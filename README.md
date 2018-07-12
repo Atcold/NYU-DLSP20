@@ -34,15 +34,15 @@ and read the manual.
 Once Miniconda is ready, checkout the course repository and
 and proceed with setting up the environment:
 ```bash
-git clone  
+git clone https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse 
 ```
 
 If you do not have git and do not wish to install it, just download the repository as zip, and unpack it:
 
 ```bash
-wget  
+wget https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip 
 #For Mac users:
-#curl -O  
+#curl -O https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip 
 unzip master.zip
 ```
 
@@ -51,6 +51,7 @@ unzip master.zip
 Change into the course folder, then type:
 
 ```bash
+#cd PyTorch-Deep-Learning-Minicourse 
 conda env create -f conda-envt.yml
 source activate codas-ml
 ```
