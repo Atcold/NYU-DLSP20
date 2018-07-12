@@ -14,7 +14,7 @@ Minicourse in Deep Learning with PyTorch
 
 # Getting started
 
-To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed. Following instruction are geared for Mac or Ubuntu linux users.
+To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed. Following instruction would work as is for Mac or Ubuntu linux users, Windows users would need to install and work in the Gitbash terminal.
 
 ## Download and install Miniconda
 
