@@ -12,7 +12,8 @@ Minicourse in Deep Learning with PyTorch
  5. `T+P` Convolutional, spectral, recurrent, and graph neural nets improve performance by exploiting data nature
  6. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
  7. `T+P` Fighting overfitting: regularisation and other techniques
- 8. `P` Case study: analysing time series data of variable length / Keras and TensorFlow
+ 8. `T+P` Case study: character- or word-level language modelling
+ 9. `P` Case study: analysing time series data of variable length / Keras and TensorFlow
 
 ## Sessions
 
