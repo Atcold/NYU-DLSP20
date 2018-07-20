@@ -11,13 +11,20 @@ Minicourse in Deep Learning with PyTorch
  4. `T+P` Neural net's forward and backward propagation
  5. `T+P` Convolutional, spectral, recurrent, and graph neural nets improve performance by exploiting data nature
  6. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
+ 7. `T+P` Fighting overfitting: regularisation and other techniques
+ 8. `P` Case study: analysing time series data of variable length / Keras and TensorFlow
+
+## Sessions
+
+ 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon
+ 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon
+ 3. Extra section (45min) on Thursday afternoon
+ 4. Extra section (1h30min) on Friday morning
 
 # Getting started
-
 To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed. Following instruction would work as is for Mac or Ubuntu linux users, Windows users would need to install and work in the Gitbash terminal.
 
 ## Download and install Miniconda
-
 Please go to the following website: https://conda.io/miniconda.html
 download and install *the latest* Miniconda version for Python 3.6 for your operating system. 
 
@@ -26,13 +33,13 @@ After that, type:
 ```bash
 conda --help
 ```
+
 and read the manual.
 
-
 ## Check-out the git repository with the exercise 
-
 Once Miniconda is ready, checkout the course repository and
 and proceed with setting up the environment:
+
 ```bash
 git clone https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse 
 ```
@@ -47,7 +54,6 @@ unzip master.zip
 ```
 
 ## Create isolated Miniconda environment
-
 Change into the course folder, then type:
 
 ```bash
