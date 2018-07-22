@@ -62,3 +62,18 @@ Change into the course folder, then type:
 conda env create -f conda-envt.yml
 source activate codas-ml
 ```
+
+
+## Start jupyter notebook
+
+Finally, start the jupoyter notebook
+
+```bash
+jupyter notebook
+```
+
+Make sure you switch to the `codas-ml` kernel before proceeding with the exercise. If you cannot find the kernel corresponding to the newly created Anaconda environment, exit the jupyter and do:
+```bash
+python -m ipykernel install --user --name codas-ml --display-name "Codas ML"
+jupyter notebook #restart
+```
