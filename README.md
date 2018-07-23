@@ -16,11 +16,20 @@ Minicourse in Deep Learning with PyTorch
  9. `P` Case study: analysing time series data of variable length / Keras and TensorFlow
 
 ## Sessions
-
  1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon
  2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon
  3. Extra section (45min) on Thursday afternoon
  4. Extra section (1h30min) on Friday morning
+
+## Notebooks visualisation
+*Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
+
+I use dark styles for both *GitHub* and *Jupyter Notebook*.
+You better do the same, or they will look ugly.
+To see the content appropriately install the following:
+
+ - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
+ - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
 
 # Getting started
 To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed. Following instruction would work as is for Mac or Ubuntu linux users, Windows users would need to install and work in the Gitbash terminal.
