@@ -29,7 +29,6 @@ def plt_style(c='k'):
     # remove background colour, set figure size
     rc('figure', figsize=(16, 8), max_open_warning=False)
     rc('axes', facecolor='none')
-    rc('nbagg', transparent=False)
 
 
 def plt_interactive(c='k'):
@@ -38,7 +37,6 @@ def plt_interactive(c='k'):
     mpl.rcParams.update(mpl.rcParamsDefault)
     get_ipython().run_line_magic('matplotlib', 'notebook')
     plt.rc('figure', figsize=(9.5, 4.75), facecolor=c)
-    rc('nbagg', transparent=False)
     # configuration for bright background
     if c == 'w':
         plt.style.use('bmh')
