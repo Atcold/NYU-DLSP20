@@ -37,6 +37,11 @@ To be able to follow the workshop exercises, you are going to need a laptop with
 ## Download and install Miniconda
 Please go to the following website: https://conda.io/miniconda.html
 download and install *the latest* Miniconda version for Python 3.6 for your operating system. 
+```bash
+wget <http:// link to miniconda>
+sh <miniconda .sh>
+```
+
 
 After that, type:
 
@@ -75,11 +80,13 @@ source activate codas-ml
 
 ## Start jupyter notebook
 
-Finally, start the jupoyter notebook
+Finally, start the jupyter notebook, if working on laptop do:
 
 ```bash
 jupyter notebook
 ```
+
+If working in JupyterLab, open a Jupyter instance and select file with the first notebook, next change the kernel. 
 
 Make sure you switch to the `codas-ml` kernel before proceeding with the exercise. If you cannot find the kernel corresponding to the newly created Anaconda environment, exit the jupyter and do:
 ```bash
