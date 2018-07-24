@@ -79,19 +79,20 @@ conda env create -f conda-envt.yml
 source activate codas-ml
 ```
 
+## Enable anaconda kernel in Jupyter
+
+To make newly created miniconda environment visible in the Jupyter, install `ipykernel`:
+
+```bash
+python -m ipykernel install --user --name codas-ml --display-name "Codas ML"
+```
 
 ## Start jupyter notebook
 
-Finally, start the jupyter notebook, if working on laptop do:
+If you are working in a JupyterLab container double click on "Files" tab in the upper right corner. Locate first notebook, double click to open. Do not attempt to start `jupyter` from the terminal window.
 
+
+If working on a laptop, start from terminal as usual:
 ```bash
 jupyter notebook
-```
-
-If working in JupyterLab, open a Jupyter instance and select file with the first notebook, next change the kernel. 
-
-Make sure you switch to the `codas-ml` kernel before proceeding with the exercise. If you cannot find the kernel corresponding to the newly created Anaconda environment, exit the jupyter and do:
-```bash
-python -m ipykernel install --user --name codas-ml --display-name "Codas ML"
-jupyter notebook #restart
 ```
