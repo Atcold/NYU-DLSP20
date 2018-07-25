@@ -9,17 +9,15 @@ Minicourse in Deep Learning with PyTorch
 
  1. `T` Learning paradigms: supervised-, unsupervised-, and reinforcement-learning
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
- 3. `T+P` Supervised learning: regression and classification
- 4. `T+P` Neural net's forward and backward propagation
- 5. `T+P` Convolutional, spectral, recurrent, and graph neural nets improve performance by exploiting data nature
+ 3. `T+P` Neural net's forward and backward propagation for classification
+ 4. `T+P` Convolutional neural nets improve performance by exploiting data nature
+ 5. `T+P` Recurrent nets natively support sequential data
  6. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
  7. `T+P` Fighting overfitting: regularisation and other techniques
- 8. `T+P` Case study: character- or word-level language modelling
- 9. `P` Case study: analysing time series data of variable length / Keras and TensorFlow
 
 ## Sessions
- 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon
- 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon
+ 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon (1, 2, 3)
+ 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon (4)
  3. Extra section (45min) on Thursday afternoon
  4. Extra section (1h30min) on Friday morning
 
