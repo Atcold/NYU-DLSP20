@@ -31,7 +31,7 @@ To see the content appropriately install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
- 
+
 ## Media coverage
  - Princeton Research Computing [article](https://researchcomputing.princeton.edu/news/princetons-codas-hep-summer-school-young-physicists-gain-edge-computational-skills)
  - Princeton University main page [article](https://www.princeton.edu/news/2018/07/27/princeton-summer-program-graduate-student-physicists-gain-computational-skills)
@@ -45,7 +45,7 @@ Following instruction would work as is for Mac or Ubuntu linux users, Windows us
 
 ## Download and install Miniconda
 Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.6 for your operating system. 
+Download and install *the latest* Miniconda version for *Python* 3.6 for your operating system.
 
 ```bash
 wget <http:// link to miniconda>
@@ -60,19 +60,19 @@ conda --help
 
 and read the manual.
 
-## Check-out the git repository with the exercise 
+## Check-out the git repository with the exercise
 Once Miniconda is ready, checkout the course repository and and proceed with setting up the environment:
 
 ```bash
-git clone https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse 
+git clone https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse
 ```
 
 If you do not have git and do not wish to install it, just download the repository as zip, and unpack it:
 
 ```bash
-wget https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip 
+wget https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip
 #For Mac users:
-#curl -O https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip 
+#curl -O https://github.com/Atcold/PyTorch-Deep-Learning-Minicourse/archive/master.zip
 unzip master.zip
 ```
 
@@ -80,8 +80,8 @@ unzip master.zip
 Change into the course folder, then type:
 
 ```bash
-#cd PyTorch-Deep-Learning-Minicourse 
-conda env create -f conda-envt.yml
+#cd PyTorch-Deep-Learning-Minicourse
+conda env create -f environment.yml
 source activate codas-ml
 ```
 
