@@ -6,8 +6,8 @@ I'll upload the videos and link to them as soon as they are made available to me
 I'm also planning to record them in a more quiet environment and at a slower pace, add them to my YouTube channel, and made available [here](https://github.com/Atcold/pytorch-Video-Tutorials).
 
 ## Table of contents
-`T`: theory
-`P`: practice
+`T`: theory (slides and animations)  
+`P`: practice (*Jupyter Notebooks*)
 
  1. `T` Learning paradigms: supervised-, unsupervised-, and reinforcement-learning
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
@@ -16,11 +16,27 @@ I'm also planning to record them in a more quiet environment and at a slower pac
  5. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
  6. `T+P` Recurrent nets natively support sequential data
 
-## Sessions
- 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon (1, 2, 3)
- 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon (4)
- 3. Extra section (45min) on Thursday afternoon (5)
- 4. Extra section (1h30min) on Friday morning (6)
+## Sessions and relative material
+ 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon  
+    Topics: 1, 2, 3.  
+    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
+    Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb).  
+    Video: coming soon.
+ 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon  
+    Topics: 4.  
+    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).  
+    Notebooks: [05](05-convnet.ipynb).  
+    Video: coming soon.  
+ 3. Extra section (45min) on Thursday afternoon  
+    Topics: 5.  
+    Slides: [03 - Generative models](slides/03%20-%20Generative%20models.pdf).  
+    Notebooks: [06](06-autoencoder.ipynb), [07](07-VAE.ipynb).  
+    Video: coming soon.  
+ 4. Extra section (1h30min) on Friday morning  
+    Topics: 6.  
+    Slides: [04 - RNN](slides/04%20-%20RNN.pdf).  
+    Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb	).  
+    Video: coming soon.
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
