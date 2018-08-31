@@ -2,7 +2,7 @@
 Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/Atcold/PyTorch-Deep-Learning-Minicourse/master)
 
 These lessons, developed during the course of several years while I've been teaching at Purdue and NYU, are here proposed for the Computational and Data Science for High Energy Physics ([CoDaS-HEP](http://codas-hep.org/)) summer school at Princeton University.
-The whole course has been recorded and the playlist is made available [here](https://youtu.be/S2kNR3R30s8).
+The whole course has been recorded and the playlist is made available [here](https://www.youtube.com/playlist?list=PLLHTzKZzVU9duBIJCVGRh3tiy39d7Iz1q).
 Check the slides for drawings of better visual quality.
 I'm also planning to record them in a more quiet environment and at a slower pace, add them to my YouTube channel, and made available [here](https://github.com/Atcold/pytorch-Video-Tutorials).
 
