@@ -17,7 +17,6 @@ Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.s
     Topics: 1, 2, 3.  
     Slides: [01 - DL and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb).  
-    Videos: [01](https://youtu.be/u--4YzUQlj8), [02](https://youtu.be/panJ-pkaqBQ).
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
