@@ -1,11 +1,6 @@
 # PyTorch-Deep-Learning-Minicourse
 Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/Atcold/PyTorch-Deep-Learning-Minicourse/master)
 
-These lessons, developed during the course of several years while I've been teaching at Purdue and NYU, are here proposed for the Computational and Data Science for High Energy Physics ([CoDaS-HEP](http://codas-hep.org/)) summer school at Princeton University.
-The whole course has been recorded and the playlist is made available [here](https://www.youtube.com/playlist?list=PLLHTzKZzVU9duBIJCVGRh3tiy39d7Iz1q).
-Check the slides for drawings of better visual quality.
-I'm also planning to record them in a more quiet environment and at a slower pace, add them to my YouTube channel, and made available [here](https://github.com/Atcold/pytorch-Video-Tutorials).
-
 ## Table of contents
 `T`: theory (slides and animations)  
 `P`: practice (*Jupyter Notebooks*)
@@ -18,26 +13,11 @@ I'm also planning to record them in a more quiet environment and at a slower pac
  6. `T+P` Recurrent nets natively support sequential data
 
 ## Sessions and relative material
- 1. Time slot 1 (1h30min + 45 min = 2h15min) on Tuesday afternoon  
+ 1. Time slot 1 (2h + 2h) on Monday afternoon  
     Topics: 1, 2, 3.  
-    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
+    Slides: [01 - DL and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb).  
     Videos: [01](https://youtu.be/u--4YzUQlj8), [02](https://youtu.be/panJ-pkaqBQ).
- 2. Time slot 2 (1h30min + 45 min = 2h15min) on Wednesday afternoon  
-    Topic: 4.  
-    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).  
-    Notebook: [05](05-convnet.ipynb).  
-    Videos: [03](https://youtu.be/jFK4odq_f0A), [04](https://youtu.be/ST73HFC4Lpo).
- 3. Extra section (45min) on Thursday afternoon  
-    Topic: 5.  
-    Slides: [03 - Generative models](slides/03%20-%20Generative%20models.pdf).  
-    Notebooks: [06](06-autoencoder.ipynb), [07](07-VAE.ipynb).  
-    Video: [05](https://youtu.be/PRKq8ztYkZw).
- 4. Extra section (1h30min) on Friday morning  
-    Topic: 6.  
-    Slides: [04 - RNN](slides/04%20-%20RNN.pdf).  
-    Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb	).  
-    Video: [06](https://youtu.be/S2kNR3R30s8).
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
@@ -48,10 +28,6 @@ To see the content appropriately install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
-
-## Media coverage
- - Princeton Research Computing [article](https://researchcomputing.princeton.edu/news/princetons-codas-hep-summer-school-young-physicists-gain-edge-computational-skills);
- - Princeton University main page [article](https://www.princeton.edu/news/2018/07/27/princeton-summer-program-graduate-student-physicists-gain-computational-skills).
 
 ## Keeping in touch
 Feel free to follow me on [Twitter](https://twitter.com/AlfredoCanziani) and subscribe to my [YouTube channel](https://www.youtube.com/user/Atcold/) to have the latest free educational material.
@@ -106,7 +82,7 @@ source activate codas-ml
 To make newly created miniconda environment visible in the Jupyter, install `ipykernel`:
 
 ```bash
-python -m ipykernel install --user --name codas-ml --display-name "Codas ML"
+python -m ipykernel install --user --name codas-ml --display-name "AIMS DL"
 ```
 
 ## Start jupyter notebook
