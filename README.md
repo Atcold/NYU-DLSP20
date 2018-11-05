@@ -1,5 +1,9 @@
-# PyTorch-Deep-Learning-Minicourse
-Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/Atcold/PyTorch-Deep-Learning-Minicourse/master)
+# Mini Course in Deep Learning with PyTorch for AIMS
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/Atcold/PyTorch-Deep-Learning-Minicourse/master)
+
+The African Masters of Machine Intelligence (AMMI) is Africa's flagship program in machine intelligence led by The African Institute for Mathematical Sciences (AIMS).
+
+In this course, we will be covering the foundations of deep learning with PyTorch.
 
 ## Table of contents
 `T`: theory (slides and animations)  
@@ -18,8 +22,8 @@ Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.s
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 
-I use dark styles for both *GitHub* and *Jupyter Notebook*.
-You better do the same, or they will look ugly.
+We use dark styles for both *GitHub* and *Jupyter Notebook*.
+You should try to do the same, or they will look ugly.
 To see the content appropriately install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
