@@ -38,3 +38,8 @@ def show_scatterplot(X, colors, title=''):
     # plt.grid(True)
     plt.title(title)
     plt.axis('off')
+
+def plot_bases(bases, width=0.04):
+    bases[2:] -= bases[:2]
+    plt.arrow(*bases[0], *bases[2], width=width, color=(1,0,0), zorder=10, alpha=1., length_includes_head=True)
+    plt.arrow(*bases[1], *bases[3], width=width, color=(0,1,0), zorder=10, alpha=1., length_includes_head=True)
