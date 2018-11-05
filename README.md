@@ -8,9 +8,6 @@ Minicourse in Deep Learning with PyTorch [![Binder](https://mybinder.org/badge.s
  1. `T` Learning paradigms: supervised-, unsupervised-, and reinforcement-learning
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
  3. `T+P` Neural net's forward and backward propagation for classification
- 4. `T+P` Convolutional neural nets improve performance by exploiting data nature
- 5. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
- 6. `T+P` Recurrent nets natively support sequential data
 
 ## Sessions and relative material
  1. Time slot 1 (2h + 2h) on Monday afternoon
@@ -74,14 +71,14 @@ Change into the course folder, then type:
 ```bash
 #cd PyTorch-Deep-Learning-Minicourse
 conda env create -f environment.yml
-source activate codas-ml
+source activate aims-ml
 ```
 
 ## Enable anaconda kernel in Jupyter
 To make newly created miniconda environment visible in the Jupyter, install `ipykernel`:
 
 ```bash
-python -m ipykernel install --user --name codas-ml --display-name "AIMS DL"
+python -m ipykernel install --user --name aims-ml --display-name "AIMS DL"
 ```
 
 ## Start jupyter notebook
