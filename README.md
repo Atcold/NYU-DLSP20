@@ -31,7 +31,9 @@ To see the content appropriately install the following:
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
 
 ## Keeping in touch
-Feel free to follow me on [Twitter](https://twitter.com/alfcnz) and subscribe to my [YouTube channel](https://www.youtube.com/user/Atcold/) to have the latest free educational material.
+Feel free to follow Afredo at [Twitter](https://twitter.com/alfcnz) and subscribe to his [YouTube channel](https://www.youtube.com/user/Atcold/) to have the latest free educational material.
+
+For more educational materials you also can head to Ritchie's [website](https://www.ritchieng.com/).
 
 # Getting started
 To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
