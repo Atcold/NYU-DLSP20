@@ -3,7 +3,9 @@
 
 The African Masters of Machine Intelligence (AMMI) is Africa's flagship program in machine intelligence led by The African Institute for Mathematical Sciences (AIMS).
 
-In this course, we will be covering the foundations of deep learning with PyTorch.
+These lessons, developed during the course of several years while I've been teaching at Purdue and NYU, are here proposed for the AMMI (AIMS).
+
+Prior to this course delivered for AMMI (AIMS), an earlier version of this was delivered for the Computational and Data Science for High Energy Physics ([CoDaS-HEP](http://codas-hep.org/)) summer school at Princeton University. Please refer to this version release [here](https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/releases/tag/v1.0.0). 
 
 ## Table of contents
 `T`: theory (slides and animations)  
@@ -30,7 +32,7 @@ To see the content appropriately install the following:
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
 
 ## Keeping in touch
-Feel free to follow me on [Twitter](https://twitter.com/AlfredoCanziani) and subscribe to my [YouTube channel](https://www.youtube.com/user/Atcold/) to have the latest free educational material.
+Feel free to follow me on [Twitter](https://twitter.com/alfcnz) and subscribe to my [YouTube channel](https://www.youtube.com/user/Atcold/) to have the latest free educational material.
 
 # Getting started
 To be able to follow the workshop exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
