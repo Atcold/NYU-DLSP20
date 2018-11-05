@@ -19,7 +19,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  1. Time slot 1 (2h + 2h) on Monday afternoon
     Topics: 1, 2, 3.  
     Slides: [01 - DL and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
-    Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb).  
+    Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
