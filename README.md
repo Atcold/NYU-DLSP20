@@ -13,13 +13,17 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
 
  1. `T` Learning paradigms: supervised-, unsupervised-, and reinforcement-learning
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
- 3. `T+P` Neural net's forward and backward propagation for classification
-
+ 3. `T+P` Neural net's forward and backward propagation for classification and regression
+ 4. `T+P` Convolutional neural nets improve performance by exploiting data nature
+ 
 ## Sessions and relative material
- 1. Time slot 1 (2h + 2h) on Monday afternoon
+ 1. Time slot 1 (4h + 4h)
     Topics: 1, 2, 3.  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
-
+ 2. Time slot 2 (4h) 
+    Topic: 4.  
+    Notebook: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
+    
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 
