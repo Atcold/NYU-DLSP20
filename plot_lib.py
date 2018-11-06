@@ -2,11 +2,11 @@ from matplotlib import pyplot as plt
 import numpy as np
 import torch
 
-def set_default():
+def set_default(figsize=(10, 10)):
     plt.style.use(['dark_background', 'bmh'])
     plt.rc('axes', facecolor='k')
     plt.rc('figure', facecolor='k')
-    plt.rc('figure', figsize=(10, 10))
+    plt.rc('figure', figsize=figsize)
 
 def plot_data(X, y, d=0, auto=False, zoom=1):
     plt.scatter(X.numpy()[:, 0], X.numpy()[:, 1], c=y, s=20, cmap=plt.cm.Spectral)
