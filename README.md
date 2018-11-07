@@ -92,6 +92,17 @@ To make newly created miniconda environment visible in the Jupyter, install `ipy
 python -m ipykernel install --user --name aims-ml --display-name "AIMS DL"
 ```
 
+## Install Autocomplete by hinterland
+You have to run the following commands if you want auto-complete.
+```
+pip install jupyter_contrib_nbextensions
+pip install jupyter_nbextensions_configurator
+jupyter contrib nbextension install --user
+
+cd /usr/local/miniconda3/envs/aims-ml/lib/python3.6/site-packages/jupyter_contrib_nbextensions/nbextensions
+jupyter nbextension install hinterland
+jupyter nbextension enable hinterland/hinterland
+```
 ## Start jupyter notebook
 If you are working in a JupyterLab container double click on "Files" tab in the upper right corner.
 Locate first notebook, double click to open.
