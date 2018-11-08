@@ -24,12 +24,12 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
  2. Time slot 2 (4h + 4h) 
     Topic: 4.  
-    Notebook: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
+    Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
  3. Time slot 3 (2h)
-    Topic: 5
+    Topic: 5.
  4. Time slot 4 (4h + 4h)
     Topic: 6.
-    Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb).
+    <br />Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb).
     
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
