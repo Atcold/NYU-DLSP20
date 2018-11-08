@@ -15,6 +15,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
  3. `T+P` Neural net's forward and backward propagation for classification and regression
  4. `T+P` Convolutional neural nets improve performance by exploiting data nature
+ 5. `T+P` Recurrent nets natively support sequential data
  
 ## Sessions and relative material
  1. Time slot 1 (4h + 4h)
@@ -23,6 +24,9 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  2. Time slot 2 (4h) 
     Topic: 4.  
     Notebook: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
+ 3. Extra section (1h30min) on Friday morning  
+    Topic: 5.
+    Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb	).
     
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
