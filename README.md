@@ -20,12 +20,15 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  
 ## Sessions and relative material
  1. Time slot 1 (4h + 4h)
-    Topics: 1, 2, 3.  
+    Topics: 1, 2, 3.
+    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
  2. Time slot 2 (4h + 4h) 
-    Topic: 4.  
+    Topic: 4.
+    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).  
     Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
  3. Time slot 3 (2h)
+    Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf)
     Topic: 5.
  4. Time slot 4 (4h + 4h)
     Topic: 6.
