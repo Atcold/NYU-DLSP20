@@ -23,7 +23,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Topics: 1, 2, 3.
     <br />Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).
     <br />Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
- 2. Time slot 2 (4h + 4h) 
+ 2. Time slot 2 (4h + 2h) 
     <br />Topic: 4.
     <br />Slides: [02 - CNN](slides/02%20-%20CNN.pdf).
     <br />Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
