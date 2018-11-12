@@ -16,10 +16,10 @@ class EchoData(Sequence):
         self.batch_size = batch_size
         if seed is not None:
             np.random.seed(seed)
-        self.raw_x = None
-        self.raw_y = None
-        self.x_batches = []
-        self.y_batches = []
+        self.x_batch = None
+        self.y_batch = None
+        self.x_chunks = []
+        self.y_chunks = []
         self.generate_new_series()
         self.prepare_batches()
 
@@ -27,7 +27,7 @@ class EchoData(Sequence):
         if index == 0:
             self.generate_new_series()
             self.prepare_batches()
-        return self.x_batches[index], self.y_batches[index]
+        return self.x_chunks[index], self.y_chunks[index]
 
     def __len__(self):
         return self.n_batches
@@ -39,14 +39,14 @@ class EchoData(Sequence):
             p=[0.5, 0.5])
         y = np.roll(x, self.echo_step, axis=1)
         y[:, 0:self.echo_step] = 0
-        self.raw_x = x
-        self.raw_y = y
+        self.x_batch = x
+        self.y_batch = y
 
     def prepare_batches(self):
-        x = np.expand_dims(self.raw_x, axis=-1)
-        y = np.expand_dims(self.raw_y, axis=-1)
-        self.x_batches = np.split(x, self.n_batches, axis=1)
-        self.y_batches = np.split(y, self.n_batches, axis=1)
+        x = np.expand_dims(self.x_batch, axis=-1)
+        y = np.expand_dims(self.y_batch, axis=-1)
+        self.x_chunks = np.split(x, self.n_batches, axis=1)
+        self.y_chunks = np.split(y, self.n_batches, axis=1)
 
 
 class TemporalOrderExp6aSequence(Sequence):
