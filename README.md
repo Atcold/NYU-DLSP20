@@ -32,7 +32,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Topic: 5.
  4. Time slot 4 (4h + 4h)
     <br />Topic: 6.
-    <br />Notebooks: [08-1](08-1-classify_seq_data.ipynb), [08-2](08-2-echo_data.ipynb), [08-3](08-3-temporal_order_classification_experiments.ipynb), [08-4](08-4-echo_experiments.ipynb).
+    <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
