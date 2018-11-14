@@ -15,8 +15,9 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  2. `P` Getting started with the tools: Jupyter notebook, PyTorch tensors and autodifferentiation
  3. `T+P` Neural net's forward and backward propagation for classification and regression
  4. `T+P` Convolutional neural nets improve performance by exploiting data nature
- 5. `T+P` Foundations of Salsa.
+ 5. `T+P` Foundations of Salsa
  6. `T+P` Recurrent nets natively support sequential data
+ 7. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
  
 ## Sessions and relative material
  1. Time slot 1 (4h + 4h)
@@ -35,6 +36,9 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py)
     <br />Assignment: [HW1](assignments/hw1.pdf)
     <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
+ 5. Time slot 4 (4h)
+    <br />Topic: 7.
+    <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
