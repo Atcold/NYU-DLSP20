@@ -38,6 +38,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
  5. Time slot 4 (4h)
     <br />Topic: 7.
+    <br />Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf)
     <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
 
 ## Notebooks visualisation
