@@ -35,16 +35,15 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  4. Time slot 4 (4h + 4h)
     <br />Topic: 6.
     <br />Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py)
-    <br />Assignment: [HW1](assignments/hw1.pdf)
+    <br />Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf)
     <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
- 5. Time slot 4 (4h)
+ 5. Time slot 5 (4h)
     <br />Topic: 7.
     <br />Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py)
     <br />Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf)
     <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
- 6. Time slot 4 (2h)
+ 6. Time slot 6 (2h)
     <br />Topic: 8.
-    <br />Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py)
     <br />Notebooks: [12](12-regularization.ipynb)
 
 ## Notebooks visualisation
