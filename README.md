@@ -18,6 +18,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  5. `T+P` Foundations of Salsa
  6. `T+P` Recurrent nets natively support sequential data
  7. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
+ 8. `T+P` Regularization for neural nets
  
 ## Sessions and relative material
  1. Time slot 1 (4h + 4h)
@@ -38,8 +39,13 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
  5. Time slot 4 (4h)
     <br />Topic: 7.
+    <br />Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py)
     <br />Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf)
     <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
+ 6. Time slot 4 (2h)
+    <br />Topic: 8.
+    <br />Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py)
+    <br />Notebooks: [12](12-regularization.ipynb)
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
