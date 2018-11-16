@@ -34,6 +34,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Topic: 5.
  4. Time slot 4 (4h + 4h)
     <br />Topic: 6.
+    <br />Slides: [04 - RNN](slides/04%20-%20RNN.pdf)
     <br />Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py)
     <br />Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf)
     <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
