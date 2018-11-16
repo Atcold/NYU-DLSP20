@@ -136,3 +136,6 @@ If working on a laptop, start from terminal as usual:
 ```bash
 jupyter notebook
 ```
+
+## More PyTorch Resources
+If you would like more PyTorch resources, head over to the global community-maintained repository of hundreds of reliable implementations and guides at the following repository created by Ritchie Ng: [The Incredible PyTorch](https://github.com/ritchieng/the-incredible-pytorch).
