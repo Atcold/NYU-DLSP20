@@ -45,6 +45,7 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
     <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
  6. Time slot 6 (2h)
     <br />Topic: 8.
+    <br />Assignment: [HW2](assignments/hw2.pdf)
     <br />Notebooks: [12](12-regularization.ipynb)
 
 ## Notebooks visualisation
