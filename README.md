@@ -2,10 +2,10 @@
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/Atcold/PyTorch-Deep-Learning-Minicourse/master)
 
 The African Masters of Machine Intelligence (AMMI) is Africa's flagship program in machine intelligence led by The African Institute for Mathematical Sciences (AIMS).
-
 These lessons, developed during the course of several years while I've been teaching at Purdue and NYU, are here proposed for the AMMI (AIMS).
 
-Prior to this course delivered for AMMI (AIMS), an earlier version of this was delivered for the Computational and Data Science for High Energy Physics ([CoDaS-HEP](http://codas-hep.org/)) summer school at Princeton University. Please refer to this version release [here](https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/releases/tag/v1.0.0). 
+Prior to this course delivered for AMMI (AIMS), an earlier version of this was delivered and video-recorded for the Computational and Data Science for High Energy Physics ([CoDaS-HEP](http://codas-hep.org/)) summer school at Princeton University.
+Please refer to this version release [here](https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/releases/tag/v1.0.0). 
 
 ## Table of contents
 `T`: theory (slides and animations)  
@@ -18,35 +18,40 @@ Prior to this course delivered for AMMI (AIMS), an earlier version of this was d
  5. `T+P` Foundations of Salsa
  6. `T+P` Recurrent nets natively support sequential data
  7. `T+P` Unsupervised learning: vanilla and variational autoencoders, generative adversarial nets
- 8. `T+P` Regularization for neural nets
+ 8. `T` How to create and deliver an effective presentation
+ 9. `T+P` Regularization for neural nets
  
 ## Sessions and relative material
  1. Time slot 1 (4h + 4h)
-    <br />Topics: 1, 2, 3.
-    <br />Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).
-    <br />Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
+    Topics: 1, 2, 3.
+    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).
+    Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
  2. Time slot 2 (4h + 2h) 
-    <br />Topic: 4.
-    <br />Slides: [02 - CNN](slides/02%20-%20CNN.pdf).
-    <br />Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
+    Topic: 4.
+    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).
+    Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
  3. Time slot 3 (2h)
-    <br />Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf).
-    <br />Topic: 5.
+    Topic: 5.
+    Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf).
  4. Time slot 4 (4h + 4h)
-    <br />Topic: 6.
-    <br />Slides: [04 - RNN](slides/04%20-%20RNN.pdf)
-    <br />Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py)
-    <br />Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf)
-    <br />Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb)
+    Topic: 6.
+    Slides: [04 - RNN](slides/04%20-%20RNN.pdf).
+    Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py).
+    Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf).
+    Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb).
  5. Time slot 5 (4h)
-    <br />Topic: 7.
-    <br />Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py)
-    <br />Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf)
-    <br />Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb)
- 6. Time slot 6 (2h)
-    <br />Topic: 8.
-    <br />Assignment: [HW2](assignments/hw2.pdf)
-    <br />Notebooks: [12](12-regularization.ipynb)
+    Topic: 7.
+    Slides: [05 - Generative models](slides/05%20-%20Generative%20models.pdf).
+    Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py).
+    Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf).
+    Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).
+ 6. Topic: 8.
+    Slides: *still cleaning it up*
+ 7. Time slot 6 (2h)
+    Topic: 9.
+    Slides: *still cleaning it up*
+    Assignment: [HW2](assignments/hw2.pdf).
+    Notebooks: [12](12-regularization.ipynb).
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
