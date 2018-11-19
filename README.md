@@ -22,36 +22,36 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
  9. `T+P` Regularization for neural nets
  
 ## Sessions and relative material
- 1. Time slot 1 (4h + 4h)
-    Topics: 1, 2, 3.
-    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).
+ 1. Time slot 1 (4h + 4h)  
+    Topics: 1, 2, 3.  
+    Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
- 2. Time slot 2 (4h + 2h) 
-    Topic: 4.
-    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).
-    Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).
- 3. Time slot 3 (2h)
-    Topic: 5.
-    Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf).
- 4. Time slot 4 (4h + 4h)
-    Topic: 6.
-    Slides: [04 - RNN](slides/04%20-%20RNN.pdf).
-    Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py).
-    Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf).
-    Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb).
- 5. Time slot 5 (4h)
-    Topic: 7.
-    Slides: [05 - Generative models](slides/05%20-%20Generative%20models.pdf).
-    Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py).
-    Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf).
-    Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).
- 6. Topic: 8.
-    Slides: *still cleaning it up*
- 7. Time slot 6 (2h)
-    Topic: 9.
-    Slides: *still cleaning it up*
-    Assignment: [HW2](assignments/hw2.pdf).
-    Notebooks: [12](12-regularization.ipynb).
+ 2. Time slot 2 (4h + 2h)  
+    Topic: 4.  
+    Slides: [02 - CNN](slides/02%20-%20CNN.pdf).  
+    Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).  
+ 3. Time slot 3 (2h)  
+    Topic: 5.  
+    Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf).  
+ 4. Time slot 4 (4h + 4h)  
+    Topic: 6.  
+    Slides: [04 - RNN](slides/04%20-%20RNN.pdf).  
+    Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py).  
+    Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf).  
+    Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb).  
+ 5. Time slot 5 (4h)  
+    Topic: 7.  
+    Slides: [05 - Generative models](slides/05%20-%20Generative%20models.pdf).  
+    Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py).  
+    Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf).  
+    Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).  
+ 6. Topic: 8.  
+    Slides: *still cleaning it up*  
+ 7. Time slot 6 (2h)  
+    Topic: 9.  
+    Slides: *still cleaning it up*  
+    Assignment: [HW2](assignments/hw2.pdf).  
+    Notebooks: [12](12-regularization.ipynb).  
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
