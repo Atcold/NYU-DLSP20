@@ -39,7 +39,7 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py).  
     Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf).  
     Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb).  
- 5. Time slot 5 (5h)  
+ 5. Time slot 5 (4h + 4h)  
     Topic: 7.  
     Slides: [05 - Generative models](slides/05%20-%20Generative%20models.pdf).  
     Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py).  
@@ -48,7 +48,7 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
  6. Time slot 6 (1h)  
     Topic: 8.  
     Slides: [06 - How to present](slides/06%20-%20How%20to%20present.pdf).    
- 7. Time slot 7 (2h)  
+ 7. Time slot 7 (1h)  
     Topic: 9.  
     Slides: [07 - Regularisation](slides/07%20-%20Regularisation.pdf).    
     Assignment: [HW2](assignments/hw2.pdf).  
