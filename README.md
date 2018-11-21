@@ -46,10 +46,10 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf).  
     Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).  
  6. Topic: 8.  
-    Slides: *still cleaning it up*  
+    Slides: [06 - How to present](slides/06%20-%20How%20to%20present.pdf).    
  7. Time slot 6 (2h)  
     Topic: 9.  
-    Slides: *still cleaning it up*  
+    Slides: [07 - Regularisation](slides/07%20-%20Regularisation.pdf).    
     Assignment: [HW2](assignments/hw2.pdf).  
     Notebooks: [12](12-regularization.ipynb).  
 
