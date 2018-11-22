@@ -47,7 +47,8 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).  
  6. Time slot 6 (1h)  
     Topic: 8.  
-    Slides: [06 - How to present](slides/06%20-%20How%20to%20present.pdf).    
+    Slides: [06 - How to present](slides/06%20-%20How%20to%20present.pdf).  
+    Video: [How to prepare a presentation](https://youtu.be/y4N0_Tvt75s).  
  7. Time slot 7 (1h)  
     Topic: 9.  
     Slides: [07 - Regularisation](slides/07%20-%20Regularisation.pdf).    
