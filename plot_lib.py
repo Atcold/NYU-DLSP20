@@ -9,6 +9,7 @@ def set_default(figsize=(10, 10)):
     plt.rc('figure', figsize=figsize)
 
 def plot_data(X, y, d=0, auto=False, zoom=1):
+    X = X.cpu()
     plt.scatter(X.numpy()[:, 0], X.numpy()[:, 1], c=y, s=20, cmap=plt.cm.Spectral)
     plt.axis('square')
     plt.axis(np.array((-1.1, 1.1, -1.1, 1.1)) * zoom)
@@ -20,6 +21,7 @@ def plot_data(X, y, d=0, auto=False, zoom=1):
     plt.axhline(0, xmin=_m, color=_c, lw=1, zorder=0)
 
 def plot_model(X, y, model):
+    model.cpu()
     mesh = np.arange(-1.1, 1.1, 0.01)
     xx, yy = np.meshgrid(mesh, mesh)
     with torch.no_grad():
@@ -30,8 +32,8 @@ def plot_model(X, y, model):
     plot_data(X, y)
 
 def show_scatterplot(X, colors, title=''):
-    colors = colors.numpy()
-    X = X.numpy()
+    colors = colors.cpu().numpy()
+    X = X.cpu().numpy()
     plt.figure()
     plt.axis('equal')
     plt.scatter(X[:, 0], X[:, 1], c=colors, s=30)
@@ -40,6 +42,7 @@ def show_scatterplot(X, colors, title=''):
     plt.axis('off')
 
 def plot_bases(bases, width=0.04):
+    bases = bases.cpu()
     bases[2:] -= bases[:2]
     plt.arrow(*bases[0], *bases[2], width=width, color=(1,0,0), zorder=10, alpha=1., length_includes_head=True)
     plt.arrow(*bases[1], *bases[3], width=width, color=(0,1,0), zorder=10, alpha=1., length_includes_head=True)
