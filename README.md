@@ -59,8 +59,8 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 
 We use dark styles for both *GitHub* and *Jupyter Notebook*.
-You should try to do the same, or they will look ugly.
-To see the content appropriately install the following:
+You should try to do the same, or they will look ugly. JupyterLab has a built-in selectable dark theme, so you only need to install something if you want to use the classic notebook interface.
+To see the content appropriately in the classic interface install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
@@ -113,14 +113,7 @@ Change into the course folder, then type:
 ```bash
 #cd PyTorch-Deep-Learning-Minicourse
 conda env create -f environment.yml
-source activate aims-ml
-```
-
-## Enable anaconda kernel in Jupyter
-To make newly created miniconda environment visible in the Jupyter, install `ipykernel`:
-
-```bash
-python -m ipykernel install --user --name aims-ml --display-name "AIMS DL"
+source activate dl-minicourse
 ```
 
 ## Install Autocomplete by hinterland
@@ -130,11 +123,11 @@ pip install jupyter_contrib_nbextensions
 pip install jupyter_nbextensions_configurator
 jupyter contrib nbextension install --user
 
-cd /usr/local/miniconda3/envs/aims-ml/lib/python3.6/site-packages/jupyter_contrib_nbextensions/nbextensions
+cd /usr/local/miniconda3/envs/dl-minicourse/lib/python3.6/site-packages/jupyter_contrib_nbextensions/nbextensions
 jupyter nbextension install hinterland
 jupyter nbextension enable hinterland/hinterland
 ```
-## Start jupyter notebook
+## Start Jupyter notebook or JupyterLab
 If you are working in a JupyterLab container double click on "Files" tab in the upper right corner.
 Locate first notebook, double click to open.
 Do not attempt to start `jupyter` from the terminal window.
@@ -142,8 +135,15 @@ Do not attempt to start `jupyter` from the terminal window.
 If working on a laptop, start from terminal as usual:
 
 ```bash
+jupyter lab
+```
+
+Or, for the classic interface:
+
+```bash
 jupyter notebook
 ```
+
 
 ## More PyTorch Resources
 If you would like more PyTorch resources, head over to the global community-maintained repository of hundreds of reliable implementations and guides at the following repository created by Ritchie Ng: [The Incredible PyTorch](https://github.com/ritchieng/the-incredible-pytorch).
