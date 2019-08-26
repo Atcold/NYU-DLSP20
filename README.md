@@ -26,10 +26,12 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Topics: 1, 2, 3.  
     Slides: [01 - ML and spiral classification](slides/01%20-%20ML%20and%20spiral%20classification.pdf).  
     Notebooks: [01](01-tensor_tutorial.ipynb), [02](02-space_stretching.ipynb), [03](03-autograd_tutorial.ipynb), [04](04-spiral_classification.ipynb), [05](05-regression.ipynb).  
+    Chapters: 32(Introduction to PyTorch and Tensors), 23(Tensor Transformations), 2(Backpropagation), 33(Regression).
  2. Time slot 2 (4h + 2h)  
     Topic: 4.  
     Slides: [02 - CNN](slides/02%20-%20CNN.pdf).  
     Notebooks: [06](06-convnet.ipynb), [07](07-listening_to_kernels.ipynb).  
+    Chapters: 11(Components of a CNN), 34(Convolutional Networks).
  3. Time slot 3 (2h)  
     Topic: 5.  
     Slides: [03 - Salsa](slides/03%20-%20Salsa.pdf).  
@@ -39,12 +41,14 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Code Readings: [Word Language Model](https://github.com/pytorch/examples/blob/master/word_language_model/model.py).  
     Assignment: [HW1](assignments/hw1.pdf), [HW1 Solutions](assignments/hw1_solutions.pdf).  
     Notebooks: [08](08-seq_classification.ipynb), [09](09-echo_data.ipynb).  
+    Chapters: 36(Sequence Modeling).
  5. Time slot 5 (4h + 4h)  
     Topic: 7.  
     Slides: [05 - Generative models](slides/05%20-%20Generative%20models.pdf).  
     Code Readings: [GAN](https://github.com/pytorch/examples/blob/master/dcgan/main.py).  
     Guides: [TikZ Quick Guide](assignments/tikz_guide.pdf).  
     Notebooks: [10](10-autoencoder.ipynb), [11](11-VAE.ipynb).  
+    Chapters: 37(Autoencoder), 38(Variational Auto-Encoder).
  6. Time slot 6 (1h)  
     Topic: 8.  
     Slides: [06 - How to present](slides/06%20-%20How%20to%20present.pdf).  
@@ -54,6 +58,7 @@ Please refer to this version release [here](https://github.com/Atcold/pytorch-De
     Slides: [07 - Regularisation](slides/07%20-%20Regularisation.pdf).    
     Assignment: [HW2](assignments/hw2.pdf).  
     Notebooks: [12](12-regularization.ipynb).  
+    Chapters: 24(Regularisation and Overfitting), 25(Regularization).
 
 ## Notebooks visualisation
 *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
