@@ -74,3 +74,19 @@ def show_mat(mat, vect, prod, threshold=-1):
 
     # Fix y-axis limits
     ax1.set_ylim(bottom=max(len(prod), len(vect)) - 0.5)
+
+
+colors = dict(
+    aqua='#8dd3c7',
+    yellow='#ffffb3',
+    lavender='#bebada',
+    red='#fb8072',
+    blue='#80b1d3',
+    orange='#fdb462',
+    green='#b3de69',
+    pink='#fccde5',
+    grey='#d9d9d9',
+    violet='#bc80bd',
+    unk1='#ccebc5',
+    unk2='#ffed6f',
+)
