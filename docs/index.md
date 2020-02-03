@@ -1,3 +1,6 @@
-# Write a title here
+---
+layout: default
+title: Deep Learning (with PyTorch)
+---
 
-Add some text for my homepage.
+This is now the course homepage.
