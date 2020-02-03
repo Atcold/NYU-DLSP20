@@ -1,4 +1,8 @@
-# Mini Course in Deep Learning with PyTorch for AIMS
+---
+layout: default
+title: Mini Course in Deep Learning with PyTorch for AIMS
+---
+
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning-Minicourse/master)
 
 The African Masters of Machine Intelligence (AMMI) is Africa's flagship program in machine intelligence led by The African Institute for Mathematical Sciences (AIMS).
