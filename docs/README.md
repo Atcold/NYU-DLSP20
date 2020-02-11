@@ -36,3 +36,22 @@ For your convenience there's an execturable in this directory containing this ex
 ./serve.sh
 ```
 
+## Adding a chapter or section
+
+If you need to add one more chapter or section, you will need to edit the `_config.yml` file in order to make it aware of your new contribution. More specifically you will need to add one or more line to the website outline, which looks like this at the moment.
+
+```yaml
+chapters:
+  - path: chapters/01.md
+    sections:
+      - path: chapters/01-1.md
+      - path: chapters/01-2.md
+      - path: chapters/01-3.md
+  - path: chapters/02.md
+    sections:
+      - path: chapters/02-1.md
+      - path: chapters/02-2.md
+      - path: chapters/02-3.md
+```
+
+The images for a given `section` will be fetched from a folder having the same name of the `section`'s file name, without considering the file extension. So, images for the file `02-2.md` will be automatically retrieved from the `02-2\` directory. The file will not be rendered well here in the repo, but `jekyll` will do a good job on the besite.
