@@ -15,14 +15,6 @@ wget <http:// link to miniconda>
 sh <miniconda*.sh>
 ```
 
-After that, type:
-
-```bash
-conda --help
-```
-
-and read the manual.
-
 
 ## Check-out the git repository with the exercise
 Once Miniconda is ready, checkout the course repository and and proceed with setting up the environment:
