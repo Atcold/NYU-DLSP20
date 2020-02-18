@@ -63,6 +63,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="chapters/02-3">NN training</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/04-spiral_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/05-regression.ipynb">📓</a>
       </td>
@@ -81,6 +82,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="chapters/03-3"></a>–</td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/06-convnet.ipynb">📓</a>
       </td>
     </tr>
@@ -91,9 +93,10 @@ This course concerns the latest techniques in deep learning and representation l
 
 | Role | Photo | Contact | About |
 |:-----|:-----:|:--------|:------|
-|Instructor|<img src="Yann.png" width="100" height="100">|Yann LeCun<br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
-|Instructor|<img src="https://pbs.twimg.com/profile_images/1204441318207950855/qEPqQ01h_400x400.jpg" width="100" height="100">|Alfredo Canziani<br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
-|Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|Mark Goldstein<br>goldstein@nyu.edu|PhD student in CS at NYU|
+|Instructor|<img src="Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|Instructor|<img src="https://pbs.twimg.com/profile_images/1204441318207950855/qEPqQ01h_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
+|Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
+|Web master|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
 |Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
 |Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Raghav Jajodia <br>rj1408@nyu.edu|
 |Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Priyank Pathak <br>pp1953@nyu.edu|
