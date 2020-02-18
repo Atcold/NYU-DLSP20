@@ -16,6 +16,76 @@ title: DEEP LEARNING
 
 This course concerns the latest techniques in deep learning and representation learning, focusing on supervised and unsupervised deep learning, embedding methods, metric learning, convolutional and recurrent nets, with applications to computer vision, natural language understanding, and speech recognition. The prerequisites include: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) or a graduate-level machine learning course.
 
+## Lectures
+
+**Legend**: 🖥 slides, 📓 Jupyter notebook.
+
+<table>
+<!-- =============================== HEADER ================================ -->
+  <thead>
+    <tr>
+      <th>Week</th>
+      <th align="left">Format</th>
+      <th align="left">Title</th>
+      <th align="left">Resources</th>
+    </tr>
+  </thead>
+  <tbody>
+<!-- =============================== WEEK 1 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="chapters/01">①</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="chapters/01-1">History and motivation</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
+      </td>
+    </tr>
+    <tr><td><a href="chapters/01-2">Evolution and DL</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="chapters/01-3">Neural nets (NN)</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/01-tensor_tutorial.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/02-space_stretching.ipynb">📓</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 2 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="chapters/02">②</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="chapters/02-1">SGD and backprop</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
+      </td>
+    </tr>
+    <tr><td><a href="chapters/02-2">Backprop in practice</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="chapters/02-3">NN training</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/04-spiral_classification.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/05-regression.ipynb">📓</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 3 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="chapters/03"></a>③</td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="chapters/03-1"></a>–</td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
+      </td>
+    </tr>
+    <tr><td><a href="chapters/03-2"></a>–</td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="chapters/03-3"></a>–</td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/06-convnet.ipynb">📓</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## People
 
