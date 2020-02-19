@@ -1,6 +1,6 @@
 # Website generation
 
-[This repo's website](https://atcold.github.io/pytorch-Deep-Learning-Minicourse/) is automatically served via [GitHub Pages](https://pages.github.com/) using [Jekyll](https://jekyllrb.com/).
+[This repo's website](https://atcold.github.io/pytorch-Deep-Learning) is automatically served via [GitHub Pages](https://pages.github.com/) using [Jekyll](https://jekyllrb.com/).
 
 # Running locally
 
