@@ -9,7 +9,7 @@ title: DEEP LEARNING
 | LECTURES    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRACTICA    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
-| MATERIAL    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning-Minicourse) |
+| MATERIAL    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## Description
@@ -45,8 +45,8 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="chapters/01-3">Neural nets (NN)</a></td>
       <td>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/01-tensor_tutorial.ipynb">📓</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/02-space_stretching.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
       </td>
     </tr>
 <!-- =============================== WEEK 2 ================================ -->
@@ -63,9 +63,9 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="chapters/02-3">NN training</a></td>
       <td>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/04-spiral_classification.ipynb">📓</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/05-regression.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/04-spiral_classification.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/05-regression.ipynb">📓</a>
       </td>
     </tr>
 <!-- =============================== WEEK 3 ================================ -->
@@ -82,8 +82,8 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="chapters/03-3"></a>–</td>
       <td>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning-Minicourse/blob/master/06-convnet.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
       </td>
     </tr>
   </tbody>
