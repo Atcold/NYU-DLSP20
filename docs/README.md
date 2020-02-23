@@ -4,6 +4,20 @@
 
 # Running locally
 
+## Clone the Repo
+
+First, you need to clone this repo with all submodules. You need to do:
+
+```bash
+git clone --recursive <repo>
+```
+
+If you have already cloned it, you can simply do:
+
+```bash
+git submodule update --init --recursive
+```
+
 ## Installation
 
 If you want to debug it locally, you need to install `jekyll`, starting by installing `gem` and exporting it's `PATH`.
