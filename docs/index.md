@@ -19,7 +19,7 @@ This course concerns the latest techniques in deep learning and representation l
 
 ## Lectures
 
-**Legend**: 🖥 slides, 📓 Jupyter notebook.
+**Legend**: 🖥 slides, 📓 Jupyter notebook, 🎥 YouTube video.
 
 <table>
 <!-- =============================== HEADER ================================ -->
@@ -39,6 +39,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="chapters/01-1">History and motivation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
+        <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
       </td>
     </tr>
     <tr><td><a href="chapters/01-2">Evolution and DL</a></td></tr>
@@ -48,6 +49,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
+        <a href="https://www.youtube.com/watch?v=5_qrxVq1kvc">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 2 ================================ -->
