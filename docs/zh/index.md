@@ -10,13 +10,11 @@ translator: Mingyang Zhao
 
 **DS-GA 1008 · 2020 春季 · [纽约大学数据科学中心](http://cds.nyu.edu/)**
 
-|                  |                                     | 
-| ---              | ---                                 |
-| 指导教师          | Yann LeCun 和 Alfredo Canziani      |
-| 讲座课            | 周一 16:55 – 18:35, [GCASL C95]  |
+| 指导教师          | Yann LeCun 和 Alfredo Canziani  |
+| 讲座课            | 周一 16:55 – 18:35, [GCASL C95] |
 | 实践课            | 周二 19:10 – 20:00, [GCASL C95] |
-| [PIAZZA 讨论区]   | 验证码: `DLSP20`                     |
-| 资料              | [Google 云端硬盘], [Notebooks]       |
+| [PIAZZA 讨论区]   | 验证码: `DLSP20`                |
+| 资料              | [Google 云端硬盘], [Notebooks]  |
 
 <!-- Links -->
 [GCASL C95]: http://libzuorary.nyu.edu/services/campus-media/classrooms/gcasl-c95/
@@ -31,6 +29,7 @@ translator: Mingyang Zhao
 
 <!-- Links -->
 [DS-GA 1001 数据科学入门]: https://cds.nyu.edu/academics/ms-curriculum/
+
 
 ## 课程
 
@@ -119,7 +118,7 @@ translator: Mingyang Zhao
       <td rowspan="2">讲座</td>
       <td><a href="chapters/zh/05-1"></a>-</td>
       <td rowspan="2">
-        <a href="https://drive.google.com/open?id=1Qqtt4xjSJYTGDvy5bLT6KnbmXWUUnJEn">🖥️</a>
+        <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
       </td>
     </tr>
     <tr><td><a href="chapters/zh/05-2"></a>-</td></tr>
