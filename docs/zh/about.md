@@ -1,6 +1,7 @@
 ---
 title: Contribution instructions
 lang-ref: about
+lang: zh
 ---
 
 
