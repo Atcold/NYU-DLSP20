@@ -105,7 +105,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="2">Lecture</td>
       <td><a href="chapters/05-1"></a>-</td>
       <td rowspan="2">
-        <a href="https://drive.google.com/open?id=1Qqtt4xjSJYTGDvy5bLT6KnbmXWUUnJEn">🖥️</a>
+        <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
       </td>
     </tr>
     <tr><td><a href="chapters/05-2"></a>-</td></tr>
