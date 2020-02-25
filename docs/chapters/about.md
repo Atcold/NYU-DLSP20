@@ -63,7 +63,7 @@ Some text.
  - - 1 - -
 $$
 ax^2 + bx + c = 0 \quad\Rightarrow\quad
-_1x_2 = {-b \pm \sqrt{b^2 - 4ac} \over 2a}
+x_1x_2 = {-b \pm \sqrt{b^2 - 4ac} \over 2a}
 $$
  - - 1 - -
 Some more text.
