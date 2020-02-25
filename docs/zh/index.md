@@ -3,7 +3,10 @@ layout: default
 title: DEEP LEARNING
 author: Alfredo Canziani
 lang-ref: home
+lang: zh
 ---
+
+这是一些中国人
 
 **DS-GA 1008 · SPRING 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
 
