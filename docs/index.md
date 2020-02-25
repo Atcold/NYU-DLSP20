@@ -91,11 +91,27 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
     <tr>
-      <td rowspan="1" align="center"><a href="chapters/03"></a>④</td>
+      <td rowspan="1" align="center"><a href="chapters/04">④</a></td>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/04-1"></a>–</td>
+      <td><a href="chapters/04-1">1D convolutions</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 5 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="chapters/05"></a>⑤</td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="chapters/05-1"></a>-</td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/open?id=1Qqtt4xjSJYTGDvy5bLT6KnbmXWUUnJEn">🖥️</a>
+      </td>
+    </tr>
+    <tr><td><a href="chapters/05-2"></a>-</td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="chapters/05-3"></a>-</td>
+      <td>
       </td>
     </tr>
   </tbody>
