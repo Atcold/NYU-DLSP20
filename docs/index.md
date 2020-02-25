@@ -2,6 +2,7 @@
 layout: default
 title: DEEP LEARNING
 author: Alfredo Canziani
+lang-ref: home
 ---
 
 **DS-GA 1008 · SPRING 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**

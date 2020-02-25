@@ -1,5 +1,6 @@
 ---
 title: Contribution instructions
+lang-ref: about
 ---
 
 
