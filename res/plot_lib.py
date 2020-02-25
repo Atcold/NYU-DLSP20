@@ -3,11 +3,11 @@ import numpy as np
 import torch
 
 
-def set_default(figsize=(10, 10)):
+def set_default(figsize=(10, 10), dpi=100):
     plt.style.use(['dark_background', 'bmh'])
     plt.rc('axes', facecolor='k')
     plt.rc('figure', facecolor='k')
-    plt.rc('figure', figsize=figsize)
+    plt.rc('figure', figsize=figsize, dpi=dpi)
 
 
 def plot_data(X, y, d=0, auto=False, zoom=1):
@@ -68,6 +68,10 @@ def show_mat(mat, vect, prod, threshold=-1):
     ax2.set_title(f'a^(i): {vect.numel()}')
     ax3.set_title(f'p: {prod.numel()}')
 
+    # Remove xticks for vectors
+    ax2.set_xticks(tuple())
+    ax3.set_xticks(tuple())
+    
     # Plot colourbars
     fig.colorbar(cax1, ax=ax2)
     fig.colorbar(cax3, ax=ax3)
