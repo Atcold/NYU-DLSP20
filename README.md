@@ -22,7 +22,7 @@ sh <miniconda*.sh>
 
 ## Check-out the git repository with the exercise
 
-Once Miniconda is ready, checkout the course repository and and proceed with setting up the environment:
+Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
 
 ```bash
 git clone https://github.com/Atcold/pytorch-Deep-Learning
