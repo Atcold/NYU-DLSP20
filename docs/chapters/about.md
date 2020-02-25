@@ -41,13 +41,13 @@ Moreover, since a specific size was needed, `width` or `height` can be specified
 
 ## Adding headings
 
-When adding headings, using two or three `#`, link it to the corresponding video time stamp, and add an extra empty line in the source code.
+When adding headings, using two or three `#`, add an extra empty line in the source code.
 
 ```markdown
 Some text from a preceding paragraph.
  - - 1 - -
  - - 2 - -
-## [New heading](hour:minute:second)
+## New heading
  - - 1 - -
 More text.
 ```
