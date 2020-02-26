@@ -56,16 +56,16 @@ If you need to add one more chapter or section, you will need to edit the `_conf
 
 ```yaml
 en:
-  - path: en/01.md
+  - path: en/week01/01.md
     sections:
-      - path: en/01-1.md
-      - path: en/01-2.md
-      - path: en/01-3.md
-  - path: en/02.md
+      - path: en/week01/01-1.md
+      - path: en/week01/01-2.md
+      - path: en/week01/01-3.md
+  - path: en/week02/02.md
     sections:
-      - path: en/02-1.md
-      - path: en/02-2.md
-      - path: en/02-3.md
+      - path: en/week02/02-1.md
+      - path: en/week02/02-2.md
+      - path: en/week02/02-3.md
 ```
 
 The images for a given `section` will be fetched from a folder having the same name of the `section`'s file name, without considering the file extension. So, images for the file `02-2.md` will be automatically retrieved from the `02-2\` directory. The file will not be rendered well here in the repo, but `jekyll` will do a good job on the besite.
