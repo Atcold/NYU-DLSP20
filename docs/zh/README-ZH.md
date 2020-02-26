@@ -1,9 +1,6 @@
 # 深度学习 (使用PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 
-
-**EN:** This repo hosts the Mandarin translation of the [companion website](https://atcold.github.io/pytorch-Deep-Learning/) of [Deep Learning (with PyTorch)](https://github.com/Atcold/pytorch-Deep-Learning) Jupyter Notebook repo and its `README.md`.
-
-这份笔记的仓库具有[同步网站](https://atcold.github.io/pytorch-Deep-Learning/)，在那里您可以获得所有课程资料的视频与文本.
+这份笔记的仓库具有[同步网站](https://atcold.github.io/pytorch-Deep-Learning/zh/)，在那里您可以获得所有课程资料的视频与文本.
 
 
 # 起步
