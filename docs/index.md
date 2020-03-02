@@ -35,18 +35,18 @@ This course concerns the latest techniques in deep learning and representation l
   <tbody>
 <!-- =============================== WEEK 1 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="chapters/01">①</a></td>
+      <td rowspan="3" align="center"><a href="en/week01/01">①</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="chapters/01-1">History and motivation</a></td>
+      <td><a href="en/week01/01-1">History and motivation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
         <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="chapters/01-2">Evolution and DL</a></td></tr>
+    <tr><td><a href="en/week01/01-2">Evolution and DL</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/01-3">Neural nets (NN)</a></td>
+      <td><a href="en/week01/01-3">Neural nets (NN)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
@@ -55,18 +55,18 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 2 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="chapters/02">②</a></td>
+      <td rowspan="3" align="center"><a href="en/week02/02">②</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="chapters/02-1">SGD and backprop</a></td>
+      <td><a href="en/week02/02-1">SGD and backprop</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
         <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="chapters/02-2">Backprop in practice</a></td></tr>
+    <tr><td><a href="en/week02/02-2">Backprop in practice</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/02-3">NN training</a></td>
+      <td><a href="en/week02/02-3">NN training</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/04-spiral_classification.ipynb">📓</a>
@@ -76,17 +76,17 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 3 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="chapters/03">③</a></td>
+      <td rowspan="3" align="center"><a href="en/week03/03">③</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="chapters/03-1">Parameter transformation</a></td>
+      <td><a href="en/week03/03-1">Parameter transformation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
       </td>
     </tr>
-    <tr><td><a href="chapters/03-2">CNN</a></td></tr>
+    <tr><td><a href="en/week03/03-2">CNN</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/03-3">Natural signals' properties</a></td>
+      <td><a href="en/week03/03-3">Natural signals' properties</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
@@ -94,26 +94,26 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
     <tr>
-      <td rowspan="1" align="center"><a href="chapters/04">④</a></td>
+      <td rowspan="1" align="center"><a href="en/week04/04">④</a></td>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/04-1">1D convolutions</a></td>
+      <td><a href="en/week04/04-1">1D convolutions</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
       </td>
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="chapters/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="chapters/05-1"></a>-</td>
+      <td><a href="en/week05/05-1"></a>-</td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
       </td>
     </tr>
-    <tr><td><a href="chapters/05-2"></a>-</td></tr>
+    <tr><td><a href="en/week05/05-2"></a>-</td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/05-3"></a>-</td>
+      <td><a href="en/week05/05-3"></a>-</td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
@@ -121,17 +121,17 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="chapters/06"></a>⑥</td>
+      <td rowspan="3" align="center"><a href="en/week06/06"></a>⑥</td>
       <td rowspan="2">Lecture</td>
-      <td><a href="chapters/06-1"></a>-</td>
+      <td><a href="en/week06/06-1"></a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
     </tr>
-    <tr><td><a href="chapters/06-2"></a>-</td></tr>
+    <tr><td><a href="en/week06/06-2"></a>-</td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="chapters/06-3"></a>-</td>
+      <td><a href="en/week06/06-3"></a>-</td>
       <td>
       </td>
     </tr>
