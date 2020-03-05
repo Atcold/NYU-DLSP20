@@ -24,7 +24,7 @@ When adding figures, make sure they are centred in the page. To do this, follow 
 ```
 
 In this particular example, the author chose to resize the image to 40% of its original size. Given that the image had a transparent background, an additional light colour (`#DCDCDC`) has been added to the background.
-Note that you _must_ use the liquid tag `link` in order for images to link properly. This should be done for all text-based links as well.
+Note that you _must_ use prepend the file with `{{site.baseurl}}`. Otherwise, it will not work on GitHub pages.
 
 
 ## Adding figures side by side

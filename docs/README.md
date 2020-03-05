@@ -41,7 +41,7 @@ which for me is `/usr/local/lib/ruby/gems/2.6.0`.
 Given that we know where to find `jekyll`, we can serve the website with the following command:
 
 ```bash
-/usr/local/lib/ruby/gems/2.6.0/bin/jekyll serve --trace --baseurl ''
+/usr/local/lib/ruby/gems/2.6.0/bin/jekyll serve --trace --baseurl '/pytorch-Deep-Learning'
 ```
 
 For your convenience there's an execturable in this directory containing this exact line. So, all you need to do to run the web server is typing:
