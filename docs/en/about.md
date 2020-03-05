@@ -18,12 +18,13 @@ When adding figures, make sure they are centred in the page. To do this, follow 
 
 ```html
 <center>
-<img src="/images/week01/01-3/Network.png" style="zoom: 40%; background-color:#DCDCDC;" /><br>
+<img src="{% link /images/week01/01-3/Network.png %}" style="zoom: 40%; background-color:#DCDCDC;" /><br>
 <b>Figure 2:</b> Network architecture.
 </center>
 ```
 
 In this particular example, the author chose to resize the image to 40% of its original size. Given that the image had a transparent background, an additional light colour (`#DCDCDC`) has been added to the background.
+Note that you _must_ use the liquid tag `link` in order for images to link properly. This should be done for all text-based links as well.
 
 
 ## Adding figures side by side
@@ -31,7 +32,7 @@ In this particular example, the author chose to resize the image to 40% of its o
 In this case the author displayed two figures, side by side, using a table.
 
 ```html
-| <center><img src="/images/week01/01-3/Spiral1.png" width="200px"/></center> | <center><img src="/images/week01/01-3/Spiral2.png" height="170px"/></center> |
+| <center><img src="{% link /images/week01/01-3/Spiral1.png %}" width="200px"/></center> | <center><img src="{% link /images/week01/01-3/Spiral2.png %}" height="170px"/></center> |
 |            (a) Input points, pre-network                |           (b) Output points, post-network                |
 
 <center><b>Figure 1:</b> Five color spiral.</center>
