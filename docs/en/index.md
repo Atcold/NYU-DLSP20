@@ -122,7 +122,7 @@ This course concerns the latest techniques in deep learning and representation l
 
 | Role | Photo | Contact | About |
 |:-----|:-----:|:--------|:------|
-|Instructor|<img src="Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|Instructor|<img src="/images/index/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
 |Instructor|<img src="https://pbs.twimg.com/profile_images/1204441318207950855/qEPqQ01h_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
