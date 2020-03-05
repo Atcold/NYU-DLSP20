@@ -18,12 +18,12 @@ When adding figures, make sure they are centred in the page. To do this, follow 
 
 ```html
 <center>
-<img src="/images/week0x/0x/Network.png" style="zoom: 40%; background-color:#DCDCDC;" /><br>
+<img src="/images/week01/01-3/Network.png" style="zoom: 40%; background-color:#DCDCDC;" /><br>
 <b>Figure 2:</b> Network architecture.
 </center>
 ```
 
-In this particular example, the author chose to resize the image to 40% of its original size. Given that the image had a transparent background, an additional light colour (`#DCDCDC`) has been added to the background. In this example, taken from `01-3.md`, the image is automatically fetched from the `/01-3/` directory, which is automatically prepended to the name of the image `Network.png`.
+In this particular example, the author chose to resize the image to 40% of its original size. Given that the image had a transparent background, an additional light colour (`#DCDCDC`) has been added to the background.
 
 
 ## Adding figures side by side
@@ -31,7 +31,7 @@ In this particular example, the author chose to resize the image to 40% of its o
 In this case the author displayed two figures, side by side, using a table.
 
 ```html
-| <center><img src="/images/week0x/0x/Spiral1.png" width="200px"/></center> | <center><img src="/images/week0x/0x/Spiral2.png" height="170px"/></center> |
+| <center><img src="/images/week01/01-3/Spiral1.png" width="200px"/></center> | <center><img src="/images/week01/01-3/Spiral2.png" height="170px"/></center> |
 |            (a) Input points, pre-network                |           (b) Output points, post-network                |
 
 <center><b>Figure 1:</b> Five color spiral.</center>
