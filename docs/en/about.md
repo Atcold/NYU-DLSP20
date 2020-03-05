@@ -18,7 +18,7 @@ When adding figures, make sure they are centred in the page. To do this, follow 
 
 ```html
 <center>
-<img src="Network.png" style="zoom: 40%; background-color:#DCDCDC;" /><br>
+<img src="/images/week0x/0x/Network.png" style="zoom: 40%; background-color:#DCDCDC;" /><br>
 <b>Figure 2:</b> Network architecture.
 </center>
 ```
@@ -31,7 +31,7 @@ In this particular example, the author chose to resize the image to 40% of its o
 In this case the author displayed two figures, side by side, using a table.
 
 ```html
-| <center><img src="Spiral1.png" width="200px"/></center> | <center><img src="Spiral2.png" height="170px"/></center> |
+| <center><img src="/images/week0x/0x/Spiral1.png" width="200px"/></center> | <center><img src="/images/week0x/0x/Spiral2.png" height="170px"/></center> |
 |            (a) Input points, pre-network                |           (b) Output points, post-network                |
 
 <center><b>Figure 1:</b> Five color spiral.</center>
