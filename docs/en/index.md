@@ -60,7 +60,6 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week02/02-1">SGD and backprop</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
-        <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week02/02-2">Backprop in practice</a></td></tr>
@@ -71,7 +70,6 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/04-spiral_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/05-regression.ipynb">📓</a>
-        <a href="https://www.youtube.com/watch?v=WAn6lip5oWk">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 3 ================================ -->
@@ -103,7 +101,7 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="en/week05/05"></a>⑤</td>
       <td rowspan="2">Lecture</td>
       <td><a href="en/week05/05-1"></a>-</td>
       <td rowspan="2">
@@ -115,24 +113,6 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="1">Practicum</td>
       <td><a href="en/week05/05-3"></a>-</td>
       <td>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
-      </td>
-    </tr>
-<!-- =============================== WEEK 6 ================================ -->
-    <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06"></a>⑥</td>
-      <td rowspan="2">Lecture</td>
-      <td><a href="en/week06/06-1"></a>-</td>
-      <td rowspan="2">
-        <a href=""></a>
-      </td>
-    </tr>
-    <tr><td><a href="en/week06/06-2"></a>-</td></tr>
-    <tr>
-      <td rowspan="1">Practicum</td>
-      <td><a href="en/week06/06-3"></a>-</td>
-      <td>
       </td>
     </tr>
   </tbody>
@@ -142,7 +122,7 @@ This course concerns the latest techniques in deep learning and representation l
 
 | Role | Photo | Contact | About |
 |:-----|:-----:|:--------|:------|
-|Instructor|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|Instructor|<img src="{{site.baseurl}}/images/index/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
 |Instructor|<img src="https://pbs.twimg.com/profile_images/1204441318207950855/qEPqQ01h_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
