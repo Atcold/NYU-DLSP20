@@ -81,6 +81,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week03/03-1">Parameter transformation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
+        <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week03/03-2">CNN</a></td></tr>
@@ -90,6 +91,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
+        <a href="https://youtu.be/kwPWpVverkw">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
@@ -105,15 +107,15 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week05/05-1"></a>-</td>
+      <td><a href="en/week05/05-1">Optimisation I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
       </td>
     </tr>
-    <tr><td><a href="en/week05/05-2"></a>-</td></tr>
+    <tr><td><a href="en/week05/05-2">Optimisation II</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week05/05-3"></a>-</td>
+      <td><a href="en/week05/05-3">CNN, autograd</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
@@ -121,7 +123,7 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06"></a>⑥</td>
+      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
       <td rowspan="2">Lecture</td>
       <td><a href="en/week06/06-1"></a>-</td>
       <td rowspan="2">
@@ -132,6 +134,22 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="1">Practicum</td>
       <td><a href="en/week06/06-3"></a>-</td>
+      <td>
+      </td>
+    </tr>
+<!-- =============================== WEEK 7 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week07/07"></a>⑦</td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week07/07-1"></a>-</td>
+      <td rowspan="2">
+        <a href=""></a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week07/07-2"></a>-</td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week07/07-3"></a>-</td>
       <td>
       </td>
     </tr>
