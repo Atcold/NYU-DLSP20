@@ -101,6 +101,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week04/04-1">1D convolutions</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
+        <a href="https://youtu.be/OrBEon3VlQg">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
