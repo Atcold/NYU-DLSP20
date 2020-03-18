@@ -144,12 +144,12 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="3" align="center"><a href="en/week07/07"></a>⑦</td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week07/07-1"></a>-</td>
+      <td><a href="en/week07/07-1">Energy-Based Models</a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
     </tr>
-    <tr><td><a href="en/week07/07-2"></a>-</td></tr>
+    <tr><td><a href="en/week07/07-2"></a>SSL, EBM</td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
       <td><a href="en/week07/07-3">Autoencoders</a></td>
@@ -160,6 +160,7 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
   </tbody>
 </table>
+
 
 ## People
 
