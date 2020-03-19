@@ -3,6 +3,9 @@
 This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 
 
+这份`README.md`的中文版本及网站可以在[这里](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md)找到.
+
+
 # Getting started
 
 To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
@@ -22,7 +25,7 @@ sh <miniconda*.sh>
 
 ## Check-out the git repository with the exercise
 
-Once Miniconda is ready, checkout the course repository and and proceed with setting up the environment:
+Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
 
 ```bash
 git clone https://github.com/Atcold/pytorch-Deep-Learning
