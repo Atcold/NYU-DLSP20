@@ -152,8 +152,10 @@ This course concerns the latest techniques in deep learning and representation l
     <tr><td><a href="en/week07/07-2"></a>-</td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week07/07-3"></a>-</td>
+      <td><a href="en/week07/07-3">Autoencoders</a></td>
       <td>
+        <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
       </td>
     </tr>
   </tbody>
