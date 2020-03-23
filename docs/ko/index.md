@@ -1,6 +1,6 @@
 ---
 layout: default
-title: DEEP LEARNING
+title: 딥러닝
 author: Alfredo Canziani
 lang-ref: home
 lang: ko
