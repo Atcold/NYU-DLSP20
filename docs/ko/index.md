@@ -109,7 +109,7 @@ translator: Gio
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
-      <td rowspan="2">이론/td>
+      <td rowspan="2">이론</td>
       <td><a href="en/week05/05-1">최적화 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
@@ -164,6 +164,7 @@ translator: Gio
 </table>
 
 
+<!--
 ## People
 
 | 역할 | 사진 | 연락처 | 약력 |
@@ -178,3 +179,4 @@ translator: Gio
 |채점자|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
 |채점자|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
 |채점자|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
+-->
