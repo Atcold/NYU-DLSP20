@@ -65,5 +65,6 @@ Deberías intentar hacer lo mismo, o se verán feos.
 JupyterLab tiene incorporado un tema oscuro seleccionable, por lo que solo necesitas instalar algo extra si deseas usar la interfaz clásica de las notebooks.
 Para ver el contenido adecuadamente en la interfaz clásica, instala lo siguiente:
 
- - [Tema oscuro para *Jupyter Notebook*] (https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [Tema oscuro para *GitHub*] (https://userstyles.org/styles/37035/github-dark) y comenta el bloque de código `invert #fff to # 181818`.
+ - [Tema oscuro para *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
+ 
+ - [Tema oscuro para *GitHub*](https://userstyles.org/styles/37035/github-dark) y comenta el bloque de código `invert #fff to # 181818`.
