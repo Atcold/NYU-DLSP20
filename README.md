@@ -17,7 +17,7 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 
 <!-- Italian -->
 <!--
-🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [a quest indirizzo](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md).
+🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [a questo indirizzo](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md).
 -->
 
 
