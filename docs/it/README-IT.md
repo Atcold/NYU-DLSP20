@@ -7,18 +7,17 @@ materiale del corso puo essere trovato in formati video e testuali.
 
 # Iniziare
 
-Per poter seguire gli esercizi, si avra bisogno di un computer con Miniconda
-(una version minimalista di Anaconda), e di varie librerie di Python installate.
-Le sequenti instruzioni dovrebbero funzionare sia per utenti Mac che per quelli
+Per poter seguire gli esercizi, si avrà bisogno di un computer con Miniconda
+(una version minimalista di Anaconda) e di diversi pacchetti Python installati.
+Le seguenti istruzioni dovrebbero funzionare sia per utenti Mac che per quelli
 che usano Ubuntu Linux, mentre utenti Windows dovrebbere installare e usare il
 terminale fornito con [Git Bash](https://gitforwindows.org/).
 
 
 ## Scaricare e installare Miniconda
 
-Vai al [sito di Anaconda](https://conda.io/miniconda.html).
-Scarica e installa *l'ultima* version di Miniconda per *Python* 3.7 per il tuo
-sistema operativo.
+Vai al [sito di Anaconda](https://conda.io/miniconda.html). Scarica e installa
+*l'ultima* version di Miniconda per *Python* 3.7 per il tuo sistema operativo.
 
 
 ```bash
@@ -29,7 +28,7 @@ sh <miniconda*.sh>
 
 ## Scarica il repositorio di git con gli esercizi
 
-Una volta che Miniconda e' pronto, scarica il repositorio del corso e procedi a
+Una volta che Miniconda è pronto, scarica il repositorio del corso e procedi a
 configurare il tuo ambiente di lavoro:
 
 ```bash
@@ -39,7 +38,8 @@ git clone https://github.com/Atcold/pytorch-Deep-Learning
 
 ## Crea un ambiente di lavoro isolato di Miniconda
 
-Cambia cartella (`cd` -- "change directory") andando nella cartella del corso, poi scrivi:
+Cambia cartella (`cd` -- "change directory") e vai in quella del corso, poi
+scrivi:
 
 ```bash
 # cd pytorch-Deep-Learning
@@ -66,16 +66,18 @@ jupyter notebook
 ## Visualizzazione dei notebook
 
 I *Jupyter Notebook* sono usati durante tutte queste lezioni per l'esplorazione
-e la visualizzazione interattiva dei dati.
+e la visualizzazione interattiva di dati.
 
-Usiamo lo stile scuro sia per *GitHub* che per *Jupyter Notebook*.
-Dovresti provare a configurare entrambi nello stesso modo, o altrimenti
-potrebbero non essere belli da vedere.
-JupyterLab ha un tema scuro che puo' essere selezionato, quindi devi solo
-installare qualche libreria se vuoi usare l'interfaccia classica di notebook.
+Usiamo uno stile scuro sia per *GitHub* che per *Jupyter Notebook*. Dovresti
+provare a configurare entrambi nello stesso modo, o altrimenti potrebbero non
+essere belli da vedere. JupyterLab ha già un tema scuro che puo' essere
+selezionato, quindi devi solo installare qualche libreria se vuoi usare
+l'interfaccia classica di notebook.
 
-Per vedere il contenuto in modo appropriato usando l'interfaccia classica, install:
+Per vedere il contenuto in modo appropriato usando l'interfaccia classica,
+installa:
 
- - [Tema scuro di *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [Tema scuro di *GitHub*](https://userstyles.org/styles/37035/github-dark), e
+ - [Tema scuro di *Jupyter
+   Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
+ - [Tema scuro di *GitHub*](https://userstyles.org/styles/37035/github-dark) e
    commenta il blocco di codice `invert #fff to #181818`.
