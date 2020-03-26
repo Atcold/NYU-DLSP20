@@ -1,6 +1,6 @@
 ---
 layout: default
-title: APPRENDIMENTO AUTOMATICO
+title: APPRENDIMENTO PROFONDO
 author: Alfredo Canziani
 lang-ref: home
 lang: it
@@ -17,11 +17,14 @@ lang: it
 
 ## Description
 
-Questo corso tratta delle ultime tecniche in apprendimento automatio e
-representation learning, concentrandosi su supervised e unsupervised deep
-learning, embedding methods, metric learning, convolutional and recurrent nets,
-con applicazioni di visione computerizzata, natural language understanding e
-riconoscimento vocale.
+Questo corso tratta delle ultime tecniche in apprendimento profondo (DL, Deep learning) e
+apprendimento della rappresentazione (representation learning), concentrandosi
+su apprendimento profondo supervisionato e non-supervisionato, metodi di
+embedding, apprendimento metrico (metric learning), reti convoluzionali e
+ricorrenti (CNN, Convolutional Neural Network); RNN, Recurrent Neural Network),
+con applicazioni di visione artificiale (computer vision), comprendimento del
+linguaggio naturale (NLU, Natural Language Understanding) e
+riconoscimento vocale (Speech Processing).
 I prerequisiti del corso includono: [DS-GA 1001 Intro to Data
 Science](https://cds.nyu.edu/academics/ms-curriculum/) o un corso di machine
 learning universitario.
@@ -35,7 +38,7 @@ learning universitario.
 <!-- =============================== HEADER ================================ -->
   <thead>
     <tr>
-      <th>Week</th>
+      <th>Settimana</th>
       <th align="left">Formato</th>
       <th align="left">Titolo</th>
       <th align="left">Risorse</th>
@@ -52,7 +55,7 @@ learning universitario.
         <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week01/01-2">Evoluzione e Apprendimento Automatic (DL, Deep Learning)</a></td></tr>
+    <tr><td><a href="it/week01/01-2">Evoluzione e apprendimento profondo (DL, Deep Learning)</a></td></tr>
     <tr>
       <td rowspan="1">Pratica</td>
       <td><a href="it/week01/01-3">Reti Neurali (NN, Neural Network)</a></td>
@@ -66,13 +69,13 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week02/02">②</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week02/02-1">SGD e backprop</a></td>
+      <td><a href="it/week02/02-1">SGD e retropropagazione (backpropagation)</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
         <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week02/02-2">Backprop in pratica</a></td></tr>
+    <tr><td><a href="it/week02/02-2">Retropropagazione in pratica</a></td></tr>
     <tr>
       <td rowspan="1">Pratica</td>
       <td><a href="it/week02/02-3">Addestramento di reti neurali</a></td>
@@ -153,7 +156,7 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week07/07"></a>⑦</td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week07/07-1">Modelli a Energia</a>-</td>
+      <td><a href="it/week07/07-1">Modelli a Energia (Energy-Based Models)</a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
@@ -161,7 +164,7 @@ learning universitario.
     <tr><td><a href="it/week07/07-2"></a>SSL, EBM</td></tr>
     <tr>
       <td rowspan="1">Pratica</td>
-      <td><a href="it/week07/07-3">Autoencoders</a></td>
+      <td><a href="it/week07/07-3">Auto-codificatori (Autoencoder)</a></td>
       <td>
         <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
