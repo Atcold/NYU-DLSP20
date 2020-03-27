@@ -4,6 +4,8 @@ title: APPRENDIMENTO PROFONDO
 author: Alfredo Canziani
 lang-ref: home
 lang: it
+translation-date: 26 Mar 2020
+translator: Nantas Nardelli
 ---
 
 **DS-GA 1008 · PRIMAVERA 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
