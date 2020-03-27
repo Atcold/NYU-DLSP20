@@ -1,6 +1,6 @@
 # 딥러닝 (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 
-[웹사이트](https://atcold.github.io/pytorch-Deep-Learning/)를 방문해보세요! 비디오와 텍스트 형식의 모든 강의 자료를 확인하실 수 있습니다!
+[웹사이트](https://atcold.github.io/pytorch-Deep-Learning/ko/)를 방문해보세요! 비디오와 텍스트 형식의 모든 강의 자료를 확인하실 수 있습니다!
 
 # 시작하기
 

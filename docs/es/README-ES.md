@@ -1,7 +1,7 @@
 # Aprendizaje Profundo (con PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 
 
-Este repositorio de *notebooks* tiene un [sitio web complementario](https://atcold.github.io/pytorch-Deep-Learning/), donde todo el material del curso puede ser encontrado en formato textual y de video.
+Este repositorio de *notebooks* tiene un [sitio web complementario](https://atcold.github.io/pytorch-Deep-Learning/es/), donde todo el material del curso puede ser encontrado en formato textual y de video.
 
 
 # Comenzando
@@ -65,6 +65,5 @@ Deberías intentar hacer lo mismo, o se verán feos.
 JupyterLab tiene incorporado un tema oscuro seleccionable, por lo que solo necesitas instalar algo extra si deseas usar la interfaz clásica de las notebooks.
 Para ver el contenido adecuadamente en la interfaz clásica, instala lo siguiente:
 
- - [Tema oscuro para *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- 
- - [Tema oscuro para *GitHub*](https://userstyles.org/styles/37035/github-dark) y comenta el bloque de código `invert #fff to # 181818`.
+ - [Tema oscuro para *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
+ - [Tema oscuro para *GitHub*](https://userstyles.org/styles/37035/github-dark) y comenta el bloque de código `invert #fff to # 181818`.

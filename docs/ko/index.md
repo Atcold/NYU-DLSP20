@@ -37,18 +37,18 @@ translator: Gio
   <tbody>
 <!-- =============================== WEEK 1 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week01/01">①</a></td>
+      <td rowspan="3" align="center"><a href="week01/01">①</a></td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week01/01-1">딥러닝의 등장과 역사</a></td>
+      <td><a href="week01/01-1">딥러닝의 등장과 역사</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
         <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week01/01-2">딥러닝의 발전</a></td></tr>
+    <tr><td><a href="week01/01-2">딥러닝의 발전</a></td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week01/01-3">신경망 (NN)</a></td>
+      <td><a href="week01/01-3">신경망 (NN)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
@@ -57,18 +57,18 @@ translator: Gio
     </tr>
 <!-- =============================== WEEK 2 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week02/02">②</a></td>
+      <td rowspan="3" align="center"><a href="week02/02">②</a></td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week02/02-1">확률적 경사 하강법과 역전파</a></td>
+      <td><a href="week02/02-1">확률적 경사 하강법과 역전파</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
         <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week02/02-2">경사 하강법의 실제 적용</a></td></tr>
+    <tr><td><a href="week02/02-2">경사 하강법의 실제 적용</a></td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week02/02-3">신경망의 학습</a></td>
+      <td><a href="week02/02-3">신경망의 학습</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/04-spiral_classification.ipynb">📓</a>
@@ -78,18 +78,18 @@ translator: Gio
     </tr>
 <!-- =============================== WEEK 3 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week03/03">③</a></td>
+      <td rowspan="3" align="center"><a href="week03/03">③</a></td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week03/03-1">파라미터 변환</a></td>
+      <td><a href="week03/03-1">파라미터 변환</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
         <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week03/03-2">합성곱 신경망</a></td></tr>
+    <tr><td><a href="week03/03-2">합성곱 신경망</a></td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week03/03-3">자연 신호의 성질</a></td>
+      <td><a href="week03/03-3">자연 신호의 성질</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
@@ -98,9 +98,9 @@ translator: Gio
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
     <tr>
-      <td rowspan="1" align="center"><a href="en/week04/04">④</a></td>
+      <td rowspan="1" align="center"><a href="week04/04">④</a></td>
       <td rowspan="1">실습</td>
-      <td><a href="en/week04/04-1">1D 합성곱</a></td>
+      <td><a href="week04/04-1">1D 합성곱</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
         <a href="https://youtu.be/OrBEon3VlQg">🎥</a>
@@ -108,18 +108,18 @@ translator: Gio
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="week05/05">⑤</a></td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week05/05-1">최적화 I</a></td>
+      <td><a href="week05/05-1">최적화 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
         <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week05/05-2">최적화 II</a></td></tr>
+    <tr><td><a href="week05/05-2">최적화 II</a></td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week05/05-3">CNN, autograd</a></td>
+      <td><a href="week05/05-3">CNN, autograd</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
@@ -128,33 +128,33 @@ translator: Gio
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
+      <td rowspan="3" align="center"><a href="week06/06">⑥</a></td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week06/06-1"></a>-</td>
+      <td><a href="week06/06-1"></a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
     </tr>
-    <tr><td><a href="en/week06/06-2"></a>-</td></tr>
+    <tr><td><a href="week06/06-2"></a>-</td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week06/06-3"></a>-</td>
+      <td><a href="week06/06-3"></a>-</td>
       <td>
       </td>
     </tr>
 <!-- =============================== WEEK 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week07/07"></a>⑦</td>
+      <td rowspan="3" align="center"><a href="week07/07"></a>⑦</td>
       <td rowspan="2">이론</td>
-      <td><a href="en/week07/07-1"></a>-</td>
+      <td><a href="week07/07-1"></a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
     </tr>
-    <tr><td><a href="en/week07/07-2"></a>준지도 학습, 에너지 기반 모델</td></tr>
+    <tr><td><a href="week07/07-2"></a>준지도 학습, 에너지 기반 모델</td></tr>
     <tr>
       <td rowspan="1">실습</td>
-      <td><a href="en/week07/07-3">오토인코더</a></td>
+      <td><a href="week07/07-3">오토인코더</a></td>
       <td>
         <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
