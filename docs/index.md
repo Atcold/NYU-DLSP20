@@ -144,7 +144,7 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="3" align="center"><a href="en/week07/07"></a>⑦</td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week07/07-1"></a>-</td>
+      <td><a href="en/week07/07-1">Energy-Based Models</a>-</td>
       <td rowspan="2">
         <a href=""></a>
       </td>
@@ -166,7 +166,7 @@ This course concerns the latest techniques in deep learning and representation l
 
 | Role | Photo | Contact | About |
 |:-----|:-----:|:--------|:------|
-|Instructor|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|Instructor|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
 |Instructor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
