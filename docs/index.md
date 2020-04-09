@@ -81,6 +81,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week03/03-1">Parameter transformation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
+        <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week03/03-2">CNN</a></td></tr>
@@ -90,6 +91,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
+        <a href="https://youtu.be/kwPWpVverkw">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
@@ -99,29 +101,32 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week04/04-1">1D convolutions</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
+        <a href="https://youtu.be/OrBEon3VlQg">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week05/05-1"></a>-</td>
+      <td><a href="en/week05/05-1">Optimisation I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
+        <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week05/05-2"></a>-</td></tr>
+    <tr><td><a href="en/week05/05-2">Optimisation II</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week05/05-3"></a>-</td>
+      <td><a href="en/week05/05-3">CNN, autograd</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
+        <a href="https://youtu.be/eEzCZnOFU1w">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06"></a>⑥</td>
+      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
       <td rowspan="2">Lecture</td>
       <td><a href="en/week06/06-1"></a>-</td>
       <td rowspan="2">
@@ -135,15 +140,34 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
       </td>
     </tr>
+<!-- =============================== WEEK 7 ================================ -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week07/07"></a>⑦</td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week07/07-1">Energy-Based Models</a>-</td>
+      <td rowspan="2">
+        <a href=""></a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week07/07-2"></a>SSL, EBM</td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week07/07-3">Autoencoders</a></td>
+      <td>
+        <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
+      </td>
+    </tr>
   </tbody>
 </table>
+
 
 ## People
 
 | Role | Photo | Contact | About |
 |:-----|:-----:|:--------|:------|
-|Instructor|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCuna</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
-|Instructor|<img src="https://pbs.twimg.com/profile_images/1204441318207950855/qEPqQ01h_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
+|Instructor|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|Instructor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
 |Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
