@@ -58,7 +58,7 @@ $$(\bar{Y}, \bar{Z})=\operatorname{argmin}_{y \in \mathcal{Y}, z \in \mathcal{Z}
 Let’s assume that $Z_1$, $Z_2$, and $Y_1$ are discrete binary variables, and $Y_2$ is a ternary variable. The cardinality of the domain of $X$ is immaterial since X is always observed. The number of possible configurations of $Z$ and $Y$ given X is $2 \times 2 \times 2 \times 3 = 24$. A naive minimization algorithm through exhaustive search would evaluate the entire energy function 24 times (96 single factor evaluations). 
 
 However, we notice that for a given $X$, $E_a$ only has two possible input configurations: $Z_1 = 0$ and $Z_1 = 1$. Similarly, $E_b$ and $E_c$ only have 4 possible input configurations, and $E_d$ has 6. Hence,
-there is no need for more than 2 + 4 + 4 + 6 = 16 single factor evaluations.
+there is no need for more than $2 + 4 + 4 + 6 = 16$ single factor evaluations.
 
 Hence, we can precompute the 16 factor values, and put them on the arcs in a trellis as shown in Figure 19 (bottom).
 
