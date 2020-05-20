@@ -172,6 +172,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week08/08-1">Contrastive methods</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Zo_PyBEO6aNt0GV74kj8MQL7kfHdIHYO">🖥️</a>
+        <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week08/08-2">Regularised latent</a></td></tr>
@@ -181,6 +182,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/11-VAE.ipynb">📓</a>
+        <a href="https://youtu.be/7Rb4s9wNOmc">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 9 ================================ -->
