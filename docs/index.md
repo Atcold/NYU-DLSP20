@@ -189,9 +189,10 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="3" align="center"><a href="en/week09/09">⑨</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week09/09-1"></a>-</td>
+      <td><a href="en/week09/09-1">Sparsity</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
+        <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week09/09-2">Word model, GANs</a></td></tr>
@@ -201,6 +202,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
+        <a href="https://youtu.be/xYc11zyZ26M">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 10 =============================== -->
