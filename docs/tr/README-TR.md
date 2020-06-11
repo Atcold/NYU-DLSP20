@@ -3,12 +3,12 @@
 Bu kurs deposunun materyallerini yazılı ve video halinde bulabileceğiniz [ilgili site](https://atcold.github.io/pytorch-Deep-Learning/).
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) [TR](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md)
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md)
 
 # Başlarken
 
 Alıştırmaları takip edebilmek için Miniconda (Anaconda'nın asgari versiyonu) ve birkaç Python paketi kurulu bir bilgisayara ihtiyacınız olacak.
-Aşağıdaki yönergeler Mac veya Ubuntu Linux kullancıları için geçerlidir. Windows kullanıcıları [Git BASH](https://gitforwindows.org/) kurmalı ve kullanmalı.
+Aşağıdaki yönergeler Mac veya Ubuntu Linux kullancıları için geçerlidir. Windows kullanıcılarının [Git BASH](https://gitforwindows.org/) kullanması gerekli.
 
 
 ## Miniconda'nın indirilmesi ve yüklenmesi
@@ -62,6 +62,7 @@ jupyter notebook
 *GitHub* ve *Jupyter Notebook* için koyu tema kullanıyoruz.
 Eğer çirkin görünmelerini istemiyorsan sen de öyle kullanmalısın.
 JupyterLab'ın seçilebilir hazır bir koyu teması bulunuyor eğer klasik defter arayüzü kullanmak istiyorsan bir şey yüklemen gerekiyor.
+
 İçeriği klasik arayüzde düzgün bir şekilde görüntülemek istiyorsan aşağıdakileri yükle:
 
  - [*Jupyter Notebook* koyu tema](https://userstyles.org/styles/153443/jupyter-notebook-dark);
