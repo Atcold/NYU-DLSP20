@@ -66,7 +66,7 @@ JupyterLab'ın seçilebilir hazır bir koyu teması bulunuyor eğer klasik defte
 İçeriği klasik arayüzde düzgün bir şekilde görüntülemek istiyorsan aşağıdakileri yükle:
 
  - [*Jupyter Notebook* koyu tema](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [*GitHub* koyu tema](https://userstyles.org/styles/37035/github-dark) `invert #fff to #181818`ve bu kod bloğunu yorum satırından çıkar.
+ - [*GitHub* koyu tema](https://userstyles.org/styles/37035/github-dark) `invert #fff to #181818` ve bu kod bloğunu yorum satırından çıkar.
 
 
 
