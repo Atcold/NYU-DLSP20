@@ -7,7 +7,7 @@
 Bu kurs deposunun materyallerini yazılı ve video halinde bulabileceğiniz [ilgili site](https://atcold.github.io/pytorch-Deep-Learning/).
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md)      [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md)       [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md)      [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md)      [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md)      [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md)
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md).[🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md).[🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) .[🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md).[🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md)
 
 <!-- Getting started-->
 # Başlarken
