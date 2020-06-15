@@ -149,9 +149,10 @@ This course concerns the latest techniques in deep learning and representation l
     <tr>
       <td rowspan="3" align="center"><a href="en/week07/07">⑦</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week07/07-1">Energy-Based Models</a>-</td>
+      <td><a href="en/week07/07-1">Energy-Based Models</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
+        <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week07/07-2">SSL, EBM</a></td></tr>
@@ -161,6 +162,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
+        <a href="https://youtu.be/bggWQ14DD9M">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 8 ================================ -->
@@ -170,6 +172,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week08/08-1">Contrastive methods</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Zo_PyBEO6aNt0GV74kj8MQL7kfHdIHYO">🖥️</a>
+        <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week08/08-2">Regularised latent</a></td></tr>
@@ -179,15 +182,17 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/11-VAE.ipynb">📓</a>
+        <a href="https://youtu.be/7Rb4s9wNOmc">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 9 ================================ -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week09/09">⑨</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week09/09-1"></a>-</td>
+      <td><a href="en/week09/09-1">Sparsity</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
+        <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week09/09-2">Word model, GANs</a></td></tr>
@@ -197,6 +202,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
+        <a href="https://youtu.be/xYc11zyZ26M">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 10 =============================== -->
