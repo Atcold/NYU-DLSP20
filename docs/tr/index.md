@@ -1,6 +1,6 @@
 ---
 layout: default
-title: pytorch ile derin öğrenme
+title: DERIN ÖĞRENME
 author: Alfredo Canziani
 lang-ref: home
 lang: tr
