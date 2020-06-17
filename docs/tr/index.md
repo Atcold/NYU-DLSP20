@@ -309,4 +309,4 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
       <td style="text-align: left"> </td>
     </tr>
   </tbody>
-</table></table>
+</table>
