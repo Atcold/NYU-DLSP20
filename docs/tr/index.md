@@ -258,7 +258,7 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
       <td style="text-align: left">Öğretim Üyesi</td>
       <td style="text-align: center"><img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100" /></td>
       <td style="text-align: left"><a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br />canziani@nyu.edu</td>
-      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında yardımcı doçent</td>
+      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında Yardımcı Doçent</td>
     </tr>
     <tr>
       <td style="text-align: left">Asistan</td>
