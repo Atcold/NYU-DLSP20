@@ -212,6 +212,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td><a href="en/week10/10-1">CV SSL I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
+        <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
     <tr><td><a href="en/week10/10-2">CV SSL II</a></td></tr>
@@ -221,6 +222,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/14-truck_backer-upper.ipynb">📓</a>
+        <a href="https://youtu.be/A3klBqEWR-I">🎥</a>
       </td>
     </tr>
   </tbody>
