@@ -225,6 +225,28 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/A3klBqEWR-I">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 11 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week11/11">⑪</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week11/11-1">Activations</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
+        <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
+        <a href="https://drive.google.com/file/d/1tryOlVAFmazLLZusD2-UfReFMkPk5hPk">🖥️</a>
+        <a href="https://youtu.be/bj1fh3BvqSU">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week11/11-2">Losses</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week11/11-3">PPUU</a></td>
+      <td>
+        <a href="http://bit.ly/PPUU-slides">🖥️</a>
+        <a href="http://bit.ly/PPUU-code">📓</a>
+        <a href="https://youtu.be/VcrCr-KNBHc">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
