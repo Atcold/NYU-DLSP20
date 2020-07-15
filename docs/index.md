@@ -247,6 +247,26 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/VcrCr-KNBHc">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 12 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week12/12">⑫</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week12/12-1">DL for NLP I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
+        <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week12/12-2">DL for NLP II</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week12/12-3">Attention & transformer</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
+        <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
