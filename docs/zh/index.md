@@ -235,7 +235,7 @@ translator: Mingyang Zhao
     <tr>
       <td rowspan="3" align="center"><a href="en/week11/11">⑪</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week11/11-1">激活</a></td>
+      <td><a href="en/week11/11-1">激活值</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
         <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
