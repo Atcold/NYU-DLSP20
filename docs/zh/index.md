@@ -261,7 +261,7 @@ translator: Mingyang Zhao
 
 | 角式 | 相片 | 联络方式 | 关于 |
 |:-----|:-----:|:--------|:------|
-|讲师|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|在紐約大學計算機科學部门的銀級教授<br>同時也是圖靈獎獲得者|
+|讲师|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun(楊立昆)</a><br>yann@cs.nyu.edu|在紐約大學計算機科學部门的銀級教授<br>同時也是圖靈獎獲得者|
 |讲师|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|紐約大學計算機科學部门的助教|
 |助手|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|纽约大学计算机科学博士学生|
 |网站管理员|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|纽约大学计算机科学博士学生|
