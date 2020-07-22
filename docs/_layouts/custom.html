@@ -1,0 +1,48 @@
+---
+layout: default
+---
+
+<div style="display:none;">
+    $$\gdef \sam #1 {\mathrm{softargmax}(#1)}$$
+    $$\gdef \vect #1 {\boldsymbol{#1}} $$
+    $$\gdef \matr #1 {\boldsymbol{#1}} $$
+    $$\gdef \E  {\mathbb{E}} $$
+    $$\gdef \V  {\mathbb{V}} $$
+    $$\gdef \R {\mathbb{R}} $$
+    $$\gdef \N {\mathbb{N}} $$
+    $$\gdef \relu #1 {\texttt{ReLU}(#1)} $$
+    $$\gdef \D {\,\mathrm{d}} $$
+    $$\gdef \deriv #1 #2 {\frac{\D #1}{\D #2}}$$
+    $$\gdef \pd #1 #2 {\frac{\partial #1}{\partial #2}}$$
+    $$\gdef \set #1 {\left\lbrace #1 \right\rbrace} $$
+</div>
+
+{% if page.lecturer %}
+🎙️ <i>{{page.lecturer}}</i>
+{% endif %}
+
+{{ content }}
+
+
+{% if page.authors or page.date or page.translator %}
+<hr/>
+{% endif %}
+
+{% if page.authors %}
+<!--Writing emoji is here but doesn't show up sometimes -->📝 <i>{{ page.authors }}</i>
+{% endif %}
+
+{% if page.translator %}
+{% if page.lang %}
+  {% assign thislang = page.lang %}
+{% else %}
+  {% assign thislang = "en" %}
+{% endif %}
+<br/>
+<i class="fa flag-placeholder lang-is-{{ thislang }}"></i> <i>{{ page.translator }}</i>
+{% endif %}
+
+{% if page.date %}
+<br/>
+<i>{{ page.date }}</i>
+{% endif %}
