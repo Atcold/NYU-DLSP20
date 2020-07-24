@@ -128,8 +128,6 @@ translator: Mingyang Zhao
       <td>
       </td>
     </tr>
-  </tbody>
-</table>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
