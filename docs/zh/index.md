@@ -114,18 +114,22 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/zh/week05/05"></a>⑤</td>
+      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="{{site.baseurl}}/zh/week05/05-1"></a>-</td>
+      <td><a href="en/week05/05-1">优化工具 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
+        <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/zh/week05/05-2"></a>-</td></tr>
+    <tr><td><a href="en/week05/05-2">优化方法 II</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="{{site.baseurl}}/zh/week05/05-3"></a>-</td>
+      <td><a href="en/week05/05-3">了解卷积和自动微分引擎</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
+        <a href="https://youtu.be/eEzCZnOFU1w">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
