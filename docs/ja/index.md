@@ -1,8 +1,11 @@
 ---
 layout: default
-title: DEEP LEARNING
+title: 深層学習
 author: Alfredo Canziani
-lang-ref: ja
+lang-ref: home
+lang: ja
+translation-date: 12 August 2020
+translator: Go Inoue
 ---
 
 **DS-GA 1008 · 2020年度春学期 · [ニューヨーク大学データ・サイエンス・センター](http://cds.nyu.edu/)**
