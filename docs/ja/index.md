@@ -4,7 +4,7 @@ title: 深層学習
 author: Alfredo Canziani
 lang-ref: home
 lang: ja
-translation-date: 12 August 2020
+translation-date: 12 Aug 2020
 translator: Go Inoue
 ---
 
