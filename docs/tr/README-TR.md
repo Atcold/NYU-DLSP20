@@ -4,10 +4,10 @@
 <!-- This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 -->
 
-Bu kurs deposunun materyallerini yazılı ve video halinde bulabileceğiniz [ilgili site](https://atcold.github.io/pytorch-Deep-Learning/).
+Bu kurs deposunun materyallerini yazılı ve video halinde bulabileceğiniz [ilgili site](https://atcold.github.io/pytorch-Deep-Learning/tr).
 
-<!-- English - Mandarin - Korean - Spanish - Italian - Turkish -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md)
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese -->
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md)
 
 <!-- Getting started-->
 # Başlarken
@@ -47,7 +47,7 @@ git clone https://github.com/Atcold/pytorch-Deep-Learning
 
 <!-- Create isolated Miniconda environment
 -->
-## İzole bir Miniconda ortamı oluşturun 
+## İzole bir Miniconda ortamı oluşturun
 
 <!-- Change directory (`cd`) into the course folder, then type:
 -->
@@ -61,7 +61,7 @@ source activate pDL
 
 <!-- Start Jupyter Notebook or JupyterLab
 -->
-## Jupyter Notebook'u veya JupyerLab'ı başlatın 
+## Jupyter Notebook'u veya JupyerLab'ı başlatın
 
 <!-- Start from terminal as usual:
 -->
@@ -85,7 +85,7 @@ jupyter notebook
 
 <!-- *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 -->
-*Jupyter Notebooks* dersler boyunca interaktif bir biçimde verilerin incelenmesinde ve görselleştirilmesinde kullanıldı. 
+*Jupyter Notebooks* dersler boyunca interaktif bir biçimde verilerin incelenmesinde ve görselleştirilmesinde kullanıldı.
 
 <!-- We use dark styles for both *GitHub* and *Jupyter Notebook*.
 You should try to do the same, or they will look ugly.
