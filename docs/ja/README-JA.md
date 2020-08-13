@@ -1,6 +1,6 @@
 # 深層学習 (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 <!-- This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format. -->
-この講義で用いられる資料は全て、ビデオあるいはテキスト形式で[付随しているウェブサイト](https://atcold.github.io/pytorch-Deep-Learning/)に全て含まれています。
+この講義で用いられる資料は全て、ビデオあるいはテキスト形式で[付随しているウェブサイト](https://atcold.github.io/pytorch-Deep-Learning/ja)に全て含まれています。
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese -->
 [🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md)
@@ -52,7 +52,7 @@ source activate pDL
 ## Jupyter Notebook または JupyterLab を起動する
 
 <!-- Start from terminal as usual: -->
-次のコマンドを実行してターミナルから起動します. 
+次のコマンドを実行してターミナルから起動します.
 
 ```bash
 jupyter lab
