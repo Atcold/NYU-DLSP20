@@ -4,7 +4,7 @@ title: DERIN ÖĞRENME
 author: Alfredo Canziani
 lang-ref: home
 lang: tr
-translation-date: 12 June 2020
+translation-date: 1 July 2020
 translator: Murat Ekici
 ---
 
@@ -20,7 +20,7 @@ translator: Murat Ekici
 ## Açıklama
 
 Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev öğrenme (metric learning), evrişimsel(CNN, Convolutional Neural Network) ve özyineli ağlara (RNN, Recurrent Neural Network) odaklanarak derin öğrenme ve özniteliksel öğrenme alanındaki en yeni teknikleri ve bu tekniklerin  bilgisayarlı görü (computer vision), doğal dil anlama (natural language understanding) ve ses tanıma alanlarınlarındaki uygulamalarını konu almaktadır.
-Önkoşullar:[DS-GA 1001 Veri Bilimine Giriş](https://cds.nyu.edu/academics/ms-curriculum/) lisansüstü düzeyde makine öğrenmesi kursu.
+Önkoşullar:[DS-GA 1001 Veri Bilimine Giriş](https://cds.nyu.edu/academics/ms-curriculum/) ya da lisansüstü düzeyde makine öğrenmesi kursu.
 
 
 
@@ -153,7 +153,7 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
     </tr>
 <!-- =============================== WEEK 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week07/07"></a>⑦</td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week07/07">⑦</a></td>
       <td rowspan="2">Anlatım</td>
       <td><a href="{{site.baseurl}}/tr/week07/07-1">Enerji tabanlı modeller (Energy-Based Models)</a></td>
       <td rowspan="2">
@@ -214,21 +214,64 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week10/10">⑩</a></td>
       <td rowspan="2">Anlatım</td>
-      <td><a href="{{site.baseurl}}/tr/week10/10-1"></a>-</td>
+      <td><a href="{{site.baseurl}}/tr/week10/10-1">CV SSL I</a></td>
       <td rowspan="2">
-        <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
+         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
+        <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/tr/week10/10-2"></a>-</td></tr>
+    <tr><td><a href="{{site.baseurl}}/tr/week10/10-2">CV SSL II</a></td></tr>
     <tr>
       <td rowspan="1">Uygulama</td>
-      <td><a href="{{site.baseurl}}/tr/week10/10-3"></a>-</td>
+      <td><a href="{{site.baseurl}}/tr/week10/10-3">Kestirimsel Kontrol</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/14-truck_backer-upper.ipynb">📓</a>
+        <a href="https://youtu.be/A3klBqEWR-I">🎥</a>
       </td>
     </tr>
-
+<!-- =============================== WEEK 11 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week11/11">⑪</a></td>
+      <td rowspan="2">Anlatım</td>
+      <td><a href="{{site.baseurl}}/tr/week11/11-1">Aktivasyonlar</a></td>
+      <td rowspan="2">
+         <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
+        <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
+        <a href="https://drive.google.com/file/d/1tryOlVAFmazLLZusD2-UfReFMkPk5hPk">🖥️</a>
+        <a href="https://youtu.be/bj1fh3BvqSU">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="{{site.baseurl}}/tr/week11/11-2">Kayıplar</a></td></tr>
+    <tr>
+      <td rowspan="1">Uygulama</td>
+      <td><a href="{{site.baseurl}}/tr/week11/11-3">PPUU</a></td>
+      <td>
+        <a href="http://bit.ly/PPUU-slides">🖥️</a>
+        <a href="http://bit.ly/PPUU-code">📓</a>
+        <a href="https://youtu.be/VcrCr-KNBHc">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 12 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week12/12">⑫</a></td>
+      <td rowspan="2">Anlatım</td>
+      <td><a href="{{site.baseurl}}/tr/week12/12-1">Doğal Dil İşleme için Derin Öğrenme I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
+	<a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
+      </td></tr>
+<tr><td><a href="{{site.baseurl}}/tr/week12/12-2">Doğal Dil İşleme için Derin Öğrenme II</a></td>
+	</tr>
+    <tr>
+      <td rowspan="1">Uygulama</td>
+      <td><a href="{{site.baseurl}}/tr/week12/12-3">Dikkat ve Dönüştürücü</a></td>
+      <td>
+         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
+        <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
+      </td>
+    </tr>
 
   </tbody>
 </table>
@@ -236,18 +279,78 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
 
 
 
-## People
+## Ekip
 
-| Role | Photo | Contact | About |
-|:-----|:-----:|:--------|:------|
-|Instructor|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
-|Instructor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
-|Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
-|Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Raghav Jajodia <br>rj1408@nyu.edu|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Priyank Pathak <br>pp1953@nyu.edu|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
-|Grader|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Rol</th>
+      <th style="text-align: center">Fotoğraf</th>
+      <th style="text-align: left">İletişim</th>
+      <th style="text-align: left">Hakkında</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">Öğretim Üyesi</td>
+      <td style="text-align: center"><img src="../images/Yann.png" width="100" height="100" /></td>
+      <td style="text-align: left"><a href="https://twitter.com/ylecun">Yann LeCun</a><br />yann@cs.nyu.edu</td>
+      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında Silver Professor <br /> Turing ödülü sahibi</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Öğretim Üyesi</td>
+      <td style="text-align: center"><img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100" /></td>
+      <td style="text-align: left"><a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br />canziani@nyu.edu</td>
+      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında Yardımcı Doçent</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Asistan</td>
+      <td style="text-align: center"><img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100" /></td>
+      <td style="text-align: left"><a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br />goldstein@nyu.edu</td>
+      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında doktora öğrencisi</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Webmaster</td>
+      <td style="text-align: center"><img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100" /></td>
+      <td style="text-align: left"><a href="https://twitter.com/ebetica">Zeming Lin</a><br />zl2799@nyu.edu</td>
+      <td style="text-align: left">NYU'da Bilgisayar Bilimi alanında doktora öğrencisi</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">Grader</td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Serkan Karakulak <br />sk7685@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> Grader </td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Raghav Jajodia <br />rj1408@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> Grader </td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Priyank Pathak <br />pp1953@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> Grader </td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Chiao-Hsun Wang <br />chw371@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> Grader </td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Pedro Vidal<br />pmh314@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+    <tr>
+      <td style="text-align: left"> Grader </td>
+      <td style="text-align: center"><img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100" /></td>
+      <td style="text-align: left">Bixing Yan <br />by783@nyu.edu</td>
+      <td style="text-align: left"> </td>
+    </tr>
+  </tbody>
+</table>
 
