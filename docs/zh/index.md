@@ -114,22 +114,24 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/zh/week05/05"></a>⑤</td>
+      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="{{site.baseurl}}/zh/week05/05-1"></a>-</td>
+      <td><a href="en/week05/05-1">优化工具 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
+        <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/zh/week05/05-2"></a>-</td></tr>
+    <tr><td><a href="en/week05/05-2">优化方法 II</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="{{site.baseurl}}/zh/week05/05-3"></a>-</td>
+      <td><a href="en/week05/05-3">了解卷积和自动微分引擎</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
+        <a href="https://youtu.be/eEzCZnOFU1w">🎥</a>
       </td>
     </tr>
-  </tbody>
-</table>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
@@ -261,13 +263,7 @@ translator: Mingyang Zhao
 
 | 角式 | 相片 | 联络方式 | 关于 |
 |:-----|:-----:|:--------|:------|
-|讲师|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun(杨立昆)</a><br>yann@cs.nyu.edu|在纽约大学计算机科学部门的银级教授<br>同时也是图灵奖获得者|
+|讲师|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun(杨立昆)</a><br>yann@cs.nyu.edu|在纽约大学计算机科学部门的银<br>级教授同时也是图灵奖获得者|
 |讲师|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|纽约大学计算机科学部门的助教|
 |助手|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|纽约大学计算机科学博士学生|
 |网站管理员|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|纽约大学计算机科学博士学生|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Raghav Jajodia <br>rj1408@nyu.edu|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Priyank Pathak <br>pp1953@nyu.edu|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
-|评分员|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
