@@ -1,8 +1,11 @@
 ---
 layout: default
-title: DEEP LEARNING
+title: التعلم العميق
 author: Alfredo Canziani
 lang-ref: home
+lang: ar
+translation-date: 21 August 2020
+translator: Anass Elhoud
 ---
 
 **DS-GA 1008 · ربيع 2020 · [مركز جامعة نيويورك لعلم البيانات](http://cds.nyu.edu/)**
