@@ -4,7 +4,7 @@ title: التعلم العميق
 author: Alfredo Canziani
 lang-ref: home
 lang: ar
-translation-date: 21 August 2020
+translation-date: 21 Aug 2020
 translator: Anass Elhoud
 ---
 
