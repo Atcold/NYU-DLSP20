@@ -28,10 +28,16 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 🇯🇵 日本語版の `README.md` は  [ここ](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) にあります.
 -->
 
+<!-- Arabic -->
+<!--
+🇸🇦 النسخة العربية من ملف `README.md`  [ar](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) والموقع الالكتروني.
+-->
 
-<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese -->
-<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md)
+
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic -->
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic -->
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md)
+
 
 # Getting started
 
