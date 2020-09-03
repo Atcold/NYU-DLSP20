@@ -19,7 +19,7 @@ translator: Murat Ekici
 
 ## Açıklama
 
-Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev öğrenme (metric learning), evrişimsel(CNN, Convolutional Neural Network) ve özyineli ağlara (RNN, Recurrent Neural Network) odaklanarak derin öğrenme ve özniteliksel öğrenme alanındaki en yeni teknikleri ve bu tekniklerin  bilgisayarlı görü (computer vision), doğal dil anlama (natural language understanding) ve ses tanıma alanlarınlarındaki uygulamalarını konu almaktadır.
+Bu kurs, gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev öğrenme (metric learning), evrişimsel(CNN, Convolutional Neural Network) ve özyineli ağlara (RNN, Recurrent Neural Network) odaklanarak derin öğrenme ve özniteliksel öğrenme alanındaki en yeni teknikleri ve bu tekniklerin  bilgisayarlı görü (computer vision), doğal dil anlama (natural language understanding) ve ses tanıma alanlarınlarındaki uygulamalarını konu almaktadır.
 Önkoşullar:[DS-GA 1001 Veri Bilimine Giriş](https://cds.nyu.edu/academics/ms-curriculum/) ya da lisansüstü düzeyde makine öğrenmesi kursu.
 
 
@@ -272,11 +272,33 @@ Bu kurs,gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev �
         <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 13 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/tr/week13/13">⑬</a></td>
+      <td rowspan="2">Anlatım</td>
+      <td><a href="{{site.baseurl}}/tr/week13/13-1"> Grafik Evrişimsel Ağlar (GCN) I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
+        <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="{{site.baseurl}}/tr/week13/13-2">GCN II</a></td></tr>
+    <tr>
+      <td rowspan="1">Uygulama</td>
+      <td><a href="{{site.baseurl}}/tr/week13/13-3">GCN III</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
+        <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
+
+
 
   </tbody>
 </table>
 
-
+<br/><br/>
 
 
 ## Ekip
