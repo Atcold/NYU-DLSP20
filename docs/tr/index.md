@@ -293,8 +293,6 @@ Bu kurs, gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev 
       </td>
     </tr>
 
-
-
   </tbody>
 </table>
 
