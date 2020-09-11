@@ -267,6 +267,26 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 13 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week13/13-1">GCNs I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
+        <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week13/13-2">GCNs II</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week13/13-3">GCNs III</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
+        <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
