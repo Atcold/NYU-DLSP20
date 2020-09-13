@@ -1,0 +1,3438 @@
+0:00:00.439,0:00:04.740
+actually first point we have a website
+
+0:00:02.550,0:00:07.350
+now you can find a website if you go to
+
+0:00:04.740,0:00:09.150
+the repository on my github that you can
+
+0:00:07.350,0:00:11.370
+click there on the link and you get
+
+0:00:09.150,0:00:14.040
+redirected to the website where you have
+
+0:00:11.370,0:00:16.350
+the summaries of the previous class and
+
+0:00:14.040,0:00:19.970
+the previous lab right so it's your duty
+
+0:00:16.350,0:00:23.420
+to go over those summaries before class
+
+0:00:19.970,0:00:25.439
+otherwise if I take the first 15 minutes
+
+0:00:23.420,0:00:27.630
+revising what we have seen last time
+
+0:00:25.439,0:00:30.300
+then we have 15 minutes less to see new
+
+0:00:27.630,0:00:33.690
+stuff right it's very hard when we have
+
+0:00:30.300,0:00:36.300
+just 50 minutes on Tuesday nevertheless
+
+0:00:33.690,0:00:38.040
+we start with a question so let's say
+
+0:00:36.300,0:00:40.230
+I'd like to do classification between
+
+0:00:38.040,0:00:43.800
+images of dogs and cats
+
+0:00:40.230,0:00:48.629
+if this is my cat image where will be my
+
+0:00:43.800,0:00:50.910
+dog image near to this point right so
+
+0:00:48.629,0:00:53.340
+how can we tell them apart
+
+0:00:50.910,0:00:58.649
+first of all I had to take it if this is
+
+0:00:53.340,0:01:01.039
+the zero I will have to talk to suppose
+
+0:00:58.649,0:01:04.850
+the talk what am I doing here in my
+
+0:01:01.039,0:01:04.850
+translation how do you translate stuff
+
+0:01:05.960,0:01:16.229
+matrix multiplication okay what does
+
+0:01:11.490,0:01:21.420
+matrix multiplication do rotation
+
+0:01:16.229,0:01:25.250
+reflection scaling and share right shear
+
+0:01:21.420,0:01:27.990
+what it is pronounced actually scaling
+
+0:01:25.250,0:01:33.060
+how can you do scaling also why are
+
+0:01:27.990,0:01:38.159
+scalars called scalar scalars do because
+
+0:01:33.060,0:01:40.020
+they scale yeah good right right so you
+
+0:01:38.159,0:01:41.670
+can always think about a matrix you can
+
+0:01:40.020,0:01:44.310
+just normalize it such that you have
+
+0:01:41.670,0:01:46.170
+like unitary determinant and then you
+
+0:01:44.310,0:01:48.780
+actually have a scalar which is changing
+
+0:01:46.170,0:01:51.149
+the you know the size right so you can
+
+0:01:48.780,0:01:54.720
+have I usually think about matrices as
+
+0:01:51.149,0:01:57.030
+rotation and so I usually just say we
+
+0:01:54.720,0:01:59.189
+rotate stuff in whatever dimensional
+
+0:01:57.030,0:02:01.259
+space and then we are going to be doing
+
+0:01:59.189,0:02:03.600
+another operation with neural nets which
+
+0:02:01.259,0:02:03.930
+is gonna be squashing so you're going to
+
+0:02:03.600,0:02:06.020
+be
+
+0:02:03.930,0:02:09.000
+me repeating these very many times
+
+0:02:06.020,0:02:12.030
+neural nets are simply rotation and
+
+0:02:09.000,0:02:16.380
+squashing rotation and squashing was
+
+0:02:12.030,0:02:19.020
+coming after rotation and then fantastic
+
+0:02:16.380,0:02:21.270
+all right so let's get starting I
+
+0:02:19.020,0:02:22.560
+started then you know just because I
+
+0:02:21.270,0:02:26.790
+like advertising
+
+0:02:22.560,0:02:28.560
+I just put there my handle and again if
+
+0:02:26.790,0:02:30.240
+you need to say anything just call me al
+
+0:02:28.560,0:02:32.670
+have no idea what's going on please
+
+0:02:30.240,0:02:35.880
+repeat and if you don't know who that
+
+0:02:32.670,0:02:39.450
+guy is you may have a look about TV
+
+0:02:35.880,0:02:43.470
+series from the nineties anyhow Oh a
+
+0:02:39.450,0:02:45.150
+double n what is it artificial neural
+
+0:02:43.470,0:02:47.700
+networks I guess yeah supervisor
+
+0:02:45.150,0:02:49.680
+supervised learning classification so
+
+0:02:47.700,0:02:52.290
+there's gonna be kind of a revised of
+
+0:02:49.680,0:02:54.510
+stuff he has already seen before but you
+
+0:02:52.290,0:02:56.850
+know in a very much prettier way because
+
+0:02:54.510,0:03:00.180
+I spent the whole day making this stuff
+
+0:02:56.850,0:03:02.610
+for you all right so let's go on and we
+
+0:03:00.180,0:03:06.239
+have this guy right we have seen this
+
+0:03:02.610,0:03:09.900
+last time and let's say those are simply
+
+0:03:06.239,0:03:12.180
+three branches of a spiral so my case in
+
+0:03:09.900,0:03:15.870
+this case what is where is gonna be my
+
+0:03:12.180,0:03:19.440
+data living on so where is the data here
+
+0:03:15.870,0:03:21.810
+if I show you this stuff here those
+
+0:03:19.440,0:03:25.230
+branches are made of points and these
+
+0:03:21.810,0:03:27.239
+points live on what space r2 right is
+
+0:03:25.230,0:03:31.220
+the plane so all those points are moving
+
+0:03:27.239,0:03:33.750
+around that plane why did I show colors
+
+0:03:31.220,0:03:36.140
+those are the labels right so three
+
+0:03:33.750,0:03:38.820
+different classes three different labels
+
+0:03:36.140,0:03:42.709
+you can make this drawing with
+
+0:03:38.820,0:03:46.140
+matplotlib and Python and numpy okay
+
+0:03:42.709,0:03:48.269
+on the other side oh yeah so we have
+
+0:03:46.140,0:03:50.750
+like a T goes from zero to one and then
+
+0:03:48.269,0:03:54.299
+C is gonna be the class from 1 to
+
+0:03:50.750,0:03:56.430
+capital C in this case let's make things
+
+0:03:54.299,0:04:00.739
+a little bit more spicy so let's add
+
+0:03:56.430,0:04:02.940
+some crap there such that we have more
+
+0:04:00.739,0:04:06.489
+crappy looking data that is like
+
+0:04:02.940,0:04:10.569
+actually more really sorry okay
+
+0:04:06.489,0:04:12.730
+what does classification mean if you do
+
+0:04:10.569,0:04:15.310
+if you'd like to do craft classification
+
+0:04:12.730,0:04:20.889
+let's use the you know whatever thing
+
+0:04:15.310,0:04:22.900
+you want what's called the thing that no
+
+0:04:20.889,0:04:24.610
+regression logistic regression so what
+
+0:04:22.900,0:04:27.160
+does logistic regression do here in this
+
+0:04:24.610,0:04:29.320
+case so it's going to do something like
+
+0:04:27.160,0:04:31.210
+this right some linear planes for
+
+0:04:29.320,0:04:38.350
+separating the data what's the main
+
+0:04:31.210,0:04:40.000
+issue here a second it's not really
+
+0:04:38.350,0:04:42.280
+acceptable so but what is the main issue
+
+0:04:40.000,0:04:44.380
+here how what how would you define was
+
+0:04:42.280,0:04:49.080
+the issue here like yes they are not
+
+0:04:44.380,0:04:49.080
+linearly separable therefore you have
+
+0:04:49.259,0:05:03.460
+yeah but what what doesn't what don't
+
+0:04:52.780,0:05:06.220
+you like from that drawing right so
+
+0:05:03.460,0:05:08.800
+points in one region you have multiple
+
+0:05:06.220,0:05:12.190
+multiple classes right this means that
+
+0:05:08.800,0:05:14.590
+those branches are crossing my decision
+
+0:05:12.190,0:05:22.240
+boundaries which are linear huh
+
+0:05:14.590,0:05:26.169
+so how can we fix that okay because it
+
+0:05:22.240,0:05:26.560
+will be seen my video from from last
+
+0:05:26.169,0:05:28.630
+week
+
+0:05:26.560,0:05:31.030
+so usually how people saying oh just you
+
+0:05:28.630,0:05:32.949
+know like make those decision boundary
+
+0:05:31.030,0:05:34.780
+non linear right that's what use or the
+
+0:05:32.949,0:05:36.729
+other professors do I do only cool the
+
+0:05:34.780,0:05:38.409
+things that are more cool so I just get
+
+0:05:36.729,0:05:39.909
+the data to be linearly separable right
+
+0:05:38.409,0:05:42.729
+that was just different perspective to
+
+0:05:39.909,0:05:44.440
+see the same stuff anyhow the main issue
+
+0:05:42.729,0:05:46.270
+here is that we have intersection
+
+0:05:44.440,0:05:50.080
+between these decision boundaries and
+
+0:05:46.270,0:05:51.909
+data and therefore I'm gonna try to do
+
+0:05:50.080,0:05:53.500
+this right and you already seen the
+
+0:05:51.909,0:05:57.340
+video from last time so okay this is no
+
+0:05:53.500,0:06:00.009
+news or the thing that you may be more
+
+0:05:57.340,0:06:02.949
+useful see how the decision boundary is
+
+0:06:00.009,0:06:07.180
+over training will try to adapt what is
+
+0:06:02.949,0:06:09.820
+the you know like the the distribution
+
+0:06:07.180,0:06:11.680
+of this data here we are watching things
+
+0:06:09.820,0:06:13.810
+from the bottom up so if you have your
+
+0:06:11.680,0:06:15.880
+network where the first layer is on the
+
+0:06:13.810,0:06:18.330
+bottom and the last layer is on the top
+
+0:06:15.880,0:06:21.419
+and if you draw networks in the
+
+0:06:18.330,0:06:25.650
+direction you get one grade less so the
+
+0:06:21.419,0:06:30.860
+input is gonna be on the bottom why is
+
+0:06:25.650,0:06:36.539
+that why do we have input on the bottom
+
+0:06:30.860,0:06:39.900
+does anyone can can anyone guess yeah
+
+0:06:36.539,0:06:40.349
+well their neural network aha that's
+
+0:06:39.900,0:06:42.629
+correct
+
+0:06:40.349,0:06:44.550
+right so we have low level features at
+
+0:06:42.629,0:06:47.219
+the lower part of the network and as you
+
+0:06:44.550,0:06:49.139
+climb up in the hierarchy you basically
+
+0:06:47.219,0:06:51.180
+want to draw this network in this the
+
+0:06:49.139,0:06:53.639
+way it is made right so you have high in
+
+0:06:51.180,0:06:56.159
+the hierarchy in the upper part so if
+
+0:06:53.639,0:06:59.219
+you put some classifier you will put a
+
+0:06:56.159,0:07:00.659
+classifier on top right so if you the
+
+0:06:59.219,0:07:03.360
+first time I was reading a paper now
+
+0:07:00.659,0:07:07.590
+from Joffrey he's like a little blah
+
+0:07:03.360,0:07:10.919
+blah I put a classifier on top of what
+
+0:07:07.590,0:07:13.199
+of the network I'm thinking what's the
+
+0:07:10.919,0:07:15.060
+top of a network I have no idea
+
+0:07:13.199,0:07:16.319
+right so networks are drawn from bottom
+
+0:07:15.060,0:07:17.789
+to top with the first layer on the
+
+0:07:16.319,0:07:20.129
+bottom where you have the input coming
+
+0:07:17.789,0:07:21.900
+in lower level features is you climb up
+
+0:07:20.129,0:07:24.210
+you have the top and therefore if you
+
+0:07:21.900,0:07:27.210
+have multiple outputs it's called a
+
+0:07:24.210,0:07:30.240
+multi-headed Network right like a hydra
+
+0:07:27.210,0:07:31.680
+hydra whatever it's called anyhow so
+
+0:07:30.240,0:07:34.979
+we're gonna figure out now in this
+
+0:07:31.680,0:07:39.210
+lesson how we can do these things do you
+
+0:07:34.979,0:07:41.069
+know how to do this stuff no yes okay
+
+0:07:39.210,0:07:43.500
+you should be because you should have
+
+0:07:41.069,0:07:45.000
+taken machine learning before but
+
+0:07:43.500,0:07:47.250
+perhaps is not linearly separable right
+
+0:07:45.000,0:07:49.339
+so we just add one more layer and things
+
+0:07:47.250,0:07:52.620
+start working anyhow
+
+0:07:49.339,0:07:54.449
+training data okay so yes yesterday well
+
+0:07:52.620,0:07:56.909
+last week we have seen that a neural
+
+0:07:54.449,0:07:59.520
+network when you just initialize it it
+
+0:07:56.909,0:08:01.349
+makes some kind of transformation so we
+
+0:07:59.520,0:08:03.599
+were feeding that kind of cloud the
+
+0:08:01.349,0:08:06.810
+walls it was which was sample from a
+
+0:08:03.599,0:08:08.879
+Gaussian distribution with a identity
+
+0:08:06.810,0:08:13.169
+matrix as covariance matrix and mean
+
+0:08:08.879,0:08:16.919
+zero so what was the roughly average
+
+0:08:13.169,0:08:20.909
+radius of that X out of points 300 you
+
+0:08:16.919,0:08:22.800
+actually remember very good the radius
+
+0:08:20.909,0:08:26.459
+was 3 right so things were within a
+
+0:08:22.800,0:08:27.800
+radius of 3 and those kind of kind of
+
+0:08:26.459,0:08:29.750
+circular
+
+0:08:27.800,0:08:32.149
+it was fed inside the network and the
+
+0:08:29.750,0:08:34.010
+network was getting you any kind of
+
+0:08:32.149,0:08:37.519
+arbitrary transformation which was super
+
+0:08:34.010,0:08:40.430
+pretty right yes it was very pretty
+
+0:08:37.519,0:08:43.070
+yeah good but then the transformation
+
+0:08:40.430,0:08:45.440
+wasn't instrumental to do anything right
+
+0:08:43.070,0:08:49.399
+so today we're gonna see how by using
+
+0:08:45.440,0:08:51.890
+data we can enforce some kind of meaning
+
+0:08:49.399,0:08:56.000
+over that kind of transformation that a
+
+0:08:51.890,0:08:57.500
+network does by itself and so data is
+
+0:08:56.000,0:09:00.410
+going to be the most important part so
+
+0:08:57.500,0:09:03.680
+here we're gonna have that should be in
+
+0:09:00.410,0:09:06.140
+ink yeah it's too bright thing here so
+
+0:09:03.680,0:09:08.480
+whatever so the X is going to be my
+
+0:09:06.140,0:09:11.029
+input data it's both because represents
+
+0:09:08.480,0:09:15.589
+a vector and this guy lives in our end
+
+0:09:11.029,0:09:18.829
+okay how much is n in our case two
+
+0:09:15.589,0:09:21.140
+because because points live on that
+
+0:09:18.829,0:09:23.180
+space right hope the spires okay
+
+0:09:21.140,0:09:26.899
+fantastic and then it's gonna be my ice
+
+0:09:23.180,0:09:30.170
+sample I have several samples right and
+
+0:09:26.899,0:09:33.140
+this takes quite long to draw you have
+
+0:09:30.170,0:09:35.180
+several samples and they're like row row
+
+0:09:33.140,0:09:37.040
+vectors and I put them I stack them one
+
+0:09:35.180,0:09:39.290
+on top of each other and I have M of
+
+0:09:37.040,0:09:44.089
+them right so that matrix what what is
+
+0:09:39.290,0:09:47.329
+the size of this matrix shout louder n
+
+0:09:44.089,0:09:50.329
+by n fantastic so I have n columns and M
+
+0:09:47.329,0:09:52.339
+in the height if I would use these
+
+0:09:50.329,0:09:56.140
+metrics for doing some operations what
+
+0:09:52.339,0:09:56.140
+is the dimension where I'm shooting to
+
+0:09:57.490,0:10:02.660
+try again and okay because the height of
+
+0:10:01.399,0:10:04.640
+the matrix is gonna be the dimension
+
+0:10:02.660,0:10:06.170
+where you shoot to and then wait for the
+
+0:10:04.640,0:10:07.820
+domain the metrics in a bigger dimension
+
+0:10:06.170,0:10:11.089
+where you shoot from right because you
+
+0:10:07.820,0:10:14.020
+multiply you know column times row times
+
+0:10:11.089,0:10:16.850
+code right all right cool
+
+0:10:14.020,0:10:18.970
+sorry we have CI which is going to be my
+
+0:10:16.850,0:10:22.160
+different classes for each of those
+
+0:10:18.970,0:10:24.769
+points in the 2d plane and so here we're
+
+0:10:22.160,0:10:27.440
+gonna have those C is gonna be equal to
+
+0:10:24.769,0:10:30.920
+1 to capital K before it was capital C I
+
+0:10:27.440,0:10:36.160
+see how to fix that I know so how many
+
+0:10:30.920,0:10:38.870
+how much is capital K here 3 because we
+
+0:10:36.160,0:10:41.440
+have seen three colors yeah fantastic
+
+0:10:38.870,0:10:46.480
+all right so if I stuck all the
+
+0:10:41.440,0:10:49.060
+see is how many CIS do I have second M
+
+0:10:46.480,0:10:55.380
+so you should stack em of these guys you
+
+0:10:49.060,0:10:58.480
+get a a likely a column vector here C
+
+0:10:55.380,0:11:01.060
+alright finally this is a height of M
+
+0:10:58.480,0:11:04.060
+but the problem with this kind of
+
+0:11:01.060,0:11:05.950
+notation like 1 2 3 whatever basically
+
+0:11:04.060,0:11:08.440
+is that they introduced some kind of
+
+0:11:05.950,0:11:11.130
+ordering right so class 1 comes before
+
+0:11:08.440,0:11:13.300
+class 2 which comes before just free and
+
+0:11:11.130,0:11:15.040
+it doesn't make any sense right they are
+
+0:11:13.300,0:11:16.570
+colors so it's a categorical
+
+0:11:15.040,0:11:19.180
+distribution I don't want to have
+
+0:11:16.570,0:11:20.520
+something that also has order therefore
+
+0:11:19.180,0:11:22.810
+I'm gonna be using this alternative
+
+0:11:20.520,0:11:25.450
+representation which I'm gonna be
+
+0:11:22.810,0:11:28.720
+basically converting those T's into
+
+0:11:25.450,0:11:30.490
+vectors of the size of my capital k so
+
+0:11:28.720,0:11:33.310
+the number of classes and then I'm gonna
+
+0:11:30.490,0:11:38.050
+have a 1 in correspondence of the class
+
+0:11:33.310,0:11:40.750
+which is indexed by the see the specific
+
+0:11:38.050,0:11:43.720
+CI ok so let's say CI is going to be
+
+0:11:40.750,0:11:46.030
+equal 1 that you have basically the
+
+0:11:43.720,0:11:48.190
+first guy here ok and since we are
+
+0:11:46.030,0:11:50.290
+talking about mathematics I can count
+
+0:11:48.190,0:11:53.500
+from 1 right 1 2 3 if you are talking
+
+0:11:50.290,0:11:55.600
+about Python and C++ whatever so you
+
+0:11:53.500,0:11:59.370
+switch gear you have different hot you
+
+0:11:55.600,0:12:03.430
+can count from 0 math you count from 1
+
+0:11:59.370,0:12:09.460
+so if you stack all those C is converted
+
+0:12:03.430,0:12:13.360
+into that representation what you get we
+
+0:12:09.460,0:12:15.790
+don't have numbers just use letters you
+
+0:12:13.360,0:12:18.430
+have M by K matrix right so this is
+
+0:12:15.790,0:12:20.560
+going to be my capital y matrix and then
+
+0:12:18.430,0:12:24.490
+you have my capital K number of columns
+
+0:12:20.560,0:12:27.940
+and M number of rows and each of these
+
+0:12:24.490,0:12:30.970
+guys here is going to be a vector which
+
+0:12:27.940,0:12:34.120
+is the zero one set to the K where only
+
+0:12:30.970,0:12:36.339
+one I mean one only one item is set to
+
+0:12:34.120,0:12:39.550
+one and so you can say that the zero
+
+0:12:36.339,0:12:41.740
+norm is equal to one moreover you can
+
+0:12:39.550,0:12:44.970
+also think about this notation has
+
+0:12:41.740,0:12:48.790
+having sound probably probability mass
+
+0:12:44.970,0:12:51.400
+which is completely concentrated in one
+
+0:12:48.790,0:12:53.170
+specific spot right so you have three
+
+0:12:51.400,0:12:53.860
+possible spots you have three possible
+
+0:12:53.170,0:12:57.160
+classes
+
+0:12:53.860,0:13:00.220
+you put all your 100% bet over that
+
+0:12:57.160,0:13:02.829
+specific category the network will try
+
+0:13:00.220,0:13:04.959
+to approximate this I won't be able to
+
+0:13:02.829,0:13:08.890
+but that's how we train a network with
+
+0:13:04.959,0:13:13.269
+these kind of hard labels questions so
+
+0:13:08.890,0:13:13.600
+far sorry that was exercise questions so
+
+0:13:13.269,0:13:18.190
+far
+
+0:13:13.600,0:13:21.899
+am I too slow yes a little bit
+
+0:13:18.190,0:13:23.529
+no okay do you like the font the colors
+
+0:13:21.899,0:13:26.709
+okay thank you
+
+0:13:23.529,0:13:29.740
+it takes forever all right
+
+0:13:26.709,0:13:32.410
+latex that's why we moved to markdown
+
+0:13:29.740,0:13:33.730
+right all right anyhow so this will be
+
+0:13:32.410,0:13:35.170
+basically the first exercise you have
+
+0:13:33.730,0:13:37.000
+something similar in your first homework
+
+0:13:35.170,0:13:39.490
+so we skip this because it's gonna be
+
+0:13:37.000,0:13:40.660
+due for two weeks and basically if this
+
+0:13:39.490,0:13:43.810
+would have been a tutorial it would have
+
+0:13:40.660,0:13:45.490
+been typing stuff now all right so let's
+
+0:13:43.810,0:13:47.529
+see how a fully networked fully
+
+0:13:45.490,0:13:51.020
+connected let network works and look
+
+0:13:47.529,0:13:52.589
+like so at the bottom Y is at the bottom
+
+0:13:51.020,0:13:58.260
+[Music]
+
+0:13:52.589,0:14:00.399
+say again the input is at the bottom Y
+
+0:13:58.260,0:14:04.120
+lower-level feature fantastic what's the
+
+0:14:00.399,0:14:07.390
+color of the X pink I mean yes that's
+
+0:14:04.120,0:14:09.610
+correct but yeah then we get a fine
+
+0:14:07.390,0:14:12.760
+transformation is shown there by the
+
+0:14:09.610,0:14:16.660
+arrow and then we get into that green F
+
+0:14:12.760,0:14:19.209
+where F is gonna be a non-linearity the
+
+0:14:16.660,0:14:21.760
+output of the F is going to be called H
+
+0:14:19.209,0:14:23.800
+h which is representing my hidden layer
+
+0:14:21.760,0:14:26.260
+okay so H is something that is inside a
+
+0:14:23.800,0:14:29.170
+network and I can't see from outside and
+
+0:14:26.260,0:14:31.140
+so it's called hidden it's bold because
+
+0:14:29.170,0:14:33.100
+it's a vector
+
+0:14:31.140,0:14:34.510
+moreover then I have another affine
+
+0:14:33.100,0:14:37.510
+transformation you only see the matrix
+
+0:14:34.510,0:14:39.220
+there which maps to G which is another
+
+0:14:37.510,0:14:40.750
+linear chance another nonlinear
+
+0:14:39.220,0:14:44.170
+transformation and now you have the
+
+0:14:40.750,0:14:47.019
+final output which is y hat and so the
+
+0:14:44.170,0:14:49.560
+output color is it don't say white but
+
+0:14:47.019,0:14:52.060
+what's the bubble output bubble color
+
+0:14:49.560,0:14:53.910
+blue right and then the hidden is gonna
+
+0:14:52.060,0:14:56.199
+be green it's gonna be always constant
+
+0:14:53.910,0:14:58.420
+all right so these are the only
+
+0:14:56.199,0:15:01.120
+questions basically you're gonna see in
+
+0:14:58.420,0:15:05.779
+in this course you have the hidden layer
+
+0:15:01.120,0:15:08.029
+H vector is gonna be it is nonlinear
+
+0:15:05.779,0:15:10.699
+function point-wise nonlinear function
+
+0:15:08.029,0:15:13.069
+which is so element-wise nonlinear
+
+0:15:10.699,0:15:17.509
+function of a fine transformation of the
+
+0:15:13.069,0:15:19.100
+input which is the X here plus you know
+
+0:15:17.509,0:15:21.139
+the bias right so this is a linear
+
+0:15:19.100,0:15:22.939
+operator plus the bias this is a fine
+
+0:15:21.139,0:15:26.089
+transformation and then the F is gonna
+
+0:15:22.939,0:15:28.519
+be your nonlinear mapping again then you
+
+0:15:26.089,0:15:31.850
+have your Y hat which is gonna be my
+
+0:15:28.519,0:15:34.430
+output of the network my hypothesis is
+
+0:15:31.850,0:15:37.189
+gonna be a nonlinear function I'll apply
+
+0:15:34.430,0:15:39.019
+to each element of this vector here and
+
+0:15:37.189,0:15:41.209
+this vector is basically a affine
+
+0:15:39.019,0:15:44.350
+transformation of the hidden layer okay
+
+0:15:41.209,0:15:46.579
+that's all you get in a neural network
+
+0:15:44.350,0:15:47.750
+affine transformation I usually call
+
+0:15:46.579,0:15:50.269
+them rotations
+
+0:15:47.750,0:15:52.519
+I called nonlinear function as squashing
+
+0:15:50.269,0:15:54.379
+and so you just repeat rotation
+
+0:15:52.519,0:15:59.029
+squashing rotation squashing rotation
+
+0:15:54.379,0:16:01.870
+squashing fantastic thank you all right
+
+0:15:59.029,0:16:04.610
+so that's it right easy right so far
+
+0:16:01.870,0:16:14.720
+know you have a question Mike interphase
+
+0:16:04.610,0:16:17.000
+ask what's up yeah both F and G are
+
+0:16:14.720,0:16:21.470
+arbitrary nonlinear functions you can
+
+0:16:17.000,0:16:23.629
+use anything you like this is only one
+
+0:16:21.470,0:16:27.230
+hidden layer my output layer is gonna be
+
+0:16:23.629,0:16:29.540
+my blue guy let's add the output ISM you
+
+0:16:27.230,0:16:31.399
+can see Y hat on top so if output and
+
+0:16:29.540,0:16:34.040
+the X is going to be your input on the
+
+0:16:31.399,0:16:36.410
+bottom so I call this one three layer
+
+0:16:34.040,0:16:38.600
+neural network Jung looks like he's
+
+0:16:36.410,0:16:40.430
+calling this to lay on your network I
+
+0:16:38.600,0:16:42.709
+call it free day on your network because
+
+0:16:40.430,0:16:44.990
+there is a input neuron at the bottom
+
+0:16:42.709,0:16:48.709
+there is a hidden neuron at the center
+
+0:16:44.990,0:16:52.040
+and it is an output so one two three but
+
+0:16:48.709,0:16:56.220
+he counts from zero like
+
+0:16:52.040,0:16:58.530
+programmers so true later but no see how
+
+0:16:56.220,0:17:01.070
+many how many affine transformation does
+
+0:16:58.530,0:17:03.780
+a three-layer neural network have
+
+0:17:01.070,0:17:10.580
+fantastic how many layers of neurons you
+
+0:17:03.780,0:17:10.580
+have three okay cool yeah question
+
+0:17:11.960,0:17:22.110
+haha yeah well fine transformation right
+
+0:17:15.990,0:17:24.990
+so there is also translation because I
+
+0:17:22.110,0:17:27.360
+liked usually to extract the scaling and
+
+0:17:24.990,0:17:30.090
+scaler from the matrix and then I have
+
+0:17:27.360,0:17:32.910
+my unitary determinant determinant
+
+0:17:30.090,0:17:34.020
+matrix which is basically rotating stuff
+
+0:17:32.910,0:17:36.060
+and then you had the other one which is
+
+0:17:34.020,0:17:38.010
+scaling they also have flipping right
+
+0:17:36.060,0:17:38.880
+for if you have the determinant which is
+
+0:17:38.010,0:17:41.700
+negative right
+
+0:17:38.880,0:17:43.290
+usually matrix is just rotating stuff
+
+0:17:41.700,0:17:46.410
+it's a bit hard to think about in high
+
+0:17:43.290,0:17:48.030
+dimensions I just say matrices rotate
+
+0:17:46.410,0:17:50.370
+stuff because they apply the same kind
+
+0:17:48.030,0:17:56.030
+of movement of everything right so it's
+
+0:17:50.370,0:17:57.330
+kind of global operation other questions
+
+0:17:56.030,0:18:00.420
+all right
+
+0:17:57.330,0:18:02.430
+so example of nonlinear functions are
+
+0:18:00.420,0:18:05.130
+here a few so the first one is positive
+
+0:18:02.430,0:18:06.930
+part basically you get the positive as
+
+0:18:05.130,0:18:09.720
+it is if it's negative you set it to
+
+0:18:06.930,0:18:13.640
+zero other people call it 300 rectified
+
+0:18:09.720,0:18:16.800
+inner unit or other stuff I don't know
+
+0:18:13.640,0:18:19.350
+yeah whatever I like positive part which
+
+0:18:16.800,0:18:23.550
+is math ish then there is a sigmoid
+
+0:18:19.350,0:18:26.310
+which is the one over one plus X of the
+
+0:18:23.550,0:18:28.110
+minus whatever argument hyperbolic
+
+0:18:26.310,0:18:30.390
+tangent which is just a rescale version
+
+0:18:28.110,0:18:32.820
+of this sigmoid we saw that last time
+
+0:18:30.390,0:18:34.410
+then there is the soft arc max you're
+
+0:18:32.820,0:18:36.000
+going to call it this way because it's
+
+0:18:34.410,0:18:37.650
+going to be just a softer version of a
+
+0:18:36.000,0:18:40.440
+narc max an argument is going to give
+
+0:18:37.650,0:18:43.740
+you all zeros but an index equal to one
+
+0:18:40.440,0:18:45.750
+in correspondence of the correct highest
+
+0:18:43.740,0:18:48.240
+value its soft max it's gonna give you
+
+0:18:45.750,0:18:51.480
+something like that where it's gonna be
+
+0:18:48.240,0:18:53.430
+almost 1 on the highest value kind of 0
+
+0:18:51.480,0:18:55.230
+ish everywhere else right but if you
+
+0:18:53.430,0:18:57.450
+have two guys at the same height you're
+
+0:18:55.230,0:19:00.800
+gonna get half and half and the rest is
+
+0:18:57.450,0:19:00.800
+going to be kind of 0 okay yeah
+
+0:19:05.250,0:19:13.440
+I guess this is a nice derivative this
+
+0:19:10.230,0:19:16.740
+guy is easy to I think used for training
+
+0:19:13.440,0:19:18.050
+I think you could use that kind of
+
+0:19:16.740,0:19:20.580
+normalization in Spain
+
+0:19:18.050,0:19:25.160
+so the question was like why don't we
+
+0:19:20.580,0:19:28.500
+use a like resizing like why don't you
+
+0:19:25.160,0:19:31.710
+automatically you know set the output to
+
+0:19:28.500,0:19:33.180
+be within a 0 to 1 range I guess because
+
+0:19:31.710,0:19:34.500
+it's gonna be dependent on the out on
+
+0:19:33.180,0:19:35.790
+the output right you change the output
+
+0:19:34.500,0:19:38.040
+you have to change all the time with
+
+0:19:35.790,0:19:41.160
+scaling this one is just one scaling all
+
+0:19:38.040,0:19:42.200
+the ways the same I guess yeah that
+
+0:19:41.160,0:19:46.650
+could be the answer
+
+0:19:42.200,0:19:49.530
+all right so uh-huh okay and this took
+
+0:19:46.650,0:19:52.220
+five hours drawing okay we have our X on
+
+0:19:49.530,0:19:54.420
+the left-hand side with five elements
+
+0:19:52.220,0:19:56.970
+then here you have for example your
+
+0:19:54.420,0:19:57.480
+first hidden layer I may have a second
+
+0:19:56.970,0:19:59.910
+hidden layer
+
+0:19:57.480,0:20:01.650
+a third hidden layer and then finally my
+
+0:19:59.910,0:20:04.340
+output layer so how many layers does
+
+0:20:01.650,0:20:04.340
+this network have
+
+0:20:10.280,0:20:17.340
+how many how many columns can you count
+
+0:20:13.020,0:20:19.740
+here fine okay fantastic how many gaps
+
+0:20:17.340,0:20:22.530
+between columns can you account for our
+
+0:20:19.740,0:20:26.130
+babe rotations you have okay cool
+
+0:20:22.530,0:20:28.380
+all right so we go from the first layer
+
+0:20:26.130,0:20:31.170
+which is also called a wank we start the
+
+0:20:28.380,0:20:33.600
+activation at the layer one we go to the
+
+0:20:31.170,0:20:36.510
+activation at layer 2 and so on a three
+
+0:20:33.600,0:20:40.260
+eight four until the a capital L the
+
+0:20:36.510,0:20:43.320
+last one so we got from activation at
+
+0:20:40.260,0:20:47.790
+layer 1 to activation layer to the W one
+
+0:20:43.320,0:20:50.880
+matrix basically you go Israel with W
+
+0:20:47.790,0:20:53.520
+two there W 3 and so on right so how do
+
+0:20:50.880,0:20:56.850
+you get that first neuron can you see
+
+0:20:53.520,0:21:03.420
+anything so okay let me see if I can
+
+0:20:56.850,0:21:06.300
+make not too dark is the any better kind
+
+0:21:03.420,0:21:11.630
+of okay I whatever I go like this
+
+0:21:06.300,0:21:16.950
+boom okay anyone taking notes on paper
+
+0:21:11.630,0:21:18.780
+sorry okay yeah after I turn on the
+
+0:21:16.950,0:21:20.730
+light okay so how do you get the values
+
+0:21:18.780,0:21:25.640
+for this guy here so this guy is gonna
+
+0:21:20.730,0:21:28.500
+be the Jeff neuron on my what layer
+
+0:21:25.640,0:21:30.720
+second layer right so a two so this is
+
+0:21:28.500,0:21:33.870
+gonna be my element-wise sorry my
+
+0:21:30.720,0:21:37.530
+non-linear function f where i have this
+
+0:21:33.870,0:21:40.770
+w j which is the jf role of w1 matrix
+
+0:21:37.530,0:21:45.960
+which is multiplied by X so I have a Rho
+
+0:21:40.770,0:21:51.000
+times a vector you get a scalar thank
+
+0:21:45.960,0:21:52.280
+you and then plus BJ what is BJ it's a
+
+0:21:51.000,0:21:56.040
+scalar yes that's correct
+
+0:21:52.280,0:21:58.070
+also called bias right okay what a
+
+0:21:56.040,0:22:00.750
+choice of words sorry
+
+0:21:58.070,0:22:05.550
+and this is gonna basically be like the
+
+0:22:00.750,0:22:08.370
+sum of the scalar multiplications right
+
+0:22:05.550,0:22:10.530
+I mean the sum of the multiplications
+
+0:22:08.370,0:22:13.290
+and so how do you get these on you get
+
+0:22:10.530,0:22:14.760
+these guys you multiply them by the
+
+0:22:13.290,0:22:19.890
+weights and then you get the first guy
+
+0:22:14.760,0:22:21.510
+right and then for the second one it's
+
+0:22:19.890,0:22:22.060
+right blue copy and paste doesn't work
+
+0:22:21.510,0:22:25.720
+so you
+
+0:22:22.060,0:22:28.540
+to draw all those lines again and then
+
+0:22:25.720,0:22:33.580
+you start realizing that you made a very
+
+0:22:28.540,0:22:36.940
+bad decision when drawing everything
+
+0:22:33.580,0:22:41.920
+else okay so where are these weights
+
+0:22:36.940,0:22:46.450
+toward in w1 okay fantastic not gonna be
+
+0:22:41.920,0:22:49.090
+fast forward you know fast forward yeah
+
+0:22:46.450,0:22:51.640
+how pretty no this is PowerPoint ninja
+
+0:22:49.090,0:22:53.800
+skills okay I should be doing
+
+0:22:51.640,0:22:57.040
+advertisements for and this should pay
+
+0:22:53.800,0:22:59.970
+me Microsoft all right so this is on
+
+0:22:57.040,0:23:05.860
+your network right how pretty is it
+
+0:22:59.970,0:23:09.610
+thank you okay I give you back the light
+
+0:23:05.860,0:23:12.730
+here I should just turn on right
+
+0:23:09.610,0:23:14.410
+everything I guess I had let me know if
+
+0:23:12.730,0:23:16.510
+we can turn off the first line of light
+
+0:23:14.410,0:23:19.960
+okay we had to figure that next time I
+
+0:23:16.510,0:23:21.880
+guess all right so we just use this
+
+0:23:19.960,0:23:23.980
+representation where each of those
+
+0:23:21.880,0:23:27.520
+layers you were observing before
+
+0:23:23.980,0:23:29.830
+I'll just condense in one bolt here so
+
+0:23:27.520,0:23:31.630
+in this case H is a vector right and so
+
+0:23:29.830,0:23:33.430
+a vector of whatever number of elements
+
+0:23:31.630,0:23:36.550
+is just represented there in on the
+
+0:23:33.430,0:23:37.930
+screen and the same for the Y so here
+
+0:23:36.550,0:23:39.880
+you had those matrices which are
+
+0:23:37.930,0:23:42.940
+shooting the right directions the right
+
+0:23:39.880,0:23:46.540
+right dimensionalities and then here you
+
+0:23:42.940,0:23:49.390
+had the nonlinear functions so you can
+
+0:23:46.540,0:23:53.620
+think about my white hat here this guy
+
+0:23:49.390,0:23:56.170
+is some kind of Y hat function of my
+
+0:23:53.620,0:23:58.570
+current input X right so the X the pink
+
+0:23:56.170,0:24:01.150
+guy gets fed into the network and then a
+
+0:23:58.570,0:24:02.980
+network will give me a some kind of you
+
+0:24:01.150,0:24:05.710
+know I expect you to have this kind of
+
+0:24:02.980,0:24:08.980
+output prediction so this can be thought
+
+0:24:05.710,0:24:11.020
+as a function that map's RN to our C
+
+0:24:08.980,0:24:13.390
+where C is number of classes that was
+
+0:24:11.020,0:24:15.970
+capital K but I guess I had to fix this
+
+0:24:13.390,0:24:21.040
+right so you can see these as mapping
+
+0:24:15.970,0:24:22.350
+inputs to final predictions usually it's
+
+0:24:21.040,0:24:24.610
+better to think in a different way so
+
+0:24:22.350,0:24:26.520
+what's happening is actually you met
+
+0:24:24.610,0:24:29.560
+these are n to some intermediate
+
+0:24:26.520,0:24:31.660
+representation Rd and then you go
+
+0:24:29.560,0:24:33.850
+finally to the final classification
+
+0:24:31.660,0:24:35.830
+dimensions where did the
+
+0:24:33.850,0:24:38.289
+of the internal layer it's much much
+
+0:24:35.830,0:24:41.230
+larger than the input and output
+
+0:24:38.289,0:24:43.679
+dimensions why is that because whenever
+
+0:24:41.230,0:24:47.500
+you go in a very high dimensional space
+
+0:24:43.679,0:24:51.250
+everything is far like really really
+
+0:24:47.500,0:24:53.350
+really really really far apart and so if
+
+0:24:51.250,0:24:55.480
+things are very far it's very easy to
+
+0:24:53.350,0:24:57.370
+rotate stuff and get things to move a
+
+0:24:55.480,0:24:59.080
+little bit then right if you go
+
+0:24:57.370,0:25:01.960
+everything a very tiny little crumb
+
+0:24:59.080,0:25:03.700
+space you try to move things everything
+
+0:25:01.960,0:25:05.440
+moves together right but then if you go
+
+0:25:03.700,0:25:08.260
+into this intermediate space where
+
+0:25:05.440,0:25:10.030
+everything is so far apart you can just
+
+0:25:08.260,0:25:13.750
+kick things around okay and it's much
+
+0:25:10.030,0:25:16.030
+easier so going to a higher intermediate
+
+0:25:13.750,0:25:18.960
+representation dimensional intermediate
+
+0:25:16.030,0:25:23.860
+representation it's really really really
+
+0:25:18.960,0:25:25.390
+helpful so potentially you can have a
+
+0:25:23.860,0:25:28.600
+very fat Network right you have an input
+
+0:25:25.390,0:25:31.240
+very fat hidden layer just an output the
+
+0:25:28.600,0:25:34.240
+cool part is that if I have hundred
+
+0:25:31.240,0:25:38.020
+neurons in my hidden layer I can simply
+
+0:25:34.240,0:25:39.730
+use two hidden layers of ten neurons
+
+0:25:38.020,0:25:41.799
+there's going to be performing roughly
+
+0:25:39.730,0:25:44.169
+the same so instead of having this very
+
+0:25:41.799,0:25:46.809
+very fat intermediate layer I can just
+
+0:25:44.169,0:25:49.179
+decide to stack a few hidden layers and
+
+0:25:46.809,0:25:51.429
+the number of combination of those
+
+0:25:49.179,0:25:54.070
+neurons you know will grow in
+
+0:25:51.429,0:25:57.130
+exponentially so it's if you want a
+
+0:25:54.070,0:26:00.010
+1,000 layer that 1,000 yuan hit a layer
+
+0:25:57.130,0:26:09.039
+you can just have three hidden layers of
+
+0:26:00.010,0:26:10.809
+ten right so in the second case where
+
+0:26:09.039,0:26:12.940
+you have a cascade of things you will
+
+0:26:10.809,0:26:15.760
+have data dependencies and you will have
+
+0:26:12.940,0:26:17.559
+to wait for the guys down to have finish
+
+0:26:15.760,0:26:19.780
+before starting the next operation so by
+
+0:26:17.559,0:26:23.230
+definition the more layers you stack the
+
+0:26:19.780,0:26:25.240
+slower you get on the other case you
+
+0:26:23.230,0:26:27.370
+need to have so many many many more
+
+0:26:25.240,0:26:31.480
+units in the other case in order to be
+
+0:26:27.370,0:26:33.190
+able to go to actually be as good as you
+
+0:26:31.480,0:26:34.900
+are by stacking just a few of those
+
+0:26:33.190,0:26:37.330
+layers so in other cases you will have
+
+0:26:34.900,0:26:39.010
+to do many computations as well if you
+
+0:26:37.330,0:26:40.780
+get paralyzed software I guess like
+
+0:26:39.010,0:26:44.200
+power parallel hardware then you can
+
+0:26:40.780,0:26:44.980
+prefer maybe those large versions but I
+
+0:26:44.200,0:26:53.080
+wouldn't go
+
+0:26:44.980,0:26:55.000
+for those yeah that's correct is bad so
+
+0:26:53.080,0:26:59.250
+it takes also much more space in memory
+
+0:26:55.000,0:27:02.919
+all right so much time we make noise
+
+0:26:59.250,0:27:03.669
+okay I can't watch my watch okay never
+
+0:27:02.919,0:27:07.090
+mind
+
+0:27:03.669,0:27:08.559
+all right so okay so in this case my
+
+0:27:07.090,0:27:10.960
+input lives in a two dimensional space
+
+0:27:08.559,0:27:12.549
+my hidden layer is going to be living a
+
+0:27:10.960,0:27:14.890
+hundred dimensional space in my finite
+
+0:27:12.549,0:27:18.450
+class my final output is going to be
+
+0:27:14.890,0:27:20.710
+living in a three dimensional space and
+
+0:27:18.450,0:27:22.809
+this would be the second part where you
+
+0:27:20.710,0:27:24.970
+start doing stuff with your computer but
+
+0:27:22.809,0:27:27.309
+we are in class we have no time so a
+
+0:27:24.970,0:27:29.919
+neural network training huh
+
+0:27:27.309,0:27:31.600
+how does it work so we use this guy here
+
+0:27:29.919,0:27:34.679
+the soft Arg max which is a software
+
+0:27:31.600,0:27:36.940
+version of the max of the art max right
+
+0:27:34.679,0:27:38.770
+which is simply the fraction of the
+
+0:27:36.940,0:27:40.900
+exponential divided by the sum of all
+
+0:27:38.770,0:27:43.330
+the exponential of the other items right
+
+0:27:40.900,0:27:45.280
+we already seen this yesterday why do I
+
+0:27:43.330,0:27:51.070
+write these tough leads between zero and
+
+0:27:45.280,0:27:57.429
+one why it doesn't why didn't I use the
+
+0:27:51.070,0:27:58.690
+square brackets I so the answer was it's
+
+0:27:57.429,0:28:02.110
+very unlikely I would say it's
+
+0:27:58.690,0:28:03.190
+impossible why it's impossible because
+
+0:28:02.110,0:28:07.419
+the exponential function of the
+
+0:28:03.190,0:28:13.559
+numerator is strictly positive why
+
+0:28:07.419,0:28:16.929
+doesn't reach one because the
+
+0:28:13.559,0:28:20.350
+exponential is strictly positive that
+
+0:28:16.929,0:28:21.850
+was the answer correct yeah the bottom
+
+0:28:20.350,0:28:24.960
+doesn't is always going to be slightly
+
+0:28:21.850,0:28:27.940
+larger than the numerator right
+
+0:28:24.960,0:28:30.070
+all right so the input to be soft Arg
+
+0:28:27.940,0:28:32.110
+max layer is called logic and the logics
+
+0:28:30.070,0:28:37.570
+are the output the linear output of the
+
+0:28:32.110,0:28:40.750
+network here we're gonna have our total
+
+0:28:37.570,0:28:43.150
+loss the loss for the specific for the
+
+0:28:40.750,0:28:45.400
+old data set we have which is function
+
+0:28:43.150,0:28:47.740
+of the capital y hat the prediction of
+
+0:28:45.400,0:28:51.490
+the network for the whole set of inputs
+
+0:28:47.740,0:28:53.890
+and the vector C which is this vector of
+
+0:28:51.490,0:28:57.220
+labels and which is gonna be simply here
+
+0:28:53.890,0:28:58.150
+the average of this lower case and this
+
+0:28:57.220,0:29:00.240
+curly
+
+0:28:58.150,0:29:04.870
+which is basically the per sample loss
+
+0:29:00.240,0:29:06.460
+Yun uses capital L for that thing so in
+
+0:29:04.870,0:29:09.430
+this case if I do if I want to do
+
+0:29:06.460,0:29:12.690
+classification my per sample loss is
+
+0:29:09.430,0:29:17.020
+gonna be basically minus log of the
+
+0:29:12.690,0:29:20.590
+output of the soft agar max at the
+
+0:29:17.020,0:29:23.910
+correct class C okay so C is gonna be my
+
+0:29:20.590,0:29:27.280
+correct class which is that index 1 hot
+
+0:29:23.910,0:29:30.160
+actually see was the the Cardinal or
+
+0:29:27.280,0:29:32.470
+Deena no Cardinal number right the blue
+
+0:29:30.160,0:29:34.450
+why was the one hot encoding and my why
+
+0:29:32.470,0:29:36.220
+why hot is gonna be the output of the
+
+0:29:34.450,0:29:39.640
+network which is the output of the soft
+
+0:29:36.220,0:29:42.580
+soft arguments so my per simple also
+
+0:29:39.640,0:29:47.010
+gonna be the minus log of that so dark
+
+0:29:42.580,0:29:50.320
+max are the correct case class right so
+
+0:29:47.010,0:29:51.850
+do you understand what I said yes so
+
+0:29:50.320,0:29:54.100
+just to test your understanding you're
+
+0:29:51.850,0:29:56.890
+gonna be telling me what's right next so
+
+0:29:54.100,0:29:59.250
+let's say yeah this loss is also called
+
+0:29:56.890,0:30:03.330
+cross entropy or negative log likelihood
+
+0:29:59.250,0:30:06.160
+so let's say my pink X which looks white
+
+0:30:03.330,0:30:09.280
+is there and then I have my class the
+
+0:30:06.160,0:30:13.330
+orange class equal to 1 therefore what's
+
+0:30:09.280,0:30:19.450
+gonna be my blue y the one hot and
+
+0:30:13.330,0:30:22.390
+coding of the class c100 okay fantastic
+
+0:30:19.450,0:30:25.810
+alright so let's say I feed these eggs
+
+0:30:22.390,0:30:29.080
+to my neural net so I'm going to compute
+
+0:30:25.810,0:30:33.730
+these Y or case missing a white sorry my
+
+0:30:29.080,0:30:38.410
+bad so here is a Y right Y hat of this
+
+0:30:33.730,0:30:40.570
+item here so why do I write almost no
+
+0:30:38.410,0:30:43.240
+sorry sorry sorry my bad so I put these
+
+0:30:40.570,0:30:44.620
+eggs here inside this Y hat and the
+
+0:30:43.240,0:30:47.110
+output of the network is gonna be this
+
+0:30:44.620,0:30:49.800
+almost one almost 0 almost 0 what is
+
+0:30:47.110,0:30:49.800
+almost 1
+
+0:30:51.000,0:31:02.170
+easy 1 plus or 1 minus what is almost 0
+
+0:30:58.830,0:31:03.540
+0 plus very good and what about the last
+
+0:31:02.170,0:31:07.330
+one
+
+0:31:03.540,0:31:10.030
+0 plus good alright so if I have this
+
+0:31:07.330,0:31:10.660
+guy here what's going to be my person
+
+0:31:10.030,0:31:13.570
+per loss
+
+0:31:10.660,0:31:16.090
+so my percent loss is going to be these
+
+0:31:13.570,0:31:19.780
+output almost 1 almost 0 almost 0 and
+
+0:31:16.090,0:31:24.520
+then class number 1 ok so what do I get
+
+0:31:19.780,0:31:30.550
+here so here you're going to be
+
+0:31:24.520,0:31:36.130
+computing the what is y hat of C Y hat
+
+0:31:30.550,0:31:42.100
+of C is gonna be hold on yes so Y hat of
+
+0:31:36.130,0:31:50.860
+C is gonna be almost 1 which is 1 - okay
+
+0:31:42.100,0:31:58.300
+then you have log of 1 - so it's gonna
+
+0:31:50.860,0:32:00.429
+be 0 - then it is a minus in front you
+
+0:31:58.300,0:32:03.670
+get 0 plus death correct very good
+
+0:32:00.429,0:32:05.770
+how about so basically if you input
+
+0:32:03.670,0:32:08.320
+these eggs in my network the class I
+
+0:32:05.770,0:32:13.690
+expect to have for that input is 1 and
+
+0:32:08.320,0:32:15.520
+my network says 1 0 0 the loss is gonna
+
+0:32:13.690,0:32:18.490
+be which basically is the penalty for
+
+0:32:15.520,0:32:20.170
+saying you know say bullshit is gonna be
+
+0:32:18.490,0:32:23.140
+oh no penalty
+
+0:32:20.170,0:32:25.540
+you're doing well ok so let's see what's
+
+0:32:23.140,0:32:30.820
+happening instead if my network says oh
+
+0:32:25.540,0:32:35.200
+no no this simple is 0 1 0 so my percent
+
+0:32:30.820,0:32:39.520
+loss of 0 1 0 & 1 is going to be what so
+
+0:32:35.200,0:32:44.790
+what is y hat of C almost zero what kind
+
+0:32:39.520,0:32:47.860
+of 1 1 0 0 plus what is log of 0 plus
+
+0:32:44.790,0:32:51.640
+negative infinity what is with a minus
+
+0:32:47.860,0:32:53.559
+in front so this guy approaches positive
+
+0:32:51.640,0:32:55.990
+infinity right so that's why there is a
+
+0:32:53.559,0:32:58.929
+plus there if you just write infinity
+
+0:32:55.990,0:33:00.730
+that's wrong for me okay plus infinity
+
+0:32:58.929,0:33:04.000
+minus infinity infinities are three
+
+0:33:00.730,0:33:06.910
+different items different animals
+
+0:33:04.000,0:33:08.890
+okay makes sense so if your networks say
+
+0:33:06.910,0:33:12.690
+bullshit you're gonna say plus infinity
+
+0:33:08.890,0:33:15.820
+very bad Network if the network says no
+
+0:33:12.690,0:33:20.010
+kind of right answer you just say all
+
+0:33:15.820,0:33:20.010
+right you're doing well yeah question
+
+0:33:24.540,0:33:37.690
+second sorry so why hot the question you
+
+0:33:35.380,0:33:39.790
+cannot see maybe here in if you squint a
+
+0:33:37.690,0:33:42.360
+little bit in gray you have white hat is
+
+0:33:39.790,0:33:45.490
+going to be a function of your input X
+
+0:33:42.360,0:33:48.040
+through two rotations and to squashing
+
+0:33:45.490,0:33:50.260
+x' one squashing being the positive part
+
+0:33:48.040,0:33:53.410
+and the other squashing bhindi soft arc
+
+0:33:50.260,0:33:56.410
+max right and so if you use these per
+
+0:33:53.410,0:33:59.590
+sample loss on the on top of your soft
+
+0:33:56.410,0:34:01.300
+Arg max then you get this kind of cross
+
+0:33:59.590,0:34:03.790
+entropy term and then if you compute
+
+0:34:01.300,0:34:07.030
+what's written here you get basically
+
+0:34:03.790,0:34:10.000
+this if you input an x and your network
+
+0:34:07.030,0:34:12.370
+is correct you say good network good boy
+
+0:34:10.000,0:34:15.040
+if you stab your network say it's
+
+0:34:12.370,0:34:24.520
+bullshit then you're gonna say bad you
+
+0:34:15.040,0:34:28.990
+know bad network order makes sense so Y
+
+0:34:24.520,0:34:31.780
+hat is a vector and I choose the seized
+
+0:34:28.990,0:34:37.210
+items so that you can see you can think
+
+0:34:31.780,0:34:40.300
+about this one is y hot subscript C but
+
+0:34:37.210,0:34:42.040
+C is actually the yeah C is gonna be one
+
+0:34:40.300,0:34:45.580
+two or three right so it's gonna be
+
+0:34:42.040,0:34:48.370
+basically or y1 or Y hot tool Y hat
+
+0:34:45.580,0:34:51.940
+three so one of the three items elements
+
+0:34:48.370,0:34:59.020
+of Y hat makes sense no yes you can say
+
+0:34:51.940,0:35:02.470
+no did I answer your question no so Y
+
+0:34:59.020,0:35:04.920
+hat it's a vector of three items three
+
+0:35:02.470,0:35:04.920
+elements
+
+0:35:06.529,0:35:11.400
+yeah here right why Hut if you squint a
+
+0:35:09.660,0:35:12.950
+little bit it's gonna be the output of
+
+0:35:11.400,0:35:17.160
+the network
+
+0:35:12.950,0:35:19.109
+okay glasses yeah and the output guy so
+
+0:35:17.160,0:35:20.520
+this inside this guy here inside is
+
+0:35:19.109,0:35:22.680
+gonna be the logic to the linear output
+
+0:35:20.520,0:35:24.049
+and then you apply this G which is gonna
+
+0:35:22.680,0:35:27.270
+be this soft arcamax
+
+0:35:24.049,0:35:29.190
+okay which is kind of normalizing the
+
+0:35:27.270,0:35:31.410
+outputs to be within zero and one such
+
+0:35:29.190,0:35:49.079
+that the sum of all the items of the
+
+0:35:31.410,0:35:51.630
+output is going to be up to one so why
+
+0:35:49.079,0:35:53.160
+don't you use it mean square error
+
+0:35:51.630,0:35:56.670
+I think young yesterday addressed is
+
+0:35:53.160,0:35:58.859
+this question he he actually wrote and
+
+0:35:56.670,0:36:00.690
+wrote and written here's and written on
+
+0:35:58.859,0:36:03.089
+the on the notebook right so but the
+
+0:36:00.690,0:36:05.250
+point is that this is the loss function
+
+0:36:03.089,0:36:07.490
+that we use for classification which
+
+0:36:05.250,0:36:10.650
+gives you something that actually works
+
+0:36:07.490,0:36:13.470
+other losses may not be optimal optimize
+
+0:36:10.650,0:36:16.049
+so when you like to do classification we
+
+0:36:13.470,0:36:17.880
+use this cross entropy which also has
+
+0:36:16.049,0:36:20.460
+other statistical property I'm not going
+
+0:36:17.880,0:36:23.000
+to be talking about here all right so
+
+0:36:20.460,0:36:25.470
+since I'd like also to go over the
+
+0:36:23.000,0:36:30.450
+notebooks and stuff I will try to speed
+
+0:36:25.470,0:36:33.510
+up a little bit alright so training how
+
+0:36:30.450,0:36:35.910
+does training work so I just get all the
+
+0:36:33.510,0:36:38.670
+parameters all the matrices like weight
+
+0:36:35.910,0:36:41.130
+matrices biases and whatever I get a set
+
+0:36:38.670,0:36:42.539
+of those weights and I called them
+
+0:36:41.130,0:36:44.490
+capital theta is gonna be in the
+
+0:36:42.539,0:36:48.029
+collection of the set of all my
+
+0:36:44.490,0:36:51.420
+trainable parameters such that I can
+
+0:36:48.029,0:36:55.500
+write now my J of theta which is defined
+
+0:36:51.420,0:37:01.710
+as the loss so it's the same stuff why
+
+0:36:55.500,0:37:03.779
+did I change notation so what can you
+
+0:37:01.710,0:37:06.470
+notice here what's inside this function
+
+0:37:03.779,0:37:08.970
+this function is function of the
+
+0:37:06.470,0:37:11.630
+parameters whereas this function here
+
+0:37:08.970,0:37:14.010
+the loss is usually function of the
+
+0:37:11.630,0:37:15.720
+output of the network I mean this Y hat
+
+0:37:14.010,0:37:17.519
+is the output of the network in this
+
+0:37:15.720,0:37:21.119
+case since its capital is for the whole
+
+0:37:17.519,0:37:22.979
+that's right so this is the one the way
+
+0:37:21.119,0:37:25.199
+we use the right when we can be right
+
+0:37:22.979,0:37:26.549
+like the loss the type of loss is you
+
+0:37:25.199,0:37:28.919
+simply say or J is going to be my
+
+0:37:26.549,0:37:31.289
+objective function for a optimization
+
+0:37:28.919,0:37:33.509
+problem we're gonna see it right now so
+
+0:37:31.289,0:37:36.119
+how does it work we can think about J
+
+0:37:33.509,0:37:40.289
+being this purple guy here which looks
+
+0:37:36.119,0:37:43.049
+like that there I use like a lowercase a
+
+0:37:40.289,0:37:44.759
+lowercase theta which is basically a
+
+0:37:43.049,0:37:47.809
+scalar you just think about having one
+
+0:37:44.759,0:37:51.059
+parameter and so if I have J on the
+
+0:37:47.809,0:37:53.759
+y-axis I'm gonna have data on the x-axis
+
+0:37:51.059,0:37:55.259
+right so how do you train these networks
+
+0:37:53.759,0:37:57.509
+usually you start with you know a
+
+0:37:55.259,0:37:59.549
+randomly initialized Network which means
+
+0:37:57.509,0:38:02.369
+you know you pick just an initial theta
+
+0:37:59.549,0:38:05.459
+zero value that specific point you can
+
+0:38:02.369,0:38:08.849
+see that the the J which is gonna be
+
+0:38:05.459,0:38:10.979
+called training training loss has a
+
+0:38:08.849,0:38:14.399
+specific value which is going to be my J
+
+0:38:10.979,0:38:16.619
+at point theta zero there you can
+
+0:38:14.399,0:38:18.829
+compute the derivative which you can't
+
+0:38:16.619,0:38:21.179
+even see it's a green line they're
+
+0:38:18.829,0:38:29.069
+parallel to the yeah you can't see I
+
+0:38:21.179,0:38:30.599
+know sorry again right how pretty so you
+
+0:38:29.069,0:38:31.949
+had the green slope there which is
+
+0:38:30.599,0:38:34.079
+showing you the derivative at that point
+
+0:38:31.949,0:38:36.689
+and then that is basically the
+
+0:38:34.079,0:38:38.609
+derivative for my J function with
+
+0:38:36.689,0:38:41.909
+respect to the parameter theta computed
+
+0:38:38.609,0:38:43.109
+at the point theta 0 now the only thing
+
+0:38:41.909,0:38:47.609
+you have to do is going to be taking a
+
+0:38:43.109,0:38:50.239
+step towards left so is that variable to
+
+0:38:47.609,0:38:50.239
+be positive or negative
+
+0:38:53.270,0:38:59.640
+so do you agree that the relative is
+
+0:38:56.869,0:39:03.720
+positive fantastic but I'm taking a step
+
+0:38:59.640,0:39:04.820
+towards the left and so how do that how
+
+0:39:03.720,0:39:08.250
+do you do that
+
+0:39:04.820,0:39:09.589
+is actually you just put on - okay
+
+0:39:08.250,0:39:12.030
+fantastic
+
+0:39:09.589,0:39:17.910
+so this is called how it's called these
+
+0:39:12.030,0:39:20.250
+stuff here okay so this is gradient
+
+0:39:17.910,0:39:26.040
+descent right how do you train on your
+
+0:39:20.250,0:39:30.060
+own network in this okay game 800 votes
+
+0:39:26.040,0:39:33.839
+I heard another word here whom who say
+
+0:39:30.060,0:39:36.750
+back propagation here today no I mean
+
+0:39:33.839,0:39:39.570
+did I okay I did if I didn't mention
+
+0:39:36.750,0:39:44.280
+back propagation yet right so how do we
+
+0:39:39.570,0:39:48.450
+train a network gradient method right
+
+0:39:44.280,0:39:49.950
+okay cool how to publish gradients how
+
+0:39:48.450,0:39:55.530
+do you compute these gradients so what
+
+0:39:49.950,0:39:58.080
+is this the J in the W Y so this guy is
+
+0:39:55.530,0:40:00.030
+gonna be my J in the Y which is the
+
+0:39:58.080,0:40:01.980
+partial with respect to the output times
+
+0:40:00.030,0:40:04.380
+the Y in DW right
+
+0:40:01.980,0:40:06.619
+and similarly how this what is the
+
+0:40:04.380,0:40:09.420
+partial derivative of the what is the
+
+0:40:06.619,0:40:11.550
+Jacobian of my target my objective
+
+0:40:09.420,0:40:14.190
+function with respect to the WH is gonna
+
+0:40:11.550,0:40:16.050
+be my partial derivative of the output
+
+0:40:14.190,0:40:18.660
+of the cost with respect to the output
+
+0:40:16.050,0:40:21.869
+of the network then times the Jacobian
+
+0:40:18.660,0:40:23.070
+of the the output of the night so with
+
+0:40:21.869,0:40:25.619
+respect to the hidden layer and then
+
+0:40:23.070,0:40:30.170
+finally the partial of the hidden with
+
+0:40:25.619,0:40:30.170
+respect to DW right how is called this
+
+0:40:31.609,0:40:40.140
+back propagation okay all right so what
+
+0:40:35.790,0:40:42.180
+is back propagation there are two
+
+0:40:40.140,0:40:46.109
+computations right how do we train the
+
+0:40:42.180,0:40:48.790
+network okay if you get it wrong on the
+
+0:40:46.109,0:40:59.630
+midterm when I fail you
+
+0:40:48.790,0:41:04.099
+all right yes this the left is an
+
+0:40:59.630,0:41:08.660
+exercise why these are plus here okay so
+
+0:41:04.099,0:41:12.320
+in the last how many minutes I have five
+
+0:41:08.660,0:41:16.460
+minutes really no I mean so that's a lot
+
+0:41:12.320,0:41:23.869
+of time so we're gonna go through two
+
+0:41:16.460,0:41:34.310
+notebooks maybe they're meaner see the
+
+0:41:23.869,0:41:37.940
+word get up by torch Conda activate main
+
+0:41:34.310,0:41:46.730
+course yeah works
+
+0:41:37.940,0:41:50.390
+Jupiter notebook okay how do I share my
+
+0:41:46.730,0:42:00.170
+screen system preferences yeah but I
+
+0:41:50.390,0:42:04.640
+cannot see arrangement mirror okay you
+
+0:42:00.170,0:42:07.130
+can see no so we're gonna be going
+
+0:42:04.640,0:42:11.540
+through the spider classification right
+
+0:42:07.130,0:42:15.500
+now you know
+
+0:42:11.540,0:42:16.790
+okay so since he's gonna be oh you can
+
+0:42:15.500,0:42:17.210
+see I stuff I don't have to turn off the
+
+0:42:16.790,0:42:19.030
+light
+
+0:42:17.210,0:42:23.060
+okay so here I'm gonna do basically
+
+0:42:19.030,0:42:26.300
+import random shit random stuff tours
+
+0:42:23.060,0:42:28.609
+tours and an optimum math ipython such
+
+0:42:26.300,0:42:31.880
+that you can see something I use my
+
+0:42:28.609,0:42:37.280
+awesome default configuration we have a
+
+0:42:31.880,0:42:40.280
+device what's the devices for for
+
+0:42:37.280,0:42:43.220
+whatever the device you want to run the
+
+0:42:40.280,0:42:46.339
+stuff only want so if this is taking
+
+0:42:43.220,0:42:48.500
+care here I just put the same number so
+
+0:42:46.339,0:42:50.359
+you see have seen before you should be
+
+0:42:48.500,0:42:51.020
+able to understand this stuff and do it
+
+0:42:50.359,0:42:52.490
+yourself
+
+0:42:51.020,0:42:54.650
+that's part of I think kind of the
+
+0:42:52.490,0:42:59.630
+homework next year we had to do this as
+
+0:42:54.650,0:43:01.280
+homework remember all right so I just
+
+0:42:59.630,0:43:02.060
+visualize the data you're ready seen
+
+0:43:01.280,0:43:05.420
+this stuff okay
+
+0:43:02.060,0:43:07.340
+so oh there is no surprise so this is a
+
+0:43:05.420,0:43:09.680
+starting point points are having two
+
+0:43:07.340,0:43:11.270
+coordinates like each point has X&Y and
+
+0:43:09.680,0:43:13.160
+then you have a color for the different
+
+0:43:11.270,0:43:14.960
+class I'm not running it too fast right
+
+0:43:13.160,0:43:16.640
+I'm not support you're not supposed to
+
+0:43:14.960,0:43:18.350
+read the code now you read the code
+
+0:43:16.640,0:43:20.180
+later and play with a notebook at least
+
+0:43:18.350,0:43:21.590
+one hour right now we just go through
+
+0:43:20.180,0:43:24.170
+the notebook just to see that actually
+
+0:43:21.590,0:43:28.610
+runs because you never know it's an open
+
+0:43:24.170,0:43:31.310
+source project right so linear model I'm
+
+0:43:28.610,0:43:32.630
+gonna be training this guy over here so
+
+0:43:31.310,0:43:34.490
+I create a sequential which is a
+
+0:43:32.630,0:43:37.010
+container I don't have to use it but
+
+0:43:34.490,0:43:38.390
+it's easier and I put there to linear
+
+0:43:37.010,0:43:40.580
+what is linear it's wrong
+
+0:43:38.390,0:43:41.630
+what's a linear it's on affine
+
+0:43:40.580,0:43:44.840
+transformation what's an affine
+
+0:43:41.630,0:43:47.830
+transformation five things are gonna be
+
+0:43:44.840,0:43:51.290
+on the midterm so you know just realize
+
+0:43:47.830,0:43:53.120
+going from D to H where these actually
+
+0:43:51.290,0:43:56.480
+the input space H is gonna be the hidden
+
+0:43:53.120,0:43:58.880
+and then from hidden on the output just
+
+0:43:56.480,0:44:03.410
+linear layers right so how are the
+
+0:43:58.880,0:44:04.070
+decision boundaries here crappy yes
+
+0:44:03.410,0:44:07.310
+correct
+
+0:44:04.070,0:44:11.410
+linear so I start this guy trains in a
+
+0:44:07.310,0:44:18.620
+blast and then I show you the output
+
+0:44:11.410,0:44:20.480
+nothing right bad bad network its best
+
+0:44:18.620,0:44:23.120
+right so why are these decision
+
+0:44:20.480,0:44:31.820
+boundaries put in this configuration why
+
+0:44:23.120,0:44:35.090
+they are not rotated why do you have the
+
+0:44:31.820,0:44:39.830
+yellow area on the left-hand side and
+
+0:44:35.090,0:44:44.570
+not on the other side it tries to do it
+
+0:44:39.830,0:44:51.340
+best right so my curacy it's 0 5 you can
+
+0:44:44.570,0:44:51.340
+see so what is 0 5 ok who said random
+
+0:44:53.049,0:45:01.189
+okay very good all right otherwise you
+
+0:44:57.650,0:45:09.229
+want to refresh your probability hmm
+
+0:45:01.189,0:45:12.769
+okay 1/3 right okay you have no time but
+
+0:45:09.229,0:45:14.150
+I wanted to add one more thing yeah we
+
+0:45:12.769,0:45:16.369
+don't have training losses here
+
+0:45:14.150,0:45:19.939
+what is the first value of the training
+
+0:45:16.369,0:45:23.709
+loss the first this is the latest value
+
+0:45:19.939,0:45:28.900
+I get right so this is my final loss all
+
+0:45:23.709,0:45:28.900
+0.86 what is the first value of my loss
+
+0:45:35.950,0:45:43.970
+any idea about you see my screen here
+
+0:45:40.490,0:45:46.789
+damn I cannot even okay ok figure out
+
+0:45:43.970,0:45:51.529
+how much the first number you get there
+
+0:45:46.789,0:45:53.180
+is no y-you figure out if you don't
+
+0:45:51.529,0:45:54.440
+figure out the next week I tell you but
+
+0:45:53.180,0:45:56.259
+you should figure it out right so you
+
+0:45:54.440,0:45:59.869
+should try to use your brain too
+
+0:45:56.259,0:46:01.849
+sometimes alright so let's do something
+
+0:45:59.869,0:46:05.299
+here I'm gonna be adding this positive
+
+0:46:01.849,0:46:09.109
+part in the center ok so I just add one
+
+0:46:05.299,0:46:10.670
+more little tiny zero to the negative
+
+0:46:09.109,0:46:11.150
+numbers right everything else is the
+
+0:46:10.670,0:46:13.390
+same
+
+0:46:11.150,0:46:15.920
+I did I don't change anything but I
+
+0:46:13.390,0:46:18.500
+delete negative number spike with the
+
+0:46:15.920,0:46:31.430
+Zook the the thing either I don't know
+
+0:46:18.500,0:46:34.759
+the English name accuracy Oh No okay see
+
+0:46:31.430,0:46:38.450
+are you excited are you waiting it for
+
+0:46:34.759,0:46:47.809
+it kind of you are sleeping I guess nice
+
+0:46:38.450,0:46:50.150
+oh okay cool so yeah two minutes left
+
+0:46:47.809,0:46:52.970
+try changing the number of hidden layers
+
+0:46:50.150,0:46:54.950
+right so the try changing the sorry try
+
+0:46:52.970,0:47:00.140
+changing the dimension of the hidden
+
+0:46:54.950,0:47:01.849
+layer what does it happen if you use two
+
+0:47:00.140,0:47:04.640
+hidden two neurons in the hidden layer
+
+0:47:01.849,0:47:05.839
+of fine yawns sorry try playing with
+
+0:47:04.640,0:47:10.160
+this right and figure out what's
+
+0:47:05.839,0:47:11.930
+happening you can comment on Piazza you
+
+0:47:10.160,0:47:15.200
+can start talking you can have like you
+
+0:47:11.930,0:47:18.710
+know conversations - all right we really
+
+0:47:15.200,0:47:20.990
+highly encourage you to play with these
+
+0:47:18.710,0:47:22.880
+notebooks and figure out things in the
+
+0:47:20.990,0:47:28.910
+last 30 seconds we go through another
+
+0:47:22.880,0:47:35.089
+notebook which is gonna be exactly the
+
+0:47:28.910,0:47:39.650
+same okay but in this case my point look
+
+0:47:35.089,0:47:41.150
+like this you see anything kind of right
+
+0:47:39.650,0:47:43.970
+so you see like this kind of banana
+
+0:47:41.150,0:47:45.670
+which is not a banana is like a you know
+
+0:47:43.970,0:47:48.250
+double like see
+
+0:47:45.670,0:47:49.750
+Nikki Nike thank you symbol alright so
+
+0:47:48.250,0:47:55.839
+I'm gonna be training here my linear
+
+0:47:49.750,0:47:57.430
+network I train everything okay I
+
+0:47:55.839,0:47:59.349
+explained now don't worry
+
+0:47:57.430,0:48:01.269
+alright so I trained my linear network
+
+0:47:59.349,0:48:04.450
+what is my linear network the same stuff
+
+0:48:01.269,0:48:09.819
+as before I have sequential a container
+
+0:48:04.450,0:48:11.289
+where I put my tool what are those fine
+
+0:48:09.819,0:48:15.819
+transformations yes correct
+
+0:48:11.289,0:48:17.829
+I sent to the device oh okay how do we
+
+0:48:15.819,0:48:20.380
+train a network right so to train a
+
+0:48:17.829,0:48:23.109
+network you have your input X these are
+
+0:48:20.380,0:48:25.390
+all my points I fed I feed them to the
+
+0:48:23.109,0:48:27.400
+network inside my mother and my mother
+
+0:48:25.390,0:48:29.289
+will give me my white bread right and
+
+0:48:27.400,0:48:33.160
+the definition of the model it's this
+
+0:48:29.289,0:48:34.809
+one is this container here okay so we
+
+0:48:33.160,0:48:37.539
+have the model we feed we call the whole
+
+0:48:34.809,0:48:40.480
+X you get white bread then I compute the
+
+0:48:37.539,0:48:41.920
+loss which is gonna be my criterion to
+
+0:48:40.480,0:48:44.619
+which which is computed over my
+
+0:48:41.920,0:48:46.690
+predictions and wise the wise are the
+
+0:48:44.619,0:48:49.359
+classes right and the white prediction
+
+0:48:46.690,0:48:51.369
+are those output of the network in this
+
+0:48:49.359,0:48:53.980
+case the criterion it's written here is
+
+0:48:51.369,0:48:55.539
+going to be our MSC loss so we change
+
+0:48:53.980,0:48:58.809
+before we were using actually a cross
+
+0:48:55.539,0:49:00.880
+entropy minus log of the softmax soft
+
+0:48:58.809,0:49:02.559
+dark max now we are going to using a MSC
+
+0:49:00.880,0:49:04.809
+because we are using a regression in a
+
+0:49:02.559,0:49:07.390
+very no regression problem so we compute
+
+0:49:04.809,0:49:09.730
+the loss which is the quadratic distance
+
+0:49:07.390,0:49:11.890
+between your output and the target right
+
+0:49:09.730,0:49:13.630
+so if you talk about the regression we
+
+0:49:11.890,0:49:15.519
+talked about target if we talk about
+
+0:49:13.630,0:49:18.329
+classification we're gonna be talking
+
+0:49:15.519,0:49:23.369
+about classes in labels so neighbors
+
+0:49:18.329,0:49:23.369
+classification regression we talk about
+
+0:49:23.549,0:49:29.980
+target okay all right so we compute the
+
+0:49:26.829,0:49:33.250
+loss here and then I had to clean up
+
+0:49:29.980,0:49:36.250
+whatever happened before so I say to my
+
+0:49:33.250,0:49:38.109
+optimizer clean all the previous left
+
+0:49:36.250,0:49:41.259
+over from the previous operation which
+
+0:49:38.109,0:49:43.240
+is this zero grad pass then I perform
+
+0:49:41.259,0:49:45.660
+backward what is backward what is back
+
+0:49:43.240,0:49:45.660
+propagation
+
+0:49:47.040,0:49:59.140
+computation of the partial derivative
+
+0:49:49.630,0:50:02.760
+derivative of the second partial partial
+
+0:49:59.140,0:50:05.410
+derivative of loss with respect to the
+
+0:50:02.760,0:50:07.240
+parameter so lost not backwards is
+
+0:50:05.410,0:50:08.830
+simply chain rule and computes all the
+
+0:50:07.240,0:50:10.450
+partial derivative of your final loss
+
+0:50:08.830,0:50:12.310
+which is gonna be in this case the mean
+
+0:50:10.450,0:50:14.530
+squared error with respect to each and
+
+0:50:12.310,0:50:17.490
+every parameter of your model finally
+
+0:50:14.530,0:50:19.810
+you do a step which is gonna be stepping
+
+0:50:17.490,0:50:21.400
+if you that's the gradient you step
+
+0:50:19.810,0:50:24.820
+backwards in the direction of the
+
+0:50:21.400,0:50:26.800
+gradient okay all right so we train this
+
+0:50:24.820,0:50:28.630
+network which didn't have a non
+
+0:50:26.800,0:50:31.470
+linearity and it did something I don't
+
+0:50:28.630,0:50:34.210
+know how to interpret this loss and this
+
+0:50:31.470,0:50:35.940
+is gonna be my output of the network
+
+0:50:34.210,0:50:42.370
+what is it
+
+0:50:35.940,0:50:45.040
+linear regression a-okay boring okay so
+
+0:50:42.370,0:50:48.520
+now I'm gonna do deep networks super
+
+0:50:45.040,0:50:52.330
+exciting things what do I change
+
+0:50:48.520,0:50:56.320
+I just put I just delete negative values
+
+0:50:52.330,0:50:58.360
+okay how cool is that all right so so I
+
+0:50:56.320,0:51:01.420
+used move the negative values sometimes
+
+0:50:58.360,0:51:03.820
+here real oh all sometimes I just use a
+
+0:51:01.420,0:51:06.400
+hyperbolic tangent I just split in two
+
+0:51:03.820,0:51:11.320
+times so you can see the comparison I
+
+0:51:06.400,0:51:14.020
+train this stuff and see let's see the
+
+0:51:11.320,0:51:16.360
+prediction before actually training so
+
+0:51:14.020,0:51:22.300
+before training you're gonna get this
+
+0:51:16.360,0:51:24.160
+kind of predictions right kind of
+
+0:51:22.300,0:51:27.700
+shooting towards zero I know for example
+
+0:51:24.160,0:51:30.760
+line and the Green Line is maybe
+
+0:51:27.700,0:51:33.070
+representing the variance here where my
+
+0:51:30.760,0:51:35.230
+cursor is is 0 so the variance here is
+
+0:51:33.070,0:51:37.630
+like 0.2 roughly between all those
+
+0:51:35.230,0:51:40.240
+predictions let's go down and let's
+
+0:51:37.630,0:51:44.380
+watch how the network changed their
+
+0:51:40.240,0:51:46.810
+final output given that we have used the
+
+0:51:44.380,0:51:49.630
+loss right and we have we've moved
+
+0:51:46.810,0:51:51.940
+against so we are in the mountain there
+
+0:51:49.630,0:51:55.450
+is fog you can't see where the valley is
+
+0:51:51.940,0:51:56.770
+it's just walk towards the slippery you
+
+0:51:55.450,0:51:58.540
+know what that thing that goes down
+
+0:51:56.770,0:52:00.730
+right towards the
+
+0:51:58.540,0:52:03.880
+down to the body so after doing this
+
+0:52:00.730,0:52:07.930
+procedure several times are you excited
+
+0:52:03.880,0:52:13.240
+to see how this network perform I don't
+
+0:52:07.930,0:52:17.260
+hear you okay thank you alright so here
+
+0:52:13.240,0:52:20.140
+mom so guess which one okay guess which
+
+0:52:17.260,0:52:22.110
+one is a is using the positive part and
+
+0:52:20.140,0:52:25.540
+which one is using the hyperbolic
+
+0:52:22.110,0:52:27.540
+tangent okay because you're solid
+
+0:52:25.540,0:52:30.550
+Piper's damn
+
+0:52:27.540,0:52:34.540
+okay so left inside you can see how my
+
+0:52:30.550,0:52:39.430
+network approximates my input is a what
+
+0:52:34.540,0:52:42.940
+is that thing called can you see
+
+0:52:39.430,0:52:47.530
+anything maybe you can see how does this
+
+0:52:42.940,0:52:51.220
+stuff look like this looked like a
+
+0:52:47.530,0:52:54.720
+straight line right so my network it's
+
+0:52:51.220,0:52:57.760
+simply a output is simply a piecewise
+
+0:52:54.720,0:53:00.280
+linear you know approximation of your
+
+0:52:57.760,0:53:05.910
+input this is because I just deleted the
+
+0:53:00.280,0:53:05.910
+negative things instead if you use the
+
+0:53:06.630,0:53:14.610
+what is it like parabolic tangent yes
+
+0:53:10.980,0:53:18.070
+you get this guy here how smooth right
+
+0:53:14.610,0:53:22.630
+okay why did I do this stuff this is
+
+0:53:18.070,0:53:24.070
+nicer right I think okay first of all
+
+0:53:22.630,0:53:26.230
+you can see the yellow thing which is
+
+0:53:24.070,0:53:28.990
+the standard deviation which looks like
+
+0:53:26.230,0:53:31.000
+fucked up here and less fucked up on the
+
+0:53:28.990,0:53:34.120
+left hand side right see with the
+
+0:53:31.000,0:53:35.860
+standard deviation is really spiky so if
+
+0:53:34.120,0:53:38.940
+you train an insane Belov network these
+
+0:53:35.860,0:53:42.010
+networks will kind of not agree as
+
+0:53:38.940,0:53:44.800
+consistently as those other dudes on the
+
+0:53:42.010,0:53:47.920
+left hand side moreover let me change
+
+0:53:44.800,0:53:50.860
+one line let's put here number four so
+
+0:53:47.920,0:53:52.870
+I'm gonna be now looking at outside my
+
+0:53:50.860,0:53:54.070
+training region data okay I'm gonna be
+
+0:53:52.870,0:53:56.770
+looking what's happening on the left
+
+0:53:54.070,0:53:59.020
+left and right what do you expect to see
+
+0:53:56.770,0:54:01.800
+what do you expect these networks to do
+
+0:53:59.020,0:54:06.030
+when you actually test the network
+
+0:54:01.800,0:54:06.030
+outside the training region
+
+0:54:08.380,0:54:13.319
+[Music]
+
+0:54:10.309,0:54:16.470
+okay good intuition something similar so
+
+0:54:13.319,0:54:21.119
+this network will not work right because
+
+0:54:16.470,0:54:24.630
+network will only be able to generalize
+
+0:54:21.119,0:54:26.190
+over data that is in a similar range if
+
+0:54:24.630,0:54:30.599
+you ask your network that has been
+
+0:54:26.190,0:54:33.599
+trained on this data how to interpret
+
+0:54:30.599,0:54:37.289
+things that are over here they will say
+
+0:54:33.599,0:54:39.720
+I don't know and unfortunately the main
+
+0:54:37.289,0:54:42.559
+issue is the desire regression networks
+
+0:54:39.720,0:54:46.109
+so they will not tell you how confident
+
+0:54:42.559,0:54:49.140
+they are right they are absolutely I
+
+0:54:46.109,0:54:51.359
+shouldn't say that word alright whatever
+
+0:54:49.140,0:54:52.849
+I said they won't tell you how confident
+
+0:54:51.359,0:54:55.710
+they are right we are just telling you
+
+0:54:52.849,0:55:02.039
+whatever that number but let's see
+
+0:54:55.710,0:55:03.599
+what's happening now so what's going on
+
+0:55:02.039,0:55:07.710
+here now I just show you a little bit
+
+0:55:03.599,0:55:09.000
+more right on the side the yellow one is
+
+0:55:07.710,0:55:11.400
+going to be the standard deviation and
+
+0:55:09.000,0:55:14.609
+the green one is the variance you can
+
+0:55:11.400,0:55:17.819
+see on the left hand side is the real aw
+
+0:55:14.609,0:55:21.359
+the really linear in the positive part
+
+0:55:17.819,0:55:24.630
+function keeps having the final branches
+
+0:55:21.359,0:55:26.490
+keeping they keep the same slope whereas
+
+0:55:24.630,0:55:30.329
+the one train with the hyperbolic
+
+0:55:26.490,0:55:34.829
+tangent it will saturate eventually okay
+
+0:55:30.329,0:55:36.720
+and so you have to know this network
+
+0:55:34.829,0:55:38.700
+will have side effects the choice of
+
+0:55:36.720,0:55:40.559
+nonlinear function will have a side
+
+0:55:38.700,0:55:43.740
+effect especially if you go outside the
+
+0:55:40.559,0:55:46.890
+training domain region luckily you can
+
+0:55:43.740,0:55:49.020
+use this technique the n symbol variance
+
+0:55:46.890,0:55:51.150
+prediction or estimation in order to
+
+0:55:49.020,0:55:52.680
+estimate somehow the uncertainty with
+
+0:55:51.150,0:55:54.569
+which the prediction is made this is
+
+0:55:52.680,0:55:57.390
+really really really really important in
+
+0:55:54.569,0:55:59.010
+terms of research right sure if you have
+
+0:55:57.390,0:56:01.049
+your network that does regression you
+
+0:55:59.010,0:56:03.390
+have no whatsoever clue about its own
+
+0:56:01.049,0:56:05.369
+confidence if you train a bunch of
+
+0:56:03.390,0:56:06.720
+networks that have different initial
+
+0:56:05.369,0:56:08.670
+values you train them all with the same
+
+0:56:06.720,0:56:11.339
+procedure you can compute the variance
+
+0:56:08.670,0:56:13.670
+in order to estimate the uncertainty
+
+0:56:11.339,0:56:17.130
+with which a given prediction is made
+
+0:56:13.670,0:56:18.420
+with this that was it for today thank
+
+0:56:17.130,0:56:27.030
+you for listening and I see you now
+
+0:56:18.420,0:56:28.799
+week bye-bye questions okay other
+
+0:56:27.030,0:56:31.049
+questions hold on hold on hold on wait
+
+0:56:28.799,0:56:34.859
+wait wait a sec first of all okay the
+
+0:56:31.049,0:56:37.559
+sky bursts and whatever they have to pay
+
+0:56:34.859,0:56:39.480
+attention to what he writes we have
+
+0:56:37.559,0:56:40.440
+always the notes coming up on the
+
+0:56:39.480,0:56:43.740
+website
+
+0:56:40.440,0:56:45.480
+by Sunday such that you can revise the
+
+0:56:43.740,0:56:48.420
+content before class if you come to
+
+0:56:45.480,0:56:51.750
+class without revising content you may
+
+0:56:48.420,0:56:57.210
+not be fully you know perceptive for
+
+0:56:51.750,0:57:00.619
+whatever we talk about the two Z's I
+
+0:56:57.210,0:57:00.619
+think all right thank you
+
