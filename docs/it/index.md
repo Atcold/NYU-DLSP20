@@ -140,36 +140,23 @@ learning universitario.
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/it/week06/06">⑥</a></td>
-      <td rowspan="2">Lezione</td>
-      <td><a href="{{site.baseurl}}/it/week06/06-1"></a>-</td>
+      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week06/06-1">Applicazioni di reti convoluzionali</a></td>
       <td rowspan="2">
-        <a href=""></a>
+        <a href="https://drive.google.com/open?id=1opT7lV0IRYJegtZjuHsKhlsM5L7GpGL1">🖥️</a>
+        <a href="https://drive.google.com/open?id=1sdeVBC3nuh5Zkm2sqzdScEicRvLc_v-F">🖥️</a>
+        <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/it/week06/06-2"></a>-</td></tr>
+    <tr><td><a href="en/week06/06-2">RNNs, GRUs, LSTMs, Attenzione, Seq2Seq, e Reti di Memoria</a></td></tr>
     <tr>
-      <td rowspan="1">Pratica</td>
-      <td><a href="{{site.baseurl}}/it/week06/06-3"></a>-</td>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week06/06-3">Architettura delle RNN e modelli LSTM</a></td>
       <td>
-      </td>
-    </tr>
-<!-- =============================== WEEK 7 ================================ -->
-    <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/it/week07/07"></a>⑦</td>
-      <td rowspan="2">Lezione</td>
-      <td><a href="{{site.baseurl}}/it/week07/07-1">Modelli a Energia (Energy-Based Models)</a>-</td>
-      <td rowspan="2">
-        <a href=""></a>
-      </td>
-    </tr>
-    <tr><td><a href="{{site.baseurl}}/it/week07/07-2"></a>SSL, EBM</td></tr>
-    <tr>
-      <td rowspan="1">Pratica</td>
-      <td><a href="{{site.baseurl}}/it/week07/07-3">Auto-codificatori (Autoencoder)</a></td>
-      <td>
-        <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
-        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
+        <a href="https://youtu.be/8cAffg2jaT0">🎥</a>
       </td>
     </tr>
 <!-- =============================== WEEK 7 ================================ -->
