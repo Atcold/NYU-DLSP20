@@ -132,7 +132,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong Deep Lea
 <!-- =============================== WEEK 4 ================================ -->
     <tr>
       <td rowspan="1" align="center"><a href="en/week04/04">④</a></td>
-      <td rowspan="1">Lý thuyết</td>
+      <td rowspan="1">Thực hành</td>
       <td><a href="en/week04/04-1">1D convolutions</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
