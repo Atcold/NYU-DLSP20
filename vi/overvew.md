@@ -1,9 +1,9 @@
 --
-layout: default
-title: DEEP LEARNING WITH PYTORCH
-author: Alfredo Canziani
-translator: Huynh Nguyen
-lang-ref: home
+|layout: default|
+|title: DEEP LEARNING WITH PYTORCH|
+|author: Alfredo Canziani|
+|translator: Huynh Nguyen|
+|lang-ref: home|
 ---
 
 **DS-GA 1008 · SPRING 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
