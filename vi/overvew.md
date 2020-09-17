@@ -1,4 +1,4 @@
-## Giới thiệu
+## Tuyên bố bản quyền
 <table>
 <!-- =============================== HEADER ================================ -->
   <thead>
@@ -49,9 +49,9 @@
   </tbody>
 </table>
     
-## Description
+## Mô tả khóa học
 
-This course concerns the latest techniques in deep learning and representation learning, focusing on supervised and unsupervised deep learning, embedding methods, metric learning, convolutional and recurrent nets, with applications to computer vision, natural language understanding, and speech recognition. The prerequisites include: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) or a graduate-level machine learning course.
+Khóa học này liên quan đến các kỹ thuật mới nhất trong Deep Learning và Representation Learning, nội dung tập trung vào học sâu có giám sát và không giám sát, phương pháp embedding, học theo dữ liệu, mạng tích chập và lặp lại, với các ứng dụng cho thị giác máy tính, hiểu ngôn ngữ tự nhiên và nhận diện giọng nói. Các điều kiện tiên quyết, bao gồm: Giới thiệu về khoa học dữ liệu([DS-GA 1001](https://cds.nyu.edu/academics/ms-curriculum/)) hoặc các khóa học máy học cấp độ sau đại học.
 
 ## Lectures
 
