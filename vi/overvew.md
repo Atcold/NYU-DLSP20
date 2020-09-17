@@ -1,12 +1,30 @@
---
-|layout: default|
-|title: DEEP LEARNING WITH PYTORCH|
-|author: Alfredo Canziani|
-|translator: Huynh Nguyen|
-|lang-ref: home|
----
+## Giới thiệu
+<table>
+<!-- =============================== HEADER ================================ -->
+  <thead>
+    <tr>
+      <th align="left">Biểu mẫu</th>
+      <th align="left">Khóa học</th>
+      <th align="left">Tác giả</th>
+      <th align="left">Người dịch</th>
+      <th align="left">Ngôn ngữ</th>
+    </tr>
+  </thead>
+  <tbody>
+<!-- =============================== WEEK 1 ================================ -->
+    <tr>
+      <td rowspan="1">Mặc định</td>
+      <td rowspan="1"><a href="https://www.youtube.com/playlist?list=PLLHTzKZzVU9eaEyErdV26ikyolxOsz6mq">Học sâu với Pytorch</td>
+      <td rowspan="1"><a href="https://twitter.com/alfcnz">Alfredo Canziani</td>
+      <td rowspan="1"><a href="/https:/twitter.com/NguynTnHuynh1">Huynh Nguyen</td>
+      <td rowspan="1">Tiếng Việt</td>
+    </tr>
+  </tbody>
+</table>
 
-**DS-GA 1008 · SPRING 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
+## THÔNG TIN KHÓA HỌC
+
+**DS-GA 1008 · Học kỳ mùa xuân - 2020 · [Trung tâm khoa học dữ liệu - NYU](http://cds.nyu.edu/)**
 
 | INSTRUCTORS | Yann LeCun & Alfredo Canziani |
 | LECTURES    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
