@@ -140,19 +140,19 @@ learning universitario.
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
-      <td rowspan="2">Lecture</td>
-      <td><a href="en/week06/06-1">Applicazioni di reti convoluzionali</a></td>
+      <td rowspan="3" align="center"><a href="it/week06/06">⑥</a></td>
+      <td rowspan="2">Lezione</td>
+      <td><a href="{{site.baseurl}}/it/week06/06-1">Applicazioni di reti convoluzionali</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1opT7lV0IRYJegtZjuHsKhlsM5L7GpGL1">🖥️</a>
         <a href="https://drive.google.com/open?id=1sdeVBC3nuh5Zkm2sqzdScEicRvLc_v-F">🖥️</a>
         <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week06/06-2">RNNs, GRUs, LSTMs, Attenzione, Seq2Seq, e Reti di Memoria</a></td></tr>
+    <tr><td><a href="it/week06/06-2">RNNs, GRUs, LSTMs, Attenzione, Seq2Seq, e Reti di Memoria</a></td></tr>
     <tr>
-      <td rowspan="1">Practicum</td>
-      <td><a href="en/week06/06-3">Architettura delle RNN e modelli LSTM</a></td>
+      <td rowspan="1">Practica</td>
+      <td><a href="{{site.baseurl}}/it/week06/06-3">Architettura delle RNN e modelli LSTM</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
@@ -163,16 +163,16 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week07/07">⑦</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week07/07-1">Modelli ad energia (EBM, Energy Based Models)</a></td>
+      <td><a href="{{site.baseurl}}/it/week07/07-1">Modelli ad energia (EBM, Energy Based Models)</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
         <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week07/07-2">SSL, EBM con dettagli ed esempi</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/it/week07/07-2">SSL, EBM con dettagli ed esempi</a></td></tr>
     <tr>
       <td rowspan="1">Practica</td>
-      <td><a href="it/week07/07-3">Introduzione agli autoencoder</a></td>
+      <td><a href="{{site.baseurl}}/it/week07/07-3">Introduzione agli autoencoder</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
@@ -183,16 +183,16 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week08/08">⑧</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week08/08-1">Metodi contrastivi nei modelli ad energia</a></td>
+      <td><a href="{{site.baseurl}}/it/week08/08-1">Metodi contrastivi nei modelli ad energia</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Zo_PyBEO6aNt0GV74kj8MQL7kfHdIHYO">🖥️</a>
         <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week08/08-2">Modelli ad energia a variabile latente regolarizzata</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/it/week08/08-2">Modelli ad energia a variabile latente regolarizzata</a></td></tr>
     <tr>
       <td rowspan="1">Practica</td>
-      <td><a href="it/week08/08-3">Modelli generativi - autoencoder variazionali</a></td>
+      <td><a href="{{site.baseurl}}/it/week08/08-3">Modelli generativi - autoencoder variazionali</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/11-VAE.ipynb">📓</a>
@@ -203,16 +203,16 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week09/09">⑨</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week09/09-1">Autoencoder discriminativi ricorrenti sparsi</a></td>
+      <td><a href="{{site.baseurl}}/it/week09/09-1">Autoencoder discriminativi ricorrenti sparsi</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week09/09-2">Modelli della realtà e reti avversarie generative</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/it/week09/09-2">Modelli della realtà e reti avversarie generative</a></td></tr>
     <tr>
       <td rowspan="1">Practica</td>
-      <td><a href="it/week09/09-3">Reti avversarie generative</a></td>
+      <td><a href="{{site.baseurl}}/it/week09/09-3">Reti avversarie generative</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
@@ -223,16 +223,16 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week10/10">⑩</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week10/10-1">Apprendimento auto-supervisionato - Compiti di pretesto</a></td>
+      <td><a href="{{site.baseurl}}/it/week10/10-1">Apprendimento auto-supervisionato - Compiti di pretesto</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
         <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week10/10-2">Apprendimento auto-supervisionato - ClusterFit e PIRL</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/it/week10/10-2">Apprendimento auto-supervisionato - ClusterFit e PIRL</a></td></tr>
     <tr>
       <td rowspan="1">Practica</td>
-      <td><a href="it/week10/10-3">Il controllore per la retromarcia di un camion</a></td>
+      <td><a href="{{site.baseurl}}/it/week10/10-3">Il controllore per la retromarcia di un camion</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/14-truck_backer-upper.ipynb">📓</a>
@@ -243,7 +243,7 @@ learning universitario.
     <tr>
       <td rowspan="3" align="center"><a href="it/week11/11">⑪</a></td>
       <td rowspan="2">Lezione</td>
-      <td><a href="it/week11/11-1">Funzioni di attivazione e di perdita (parte 1)</a></td>
+      <td><a href="{{site.baseurl}}/it/week11/11-1">Funzioni di attivazione e di perdita (parte 1)</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
         <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
@@ -251,10 +251,10 @@ learning universitario.
         <a href="https://youtu.be/bj1fh3BvqSU">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="it/week11/11-2">Funzioni di perdita (cont.) e funzioni di perdita per i modelli ad energia</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/it/week11/11-2">Funzioni di perdita (cont.) e funzioni di perdita per i modelli ad energia</a></td></tr>
     <tr>
       <td rowspan="1">Practica</td>
-      <td><a href="it/week11/11-3">Articolo "Prediction and Policy learning Under Uncertainty" (PPUU)</a></td>
+      <td><a href="{{site.baseurl}}/it/week11/11-3">Articolo "Prediction and Policy learning Under Uncertainty" (PPUU)</a></td>
       <td>
         <a href="http://bit.ly/PPUU-slides">🖥️</a>
         <a href="http://bit.ly/PPUU-code">📓</a>
