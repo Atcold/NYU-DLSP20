@@ -35,7 +35,7 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 
 <!-- Vietnamese -->
 <!--
-🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [vi](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-VI.md).
+🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [vi](https://github.com/JohnsonNguyen1820/pytorch-Deep-Learning/blob/patch-2/docs/vi/READMI-VI.md).
 -->
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic -->
