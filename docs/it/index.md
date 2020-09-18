@@ -1,4 +1,4 @@
-Pratica---
+---
 layout: default
 title: Apprendimento Profondo
 author: Alfredo Canziani
