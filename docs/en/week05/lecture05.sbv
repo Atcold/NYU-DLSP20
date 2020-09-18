@@ -1,0 +1,7146 @@
+0:00:00.000,0:00:04.410
+all right so as you can see today we
+
+0:00:02.399,0:00:05.430
+don't have Yong Yong is somewhere else
+
+0:00:04.410,0:00:09.120
+having fun
+
+0:00:05.430,0:00:11.610
+hyeyeon okay so today's that we have our
+
+0:00:09.120,0:00:13.740
+own de facto he's a research scientist
+
+0:00:11.610,0:00:14.730
+at Facebook working mostly on
+
+0:00:13.740,0:00:16.619
+optimization
+
+0:00:14.730,0:00:19.800
+he's been there for the past three years
+
+0:00:16.619,0:00:21.900
+and before he was a data scientist at
+
+0:00:19.800,0:00:25.740
+Amita and then a student at the
+
+0:00:21.900,0:00:27.599
+Australian National University so why
+
+0:00:25.740,0:00:35.329
+don't we give a round of applause to the
+
+0:00:27.599,0:00:37.350
+our speaker today I'll be talking about
+
+0:00:35.329,0:00:40.739
+optimization and if we have time at the
+
+0:00:37.350,0:00:42.739
+end the death of optimization so these
+
+0:00:40.739,0:00:45.960
+are the topics I will be covering today
+
+0:00:42.739,0:00:47.879
+now optimization is at the heart of
+
+0:00:45.960,0:00:49.170
+machine learning and some of the things
+
+0:00:47.879,0:00:52.680
+are going to be talking about today will
+
+0:00:49.170,0:00:55.020
+be used every day in your role
+
+0:00:52.680,0:00:56.640
+potentially as an applied scientist or
+
+0:00:55.020,0:01:00.809
+even as a research scientist or a data
+
+0:00:56.640,0:01:01.590
+scientist and I'm gonna focus on the
+
+0:01:00.809,0:01:03.359
+application of these methods
+
+0:01:01.590,0:01:05.850
+particularly rather than the theory
+
+0:01:03.359,0:01:07.409
+behind them part of the reason for this
+
+0:01:05.850,0:01:10.260
+is that we don't fully understand all of
+
+0:01:07.409,0:01:12.420
+these methods so for me to come up here
+
+0:01:10.260,0:01:15.119
+and say this is why it works I would be
+
+0:01:12.420,0:01:19.770
+oversimplifying things but what I can
+
+0:01:15.119,0:01:22.320
+tell you is how to use them how we know
+
+0:01:19.770,0:01:24.750
+that they work in certain situations and
+
+0:01:22.320,0:01:28.320
+what the best method may be to use to
+
+0:01:24.750,0:01:29.909
+train your neural network and to
+
+0:01:28.320,0:01:31.770
+introduce you to the topic of
+
+0:01:29.909,0:01:34.439
+optimization I need to start with the
+
+0:01:31.770,0:01:36.720
+worst method in the world gradient
+
+0:01:34.439,0:01:41.159
+descent and I'll explain in a minute why
+
+0:01:36.720,0:01:43.850
+it's the worst method but to begin with
+
+0:01:41.159,0:01:46.170
+we're going to use the most generic
+
+0:01:43.850,0:01:47.549
+formulation of optimization now the
+
+0:01:46.170,0:01:49.439
+problems you're going to be considering
+
+0:01:47.549,0:01:51.659
+will have more structure than this but
+
+0:01:49.439,0:01:54.270
+it's very useful useful notationally to
+
+0:01:51.659,0:01:56.969
+start this way so we talked about a
+
+0:01:54.270,0:02:00.659
+function f now we're trying to prove
+
+0:01:56.969,0:02:03.930
+properties of our optimizer will assume
+
+0:02:00.659,0:02:05.340
+additional structure on f but in
+
+0:02:03.930,0:02:07.049
+practice the structure in our neural
+
+0:02:05.340,0:02:07.770
+networks essentially obey no of the
+
+0:02:07.049,0:02:09.239
+assumptions
+
+0:02:07.770,0:02:10.470
+none of the assumptions people make in
+
+0:02:09.239,0:02:12.030
+practice
+
+0:02:10.470,0:02:14.940
+I'm just gonna start with the generic F
+
+0:02:12.030,0:02:17.070
+and we'll assume it's continuous and
+
+0:02:14.940,0:02:18.750
+differentiable even though we're already
+
+0:02:17.070,0:02:20.490
+getting into the realm of incorrect
+
+0:02:18.750,0:02:21.810
+assumptions since the neural networks
+
+0:02:20.490,0:02:25.170
+most people are using in practice these
+
+0:02:21.810,0:02:28.170
+days are not differentiable instead you
+
+0:02:25.170,0:02:29.460
+have a equivalent sub differential which
+
+0:02:28.170,0:02:31.500
+you can essentially plug into all these
+
+0:02:29.460,0:02:33.570
+formulas and if you cross your fingers
+
+0:02:31.500,0:02:36.540
+there's no theory to support this it
+
+0:02:33.570,0:02:38.910
+should work so the method of gradient
+
+0:02:36.540,0:02:41.160
+descent is shown here it's an iterative
+
+0:02:38.910,0:02:44.790
+method so you start at a point k equals
+
+0:02:41.160,0:02:46.950
+zero and at each step you update your
+
+0:02:44.790,0:02:49.410
+point and here we're going to use W to
+
+0:02:46.950,0:02:51.240
+represent our current iterate either it
+
+0:02:49.410,0:02:54.000
+being the standard nomenclature for the
+
+0:02:51.240,0:02:56.690
+point for your neural network this w
+
+0:02:54.000,0:03:00.420
+will be some large collection of weights
+
+0:02:56.690,0:03:01.800
+one weight tensor per layer but notation
+
+0:03:00.420,0:03:03.540
+we we kind of squash the whole thing
+
+0:03:01.800,0:03:05.280
+down to a single vector and you can
+
+0:03:03.540,0:03:09.000
+imagine just doing that literally by
+
+0:03:05.280,0:03:10.440
+reshaping all your vectors to all your
+
+0:03:09.000,0:03:13.740
+tensors two vectors and just concatenate
+
+0:03:10.440,0:03:15.989
+them together and this method is
+
+0:03:13.740,0:03:17.519
+remarkably simple all we do is we follow
+
+0:03:15.989,0:03:22.800
+the direction of the negative gradient
+
+0:03:17.519,0:03:24.750
+and the rationale for this it's pretty
+
+0:03:22.800,0:03:27.480
+simple so let me give you a diagram and
+
+0:03:24.750,0:03:28.410
+maybe this will help explain exactly why
+
+0:03:27.480,0:03:31.530
+following the negative gradient
+
+0:03:28.410,0:03:33.570
+direction is a good idea so we don't
+
+0:03:31.530,0:03:36.300
+know enough about our function to do
+
+0:03:33.570,0:03:38.760
+better this is a high level idea when
+
+0:03:36.300,0:03:42.019
+we're optimizing a function we look at
+
+0:03:38.760,0:03:45.060
+the landscape the optimization landscape
+
+0:03:42.019,0:03:47.250
+locally so by optimization landscape I
+
+0:03:45.060,0:03:49.230
+mean the domain of all possible weights
+
+0:03:47.250,0:03:51.290
+of our network now we don't know what's
+
+0:03:49.230,0:03:53.459
+going to happen if we use any particular
+
+0:03:51.290,0:03:54.870
+weights on your network we don't know if
+
+0:03:53.459,0:03:56.930
+it'll be better at the task we're trying
+
+0:03:54.870,0:03:59.430
+to train it to or worse but we do know
+
+0:03:56.930,0:04:01.530
+locally is the point that are currently
+
+0:03:59.430,0:04:03.150
+ad and the gradient and this gradient
+
+0:04:01.530,0:04:05.190
+provides some information about a
+
+0:04:03.150,0:04:07.650
+direction which we can travel in that
+
+0:04:05.190,0:04:09.870
+may improve the performance of our
+
+0:04:07.650,0:04:13.080
+network or in this case reduce the value
+
+0:04:09.870,0:04:14.340
+of our function were minimizing here in
+
+0:04:13.080,0:04:16.769
+this set up this general setup
+
+0:04:14.340,0:04:19.380
+minimizing a function is essentially
+
+0:04:16.769,0:04:21.180
+training in your network so minimizing
+
+0:04:19.380,0:04:23.520
+the loss will give you the best
+
+0:04:21.180,0:04:24.830
+performance on your classification task
+
+0:04:23.520,0:04:26.550
+or whatever you're trying to do and
+
+0:04:24.830,0:04:28.800
+because we only look at the world
+
+0:04:26.550,0:04:31.110
+locally here this gradient is basically
+
+0:04:28.800,0:04:32.880
+the best information we have and you can
+
+0:04:31.110,0:04:36.270
+think of this as descending a valley
+
+0:04:32.880,0:04:37.680
+where you start somewhere horrible some
+
+0:04:36.270,0:04:39.600
+pinkie part of the landscape the top of
+
+0:04:37.680,0:04:41.310
+a mountain for instance and you travel
+
+0:04:39.600,0:04:43.590
+down from there and at each point you
+
+0:04:41.310,0:04:48.150
+follow the direction near you that has
+
+0:04:43.590,0:04:50.040
+the most sorry the steepest descent and
+
+0:04:48.150,0:04:51.389
+in fact the go the method of grading %
+
+0:04:50.040,0:04:53.820
+is sometimes called the method of
+
+0:04:51.389,0:04:56.160
+steepest descent and this direction will
+
+0:04:53.820,0:04:57.630
+change as you move in the space now if
+
+0:04:56.160,0:04:59.820
+you move locally by only an
+
+0:04:57.630,0:05:02.040
+infinitesimal amount assuming this
+
+0:04:59.820,0:05:03.419
+smoothness that I mentioned before which
+
+0:05:02.040,0:05:04.740
+is actually not true in practice but
+
+0:05:03.419,0:05:06.810
+we'll get to that assuming the
+
+0:05:04.740,0:05:08.280
+smoothness this small step will only
+
+0:05:06.810,0:05:09.990
+change the gradient a small amount so
+
+0:05:08.280,0:05:11.820
+the direction you're traveling in is at
+
+0:05:09.990,0:05:15.900
+least a good direction when you take
+
+0:05:11.820,0:05:18.120
+small steps and we essentially just
+
+0:05:15.900,0:05:19.080
+follow this path taking as larger steps
+
+0:05:18.120,0:05:20.669
+as we can
+
+0:05:19.080,0:05:22.200
+traversing the landscape until we reach
+
+0:05:20.669,0:05:25.229
+the valley at the bottom which is the
+
+0:05:22.200,0:05:29.070
+minimizer our function now there's a
+
+0:05:25.229,0:05:30.690
+little bit more we can say for some
+
+0:05:29.070,0:05:32.729
+problem classes and I'm going to use the
+
+0:05:30.690,0:05:34.950
+most simplistic problem class we can
+
+0:05:32.729,0:05:37.770
+just because it's the only thing that I
+
+0:05:34.950,0:05:39.210
+can really do any mathematics for on one
+
+0:05:37.770,0:05:43.080
+slide so bear with me
+
+0:05:39.210,0:05:44.580
+this class is quadratics so for a
+
+0:05:43.080,0:05:46.350
+quadratic optimization problem we
+
+0:05:44.580,0:05:51.570
+actually know quite a bit just based off
+
+0:05:46.350,0:05:54.150
+the gradient so firstly a gradient cuts
+
+0:05:51.570,0:05:55.440
+off an entire half of a space and now
+
+0:05:54.150,0:05:59.610
+illustrate this here with this green
+
+0:05:55.440,0:06:02.130
+line so we're at that point there where
+
+0:05:59.610,0:06:03.750
+the line starts near the Green Line we
+
+0:06:02.130,0:06:05.789
+know the solution cannot be in the rest
+
+0:06:03.750,0:06:08.220
+of the space and this is not true from
+
+0:06:05.789,0:06:09.930
+your networks but it's still a genuinely
+
+0:06:08.220,0:06:12.150
+a good guideline that we want to follow
+
+0:06:09.930,0:06:13.710
+the direction of negative gradient there
+
+0:06:12.150,0:06:16.260
+could be better solutions elsewhere in
+
+0:06:13.710,0:06:17.910
+the space but finding them is is much
+
+0:06:16.260,0:06:20.220
+harder than just trying to find the best
+
+0:06:17.910,0:06:21.300
+solution near to where we are so that's
+
+0:06:20.220,0:06:23.160
+what we do we trying to find the best
+
+0:06:21.300,0:06:24.930
+solution near to where we are you could
+
+0:06:23.160,0:06:26.100
+imagine this being the surface of the
+
+0:06:24.930,0:06:28.410
+earth where there are many hills and
+
+0:06:26.100,0:06:29.610
+valleys and we can't hope to know
+
+0:06:28.410,0:06:31.020
+something about a mountain on the other
+
+0:06:29.610,0:06:33.270
+side of the planet but we can certainly
+
+0:06:31.020,0:06:34.559
+look for the valley directly beneath the
+
+0:06:33.270,0:06:37.229
+mountain where we currently are
+
+0:06:34.559,0:06:39.089
+in fact you can think of these functions
+
+0:06:37.229,0:06:40.799
+here as being represented with these
+
+0:06:39.089,0:06:44.369
+topographic maps this is the same as
+
+0:06:40.799,0:06:48.089
+topographic maps you use that you may be
+
+0:06:44.369,0:06:50.369
+familiar with from from the planet Earth
+
+0:06:48.089,0:06:51.959
+where mountains are shown by these rings
+
+0:06:50.369,0:06:53.309
+now here the rings are representing
+
+0:06:51.959,0:06:54.599
+descent so this is the bottom of the
+
+0:06:53.309,0:06:57.839
+valley we're showing here not the top of
+
+0:06:54.599,0:06:59.809
+a hill at the center there so yes our
+
+0:06:57.839,0:07:02.459
+gradient knocks off a whole half of the
+
+0:06:59.809,0:07:04.619
+possible space now it's very reasonable
+
+0:07:02.459,0:07:06.059
+then to go in the direction find this
+
+0:07:04.619,0:07:08.159
+negative gradient because it's kind of
+
+0:07:06.059,0:07:10.199
+orthogonal to this line that cuts off
+
+0:07:08.159,0:07:12.269
+after space and you can see that I've
+
+0:07:10.199,0:07:21.409
+got the indication of orthogonal you
+
+0:07:12.269,0:07:23.399
+there the little la square so the
+
+0:07:21.409,0:07:25.319
+properties of gradient to spend a
+
+0:07:23.399,0:07:27.149
+gradient descent depend greatly on the
+
+0:07:25.319,0:07:28.889
+structure of the problem for these
+
+0:07:27.149,0:07:30.629
+quadratic problems it's actually
+
+0:07:28.889,0:07:32.549
+relatively simple to characterize what
+
+0:07:30.629,0:07:34.079
+will happen so I'm going to give you a
+
+0:07:32.549,0:07:35.369
+little bit of an overview here and I'll
+
+0:07:34.079,0:07:36.689
+spend a few minutes on this because it's
+
+0:07:35.369,0:07:38.339
+quite interesting and I'm hoping that
+
+0:07:36.689,0:07:40.229
+those of you with some background in
+
+0:07:38.339,0:07:42.629
+linear algebra can follow this
+
+0:07:40.229,0:07:44.579
+derivation but we're going to consider a
+
+0:07:42.629,0:07:47.309
+quadratic optimization problem
+
+0:07:44.579,0:07:50.459
+now the problem stated in the gray box
+
+0:07:47.309,0:07:53.309
+at the top you can see that this is a
+
+0:07:50.459,0:07:56.999
+quadratic where a is a positive definite
+
+0:07:53.309,0:07:58.769
+matrix we can handle broader classes of
+
+0:07:56.999,0:08:01.289
+Quadra quadratics and this potentially
+
+0:07:58.769,0:08:04.649
+but the analysis is most simple in the
+
+0:08:01.289,0:08:05.969
+positive definite case and the grating
+
+0:08:04.649,0:08:09.539
+of that function is very simple of
+
+0:08:05.969,0:08:11.279
+course as a w- b and u the solution of
+
+0:08:09.539,0:08:13.379
+this problem has a closed form in the
+
+0:08:11.279,0:08:18.089
+case of quadratics it's as inverse of a
+
+0:08:13.379,0:08:20.179
+times B now what we do is we take the
+
+0:08:18.089,0:08:23.549
+steps they're shown in the green box and
+
+0:08:20.179,0:08:26.519
+we just plug it into the distance from
+
+0:08:23.549,0:08:28.529
+solution so this wk minus 1 minus W star
+
+0:08:26.519,0:08:30.479
+is a distance from solution so we want
+
+0:08:28.529,0:08:32.219
+to see how this changes over time and
+
+0:08:30.479,0:08:34.050
+the idea is that if we're moving closer
+
+0:08:32.219,0:08:35.819
+to the solution over time the method is
+
+0:08:34.050,0:08:38.579
+converging so we start with that
+
+0:08:35.819,0:08:40.589
+distance from solution to be plug in the
+
+0:08:38.579,0:08:44.509
+value of the update now with a little
+
+0:08:40.589,0:08:44.509
+bit of rearranging we can pull
+
+0:08:45.050,0:08:50.950
+the terms we can group the terms
+
+0:08:46.430,0:09:00.830
+together and we can write B as a inverse
+
+0:08:50.950,0:09:05.090
+so we can pull or we can pull the W star
+
+0:09:00.830,0:09:07.840
+inside the inside the brackets there and
+
+0:09:05.090,0:09:11.960
+then we get this expression where it's
+
+0:09:07.840,0:09:13.790
+matrix times the previous distance to
+
+0:09:11.960,0:09:16.040
+the solution matrix times previous
+
+0:09:13.790,0:09:17.900
+distance solution now we don't know
+
+0:09:16.040,0:09:20.720
+anything about which directions this
+
+0:09:17.900,0:09:22.760
+quadratic it varies most extremely in
+
+0:09:20.720,0:09:24.890
+but we can just not bound this very
+
+0:09:22.760,0:09:27.350
+simply by taking the product of the
+
+0:09:24.890,0:09:28.850
+matrix as norm and the distance to the
+
+0:09:27.350,0:09:31.430
+solution here this norm at the bottom so
+
+0:09:28.850,0:09:34.070
+that's the bottom line now now when
+
+0:09:31.430,0:09:36.890
+you're considering matrix norms it's
+
+0:09:34.070,0:09:39.590
+pretty straightforward to see that
+
+0:09:36.890,0:09:41.150
+you're going to have an expression where
+
+0:09:39.590,0:09:45.710
+the eigen values of this matrix are
+
+0:09:41.150,0:09:47.720
+going to be 1 minus mu gamma or 1 minus
+
+0:09:45.710,0:09:48.950
+L gamma now the way I get this is I just
+
+0:09:47.720,0:09:51.560
+look at what are the extreme eigen
+
+0:09:48.950,0:09:54.050
+values of a which we call them mu and L
+
+0:09:51.560,0:09:55.490
+and by plugging these into the
+
+0:09:54.050,0:09:56.930
+expression we can see what the extreme
+
+0:09:55.490,0:09:59.780
+eigen values will be of this combined
+
+0:09:56.930,0:10:03.050
+matrix I minus gamma a and you have this
+
+0:09:59.780,0:10:04.910
+absolute value here now you can optimize
+
+0:10:03.050,0:10:06.320
+this and get an optimal learning rate
+
+0:10:04.910,0:10:08.180
+for the quadratics
+
+0:10:06.320,0:10:09.920
+but that optimal learning rate is not
+
+0:10:08.180,0:10:12.500
+robust in practice you probably don't
+
+0:10:09.920,0:10:16.910
+want to use that so a simpler value you
+
+0:10:12.500,0:10:18.440
+can use is 1 over L ll being the largest
+
+0:10:16.910,0:10:22.420
+eigen value and this gives you this
+
+0:10:18.440,0:10:25.820
+convergence rate of 1 minus mu L
+
+0:10:22.420,0:10:29.240
+reduction in distance to solution every
+
+0:10:25.820,0:10:32.020
+step do we have any questions here I
+
+0:10:29.240,0:10:32.020
+know it's a little dense
+
+0:10:34.360,0:10:42.500
+yes yes it's it's a substitution from in
+
+0:10:41.120,0:10:46.010
+that gray box do you see the bottom line
+
+0:10:42.500,0:10:49.190
+on the gray box yeah that's that's just
+
+0:10:46.010,0:10:51.230
+a by definition we can solve the
+
+0:10:49.190,0:10:52.730
+gradient so by taking the gradient to
+
+0:10:51.230,0:10:53.060
+zero if you see in that second line in
+
+0:10:52.730,0:10:54.440
+the box
+
+0:10:53.060,0:10:55.720
+taking the gradient to zero this so
+
+0:10:54.440,0:10:58.040
+replaced our gradient with zero and
+
+0:10:55.720,0:11:01.910
+rearranging you get the closed form
+
+0:10:58.040,0:11:03.020
+solution to the problem here so the
+
+0:11:01.910,0:11:04.490
+problem with using that closed form
+
+0:11:03.020,0:11:06.920
+solution in practice is we have to
+
+0:11:04.490,0:11:08.420
+invert a matrix and by using gradient
+
+0:11:06.920,0:11:10.310
+descent we can solve this problem by
+
+0:11:08.420,0:11:12.920
+only doing matrix multiplications
+
+0:11:10.310,0:11:14.300
+instead I'm not that I would suggest you
+
+0:11:12.920,0:11:15.560
+actually use this technique to solve the
+
+0:11:14.300,0:11:18.830
+matrix as I mentioned before it's the
+
+0:11:15.560,0:11:20.750
+worst method in the world and the
+
+0:11:18.830,0:11:22.910
+convergence rate of this method is
+
+0:11:20.750,0:11:25.100
+controlled by this new overall quantity
+
+0:11:22.910,0:11:26.540
+now these are standard notations so
+
+0:11:25.100,0:11:27.950
+we're going from linear algebra where
+
+0:11:26.540,0:11:30.320
+you talk about the min and Max eigen
+
+0:11:27.950,0:11:33.430
+value to the notation typically used in
+
+0:11:30.320,0:11:36.080
+the field of optimization moving
+
+0:11:33.430,0:11:39.380
+smallest eigen value L being largest
+
+0:11:36.080,0:11:41.110
+eigen value and this mu over L is the
+
+0:11:39.380,0:11:44.570
+inverse of the condition number
+
+0:11:41.110,0:11:48.350
+condition number being L over Mir this
+
+0:11:44.570,0:11:51.140
+gives you a broad characterization of
+
+0:11:48.350,0:11:55.700
+how quickly optimization methods will
+
+0:11:51.140,0:11:57.440
+work on this problem and this these
+
+0:11:55.700,0:11:59.930
+military terms they don't exist for
+
+0:11:57.440,0:12:02.870
+neural networks only in the very
+
+0:11:59.930,0:12:04.220
+simplest situations do we have L exists
+
+0:12:02.870,0:12:06.740
+and we essentially never have mu
+
+0:12:04.220,0:12:08.810
+existing nevertheless we want to talk
+
+0:12:06.740,0:12:10.520
+about network networks being polar
+
+0:12:08.810,0:12:12.340
+conditioned and well conditioned and
+
+0:12:10.520,0:12:14.930
+poorly conditioned would typically be
+
+0:12:12.340,0:12:18.230
+some approximation to L is very large
+
+0:12:14.930,0:12:21.260
+and well conditioned maybe L is very
+
+0:12:18.230,0:12:24.110
+close to one so the step size we can
+
+0:12:21.260,0:12:27.770
+select in one summer training depends
+
+0:12:24.110,0:12:28.910
+very heavily on these constants so let
+
+0:12:27.770,0:12:30.800
+me give you a little bit of an intuition
+
+0:12:28.910,0:12:33.380
+for step sizes and this is very
+
+0:12:30.800,0:12:34.640
+important in practice I myself find a
+
+0:12:33.380,0:12:36.890
+lot of my time is spent treating
+
+0:12:34.640,0:12:40.310
+learning rates and I'm sure you'll be
+
+0:12:36.890,0:12:43.730
+involved in similar procedure so we have
+
+0:12:40.310,0:12:45.740
+a couple of situations that can occur if
+
+0:12:43.730,0:12:47.090
+we use a learning rate that's too low
+
+0:12:45.740,0:12:49.310
+we'll find that we make steady progress
+
+0:12:47.090,0:12:53.780
+towards the solution here we're
+
+0:12:49.310,0:12:56.480
+minimizing a little 1d quadratic and by
+
+0:12:53.780,0:12:59.000
+steady progress I mean that every
+
+0:12:56.480,0:13:00.920
+iteration the gradient stays in buffer
+
+0:12:59.000,0:13:02.560
+the same direction and you make similar
+
+0:13:00.920,0:13:05.420
+progress as you approach the solution
+
+0:13:02.560,0:13:07.370
+this is slower than it is possible so
+
+0:13:05.420,0:13:09.910
+what you would ideally want to do is go
+
+0:13:07.370,0:13:11.930
+straight to the solution for a quadratic
+
+0:13:09.910,0:13:12.650
+especially a 1d one like this that's
+
+0:13:11.930,0:13:14.990
+going to be pretty straightforward
+
+0:13:12.650,0:13:16.340
+there's going to be an exact step size
+
+0:13:14.990,0:13:18.290
+that'll get you all the way to solution
+
+0:13:16.340,0:13:20.810
+but more generally you can't do that
+
+0:13:18.290,0:13:23.810
+and what you typically want to use is
+
+0:13:20.810,0:13:26.150
+actually a step size a bit above that
+
+0:13:23.810,0:13:27.410
+optimal and this is for a number of
+
+0:13:26.150,0:13:29.570
+reasons it tends to be quicker in
+
+0:13:27.410,0:13:31.760
+practice we have to be very very careful
+
+0:13:29.570,0:13:33.800
+because you get divergence and the term
+
+0:13:31.760,0:13:35.210
+divergence means that the iterates will
+
+0:13:33.800,0:13:37.160
+get further away than from the solution
+
+0:13:35.210,0:13:38.720
+instead of closer this will typically
+
+0:13:37.160,0:13:42.530
+happen if you use two larger learning
+
+0:13:38.720,0:13:44.210
+rate unfortunately for us we want to use
+
+0:13:42.530,0:13:45.590
+learning rates as large as possible to
+
+0:13:44.210,0:13:47.780
+get as quick learning as possible so
+
+0:13:45.590,0:13:50.180
+we're always at the edge of divergence
+
+0:13:47.780,0:13:52.370
+in fact it's very rare that you'll see
+
+0:13:50.180,0:13:55.400
+that the gradients follow this nice
+
+0:13:52.370,0:13:56.660
+trajectory where they all point the same
+
+0:13:55.400,0:13:58.670
+direction until you kind of reach the
+
+0:13:56.660,0:14:00.050
+solution what almost always happens in
+
+0:13:58.670,0:14:02.960
+practice especially with gradient
+
+0:14:00.050,0:14:05.270
+descent invariants is that you observe
+
+0:14:02.960,0:14:06.770
+this zigzagging behavior now we can't
+
+0:14:05.270,0:14:08.420
+actually see zigzagging in million
+
+0:14:06.770,0:14:10.940
+dimensional spaces that we train your
+
+0:14:08.420,0:14:13.880
+networks in but it's very evident in
+
+0:14:10.940,0:14:15.680
+these 2d plots of a quadratic so here
+
+0:14:13.880,0:14:16.760
+I'm showing the level sets you can see
+
+0:14:15.680,0:14:20.560
+the numbers or the function value
+
+0:14:16.760,0:14:25.250
+indicated there on the level sets and
+
+0:14:20.560,0:14:27.830
+when we use a learning rate that is good
+
+0:14:25.250,0:14:29.840
+not optimal but good we get pretty close
+
+0:14:27.830,0:14:31.760
+to that blue dot the solution are for
+
+0:14:29.840,0:14:33.740
+the 10 steps when we use a learning rate
+
+0:14:31.760,0:14:35.450
+that seems nicer in that it's not
+
+0:14:33.740,0:14:37.100
+oscillating it's well-behaved when we
+
+0:14:35.450,0:14:38.330
+use such a learning rate we actually end
+
+0:14:37.100,0:14:40.760
+up quite a bit further away from the
+
+0:14:38.330,0:14:42.830
+solution so it's a fact of life that we
+
+0:14:40.760,0:14:46.490
+have to deal with these learning rates
+
+0:14:42.830,0:14:50.690
+that are stressfully high it's kind of
+
+0:14:46.490,0:14:54.440
+like a race right you know no one wins a
+
+0:14:50.690,0:14:55.730
+a race by driving safely so our network
+
+0:14:54.440,0:15:00.500
+training should be very comparable to
+
+0:14:55.730,0:15:01.940
+that so the core topic we want to talk
+
+0:15:00.500,0:15:05.870
+about is actually it stochastic
+
+0:15:01.940,0:15:08.600
+optimization and this is the method that
+
+0:15:05.870,0:15:11.780
+we will be using every day for training
+
+0:15:08.600,0:15:14.660
+neural networks in practice so it's de
+
+0:15:11.780,0:15:16.850
+casting optimization is actually not so
+
+0:15:14.660,0:15:19.190
+different what we're gonna do is we're
+
+0:15:16.850,0:15:21.740
+going to replace the gradients in our
+
+0:15:19.190,0:15:25.700
+gradient descent step with a stochastic
+
+0:15:21.740,0:15:27.890
+approximation to the gradient now in a
+
+0:15:25.700,0:15:29.930
+neural network we can be a bit more
+
+0:15:27.890,0:15:33.440
+precise here by stochastic approximation
+
+0:15:29.930,0:15:36.310
+what we mean is the gradient of the loss
+
+0:15:33.440,0:15:39.140
+for a single data point single instance
+
+0:15:36.310,0:15:42.970
+you might want to call it so I've got
+
+0:15:39.140,0:15:46.010
+that in the notation here this function
+
+0:15:42.970,0:15:49.430
+L is the loss of one day the point here
+
+0:15:46.010,0:15:50.810
+the data point is indexed by AI and we
+
+0:15:49.430,0:15:52.970
+would write this typically in the
+
+0:15:50.810,0:15:54.590
+optimization literature as the function
+
+0:15:52.970,0:15:57.380
+fi and I'm going to use this notation
+
+0:15:54.590,0:16:00.530
+but you should imagine fi as being the
+
+0:15:57.380,0:16:02.390
+loss for a single instance I and here
+
+0:16:00.530,0:16:04.850
+I'm using supervised learning setup
+
+0:16:02.390,0:16:08.330
+where we have data points I labels Y I
+
+0:16:04.850,0:16:10.040
+so they points X I labels Y I the full
+
+0:16:08.330,0:16:14.290
+loss for a function is shown at the top
+
+0:16:10.040,0:16:16.280
+there it's a sum of all these F is now
+
+0:16:14.290,0:16:17.600
+let me give you a bit more explanation
+
+0:16:16.280,0:16:19.880
+for what we're doing here we're placing
+
+0:16:17.600,0:16:24.230
+this through gradient with a stochastic
+
+0:16:19.880,0:16:27.050
+gradient this is a Luisi approximation
+
+0:16:24.230,0:16:30.350
+and this is how it's often explained in
+
+0:16:27.050,0:16:33.560
+the stochastic optimization setup so we
+
+0:16:30.350,0:16:36.440
+have this function the gradient and in
+
+0:16:33.560,0:16:38.870
+our setup it's expected value is equal
+
+0:16:36.440,0:16:41.150
+to the full gradient so you can think of
+
+0:16:38.870,0:16:42.890
+a stochastic gradient descent step as
+
+0:16:41.150,0:16:47.210
+being a full gradient step in
+
+0:16:42.890,0:16:48.560
+expectation now this is not actually the
+
+0:16:47.210,0:16:50.480
+best way to view it because there's a
+
+0:16:48.560,0:16:53.810
+lot more going on than that it's not
+
+0:16:50.480,0:16:58.310
+just gradient descent with noise so let
+
+0:16:53.810,0:17:00.440
+me give you a little bit more detail but
+
+0:16:58.310,0:17:03.050
+first I let anybody ask any questions I
+
+0:17:00.440,0:17:05.750
+have here before I move on yes
+
+0:17:03.050,0:17:08.420
+mm-hmm yeah I could talk a bit more
+
+0:17:05.750,0:17:10.730
+about that but yes so you're right so
+
+0:17:08.420,0:17:12.500
+using your entire dataset to calculate a
+
+0:17:10.730,0:17:14.709
+gradient is here what I mean by gradient
+
+0:17:12.500,0:17:17.720
+descent we also call that full batch
+
+0:17:14.709,0:17:19.189
+gradient descent just to be clear now in
+
+0:17:17.720,0:17:22.280
+machine learning we virtually always use
+
+0:17:19.189,0:17:23.630
+mini batches so people may use the name
+
+0:17:22.280,0:17:24.620
+gradient descent or something when
+
+0:17:23.630,0:17:26.780
+they're really talking about stochastic
+
+0:17:24.620,0:17:29.150
+gradient descent and what you mentioned
+
+0:17:26.780,0:17:30.679
+is absolutely true so there are some
+
+0:17:29.150,0:17:33.920
+difficulties of training neural networks
+
+0:17:30.679,0:17:35.809
+using very large batch sizes and this is
+
+0:17:33.920,0:17:37.010
+understood to some degree and I'll
+
+0:17:35.809,0:17:38.600
+actually explain that on the very next
+
+0:17:37.010,0:17:39.230
+slide so let me let me get to to your
+
+0:17:38.600,0:17:43.220
+point first
+
+0:17:39.230,0:17:45.679
+so the point the answer to your question
+
+0:17:43.220,0:17:48.520
+is actually the third point here the
+
+0:17:45.679,0:17:50.780
+noise in stochastic gradient descent
+
+0:17:48.520,0:17:53.090
+induces this phenomena known as
+
+0:17:50.780,0:17:54.770
+annealing and the diagram directly to
+
+0:17:53.090,0:17:57.110
+the right of it illustrates this
+
+0:17:54.770,0:18:00.260
+phenomena so your network training
+
+0:17:57.110,0:18:02.480
+landscapes have a bumpy structure to
+
+0:18:00.260,0:18:05.330
+them where there are lots of small
+
+0:18:02.480,0:18:07.270
+minima that are not good minima that
+
+0:18:05.330,0:18:09.320
+appear on the path to the good minima so
+
+0:18:07.270,0:18:12.140
+the theory that a lot of people
+
+0:18:09.320,0:18:13.760
+subscribe to is that SGD in particular
+
+0:18:12.140,0:18:16.340
+the noise induced in the gradient
+
+0:18:13.760,0:18:18.919
+actually helps the optimizer to jump
+
+0:18:16.340,0:18:20.660
+over these bad minima and the theory is
+
+0:18:18.919,0:18:22.669
+that these bad minima are quite small in
+
+0:18:20.660,0:18:26.059
+the space and so they're easy to jump
+
+0:18:22.669,0:18:27.380
+over we're good minima that results in
+
+0:18:26.059,0:18:30.169
+good performance around your own network
+
+0:18:27.380,0:18:34.070
+are larger and harder to skip so does
+
+0:18:30.169,0:18:36.530
+this answer your question yes so besides
+
+0:18:34.070,0:18:39.440
+that annealing point of view there's
+
+0:18:36.530,0:18:42.500
+there's actually a few other reasons so
+
+0:18:39.440,0:18:45.559
+we have a lot of redundancy in the
+
+0:18:42.500,0:18:47.750
+information we get from each terms
+
+0:18:45.559,0:18:51.679
+gradient and using stochastic gradient
+
+0:18:47.750,0:18:54.140
+lets us exploit this redundancy in a lot
+
+0:18:51.679,0:18:56.870
+of situations the gradient computed on a
+
+0:18:54.140,0:18:58.340
+few hundred examples is almost as good
+
+0:18:56.870,0:19:01.460
+as a gradient computed on the full data
+
+0:18:58.340,0:19:03.860
+set and often thousands of times cheaper
+
+0:19:01.460,0:19:05.300
+depending on your problem so it's it's
+
+0:19:03.860,0:19:07.790
+hard to come up with a compelling reason
+
+0:19:05.300,0:19:09.320
+to use gradient descent given the
+
+0:19:07.790,0:19:13.809
+success of stochastic gradient descent
+
+0:19:09.320,0:19:13.809
+and this is part of the reason why
+
+0:19:13.879,0:19:17.460
+disgusted gradient said is one of the
+
+0:19:15.659,0:19:19.859
+best misses we have but gradient descent
+
+0:19:17.460,0:19:21.720
+is one of the worst and in fact early
+
+0:19:19.859,0:19:23.580
+stages the correlation is remarkable
+
+0:19:21.720,0:19:26.399
+this disgusted gradient can be
+
+0:19:23.580,0:19:28.499
+correlated up to a coefficient of 0.999
+
+0:19:26.399,0:19:29.940
+correlation coefficient to the true
+
+0:19:28.499,0:19:33.869
+gradient at those early steps of
+
+0:19:29.940,0:19:36.749
+optimization so I want to briefly talk
+
+0:19:33.869,0:19:38.179
+about a something you need to know about
+
+0:19:36.749,0:19:41.399
+I think Jana has already mentioned this
+
+0:19:38.179,0:19:43.259
+briefly but in practice we don't use
+
+0:19:41.399,0:19:45.479
+individual instances in stochastic
+
+0:19:43.259,0:19:48.749
+gradient descent how we use mini batches
+
+0:19:45.479,0:19:51.059
+of instances so I'm just using some
+
+0:19:48.749,0:19:52.649
+notation here but everybody uses
+
+0:19:51.059,0:19:54.029
+different notation for mini batching so
+
+0:19:52.649,0:19:56.970
+you shouldn't get too attached to the
+
+0:19:54.029,0:19:58.769
+notation but essentially at every step
+
+0:19:56.970,0:20:03.149
+you have some batch here I'm going to
+
+0:19:58.769,0:20:06.929
+call it B an index with I for step and
+
+0:20:03.149,0:20:09.299
+you basically use the average of the
+
+0:20:06.929,0:20:11.249
+gradients over this mini batch which is
+
+0:20:09.299,0:20:13.470
+a subset of your data rather than a
+
+0:20:11.249,0:20:15.119
+single instance or the full full batch
+
+0:20:13.470,0:20:19.799
+now almost everybody will use this mini
+
+0:20:15.119,0:20:21.690
+batch selected uniformly at random
+
+0:20:19.799,0:20:23.009
+some people use with replacement
+
+0:20:21.690,0:20:24.629
+sampling and some people use without
+
+0:20:23.009,0:20:26.669
+with replacement sampling but the
+
+0:20:24.629,0:20:29.849
+differences are not important for this
+
+0:20:26.669,0:20:31.729
+purposes you can use either and there's
+
+0:20:29.849,0:20:33.599
+a lot of advantages to mini batching so
+
+0:20:31.729,0:20:35.220
+there's actually some good impelling
+
+0:20:33.599,0:20:36.539
+theoretical reasons to not be any batch
+
+0:20:35.220,0:20:38.609
+but the practical reasons are
+
+0:20:36.539,0:20:40.979
+overwhelming part of these practical
+
+0:20:38.609,0:20:43.950
+reasons are computational we make
+
+0:20:40.979,0:20:45.749
+ammonia may utilize our hardware say at
+
+0:20:43.950,0:20:47.489
+1% efficiency when training some of the
+
+0:20:45.749,0:20:49.409
+network's we use if we try and use
+
+0:20:47.489,0:20:51.239
+single instances and we get the most
+
+0:20:49.409,0:20:52.970
+efficient utilization of the hardware
+
+0:20:51.239,0:20:55.979
+with batch sizes often in the hundreds
+
+0:20:52.970,0:20:58.259
+if you're training on the typical
+
+0:20:55.979,0:20:59.999
+imagenet data set for in for instance
+
+0:20:58.259,0:21:03.239
+you don't use batch sizes less than
+
+0:20:59.999,0:21:08.429
+about 64 to get good efficiency maybe
+
+0:21:03.239,0:21:10.200
+can go down to 32 but another important
+
+0:21:08.429,0:21:13.080
+application is distributed training and
+
+0:21:10.200,0:21:15.359
+this is really becoming a big thing so
+
+0:21:13.080,0:21:17.309
+as was mentioned before people were
+
+0:21:15.359,0:21:18.929
+recently able to Train imagenet days
+
+0:21:17.309,0:21:21.639
+said that normally takes two days to
+
+0:21:18.929,0:21:23.950
+train and not so long ago it took
+
+0:21:21.639,0:21:25.779
+in a week to train in only one hour and
+
+0:21:23.950,0:21:28.450
+the way they did that was using very
+
+0:21:25.779,0:21:29.889
+large mini batches and along with using
+
+0:21:28.450,0:21:31.889
+large many batches there are some tricks
+
+0:21:29.889,0:21:34.059
+that you need to use to get it to work
+
+0:21:31.889,0:21:35.619
+it's probably not something that you
+
+0:21:34.059,0:21:37.149
+would cover an introductory lecture so I
+
+0:21:35.619,0:21:38.799
+encourage you to check out that paper if
+
+0:21:37.149,0:21:40.409
+you're interested it's imagenet in one
+
+0:21:38.799,0:21:42.789
+hour
+
+0:21:40.409,0:21:45.279
+leaves face book authors I can't recall
+
+0:21:42.789,0:21:48.070
+the first author at the moment as a side
+
+0:21:45.279,0:21:51.459
+note there are some situations where you
+
+0:21:48.070,0:21:52.809
+need to do full batch optimization do
+
+0:21:51.459,0:21:54.759
+not use gradient descent in that
+
+0:21:52.809,0:21:57.070
+situation I can't emphasize it enough to
+
+0:21:54.759,0:21:59.950
+not use gradient ascent ever if you have
+
+0:21:57.070,0:22:01.479
+full batch data by far the most
+
+0:21:59.950,0:22:03.249
+effective method that is kind of
+
+0:22:01.479,0:22:06.339
+plug-and-play you don't to think about
+
+0:22:03.249,0:22:08.859
+it is known as l-bfgs it's accumulation
+
+0:22:06.339,0:22:10.139
+of 50 years of optimization research and
+
+0:22:08.859,0:22:12.519
+it works really well
+
+0:22:10.139,0:22:15.129
+torch's implementation is pretty good
+
+0:22:12.519,0:22:17.379
+but the SyFy implementation causes some
+
+0:22:15.129,0:22:20.249
+filtering code that was written 15 years
+
+0:22:17.379,0:22:23.440
+ago that is pretty much bulletproof so
+
+0:22:20.249,0:22:24.269
+because they were those so that's a good
+
+0:22:23.440,0:22:26.619
+question
+
+0:22:24.269,0:22:27.070
+classically you do need to use the full
+
+0:22:26.619,0:22:28.809
+data set
+
+0:22:27.070,0:22:32.559
+now pipe torches implementation actually
+
+0:22:28.809,0:22:34.209
+supports using mini battery now this is
+
+0:22:32.559,0:22:36.219
+somewhat of a gray area in that there's
+
+0:22:34.209,0:22:37.899
+really no theory to support the use of
+
+0:22:36.219,0:22:40.570
+this and it may work well for your
+
+0:22:37.899,0:22:43.839
+problem or it may not so it could be
+
+0:22:40.570,0:22:46.389
+worth trying I mean you want to use your
+
+0:22:43.839,0:22:49.929
+whole data set for each gradient
+
+0:22:46.389,0:22:51.099
+evaluation or probably more likely since
+
+0:22:49.929,0:22:52.359
+it's very rarely you want to do that
+
+0:22:51.099,0:22:54.539
+probably more likely you're solving some
+
+0:22:52.359,0:22:56.889
+other optimization problem that isn't
+
+0:22:54.539,0:22:59.589
+isn't training in your network but maybe
+
+0:22:56.889,0:23:01.869
+some ancillary problem related and you
+
+0:22:59.589,0:23:05.259
+need to solve an optimization problem
+
+0:23:01.869,0:23:06.669
+without this data point structure that
+
+0:23:05.259,0:23:08.409
+doesn't summer isn't a sum of data
+
+0:23:06.669,0:23:12.239
+points yeah hopefully it was another
+
+0:23:08.409,0:23:14.579
+question yep oh yes the question was
+
+0:23:12.239,0:23:16.869
+young recommended we used mini batches
+
+0:23:14.579,0:23:18.399
+equal to the size of the number of
+
+0:23:16.869,0:23:20.079
+classes we have in our data set why is
+
+0:23:18.399,0:23:22.329
+that reasonable that was the question
+
+0:23:20.079,0:23:23.889
+the answer is that we want any vectors
+
+0:23:22.329,0:23:26.919
+to be representative of the full data
+
+0:23:23.889,0:23:28.329
+set and typically each class is quite
+
+0:23:26.919,0:23:30.099
+distinct from the other classes in its
+
+0:23:28.329,0:23:33.490
+properties so about using a mini batch
+
+0:23:30.099,0:23:35.529
+that contains on average
+
+0:23:33.490,0:23:36.850
+one instance from each class in fact we
+
+0:23:35.529,0:23:38.049
+can enforce that explicitly although
+
+0:23:36.850,0:23:39.820
+it's not necessary
+
+0:23:38.049,0:23:43.059
+by having an approximately equal to that
+
+0:23:39.820,0:23:44.590
+size we can assume it has the kind of
+
+0:23:43.059,0:23:46.630
+structure of a food gradient so you
+
+0:23:44.590,0:23:49.870
+capture a lot of the correlations in the
+
+0:23:46.630,0:23:52.360
+data you see with the full gradient and
+
+0:23:49.870,0:23:54.279
+it's a good guide especially if you're
+
+0:23:52.360,0:23:57.010
+using training on CPU where you're not
+
+0:23:54.279,0:23:58.690
+constrained too much by hardware
+
+0:23:57.010,0:24:01.960
+efficiency here when training on energy
+
+0:23:58.690,0:24:05.080
+on a CPU batch size is not critical for
+
+0:24:01.960,0:24:07.570
+hardware utilization it's problem
+
+0:24:05.080,0:24:09.370
+dependent I would always recommend mini
+
+0:24:07.570,0:24:12.100
+batching I don't think it's worth trying
+
+0:24:09.370,0:24:13.899
+size one as a starting point if you try
+
+0:24:12.100,0:24:16.240
+to eke out small gains maybe that's
+
+0:24:13.899,0:24:19.779
+worth exploring yes there was another
+
+0:24:16.240,0:24:21.850
+question so in the annealing example so
+
+0:24:19.779,0:24:24.760
+the question was why is the lost
+
+0:24:21.850,0:24:28.929
+landscape so wobbly and this is this is
+
+0:24:24.760,0:24:31.600
+actually something that is very a very
+
+0:24:28.929,0:24:32.740
+realistic depiction of actual law slams
+
+0:24:31.600,0:24:37.630
+codes for neural networks they're
+
+0:24:32.740,0:24:40.390
+incredibly in the sense that they have a
+
+0:24:37.630,0:24:41.860
+lot of hills and valleys and this is
+
+0:24:40.390,0:24:44.470
+something that is actively researched
+
+0:24:41.860,0:24:47.140
+now what we can say for instance is that
+
+0:24:44.470,0:24:50.710
+there is a very large number of good
+
+0:24:47.140,0:24:52.720
+minima and and so hills and valleys we
+
+0:24:50.710,0:24:55.270
+know this because your networks have
+
+0:24:52.720,0:24:56.590
+this combinatorial aspect to them you
+
+0:24:55.270,0:24:58.750
+can reaper ammeter eyes a neural network
+
+0:24:56.590,0:25:00.309
+by shifting all the weights around and
+
+0:24:58.750,0:25:02.799
+you can get in your work you'll know if
+
+0:25:00.309,0:25:04.750
+it outputs exactly the same output for
+
+0:25:02.799,0:25:05.830
+whatever task you're looking at with all
+
+0:25:04.750,0:25:07.419
+these weights moved around and that
+
+0:25:05.830,0:25:10.720
+correspondence essentially to a
+
+0:25:07.419,0:25:12.460
+different location in parameter space so
+
+0:25:10.720,0:25:14.860
+given that there's an exponential number
+
+0:25:12.460,0:25:16.270
+of these possible ways of rearranging
+
+0:25:14.860,0:25:17.200
+the weights to get the same network
+
+0:25:16.270,0:25:18.940
+you're going to end up with the space
+
+0:25:17.200,0:25:21.340
+that's incredibly spiky exponential
+
+0:25:18.940,0:25:24.789
+number of these spikes now the reason
+
+0:25:21.340,0:25:26.440
+why these these local minima appear that
+
+0:25:24.789,0:25:27.580
+is something that is still active
+
+0:25:26.440,0:25:30.970
+research so I'm not sure I can give you
+
+0:25:27.580,0:25:32.890
+a great answer there but they're
+
+0:25:30.970,0:25:35.649
+definitely observed in practice and what
+
+0:25:32.890,0:25:39.000
+I can say is they appear to be less of a
+
+0:25:35.649,0:25:39.000
+problem we've very
+
+0:25:39.090,0:25:42.810
+like close to state-of-the-art networks
+
+0:25:40.980,0:25:46.200
+so these local minima were considered
+
+0:25:42.810,0:25:47.940
+big problems 15 years ago but so much at
+
+0:25:46.200,0:25:51.120
+the moment people essentially never hit
+
+0:25:47.940,0:25:52.350
+them in practice when using kind of
+
+0:25:51.120,0:25:54.000
+recommended parameters and things like
+
+0:25:52.350,0:25:55.980
+that when you use very large batches you
+
+0:25:54.000,0:25:58.020
+can run into these problems it's not
+
+0:25:55.980,0:25:59.490
+even clear that the the poor performance
+
+0:25:58.020,0:26:01.050
+when using large batches is even
+
+0:25:59.490,0:26:03.900
+attributable to these larger minima to
+
+0:26:01.050,0:26:06.630
+these local minima so this is yes to
+
+0:26:03.900,0:26:08.550
+ongoing research yes the problem is you
+
+0:26:06.630,0:26:09.360
+can't really see this local structure
+
+0:26:08.550,0:26:10.920
+because we're in this million
+
+0:26:09.360,0:26:13.500
+dimensional space it's not a good way to
+
+0:26:10.920,0:26:15.090
+see it so yeah I don't know if people
+
+0:26:13.500,0:26:17.250
+might have explored that already I'm not
+
+0:26:15.090,0:26:18.840
+familiar with papers on that but I bet
+
+0:26:17.250,0:26:21.360
+someone has looked at it so you might
+
+0:26:18.840,0:26:23.520
+want to google that yeah so a lot of the
+
+0:26:21.360,0:26:26.160
+advances in neural network design have
+
+0:26:23.520,0:26:27.420
+actually been in reducing this bumpiness
+
+0:26:26.160,0:26:28.860
+in a lot of ways so this is part of the
+
+0:26:27.420,0:26:30.510
+reason why it's not considered a huge
+
+0:26:28.860,0:26:32.390
+problem anymore whether it was it was
+
+0:26:30.510,0:26:35.960
+considered a big problem in the past
+
+0:26:32.390,0:26:39.630
+there's any other questions yes so it's
+
+0:26:35.960,0:26:41.550
+it is hard to see but there are certain
+
+0:26:39.630,0:26:44.790
+things you can do that we make the the
+
+0:26:41.550,0:26:46.830
+peaks and valleys smaller certainly and
+
+0:26:44.790,0:26:48.660
+by rescaling some parts the neural
+
+0:26:46.830,0:26:50.010
+network you can amplify certain
+
+0:26:48.660,0:26:51.930
+directions the curvature in certain
+
+0:26:50.010,0:26:54.320
+directions can be stretched and squashed
+
+0:26:51.930,0:26:58.440
+the particular innovation residual
+
+0:26:54.320,0:27:00.000
+connections that were mentioned they're
+
+0:26:58.440,0:27:01.410
+very easy to see that they smooth out
+
+0:27:00.000,0:27:03.600
+the the loss in fact you can kind of
+
+0:27:01.410,0:27:05.010
+draw two line between two points in the
+
+0:27:03.600,0:27:06.570
+space and you can see what happens along
+
+0:27:05.010,0:27:08.130
+that line that's really the best way we
+
+0:27:06.570,0:27:10.170
+have a visualizing million dimensional
+
+0:27:08.130,0:27:11.700
+spaces so I turn him into one dimension
+
+0:27:10.170,0:27:13.200
+and you can see that it's that it's a
+
+0:27:11.700,0:27:14.850
+much nicer between these two points
+
+0:27:13.200,0:27:17.370
+whatever two points you choose when
+
+0:27:14.850,0:27:18.750
+using these residual connections I'll be
+
+0:27:17.370,0:27:21.570
+talking all about dodging or later in
+
+0:27:18.750,0:27:23.220
+the lecture so yeah if hopefully I'll
+
+0:27:21.570,0:27:24.870
+answer that question without you having
+
+0:27:23.220,0:27:28.910
+to ask it again but we'll see
+
+0:27:24.870,0:27:31.560
+thanks any other questions yes so l-bfgs
+
+0:27:28.910,0:27:32.970
+excellent method it's it's kind of a
+
+0:27:31.560,0:27:34.650
+constellation of optimization
+
+0:27:32.970,0:27:37.530
+researchers that we still use SGD a
+
+0:27:34.650,0:27:40.470
+method invented in the 60s or earlier is
+
+0:27:37.530,0:27:43.500
+still state of the art but there has
+
+0:27:40.470,0:27:44.880
+been some innovation in fact only a
+
+0:27:43.500,0:27:46.470
+couple years later but there was some
+
+0:27:44.880,0:27:49.180
+innovation since the invention of sed
+
+0:27:46.470,0:27:52.420
+and one of these innovations is
+
+0:27:49.180,0:27:54.730
+and I'll talk about another later so
+
+0:27:52.420,0:27:56.080
+momentum it's a trick
+
+0:27:54.730,0:27:57.520
+that you should pretty much always be
+
+0:27:56.080,0:27:59.650
+using when you're using stochastic
+
+0:27:57.520,0:28:00.880
+gradient descent it's worth be going
+
+0:27:59.650,0:28:03.640
+into this in a little bit of detail
+
+0:28:00.880,0:28:04.930
+you'll often be tuning the momentum
+
+0:28:03.640,0:28:06.070
+parameter and your network and it's
+
+0:28:04.930,0:28:09.340
+useful to understand what it's actually
+
+0:28:06.070,0:28:11.830
+doing when you're tuning up so part of
+
+0:28:09.340,0:28:15.970
+the problem with momentum it's very
+
+0:28:11.830,0:28:17.230
+misunderstood and this can be explained
+
+0:28:15.970,0:28:18.760
+by the fact that there's actually three
+
+0:28:17.230,0:28:20.170
+different ways of writing momentum that
+
+0:28:18.760,0:28:21.790
+look completely different but turn out
+
+0:28:20.170,0:28:23.290
+to be equivalent I'm only going to
+
+0:28:21.790,0:28:25.120
+present two of these ways because the
+
+0:28:23.290,0:28:26.440
+third way is not as well known but is
+
+0:28:25.120,0:28:30.070
+actually in my opinion the correct way
+
+0:28:26.440,0:28:31.360
+to view it I don't talk about my
+
+0:28:30.070,0:28:32.470
+research here so we'll talk about how
+
+0:28:31.360,0:28:35.080
+it's actually implemented in the
+
+0:28:32.470,0:28:37.390
+packages you'll be using and this first
+
+0:28:35.080,0:28:39.550
+form here is what's actually implemented
+
+0:28:37.390,0:28:42.040
+in Python and other software that you'll
+
+0:28:39.550,0:28:44.350
+be using here we maintain two variables
+
+0:28:42.040,0:28:47.650
+now you'll see lots of papers using
+
+0:28:44.350,0:28:49.600
+different notation here P is the
+
+0:28:47.650,0:28:51.580
+notation used in physics for momentum
+
+0:28:49.600,0:28:53.650
+and it's very common to use that also as
+
+0:28:51.580,0:28:55.720
+the momentum variable when talking about
+
+0:28:53.650,0:28:58.300
+sed with momentum so I'll be following
+
+0:28:55.720,0:29:01.000
+that convention so instead of having a
+
+0:28:58.300,0:29:03.750
+single iterate we now have to Eretz P
+
+0:29:01.000,0:29:06.940
+and W and at every step we update both
+
+0:29:03.750,0:29:10.930
+and this is quite a simple update so the
+
+0:29:06.940,0:29:13.060
+P update involves adding to the old P
+
+0:29:10.930,0:29:15.010
+and instead of adding exactly to the old
+
+0:29:13.060,0:29:16.720
+P we kind of damp the old P we reduce it
+
+0:29:15.010,0:29:19.060
+by multiplying it by a constant that's
+
+0:29:16.720,0:29:21.310
+worse than one so reduce the old P and
+
+0:29:19.060,0:29:23.350
+here I'm using beta hat as the constant
+
+0:29:21.310,0:29:24.880
+there so that would probably be 0.9 in
+
+0:29:23.350,0:29:28.870
+practice a small amount of damping and
+
+0:29:24.880,0:29:32.650
+we add to that the new gradient so P is
+
+0:29:28.870,0:29:36.070
+kind of this accumulated gradient buffer
+
+0:29:32.650,0:29:38.170
+you can think of where new gradients
+
+0:29:36.070,0:29:40.900
+come in at full value and past gradients
+
+0:29:38.170,0:29:42.490
+are reduced at each step by a certain
+
+0:29:40.900,0:29:45.250
+factor usually 0.9 which used to reduce
+
+0:29:42.490,0:29:47.910
+reduced so the buffer tends to be a some
+
+0:29:45.250,0:29:51.040
+sort of running sum of gradients and
+
+0:29:47.910,0:29:53.080
+it's basically we just modify this to
+
+0:29:51.040,0:29:55.210
+custer gradient two-step descent step by
+
+0:29:53.080,0:29:56.440
+using this P instead of the negative
+
+0:29:55.210,0:29:57.570
+gradient instead of the gradient sorry
+
+0:29:56.440,0:30:00.260
+using P instead of the
+
+0:29:57.570,0:30:03.360
+in the update since the two line formula
+
+0:30:00.260,0:30:05.790
+it may be better to understand this by
+
+0:30:03.360,0:30:07.440
+the second form that I put below this is
+
+0:30:05.790,0:30:09.600
+equivalent you've got a map the beta
+
+0:30:07.440,0:30:11.100
+with a small transformation so it's not
+
+0:30:09.600,0:30:12.750
+exactly the same beta between the two
+
+0:30:11.100,0:30:16.740
+methods but it's practically the same
+
+0:30:12.750,0:30:20.300
+for in practice so these are essentially
+
+0:30:16.740,0:30:20.300
+the same up to reap romanization and
+
+0:30:21.260,0:30:25.530
+this film I think is maybe clearer this
+
+0:30:23.760,0:30:28.140
+form is called the stochastic heavy ball
+
+0:30:25.530,0:30:31.170
+method and here our update still
+
+0:30:28.140,0:30:36.120
+includes the gradient but we're also
+
+0:30:31.170,0:30:40.020
+adding on a multiplied copy of the past
+
+0:30:36.120,0:30:41.070
+direction we traveled in now what does
+
+0:30:40.020,0:30:43.320
+this mean what are we actually doing
+
+0:30:41.070,0:30:45.870
+here so it's actually not too difficult
+
+0:30:43.320,0:30:49.170
+to visualize and I'm going to kind of
+
+0:30:45.870,0:30:50.850
+use a visualization from a distilled
+
+0:30:49.170,0:30:52.710
+publication you can see the dress at the
+
+0:30:50.850,0:30:53.730
+bottom there and I disagree with a lot
+
+0:30:52.710,0:30:55.620
+of what they talked about in that
+
+0:30:53.730,0:30:59.460
+document but I like the visualizations
+
+0:30:55.620,0:31:02.820
+so let's use had and I'll explain why I
+
+0:30:59.460,0:31:04.920
+disagreed some regards later but it's
+
+0:31:02.820,0:31:07.440
+quite simple so you can think of
+
+0:31:04.920,0:31:08.660
+momentum as the physical process and I
+
+0:31:07.440,0:31:10.650
+mention those of you have done
+
+0:31:08.660,0:31:15.960
+introductory physics courses would have
+
+0:31:10.650,0:31:17.340
+covered this so momentum is the property
+
+0:31:15.960,0:31:19.650
+of something to keep moving in the
+
+0:31:17.340,0:31:21.330
+direction that's currently moving in all
+
+0:31:19.650,0:31:23.280
+right if you're familiar with Newton's
+
+0:31:21.330,0:31:24.240
+laws things want to keep going in the
+
+0:31:23.280,0:31:26.910
+direction they're going and this is
+
+0:31:24.240,0:31:28.860
+momentum and when you do this mapping
+
+0:31:26.910,0:31:31.860
+the physics the gradient is kind of a
+
+0:31:28.860,0:31:34.020
+force that is pushing you're literate
+
+0:31:31.860,0:31:36.570
+which by this analogy is a heavy ball
+
+0:31:34.020,0:31:39.860
+it's pushing this heavy ball at each
+
+0:31:36.570,0:31:42.030
+point so rather than making dramatic
+
+0:31:39.860,0:31:44.030
+changes in the direction we travel at
+
+0:31:42.030,0:31:46.050
+every step which is shown in that left
+
+0:31:44.030,0:31:48.480
+diagram instead of making these dramatic
+
+0:31:46.050,0:31:50.640
+changes we're going to make kind of a
+
+0:31:48.480,0:31:51.480
+bit more modest changes so when we
+
+0:31:50.640,0:31:54.000
+realize we're going in the wrong
+
+0:31:51.480,0:31:55.740
+direction we kind of do a u-turn instead
+
+0:31:54.000,0:31:57.820
+of putting the hand brake on and
+
+0:31:55.740,0:31:59.440
+swinging around
+
+0:31:57.820,0:32:00.460
+it turns out in a lot of practical
+
+0:31:59.440,0:32:01.810
+problems this gives you a big
+
+0:32:00.460,0:32:03.430
+improvement so here you can see you're
+
+0:32:01.810,0:32:06.280
+getting much closer to the solution by
+
+0:32:03.430,0:32:09.610
+the end of it with much less oscillation
+
+0:32:06.280,0:32:10.840
+and you can see this oscillation so it's
+
+0:32:09.610,0:32:12.850
+kind of a fact of life if you're using
+
+0:32:10.840,0:32:14.650
+gradient descent type methods so here we
+
+0:32:12.850,0:32:17.200
+talk about momentum on top of gradient
+
+0:32:14.650,0:32:18.550
+descent in the visualization you're
+
+0:32:17.200,0:32:21.070
+gonna get this oscillation it's just a
+
+0:32:18.550,0:32:22.240
+property of gradient descent no way to
+
+0:32:21.070,0:32:23.890
+get rid of it without modifying the
+
+0:32:22.240,0:32:27.490
+method and we're meant to them to some
+
+0:32:23.890,0:32:28.810
+degree dampens this oscillation I've got
+
+0:32:27.490,0:32:30.760
+another visualization here which will
+
+0:32:28.810,0:32:33.190
+kind of give you an intuition for how
+
+0:32:30.760,0:32:34.660
+this beta parameter controls things now
+
+0:32:33.190,0:32:37.240
+the Department of these to be greater
+
+0:32:34.660,0:32:39.280
+than zero if it's equal to zero you
+
+0:32:37.240,0:32:40.660
+distr in gradient descent and it's gotta
+
+0:32:39.280,0:32:43.330
+be less than one otherwise the Met
+
+0:32:40.660,0:32:44.860
+everything blows up as you start
+
+0:32:43.330,0:32:45.970
+including past gradients with more and
+
+0:32:44.860,0:32:50.130
+more weight over times it's gotta be
+
+0:32:45.970,0:32:54.070
+between zero and one and typical values
+
+0:32:50.130,0:32:56.200
+range from you know small 0.25 up to
+
+0:32:54.070,0:32:59.230
+like 0.99 so in practice you can get
+
+0:32:56.200,0:33:05.980
+pretty close to one and what happens is
+
+0:32:59.230,0:33:09.130
+the smaller values they result in you're
+
+0:33:05.980,0:33:10.750
+changing direction quicker okay so in
+
+0:33:09.130,0:33:12.820
+this diagram you can see on the left
+
+0:33:10.750,0:33:14.110
+with the small beta you as soon as you
+
+0:33:12.820,0:33:16.120
+get close to the solution you kind of
+
+0:33:14.110,0:33:17.890
+change direction pretty rapidly and head
+
+0:33:16.120,0:33:19.900
+towards a solution when you use these
+
+0:33:17.890,0:33:21.940
+larger betas it takes longer for you to
+
+0:33:19.900,0:33:23.530
+make this dramatic turn you can think of
+
+0:33:21.940,0:33:24.940
+it as a car with a bad turning circle
+
+0:33:23.530,0:33:26.170
+takes you quite a long time to get
+
+0:33:24.940,0:33:29.140
+around that corner and head towards
+
+0:33:26.170,0:33:31.180
+solution now this may seem like a bad
+
+0:33:29.140,0:33:33.340
+thing but actually in practice this
+
+0:33:31.180,0:33:35.110
+significantly dampens the oscillations
+
+0:33:33.340,0:33:38.140
+that you get from gradient descent and
+
+0:33:35.110,0:33:40.450
+that's the nice property of it now in
+
+0:33:38.140,0:33:43.540
+terms of practice I can give you some
+
+0:33:40.450,0:33:45.760
+pretty clear guidance here you pretty
+
+0:33:43.540,0:33:47.020
+much always want to use momentum it's
+
+0:33:45.760,0:33:48.820
+pretty hard to find problems where it's
+
+0:33:47.020,0:33:51.130
+actually not beneficial to some degree
+
+0:33:48.820,0:33:52.960
+now part of the reason for this is it's
+
+0:33:51.130,0:33:54.580
+just an extra parameter now typically
+
+0:33:52.960,0:33:55.870
+when you take some method and just add
+
+0:33:54.580,0:33:57.610
+more parameters to it you can usually
+
+0:33:55.870,0:34:01.000
+find some value of that parameter that
+
+0:33:57.610,0:34:02.800
+makes us slightly better now that is
+
+0:34:01.000,0:34:04.330
+sometimes the case here but often these
+
+0:34:02.800,0:34:06.890
+improvements from using momentum are
+
+0:34:04.330,0:34:08.810
+actually quite substantial and
+
+0:34:06.890,0:34:10.760
+using a momentum value of point nine is
+
+0:34:08.810,0:34:13.610
+really a default value used in machine
+
+0:34:10.760,0:34:16.970
+learning quite often and often in some
+
+0:34:13.610,0:34:19.010
+situations 0.99 may be better so I would
+
+0:34:16.970,0:34:22.550
+recommend trying both values if you have
+
+0:34:19.010,0:34:24.770
+time otherwise just try point nine but I
+
+0:34:22.550,0:34:26.990
+have to do a warning the way momentum is
+
+0:34:24.770,0:34:29.300
+stated in this expression if you look at
+
+0:34:26.990,0:34:32.360
+it carefully when we increase the
+
+0:34:29.300,0:34:36.440
+momentum we kind of increase the step
+
+0:34:32.360,0:34:37.820
+size now it's not the step size of the
+
+0:34:36.440,0:34:39.380
+current gradient so the current gradient
+
+0:34:37.820,0:34:41.870
+is included in the step with the same
+
+0:34:39.380,0:34:43.399
+strengths but past gradients become
+
+0:34:41.870,0:34:45.770
+included in the step with a higher
+
+0:34:43.399,0:34:48.290
+strength when you increase momentum now
+
+0:34:45.770,0:34:50.419
+when you write momentum in other forms
+
+0:34:48.290,0:34:53.179
+this becomes a lot more obvious so this
+
+0:34:50.419,0:34:56.720
+firm kind of occludes that but what you
+
+0:34:53.179,0:34:58.820
+should generally do when you change
+
+0:34:56.720,0:35:01.430
+momentum you want to change it so that
+
+0:34:58.820,0:35:04.310
+you have your step size divided by one
+
+0:35:01.430,0:35:06.620
+minus beta is your new step size so if
+
+0:35:04.310,0:35:07.790
+your old step size was using a certain B
+
+0:35:06.620,0:35:09.860
+do you want to map it to that equation
+
+0:35:07.790,0:35:11.690
+then map it back to get the the new step
+
+0:35:09.860,0:35:14.150
+size now this may be very modest change
+
+0:35:11.690,0:35:16.400
+but if you're going from momentum 0.9 to
+
+0:35:14.150,0:35:17.960
+momentum 0.99 you may need to reduce
+
+0:35:16.400,0:35:20.480
+your learning rate by a factor of 10
+
+0:35:17.960,0:35:21.740
+approximately so just be wary of that
+
+0:35:20.480,0:35:22.850
+you can't expect to keep the same
+
+0:35:21.740,0:35:26.030
+learning rate and change the momentum
+
+0:35:22.850,0:35:27.260
+parameter at wallmart work now I want to
+
+0:35:26.030,0:35:30.530
+go into a bit of detail about why
+
+0:35:27.260,0:35:31.880
+momentum works is very misunderstood and
+
+0:35:30.530,0:35:36.530
+the explanation you'll see in that
+
+0:35:31.880,0:35:38.570
+Distilled post is acceleration and this
+
+0:35:36.530,0:35:41.870
+is certainly a contributor to the
+
+0:35:38.570,0:35:44.380
+performance of momentum now acceleration
+
+0:35:41.870,0:35:46.490
+is a topic yes if you've got a question
+
+0:35:44.380,0:35:48.170
+the question was is there a big
+
+0:35:46.490,0:35:51.320
+difference between using momentum and
+
+0:35:48.170,0:35:54.890
+using a mini batch of two and there is
+
+0:35:51.320,0:35:56.330
+so momentum has advantages in for when
+
+0:35:54.890,0:35:59.150
+using gradient descent as well as
+
+0:35:56.330,0:36:00.650
+stochastic gradient descent so in fact
+
+0:35:59.150,0:36:03.110
+this acceleration explanation were about
+
+0:36:00.650,0:36:04.880
+to use applies both in the stochastic
+
+0:36:03.110,0:36:07.520
+and non stochastic case so no matter
+
+0:36:04.880,0:36:10.970
+what batch size you're going to use the
+
+0:36:07.520,0:36:13.100
+benefits of momentum still are shown now
+
+0:36:10.970,0:36:14.600
+it also has benefits in the stochastic
+
+0:36:13.100,0:36:17.000
+case as well which I'll cover in a slide
+
+0:36:14.600,0:36:18.260
+or two so the answer is it's quite
+
+0:36:17.000,0:36:19.579
+distinct from batch size and you
+
+0:36:18.260,0:36:21.289
+shouldn't complete them
+
+0:36:19.579,0:36:22.459
+learn it like really you should be
+
+0:36:21.289,0:36:23.779
+changing your learning rate when you
+
+0:36:22.459,0:36:26.239
+change your bat size rather than
+
+0:36:23.779,0:36:27.859
+changing the momentum and for very large
+
+0:36:26.239,0:36:30.380
+batch sizes there's a clear relationship
+
+0:36:27.859,0:36:32.660
+between learning rate and batch size but
+
+0:36:30.380,0:36:34.729
+for small batch sizes it's not clear so
+
+0:36:32.660,0:36:36.170
+it's problem dependent any other
+
+0:36:34.729,0:36:38.599
+questions before I move on on momentum
+
+0:36:36.170,0:36:40.910
+yes yes it's it's just blow up so it's
+
+0:36:38.599,0:36:42.979
+actually in the in the in the physics
+
+0:36:40.910,0:36:45.279
+interpretation it's conservation of
+
+0:36:42.979,0:36:48.499
+momentum would be exactly equal to one
+
+0:36:45.279,0:36:50.509
+now that's not good because if you're in
+
+0:36:48.499,0:36:51.890
+a world with no friction then you drop a
+
+0:36:50.509,0:36:54.229
+heavy ball somewhere it's gonna keep
+
+0:36:51.890,0:36:56.479
+moving forever it's not good stuff so we
+
+0:36:54.229,0:36:57.920
+need some dampening and this is where
+
+0:36:56.479,0:37:01.069
+the physics interpretation breaks down
+
+0:36:57.920,0:37:02.269
+so you do need some damping now now you
+
+0:37:01.069,0:37:05.209
+can imagine if you use a larger value
+
+0:37:02.269,0:37:07.609
+than one those past gradients get
+
+0:37:05.209,0:37:09.410
+amplified every step so in fact the
+
+0:37:07.609,0:37:11.660
+first gradient you evaluate in your
+
+0:37:09.410,0:37:13.940
+network is not relevant information
+
+0:37:11.660,0:37:15.259
+content wise later in optimization but
+
+0:37:13.940,0:37:16.910
+if it used to be the larger than 1 it
+
+0:37:15.259,0:37:19.249
+would dominate the step that you're
+
+0:37:16.910,0:37:21.170
+using does that answer your question
+
+0:37:19.249,0:37:24.079
+yeah ok any other questions about
+
+0:37:21.170,0:37:26.359
+momentum before we move on they are for
+
+0:37:24.079,0:37:29.329
+a particular value of beta yes it's
+
+0:37:26.359,0:37:30.859
+strictly equivalent it's not very hard
+
+0:37:29.329,0:37:32.329
+to you should be able to do it in like
+
+0:37:30.859,0:37:38.359
+two lines if you try and do the
+
+0:37:32.329,0:37:39.920
+equivalence yourself no the bidders are
+
+0:37:38.359,0:37:40.910
+not quite the same but the the gamma is
+
+0:37:39.920,0:37:43.670
+the same that's why I use the same
+
+0:37:40.910,0:37:45.319
+notation for it oh yes so that's what I
+
+0:37:43.670,0:37:47.089
+mentioned yes so when you change beta
+
+0:37:45.319,0:37:48.349
+you want to scale your learning rate by
+
+0:37:47.089,0:37:51.469
+the learning rate divided by one over
+
+0:37:48.349,0:37:52.369
+beta so in this form I'm not sure if it
+
+0:37:51.469,0:37:54.109
+appears in this form it could be a
+
+0:37:52.369,0:37:55.969
+mistake but I think I'm okay here I
+
+0:37:54.109,0:37:57.680
+think it's not in this formula but yeah
+
+0:37:55.969,0:37:59.269
+what you definitely when you change beta
+
+0:37:57.680,0:38:03.630
+you need to change learning rate as well
+
+0:37:59.269,0:38:09.300
+to keep things balanced yeah
+
+0:38:03.630,0:38:11.130
+Oh either averaging form it's probably
+
+0:38:09.300,0:38:13.830
+not worth going over but you can think
+
+0:38:11.130,0:38:15.180
+of it as momentum is basically changing
+
+0:38:13.830,0:38:17.850
+the point that you evaluate the gradient
+
+0:38:15.180,0:38:20.190
+at in the standard firm you evaluate the
+
+0:38:17.850,0:38:22.230
+gradient at this W point in the inner
+
+0:38:20.190,0:38:23.430
+averaging form you take a running
+
+0:38:22.230,0:38:25.890
+average of the points you've been
+
+0:38:23.430,0:38:28.650
+evaluating the Grady Nutt and you
+
+0:38:25.890,0:38:30.630
+evaluate at that point so it's basically
+
+0:38:28.650,0:38:33.270
+instead of averaging gradients to
+
+0:38:30.630,0:38:37.530
+average points it's clear sense Jewell
+
+0:38:33.270,0:38:38.760
+yes yes so acceleration now this is
+
+0:38:37.530,0:38:43.260
+something you can spend the whole career
+
+0:38:38.760,0:38:45.270
+studying and it's it's somewhat poorly
+
+0:38:43.260,0:38:47.070
+understood now if you try and read
+
+0:38:45.270,0:38:49.400
+Nesterov original work on it now
+
+0:38:47.070,0:38:53.520
+Nesterov is kind of the grandfather of
+
+0:38:49.400,0:38:55.020
+modern optimization in practically half
+
+0:38:53.520,0:38:56.460
+the methods we use are named after him
+
+0:38:55.020,0:38:59.730
+to some degree which is can be confusing
+
+0:38:56.460,0:39:01.740
+at times and in the 80s he came up with
+
+0:38:59.730,0:39:03.360
+this formulation he didn't write it in
+
+0:39:01.740,0:39:04.650
+this form he wrote it in another form
+
+0:39:03.360,0:39:06.810
+which people realized a while later
+
+0:39:04.650,0:39:09.450
+could be written in this form and his
+
+0:39:06.810,0:39:12.510
+analysis is also very opaque and
+
+0:39:09.450,0:39:15.590
+originally written in Russian doesn't
+
+0:39:12.510,0:39:19.110
+help no for understanding unfortunately
+
+0:39:15.590,0:39:21.180
+those nice people the NSA translated all
+
+0:39:19.110,0:39:24.960
+of the Russian literature back then so
+
+0:39:21.180,0:39:27.330
+so we have access to them and it's
+
+0:39:24.960,0:39:30.540
+actually a very small modification of
+
+0:39:27.330,0:39:31.890
+the momentum step but I think that small
+
+0:39:30.540,0:39:33.660
+modification belittles what it's
+
+0:39:31.890,0:39:36.600
+actually doing it's really not the same
+
+0:39:33.660,0:39:38.850
+method at all what I can say is with
+
+0:39:36.600,0:39:41.400
+Nesterov Swimmer momentum if you very
+
+0:39:38.850,0:39:42.960
+carefully choose these constants you can
+
+0:39:41.400,0:39:46.050
+get what's known as accelerated
+
+0:39:42.960,0:39:48.030
+convergence now this doesn't apply in
+
+0:39:46.050,0:39:49.560
+your networks but for convex problems I
+
+0:39:48.030,0:39:50.610
+won't go into details of convexity but
+
+0:39:49.560,0:39:52.230
+some of you may know what that means
+
+0:39:50.610,0:39:53.670
+it's kind of a simple structure but
+
+0:39:52.230,0:39:55.740
+convex problems it's a radically
+
+0:39:53.670,0:39:58.260
+improved convergence rate from this
+
+0:39:55.740,0:39:59.940
+acceleration but only for very carefully
+
+0:39:58.260,0:40:01.500
+chosen constants and you really can't
+
+0:39:59.940,0:40:03.030
+choose these carefully ahead of time so
+
+0:40:01.500,0:40:04.470
+you've got to do quite a large search
+
+0:40:03.030,0:40:05.640
+over your parameters your hyper
+
+0:40:04.470,0:40:08.940
+parameters sorry to find the right
+
+0:40:05.640,0:40:10.710
+constants to get that acceleration what
+
+0:40:08.940,0:40:12.540
+I can say is this actually occurs for
+
+0:40:10.710,0:40:14.779
+quadratics when using regular momentum
+
+0:40:12.540,0:40:16.609
+and this is confused a lot of people
+
+0:40:14.779,0:40:18.559
+so you'll see a lot of people say that
+
+0:40:16.609,0:40:21.499
+momentum is an accelerated method it's
+
+0:40:18.559,0:40:23.449
+excited only for quadratics and even
+
+0:40:21.499,0:40:24.859
+then it's it's a little bit iffy I would
+
+0:40:23.449,0:40:27.529
+not recommend using it for quadratics
+
+0:40:24.859,0:40:29.150
+use conjugate gradients or some new
+
+0:40:27.529,0:40:33.499
+methods that have been developed over
+
+0:40:29.150,0:40:34.880
+the last few years and this is
+
+0:40:33.499,0:40:36.919
+definitely a contributing factor to our
+
+0:40:34.880,0:40:38.689
+momentum works so well in practice and
+
+0:40:36.919,0:40:42.499
+there's definitely some acceleration
+
+0:40:38.689,0:40:44.869
+going on but this acceleration is hard
+
+0:40:42.499,0:40:46.669
+to realize when you have stochastic
+
+0:40:44.869,0:40:48.890
+gradients now when you look at what
+
+0:40:46.669,0:40:51.679
+makes acceleration work noise really
+
+0:40:48.890,0:40:53.329
+kills it and it's it's hard to believe
+
+0:40:51.679,0:40:55.549
+that it's the main factor contributing
+
+0:40:53.329,0:40:58.219
+to the performance but it's certainly
+
+0:40:55.549,0:40:59.989
+there and the the still post I mentioned
+
+0:40:58.219,0:41:01.759
+attributes or the performance of
+
+0:40:59.989,0:41:02.689
+momentum to acceleration but I wouldn't
+
+0:41:01.759,0:41:05.630
+go that quite that far but it's
+
+0:41:02.689,0:41:08.390
+definitely a contributing factor but
+
+0:41:05.630,0:41:11.779
+probably the practical and provable
+
+0:41:08.390,0:41:13.669
+reason why acceleration why knows sorry
+
+0:41:11.779,0:41:19.029
+why momentum helps is noise smoothing
+
+0:41:13.669,0:41:21.619
+and this is very intuitive momentum
+
+0:41:19.029,0:41:23.059
+averages gradients in a sense we keep
+
+0:41:21.619,0:41:25.099
+this running buffer gradients that we
+
+0:41:23.059,0:41:26.239
+use as a step instead of individual
+
+0:41:25.099,0:41:30.259
+gradients this is kind of a form of
+
+0:41:26.239,0:41:31.999
+averaging and it turns out that when you
+
+0:41:30.259,0:41:33.229
+use s to D without momentum to prove
+
+0:41:31.999,0:41:35.569
+anything at all about it
+
+0:41:33.229,0:41:37.449
+you actually have to work with the
+
+0:41:35.569,0:41:40.759
+average of all the points you visited
+
+0:41:37.449,0:41:42.380
+you can get really weak bounds on the
+
+0:41:40.759,0:41:43.339
+last point that you ended up at but
+
+0:41:42.380,0:41:45.349
+really you've got to work with this
+
+0:41:43.339,0:41:46.909
+average of points and this is suboptimal
+
+0:41:45.349,0:41:48.529
+like we never want to actually take this
+
+0:41:46.909,0:41:50.509
+average in practice it's heavily
+
+0:41:48.529,0:41:52.099
+weighted with points that we visited a
+
+0:41:50.509,0:41:53.989
+long time ago which may be irrelevant
+
+0:41:52.099,0:41:55.159
+and in fact this averaging doesn't work
+
+0:41:53.989,0:41:57.140
+very well in practice for neural
+
+0:41:55.159,0:41:59.150
+networks it's really only important for
+
+0:41:57.140,0:42:01.939
+convex problems but nevertheless it's
+
+0:41:59.150,0:42:03.380
+necessary to analyze regular s2d and one
+
+0:42:01.939,0:42:05.419
+of the remarkable facts about momentum
+
+0:42:03.380,0:42:09.019
+is actually this averaging is no longer
+
+0:42:05.419,0:42:11.989
+theoretically necessary so essentially
+
+0:42:09.019,0:42:14.509
+momentum adds smoothing dream
+
+0:42:11.989,0:42:16.479
+optimization that makes it makes us so
+
+0:42:14.509,0:42:19.459
+the last point you visit is still a good
+
+0:42:16.479,0:42:21.589
+approximation to the solution with SGG
+
+0:42:19.459,0:42:23.329
+really you want to average a whole bunch
+
+0:42:21.589,0:42:24.799
+of last points you've seen in order to
+
+0:42:23.329,0:42:26.700
+get a good approximation to the solution
+
+0:42:24.799,0:42:28.980
+now let me illustrate that
+
+0:42:26.700,0:42:31.190
+here so this is this is a very typical
+
+0:42:28.980,0:42:34.109
+example of what happens when using STD
+
+0:42:31.190,0:42:36.329
+STD at the beginning you make great
+
+0:42:34.109,0:42:38.310
+progress the gradient is essentially
+
+0:42:36.329,0:42:39.960
+almost the same as the stochastic
+
+0:42:38.310,0:42:42.030
+gradient so first few steps you make
+
+0:42:39.960,0:42:44.490
+great progress towards solution but then
+
+0:42:42.030,0:42:45.780
+you end up in this ball now recall here
+
+0:42:44.490,0:42:47.579
+that's a valley that we're heading down
+
+0:42:45.780,0:42:49.349
+so this ball here is kind of the floor
+
+0:42:47.579,0:42:53.550
+of the valley and you kind of bounce
+
+0:42:49.349,0:42:55.079
+around in this floor and the most common
+
+0:42:53.550,0:42:56.579
+solution of this is if you reduce your
+
+0:42:55.079,0:42:59.280
+learning rate you'll bounce around
+
+0:42:56.579,0:43:01.290
+slower not exactly a great solution but
+
+0:42:59.280,0:43:03.089
+it's one way to handle it but when you
+
+0:43:01.290,0:43:04.710
+use s to deal with momentum you can kind
+
+0:43:03.089,0:43:06.210
+of smooth out this bouncing around and
+
+0:43:04.710,0:43:08.160
+you kind of just kind of wheel around
+
+0:43:06.210,0:43:10.140
+now the path is not always going to be
+
+0:43:08.160,0:43:12.300
+this corkscrew tile path it's actually
+
+0:43:10.140,0:43:13.920
+quite random you could kind of wobble
+
+0:43:12.300,0:43:15.990
+left and right but when I seeded it with
+
+0:43:13.920,0:43:18.570
+42 this is what it spread out so that's
+
+0:43:15.990,0:43:20.790
+what I'm using here you typically get
+
+0:43:18.570,0:43:22.950
+this corkscrew you get this cork scoring
+
+0:43:20.790,0:43:24.660
+for this set of parameters and yeah I
+
+0:43:22.950,0:43:26.099
+think this is a good explanation so some
+
+0:43:24.660,0:43:27.960
+combination of acceleration and noise
+
+0:43:26.099,0:43:31.560
+smoothing is why momentum works
+
+0:43:27.960,0:43:33.180
+oh yes yes so I should say that when we
+
+0:43:31.560,0:43:35.910
+inject noise here the gradient may not
+
+0:43:33.180,0:43:37.470
+even be the right direction to travel in
+
+0:43:35.910,0:43:39.359
+fact it could be in the opposite
+
+0:43:37.470,0:43:40.800
+direction from where you want to go and
+
+0:43:39.359,0:43:45.089
+this is why you kind of bounce around in
+
+0:43:40.800,0:43:46.410
+the valley there so in fact the gray you
+
+0:43:45.089,0:43:48.210
+can see here that the first step with
+
+0:43:46.410,0:43:49.980
+SUV is practically orthogonal to the
+
+0:43:48.210,0:43:51.210
+level set there that's because it is
+
+0:43:49.980,0:43:52.770
+such a good step at the beginning but
+
+0:43:51.210,0:43:55.109
+once you get further down it can point
+
+0:43:52.770,0:44:00.300
+in pretty much any direction vaguely
+
+0:43:55.109,0:44:01.829
+around the solution so yesterday with
+
+0:44:00.300,0:44:03.540
+momentum is currently state of the art
+
+0:44:01.829,0:44:06.180
+optimization method for a lot of machine
+
+0:44:03.540,0:44:08.730
+learning problems so you'll probably be
+
+0:44:06.180,0:44:10.380
+using it in your course for a lot of
+
+0:44:08.730,0:44:12.990
+problems but there has been some other
+
+0:44:10.380,0:44:14.760
+innovations over the years and these are
+
+0:44:12.990,0:44:16.829
+particularly useful for poorly
+
+0:44:14.760,0:44:18.060
+conditioned problems now as I mentioned
+
+0:44:16.829,0:44:19.770
+earlier in the lecture some problems
+
+0:44:18.060,0:44:20.849
+have this kind of well condition
+
+0:44:19.770,0:44:22.530
+property that we can't really
+
+0:44:20.849,0:44:25.619
+characterize for neural networks but we
+
+0:44:22.530,0:44:27.450
+can measure it by the test that if s to
+
+0:44:25.619,0:44:28.740
+D works then it's well conditioned
+
+0:44:27.450,0:44:31.470
+eventually there doesent works and if I
+
+0:44:28.740,0:44:32.940
+must be walking poorly conditioned so we
+
+0:44:31.470,0:44:34.410
+have other methods we can handle
+
+0:44:32.940,0:44:36.569
+we can use to handle this in some
+
+0:44:34.410,0:44:39.690
+situations and these generally are
+
+0:44:36.569,0:44:41.160
+called adaptive methods now you need to
+
+0:44:39.690,0:44:43.500
+be a little bit careful because what are
+
+0:44:41.160,0:44:45.839
+you adapting to people in literature use
+
+0:44:43.500,0:44:51.780
+this nomenclature for adapting learning
+
+0:44:45.839,0:44:53.490
+rates adapting momentum parameters but
+
+0:44:51.780,0:44:56.339
+in our our situation we're talk about a
+
+0:44:53.490,0:45:00.079
+specific type of adaptivity roman this
+
+0:44:56.339,0:45:03.780
+adaptivity is individual learning rates
+
+0:45:00.079,0:45:05.460
+now what I mean by that so in the
+
+0:45:03.780,0:45:06.869
+simulation I already showed you a
+
+0:45:05.460,0:45:08.940
+stochastic gradient descent
+
+0:45:06.869,0:45:10.619
+I used a global learning rate by that I
+
+0:45:08.940,0:45:13.349
+mean every single rate in your network
+
+0:45:10.619,0:45:16.800
+is updated using an equation with the
+
+0:45:13.349,0:45:19.470
+same gamma now gamma could vary over
+
+0:45:16.800,0:45:21.720
+time step so you used gamma K in the
+
+0:45:19.470,0:45:24.420
+notation but often you use a fixed
+
+0:45:21.720,0:45:26.310
+camera for quite a long time but for
+
+0:45:24.420,0:45:28.050
+adaptive methods we want to adapt a
+
+0:45:26.310,0:45:30.240
+learning rate for every weight
+
+0:45:28.050,0:45:34.050
+individually and we want to use
+
+0:45:30.240,0:45:37.109
+information we get from gradients for
+
+0:45:34.050,0:45:38.490
+each weight to adapt this so this seems
+
+0:45:37.109,0:45:39.900
+like the obvious thing to do and people
+
+0:45:38.490,0:45:41.310
+have been trying to get this stuff to
+
+0:45:39.900,0:45:43.200
+work for decades and we're kind of
+
+0:45:41.310,0:45:47.310
+stumbled upon some methods that work and
+
+0:45:43.200,0:45:48.510
+some that don't but I want to ask for
+
+0:45:47.310,0:45:50.790
+questions here if there's any any
+
+0:45:48.510,0:45:53.040
+explanation needed so I can say that
+
+0:45:50.790,0:45:55.650
+it's not entirely clear why you need to
+
+0:45:53.040,0:45:56.880
+do this right if your network is well
+
+0:45:55.650,0:45:59.190
+conditioned you don't need to do this
+
+0:45:56.880,0:46:01.349
+potentially but often the network's we
+
+0:45:59.190,0:46:03.000
+use in practice have very different
+
+0:46:01.349,0:46:05.069
+structure in different parts of the
+
+0:46:03.000,0:46:08.160
+network so for instance the early parts
+
+0:46:05.069,0:46:10.619
+of your convolutional neural network may
+
+0:46:08.160,0:46:12.990
+be very shallow convolutional layers on
+
+0:46:10.619,0:46:14.849
+large images later in the network you're
+
+0:46:12.990,0:46:16.410
+going to be doing convolutions with
+
+0:46:14.849,0:46:18.359
+large numbers of channels on small
+
+0:46:16.410,0:46:19.770
+images now these operations are very
+
+0:46:18.359,0:46:21.150
+different and there's no reason to
+
+0:46:19.770,0:46:22.740
+believe that a learning rate that works
+
+0:46:21.150,0:46:26.310
+well for one would work well for the
+
+0:46:22.740,0:46:27.480
+other and this is why the adaptive
+
+0:46:26.310,0:46:28.140
+learning rates can be useful any
+
+0:46:27.480,0:46:30.510
+questions here
+
+0:46:28.140,0:46:32.250
+yes so unfortunately there's no good
+
+0:46:30.510,0:46:33.510
+definition for neural networks we
+
+0:46:32.250,0:46:35.790
+couldn't measure it even if there was a
+
+0:46:33.510,0:46:38.970
+good definition so I'm going to use it
+
+0:46:35.790,0:46:40.109
+in a vague sense that it actually
+
+0:46:38.970,0:46:42.619
+doesn't works and it's poorly
+
+0:46:40.109,0:46:42.619
+conditioned
+
+0:46:42.910,0:46:47.960
+yes so in the sort of quadratic case if
+
+0:46:45.830,0:46:51.380
+you recall I have an explicit definition
+
+0:46:47.960,0:46:53.300
+of this condition number L over mu L
+
+0:46:51.380,0:46:55.910
+being maximized in value mu being
+
+0:46:53.300,0:46:58.250
+smallest eigen value and yeah the large
+
+0:46:55.910,0:47:00.140
+of this gap between largest larger and
+
+0:46:58.250,0:47:01.760
+smaller eigen value the worst condition
+
+0:47:00.140,0:47:03.320
+it is this does not imply if in your
+
+0:47:01.760,0:47:05.600
+network so that mu does not exist in
+
+0:47:03.320,0:47:07.610
+your networks L still has some
+
+0:47:05.600,0:47:10.730
+information in it but I wouldn't say
+
+0:47:07.610,0:47:12.800
+it's a determining factor there's just a
+
+0:47:10.730,0:47:14.330
+lot going on so there are some ways that
+
+0:47:12.800,0:47:15.619
+your looks behave a lot like simple
+
+0:47:14.330,0:47:17.240
+problems but there are other ways where
+
+0:47:15.619,0:47:23.090
+we just kind of hang wave and say that
+
+0:47:17.240,0:47:24.590
+they like them yeah yeah yes so for this
+
+0:47:23.090,0:47:25.910
+particular network this is a network
+
+0:47:24.590,0:47:28.610
+that actually isn't too poorly
+
+0:47:25.910,0:47:30.920
+conditioned already in fact this is a
+
+0:47:28.610,0:47:33.140
+VDD 16 which is practically the best net
+
+0:47:30.920,0:47:34.490
+method best network when you had a train
+
+0:47:33.140,0:47:35.930
+before the invention of certain
+
+0:47:34.490,0:47:37.369
+techniques to improve conditioning so
+
+0:47:35.930,0:47:39.770
+this is almost the best of first
+
+0:47:37.369,0:47:40.910
+condition you can actually get and there
+
+0:47:39.770,0:47:43.310
+are a lot of the structure of this
+
+0:47:40.910,0:47:45.140
+network is actually defined by this
+
+0:47:43.310,0:47:47.270
+conditioning like we double the number
+
+0:47:45.140,0:47:48.680
+of channels after certain steps because
+
+0:47:47.270,0:47:50.390
+that seems to result in networks at a
+
+0:47:48.680,0:47:53.600
+world condition rather than any other
+
+0:47:50.390,0:47:55.369
+reason but it's certainly what you can
+
+0:47:53.600,0:47:57.170
+say is that weights very light the
+
+0:47:55.369,0:47:59.960
+network have very large effect on the
+
+0:47:57.170,0:48:02.630
+output that very last layer there with
+
+0:47:59.960,0:48:04.070
+if there are 4096 weights in it that's a
+
+0:48:02.630,0:48:06.400
+very small number of whites this network
+
+0:48:04.070,0:48:09.410
+has millions of whites I believe those
+
+0:48:06.400,0:48:10.640
+4096 weights have a very strong effect
+
+0:48:09.410,0:48:13.070
+on the output because they directly
+
+0:48:10.640,0:48:14.450
+dictate that output and for that reason
+
+0:48:13.070,0:48:17.330
+you generally want to use smaller
+
+0:48:14.450,0:48:19.190
+learning rates for those whereas yeah
+
+0:48:17.330,0:48:20.510
+weights early in the network some of
+
+0:48:19.190,0:48:21.770
+them might have a large effect but
+
+0:48:20.510,0:48:24.170
+especially when you've initialized
+
+0:48:21.770,0:48:25.910
+network of randomly they typically will
+
+0:48:24.170,0:48:28.520
+have a smaller effect of those those
+
+0:48:25.910,0:48:29.840
+earlier weights and this is very hand
+
+0:48:28.520,0:48:31.430
+wavy and the reason why is because we
+
+0:48:29.840,0:48:33.859
+really don't understand this well enough
+
+0:48:31.430,0:48:38.060
+for me to give you a precise precise
+
+0:48:33.859,0:48:41.270
+statement here 120 million weights in
+
+0:48:38.060,0:48:44.710
+this network actually so yeah so that
+
+0:48:41.270,0:48:47.710
+last layer is like 4096 by 4096 matrix
+
+0:48:44.710,0:48:47.710
+so
+
+0:48:47.950,0:48:53.510
+yeah okay any other questions yeah yes I
+
+0:48:52.010,0:48:56.450
+would recommend only using them when
+
+0:48:53.510,0:48:59.120
+your problem doesn't have a structure
+
+0:48:56.450,0:49:01.970
+that decomposes into a large sum of
+
+0:48:59.120,0:49:04.880
+similar things okay yeah that's a bit of
+
+0:49:01.970,0:49:07.610
+a mouthful but sut works well when you
+
+0:49:04.880,0:49:09.830
+have an objective that is a sum where
+
+0:49:07.610,0:49:12.590
+each term of the sum is is vaguely
+
+0:49:09.830,0:49:14.990
+comparable so in machine learning each
+
+0:49:12.590,0:49:16.670
+sub term in this sum is a loss of one
+
+0:49:14.990,0:49:18.290
+data point and these have very similar
+
+0:49:16.670,0:49:19.910
+structures individual losses that's a
+
+0:49:18.290,0:49:21.080
+hand-wavy sense that they have very
+
+0:49:19.910,0:49:23.080
+similar structure because of course each
+
+0:49:21.080,0:49:25.220
+data point could be quite different but
+
+0:49:23.080,0:49:27.380
+when your problem doesn't have a large
+
+0:49:25.220,0:49:30.440
+sum as the main part of its structure
+
+0:49:27.380,0:49:32.750
+then l-bfgs would be useful that's the
+
+0:49:30.440,0:49:35.840
+general answer I doubt you make use of
+
+0:49:32.750,0:49:38.020
+it in this course l-bfgs doubt it that
+
+0:49:35.840,0:49:40.660
+it can be very handy for small networks
+
+0:49:38.020,0:49:43.280
+you can experiment around with it with
+
+0:49:40.660,0:49:44.720
+the leaner v network or something which
+
+0:49:43.280,0:49:45.890
+I'm sure you probably use in this course
+
+0:49:44.720,0:49:51.230
+you could experiment with l-bfgs
+
+0:49:45.890,0:49:54.670
+probably and have some success there one
+
+0:49:51.230,0:49:58.670
+of the kind of founding techniques in
+
+0:49:54.670,0:50:00.200
+modern your network training is rmsprop
+
+0:49:58.670,0:50:03.680
+and i'm going to talk about this year
+
+0:50:00.200,0:50:06.110
+now at some point kind of the standard
+
+0:50:03.680,0:50:07.640
+practice in the field of optimization is
+
+0:50:06.110,0:50:08.930
+in research and optimization kind of
+
+0:50:07.640,0:50:10.640
+diverged with what people were actually
+
+0:50:08.930,0:50:12.860
+doing when training neural networks and
+
+0:50:10.640,0:50:14.150
+this IMS prop was kind of the fracturing
+
+0:50:12.860,0:50:17.300
+point where we all went off in different
+
+0:50:14.150,0:50:19.820
+directions and this rmsprop is usually
+
+0:50:17.300,0:50:21.680
+attributed to Geoffrey Hinton slides
+
+0:50:19.820,0:50:23.380
+which he then attributes to an
+
+0:50:21.680,0:50:26.660
+unpublished paper from someone else
+
+0:50:23.380,0:50:28.790
+which is really unsatisfying to be
+
+0:50:26.660,0:50:32.990
+citing someone slides in a paper but
+
+0:50:28.790,0:50:34.400
+anyway it's a method that has some it
+
+0:50:32.990,0:50:36.050
+has no proof behind why it works but
+
+0:50:34.400,0:50:38.050
+it's similar to methods that you can
+
+0:50:36.050,0:50:40.820
+prove work so that's at least something
+
+0:50:38.050,0:50:43.520
+and it works pretty well in practice and
+
+0:50:40.820,0:50:44.930
+that's why I look if we use it so I want
+
+0:50:43.520,0:50:46.310
+to give you that kind of introduction
+
+0:50:44.930,0:50:48.110
+before what I explained what it actually
+
+0:50:46.310,0:50:51.020
+is and rmsprop
+
+0:50:48.110,0:50:52.960
+stands for root mean squared propagation
+
+0:50:51.020,0:50:54.579
+this was from the era where
+
+0:50:52.960,0:50:56.260
+everything we do the fuel networks we
+
+0:50:54.579,0:50:58.690
+called propagation such-and-such like
+
+0:50:56.260,0:51:00.579
+back prop which now we call deep so it
+
+0:50:58.690,0:51:02.920
+probably be called Armas deep propyl
+
+0:51:00.579,0:51:05.680
+something if it was embedded now and
+
+0:51:02.920,0:51:08.470
+it's a little bit of a modification so
+
+0:51:05.680,0:51:09.700
+it still to line algorithm but a little
+
+0:51:08.470,0:51:11.200
+bit different so I'm gonna go over these
+
+0:51:09.700,0:51:17.050
+terms in some detail because it's
+
+0:51:11.200,0:51:19.450
+important to understand this now we we
+
+0:51:17.050,0:51:21.609
+keep around this V buffer now this is
+
+0:51:19.450,0:51:22.720
+not a momentum buffer okay so we using
+
+0:51:21.609,0:51:24.430
+different notation here he is doing
+
+0:51:22.720,0:51:27.069
+something different and I'm going to use
+
+0:51:24.430,0:51:28.660
+some notation that that some people
+
+0:51:27.069,0:51:30.760
+really hates but I think it's convenient
+
+0:51:28.660,0:51:33.640
+I'm going to write the element wise
+
+0:51:30.760,0:51:36.040
+square of a vector just by squaring the
+
+0:51:33.640,0:51:37.240
+vector this is not really confusing
+
+0:51:36.040,0:51:40.390
+notationally in almost all situations
+
+0:51:37.240,0:51:41.980
+but it's a nice way to write it so here
+
+0:51:40.390,0:51:43.480
+I'm writing the gradient squared I
+
+0:51:41.980,0:51:45.550
+really mean you take every element in
+
+0:51:43.480,0:51:47.109
+that vector million element vector or
+
+0:51:45.550,0:51:49.900
+whatever it is and square each element
+
+0:51:47.109,0:51:51.309
+individually so this video update is
+
+0:51:49.900,0:51:54.010
+what's known as an exponential moving
+
+0:51:51.309,0:51:55.480
+average I do I have a quick show of
+
+0:51:54.010,0:51:57.010
+hands who's familiar with exponential
+
+0:51:55.480,0:51:59.890
+moving averages I want to know if I need
+
+0:51:57.010,0:52:01.900
+to talk about it in some more seems like
+
+0:51:59.890,0:52:03.270
+it's probably need to explain it in some
+
+0:52:01.900,0:52:06.430
+depth but in expose for a moving average
+
+0:52:03.270,0:52:08.020
+it's a standard way this has been used
+
+0:52:06.430,0:52:11.020
+for many many decades across many fields
+
+0:52:08.020,0:52:14.650
+for maintaining an average that are the
+
+0:52:11.020,0:52:16.630
+quantity that may change over time okay
+
+0:52:14.650,0:52:19.630
+so when a quantity is changing over time
+
+0:52:16.630,0:52:21.430
+we need to put larger weights on newer
+
+0:52:19.630,0:52:24.210
+values because they provide more
+
+0:52:21.430,0:52:28.230
+information and one way to do that is
+
+0:52:24.210,0:52:30.700
+down weight old values exponentially and
+
+0:52:28.230,0:52:33.700
+when you do this exponentially you mean
+
+0:52:30.700,0:52:36.880
+that the weight of an old value from say
+
+0:52:33.700,0:52:39.849
+ten steps ago will have weight alpha to
+
+0:52:36.880,0:52:41.109
+the ten in your thing so that's where
+
+0:52:39.849,0:52:42.250
+the exponential comes in the output of
+
+0:52:41.109,0:52:43.900
+the ten now it's that's not really in
+
+0:52:42.250,0:52:46.599
+the notation and in the notation at each
+
+0:52:43.900,0:52:49.390
+step we just download the pass vector by
+
+0:52:46.599,0:52:50.980
+this alpha constant and as if you can
+
+0:52:49.390,0:52:53.440
+imagine in your head things in that
+
+0:52:50.980,0:52:55.089
+buffer the V buffer that are very old at
+
+0:52:53.440,0:52:57.760
+each step they get downloaded by alpha
+
+0:52:55.089,0:52:59.230
+at every step and just as before alpha
+
+0:52:57.760,0:53:01.359
+here is something between zero and one
+
+0:52:59.230,0:53:03.190
+so we can't use values greater than one
+
+0:53:01.359,0:53:04.280
+there so this will damp those all values
+
+0:53:03.190,0:53:07.100
+until they no longer
+
+0:53:04.280,0:53:08.180
+the exponential moving average so this
+
+0:53:07.100,0:53:10.240
+method keeps an exponential moving
+
+0:53:08.180,0:53:12.860
+average of the second moment I mean
+
+0:53:10.240,0:53:17.420
+non-central second moment so we do not
+
+0:53:12.860,0:53:18.920
+subtract off the mean here the part or
+
+0:53:17.420,0:53:20.440
+implementation has a switch where you
+
+0:53:18.920,0:53:22.370
+can tell it to subtract off the mean
+
+0:53:20.440,0:53:23.660
+play with that if you like it'll
+
+0:53:22.370,0:53:25.460
+probably perform very similarly in
+
+0:53:23.660,0:53:28.220
+practice there's a paper on that I'm
+
+0:53:25.460,0:53:30.620
+sure but the original method does not
+
+0:53:28.220,0:53:33.080
+subtract off the mean there and we use
+
+0:53:30.620,0:53:35.000
+this second moment to normalize the
+
+0:53:33.080,0:53:37.820
+gradient and we do this element-wise so
+
+0:53:35.000,0:53:39.560
+all this notation is element wise every
+
+0:53:37.820,0:53:41.660
+element of the gradient is divided
+
+0:53:39.560,0:53:43.310
+through by the square root of the second
+
+0:53:41.660,0:53:44.870
+moment estimate and if you think that
+
+0:53:43.310,0:53:47.090
+this square root is really being the
+
+0:53:44.870,0:53:49.160
+standard deviation even though this is
+
+0:53:47.090,0:53:50.990
+not a central moment so it's not
+
+0:53:49.160,0:53:53.780
+actually the standard deviation it's
+
+0:53:50.990,0:53:55.580
+useful to think of it that way and the
+
+0:53:53.780,0:53:59.150
+name you know root means square is kind
+
+0:53:55.580,0:54:03.590
+of alluding to that division by the root
+
+0:53:59.150,0:54:05.270
+of the mean of the squares and the
+
+0:54:03.590,0:54:07.820
+important technical detail here you have
+
+0:54:05.270,0:54:09.940
+to add epsilon here for the annoying
+
+0:54:07.820,0:54:12.950
+problem that when you divide 0 by 0
+
+0:54:09.940,0:54:14.990
+everything breaks so you occasionally
+
+0:54:12.950,0:54:16.310
+have zeros in your network there are
+
+0:54:14.990,0:54:18.020
+some situations where it makes a
+
+0:54:16.310,0:54:20.060
+difference outside of when your
+
+0:54:18.020,0:54:23.120
+gradients zero but you absolutely do
+
+0:54:20.060,0:54:25.310
+need that epsilon in your method and
+
+0:54:23.120,0:54:27.470
+you'll see this is a recurring theme all
+
+0:54:25.310,0:54:29.900
+of these no adaptive methods basically
+
+0:54:27.470,0:54:31.850
+you've got to put an epsilon when your
+
+0:54:29.900,0:54:34.040
+the divide something just to avoiding to
+
+0:54:31.850,0:54:36.350
+avoid dividing by 0 and typically that
+
+0:54:34.040,0:54:38.690
+epsilon will be close to your machine
+
+0:54:36.350,0:54:39.740
+Epsilon I don't know if so if you're
+
+0:54:38.690,0:54:41.750
+familiar with that term but it's
+
+0:54:39.740,0:54:43.850
+something like 10 to a negative 7
+
+0:54:41.750,0:54:45.710
+sometimes 10 to the negative 8 something
+
+0:54:43.850,0:54:48.380
+of that order so really only has a small
+
+0:54:45.710,0:54:49.790
+effect on the value before I talk about
+
+0:54:48.380,0:54:51.470
+why this method works I want to talk
+
+0:54:49.790,0:54:53.150
+about the the most recent kind of
+
+0:54:51.470,0:54:54.800
+innovation on top of this method and
+
+0:54:53.150,0:54:57.560
+that is the method that we actually use
+
+0:54:54.800,0:54:59.600
+in practice so rmsprop is sometimes
+
+0:54:57.560,0:55:03.170
+still use but more often we use a method
+
+0:54:59.600,0:55:07.940
+notice atom an atom means adaptive
+
+0:55:03.170,0:55:10.790
+moment estimation so Adam is rmsprop
+
+0:55:07.940,0:55:12.740
+with momentum so I spent 20 minutes
+
+0:55:10.790,0:55:13.760
+telling you I should use momentum so I'm
+
+0:55:12.740,0:55:15.720
+going to say well you should put it on
+
+0:55:13.760,0:55:18.420
+top of rmsprop as well
+
+0:55:15.720,0:55:20.040
+there's always of doing that at least
+
+0:55:18.420,0:55:21.569
+half a dozen in this papers for each of
+
+0:55:20.040,0:55:23.700
+them but Adam is the one that caught on
+
+0:55:21.569,0:55:25.770
+and the way we do have a mention here is
+
+0:55:23.700,0:55:29.240
+we actually convert the momentum update
+
+0:55:25.770,0:55:32.609
+to an exponential moving average as well
+
+0:55:29.240,0:55:35.130
+now this may seem like a quantity
+
+0:55:32.609,0:55:37.200
+qualitatively different update like
+
+0:55:35.130,0:55:39.390
+doing momentum by moving average in fact
+
+0:55:37.200,0:55:40.829
+what we were doing before is essentially
+
+0:55:39.390,0:55:42.839
+equivalent to that you can work out some
+
+0:55:40.829,0:55:44.490
+constants where you can get a method
+
+0:55:42.839,0:55:45.780
+where you use a moving exponential
+
+0:55:44.490,0:55:47.760
+moving average momentum that is
+
+0:55:45.780,0:55:48.960
+equivalent to the regular mentum so
+
+0:55:47.760,0:55:50.460
+don't think of this moving average
+
+0:55:48.960,0:55:52.560
+momentum as being anything different
+
+0:55:50.460,0:55:54.000
+than your previous momentum but it has a
+
+0:55:52.560,0:55:55.290
+nice property that you don't need to
+
+0:55:54.000,0:55:57.660
+change the learning rate when you mess
+
+0:55:55.290,0:56:01.619
+with the beta here which I think it's a
+
+0:55:57.660,0:56:03.780
+big improvement so yeah we added
+
+0:56:01.619,0:56:06.510
+momentum of the gradient and just as
+
+0:56:03.780,0:56:07.980
+before with rmsprop we have this
+
+0:56:06.510,0:56:11.520
+exponential moving average of the
+
+0:56:07.980,0:56:13.050
+squared gradient on top of that we
+
+0:56:11.520,0:56:14.819
+basically just plug in this moving
+
+0:56:13.050,0:56:17.010
+average gradient where we had the
+
+0:56:14.819,0:56:19.109
+gradient in the previous update so it's
+
+0:56:17.010,0:56:20.579
+not too complicated now if you actually
+
+0:56:19.109,0:56:22.109
+read the atom paper you'll see a whole
+
+0:56:20.579,0:56:23.880
+bunch of additional notation the
+
+0:56:22.109,0:56:25.829
+algorithm is like ten lines long instead
+
+0:56:23.880,0:56:28.859
+of three and that is because they add
+
+0:56:25.829,0:56:31.260
+something called bias correction this is
+
+0:56:28.859,0:56:34.260
+actually not necessary but it'll help a
+
+0:56:31.260,0:56:37.560
+little bit so everybody uses it and all
+
+0:56:34.260,0:56:39.780
+it does is it increases the value of
+
+0:56:37.560,0:56:41.880
+these parameters during the early stages
+
+0:56:39.780,0:56:43.319
+of optimization and the reason you do
+
+0:56:41.880,0:56:46.500
+that is because you initialize this
+
+0:56:43.319,0:56:48.150
+momentum buffer at zero typically now
+
+0:56:46.500,0:56:50.190
+imagine your initial initializer at zero
+
+0:56:48.150,0:56:52.440
+then after the first step we're going to
+
+0:56:50.190,0:56:54.359
+be adding to that a value of 1 minus
+
+0:56:52.440,0:56:56.700
+beta times the gradient now 1 minus beta
+
+0:56:54.359,0:56:58.859
+will typically be 0.1 because we
+
+0:56:56.700,0:57:00.599
+typically use momentum point 9 so when
+
+0:56:58.859,0:57:02.339
+we do that our gradient step is actually
+
+0:57:00.599,0:57:05.069
+using a learning rate 10 times smaller
+
+0:57:02.339,0:57:06.000
+because this momentum buffer has a tenth
+
+0:57:05.069,0:57:08.670
+of a gradient in it
+
+0:57:06.000,0:57:11.060
+and that's undesirable so all the bias
+
+0:57:08.670,0:57:13.890
+correction does is just multiply by 10
+
+0:57:11.060,0:57:16.200
+the step in those early iterations and
+
+0:57:13.890,0:57:18.420
+the bias correction formula is just
+
+0:57:16.200,0:57:21.060
+basically the correct way to do that to
+
+0:57:18.420,0:57:23.030
+result in a step that's unbiased and
+
+0:57:21.060,0:57:25.640
+unbiased here means just the expectation
+
+0:57:23.030,0:57:28.420
+of the momentum buffer is the gradient
+
+0:57:25.640,0:57:31.040
+so it's nothing too mysterious
+
+0:57:28.420,0:57:32.960
+yeah don't think of it as being like a
+
+0:57:31.040,0:57:34.750
+huge addition although I do think that
+
+0:57:32.960,0:57:37.190
+the atom paper was the first one to use
+
+0:57:34.750,0:57:38.600
+bicycle action in a mainstream
+
+0:57:37.190,0:57:40.310
+optimization method I don't know if they
+
+0:57:38.600,0:57:43.670
+invented it but it certainly pioneered
+
+0:57:40.310,0:57:44.990
+the base correction so these methods
+
+0:57:43.670,0:57:46.520
+work really well in practice let me just
+
+0:57:44.990,0:57:48.590
+give you a common empirical comparison
+
+0:57:46.520,0:57:50.570
+here now this quadratic I'm using is a
+
+0:57:48.590,0:57:52.220
+diagonal quadratic so it's a little bit
+
+0:57:50.570,0:57:53.720
+shading to use a method that works well
+
+0:57:52.220,0:57:55.060
+on down or quadratics on and diagonal
+
+0:57:53.720,0:57:57.380
+quadratic but I'm gonna do that anyway
+
+0:57:55.060,0:58:00.320
+and you can see that the direction they
+
+0:57:57.380,0:58:02.780
+travel is quite an improvement over SGD
+
+0:58:00.320,0:58:03.950
+so in this simplified problem sut kind
+
+0:58:02.780,0:58:06.650
+of goes in the wrong direction at the
+
+0:58:03.950,0:58:08.780
+beginning where rmsprop basically heads
+
+0:58:06.650,0:58:12.080
+in the right direction now the problem
+
+0:58:08.780,0:58:15.140
+is rmsprop suffers from noise just as
+
+0:58:12.080,0:58:17.300
+regular sut without noise suffers so you
+
+0:58:15.140,0:58:19.490
+get this situation where kind of bounces
+
+0:58:17.300,0:58:22.310
+around the optimum quite significantly
+
+0:58:19.490,0:58:24.710
+and just as with std with momentum when
+
+0:58:22.310,0:58:26.180
+we add momentum to atom we get the same
+
+0:58:24.710,0:58:29.210
+kind of improvement where we kind of
+
+0:58:26.180,0:58:31.130
+corkscrew or sometimes reverse corkscrew
+
+0:58:29.210,0:58:32.240
+around the solution that kind of thing
+
+0:58:31.130,0:58:34.550
+and this gets you to the solution
+
+0:58:32.240,0:58:35.960
+quicker and it means that the last point
+
+0:58:34.550,0:58:38.120
+you're currently at is a good estimate
+
+0:58:35.960,0:58:39.370
+of the solution not a noisy estimate but
+
+0:58:38.120,0:58:41.990
+it's kind of the best estimate you have
+
+0:58:39.370,0:58:45.350
+so I would generally recommend using a
+
+0:58:41.990,0:58:47.510
+demova rmsprop and it's serving the case
+
+0:58:45.350,0:58:50.750
+that for some problems you just can't
+
+0:58:47.510,0:58:51.920
+use SGD atom is necessary for training
+
+0:58:50.750,0:58:53.690
+some of the neural networks were using
+
+0:58:51.920,0:58:55.820
+our language models or say our language
+
+0:58:53.690,0:58:57.290
+models it's necessary for training the
+
+0:58:55.820,0:59:03.580
+network so I'm going to talk about near
+
+0:58:57.290,0:59:03.580
+the end of this presentation and it's
+
+0:59:04.060,0:59:09.080
+it's generally the if I have to
+
+0:59:07.490,0:59:10.670
+recommend something you should use you
+
+0:59:09.080,0:59:13.100
+should try either s to D with momentum
+
+0:59:10.670,0:59:14.690
+or atom as you'll go to methods for
+
+0:59:13.100,0:59:17.120
+optimizing your networks so there's some
+
+0:59:14.690,0:59:19.430
+practical advice for you personally I
+
+0:59:17.120,0:59:22.580
+hate atom because I'm an optimization
+
+0:59:19.430,0:59:24.920
+researcher and the theory and their
+
+0:59:22.580,0:59:27.260
+paper is wrong this has been shown
+
+0:59:24.920,0:59:29.360
+recently so the method in fact does not
+
+0:59:27.260,0:59:31.730
+converge and you can show this on very
+
+0:59:29.360,0:59:32.430
+simple test problems so one of the most
+
+0:59:31.730,0:59:34.260
+heavily music
+
+0:59:32.430,0:59:35.820
+use methods in modern machine learning
+
+0:59:34.260,0:59:39.240
+actually doesn't work in a lot of
+
+0:59:35.820,0:59:40.740
+situations this is unsatisfying and it's
+
+0:59:39.240,0:59:42.870
+I'm kind of an ongoing research question
+
+0:59:40.740,0:59:44.670
+of the best way to fix this I don't
+
+0:59:42.870,0:59:45.870
+think just modifying Adam a little bit
+
+0:59:44.670,0:59:47.160
+to try and fix it is really the best
+
+0:59:45.870,0:59:50.670
+solution I think it's got some more
+
+0:59:47.160,0:59:52.620
+fundamental problems but I won't go into
+
+0:59:50.670,0:59:53.940
+any detail for that there is a very
+
+0:59:52.620,0:59:56.460
+practical problem they need to talk
+
+0:59:53.940,0:59:59.550
+about though Adam is known to sometimes
+
+0:59:56.460,1:00:01.140
+give worse generalization error I think
+
+0:59:59.550,1:00:03.720
+Yara's talked in detail about
+
+1:00:01.140,1:00:08.730
+generalization error do I go over that
+
+1:00:03.720,1:00:10.680
+so yeah generalization error is the
+
+1:00:08.730,1:00:14.100
+error on data that you didn't train your
+
+1:00:10.680,1:00:15.000
+model on basically so your networks are
+
+1:00:14.100,1:00:17.370
+very heavily parameter over
+
+1:00:15.000,1:00:20.070
+parameterised and if you train them to
+
+1:00:17.370,1:00:22.200
+give zero loss on the data you trained
+
+1:00:20.070,1:00:24.210
+it on they won't give zero loss on other
+
+1:00:22.200,1:00:27.240
+data points data that it's never seen
+
+1:00:24.210,1:00:30.390
+before and this generalization error is
+
+1:00:27.240,1:00:32.310
+that error typically the best thing we
+
+1:00:30.390,1:00:34.560
+can do is minimize the loss and the data
+
+1:00:32.310,1:00:37.080
+we have but sometimes that's suboptimal
+
+1:00:34.560,1:00:39.330
+and it turns out when you use Adam it's
+
+1:00:37.080,1:00:40.860
+quite common on particularly on image
+
+1:00:39.330,1:00:42.330
+problems that you get worst
+
+1:00:40.860,1:00:46.140
+generalization error than when you use
+
+1:00:42.330,1:00:48.090
+STD and people attribute this to a whole
+
+1:00:46.140,1:00:50.400
+bunch of different things it may be
+
+1:00:48.090,1:00:51.570
+finding those bad local minima that I
+
+1:00:50.400,1:00:54.180
+mentioned earlier the ones that are
+
+1:00:51.570,1:00:56.250
+smaller it's kind of unfortunate that
+
+1:00:54.180,1:00:57.840
+the better your optimization method the
+
+1:00:56.250,1:01:00.090
+more likely it is to hit those small
+
+1:00:57.840,1:01:02.460
+local minima because they're closer to
+
+1:01:00.090,1:01:03.930
+where you currently are and kind of it's
+
+1:01:02.460,1:01:06.510
+the goal of an optimization method to
+
+1:01:03.930,1:01:08.810
+find you the closest minima in a sense
+
+1:01:06.510,1:01:10.620
+these local optimization methods we use
+
+1:01:08.810,1:01:12.420
+but there's a whole bunch of other
+
+1:01:10.620,1:01:16.950
+reasons that you can attribute to it
+
+1:01:12.420,1:01:17.880
+less noise in Adam perhaps it could be
+
+1:01:16.950,1:01:20.100
+some structure
+
+1:01:17.880,1:01:21.810
+maybe these methods where you rescale
+
+1:01:20.100,1:01:23.070
+space like this have this fundamental
+
+1:01:21.810,1:01:24.120
+problem where they give worst
+
+1:01:23.070,1:01:26.430
+generalization we don't really
+
+1:01:24.120,1:01:28.020
+understand this but it's important to
+
+1:01:26.430,1:01:30.390
+know that this may be a problem or in
+
+1:01:28.020,1:01:31.650
+some cases it's not to say that it will
+
+1:01:30.390,1:01:33.450
+give horrible performance you'll still
+
+1:01:31.650,1:01:35.790
+get a pretty good neuron that workout at
+
+1:01:33.450,1:01:37.200
+the end and what I can tell you is the
+
+1:01:35.790,1:01:40.200
+language models that we trained at
+
+1:01:37.200,1:01:41.890
+Facebook use methods like atom or atom
+
+1:01:40.200,1:01:44.430
+itself and they
+
+1:01:41.890,1:01:46.960
+much better results than if you use STD
+
+1:01:44.430,1:01:49.570
+and there's a kind of a small thing that
+
+1:01:46.960,1:01:51.490
+won't affect you at all I would expect
+
+1:01:49.570,1:01:53.440
+but with Adam you have to maintain these
+
+1:01:51.490,1:01:56.410
+three buffers where's sed you have two
+
+1:01:53.440,1:01:57.490
+buffers of parameters this doesn't
+
+1:01:56.410,1:01:59.230
+matter except when you're training a
+
+1:01:57.490,1:02:01.060
+model that's like 12 gigabytes and then
+
+1:01:59.230,1:02:02.790
+it really becomes a problem I don't
+
+1:02:01.060,1:02:04.960
+think you'll encounter that in practice
+
+1:02:02.790,1:02:06.280
+and surely there's a little bit iffy so
+
+1:02:04.960,1:02:10.270
+you gotta trim two parameters instead of
+
+1:02:06.280,1:02:13.060
+one so yeah that's practical advice use
+
+1:02:10.270,1:02:15.160
+Adam arrest you do but onto something
+
+1:02:13.060,1:02:18.220
+that is also sup is also kind of a core
+
+1:02:15.160,1:02:20.830
+thing oh sorry have a question yes yes
+
+1:02:18.220,1:02:22.600
+you absolutely correct but typically I
+
+1:02:20.830,1:02:25.390
+guess the question the question was
+
+1:02:22.600,1:02:28.000
+weren't using a small epsilon in the
+
+1:02:25.390,1:02:30.310
+denominator result in blow-up certainly
+
+1:02:28.000,1:02:32.440
+if the numerator was equal to roughly
+
+1:02:30.310,1:02:35.110
+one than dividing through by ten to the
+
+1:02:32.440,1:02:37.900
+negative seven could be catastrophic and
+
+1:02:35.110,1:02:43.060
+this this is a legitimate question but
+
+1:02:37.900,1:02:45.250
+typically in order for the V buffer to
+
+1:02:43.060,1:02:47.350
+have very small values the gradient also
+
+1:02:45.250,1:02:48.340
+has to have had very small values you
+
+1:02:47.350,1:02:50.160
+can see that from the way the
+
+1:02:48.340,1:02:53.110
+exponential moving averages are updated
+
+1:02:50.160,1:02:54.880
+so in fact it's not a practical problem
+
+1:02:53.110,1:02:56.860
+when this when this V is incredibly
+
+1:02:54.880,1:02:59.410
+small the momentum is also very small
+
+1:02:56.860,1:03:01.180
+and when you're dividing small thing by
+
+1:02:59.410,1:03:05.380
+a small thing you don't get blow-up oh
+
+1:03:01.180,1:03:08.050
+yeah so the question is should I you buy
+
+1:03:05.380,1:03:09.340
+an SUV and atom separately at the same
+
+1:03:08.050,1:03:11.860
+time and just see which one works better
+
+1:03:09.340,1:03:13.330
+in fact that is pretty much what we do
+
+1:03:11.860,1:03:14.620
+because we have lots of computers we
+
+1:03:13.330,1:03:16.060
+just have one computer runners you need
+
+1:03:14.620,1:03:17.890
+one computer one atom and see which one
+
+1:03:16.060,1:03:19.420
+works better although we kind of know
+
+1:03:17.890,1:03:21.730
+from most problems which one is the
+
+1:03:19.420,1:03:23.050
+better choice for whatever problems
+
+1:03:21.730,1:03:24.460
+you're working with maybe you can try
+
+1:03:23.050,1:03:26.740
+both it depends how long it's going to
+
+1:03:24.460,1:03:27.940
+take to train I'm not sure exactly what
+
+1:03:26.740,1:03:29.980
+you're gonna be doing in terms of
+
+1:03:27.940,1:03:31.150
+practice in this course yeah certainly
+
+1:03:29.980,1:03:33.130
+legitimate way to do it
+
+1:03:31.150,1:03:35.020
+in fact some people use SGD at the
+
+1:03:33.130,1:03:38.110
+beginning and then switch to atom at the
+
+1:03:35.020,1:03:39.430
+end that's certainly a good approach it
+
+1:03:38.110,1:03:41.640
+just makes it more complicated and
+
+1:03:39.430,1:03:44.740
+complexity should be avoided if possible
+
+1:03:41.640,1:03:46.320
+yes this is one of those deep unanswered
+
+1:03:44.740,1:03:48.400
+questions so the question was should we
+
+1:03:46.320,1:03:49.900
+1s you deal with lots of different
+
+1:03:48.400,1:03:51.850
+initializations and see which one gets
+
+1:03:49.900,1:03:52.270
+the best solution won't I help with the
+
+1:03:51.850,1:03:54.990
+bumpiness
+
+1:03:52.270,1:03:56.760
+this is the case with small neural net
+
+1:03:54.990,1:03:59.160
+that you will get different solutions
+
+1:03:56.760,1:04:00.809
+depending on your initialization now
+
+1:03:59.160,1:04:02.369
+there's a remarkable property of the
+
+1:04:00.809,1:04:04.559
+kind of large networks we use at the
+
+1:04:02.369,1:04:07.349
+moment and the art networks as long as
+
+1:04:04.559,1:04:08.790
+you use similar random initialization in
+
+1:04:07.349,1:04:11.400
+terms of the variance of initialization
+
+1:04:08.790,1:04:13.980
+you'll end up practically at a similar
+
+1:04:11.400,1:04:16.380
+quality solutions and this is not well
+
+1:04:13.980,1:04:17.790
+understood so yeah it's it's quite
+
+1:04:16.380,1:04:19.319
+remarkable that your neural network can
+
+1:04:17.790,1:04:21.000
+train for three hundred epochs and you
+
+1:04:19.319,1:04:23.550
+end up with solution the test error is
+
+1:04:21.000,1:04:24.420
+like almost exactly the same as what you
+
+1:04:23.550,1:04:26.220
+got with some completely different
+
+1:04:24.420,1:04:30.030
+initialization we don't understand this
+
+1:04:26.220,1:04:31.800
+so if you really need to eke out tiny
+
+1:04:30.030,1:04:33.150
+performance gains you may be able to get
+
+1:04:31.800,1:04:36.150
+a little bit better Network by running
+
+1:04:33.150,1:04:37.470
+multiple and picking the best and it
+
+1:04:36.150,1:04:39.180
+seems the bigger your network and the
+
+1:04:37.470,1:04:41.550
+harder your problem the less game you
+
+1:04:39.180,1:04:44.190
+get from doing that yes so the question
+
+1:04:41.550,1:04:46.250
+was we have three buffers for each
+
+1:04:44.190,1:04:49.470
+weight on the answer answer is yes so
+
+1:04:46.250,1:04:51.599
+essentially yeah we basically in memory
+
+1:04:49.470,1:04:53.160
+we have a copy of the same size as our
+
+1:04:51.599,1:04:54.599
+weight data so our weight will be a
+
+1:04:53.160,1:04:55.920
+whole bunch of tensors in memory we have
+
+1:04:54.599,1:04:57.690
+a separate whole bunch of tensors that
+
+1:04:55.920,1:05:01.849
+our momentum tensors and we have a whole
+
+1:04:57.690,1:05:07.740
+bunch of other tensors that are the the
+
+1:05:01.849,1:05:09.960
+second moment tensors so yeah so
+
+1:05:07.740,1:05:13.470
+normalization layers so this is kind of
+
+1:05:09.960,1:05:14.369
+a clever idea why try and salt why try
+
+1:05:13.470,1:05:15.809
+and come up with a better optimization
+
+1:05:14.369,1:05:20.540
+algorithm where we can just come up with
+
+1:05:15.809,1:05:20.540
+a better network and this is the idea so
+
+1:05:20.960,1:05:24.960
+modern neural networks typically we
+
+1:05:23.280,1:05:27.599
+modify the network by adding additional
+
+1:05:24.960,1:05:32.280
+layers in between existing layers and
+
+1:05:27.599,1:05:34.260
+the goal of these layers to improve the
+
+1:05:32.280,1:05:36.450
+optimization and generalization
+
+1:05:34.260,1:05:37.980
+performance of the network and the way
+
+1:05:36.450,1:05:39.059
+they do this can happen in a few
+
+1:05:37.980,1:05:41.869
+different ways but let me give you an
+
+1:05:39.059,1:05:44.430
+example so we would typically take
+
+1:05:41.869,1:05:46.530
+standard kind of combinations so as you
+
+1:05:44.430,1:05:48.930
+know in modern your networks we
+
+1:05:46.530,1:05:50.700
+typically alternate linear operations
+
+1:05:48.930,1:05:52.319
+with nonlinear operations and here I
+
+1:05:50.700,1:05:53.880
+call that activation functions we
+
+1:05:52.319,1:05:56.069
+alternate them linear nonlinear linear
+
+1:05:53.880,1:05:58.349
+nonlinear what we could do is we can
+
+1:05:56.069,1:06:01.819
+place these normalization layers either
+
+1:05:58.349,1:06:08.400
+between the linear order non-linear or
+
+1:06:01.819,1:06:11.009
+before so there in this case we are
+
+1:06:08.400,1:06:12.359
+using for instance this is the kind of
+
+1:06:11.009,1:06:14.369
+structure we have in real networks where
+
+1:06:12.359,1:06:15.839
+we have a convolution recover that
+
+1:06:14.369,1:06:18.240
+convolutions or linear operations
+
+1:06:15.839,1:06:19.680
+followed by batch normalization this is
+
+1:06:18.240,1:06:20.789
+a type of normalization which I will
+
+1:06:19.680,1:06:22.950
+detail in a minute
+
+1:06:20.789,1:06:28.140
+followed by riilu which is currently the
+
+1:06:22.950,1:06:29.700
+most popular activation function and we
+
+1:06:28.140,1:06:31.230
+place this mobilization between these
+
+1:06:29.700,1:06:33.630
+existing layers and what I want to make
+
+1:06:31.230,1:06:35.940
+clear is this normalization layers they
+
+1:06:33.630,1:06:37.049
+affect the flow of data through so they
+
+1:06:35.940,1:06:39.150
+modify the data that's flowing through
+
+1:06:37.049,1:06:41.640
+but they don't change the power of the
+
+1:06:39.150,1:06:43.380
+network in the sense that that you can
+
+1:06:41.640,1:06:45.089
+set up the weights in the network in
+
+1:06:43.380,1:06:46.769
+some way that'll still give whatever
+
+1:06:45.089,1:06:48.839
+output you had in an unknown alized
+
+1:06:46.769,1:06:50.220
+network with a normalized network so
+
+1:06:48.839,1:06:52.109
+normalization layers you're not making
+
+1:06:50.220,1:06:53.670
+that work more powerful they improve it
+
+1:06:52.109,1:06:55.049
+in other ways normally when we add
+
+1:06:53.670,1:06:57.660
+things to a neural network the goal is
+
+1:06:55.049,1:07:00.210
+to make it more powerful and yes this
+
+1:06:57.660,1:07:01.740
+normalization layer can also be after
+
+1:07:00.210,1:07:03.509
+the activation or before the linear or
+
+1:07:01.740,1:07:05.009
+you know because this wraps around we do
+
+1:07:03.509,1:07:07.049
+this in order a lot of them are
+
+1:07:05.009,1:07:11.400
+equivalent but any questions here this
+
+1:07:07.049,1:07:13.739
+is this bits yes yes so that's certainly
+
+1:07:11.400,1:07:16.140
+true but we kind of want that we want
+
+1:07:13.739,1:07:18.450
+the real o2 sensor some of the data but
+
+1:07:16.140,1:07:20.009
+not too much but it's also not quite
+
+1:07:18.450,1:07:23.309
+accurate because normalization layers
+
+1:07:20.009,1:07:24.989
+can also scale and ship the data and so
+
+1:07:23.309,1:07:26.849
+it won't necessarily be that although
+
+1:07:24.989,1:07:28.739
+it's certainly at initialization they do
+
+1:07:26.849,1:07:30.960
+not do that scaling in ship so typically
+
+1:07:28.739,1:07:32.460
+cut off half the data and in fact if you
+
+1:07:30.960,1:07:34.109
+try to do a theoretical analysis of this
+
+1:07:32.460,1:07:37.470
+it's very convenient that it cuts off
+
+1:07:34.109,1:07:39.299
+half the data so the structure this
+
+1:07:37.470,1:07:42.239
+normalization layers they all pretty
+
+1:07:39.299,1:07:43.859
+much do the same kind of operation and
+
+1:07:42.239,1:07:47.640
+how many use kind of generic notation
+
+1:07:43.859,1:07:49.410
+here so you should imagine that X is an
+
+1:07:47.640,1:07:54.930
+input to the normalization layer and Y
+
+1:07:49.410,1:07:58.049
+is an output and what you do is use do a
+
+1:07:54.930,1:08:00.119
+whitening or normalization operation
+
+1:07:58.049,1:08:03.089
+where you subtract off some estimate of
+
+1:08:00.119,1:08:05.190
+the mean of the data and you divide
+
+1:08:03.089,1:08:09.299
+through by some estimate of the standard
+
+1:08:05.190,1:08:10.259
+deviation and remember before that I
+
+1:08:09.299,1:08:11.670
+mentioned we want to keep the
+
+1:08:10.259,1:08:12.630
+representational power of the network
+
+1:08:11.670,1:08:15.000
+the same
+
+1:08:12.630,1:08:17.430
+what we do to ensure that is we multiply
+
+1:08:15.000,1:08:19.400
+by an alpha and we add a sorry in height
+
+1:08:17.430,1:08:22.050
+multiplied by an hey and we add a B and
+
+1:08:19.400,1:08:24.420
+this is just so that the layer can still
+
+1:08:22.050,1:08:27.120
+output values over any particular range
+
+1:08:24.420,1:08:29.130
+or if we just always had every layer
+
+1:08:27.120,1:08:30.840
+output in white and data the network
+
+1:08:29.130,1:08:33.900
+couldn't output like a value million or
+
+1:08:30.840,1:08:35.370
+something like that it wouldn't it could
+
+1:08:33.900,1:08:37.230
+only do that you know with very in very
+
+1:08:35.370,1:08:38.520
+rare cases because that would be very
+
+1:08:37.230,1:08:40.650
+heavy on the tail of the normal
+
+1:08:38.520,1:08:41.850
+distribution so this allows our layers
+
+1:08:40.650,1:08:47.490
+to essentially output things that are
+
+1:08:41.850,1:08:49.200
+the same range as before and yes so
+
+1:08:47.490,1:08:50.670
+normalization layers have parameters and
+
+1:08:49.200,1:08:51.900
+in the network is a little bit more
+
+1:08:50.670,1:08:54.300
+complicated in the sensor has more
+
+1:08:51.900,1:08:56.010
+parameters it's typically a very small
+
+1:08:54.300,1:08:57.300
+number of parameters like rounding error
+
+1:08:56.010,1:09:04.290
+in your counts of network parameters
+
+1:08:57.300,1:09:05.820
+typically and yeah so the complexity of
+
+1:09:04.290,1:09:06.840
+this is on being kind of vague about how
+
+1:09:05.820,1:09:08.850
+you compute the mean and standard
+
+1:09:06.840,1:09:10.170
+deviation the reason I'm doing that is
+
+1:09:08.850,1:09:11.880
+because all the methods compute in a
+
+1:09:10.170,1:09:18.210
+different way and I'll detail that in a
+
+1:09:11.880,1:09:22.080
+second yes question weighs re lb oh it's
+
+1:09:18.210,1:09:24.630
+just a shift parameter so the data could
+
+1:09:22.080,1:09:26.160
+have had a nonzero mean and we want it
+
+1:09:24.630,1:09:28.470
+delayed to be able to produce outputs
+
+1:09:26.160,1:09:30.240
+with a nonzero mean so if we always just
+
+1:09:28.470,1:09:30.570
+subtract off the mean it couldn't do
+
+1:09:30.240,1:09:32.520
+that
+
+1:09:30.570,1:09:34.950
+so it just adds back representational
+
+1:09:32.520,1:09:37.260
+power to the layer yes so the question
+
+1:09:34.950,1:09:40.110
+is don't these a and B parameters
+
+1:09:37.260,1:09:42.330
+reverse the normalization and and in
+
+1:09:40.110,1:09:44.730
+fact that often is the case that they do
+
+1:09:42.330,1:09:46.950
+something similar but they move at
+
+1:09:44.730,1:09:48.750
+different time scales so between the
+
+1:09:46.950,1:09:50.850
+steps or between evaluations your
+
+1:09:48.750,1:09:52.410
+network the mean and variance can can
+
+1:09:50.850,1:09:53.760
+shift quite substantially based off the
+
+1:09:52.410,1:09:55.320
+data you're feeding but these a and B
+
+1:09:53.760,1:09:59.910
+parameters are quite stable they move
+
+1:09:55.320,1:10:01.260
+slowly as you learn them so because
+
+1:09:59.910,1:10:02.520
+they're most stable this has beneficial
+
+1:10:01.260,1:10:04.530
+properties and I'll describe those a
+
+1:10:02.520,1:10:06.630
+little bit later but I want to talk
+
+1:10:04.530,1:10:08.610
+about is exactly how you normalize the
+
+1:10:06.630,1:10:09.930
+data and this is where the crucial thing
+
+1:10:08.610,1:10:11.760
+so the earliest of these methods
+
+1:10:09.930,1:10:14.130
+developed was batch norm and he is this
+
+1:10:11.760,1:10:16.429
+kind of a bizarre normalization that I I
+
+1:10:14.130,1:10:17.960
+think is a horrible idea
+
+1:10:16.429,1:10:22.460
+but unfortunately works fantastically
+
+1:10:17.960,1:10:24.890
+well so it normalizes across batches so
+
+1:10:22.460,1:10:28.370
+we want information about a certain
+
+1:10:24.890,1:10:30.050
+channel recall for a convolutional
+
+1:10:28.370,1:10:32.000
+neural network which channel is one of
+
+1:10:30.050,1:10:33.170
+these latent images that you have in
+
+1:10:32.000,1:10:34.610
+your network that part way through the
+
+1:10:33.170,1:10:35.659
+network you have some data it doesn't
+
+1:10:34.610,1:10:37.070
+really look like an image if you
+
+1:10:35.659,1:10:38.810
+actually look at it but it's it's shaped
+
+1:10:37.070,1:10:41.000
+like an image anyway and that's a
+
+1:10:38.810,1:10:44.390
+channel so we want to compute an average
+
+1:10:41.000,1:10:47.239
+over this over this channel but we only
+
+1:10:44.390,1:10:49.520
+have a small amount of data that's
+
+1:10:47.239,1:10:51.380
+what's in this channel basically height
+
+1:10:49.520,1:10:53.390
+times width if it's a if it's an image
+
+1:10:51.380,1:10:56.000
+and it turns out that's not enough data
+
+1:10:53.390,1:10:57.350
+to get good estimates of these mean and
+
+1:10:56.000,1:10:58.969
+variance parameters so what batchman
+
+1:10:57.350,1:11:01.070
+does is it takes a mean and variance
+
+1:10:58.969,1:11:05.570
+estimate across all the instances in
+
+1:11:01.070,1:11:08.000
+your mini-batch pretty straightforward
+
+1:11:05.570,1:11:09.890
+and that's what it divides blue by the
+
+1:11:08.000,1:11:11.210
+reason why I don't like this is it is no
+
+1:11:09.890,1:11:12.830
+longer actually stochastic gradient
+
+1:11:11.210,1:11:14.600
+descent if you using batch normalization
+
+1:11:12.830,1:11:19.429
+so it breaks all the theory that I work
+
+1:11:14.600,1:11:22.370
+on for a living so I prefer some other
+
+1:11:19.429,1:11:24.409
+normalization strategies there in fact
+
+1:11:22.370,1:11:25.909
+quite a soon after Bachelor and people
+
+1:11:24.409,1:11:27.409
+tried normalizing via every other
+
+1:11:25.909,1:11:29.449
+possible combination of things you can
+
+1:11:27.409,1:11:31.699
+normalize by and it turns out the three
+
+1:11:29.449,1:11:34.880
+that kind of work a layer instance and
+
+1:11:31.699,1:11:37.370
+group norm and layer norm here in this
+
+1:11:34.880,1:11:41.230
+diagram you averaged across all of the
+
+1:11:37.370,1:11:43.820
+channels and across height and width now
+
+1:11:41.230,1:11:45.469
+this doesn't work on all problems so I
+
+1:11:43.820,1:11:47.000
+would only recommend it on a problem
+
+1:11:45.469,1:11:48.230
+where you know it already works and
+
+1:11:47.000,1:11:49.940
+that's typically a problem where people
+
+1:11:48.230,1:11:51.110
+already using it so look at what the
+
+1:11:49.940,1:11:53.989
+network's people are using if that's a
+
+1:11:51.110,1:11:55.850
+good idea or not will depend the
+
+1:11:53.989,1:11:57.140
+instance normalization is something
+
+1:11:55.850,1:12:01.460
+that's used a lot in modern language
+
+1:11:57.140,1:12:03.380
+models and this you do not average
+
+1:12:01.460,1:12:05.330
+across the batch anymore which is nice I
+
+1:12:03.380,1:12:07.310
+won't we talk about that much depth I
+
+1:12:05.330,1:12:08.540
+really the one I would rather you rather
+
+1:12:07.310,1:12:12.440
+you use in practice is group
+
+1:12:08.540,1:12:14.630
+normalization so here we have which
+
+1:12:12.440,1:12:16.219
+across a group of channels and this
+
+1:12:14.630,1:12:18.409
+group is trapped is chosen arbitrarily
+
+1:12:16.219,1:12:20.090
+and fixed at the beginning so typically
+
+1:12:18.409,1:12:21.239
+we just group things numerically so
+
+1:12:20.090,1:12:23.580
+channel 0 to 10
+
+1:12:21.239,1:12:26.790
+would be a group channel you know 10 to
+
+1:12:23.580,1:12:31.110
+20 making sure you don't overlap of
+
+1:12:26.790,1:12:32.820
+course disjoint groups of channels and
+
+1:12:31.110,1:12:34.560
+the size of these groups is a parameter
+
+1:12:32.820,1:12:36.780
+that you need to tune although we always
+
+1:12:34.560,1:12:39.150
+use 32 in practice you could tune that
+
+1:12:36.780,1:12:40.620
+and you just do this because there's not
+
+1:12:39.150,1:12:42.600
+enough information on a single channel
+
+1:12:40.620,1:12:43.650
+and using all the channels is too much
+
+1:12:42.600,1:12:46.170
+so you just use something in between
+
+1:12:43.650,1:12:49.320
+it's it's really quite a simple idea and
+
+1:12:46.170,1:12:50.790
+it turns out this group norm often works
+
+1:12:49.320,1:12:53.340
+better than batch normal a lot of
+
+1:12:50.790,1:12:55.410
+problems and it does mean that my HUD
+
+1:12:53.340,1:12:57.890
+theory that I work on is still balanced
+
+1:12:55.410,1:12:57.890
+so I like that
+
+1:12:58.010,1:13:04.710
+so why does normalization help this is a
+
+1:13:02.190,1:13:06.330
+matter of dispute so in fact in the last
+
+1:13:04.710,1:13:06.980
+few years several papers have come out
+
+1:13:06.330,1:13:08.790
+on this topic
+
+1:13:06.980,1:13:11.969
+unfortunately the papers did not agree
+
+1:13:08.790,1:13:13.590
+on why it works they all have completely
+
+1:13:11.969,1:13:14.969
+separate explanations but there's some
+
+1:13:13.590,1:13:16.260
+things that are definitely going on
+
+1:13:14.969,1:13:21.270
+so we can shape it we can say for sure
+
+1:13:16.260,1:13:24.120
+that the network appears to be easier to
+
+1:13:21.270,1:13:26.820
+optimize so by that I mean you can use
+
+1:13:24.120,1:13:28.140
+large learning rates better in a better
+
+1:13:26.820,1:13:29.850
+condition network you can use larger
+
+1:13:28.140,1:13:31.590
+learning rates and therefore get faster
+
+1:13:29.850,1:13:35.030
+convergence so that does seem to be the
+
+1:13:31.590,1:13:35.030
+case when you uses normalization layers
+
+1:13:36.020,1:13:39.270
+another factor which is a little bit
+
+1:13:38.070,1:13:39.989
+disputed but I think is reasonably
+
+1:13:39.270,1:13:43.530
+well-established
+
+1:13:39.989,1:13:44.489
+you get noise in the data passing
+
+1:13:43.530,1:13:47.670
+through your network when you use
+
+1:13:44.489,1:13:49.940
+normalization in vaginal and this noise
+
+1:13:47.670,1:13:52.080
+comes from other instances in the bash
+
+1:13:49.940,1:13:53.969
+because it's random what I like
+
+1:13:52.080,1:13:55.140
+instances are in your batch when you
+
+1:13:53.969,1:13:57.239
+compute the mean using those other
+
+1:13:55.140,1:14:00.480
+instances that mean is noisy and this
+
+1:13:57.239,1:14:01.469
+noise is then added or sorry subtracted
+
+1:14:00.480,1:14:03.900
+from your weight so when you do the
+
+1:14:01.469,1:14:06.050
+normalization operation so this noise is
+
+1:14:03.900,1:14:07.770
+actually potentially helping
+
+1:14:06.050,1:14:11.790
+generalization performance in your
+
+1:14:07.770,1:14:13.469
+network now there has been a lot of
+
+1:14:11.790,1:14:15.180
+papers on injecting noise internet works
+
+1:14:13.469,1:14:16.980
+to help generalization so it's not such
+
+1:14:15.180,1:14:20.370
+a crazy idea that this noise can be
+
+1:14:16.980,1:14:22.050
+helping and in terms of a practical
+
+1:14:20.370,1:14:24.030
+consideration this normalization makes
+
+1:14:22.050,1:14:26.400
+the weight initialization that you use a
+
+1:14:24.030,1:14:28.260
+lot less important it used to be kind of
+
+1:14:26.400,1:14:30.810
+a black art to select the initialization
+
+1:14:28.260,1:14:32.460
+your new your network and the people who
+
+1:14:30.810,1:14:33.540
+really good motive is often it was just
+
+1:14:32.460,1:14:35.340
+because they're really good at changing
+
+1:14:33.540,1:14:36.540
+their initialization and this is just
+
+1:14:35.340,1:14:39.540
+less the case now when we use
+
+1:14:36.540,1:14:42.080
+normalization layers and also gives the
+
+1:14:39.540,1:14:45.930
+benefit if you can kind of tile together
+
+1:14:42.080,1:14:47.550
+layers with impunity so again it used to
+
+1:14:45.930,1:14:49.050
+be the situation that if you just plug
+
+1:14:47.550,1:14:51.390
+together two possible ways in your
+
+1:14:49.050,1:14:52.740
+network it probably wouldn't work now
+
+1:14:51.390,1:14:55.170
+that we use normalization layers it
+
+1:14:52.740,1:14:57.900
+probably will work and even if it's a
+
+1:14:55.170,1:15:00.750
+horrible idea and this has spurred a
+
+1:14:57.900,1:15:02.310
+whole field of automated architecture
+
+1:15:00.750,1:15:04.500
+search where they just randomly calm
+
+1:15:02.310,1:15:05.940
+build together blocks and it's try
+
+1:15:04.500,1:15:07.890
+thousands of them and see what works and
+
+1:15:05.940,1:15:09.540
+that really wasn't possible before
+
+1:15:07.890,1:15:11.400
+because that would typically result in a
+
+1:15:09.540,1:15:14.010
+poorly conditioned Network you couldn't
+
+1:15:11.400,1:15:16.440
+train and with normalization typically
+
+1:15:14.010,1:15:19.590
+you can train it some practical
+
+1:15:16.440,1:15:20.850
+considerations so the the bachelor on
+
+1:15:19.590,1:15:23.310
+paper one of the reasons why it wasn't
+
+1:15:20.850,1:15:25.230
+invented earlier is the kind of
+
+1:15:23.310,1:15:27.480
+non-obvious thing that you have to back
+
+1:15:25.230,1:15:30.060
+propagate through the calculation of the
+
+1:15:27.480,1:15:32.160
+mean and standard deviation if you don't
+
+1:15:30.060,1:15:33.390
+do this everything blows up now you
+
+1:15:32.160,1:15:35.190
+might have to do this yourself as it'll
+
+1:15:33.390,1:15:38.880
+be implemented in the implementation
+
+1:15:35.190,1:15:42.000
+that you use oh yes so I do not have the
+
+1:15:38.880,1:15:43.380
+expertise to answer that I feel like
+
+1:15:42.000,1:15:45.060
+it's kind of sometimes it's just a
+
+1:15:43.380,1:15:46.560
+patent pet method like people like
+
+1:15:45.060,1:15:49.710
+layering in suits normally that field
+
+1:15:46.560,1:15:52.080
+more and in fact a good norm if you it's
+
+1:15:49.710,1:15:53.640
+just the group size covers both so I
+
+1:15:52.080,1:15:54.930
+would be sure that you could probably
+
+1:15:53.640,1:15:56.640
+get the same performance using group
+
+1:15:54.930,1:15:58.040
+norm with a particular group size chosen
+
+1:15:56.640,1:16:00.980
+carefully
+
+1:15:58.040,1:16:03.720
+yeah the choice of national does affect
+
+1:16:00.980,1:16:06.720
+parallelization so the implementation
+
+1:16:03.720,1:16:08.310
+zinc in your computer library or your
+
+1:16:06.720,1:16:10.380
+CPU library are pretty efficient for
+
+1:16:08.310,1:16:11.880
+each of these but it's complicated when
+
+1:16:10.380,1:16:14.820
+you are spreading your computation
+
+1:16:11.880,1:16:16.830
+across machines and you kind of have to
+
+1:16:14.820,1:16:18.630
+synchronize these these these things and
+
+1:16:16.830,1:16:20.330
+batch norm is a bit of a pain there
+
+1:16:18.630,1:16:23.790
+because it would mean that you need to
+
+1:16:20.330,1:16:25.170
+compute an average across all machines
+
+1:16:23.790,1:16:27.540
+and aggregator whereas if you're using
+
+1:16:25.170,1:16:28.620
+group norm every instance is on a
+
+1:16:27.540,1:16:30.450
+different machine you can just
+
+1:16:28.620,1:16:32.400
+completely compute the norm so in all
+
+1:16:30.450,1:16:34.350
+those other three it's separate
+
+1:16:32.400,1:16:35.730
+normalization for each instance it
+
+1:16:34.350,1:16:37.560
+doesn't depend on the other instances in
+
+1:16:35.730,1:16:38.620
+the batch so it's nicer when you're
+
+1:16:37.560,1:16:40.570
+distributing it's
+
+1:16:38.620,1:16:42.460
+when people use batch norm on a cluster
+
+1:16:40.570,1:16:45.100
+they actually do not sync the statistics
+
+1:16:42.460,1:16:50.860
+across which makes it even less like SGD
+
+1:16:45.100,1:16:51.250
+and makes me even more annoyed so what
+
+1:16:50.860,1:16:54.690
+was it already
+
+1:16:51.250,1:16:57.610
+yes yeah Bachelor basically has a lot of
+
+1:16:54.690,1:16:59.920
+momentum not in the optimization sense
+
+1:16:57.610,1:17:01.300
+but in the sense of people's minds so
+
+1:16:59.920,1:17:03.180
+it's very heavily used for that reason
+
+1:17:01.300,1:17:05.860
+but I would recommend group norm instead
+
+1:17:03.180,1:17:08.680
+and there's kind of like a technical
+
+1:17:05.860,1:17:09.760
+data with batch norm you don't want to
+
+1:17:08.680,1:17:12.280
+compute these mean and standard
+
+1:17:09.760,1:17:14.950
+deviations on batches during evaluation
+
+1:17:12.280,1:17:18.490
+time by evaluation time I mean when you
+
+1:17:14.950,1:17:20.170
+actually run your network on the test
+
+1:17:18.490,1:17:22.900
+data set or we use it in the real world
+
+1:17:20.170,1:17:24.370
+for some application it's typically in
+
+1:17:22.900,1:17:25.990
+those situations you don't have batches
+
+1:17:24.370,1:17:29.050
+any more batches or more for training
+
+1:17:25.990,1:17:31.870
+things so you need some substitution in
+
+1:17:29.050,1:17:33.100
+that case you can compute an exponential
+
+1:17:31.870,1:17:35.500
+moving average as we talked about before
+
+1:17:33.100,1:17:37.930
+and EMA of these mean and standard
+
+1:17:35.500,1:17:39.790
+deviations you may think to yourself why
+
+1:17:37.930,1:17:41.260
+don't we use an EMA in the
+
+1:17:39.790,1:17:43.270
+implementation of batch norm the answer
+
+1:17:41.260,1:17:44.860
+is because it doesn't work we it seems
+
+1:17:43.270,1:17:46.120
+like a very reasonable idea though and
+
+1:17:44.860,1:17:48.880
+people have explored that and quite a
+
+1:17:46.120,1:17:51.520
+lot of depth but it doesn't work oh yes
+
+1:17:48.880,1:17:52.900
+this is quite crucial so yet people have
+
+1:17:51.520,1:17:54.400
+tried normalizing things in neural
+
+1:17:52.900,1:17:55.480
+networks before a batch norm was
+
+1:17:54.400,1:17:57.280
+invented but they always made the
+
+1:17:55.480,1:17:59.380
+mistake of not back popping through the
+
+1:17:57.280,1:18:00.490
+mean and standard deviation and the
+
+1:17:59.380,1:18:02.290
+reason why they didn't do that is
+
+1:18:00.490,1:18:03.550
+because the math is really tricky and if
+
+1:18:02.290,1:18:05.650
+you try to implement it yourself it will
+
+1:18:03.550,1:18:07.480
+probably be wrong now that we have pie
+
+1:18:05.650,1:18:09.460
+charts which which computes gradients
+
+1:18:07.480,1:18:11.260
+correctly for you in all situations you
+
+1:18:09.460,1:18:12.850
+could actually do this in practice and
+
+1:18:11.260,1:18:13.870
+there are just a little bit but only a
+
+1:18:12.850,1:18:16.780
+little bit because it's surprisingly
+
+1:18:13.870,1:18:19.110
+difficult yeah so the question is is
+
+1:18:16.780,1:18:21.070
+there a difference if we apply
+
+1:18:19.110,1:18:23.110
+normalization before after than
+
+1:18:21.070,1:18:25.690
+non-linearity and the answer is there
+
+1:18:23.110,1:18:27.670
+will be a small difference in the
+
+1:18:25.690,1:18:28.930
+performance of your network now I can't
+
+1:18:27.670,1:18:30.910
+tell you which one's better because it
+
+1:18:28.930,1:18:32.110
+appears in some situation one works a
+
+1:18:30.910,1:18:33.670
+little bit better in other situations
+
+1:18:32.110,1:18:35.350
+the other one works better what I can
+
+1:18:33.670,1:18:37.300
+tell you is the way I draw it here is
+
+1:18:35.350,1:18:39.100
+what's used in the PI project
+
+1:18:37.300,1:18:41.650
+implementation of ResNet and most
+
+1:18:39.100,1:18:43.330
+resonant implementations so just there's
+
+1:18:41.650,1:18:45.100
+probably almost as good as you can get I
+
+1:18:43.330,1:18:49.270
+think that would use the other form if
+
+1:18:45.100,1:18:50.230
+it was better and it's certainly problem
+
+1:18:49.270,1:18:51.460
+depended this is another one of those
+
+1:18:50.230,1:18:53.050
+things where maybe the
+
+1:18:51.460,1:18:55.420
+no correct answer how you do it and it's
+
+1:18:53.050,1:19:00.160
+just random which works better I don't
+
+1:18:55.420,1:19:03.190
+know yes yeah any other questions on
+
+1:19:00.160,1:19:05.080
+this before I move on to the so you need
+
+1:19:03.190,1:19:06.850
+more data to get accurate estimates of
+
+1:19:05.080,1:19:09.310
+the mean and standard deviation the
+
+1:19:06.850,1:19:10.570
+question was why is it a good idea to
+
+1:19:09.310,1:19:12.160
+compute it across multiple channels
+
+1:19:10.570,1:19:13.450
+rather than a single channel and yes it
+
+1:19:12.160,1:19:15.340
+is because you just have more data to
+
+1:19:13.450,1:19:17.800
+make a better estimates but you want to
+
+1:19:15.340,1:19:19.000
+be careful you don't have too much data
+
+1:19:17.800,1:19:21.130
+in that because then you don't get the
+
+1:19:19.000,1:19:23.320
+noise and record that the noise is
+
+1:19:21.130,1:19:25.300
+actually useful so basically the group
+
+1:19:23.320,1:19:26.800
+size in group norm is just adjusting the
+
+1:19:25.300,1:19:28.870
+amount of noise we have basically the
+
+1:19:26.800,1:19:31.300
+question was how is this related to
+
+1:19:28.870,1:19:32.950
+group convolutions this was all
+
+1:19:31.300,1:19:36.730
+pioneered before good convolutions were
+
+1:19:32.950,1:19:38.260
+used it certainly has some interaction
+
+1:19:36.730,1:19:39.730
+with group convolutions if you use them
+
+1:19:38.260,1:19:41.920
+and so you want to be a little bit
+
+1:19:39.730,1:19:43.390
+careful there I don't know exactly what
+
+1:19:41.920,1:19:44.800
+the correct thing to do is in those
+
+1:19:43.390,1:19:46.960
+cases but I can tell you they definitely
+
+1:19:44.800,1:19:48.610
+use normalization in those situations
+
+1:19:46.960,1:19:50.290
+probably Batchelor more more than group
+
+1:19:48.610,1:19:53.260
+norm because of the momentum I mentioned
+
+1:19:50.290,1:19:55.450
+it's just more popular vaginal yes so
+
+1:19:53.260,1:19:56.890
+the question is do we ever use our Beck
+
+1:19:55.450,1:19:58.540
+instances from the mini-batch in group
+
+1:19:56.890,1:20:00.310
+norm or is it always just a single
+
+1:19:58.540,1:20:01.900
+instance we always just use a single
+
+1:20:00.310,1:20:04.450
+instance because there's so many
+
+1:20:01.900,1:20:06.610
+benefits to that it's so much simpler in
+
+1:20:04.450,1:20:08.469
+implementation and in theory to do that
+
+1:20:06.610,1:20:09.850
+maybe you can get some improvement from
+
+1:20:08.469,1:20:11.530
+that in fact I bet you there's a paper
+
+1:20:09.850,1:20:13.210
+that does that somewhere because they've
+
+1:20:11.530,1:20:15.190
+tried have any combination of this in
+
+1:20:13.210,1:20:16.510
+practice I suspect if it worked well
+
+1:20:15.190,1:20:19.450
+we'd probably be using it so probably
+
+1:20:16.510,1:20:23.410
+probably doesn't work well under the the
+
+1:20:19.450,1:20:24.370
+death of optimization I wanted to put
+
+1:20:23.410,1:20:25.480
+something a little bit interesting
+
+1:20:24.370,1:20:27.610
+because you've all been sitting through
+
+1:20:25.480,1:20:30.040
+kind of a pretty dense lecture so this
+
+1:20:27.610,1:20:31.870
+is something that I've kind of been
+
+1:20:30.040,1:20:34.300
+working on a little bit I thought you
+
+1:20:31.870,1:20:36.580
+might find interesting so you might have
+
+1:20:34.300,1:20:40.989
+seen the the xkcd comic here that I've
+
+1:20:36.580,1:20:42.790
+modified it's not always this way it's
+
+1:20:40.989,1:20:44.650
+kind of point of what it makes so
+
+1:20:42.790,1:20:46.270
+sometimes we can just barge into a field
+
+1:20:44.650,1:20:48.550
+we know nothing about it and improve on
+
+1:20:46.270,1:20:50.469
+how they're currently doing it although
+
+1:20:48.550,1:20:52.000
+you have to be a little bit careful so
+
+1:20:50.469,1:20:53.560
+the problem I want to talk about is one
+
+1:20:52.000,1:20:54.700
+that young I think mentioned briefly in
+
+1:20:53.560,1:20:58.530
+the first lecture but I want to go into
+
+1:20:54.700,1:21:01.610
+a bit of detail it's MRI reconstruction
+
+1:20:58.530,1:21:04.639
+now in the MRI reconstruction problem
+
+1:21:01.610,1:21:06.800
+we take a raw data from an MRI machine a
+
+1:21:04.639,1:21:08.540
+medical imaging machine we take raw data
+
+1:21:06.800,1:21:11.270
+from that machine and we reconstruct an
+
+1:21:08.540,1:21:12.530
+image and there's some pipeline an
+
+1:21:11.270,1:21:15.590
+algorithm in the middle there that
+
+1:21:12.530,1:21:17.900
+produces the image and the goal
+
+1:21:15.590,1:21:19.580
+basically here is to replace 30 years of
+
+1:21:17.900,1:21:21.020
+research into what algorithm they should
+
+1:21:19.580,1:21:23.900
+use their with with neural networks
+
+1:21:21.020,1:21:27.949
+because that's that's what I'll get paid
+
+1:21:23.900,1:21:30.199
+to do and I'll give you a bit of detail
+
+1:21:27.949,1:21:31.810
+so these MRI machines capture data in
+
+1:21:30.199,1:21:33.770
+what's known as the Fourier domain I
+
+1:21:31.810,1:21:34.909
+know a lot of you have done signal
+
+1:21:33.770,1:21:36.409
+processing some of you may have no idea
+
+1:21:34.909,1:21:42.070
+what this is and you don't need to
+
+1:21:36.409,1:21:42.070
+understand it for this problem oh yeah
+
+1:21:44.770,1:21:49.639
+yes so you may have seen the the further
+
+1:21:47.510,1:21:53.000
+domain in one dimensional case
+
+1:21:49.639,1:21:54.710
+so for neural networks sorry for MRI
+
+1:21:53.000,1:21:56.389
+reconstruction we have two dimensional
+
+1:21:54.710,1:21:58.340
+Fourier domain the thing you need to
+
+1:21:56.389,1:22:00.350
+know is it's a linear mapping to get
+
+1:21:58.340,1:22:02.389
+from the fluid domain to image domain
+
+1:22:00.350,1:22:04.909
+it's just linear and it's very efficient
+
+1:22:02.389,1:22:06.350
+to do that mapping it literally takes
+
+1:22:04.909,1:22:08.869
+milliseconds no matter how big your
+
+1:22:06.350,1:22:09.980
+images on modern computers so linear and
+
+1:22:08.869,1:22:12.619
+easy to convert back and forth between
+
+1:22:09.980,1:22:15.619
+the two and the MRI machines actually
+
+1:22:12.619,1:22:18.800
+capture either rows or columns of this
+
+1:22:15.619,1:22:20.540
+Fourier domain as samples they're called
+
+1:22:18.800,1:22:22.730
+sample in the literature so each time
+
+1:22:20.540,1:22:25.280
+the machine computes a sample which is
+
+1:22:22.730,1:22:27.500
+every few milliseconds it gets a role
+
+1:22:25.280,1:22:28.940
+column of this image and this is
+
+1:22:27.500,1:22:31.520
+actually technically a complex-valued
+
+1:22:28.940,1:22:33.380
+image but this does not matter for my
+
+1:22:31.520,1:22:36.530
+discussion of it so you can imagine it's
+
+1:22:33.380,1:22:38.300
+just a two channel image if you imagine
+
+1:22:36.530,1:22:41.630
+a real and imaginary channel just think
+
+1:22:38.300,1:22:42.830
+of them as color channels the problem we
+
+1:22:41.630,1:22:46.250
+want to do we want to solve is
+
+1:22:42.830,1:22:48.800
+accelerating MRI acceleration here is in
+
+1:22:46.250,1:22:50.360
+the sense of faster so we want to run
+
+1:22:48.800,1:22:53.830
+the machines quicker and produce
+
+1:22:50.360,1:22:53.830
+identical quality images
+
+1:22:55.400,1:23:00.050
+and one way we can do that in the most
+
+1:22:57.710,1:23:02.690
+successful way so far is by just not
+
+1:23:00.050,1:23:05.540
+capturing all of the columns we just
+
+1:23:02.690,1:23:07.040
+skip some randomly it's useful in
+
+1:23:05.540,1:23:09.320
+practice to also capture some of the
+
+1:23:07.040,1:23:11.150
+middle columns it turns out they contain
+
+1:23:09.320,1:23:14.150
+a lot of the information but outside the
+
+1:23:11.150,1:23:16.159
+middle we just capture randomly and we
+
+1:23:14.150,1:23:16.699
+can't just use a nice linear operation
+
+1:23:16.159,1:23:18.290
+anymore
+
+1:23:16.699,1:23:20.270
+that diagram on the right is the output
+
+1:23:18.290,1:23:22.310
+of that linear operation I mentioned
+
+1:23:20.270,1:23:23.810
+applied to this data so it doesn't give
+
+1:23:22.310,1:23:25.640
+useful Apple they only do something a
+
+1:23:23.810,1:23:27.100
+little bit more intelligent any
+
+1:23:25.640,1:23:32.210
+questions on this before I move on
+
+1:23:27.100,1:23:35.030
+it is frequency and phase dimensions so
+
+1:23:32.210,1:23:36.530
+in this particular case I'm actually
+
+1:23:35.030,1:23:38.510
+sure this diagram one of the dimensions
+
+1:23:36.530,1:23:42.050
+is frequency and one is phase and the
+
+1:23:38.510,1:23:44.390
+value is the magnitude of a sine wave
+
+1:23:42.050,1:23:47.239
+with that frequency and phase so if you
+
+1:23:44.390,1:23:48.980
+add together all the sine waves wave
+
+1:23:47.239,1:23:52.219
+them with the frequency oh so with the
+
+1:23:48.980,1:23:54.620
+weight in this image you get the
+
+1:23:52.219,1:23:55.640
+original image so it's it's a little bit
+
+1:23:54.620,1:23:58.429
+more complicated because it's in two
+
+1:23:55.640,1:23:59.719
+dimensions and the sine waves you gotta
+
+1:23:58.429,1:24:02.030
+be little bit careful but it's basically
+
+1:23:59.719,1:24:04.730
+just each pixel is the magnitude of a
+
+1:24:02.030,1:24:06.230
+sine wave or if you want to compare to a
+
+1:24:04.730,1:24:09.409
+1d analogy
+
+1:24:06.230,1:24:11.960
+you'll just have frequencies so the
+
+1:24:09.409,1:24:14.360
+pixel intensity is the strength of that
+
+1:24:11.960,1:24:16.580
+frequency if you have a musical note say
+
+1:24:14.360,1:24:18.020
+a piano note with a C major as one of
+
+1:24:16.580,1:24:19.340
+the frequencies that would be one pixel
+
+1:24:18.020,1:24:21.949
+this image would be the C major
+
+1:24:19.340,1:24:24.140
+frequency and another might be a minor
+
+1:24:21.949,1:24:25.460
+or something like that and the magnitude
+
+1:24:24.140,1:24:28.370
+of it is just how hard they press the
+
+1:24:25.460,1:24:31.940
+key on the piano so you have frequency
+
+1:24:28.370,1:24:34.370
+information yes so the video doesn't
+
+1:24:31.940,1:24:36.650
+work there was one of the biggest
+
+1:24:34.370,1:24:38.750
+breakthroughs in in Threat achill
+
+1:24:36.650,1:24:40.699
+mathematics for a long time was the
+
+1:24:38.750,1:24:41.690
+invention of compressed sensing I'm sure
+
+1:24:40.699,1:24:43.640
+some of you have heard of compressed
+
+1:24:41.690,1:24:45.710
+sensing a hands of show of hands
+
+1:24:43.640,1:24:47.360
+compressed sensing yeah some of you
+
+1:24:45.710,1:24:48.980
+especially work in the mathematical
+
+1:24:47.360,1:24:51.230
+sciences would be aware of it
+
+1:24:48.980,1:24:53.330
+basically there's this phenomenal
+
+1:24:51.230,1:24:56.030
+political paper that showed that we
+
+1:24:53.330,1:24:57.770
+could actually in theory get a perfect
+
+1:24:56.030,1:25:00.380
+reconstruction from these subsampled
+
+1:24:57.770,1:25:02.080
+measurements and we had some
+
+1:25:00.380,1:25:03.739
+requirements for this to work the
+
+1:25:02.080,1:25:06.010
+requirements were that we needed to
+
+1:25:03.739,1:25:07.540
+sample randomly
+
+1:25:06.010,1:25:10.150
+in fact it's a bit weaker you have to
+
+1:25:07.540,1:25:12.040
+sample incoherently but in practice
+
+1:25:10.150,1:25:14.710
+everybody samples randomly so it's
+
+1:25:12.040,1:25:16.540
+essentially the same thing now here
+
+1:25:14.710,1:25:18.910
+we're randomly sampling columns but
+
+1:25:16.540,1:25:20.230
+within the columns we do not randomly
+
+1:25:18.910,1:25:22.330
+sample the reason being is it's not
+
+1:25:20.230,1:25:23.710
+faster in the machine the machine can
+
+1:25:22.330,1:25:25.930
+capture one column as quickly as you
+
+1:25:23.710,1:25:27.760
+could capture half a column so we just
+
+1:25:25.930,1:25:29.350
+kind of capture a whole column so that
+
+1:25:27.760,1:25:32.260
+makes it no longer random so that's one
+
+1:25:29.350,1:25:33.760
+kind of problem with it the other
+
+1:25:32.260,1:25:35.020
+problem is kind of the the assumptions
+
+1:25:33.760,1:25:36.850
+of this compressed sensing theory are
+
+1:25:35.020,1:25:39.400
+violated by the kind of images we want
+
+1:25:36.850,1:25:41.020
+to reconstruct I show you on the right
+
+1:25:39.400,1:25:43.300
+they're an example of compressed sensing
+
+1:25:41.020,1:25:44.560
+Theory reconstruction this was a big
+
+1:25:43.300,1:25:46.750
+step forward from what they could do
+
+1:25:44.560,1:25:48.940
+before you would you'll get something
+
+1:25:46.750,1:25:50.920
+that looks like this previously that was
+
+1:25:48.940,1:25:53.020
+really considered the best in fact some
+
+1:25:50.920,1:25:55.900
+people would when this result came out
+
+1:25:53.020,1:25:57.430
+swore though this was impossible it's
+
+1:25:55.900,1:25:58.480
+actually not but you need some
+
+1:25:57.430,1:26:00.550
+assumptions and these assumptions are
+
+1:25:58.480,1:26:02.950
+pretty critical and I mention them there
+
+1:26:00.550,1:26:05.080
+so you need sparsity of the image now
+
+1:26:02.950,1:26:06.940
+that mi a-- majors not sparse by sparse
+
+1:26:05.080,1:26:09.370
+I mean it has a lot of zero or black
+
+1:26:06.940,1:26:11.710
+pixels it's clearly not sparse but it
+
+1:26:09.370,1:26:13.660
+can be represented sparsely or
+
+1:26:11.710,1:26:15.880
+approximately sparsely if you do a
+
+1:26:13.660,1:26:18.160
+wavelet decomposition now I won't go to
+
+1:26:15.880,1:26:19.510
+the details there's a little bit of
+
+1:26:18.160,1:26:20.920
+problem though it's only approximately
+
+1:26:19.510,1:26:22.420
+sparse and when you do that wavelet
+
+1:26:20.920,1:26:24.489
+decomposition that's why this is not a
+
+1:26:22.420,1:26:26.020
+perfect reconstruction if it was very
+
+1:26:24.489,1:26:28.060
+sparse in the wavelet domain and
+
+1:26:26.020,1:26:30.640
+perfectly that would be in exactly the
+
+1:26:28.060,1:26:33.160
+same as the left image and this
+
+1:26:30.640,1:26:34.600
+compressed sensing is based off of the
+
+1:26:33.160,1:26:36.220
+field of optimization it kind of
+
+1:26:34.600,1:26:37.270
+revitalize a lot of the techniques
+
+1:26:36.220,1:26:39.550
+people have been using for a long time
+
+1:26:37.270,1:26:41.500
+the way you get this reconstruction is
+
+1:26:39.550,1:26:45.130
+you solve a little mini optimization
+
+1:26:41.500,1:26:46.150
+problem at every step you every image
+
+1:26:45.130,1:26:47.830
+you want to reconstruct how many other
+
+1:26:46.150,1:26:48.910
+machines so your machine has to solve an
+
+1:26:47.830,1:26:51.030
+optimization problem for every image
+
+1:26:48.910,1:26:54.310
+every time it solves this little
+
+1:26:51.030,1:26:57.340
+quadratic problem with this kind of
+
+1:26:54.310,1:26:58.840
+complicated regularization term so this
+
+1:26:57.340,1:27:00.700
+is great for optimization or all these
+
+1:26:58.840,1:27:02.050
+people who had been getting low paid
+
+1:27:00.700,1:27:03.780
+jobs at universities all of a sudden
+
+1:27:02.050,1:27:05.980
+there of their research was trendy and
+
+1:27:03.780,1:27:09.370
+corporations needed their help so this
+
+1:27:05.980,1:27:10.540
+is great but we can do better so we
+
+1:27:09.370,1:27:13.120
+instead of solving this minimization
+
+1:27:10.540,1:27:15.520
+problem at every time step I will use a
+
+1:27:13.120,1:27:16.960
+neural network so obviously being here
+
+1:27:15.520,1:27:22.300
+arbitrarily to represent the huge in
+
+1:27:16.960,1:27:24.190
+your network beef a big of course we we
+
+1:27:22.300,1:27:26.410
+hope that we can learn in your network
+
+1:27:24.190,1:27:28.000
+of such sufficient complexity that it
+
+1:27:26.410,1:27:30.190
+can essentially solve the optimization
+
+1:27:28.000,1:27:31.240
+problem in one step it just outputs a
+
+1:27:30.190,1:27:33.550
+solution that's as good as the
+
+1:27:31.240,1:27:35.200
+optimization problem solution now this
+
+1:27:33.550,1:27:37.570
+would have been considered impossible 15
+
+1:27:35.200,1:27:39.820
+years ago now we know better so it's
+
+1:27:37.570,1:27:42.970
+actually not very difficult in fact we
+
+1:27:39.820,1:27:44.980
+can just take an example of we can solve
+
+1:27:42.970,1:27:46.810
+a few of these a few I mean like a few
+
+1:27:44.980,1:27:48.520
+hundred thousand of these optimization
+
+1:27:46.810,1:27:49.900
+problems take the solution and the input
+
+1:27:48.520,1:27:53.620
+and we're gonna strain a neural network
+
+1:27:49.900,1:27:54.880
+to map from input to solution that's
+
+1:27:53.620,1:27:56.830
+actually a little bit suboptimal because
+
+1:27:54.880,1:27:58.570
+we get weakened in some cases we know a
+
+1:27:56.830,1:28:00.070
+better solution than the solution to the
+
+1:27:58.570,1:28:03.580
+optimization problem we can gather that
+
+1:28:00.070,1:28:04.780
+by measuring the patient and that's what
+
+1:28:03.580,1:28:06.130
+we actually do in practice so we don't
+
+1:28:04.780,1:28:07.000
+try and solve the optimization problem
+
+1:28:06.130,1:28:09.250
+we try and get to an even better
+
+1:28:07.000,1:28:11.260
+solution and this works really well so
+
+1:28:09.250,1:28:13.480
+I'll give you a very simple example of
+
+1:28:11.260,1:28:14.740
+this so this is what you can do much
+
+1:28:13.480,1:28:16.210
+better than the compressed sensory
+
+1:28:14.740,1:28:18.580
+reconstruction using a neural network
+
+1:28:16.210,1:28:19.840
+and this network involves the tricks
+
+1:28:18.580,1:28:23.140
+I've mentioned so it's trained using
+
+1:28:19.840,1:28:25.720
+Adam it uses group norm normalization
+
+1:28:23.140,1:28:28.690
+layers and convolutional neural networks
+
+1:28:25.720,1:28:31.510
+as you've already been taught and it
+
+1:28:28.690,1:28:33.970
+uses a technique known as u nets which
+
+1:28:31.510,1:28:35.470
+you may go over later in the course not
+
+1:28:33.970,1:28:37.390
+sure about that but it's not a very
+
+1:28:35.470,1:28:39.160
+complicated modification of only one it
+
+1:28:37.390,1:28:40.660
+works as yeah this is the kind of thing
+
+1:28:39.160,1:28:42.490
+you can do and this is this is very
+
+1:28:40.660,1:28:44.880
+close to practical applications so
+
+1:28:42.490,1:28:47.620
+you'll be seeing these accelerated MRI
+
+1:28:44.880,1:28:49.750
+scans happening in in clinical practice
+
+1:28:47.620,1:28:52.420
+in only a few years tired this is not
+
+1:28:49.750,1:28:53.980
+vaporware and yeah that's everything i
+
+1:28:52.420,1:28:55.420
+wanted to talk about you talk about
+
+1:28:53.980,1:28:58.620
+today optimization and the death of
+
+1:28:55.420,1:28:58.620
+optimization thank you
+
