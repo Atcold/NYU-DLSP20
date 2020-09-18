@@ -1,4 +1,4 @@
----
+Pratica---
 layout: default
 title: Apprendimento Profondo
 author: Alfredo Canziani
@@ -12,7 +12,7 @@ translator: Nantas Nardelli
 
 | ISTRUTTORI  | Yann LeCun & Alfredo Canziani |
 | LEZIONI     | Lunedì 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| PRACTICA    | Martedì 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| PRATICA    | Martedì 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Codice d'accesso: `DLSP20` |
 | MATERIALE   | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
@@ -151,7 +151,7 @@ learning universitario.
     </tr>
     <tr><td><a href="it/week06/06-2">RNNs, GRUs, LSTMs, Attenzione, Seq2Seq, e Reti di Memoria</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week06/06-3">Architettura delle RNN e modelli LSTM</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
@@ -171,7 +171,7 @@ learning universitario.
     </tr>
     <tr><td><a href="{{site.baseurl}}/it/week07/07-2">SSL, EBM con dettagli ed esempi</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week07/07-3">Introduzione agli autoencoder</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
@@ -191,7 +191,7 @@ learning universitario.
     </tr>
     <tr><td><a href="{{site.baseurl}}/it/week08/08-2">Modelli ad energia a variabile latente regolarizzata</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week08/08-3">Modelli generativi - autoencoder variazionali</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
@@ -211,7 +211,7 @@ learning universitario.
     </tr>
     <tr><td><a href="{{site.baseurl}}/it/week09/09-2">Modelli della realtà e reti avversarie generative</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week09/09-3">Reti avversarie generative</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
@@ -231,7 +231,7 @@ learning universitario.
     </tr>
     <tr><td><a href="{{site.baseurl}}/it/week10/10-2">Apprendimento auto-supervisionato - ClusterFit e PIRL</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week10/10-3">Il controllore per la retromarcia di un camion</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
@@ -253,7 +253,7 @@ learning universitario.
     </tr>
     <tr><td><a href="{{site.baseurl}}/it/week11/11-2">Funzioni di perdita (cont.) e funzioni di perdita per i modelli ad energia</a></td></tr>
     <tr>
-      <td rowspan="1">Practica</td>
+      <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week11/11-3">Articolo "Prediction and Policy learning Under Uncertainty" (PPUU)</a></td>
       <td>
         <a href="http://bit.ly/PPUU-slides">🖥️</a>
