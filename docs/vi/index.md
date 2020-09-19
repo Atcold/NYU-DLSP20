@@ -1,53 +1,17 @@
-## Tuyên bố bản quyền
-<table>
-<!-- =============================== HEADER ================================ -->
-  <thead>
-    <tr>
-      <th align="left">Biểu mẫu</th>
-      <th align="left">Khóa học</th>
-      <th align="left">Tác giả</th>
-      <th align="left">Người dịch</th>
-      <th align="left">Ngôn ngữ</th>
-    </tr>
-  </thead>
-  <tbody>
-<!-- =============================== BODY ================================ -->
-    <tr>
-      <td rowspan="1">Mặc định</td>
-      <td rowspan="1"><a href="https://www.youtube.com/playlist?list=PLLHTzKZzVU9eaEyErdV26ikyolxOsz6mq">Học sâu với Pytorch</td>
-      <td rowspan="1"><a href="https://twitter.com/alfcnz">Alfredo Canziani</td>
-      <td rowspan="1"><a href="https://twitter.com/NguynTnHuynh1">Huynh Nguyen</td>
-      <td rowspan="1">Tiếng Việt</td>
-    </tr>
-  </tbody>
-</table>
+---
+Bố cục: Mặc định
+Tiêu đề: Học sâu
+Tác giả: Alfredo Canziani
+Tham khảo: Trang chủ
+---
 
-## Thông tin khóa học
+**DS-GA 1008 · Học kỳ mùa xuân 2020 · [Trung tâm khoa học dữ liệu, NYU](http://cds.nyu.edu/)**
 
-**DS-GA 1008 · Học kỳ mùa xuân - 2020 · [Trung tâm khoa học dữ liệu - NYU](http://cds.nyu.edu/)**
-
-<table>
-<!-- =============================== HEADER ================================ -->
-  <thead>
-    <tr>
-      <th align="left">Giảng viên</th>
-      <th align="left">Lý thuyết</th>
-      <th align="left">Thực hành</th>
-      <th align="left">Piazza</th>
-      <th align="left">Phương pháp học</th>
-    </tr>
-  </thead>
-  <tbody>
-<!-- =============================== BODY ================================ -->
-    <tr>
-      <td rowspan="1"><a href="http://yann.lecun.com/">Yann LeCun , <a href="https://twitter.com/alfcnz">Alfredo Canziani</td>
-      <td rowspan="1"> Thứ hai 16:55 - 18:35, <a href="http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/">GCASL C95</td>
-      <td rowspan="1"> Thứ ba 19:10 - 20:00, <a href="http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/">GCASL C95</td>
-      <td rowspan="1"><a href="https://piazza.com/nyu/spring2020/dsga1008/home">Access code: DLSP20</td>
-      <td rowspan="1"><a href="https://bitly.com/DLSP20">Google Drive , <a href="https://github.com/Atcold/pytorch-Deep-Learning">Notebook</td>
-    </tr>
-  </tbody>
-</table>
+| Người hướng dẫn | Yann LeCun & Alfredo Canziani |
+| Bài giảng    | Thứ hai 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| Thực hành    | Thứ ba 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Mã truy cập: `DLSP20` |
+| Tài liệu    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
     
 ## Mô tả khóa học
 
