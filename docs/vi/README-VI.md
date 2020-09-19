@@ -1,6 +1,6 @@
-# Deep Learning (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
+# Học sâu (với PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 
-This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
+Notebook này hiện đang được phát hành tại [trang web](https://atcold.github.io/pytorch-Deep-Learning/), nơi tất cả tài liệu của khóa học có thể được tìm thấy ở định dạng video hoặc văn bản.
 
 <!-- Mandarin -->
 <!--
@@ -33,8 +33,10 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 🇸🇦 النسخة العربية من ملف `README.md`  [ar](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) والموقع الالكتروني.
 -->
 
+<!-- Vietnamese -->
+<!-- Vi Các bạn có thể tìm thấy phiên bản Tiếng Việt của `README.md` [Vi](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-VI.md) tại đây!
 
-<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic -->
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - Vietnamse-->
 [🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md)
 
 
