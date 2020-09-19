@@ -1,0 +1,20 @@
+---
+Tham khảo: 01
+Tiêu đề: Tuần_01
+---
+
+
+## Bài giảng phần A
+
+Trong phần này, chúng ta thảo luận về động lực đằng sau học sâu (Deep Learning). Chúng ta bắt đầu với lịch và nguồn cảm hứng (inspiration) của học sâu. Sau đó, chúng ta thảo luận về lịch sử của nhận dạng mẫu và giới thiệu về giảm độc dốc (gradient descent) bằng phương pháp tính toán truyền ngược (backpropagation). Cuối cùng, chúng ta thảo luận về sự biểu diễn cấp bậc (hierarchital representation) của vỏ não thị giác (visual cortex).
+
+
+## Bài giảng phần B
+
+Trước tiên, chúng ta thảo luận về sự bùng nổ của CNNs, từ Fukushima đến LeCun và AlexNet. Sau đó, chúng ta thảo luận một vài ứng dụng của CNNs, bao gồm: phân đoạn hình ảnh (image segmentation), xe tự lái (autonomous vehicles), và phân tích hình ảnh y tế (medical image analysis). Chúng ta thảo luận về bản chất phân cấp của mạng 
+We discuss the hierarchical nature of deep networks and the attributes of deep networks that make them advantageous. We conclude with a discussion of generating and learning features/representations.
+
+
+## Thực hành
+
+We discuss the motivation for applying transformations to data points visualized in space. We talk about Linear Algebra and the application of linear and non-linear transformations. We discuss the use of visualization to understand the function and effects of these transformations. We walk through examples in a Jupyter Notebook and conclude with a discussion of functions represented by neural networks.
