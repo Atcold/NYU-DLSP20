@@ -117,7 +117,7 @@ translator: Ali Abedi
     </tr>
     <tr><td><a href="en/week05/05-2">بهینه سازی ۲</a></td></tr>
     <tr>
-      <td rowspan="1">Practicum</td>
+      <td rowspan="1">عملی</td>
       <td><a href="en/week05/05-3">شبکه‌های عصبی کانولوشنی, autograd</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
