@@ -54,18 +54,18 @@ sh <miniconda*.sh>
 ```
 
 
-## Check-out the git repository with the exercise
+## Kiểm tra *kho git* với bài tập
 
-Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
+Khi Miniconda đã sẵn sàng, hãy kiểm tra kho học liệu và tiến hành cài đặt môi trường:
 
 ```bash
 git clone https://github.com/Atcold/pytorch-Deep-Learning
 ```
 
 
-## Create isolated Miniconda environment
+## Tạo môi trường Miniconda riêng biệt
 
-Change directory (`cd`) into the course folder, then type:
+Thay đổi thư mục (`cd`) thành thư mục khoa học, sau đó gõ:
 
 ```bash
 # cd pytorch-Deep-Learning
@@ -74,29 +74,28 @@ source activate pDL
 ```
 
 
-## Start Jupyter Notebook or JupyterLab
+## Khởi động Jupyter Notebook or JupyterLab
 
-Start from terminal as usual:
+Bắt đầu từ terminal như thường lệ:
 
 ```bash
 jupyter lab
 ```
 
-Or, for the classic interface:
+Hoặc đối với giao diện truyền thống:
 
 ```bash
 jupyter notebook
 ```
 
 
-## Notebooks visualisation
+## Trực quan Notebooks
 
-*Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
+*Jupyter Notebooks* được sử dụng trong suốt bài giảng này để khám phá và trực quan hóa dữ liệu tương tác.
 
-We use dark styles for both *GitHub* and *Jupyter Notebook*.
-You should try to do the same, or they will look ugly.
-JupyterLab has a built-in selectable dark theme, so you only need to install something if you want to use the classic notebook interface.
-To see the content appropriately in the classic interface install the following:
+Chúng tôi sử dụng kiểu tối (dark style) cho cả *GitHub* và *Jypyter Notebooks*.
+Bạn nên cố gắng làm đều tương tự, nếu không chúng sẽ trong xấu.
+JupyterLab có thể chọn chủ đề tối (dark theme) được tích hợp sẵn, vì vậy bạn chỉ cần cài đặt thứ gì đó nếu muốn sử dụng giao diện Notebook truyền thống. Để xem nội dung phù hợp trong giao diện cổ điển, hãy cài đặt các bước sau:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
+ - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) và nhập khối mã `invert #fff to #181818'.
