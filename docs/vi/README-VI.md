@@ -41,17 +41,15 @@ Notebook này hiện đang được phát hành tại [trang web](https://atcold
 
 # Bắt đầu
 
-To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
-The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal.
+Để có thể làm theo các bài tập, bạn cần có máy tính xách tay được cài đặt Miniconda (phiên bản đơn giản của Anaconda) và một số gói thư viện của Python. Hướng dẫn sau đây dành cho những người dùng sử dụng Mac hoặc Ubuntu Linux, người dùng Window cần cài đặt và làm việc trong terminal [Git BASH](https://gitforwindows.org/).
 
+## Tải và cài đặt Miniconda
 
-## Download and install Miniconda
-
-Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Vui lòng truy cập [Anaconda website](https://conda.io/miniconda.html).
+Tải xuống và cài đặt *phiên bản mới nhất* Miniconda cho *Python* 3.7 tương ứng với hệ điều hành của bạn.
 
 ```bash
-wget <http:// link to miniconda>
+wget <http:// liên kết đến trang web Miniconda>
 sh <miniconda*.sh>
 ```
 
