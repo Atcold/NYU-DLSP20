@@ -34,10 +34,10 @@ Notebook này hiện đang được phát hành tại [trang web](https://atcold
 -->
 
 <!-- Vietnamese -->
-<!-- Các bạn có thể tìm thấy phiên bản Tiếng Việt của `README.md` [Vi](https://github.com/JohnsonNguyen1820/pytorch-Deep-Learning/blob/patch-1/docs/vi/README-VI.md) tại đây!
+<!-- Các bạn có thể tìm thấy phiên bản Tiếng Việt của 'README.md' [Vi](https://github.com/JohnsonNguyen1820/pytorch-Deep-Learning/blob/patch-1/docs/vi/README-VI.md) tại đây!
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - Vietnamse-->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md)
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) &nbsp; [Vi](https://github.com/JohnsonNguyen1820/pytorch-Deep-Learning/blob/patch-1/docs/vi/README-VI.md)
 
 
 # Bắt đầu
