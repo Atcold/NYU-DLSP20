@@ -7,7 +7,7 @@ lang: fa
 translation-date: 19 Sep 2020
 translator: Ali Abedi
 ---
-
+<div style='direction:rtl;'>
 **DS-GA 1008 · SPRING 2020 · [مرکز علوم داده نیویورک](http://cds.nyu.edu/)**
 
 | مدرسین | Yann LeCun & Alfredo Canziani |
@@ -18,12 +18,14 @@ translator: Ali Abedi
 
 
 ## توضیحات
+
 این دوره آخرین تکنیک‌های یادگیری عمیق و یادگیری ویژگی را با تمرکز بر یادگیری عمیق با ناظر و بدون ناظر، متدهای تعبیه شده، یادگیری معیارها، شبکه‌های عصبی کانولوشنی و بازگشتی با رویکردی در پیاده سازی بینایی ماشین، پردازش زبان‌های طبیعی و شناسایی صوت آموزش می‌دهد.
 پیش‌نیازهای این دوره: [DS-GA 1001 مقدمه علوم داده](https://cds.nyu.edu/academics/ms-curriculum/) یا یک دوره تخصصی یادگیری ماشین.
+
 ## دروس
 
-**راهنما**: 🖥 slides, 📓 Jupyter notebook, 🎥 فیلم یوتیوب.
-<table>
+**راهنما**: 🖥 اسلایدها, 📓 Jupyter notebook, 🎥 فیلم یوتیوب.
+<table style='direction:rtl;'>
 <!-- =============================== HEADER ================================ -->
   <thead>
     <tr>
@@ -306,3 +308,4 @@ translator: Ali Abedi
 |مصحح|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
 |مصحح|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
 |مصحح|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
+</div>
