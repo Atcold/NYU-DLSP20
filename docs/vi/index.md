@@ -16,7 +16,7 @@
       <td rowspan="1">Mặc định</td>
       <td rowspan="1"><a href="https://www.youtube.com/playlist?list=PLLHTzKZzVU9eaEyErdV26ikyolxOsz6mq">Học sâu với Pytorch</td>
       <td rowspan="1"><a href="https://twitter.com/alfcnz">Alfredo Canziani</td>
-      <td rowspan="1"><a href="/https:/twitter.com/NguynTnHuynh1">Huynh Nguyen</td>
+      <td rowspan="1"><a href="https://twitter.com/NguynTnHuynh1">Huynh Nguyen</td>
       <td rowspan="1">Tiếng Việt</td>
     </tr>
   </tbody>
