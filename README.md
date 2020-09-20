@@ -1,6 +1,6 @@
-# Deep Learning (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
-
-This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
+# (یادگیری عمیق(با پایتورچ [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
+&#x202b;
+این مخزن یک [وبسایت](https://atcold.github.io/pytorch-Deep-Learning/) به همراه خود دارد که تمام محتویات دوره در قالب متن و ویدیو در دسترس است.
 
 <!-- Mandarin -->
 <!--
@@ -38,16 +38,14 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 [🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md)
 
 
-# Getting started
+# شروع
+&#x202b;
+برای اینکه بتوانید تمرین ها را دنبال کنید به یک لپ تاپ با Miniconda (نسخه حداقلی Anaconda) نیاز دارید. راهنمایی که در ادامه می آید برای کاربران مک و اوبونتو کار می کند. کاربران ویندوز نیاز به نصب و اجرای دستورات در ترمینال [Git BASH](https://gitforwindows.org/)  دارند.
 
-To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
-The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal.
 
-
-## Download and install Miniconda
-
-Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+## Miniconda دانلود و نصب
+&#x202b;
+لطفا به وبسایت [Anaconda](https://conda.io/miniconda.html) بروید و آخرین نسخه Miniconda برای پایتون 3.7 مخصوص سیستم عامل خود را دانلود و سپس نصب کنید.
 
 ```bash
 wget <http:// link to miniconda>
@@ -55,18 +53,18 @@ sh <miniconda*.sh>
 ```
 
 
-## Check-out the git repository with the exercise
-
-Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
+## :بررسی مخزن گیت حاوی تمرین ها
+&#x202b;
+وقتی Miniconda آماده شد، مخزن این دوره را بررسی کنید و محیط کار را تنظیم کنید:
 
 ```bash
 git clone https://github.com/Atcold/pytorch-Deep-Learning
 ```
 
 
-## Create isolated Miniconda environment
-
-Change directory (`cd`) into the course folder, then type:
+## Miniconda ساخت محیط ایزوله 
+&#x202b;
+مسیر جاری را به پوشه این دوره تغییر دهید و سپس تایپ کنید:
 
 ```bash
 # cd pytorch-Deep-Learning
@@ -75,15 +73,15 @@ source activate pDL
 ```
 
 
-## Start Jupyter Notebook or JupyterLab
-
-Start from terminal as usual:
+## جوپیتر نوت بوک یا جوپیترلب را اجرا کنید
+&#x202b;
+به طور معمول از ترمینال اجرا کنید:
 
 ```bash
 jupyter lab
 ```
-
-Or, for the classic interface:
+&#x202b;
+یا برای رابط کلاسیک:
 
 ```bash
 jupyter notebook
@@ -91,13 +89,12 @@ jupyter notebook
 
 
 ## Notebooks visualisation
+&#x202b;
+جوپیتر نوت بوک ها در طول ارائه ها برای اکتشاف و مصور سازی داده ها به صورت تعاملی استفاده می شوند.
 
-*Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
+&#x202b;
+ما از استایل تیره برای گیت هاب و جوپیتر نوت بوک استفاده می کنیم. پیشنهاد می شود شما نیز همین کار را انجام دهید تا ظاهر مناسبی را تجربه کنید. جوپیترلب همراه خود تم تیره دارد، بنابراین تنها در صورتی که مایل هستید از رابط نوت بوک کلاسیک استفاده کنید باید چیز دیگری نصب کنید. برای مشاهده مناسب محتویات در رابط کلاسیک موارد زیر را نصب کنید:
 
-We use dark styles for both *GitHub* and *Jupyter Notebook*.
-You should try to do the same, or they will look ugly.
-JupyterLab has a built-in selectable dark theme, so you only need to install something if you want to use the classic notebook interface.
-To see the content appropriately in the classic interface install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
+ - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) را کامنت کنید `invert #fff to #181818` کد.
