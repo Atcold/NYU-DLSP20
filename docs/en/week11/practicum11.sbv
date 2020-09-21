@@ -1,0 +1,5370 @@
+0:00:00.319,0:00:07.080
+okay so let's get started with today
+
+0:00:03.689,0:00:12.030
+lesson and let's see what Yan likes to
+
+0:00:07.080,0:00:13.349
+do research on alright so today we're
+
+0:00:12.030,0:00:15.570
+going to be talking about model
+
+0:00:13.349,0:00:18.180
+predictive policy learning with
+
+0:00:15.570,0:00:21.900
+uncertainty regularization for driving
+
+0:00:18.180,0:00:24.420
+in dense traffic what a mouthful the
+
+0:00:21.900,0:00:25.920
+nice part is that in roughly 50 minutes
+
+0:00:24.420,0:00:28.289
+you're going to be able to understand
+
+0:00:25.920,0:00:31.560
+every word in this title and you
+
+0:00:28.289,0:00:33.149
+actually should be able to even be ready
+
+0:00:31.560,0:00:35.610
+to implement this because we basically
+
+0:00:33.149,0:00:37.620
+know all the basic components that we
+
+0:00:35.610,0:00:40.649
+have cover so far and so this is just
+
+0:00:37.620,0:00:42.809
+you know put together something but how
+
+0:00:40.649,0:00:45.450
+perhaps not in a trivial way but but I
+
+0:00:42.809,0:00:48.539
+don't think it's too crazy so this is
+
+0:00:45.450,0:00:53.550
+work done by my friend and colleague me
+
+0:00:48.539,0:00:57.379
+Kyle enough myself and then Yong here at
+
+0:00:53.550,0:01:01.230
+grant a few years back I think it was
+
+0:00:57.379,0:01:05.059
+2019 so last year I think oh maybe the
+
+0:01:01.230,0:01:05.059
+year before I don't know all right
+
+0:01:10.140,0:01:15.330
+so let's see how you can learn how to
+
+0:01:12.930,0:01:18.060
+drive the model free reinforcement
+
+0:01:15.330,0:01:21.960
+learning way right so pay attention to
+
+0:01:18.060,0:01:24.150
+the car here in in the back this display
+
+0:01:21.960,0:01:26.490
+guy so let's say I'd like to train this
+
+0:01:24.150,0:01:28.860
+this guy with model free reinforcement
+
+0:01:26.490,0:01:32.540
+learning so how would you go about that
+
+0:01:28.860,0:01:32.540
+so you would have to try
+
+0:01:32.840,0:01:41.359
+um to do things that are maybe not good
+
+0:01:38.270,0:01:43.719
+and then if you hear uh shouldn't do
+
+0:01:41.359,0:01:47.359
+those things right because it's not good
+
+0:01:43.719,0:01:49.280
+and so you have to die a few times right
+
+0:01:47.359,0:01:52.340
+before actually learning not to die but
+
+0:01:49.280,0:01:53.899
+that's arguably not the way you learn
+
+0:01:52.340,0:01:58.009
+how to drive right especially if you're
+
+0:01:53.899,0:01:59.840
+driving your your parents car and you
+
+0:01:58.009,0:02:02.060
+don't really want to crash your parents
+
+0:01:59.840,0:02:05.060
+car before learning how to not crash
+
+0:02:02.060,0:02:08.630
+your parents car right so let's figure
+
+0:02:05.060,0:02:11.090
+out a more principled way to learn how
+
+0:02:08.630,0:02:12.739
+to drive a car right so I would argue
+
+0:02:11.090,0:02:15.470
+here and this is just you know my
+
+0:02:12.739,0:02:17.150
+intuition is that if you if you have a
+
+0:02:15.470,0:02:19.069
+car now you're driving a hundred
+
+0:02:17.150,0:02:24.290
+kilometers per hour which is like thirty
+
+0:02:19.069,0:02:27.920
+meters per second if you look 30 meters
+
+0:02:24.290,0:02:33.769
+in front of you that will mean that you
+
+0:02:27.920,0:02:36.110
+look one second in the future right and
+
+0:02:33.769,0:02:38.389
+therefore you can see that you know the
+
+0:02:36.110,0:02:40.940
+road center turns slightly to the left
+
+0:02:38.389,0:02:42.799
+in one second in the future therefore I
+
+0:02:40.940,0:02:45.319
+would like to change the steering wheel
+
+0:02:42.799,0:02:47.540
+right now such that in one second I will
+
+0:02:45.319,0:02:49.730
+be you know following the ended
+
+0:02:47.540,0:02:52.849
+trajectory and where the street takes me
+
+0:02:49.730,0:02:55.849
+to okay so here I'm just trying to you
+
+0:02:52.849,0:02:57.799
+know push forward the idea that we need
+
+0:02:55.849,0:03:02.230
+to look in the future in order to be
+
+0:02:57.799,0:03:05.780
+able to make you know some sort of nice
+
+0:03:02.230,0:03:09.380
+like you know plan of action right so
+
+0:03:05.780,0:03:11.540
+you'd like to figure out that if
+
+0:03:09.380,0:03:13.400
+something is not good you may not want
+
+0:03:11.540,0:03:21.739
+to do it so it's that you don't get into
+
+0:03:13.400,0:03:26.720
+trouble so but hmm was the main problem
+
+0:03:21.739,0:03:29.720
+here others other people are problem
+
+0:03:26.720,0:03:31.579
+right so here you have that you know the
+
+0:03:29.720,0:03:36.169
+eCos around you are quite not
+
+0:03:31.579,0:03:38.959
+deterministic therefore it might be
+
+0:03:36.169,0:03:41.620
+slightly hard to take an account every
+
+0:03:38.959,0:03:44.860
+possible thing that might happen right
+
+0:03:41.620,0:03:48.040
+so let me give you like an introduction
+
+0:03:44.860,0:03:50.440
+here or a small recap of the what are
+
+0:03:48.040,0:03:53.050
+the main components in this system here
+
+0:03:50.440,0:03:56.080
+so we have a agent here represented by
+
+0:03:53.050,0:04:01.030
+this pink brain which gets as input a
+
+0:03:56.080,0:04:03.250
+state s T and produces in action is an
+
+0:04:01.030,0:04:06.190
+output which is a T which is for example
+
+0:04:03.250,0:04:11.080
+my steering control and my acceleration
+
+0:04:06.190,0:04:13.810
+or braking signal moreover I observe a
+
+0:04:11.080,0:04:16.269
+cost which is you know a consequence of
+
+0:04:13.810,0:04:19.780
+taking a specific action a given that I
+
+0:04:16.269,0:04:23.020
+find myself in state s T ok so if I
+
+0:04:19.780,0:04:25.000
+should be okay let me see there are chat
+
+0:04:23.020,0:04:29.020
+messages here let me see what's going on
+
+0:04:25.000,0:04:30.720
+okay people are laughing cool alright on
+
+0:04:29.020,0:04:34.060
+the other side you had the real world
+
+0:04:30.720,0:04:36.789
+the real world given a internal state
+
+0:04:34.060,0:04:39.100
+you get a new action and then you
+
+0:04:36.789,0:04:40.720
+produce the new state ok and also you
+
+0:04:39.100,0:04:42.970
+produce what is the result this
+
+0:04:40.720,0:04:45.430
+consequence city to provide to your
+
+0:04:42.970,0:04:47.530
+agent and so this is how you know how
+
+0:04:45.430,0:04:49.870
+you can have like a network interacting
+
+0:04:47.530,0:04:52.270
+with a real world you take actions given
+
+0:04:49.870,0:04:54.160
+a specific state and the word give you
+
+0:04:52.270,0:04:58.930
+gives you the next state and the next
+
+0:04:54.160,0:05:00.570
+consequence so this is model free
+
+0:04:58.930,0:05:03.160
+because you interact with the real world
+
+0:05:00.570,0:05:06.729
+but then the nice part is that you can
+
+0:05:03.160,0:05:08.349
+do interaction with the model of the
+
+0:05:06.729,0:05:11.289
+world okay so under on the left hand
+
+0:05:08.349,0:05:13.630
+side instead of trying things in the
+
+0:05:11.289,0:05:15.490
+real world and you know try to cook and
+
+0:05:13.630,0:05:18.250
+you burn something and then that's not
+
+0:05:15.490,0:05:21.400
+good you burnt also your hand burn my
+
+0:05:18.250,0:05:25.120
+arm nasty making cookies maybe you would
+
+0:05:21.400,0:05:27.789
+like to try in your mind first how can I
+
+0:05:25.120,0:05:30.010
+make cookies without getting burnt maybe
+
+0:05:27.789,0:05:32.410
+don't touch the oven with your hands
+
+0:05:30.010,0:05:37.750
+right that would be very
+
+0:05:32.410,0:05:40.960
+smart option right all right so how how
+
+0:05:37.750,0:05:43.120
+can we get how can we think right how
+
+0:05:40.960,0:05:47.110
+can we ponder how can we make this kind
+
+0:05:43.120,0:05:50.740
+of interaction between my actions and
+
+0:05:47.110,0:05:52.330
+the expected consequences you know of
+
+0:05:50.740,0:05:54.550
+taking a specific action with actually
+
+0:05:52.330,0:05:57.400
+without actually taking the action right
+
+0:05:54.550,0:06:00.640
+so how can I avoid to burn myself again
+
+0:05:57.400,0:06:02.320
+tonight while baking without actually
+
+0:06:00.640,0:06:02.890
+getting burned right so you want to
+
+0:06:02.320,0:06:08.170
+think ahead
+
+0:06:02.890,0:06:10.290
+don't touch what's hot hmm okay all
+
+0:06:08.170,0:06:12.700
+right so how do we train this word model
+
+0:06:10.290,0:06:15.910
+the same way we trained it last week
+
+0:06:12.700,0:06:18.760
+right so we start with initial state we
+
+0:06:15.910,0:06:20.380
+provide some you know action which was
+
+0:06:18.760,0:06:22.990
+random last week and this week instead
+
+0:06:20.380,0:06:25.720
+is not for example the action here might
+
+0:06:22.990,0:06:29.140
+be the action taken by some expert that
+
+0:06:25.720,0:06:32.470
+we observed like mom cooking for you of
+
+0:06:29.140,0:06:34.120
+dead don't know and you can see what is
+
+0:06:32.470,0:06:36.190
+the the current state and then you can
+
+0:06:34.120,0:06:39.970
+have the next state dinner is ready
+
+0:06:36.190,0:06:42.700
+mmm I'm gonna gray I'm actually hungry
+
+0:06:39.970,0:06:45.670
+p.m. all right more or you also had the
+
+0:06:42.700,0:06:48.790
+consequence 15 they're going to be you
+
+0:06:45.670,0:06:51.310
+know your mouth is watering anyhow
+
+0:06:48.790,0:06:53.290
+you're gonna be providing now like a
+
+0:06:51.310,0:06:55.330
+distance between this state that are
+
+0:06:53.290,0:06:58.630
+observed in the real world in the state
+
+0:06:55.330,0:07:00.220
+that are provided to you by the model of
+
+0:06:58.630,0:07:02.470
+the world and then you have an MSc loss
+
+0:07:00.220,0:07:04.060
+right so that's just regression so you
+
+0:07:02.470,0:07:06.610
+try to regress what is the next state
+
+0:07:04.060,0:07:09.190
+given that you start from the initial
+
+0:07:06.610,0:07:13.240
+same state and you provide like specific
+
+0:07:09.190,0:07:15.040
+action okay so far this is something we
+
+0:07:13.240,0:07:18.730
+already seen last week just give you an
+
+0:07:15.040,0:07:21.790
+overview again right all right keep coin
+
+0:07:18.730,0:07:25.570
+if you don't complain so let's figure
+
+0:07:21.790,0:07:28.270
+out here what we can do for example in
+
+0:07:25.570,0:07:32.020
+my case in this case I don't have my
+
+0:07:28.270,0:07:34.390
+model out putting a cost or I don't have
+
+0:07:32.020,0:07:39.910
+the word out put in a cost and more
+
+0:07:34.390,0:07:42.820
+specifically I have that in my case
+
+0:07:39.910,0:07:46.060
+I will have my brain here my agent that
+
+0:07:42.820,0:07:49.690
+again takes a state and provides an
+
+0:07:46.060,0:07:52.870
+action which is feeding this model and
+
+0:07:49.690,0:07:55.360
+then I have my cost is going to be a
+
+0:07:52.870,0:07:58.570
+differentiable function of the state
+
+0:07:55.360,0:08:00.760
+okay which is exactly what we had seen
+
+0:07:58.570,0:08:02.380
+last week right with the final you know
+
+0:08:00.760,0:08:04.720
+destination to be you know the specific
+
+0:08:02.380,0:08:07.000
+thing that you gramm run back
+
+0:08:04.720,0:08:08.110
+propagation through time and back
+
+0:08:07.000,0:08:10.180
+propagation through time would be
+
+0:08:08.110,0:08:12.760
+unrolling this loop right so you go
+
+0:08:10.180,0:08:18.490
+forward you go like that and then you do
+
+0:08:12.760,0:08:20.560
+a back problem okay all right cool so
+
+0:08:18.490,0:08:22.570
+let me introduce to you right now the
+
+0:08:20.560,0:08:26.500
+data set right so far littles you know
+
+0:08:22.570,0:08:28.570
+just like setting up the problem so here
+
+0:08:26.500,0:08:31.720
+it's my actual real case scenario I have
+
+0:08:28.570,0:08:34.660
+six cameras seven cameras mounted on it
+
+0:08:31.720,0:08:39.940
+on the top of a 30-story building facing
+
+0:08:34.660,0:08:42.280
+the i-80 interstate segment on the of
+
+0:08:39.940,0:08:44.980
+the highway array and so here I have
+
+0:08:42.280,0:08:46.270
+these cameras recording these cars first
+
+0:08:44.980,0:08:48.340
+part is going to be fixing the
+
+0:08:46.270,0:08:50.410
+perspective right such that I can have
+
+0:08:48.340,0:08:53.500
+like a hovering view where I cat op down
+
+0:08:50.410,0:08:55.780
+view moreover here we extract some
+
+0:08:53.500,0:08:57.940
+bounding boxes for each baked-on right
+
+0:08:55.780,0:08:59.740
+so there is detection there is
+
+0:08:57.940,0:09:01.480
+regression of the you know well
+
+0:08:59.740,0:09:03.160
+detection and figuring out the size of
+
+0:09:01.480,0:09:04.960
+this bounding boxes and then there is
+
+0:09:03.160,0:09:08.080
+tracking because these bounding boxes
+
+0:09:04.960,0:09:10.210
+are following my cars and so you can see
+
+0:09:08.080,0:09:13.840
+here the red track on the left hand side
+
+0:09:10.210,0:09:17.530
+or you can see like the the red pickup
+
+0:09:13.840,0:09:19.570
+car a pickup truck that is you know from
+
+0:09:17.530,0:09:23.290
+both views or from the top camera down
+
+0:09:19.570,0:09:26.050
+to one single view here I can input
+
+0:09:23.290,0:09:31.140
+these cars into my you know Python
+
+0:09:26.050,0:09:34.840
+program item game emulator game engine
+
+0:09:31.140,0:09:36.340
+and I can draw this representation in
+
+0:09:34.840,0:09:39.790
+this case you can still see the red
+
+0:09:36.340,0:09:41.980
+tractor the pickup pickup pickup truck
+
+0:09:39.790,0:09:45.400
+and then on the bus on the right hand
+
+0:09:41.980,0:09:48.460
+side so here for every each and every
+
+0:09:45.400,0:09:50.950
+vehicle the blue the cyan one I have two
+
+0:09:48.460,0:09:53.320
+vectors the vector PT which is
+
+0:09:50.950,0:09:53.860
+representing the position of the vehicle
+
+0:09:53.320,0:09:56.350
+the
+
+0:09:53.860,0:09:58.779
+we are part VT which is the velocity
+
+0:09:56.350,0:10:02.589
+which is you know vector representing
+
+0:09:58.779,0:10:06.130
+the VX and V Y component and then
+
+0:10:02.589,0:10:08.470
+moreover I given that I know what is the
+
+0:10:06.130,0:10:11.709
+kinematics of driving a car or a bicycle
+
+0:10:08.470,0:10:14.170
+I can invert the kinematics of these
+
+0:10:11.709,0:10:17.470
+cars that have been driven by you know
+
+0:10:14.170,0:10:20.769
+experts and I can figure out what the
+
+0:10:17.470,0:10:23.829
+actions are that you know what the
+
+0:10:20.769,0:10:26.800
+actions of the driver are in the sense
+
+0:10:23.829,0:10:30.130
+that if the car moves with a rectilinear
+
+0:10:26.800,0:10:32.950
+uniform motion you have no action right
+
+0:10:30.130,0:10:36.370
+so if you don't apply any acceleration
+
+0:10:32.950,0:10:39.010
+which is longitudinal or transverse you
+
+0:10:36.370,0:10:40.570
+have you know the car keeps going so if
+
+0:10:39.010,0:10:43.290
+you have a rectilinear uniform motion
+
+0:10:40.570,0:10:46.510
+there is no action every time you try to
+
+0:10:43.290,0:10:48.459
+diverge from this you know motion for
+
+0:10:46.510,0:10:52.089
+example to accelerate you break or you
+
+0:10:48.459,0:10:54.870
+steer then you have some basically you
+
+0:10:52.089,0:10:57.310
+know action involved right you can
+
+0:10:54.870,0:11:02.079
+invert the kinematic model in order to
+
+0:10:57.310,0:11:04.180
+figure out what the action is cool so
+
+0:11:02.079,0:11:06.089
+here again in this representation which
+
+0:11:04.180,0:11:08.529
+is the thing that I call machine
+
+0:11:06.089,0:11:11.620
+representation I have again the same
+
+0:11:08.529,0:11:14.350
+vehicle there the other pickup car and
+
+0:11:11.620,0:11:17.920
+one on the right hand side so in this
+
+0:11:14.350,0:11:20.620
+case each vehicle here has a bounding
+
+0:11:17.920,0:11:24.220
+box which is representing my viewable
+
+0:11:20.620,0:11:27.670
+area so each car can only view that kind
+
+0:11:24.220,0:11:30.190
+of box around itself and so for example
+
+0:11:27.670,0:11:32.980
+here I can extract the first box where
+
+0:11:30.190,0:11:35.470
+April replace myself in the centre and I
+
+0:11:32.980,0:11:39.190
+movie I move myself to the blue channel
+
+0:11:35.470,0:11:42.220
+again such that i'ma I'm not like I make
+
+0:11:39.190,0:11:44.290
+myself different from the others and the
+
+0:11:42.220,0:11:45.430
+red lane the red channel represents the
+
+0:11:44.290,0:11:48.970
+lane and the green channel represents
+
+0:11:45.430,0:11:51.579
+the others wake on other vehicles you
+
+0:11:48.970,0:11:57.370
+have the other guy here this one here
+
+0:11:51.579,0:11:59.649
+that one and the last one okay and here
+
+0:11:57.370,0:12:01.990
+you can see again the pickup pickup
+
+0:11:59.649,0:12:04.899
+truck there the red one and then here
+
+0:12:01.990,0:12:07.640
+you have a piece of the bus so these are
+
+0:12:04.899,0:12:08.660
+my images I T or
+
+0:12:07.640,0:12:11.390
+serve Asians right these are
+
+0:12:08.660,0:12:13.880
+representing two things the state of the
+
+0:12:11.390,0:12:14.840
+lanes of the street basically and the
+
+0:12:13.880,0:12:16.850
+second part is going to be they
+
+0:12:14.840,0:12:18.580
+represent the traffic situation
+
+0:12:16.850,0:12:24.020
+surrounding me
+
+0:12:18.580,0:12:26.780
+so overall the set of PT the position
+
+0:12:24.020,0:12:30.830
+within the velocity and I team this
+
+0:12:26.780,0:12:33.980
+observation represent my state s T so as
+
+0:12:30.830,0:12:37.310
+T represents the current state at a
+
+0:12:33.980,0:12:41.210
+specific time T right for my given
+
+0:12:37.310,0:12:44.690
+vehicle so far any question how is it
+
+0:12:41.210,0:12:46.760
+clear I mean we already seen basically
+
+0:12:44.690,0:12:48.860
+everything so far last week and I just
+
+0:12:46.760,0:12:50.330
+gave you like an overview about the
+
+0:12:48.860,0:12:53.750
+specific data sets so there are no new
+
+0:12:50.330,0:12:59.000
+concept so far so it should be clear
+
+0:12:53.750,0:12:59.570
+right yeah no okay you're very quiet
+
+0:12:59.000,0:13:04.460
+today
+
+0:12:59.570,0:13:07.490
+maybe it's my audio on okay you're not
+
+0:13:04.460,0:13:10.130
+texting so I expect you to be okay yes
+
+0:13:07.490,0:13:13.130
+it's clear okay thank you all right cool
+
+0:13:10.130,0:13:15.050
+so the cost right so we define before we
+
+0:13:13.130,0:13:18.800
+said before that my cost is going to be
+
+0:13:15.050,0:13:20.840
+a function of my state so let's see how
+
+0:13:18.800,0:13:23.120
+I compute this cost there are two
+
+0:13:20.840,0:13:25.490
+different costs there is a lane cost
+
+0:13:23.120,0:13:30.110
+that is basically telling me whether I
+
+0:13:25.490,0:13:33.800
+am on the lane like within the lane on
+
+0:13:30.110,0:13:36.230
+like inside the lane or I am going off
+
+0:13:33.800,0:13:38.570
+lane off road and the other one is going
+
+0:13:36.230,0:13:41.480
+to be a cost that is gonna be telling me
+
+0:13:38.570,0:13:44.240
+how close I am to other vehicles so the
+
+0:13:41.480,0:13:46.880
+first one it looks like this on my
+
+0:13:44.240,0:13:49.310
+y-axis so the x-axis the direction of
+
+0:13:46.880,0:13:52.760
+motion y-axis is gonna be the one that
+
+0:13:49.310,0:13:55.640
+is you know 90 degrees to the left in
+
+0:13:52.760,0:13:57.680
+their form you can think about having a
+
+0:13:55.640,0:14:00.620
+potential it is like a house on top of
+
+0:13:57.680,0:14:03.500
+you if you overlay this with the red
+
+0:14:00.620,0:14:06.380
+channel there is some intersection on
+
+0:14:03.500,0:14:08.570
+the left hand side this intersection the
+
+0:14:06.380,0:14:10.760
+height of that intersection will go to
+
+0:14:08.570,0:14:13.520
+zero if you are exactly in the center of
+
+0:14:10.760,0:14:15.260
+the two lanes if you are shifted the
+
+0:14:13.520,0:14:18.050
+words one side you're gonna get you know
+
+0:14:15.260,0:14:19.820
+some nonzero intersection and if you're
+
+0:14:18.050,0:14:21.040
+exactly on top of the lane you get is
+
+0:14:19.820,0:14:23.050
+actually the
+
+0:14:21.040,0:14:26.980
+on the on the on the top of this
+
+0:14:23.050,0:14:28.480
+triangle right on the other side you
+
+0:14:26.980,0:14:30.699
+have the proximity cost so I have
+
+0:14:28.480,0:14:32.800
+exactly the same but for the other
+
+0:14:30.699,0:14:35.880
+vehicles night so in this case I have
+
+0:14:32.800,0:14:39.069
+one longitudinal sorry transverse
+
+0:14:35.880,0:14:43.509
+potential I have one longitudinal
+
+0:14:39.069,0:14:46.540
+potential which is changing the length
+
+0:14:43.509,0:14:48.790
+with the speed so the faster I go and
+
+0:14:46.540,0:14:51.490
+the more I would like to look ahead and
+
+0:14:48.790,0:14:54.550
+behind in this case in in the slower I
+
+0:14:51.490,0:14:56.350
+go I can you know I don't really care so
+
+0:14:54.550,0:14:58.720
+much about things that too far I just
+
+0:14:56.350,0:15:01.930
+look close to myself so we could plug
+
+0:14:58.720,0:15:03.250
+these two things in my environment you
+
+0:15:01.930,0:15:05.680
+can see now that there is an
+
+0:15:03.250,0:15:08.860
+intersection for example here that is
+
+0:15:05.680,0:15:11.050
+pretty high for the purple because we
+
+0:15:08.860,0:15:13.930
+are exactly in front of in front of us
+
+0:15:11.050,0:15:15.990
+but then the orange is quite low because
+
+0:15:13.930,0:15:19.000
+it's you know further away in the front
+
+0:15:15.990,0:15:21.790
+so you can simply do the multiplication
+
+0:15:19.000,0:15:26.740
+of the two you can get what is my
+
+0:15:21.790,0:15:31.149
+current proximity cost okay so how does
+
+0:15:26.740,0:15:32.980
+this look right now I can show you for
+
+0:15:31.149,0:15:35.050
+example for a situation where we go at
+
+0:15:32.980,0:15:36.610
+20 kilometers per hour you have all
+
+0:15:35.050,0:15:38.290
+these vehicles are very close to each
+
+0:15:36.610,0:15:40.209
+other and then if you go at 50
+
+0:15:38.290,0:15:42.430
+kilometers per hour you know on average
+
+0:15:40.209,0:15:44.980
+every one is a bit further away so if
+
+0:15:42.430,0:15:47.050
+you multiply that potential that is in
+
+0:15:44.980,0:15:49.870
+the Y and the other one that was in the
+
+0:15:47.050,0:15:53.410
+X you get something that looks like this
+
+0:15:49.870,0:15:55.060
+okay and in the case that we go at a
+
+0:15:53.410,0:15:56.829
+higher speed you cannot get something
+
+0:15:55.060,0:15:58.839
+like this because I gain the extension
+
+0:15:56.829,0:16:02.050
+in the X direction depends on the speed
+
+0:15:58.839,0:16:05.230
+and you can tell like that is the right
+
+0:16:02.050,0:16:10.120
+one is further far reaching front and
+
+0:16:05.230,0:16:13.480
+back cool so how do we get this final
+
+0:16:10.120,0:16:16.360
+cost well my final cost right now at
+
+0:16:13.480,0:16:19.060
+least as we what we establish this paper
+
+0:16:16.360,0:16:21.939
+we just multiplied this potential mask
+
+0:16:19.060,0:16:24.130
+with the green channel and then we pick
+
+0:16:21.939,0:16:27.189
+the max basically we figure out which
+
+0:16:24.130,0:16:29.889
+one is the closest car or close the same
+
+0:16:27.189,0:16:33.310
+the the part closest to us belongs to
+
+0:16:29.889,0:16:34.960
+some other object and so if you multiply
+
+0:16:33.310,0:16:37.210
+element wise multiply
+
+0:16:34.960,0:16:39.880
+these two guys and then you take the max
+
+0:16:37.210,0:16:41.980
+you get a number and the cool part is
+
+0:16:39.880,0:16:45.520
+that differentiable right so now you can
+
+0:16:41.980,0:16:47.710
+run gradients through on the network
+
+0:16:45.520,0:16:51.400
+such that you know you can compute some
+
+0:16:47.710,0:16:53.560
+actions such that that value overall is
+
+0:16:51.400,0:16:59.020
+going to be reduced and it goes to zero
+
+0:16:53.560,0:17:01.150
+such that you avoid collisions all right
+
+0:16:59.020,0:17:04.270
+so let me give you now the outline of
+
+0:17:01.150,0:17:07.180
+the talk of the lesson for today so
+
+0:17:04.270,0:17:09.520
+first we said we had to learn how to
+
+0:17:07.180,0:17:11.589
+mimic the word rain so that was pretty
+
+0:17:09.520,0:17:15.040
+abstract so far now we can start getting
+
+0:17:11.589,0:17:17.740
+concrete you know tools and information
+
+0:17:15.040,0:17:20.500
+so first we want to learn and mimic the
+
+0:17:17.740,0:17:23.110
+real world second part we'd like to use
+
+0:17:20.500,0:17:27.220
+the you know the learned model of the
+
+0:17:23.110,0:17:30.760
+environment in order to train this agent
+
+0:17:27.220,0:17:34.030
+by you know making thinking how to drive
+
+0:17:30.760,0:17:36.580
+so first you learn how other vehicles
+
+0:17:34.030,0:17:38.710
+behave in the real world second part
+
+0:17:36.580,0:17:41.110
+given that you have an understanding of
+
+0:17:38.710,0:17:43.540
+how other people interact you try to
+
+0:17:41.110,0:17:46.150
+think what would happen if I you know
+
+0:17:43.540,0:17:49.810
+perform such an such action in this in
+
+0:17:46.150,0:17:53.260
+this condition finally we can figure out
+
+0:17:49.810,0:17:55.690
+what is a nice way to evaluate a
+
+0:17:53.260,0:17:57.880
+possible way to evaluate this policy
+
+0:17:55.690,0:18:00.970
+back in the real world right so once
+
+0:17:57.880,0:18:06.130
+you've thought how to drive let's figure
+
+0:18:00.970,0:18:07.690
+out whether you can drive cool so let's
+
+0:18:06.130,0:18:10.450
+get started with the first part the
+
+0:18:07.690,0:18:14.680
+world model predicting what's next given
+
+0:18:10.450,0:18:16.690
+history and action so this is gonna be
+
+0:18:14.680,0:18:18.760
+something that you already had seen a
+
+0:18:16.690,0:18:22.600
+few lessons back but let me give you
+
+0:18:18.760,0:18:26.310
+again like a full picture here so we
+
+0:18:22.600,0:18:29.140
+have a world model which is fed with my
+
+0:18:26.310,0:18:32.020
+s1 to T which is a sequence of States
+
+0:18:29.140,0:18:34.660
+and each state represent is represented
+
+0:18:32.020,0:18:37.780
+by a position vector P T a velocity
+
+0:18:34.660,0:18:40.600
+vector in V T and these context images I
+
+0:18:37.780,0:18:42.850
+T these observations so this is a set of
+
+0:18:40.600,0:18:45.340
+things of course as you can tell you
+
+0:18:42.850,0:18:47.860
+will have different you know in
+
+0:18:45.340,0:18:48.490
+different input branches in your net
+
+0:18:47.860,0:18:50.710
+right because
+
+0:18:48.490,0:18:52.179
+there are different kind of data one is
+
+0:18:50.710,0:18:53.559
+you know four-dimensional vector the
+
+0:18:52.179,0:18:56.350
+other is an image you'd like to use a
+
+0:18:53.559,0:19:00.820
+convolutional net moreover this word
+
+0:18:56.350,0:19:03.790
+modern gets an action and the word model
+
+0:19:00.820,0:19:06.220
+will produce a prediction for the next
+
+0:19:03.790,0:19:08.530
+action on the other side you had the
+
+0:19:06.220,0:19:10.780
+real word which is telling you well
+
+0:19:08.530,0:19:14.170
+these happen instead okay so that's a
+
+0:19:10.780,0:19:15.970
+target okay so how do we train this
+
+0:19:14.170,0:19:18.809
+stuff as we said it's just a regression
+
+0:19:15.970,0:19:22.840
+problem so we just train with MSE right
+
+0:19:18.809,0:19:25.720
+so we have my state like a sequence of
+
+0:19:22.840,0:19:29.350
+state an action we provide this to this
+
+0:19:25.720,0:19:31.660
+predictor module the predictor gives me
+
+0:19:29.350,0:19:36.550
+some kind of hidden representation of
+
+0:19:31.660,0:19:38.470
+the you know of whatever future then I
+
+0:19:36.550,0:19:40.450
+have a decoder which is decoding this
+
+0:19:38.470,0:19:42.760
+hidden representation of the future and
+
+0:19:40.450,0:19:45.360
+this one this one should give me a
+
+0:19:42.760,0:19:47.350
+prediction right so this is pretty
+
+0:19:45.360,0:19:49.960
+straightforward right you have a
+
+0:19:47.350,0:19:51.550
+predictor that predicts the past into
+
+0:19:49.960,0:19:53.559
+the hidden representation of the future
+
+0:19:51.550,0:19:55.480
+they have a decoder which is decoding
+
+0:19:53.559,0:20:00.700
+the hidden representation of the future
+
+0:19:55.480,0:20:03.400
+into the actual future so we have a
+
+0:20:00.700,0:20:05.200
+target on the other side so all you need
+
+0:20:03.400,0:20:07.840
+to do is going to be having this tool
+
+0:20:05.200,0:20:12.010
+going inside an MSc then you minimize
+
+0:20:07.840,0:20:15.850
+the MSE by training these two modules so
+
+0:20:12.010,0:20:19.380
+does it work what's the action here so
+
+0:20:15.850,0:20:22.210
+the action here is for example the
+
+0:20:19.380,0:20:25.059
+acceleration and the steering steering
+
+0:20:22.210,0:20:28.240
+command that the we have observed in our
+
+0:20:25.059,0:20:30.730
+data set right so my state's s1 to t are
+
+0:20:28.240,0:20:32.980
+a sequence of you know observations of
+
+0:20:30.730,0:20:35.530
+position velocities and context images
+
+0:20:32.980,0:20:38.410
+in the action are the action taken by
+
+0:20:35.530,0:20:43.030
+the driver that I obtained by inverting
+
+0:20:38.410,0:20:46.840
+the kinematic model of the car PT is the
+
+0:20:43.030,0:20:48.670
+position of the car and VT is the
+
+0:20:46.840,0:20:52.000
+velocity of the car so a position
+
+0:20:48.670,0:20:57.190
+velocity in the 80 is the acceleration
+
+0:20:52.000,0:21:00.669
+right so PT x and y position VT x and y
+
+0:20:57.190,0:21:05.440
+velocity 80 x and y
+
+0:21:00.669,0:21:08.200
+acceleration basically is it preferred
+
+0:21:05.440,0:21:11.289
+to add the decoder instead simply using
+
+0:21:08.200,0:21:14.980
+a predictor to improve the accuracy so
+
+0:21:11.289,0:21:19.480
+the predictor predicts what's gonna be
+
+0:21:14.980,0:21:21.820
+the hidden state of the future okay so
+
+0:21:19.480,0:21:24.190
+the predictor gets the past and compress
+
+0:21:21.820,0:21:27.220
+it and tries to give you what is the
+
+0:21:24.190,0:21:29.169
+future you know the future hidden
+
+0:21:27.220,0:21:31.419
+representation then you have this code
+
+0:21:29.169,0:21:33.340
+you'd like to decode it right this is
+
+0:21:31.419,0:21:38.789
+just you know one neural net but we'd
+
+0:21:33.340,0:21:43.779
+like to separate those into blocks okay
+
+0:21:38.789,0:21:46.269
+so the action at eighty is calculated
+
+0:21:43.779,0:21:48.789
+from st plus one
+
+0:21:46.269,0:21:51.039
+yeah so these actions are the ground
+
+0:21:48.789,0:21:53.710
+truth action coming from the yeah from
+
+0:21:51.039,0:21:57.639
+the ground truth thanks how do we
+
+0:21:53.710,0:21:58.619
+calculate st we don't how do we get
+
+0:21:57.639,0:22:01.629
+actual sto
+
+0:21:58.619,0:22:05.200
+the actual str i show you before right
+
+0:22:01.629,0:22:07.840
+the the camera are checking the the cars
+
+0:22:05.200,0:22:10.029
+going on the highway i get the bounding
+
+0:22:07.840,0:22:12.239
+boxes i track the bounding boxes and
+
+0:22:10.029,0:22:16.450
+therefore i have all those you know
+
+0:22:12.239,0:22:20.830
+positions x and y's over time and then
+
+0:22:16.450,0:22:22.659
+those are DX the PT positions you can
+
+0:22:20.830,0:22:25.690
+also compute the velocity right you know
+
+0:22:22.659,0:22:27.879
+position time t plus 1 minus position at
+
+0:22:25.690,0:22:30.309
+times T divided by time you have the
+
+0:22:27.879,0:22:33.759
+velocity wait I'm still a little
+
+0:22:30.309,0:22:36.399
+confused on the role of the decoder is
+
+0:22:33.759,0:22:38.230
+it just converting the vector
+
+0:22:36.399,0:22:39.519
+representation of the future from the
+
+0:22:38.230,0:22:41.169
+predictor into actual real-world
+
+0:22:39.519,0:22:47.379
+predictions yeah that's correct
+
+0:22:41.169,0:22:49.090
+so the decoder is just like semantic the
+
+0:22:47.379,0:22:51.580
+subdivision right now it's just one
+
+0:22:49.090,0:22:53.769
+neural net and you can think about the
+
+0:22:51.580,0:22:56.350
+neural net has having an encoder and
+
+0:22:53.769,0:22:58.119
+decoder all the time right you can
+
+0:22:56.350,0:23:01.480
+decide where you want to have the hidden
+
+0:22:58.119,0:23:04.090
+representation how do we hold on how do
+
+0:23:01.480,0:23:07.419
+we determine the dimensionality of a
+
+0:23:04.090,0:23:09.849
+spread output well it depends on your
+
+0:23:07.419,0:23:12.429
+network right so whatever your network
+
+0:23:09.849,0:23:14.000
+is outputting in my case I think it 128
+
+0:23:12.429,0:23:18.950
+dimensional
+
+0:23:14.000,0:23:22.310
+vector foresty since there are variable
+
+0:23:18.950,0:23:24.710
+number of cars surrounding our agent
+
+0:23:22.310,0:23:28.360
+vehicle then okay that's a good question
+
+0:23:24.710,0:23:31.370
+is the size of SD viable so st
+
+0:23:28.360,0:23:35.610
+represents the position and velocity of
+
+0:23:31.370,0:23:38.009
+myself and then i have an image
+
+0:23:35.610,0:23:42.330
+which shows me the occupancy grid
+
+0:23:38.009,0:23:46.200
+basically shows me what the surrounding
+
+0:23:42.330,0:23:49.009
+right so I show you here this is my
+
+0:23:46.200,0:23:51.299
+image IT which represents the
+
+0:23:49.009,0:23:53.909
+configuration of the lanes of the street
+
+0:23:51.299,0:23:55.440
+and what is the configuration of the
+
+0:23:53.909,0:23:57.809
+vehicles you have not different number
+
+0:23:55.440,0:23:59.029
+of vehicles other weight vehicles in the
+
+0:23:57.809,0:24:01.649
+left image and the right image
+
+0:23:59.029,0:24:03.749
+nevertheless an image can just show your
+
+0:24:01.649,0:24:07.950
+any number of vehicles right so that's
+
+0:24:03.749,0:24:10.519
+very cute way of using images just for
+
+0:24:07.950,0:24:15.359
+the fact that I don't need to have a
+
+0:24:10.519,0:24:17.190
+variable length set of you know things
+
+0:24:15.359,0:24:19.889
+right otherwise you should have used
+
+0:24:17.190,0:24:22.859
+some kind of you know attention or asset
+
+0:24:19.889,0:24:24.929
+network or some other you know crafty
+
+0:24:22.859,0:24:27.330
+things this one you know you can use
+
+0:24:24.929,0:24:29.519
+images is a mean of representing
+
+0:24:27.330,0:24:31.590
+information these are not natural images
+
+0:24:29.519,0:24:34.409
+right these are completely synthetic
+
+0:24:31.590,0:24:36.149
+images but I can use them in order to
+
+0:24:34.409,0:24:40.590
+cope with the fact that I have a
+
+0:24:36.149,0:24:45.889
+different number of items nearby me yeah
+
+0:24:40.590,0:24:45.889
+I think I answer everyone
+
+0:24:47.529,0:24:52.970
+yeah that's a boolean green yeah yeah it
+
+0:24:50.330,0:24:56.600
+is a boolean grid right so my image has
+
+0:24:52.970,0:24:59.600
+RGB and each of them are or 0 or 1 in
+
+0:24:56.600,0:25:02.059
+this case they are I you can see the
+
+0:24:59.600,0:25:05.960
+pixels and they are a little bit blurry
+
+0:25:02.059,0:25:09.200
+because there is like I think some up
+
+0:25:05.960,0:25:13.059
+sampling with by linear by linear up
+
+0:25:09.200,0:25:15.200
+sampling here in this case let me think
+
+0:25:13.059,0:25:18.830
+yeah I think there is something like
+
+0:25:15.200,0:25:23.269
+that maybe I should be a boolean grid
+
+0:25:18.830,0:25:24.740
+that's correct I think here we do okay
+
+0:25:23.269,0:25:26.480
+there is down sampling this there is
+
+0:25:24.740,0:25:29.240
+down sampling so these images actually
+
+0:25:26.480,0:25:31.190
+are larger in there are binary but then
+
+0:25:29.240,0:25:34.490
+there are too large so it's so that we
+
+0:25:31.190,0:25:37.340
+actually make them forth and by doing
+
+0:25:34.490,0:25:39.019
+the fourth you know scaling down they
+
+0:25:37.340,0:25:40.880
+start looking like a little blurring
+
+0:25:39.019,0:25:42.440
+right now otherwise if you have a car
+
+0:25:40.880,0:25:45.830
+that turns you're gonna have all that
+
+0:25:42.440,0:25:48.919
+kind of staircase right right now
+
+0:25:45.830,0:25:52.750
+instead if you have this kind of blurred
+
+0:25:48.919,0:25:56.929
+version it's no like that stir-crazy
+
+0:25:52.750,0:26:01.159
+okay too many questions with with a
+
+0:25:56.929,0:26:03.710
+differentiable cost function do we back
+
+0:26:01.159,0:26:06.200
+propagate from the end of the trajectory
+
+0:26:03.710,0:26:08.120
+all the way back yeah it's gonna be yeah
+
+0:26:06.200,0:26:10.039
+sure that's correct we are gonna see
+
+0:26:08.120,0:26:12.950
+this in the second part right this is
+
+0:26:10.039,0:26:17.630
+first part where I train a regression
+
+0:26:12.950,0:26:20.360
+network so here it was the first model
+
+0:26:17.630,0:26:22.399
+right so you have like a encoder decoder
+
+0:26:20.360,0:26:25.880
+which is not because it's a predictor
+
+0:26:22.399,0:26:27.710
+predictor decoder just from because of
+
+0:26:25.880,0:26:29.419
+the fact that the amount stuff on the
+
+0:26:27.710,0:26:30.769
+left hand side is from the past right
+
+0:26:29.419,0:26:34.250
+that's why you need a predictor that
+
+0:26:30.769,0:26:35.929
+gives you the next thing in line but
+
+0:26:34.250,0:26:39.500
+otherwise you can think about an encoder
+
+0:26:35.929,0:26:41.680
+but it's not correct way of thinking
+
+0:26:39.500,0:26:44.290
+just you know similar
+
+0:26:41.680,0:26:45.910
+does it work so on the left hand side
+
+0:26:44.290,0:26:47.890
+you have the actual future the thing
+
+0:26:45.910,0:26:49.930
+that really happened on the right hand
+
+0:26:47.890,0:26:52.180
+side you get the deterministic you know
+
+0:26:49.930,0:26:54.610
+predictor decoder and the network that I
+
+0:26:52.180,0:26:56.650
+just show you train with MSC in order to
+
+0:26:54.610,0:26:58.720
+replicate the thing on the left this is
+
+0:26:56.650,0:27:00.970
+from the testing set of course and it's
+
+0:26:58.720,0:27:02.410
+been trained on the training set so on
+
+0:27:00.970,0:27:05.140
+the top right you're gonna see the
+
+0:27:02.410,0:27:07.240
+frames you're gonna have a 10 frame per
+
+0:27:05.140,0:27:09.910
+second and the direction of motion is
+
+0:27:07.240,0:27:11.710
+going forward and the blue guy is our
+
+0:27:09.910,0:27:14.530
+self the green guys are the others and
+
+0:27:11.710,0:27:20.340
+the red are the lanes so you can see
+
+0:27:14.530,0:27:26.250
+here that after 3 seconds for 5 seconds
+
+0:27:20.340,0:27:28.830
+everything gets quite [ __ ] up yep
+
+0:27:26.250,0:27:32.140
+nothing works
+
+0:27:28.830,0:27:34.990
+ok how nice I just taught you something
+
+0:27:32.140,0:27:35.820
+that doesn't work how happy are you are
+
+0:27:34.990,0:27:39.880
+you happy
+
+0:27:35.820,0:27:43.260
+no I can't hear you but okay I mean yeah
+
+0:27:39.880,0:27:46.600
+thank you for the no the not happy okay
+
+0:27:43.260,0:27:48.400
+alright so what's happening okay who can
+
+0:27:46.600,0:27:49.870
+tell them you should know right what's
+
+0:27:48.400,0:27:52.360
+happening because Jana has been talking
+
+0:27:49.870,0:27:56.760
+about this stuff all along this past
+
+0:27:52.360,0:27:56.760
+three weeks so what's the problem here
+
+0:27:57.000,0:28:02.290
+latent variables your cadet the solution
+
+0:28:00.030,0:28:05.290
+what's the problem okay
+
+0:28:02.290,0:28:09.370
+the MSE loss yeah I was the actual
+
+0:28:05.290,0:28:11.590
+problem oh okay someone answer is
+
+0:28:09.370,0:28:14.350
+someone answer LM whose LM I don't know
+
+0:28:11.590,0:28:20.020
+its average in future outcomes yeah yes
+
+0:28:14.350,0:28:21.400
+yes is someone answer stop okay this is
+
+0:28:20.020,0:28:24.010
+basically everything that can happen
+
+0:28:21.400,0:28:26.800
+from that initial point in time you know
+
+0:28:24.010,0:28:28.840
+you have everything else therefore it
+
+0:28:26.800,0:28:30.850
+looks like that you know every kind of
+
+0:28:28.840,0:28:34.750
+image looks up like a blur the image
+
+0:28:30.850,0:28:37.090
+right so again you had this example from
+
+0:28:34.750,0:28:39.580
+yan if you have a pencil on on a plane
+
+0:28:37.090,0:28:41.260
+and I since I can't really draw in 3d
+
+0:28:39.580,0:28:44.080
+I'm gonna give you the top-down view on
+
+0:28:41.260,0:28:46.480
+the right-hand side let's say you make
+
+0:28:44.080,0:28:49.810
+it falling right one two three four
+
+0:28:46.480,0:28:52.990
+times five six whatever and if you
+
+0:28:49.810,0:28:56.050
+compute what is the average right
+
+0:28:52.990,0:28:59.260
+folding location well this is since is a
+
+0:28:56.050,0:29:02.590
+you know X&Y is just you know coordinate
+
+0:28:59.260,0:29:04.990
+the average final location is like oh
+
+0:29:02.590,0:29:08.020
+the pen never fed and it's really wrong
+
+0:29:04.990,0:29:09.400
+right otherwise if you actually use a
+
+0:29:08.020,0:29:12.610
+pixel space you would have like the
+
+0:29:09.400,0:29:14.680
+overlay anyhow the problem is this one
+
+0:29:12.610,0:29:17.910
+right you have a multi possible future
+
+0:29:14.680,0:29:22.570
+and then you only try to regress the
+
+0:29:17.910,0:29:25.240
+average teacher right how do we fix it I
+
+0:29:22.570,0:29:28.290
+really told me we latent variable the
+
+0:29:25.240,0:29:32.890
+ACS no no no no I want latent variable
+
+0:29:28.290,0:29:35.140
+latent variable this is okay cool this
+
+0:29:32.890,0:29:38.110
+is the the energy base stuff he likes a
+
+0:29:35.140,0:29:40.560
+lot and we like it all right because we
+
+0:29:38.110,0:29:40.560
+like young
+
+0:29:46.890,0:29:52.120
+so okay and actually you already know
+
+0:29:49.780,0:29:53.620
+everything here so this is the original
+
+0:29:52.120,0:29:56.170
+Network I just show you before it
+
+0:29:53.620,0:29:57.640
+doesn't work and let's fix this so in
+
+0:29:56.170,0:29:59.770
+the center we're going to be summing
+
+0:29:57.640,0:30:02.410
+something and with some this
+
+0:29:59.770,0:30:05.940
+low-dimensional latent variable in green
+
+0:30:02.410,0:30:08.980
+ZT which goes through a you know
+
+0:30:05.940,0:30:11.980
+expansion expansion module such that he
+
+0:30:08.980,0:30:14.680
+fixed the image the dimensionality so
+
+0:30:11.980,0:30:17.260
+where's this ZT coming from well I guess
+
+0:30:14.680,0:30:20.200
+you can tell so that T is going to be
+
+0:30:17.260,0:30:22.840
+chosen such that the prediction is
+
+0:30:20.200,0:30:25.150
+minimized you know that the MSE is
+
+0:30:22.840,0:30:27.700
+minimized for this specific peak of the
+
+0:30:25.150,0:30:30.070
+prediction right so you can do inference
+
+0:30:27.700,0:30:31.480
+right so you train everything it's a
+
+0:30:30.070,0:30:33.100
+real train actually because we trained a
+
+0:30:31.480,0:30:35.230
+deterministic one now you can do
+
+0:30:33.100,0:30:37.450
+inference of the latent variable such
+
+0:30:35.230,0:30:40.540
+that you can still get the MSE to zero
+
+0:30:37.450,0:30:42.910
+by doing gradient descent into latent
+
+0:30:40.540,0:30:44.110
+space right so you can change that set
+
+0:30:42.910,0:30:48.120
+into two to chain chain chain chain
+
+0:30:44.110,0:30:48.120
+chain until the emissive dies
+
+0:30:48.680,0:30:51.770
+this is very expensive because you have
+
+0:30:50.450,0:30:53.960
+two degrees in the same thing to the
+
+0:30:51.770,0:30:56.330
+damn thing there otherwise you can just
+
+0:30:53.960,0:30:58.160
+plug this you know you can actually
+
+0:30:56.330,0:31:00.260
+predict that latent how do you do that
+
+0:30:58.160,0:31:02.390
+with an encoder and there you go where
+
+0:31:00.260,0:31:06.020
+did the encoder is so the encoder gets
+
+0:31:02.390,0:31:10.360
+the future state and gives you the mean
+
+0:31:06.020,0:31:14.000
+and variance from which you sample the
+
+0:31:10.360,0:31:15.740
+what is it Irish variational predictive
+
+0:31:14.000,0:31:17.450
+network actually is a variational
+
+0:31:15.740,0:31:21.050
+conditional predictive network because
+
+0:31:17.450,0:31:26.120
+you actually start from a actual action
+
+0:31:21.050,0:31:29.750
+89 so 80 is the condition is it
+
+0:31:26.120,0:31:32.480
+advisable to help the output fed into a
+
+0:31:29.750,0:31:35.570
+encoder for the latent variable during
+
+0:31:32.480,0:31:37.580
+training oh never mind okay all right
+
+0:31:35.570,0:31:39.890
+yeah that's that's how yeah okay that
+
+0:31:37.580,0:31:42.500
+was the answer yeah so you don't have to
+
+0:31:39.890,0:31:45.860
+all right this is just a very convenient
+
+0:31:42.500,0:31:47.840
+way to get that said T I guess in the
+
+0:31:45.860,0:31:49.010
+next next lab when we do the energy
+
+0:31:47.840,0:31:50.540
+based model we're going to do first
+
+0:31:49.010,0:31:52.130
+inference right but inference is not
+
+0:31:50.540,0:31:54.320
+take you forever because every time you
+
+0:31:52.130,0:31:56.420
+have to try try try try try try a new
+
+0:31:54.320,0:32:02.320
+Zed then where you start with why is
+
+0:31:56.420,0:32:02.320
+there an arrow from St plus 1 to F Inc
+
+0:32:02.860,0:32:08.410
+because unless you know what will happen
+
+0:32:08.539,0:32:14.749
+how will you find that ZT right so that
+
+0:32:11.239,0:32:16.879
+Z T is the missing information that you
+
+0:32:14.749,0:32:18.979
+can't have from the past because
+
+0:32:16.879,0:32:21.379
+something happened you know now my
+
+0:32:18.979,0:32:24.589
+roommate is gonna be coming naked inside
+
+0:32:21.379,0:32:27.440
+oh okay now it doesn't do that things
+
+0:32:24.589,0:32:29.749
+you know that's unpredictable part and
+
+0:32:27.440,0:32:33.709
+may never happen before yeah hopefully
+
+0:32:29.749,0:32:36.499
+likely okay the point was that given
+
+0:32:33.709,0:32:38.839
+that I have no idea about what's gonna
+
+0:32:36.499,0:32:42.559
+happen next in the future you know a
+
+0:32:38.839,0:32:45.169
+meteorite crashes here you can't really
+
+0:32:42.559,0:32:46.759
+predict the unpredictable unpredictable
+
+0:32:45.169,0:32:47.059
+part right you don't know what's going
+
+0:32:46.759,0:32:51.169
+on
+
+0:32:47.059,0:32:53.989
+therefore during training I look in the
+
+0:32:51.169,0:32:55.849
+future what's happening huh I see
+
+0:32:53.989,0:32:57.949
+something as I get information from the
+
+0:32:55.849,0:33:01.039
+future and from that information I can
+
+0:32:57.949,0:33:02.569
+predict the latent variable okay so
+
+0:33:01.039,0:33:06.009
+someone's gonna say oh you're cheating
+
+0:33:02.569,0:33:10.369
+right because you look in the future and
+
+0:33:06.009,0:33:12.229
+you don't have the future at testing
+
+0:33:10.369,0:33:14.690
+time right when you drive you don't have
+
+0:33:12.229,0:33:16.489
+access to the future but since your
+
+0:33:14.690,0:33:20.389
+training here you can kind of cheat and
+
+0:33:16.489,0:33:23.029
+look look what's happened there but we
+
+0:33:20.389,0:33:25.339
+can fix this how do we fix that so this
+
+0:33:23.029,0:33:28.190
+is the posterior blind of a variational
+
+0:33:25.339,0:33:31.969
+encoder and you fix it this way right
+
+0:33:28.190,0:33:34.969
+you enforce the posterior the decoder
+
+0:33:31.969,0:33:36.769
+they saw the encoder there to be giving
+
+0:33:34.969,0:33:39.079
+you a distribution that is as close as
+
+0:33:36.769,0:33:43.239
+possible to the prior to that K ed right
+
+0:33:39.079,0:33:48.349
+and so in this case you learn how to
+
+0:33:43.239,0:33:50.690
+predict basically mean meaningful latent
+
+0:33:48.349,0:33:52.729
+variable ZT trying to you know
+
+0:33:50.690,0:33:56.989
+disconnect as well from that kind of
+
+0:33:52.729,0:33:58.590
+future okay I'm not sure what Allah is
+
+0:33:56.989,0:34:01.590
+it
+
+0:33:58.590,0:34:06.960
+I'm not I'm not really understanding the
+
+0:34:01.590,0:34:09.000
+f X part FX means a expansion so that T
+
+0:34:06.960,0:34:11.370
+is the latent might be you know 16
+
+0:34:09.000,0:34:15.060
+dimensional vector very tiny thing and
+
+0:34:11.370,0:34:17.400
+the F bread must can easily be like some
+
+0:34:15.060,0:34:20.850
+kind of spatial information right so
+
+0:34:17.400,0:34:22.710
+given that is the state is an image are
+
+0:34:20.850,0:34:24.090
+gonna be like you know throughout New
+
+0:34:22.710,0:34:26.190
+York neural-net I'm gonna be making it
+
+0:34:24.090,0:34:27.720
+convolutional nets a bit smaller it's
+
+0:34:26.190,0:34:30.679
+gonna be still spatial I won't be
+
+0:34:27.720,0:34:34.650
+collapsing in one vector such that my X
+
+0:34:30.679,0:34:37.500
+FX be explained expander will expand my
+
+0:34:34.650,0:34:40.380
+16 dimensional vector may be in two
+
+0:34:37.500,0:34:44.070
+sixteenth lanes of the same size of this
+
+0:34:40.380,0:34:46.169
+F pred hidden representation okay such
+
+0:34:44.070,0:34:47.520
+that I can sum them together could you
+
+0:34:46.169,0:34:49.919
+repeat how you're putting the
+
+0:34:47.520,0:34:52.770
+restriction on the model not being able
+
+0:34:49.919,0:34:56.280
+to look at actually interstates so right
+
+0:34:52.770,0:34:59.280
+now only by looking in the future you
+
+0:34:56.280,0:35:02.460
+can figure out what's happening okay so
+
+0:34:59.280,0:35:05.400
+this F encoder is trained to produce the
+
+0:35:02.460,0:35:08.340
+latent variable which is minimizing that
+
+0:35:05.400,0:35:11.100
+MSC so that's not the variational at
+
+0:35:08.340,0:35:13.770
+encoder encoder there on the top part
+
+0:35:11.100,0:35:17.040
+yeah it's gonna be trying to predict the
+
+0:35:13.770,0:35:19.800
+latent that really gives you you know
+
+0:35:17.040,0:35:22.230
+zero prediction error but then on the
+
+0:35:19.800,0:35:25.380
+other side you also enforce that encoder
+
+0:35:22.230,0:35:28.140
+to give you something that is close to a
+
+0:35:25.380,0:35:30.690
+normal to to the prior feed over there
+
+0:35:28.140,0:35:33.000
+so the fact that there is like a KL term
+
+0:35:30.690,0:35:36.600
+between the posterior and the Q and the
+
+0:35:33.000,0:35:39.420
+P allows you later on to sample from the
+
+0:35:36.600,0:35:41.940
+prior when you are actually doing you
+
+0:35:39.420,0:35:43.590
+know you're using this network see you
+
+0:35:41.940,0:35:45.360
+build a prior distribution and then
+
+0:35:43.590,0:35:47.400
+during into the viewing test time
+
+0:35:45.360,0:35:49.800
+instead of looking at the actual future
+
+0:35:47.400,0:35:52.740
+state you sample from the distribution
+
+0:35:49.800,0:35:54.240
+label you just learn you just assemble
+
+0:35:52.740,0:35:55.860
+from the prior distribution so this is
+
+0:35:54.240,0:35:57.000
+going to be a fixed prior you fix the
+
+0:35:55.860,0:35:59.700
+prior which is a normal distribution
+
+0:35:57.000,0:36:03.510
+even forced the encoder you know to
+
+0:35:59.700,0:36:05.760
+stick with this kind of prior or you can
+
+0:36:03.510,0:36:07.470
+even learn what is the distribution of
+
+0:36:05.760,0:36:09.480
+those latent variables you can do many
+
+0:36:07.470,0:36:12.089
+things this is what actually we managed
+
+0:36:09.480,0:36:14.309
+to to get better
+
+0:36:12.089,0:36:15.660
+best result with okay look do you
+
+0:36:14.309,0:36:18.209
+enforce the encoder to give you
+
+0:36:15.660,0:36:21.839
+something that looks like a prior which
+
+0:36:18.209,0:36:25.439
+is a Gaussian you know independent
+
+0:36:21.839,0:36:28.229
+Gaussian and then from independent in
+
+0:36:25.439,0:36:31.670
+also I saw what's called I saw something
+
+0:36:28.229,0:36:34.709
+I forgot that you know the unitary
+
+0:36:31.670,0:36:37.499
+identity matrix right for the covariance
+
+0:36:34.709,0:36:39.299
+and so later on we are gonna be just
+
+0:36:37.499,0:36:41.279
+sampling from that prior distribution to
+
+0:36:39.299,0:36:44.640
+get late into that to look you know
+
+0:36:41.279,0:36:47.069
+reasonable okay thanks sure okay there
+
+0:36:44.640,0:36:49.559
+are many more questions how do the
+
+0:36:47.069,0:36:53.869
+latent variable prevent the averaging oh
+
+0:36:49.559,0:36:56.189
+well that's actually so basically
+
+0:36:53.869,0:36:59.189
+whenever okay
+
+0:36:56.189,0:37:01.049
+so let's say we train the brains on the
+
+0:36:59.189,0:37:03.539
+bottom the deterministic part right so
+
+0:37:01.049,0:37:06.299
+at the end you're gonna get a prediction
+
+0:37:03.539,0:37:08.279
+for the you know predicted state for the
+
+0:37:06.299,0:37:10.609
+future state which is looking like some
+
+0:37:08.279,0:37:17.609
+kind of possible but you know average
+
+0:37:10.609,0:37:19.799
+future now for a specific future you can
+
+0:37:17.609,0:37:21.959
+figure out now you know by doing
+
+0:37:19.799,0:37:26.249
+gradient descent you can minimize that
+
+0:37:21.959,0:37:27.719
+MSE by changing that additional latent
+
+0:37:26.249,0:37:30.989
+variable this is how latent variable
+
+0:37:27.719,0:37:33.660
+models work right so for every training
+
+0:37:30.989,0:37:36.329
+sample you have one latent variable
+
+0:37:33.660,0:37:38.729
+which is gonna give you exactly zero and
+
+0:37:36.329,0:37:40.650
+the seed loss you can train first with
+
+0:37:38.729,0:37:42.359
+all of them such that you can get a very
+
+0:37:40.650,0:37:44.670
+initial starting point which is the
+
+0:37:42.359,0:37:46.890
+average prediction and then you can
+
+0:37:44.670,0:37:49.199
+refine that average average prediction
+
+0:37:46.890,0:37:52.259
+by adding this additional latent
+
+0:37:49.199,0:37:54.539
+variable and that value for the latent
+
+0:37:52.259,0:37:56.789
+variable can be found for example by
+
+0:37:54.539,0:37:59.069
+doing gradient descent meaning you
+
+0:37:56.789,0:38:02.130
+minimize the MSE like you minimize this
+
+0:37:59.069,0:38:04.859
+MSE loss by getting gradients coming
+
+0:38:02.130,0:38:06.839
+down here the gradient comes here and
+
+0:38:04.859,0:38:10.349
+then you get gradients here so you can
+
+0:38:06.839,0:38:15.809
+do that equal you know exact gets Z
+
+0:38:10.349,0:38:20.099
+minus ETA gradient of the loss with
+
+0:38:15.809,0:38:22.309
+respect to to the Z right got it okay
+
+0:38:20.099,0:38:22.309
+awesome
+
+0:38:23.619,0:38:27.109
+no that wasn't someone else saying got
+
+0:38:25.970,0:38:29.329
+it okay
+
+0:38:27.109,0:38:31.789
+someone had a question before okay I
+
+0:38:29.329,0:38:34.609
+don't know oh no it was the answer I
+
+0:38:31.789,0:38:35.359
+gave so basically we are adding the F
+
+0:38:34.609,0:38:38.630
+bread
+
+0:38:35.359,0:38:42.559
+f bread our prediction of what will
+
+0:38:38.630,0:38:46.789
+happen with FX the representation of the
+
+0:38:42.559,0:38:50.630
+what actually happens now FX is not what
+
+0:38:46.789,0:38:53.319
+actually happens if X is what I couldn't
+
+0:38:50.630,0:38:59.059
+figure out that would have happened
+
+0:38:53.319,0:39:02.180
+okay so f pred output it's what I I can
+
+0:38:59.059,0:39:04.519
+you know I would guess you know my best
+
+0:39:02.180,0:39:09.710
+prediction for what happens tomorrow is
+
+0:39:04.519,0:39:12.739
+going to be that the Sun will rise might
+
+0:39:09.710,0:39:16.400
+not be the case so the the Zed that
+
+0:39:12.739,0:39:20.690
+comes down to the F expander will add
+
+0:39:16.400,0:39:24.920
+that component that will you know manage
+
+0:39:20.690,0:39:27.979
+to fix my broken prediction right so the
+
+0:39:24.920,0:39:31.099
+lower branch will try to do as the best
+
+0:39:27.979,0:39:33.589
+job it can without having knowledge of
+
+0:39:31.099,0:39:35.960
+the future and the other one allows me
+
+0:39:33.589,0:39:38.029
+to refine my prediction to be actually
+
+0:39:35.960,0:39:39.950
+correct okay but in this case we have
+
+0:39:38.029,0:39:43.489
+access to the actual future so it's kind
+
+0:39:39.950,0:39:46.190
+of cheating nevertheless you enforce
+
+0:39:43.489,0:39:49.609
+that this generation of latent variable
+
+0:39:46.190,0:39:52.479
+is going to be as close as possible to
+
+0:39:49.609,0:39:52.479
+my prior distribution
+
+0:39:53.420,0:39:58.880
+I hope it makes more sense but maybe we
+
+0:39:56.480,0:40:02.720
+can go further and then you may get a
+
+0:39:58.880,0:40:05.510
+little bit clearer clear mind well last
+
+0:40:02.720,0:40:08.170
+question is Syd Garon okay starting to
+
+0:40:05.510,0:40:11.660
+make sense answer is it guaranteed that
+
+0:40:08.170,0:40:13.550
+there exists a Zed which gives us M s is
+
+0:40:11.660,0:40:18.620
+zero I think I'm not sure about
+
+0:40:13.550,0:40:21.050
+guarantees but if your network is
+
+0:40:18.620,0:40:24.140
+reasonably well behaved I guess yeah
+
+0:40:21.050,0:40:29.990
+you're guaranteed you know if your
+
+0:40:24.140,0:40:31.550
+network capacity is can over fit but you
+
+0:40:29.990,0:40:34.490
+can't over fit because you know there
+
+0:40:31.550,0:40:36.890
+are noise in the data you can reduce you
+
+0:40:34.490,0:40:40.850
+can zero out that noise by adding this
+
+0:40:36.890,0:40:45.230
+additional term so it's guaranteed if
+
+0:40:40.850,0:40:49.280
+the network is properly sized yeah okay
+
+0:40:45.230,0:40:51.380
+cool so inference how do we drive okay
+
+0:40:49.280,0:40:55.670
+we already spoiled okay more question
+
+0:40:51.380,0:40:59.180
+training time we try to learn qz4 that
+
+0:40:55.670,0:41:03.710
+close to prior petesy test time okay
+
+0:40:59.180,0:41:05.720
+yeah I'm getting there hold on all right
+
+0:41:03.710,0:41:07.300
+test time not test driving time right
+
+0:41:05.720,0:41:09.650
+how do the hell do you use this stuff
+
+0:41:07.300,0:41:12.350
+variation of predicted condition and
+
+0:41:09.650,0:41:13.910
+predicted net for inference cool so we
+
+0:41:12.350,0:41:15.530
+had this lower branch in this lower
+
+0:41:13.910,0:41:18.530
+dimensional latent variable not a no
+
+0:41:15.530,0:41:21.440
+sixteen dimensional vector and where it
+
+0:41:18.530,0:41:24.230
+comes from we sample from prior right
+
+0:41:21.440,0:41:26.600
+because we enforce that the encoder
+
+0:41:24.230,0:41:31.430
+there was trying to you know shoot it
+
+0:41:26.600,0:41:32.870
+towards this distribution hmm cool then
+
+0:41:31.430,0:41:35.300
+what do you do next you get the
+
+0:41:32.870,0:41:37.940
+prediction you put it back so you do a
+
+0:41:35.300,0:41:40.430
+outer aggressive step right you get next
+
+0:41:37.940,0:41:43.490
+prediction network next
+
+0:41:40.430,0:41:45.380
+yeah correct okay no one wrote anything
+
+0:41:43.490,0:41:47.900
+but I know you understood and so you
+
+0:41:45.380,0:41:49.970
+keep feeding this stuff does it work yes
+
+0:41:47.900,0:41:52.550
+it works so here you can see again a
+
+0:41:49.970,0:41:54.050
+comparison between the actual future on
+
+0:41:52.550,0:41:56.390
+the left hand side the deterministic
+
+0:41:54.050,0:41:59.000
+branch that is just just the lower
+
+0:41:56.390,0:42:03.260
+branch strain as before and then here I
+
+0:41:59.000,0:42:07.370
+give you four different draws from an
+
+0:42:03.260,0:42:15.440
+art and from a end distribution was
+
+0:42:07.370,0:42:18.110
+called I can I can tell the help normal
+
+0:42:15.440,0:42:21.440
+distribution so you have you know 200
+
+0:42:18.110,0:42:24.020
+times 4 so we have 800 samples from a
+
+0:42:21.440,0:42:28.670
+normal distribution of size I don't know
+
+0:42:24.020,0:42:31.340
+16 and I feed you know on the first 200
+
+0:42:28.670,0:42:33.530
+values to the first model then I start
+
+0:42:31.340,0:42:37.790
+again from from same past and I feed to
+
+0:42:33.530,0:42:39.890
+new 100 no no 200 200 new values today
+
+0:42:37.790,0:42:42.230
+to the Leighton there then I have third
+
+0:42:39.890,0:42:44.450
+time I get the same initial condition
+
+0:42:42.230,0:42:48.050
+and then I feed this sequence another
+
+0:42:44.450,0:42:50.360
+third sequence of 200 variables pay
+
+0:42:48.050,0:42:52.250
+attention here to the car on the
+
+0:42:50.360,0:42:53.810
+right-hand side of me that isn't a
+
+0:42:52.250,0:42:55.730
+circle white circle and then the guy
+
+0:42:53.810,0:42:59.710
+behind that guy right in this square
+
+0:42:55.730,0:43:02.120
+okay and so if you show if you see here
+
+0:42:59.710,0:43:03.710
+you get basically that all these
+
+0:43:02.120,0:43:06.110
+different predictions will predict a
+
+0:43:03.710,0:43:08.450
+different location for the car going
+
+0:43:06.110,0:43:10.280
+there the dead one in the circle and a
+
+0:43:08.450,0:43:12.500
+car behind the one one in the square
+
+0:43:10.280,0:43:14.630
+also has completely no arbitrary
+
+0:43:12.500,0:43:16.730
+prediction so this super cool right
+
+0:43:14.630,0:43:19.910
+right now you have that each of these
+
+0:43:16.730,0:43:22.370
+you know possible futures you know are
+
+0:43:19.910,0:43:23.720
+completely elucidated by my network so
+
+0:43:22.370,0:43:26.210
+this stuff doesn't exist
+
+0:43:23.720,0:43:29.390
+but we have a network that generates
+
+0:43:26.210,0:43:32.360
+future how cool is this right so before
+
+0:43:29.390,0:43:34.880
+maybe we had you know limited amount of
+
+0:43:32.360,0:43:38.750
+training data now we have a network that
+
+0:43:34.880,0:43:41.870
+is just generating futures from the Hut
+
+0:43:38.750,0:43:43.610
+like a magician right so this is super
+
+0:43:41.870,0:43:45.740
+super super cool you have infinite
+
+0:43:43.610,0:43:48.140
+amount of data which is you know
+
+0:43:45.740,0:43:50.360
+completely different from what actually
+
+0:43:48.140,0:43:52.880
+happened the actual future this data
+
+0:43:50.360,0:43:53.700
+comes from only observational data so
+
+0:43:52.880,0:43:56.190
+that we
+
+0:43:53.700,0:43:58.109
+have seen in the actual reality but is
+
+0:43:56.190,0:44:02.880
+applied to this specific initial
+
+0:43:58.109,0:44:06.809
+condition so what next now you can use
+
+0:44:02.880,0:44:08.910
+this huge amount of data to train this
+
+0:44:06.809,0:44:11.130
+policy right this network that allows
+
+0:44:08.910,0:44:14.130
+you to control our agent such that it
+
+0:44:11.130,0:44:17.549
+minimizes losses the loss that the cost
+
+0:44:14.130,0:44:19.470
+for the going over these lanes and the
+
+0:44:17.549,0:44:25.069
+cost for you know colliding against
+
+0:44:19.470,0:44:25.069
+other vehicles okay
+
+0:44:25.410,0:44:32.309
+the cool part is that okay I can tell
+
+0:44:30.630,0:44:35.819
+the design I should yeah I can tell you
+
+0:44:32.309,0:44:38.309
+the cool part is that this future here
+
+0:44:35.819,0:44:41.279
+these multiple futures come from the
+
+0:44:38.309,0:44:44.480
+specific sequence of latent variable you
+
+0:44:41.279,0:44:49.500
+feed to this network right
+
+0:44:44.480,0:44:51.809
+what if you perform gradient ascent in
+
+0:44:49.500,0:44:54.210
+the latent space you get your initial
+
+0:44:51.809,0:44:56.460
+you know sample from this normal
+
+0:44:54.210,0:45:01.200
+distribution then you tweak these values
+
+0:44:56.460,0:45:02.670
+such that you [ __ ] up the hardness
+
+0:45:01.200,0:45:05.460
+like you increase the hardness you don't
+
+0:45:02.670,0:45:07.349
+[ __ ] up you increase the hardness I like
+
+0:45:05.460,0:45:09.029
+to swear you know but you increase the
+
+0:45:07.349,0:45:12.119
+hardness for example you try to increase
+
+0:45:09.029,0:45:15.450
+the proximity cost right so you get the
+
+0:45:12.119,0:45:17.130
+sequence of latent where other cars are
+
+0:45:15.450,0:45:20.579
+gonna be like kamikaze like they are
+
+0:45:17.130,0:45:22.230
+gonna be driving into you and like crazy
+
+0:45:20.579,0:45:24.960
+so that's the super cool you have a
+
+0:45:22.230,0:45:28.049
+network that gives you futures that you
+
+0:45:24.960,0:45:29.990
+want right okay I'm already too excited
+
+0:45:28.049,0:45:33.539
+I will not be able to sleep tonight
+
+0:45:29.990,0:45:35.910
+okay question if we try to sample that
+
+0:45:33.539,0:45:38.730
+from Pisa during test time it is
+
+0:45:35.910,0:45:41.640
+possible for us to look for a specific
+
+0:45:38.730,0:45:45.390
+future for example I would like to know
+
+0:45:41.640,0:45:50.430
+the solution of turning left not moving
+
+0:45:45.390,0:45:52.609
+forward so here here I don't let me
+
+0:45:50.430,0:45:52.609
+think
+
+0:45:52.840,0:45:58.660
+right right so this predictive network
+
+0:45:55.420,0:46:00.190
+you feed the action right so this is a
+
+0:45:58.660,0:46:01.690
+condition a predictive network so we
+
+0:46:00.190,0:46:03.940
+have the action here on the bottom part
+
+0:46:01.690,0:46:06.100
+so you actually display the whole point
+
+0:46:03.940,0:46:08.110
+you can take different actions and the
+
+0:46:06.100,0:46:10.120
+whole future will change based on the
+
+0:46:08.110,0:46:11.950
+action you take right I was mentioning
+
+0:46:10.120,0:46:14.170
+here we have a initial state that's you
+
+0:46:11.950,0:46:15.940
+know the initial condition and then
+
+0:46:14.170,0:46:17.680
+given different latent you're gonna have
+
+0:46:15.940,0:46:19.690
+different kind of behavior of the other
+
+0:46:17.680,0:46:22.210
+vehicles and then you can decide to
+
+0:46:19.690,0:46:24.790
+tweak this latent by for example doing
+
+0:46:22.210,0:46:27.490
+gradient ascend in the latest pace by
+
+0:46:24.790,0:46:29.500
+increasing that kind of collision term
+
+0:46:27.490,0:46:31.510
+such that you have in our crazy cars
+
+0:46:29.500,0:46:33.880
+coming at you but nevertheless as you
+
+0:46:31.510,0:46:37.150
+pointed out here you can also figure out
+
+0:46:33.880,0:46:38.530
+what are the outcomes of changing the
+
+0:46:37.150,0:46:40.990
+action right that's exactly how we're
+
+0:46:38.530,0:46:44.020
+going to be training our policy that is
+
+0:46:40.990,0:46:51.730
+actually the whole thing right okay
+
+0:46:44.020,0:46:54.600
+issues first issue so given given that
+
+0:46:51.730,0:46:58.140
+you actually have access to the future
+
+0:46:54.600,0:47:00.310
+if you turn slightly to the left
+
+0:46:58.140,0:47:02.440
+everything is gonna turn to the right
+
+0:47:00.310,0:47:05.400
+right because if you drive you know you
+
+0:47:02.440,0:47:08.340
+turn to the left and how's gonna be like
+
+0:47:05.400,0:47:12.880
+like that right so if I turn to the left
+
+0:47:08.340,0:47:15.310
+you just turn to the right and turning
+
+0:47:12.880,0:47:19.990
+to the right is gonna be contributing in
+
+0:47:15.310,0:47:23.080
+a huge way to the MSC right so right now
+
+0:47:19.990,0:47:26.020
+you can I get basically that these MSC
+
+0:47:23.080,0:47:27.880
+lofts can be minimized if you were
+
+0:47:26.020,0:47:31.570
+encoder and they're in the latent
+
+0:47:27.880,0:47:33.400
+variable is gonna tell my bottom part
+
+0:47:31.570,0:47:35.830
+that everything is turned to turn to the
+
+0:47:33.400,0:47:39.250
+right but this is absolutely not what we
+
+0:47:35.830,0:47:40.660
+want right because we know how to tell
+
+0:47:39.250,0:47:42.400
+everything turns to the right because
+
+0:47:40.660,0:47:44.950
+that's deterministic right given the
+
+0:47:42.400,0:47:46.870
+past given that I turned to the left the
+
+0:47:44.950,0:47:49.330
+steering wheel everything turns to the
+
+0:47:46.870,0:47:51.520
+right I don't care I don't want to look
+
+0:47:49.330,0:47:54.400
+in the future to see everything turns to
+
+0:47:51.520,0:47:56.110
+the right regardless of what I'm doing
+
+0:47:54.400,0:47:59.200
+with my steering wheel right so this
+
+0:47:56.110,0:48:01.780
+it's a very very huge terrible problem
+
+0:47:59.200,0:48:03.970
+because the network basically was
+
+0:48:01.780,0:48:06.580
+learning to cheat right and was figuring
+
+0:48:03.970,0:48:10.870
+out that we were turning
+
+0:48:06.580,0:48:13.450
+without us telling the system we turned
+
+0:48:10.870,0:48:17.230
+so that was terrible because basically
+
+0:48:13.450,0:48:20.680
+this big arrow here is a leak of
+
+0:48:17.230,0:48:23.410
+information and therefore it was not any
+
+0:48:20.680,0:48:26.500
+more sensitive to the current action I
+
+0:48:23.410,0:48:29.110
+was providing to my predictor right this
+
+0:48:26.500,0:48:29.680
+was a very nice big nightmare how do you
+
+0:48:29.110,0:48:32.080
+now
+
+0:48:29.680,0:48:36.040
+kill that big arrow right so how do I
+
+0:48:32.080,0:48:41.740
+get my predictive network to actually
+
+0:48:36.040,0:48:44.410
+care about the action I take so let me
+
+0:48:41.740,0:48:46.450
+show you the EDD problem here so here we
+
+0:48:44.410,0:48:48.700
+have the real sequence of latent the one
+
+0:48:46.450,0:48:50.980
+that I actually have computed from in
+
+0:48:48.700,0:48:53.770
+minimizing the MSE yeah that the answer
+
+0:48:50.980,0:48:55.300
+that's correct so here I have the real
+
+0:48:53.770,0:48:57.520
+sequence of latent and the real sequence
+
+0:48:55.300,0:48:58.570
+of actions that are taken by the DEA
+
+0:48:57.520,0:49:00.130
+agent
+
+0:48:58.570,0:49:01.830
+and so here you can see is actually
+
+0:49:00.130,0:49:06.070
+speed up for time such that you can see
+
+0:49:01.830,0:49:11.590
+there is some kind of you know you know
+
+0:49:06.070,0:49:13.630
+turning then you can see here random
+
+0:49:11.590,0:49:15.910
+variables but the real sequence of
+
+0:49:13.630,0:49:18.970
+action you can see now that things are
+
+0:49:15.910,0:49:21.370
+kind of turning right you can see see
+
+0:49:18.970,0:49:22.720
+things are turning on the left on the
+
+0:49:21.370,0:49:26.020
+last one there you have the real
+
+0:49:22.720,0:49:28.620
+sequence of latent but simple actions
+
+0:49:26.020,0:49:28.620
+and
+
+0:49:28.760,0:49:37.130
+you can clearly see the last pile at the
+
+0:49:33.080,0:49:40.640
+last point that the turning came from
+
+0:49:37.130,0:49:44.620
+the mostly from the latent right so the
+
+0:49:40.640,0:49:47.990
+latent burial 1/10 encodes the rotation
+
+0:49:44.620,0:49:49.850
+in the action that it's written a tilde
+
+0:49:47.990,0:49:53.840
+and those are same sample at random
+
+0:49:49.850,0:49:55.550
+right so well symbol from other from
+
+0:49:53.840,0:49:58.730
+other episodes so the problem here is
+
+0:49:55.550,0:50:01.060
+that the fact that we were turning can
+
+0:49:58.730,0:50:01.060
+we learn
+
+0:50:03.790,0:50:09.440
+so you'd like to learn that thing you
+
+0:50:07.310,0:50:12.110
+would like to reject the fact that we
+
+0:50:09.440,0:50:13.400
+were turning right so the fact that the
+
+0:50:12.110,0:50:16.790
+thing turns should be completely
+
+0:50:13.400,0:50:21.470
+explainable by the action right and I
+
+0:50:16.790,0:50:23.000
+think yeah I don't know anyhow let me
+
+0:50:21.470,0:50:25.970
+show you how we fix the problem
+
+0:50:23.000,0:50:28.250
+sorry explain again it was very unclear
+
+0:50:25.970,0:50:31.240
+when you were saying first and last what
+
+0:50:28.250,0:50:34.930
+you were referring to okay I try again
+
+0:50:31.240,0:50:38.570
+so here we have four different
+
+0:50:34.930,0:50:40.580
+rectangles right in the the last one on
+
+0:50:38.570,0:50:42.950
+the right hand side you have the real
+
+0:50:40.580,0:50:45.140
+sequence of latent variable which are
+
+0:50:42.950,0:50:49.130
+this the latent variable that allows me
+
+0:50:45.140,0:50:51.470
+to get the precise the correct future
+
+0:50:49.130,0:50:54.080
+right so those are the latent variable
+
+0:50:51.470,0:50:56.780
+coming from the and from the encoder in
+
+0:50:54.080,0:50:58.820
+the variational encoder and have a have
+
+0:50:56.780,0:50:59.900
+the real sequence of actions taken by
+
+0:50:58.820,0:51:03.380
+the expert okay
+
+0:50:59.900,0:51:05.750
+the further the two blue the one that
+
+0:51:03.380,0:51:09.800
+have this blue here and this one here
+
+0:51:05.750,0:51:11.240
+are you know simple simple latent
+
+0:51:09.800,0:51:12.859
+variable that the till that means they
+
+0:51:11.240,0:51:15.380
+are sample so they are randomly sample
+
+0:51:12.859,0:51:17.930
+but I have the real sequence of actions
+
+0:51:15.380,0:51:20.090
+and so I would expect to see the
+
+0:51:17.930,0:51:22.730
+steering and the last one on the left
+
+0:51:20.090,0:51:24.770
+hand side I have the real sequence of
+
+0:51:22.730,0:51:27.560
+latent but then I have you know
+
+0:51:24.770,0:51:30.920
+arbitrary actions and so if I show you
+
+0:51:27.560,0:51:33.440
+again the animation you're gonna see
+
+0:51:30.920,0:51:37.220
+here there is you know some amount of
+
+0:51:33.440,0:51:40.880
+steering involved okay and you know the
+
+0:51:37.220,0:51:43.340
+steering comes from the actions then on
+
+0:51:40.880,0:51:45.560
+the other two examples here I show you
+
+0:51:43.340,0:51:47.510
+that the same actions are not providing
+
+0:51:45.560,0:51:49.300
+the same amount of steering now that I
+
+0:51:47.510,0:51:52.700
+had sample different latent variables
+
+0:51:49.300,0:51:54.980
+nevertheless if I use the you know exact
+
+0:51:52.700,0:51:57.470
+same latent variable all the steering
+
+0:51:54.980,0:52:02.480
+happens because of the latent variable
+
+0:51:57.470,0:52:04.760
+so my decoder will tell me if in my
+
+0:52:02.480,0:52:06.530
+network that things were turning just
+
+0:52:04.760,0:52:08.450
+because they have been encoded in the
+
+0:52:06.530,0:52:10.810
+latent variable rather than in the
+
+0:52:08.450,0:52:10.810
+action
+
+0:52:11.440,0:52:17.260
+all I can I think I was clear clear but
+
+0:52:15.640,0:52:19.810
+let me show you how we fix this
+
+0:52:17.260,0:52:22.390
+maybe oh is it is it clear what I'm
+
+0:52:19.810,0:52:24.250
+trying to show you yeah that was much
+
+0:52:22.390,0:52:27.730
+better so okay thank you see
+
+0:52:24.250,0:52:30.640
+but repeating we say repetitive and it's
+
+0:52:27.730,0:52:34.150
+in Latin repetition helps that's why you
+
+0:52:30.640,0:52:35.860
+had to practice practice practice okay
+
+0:52:34.150,0:52:38.140
+how do you fix the problem the problem
+
+0:52:35.860,0:52:40.030
+is that we have a not a memory leak but
+
+0:52:38.140,0:52:42.850
+information leak right the information
+
+0:52:40.030,0:52:45.940
+leaks from the from the future well it's
+
+0:52:42.850,0:52:49.390
+a bit late all right so how do we fix
+
+0:52:45.940,0:52:52.230
+this problem we fix this problem by
+
+0:52:49.390,0:52:54.670
+simply dropping out this latent and
+
+0:52:52.230,0:52:57.520
+picking it and sampling from the prior
+
+0:52:54.670,0:53:00.070
+distribution at random okay so we don't
+
+0:52:57.520,0:53:03.040
+always rely on the output of the
+
+0:53:00.070,0:53:04.510
+posterior network the encoder but
+
+0:53:03.040,0:53:06.940
+sometimes we pick from the posterior
+
+0:53:04.510,0:53:09.490
+from the prior in this way you can't
+
+0:53:06.940,0:53:10.900
+encode the rotation anymore in the
+
+0:53:09.490,0:53:12.790
+latent variable because sometimes it
+
+0:53:10.900,0:53:16.270
+will be missing and therefore the
+
+0:53:12.790,0:53:19.870
+network will be having to you know
+
+0:53:16.270,0:53:22.060
+exploit the action you provide so in
+
+0:53:19.870,0:53:24.640
+this case the purple on the right hand
+
+0:53:22.060,0:53:27.190
+side I show you two different sets of
+
+0:53:24.640,0:53:29.200
+latent variable but the real actions
+
+0:53:27.190,0:53:31.840
+okay and this network has been trained
+
+0:53:29.200,0:53:34.060
+with this dropout trick in so in this
+
+0:53:31.840,0:53:36.430
+case you can see that the rotation is
+
+0:53:34.060,0:53:39.100
+actually encoded by the action and no
+
+0:53:36.430,0:53:42.600
+longer by the latent variables as it was
+
+0:53:39.100,0:53:45.610
+the case before so we fix this problem I
+
+0:53:42.600,0:53:48.700
+think I should be speeding slightly a
+
+0:53:45.610,0:53:51.250
+little because we're kind of running way
+
+0:53:48.700,0:53:53.610
+too late so sorry I didn't know sit
+
+0:53:51.250,0:53:53.610
+notice
+
+0:53:59.880,0:54:06.599
+but okay what how do we train the agent
+
+0:54:03.180,0:54:09.059
+well this is pretty much what I said
+
+0:54:06.599,0:54:11.430
+before on the right hand side we learned
+
+0:54:09.059,0:54:14.099
+so far the the model of the world from
+
+0:54:11.430,0:54:16.019
+the real world on the left hand side
+
+0:54:14.099,0:54:21.150
+you're gonna be training this agent
+
+0:54:16.019,0:54:23.819
+through using this predictive model so
+
+0:54:21.150,0:54:25.470
+we have the agent which picks a initial
+
+0:54:23.819,0:54:27.599
+state the initial condition right
+
+0:54:25.470,0:54:31.710
+position velocity in those context
+
+0:54:27.599,0:54:33.029
+images and gives you a control an action
+
+0:54:31.710,0:54:35.119
+which is the acceleration in the
+
+0:54:33.029,0:54:39.109
+longitudinal direction and the
+
+0:54:35.119,0:54:43.380
+acceleration in the transverse direction
+
+0:54:39.109,0:54:45.569
+alright so how does it work so this is
+
+0:54:43.380,0:54:47.240
+how we train we have a state we feed a
+
+0:54:45.569,0:54:50.190
+state to the policy you get an action
+
+0:54:47.240,0:54:52.680
+then you feed both of them to the world
+
+0:54:50.190,0:54:54.900
+model right what does the model tell you
+
+0:54:52.680,0:54:57.720
+well you need to provide some you know
+
+0:54:54.900,0:55:00.619
+latent variable we also some possible
+
+0:54:57.720,0:55:04.410
+way that the future can you know evolve
+
+0:55:00.619,0:55:08.460
+then you get a prediction cool you feed
+
+0:55:04.410,0:55:11.849
+a prediction to these laws where the
+
+0:55:08.460,0:55:15.390
+lost is gonna be my cost of the task I'm
+
+0:55:11.849,0:55:17.640
+trying to accomplish in my case is gonna
+
+0:55:15.390,0:55:19.170
+be the summation of the proximity cost
+
+0:55:17.640,0:55:21.690
+the one that is telling me how close I
+
+0:55:19.170,0:55:24.359
+am to other vehicles plus some kind of
+
+0:55:21.690,0:55:27.569
+you know cost associated to the beam in
+
+0:55:24.359,0:55:29.249
+the center of the lane cool so in the
+
+0:55:27.569,0:55:31.619
+next state I I send it to the network
+
+0:55:29.249,0:55:34.019
+then the policy I get the next action I
+
+0:55:31.619,0:55:36.480
+feed both of them to the world model you
+
+0:55:34.019,0:55:39.259
+get the latent variable you get a new
+
+0:55:36.480,0:55:42.630
+prediction you send this to the loss and
+
+0:55:39.259,0:55:47.069
+more prediction like policy world model
+
+0:55:42.630,0:55:50.369
+latent variable next guy loss and finish
+
+0:55:47.069,0:55:55.339
+you do a back propagation to train the
+
+0:55:50.369,0:55:55.339
+policy model and doesn't work [ __ ]
+
+0:55:56.450,0:56:03.740
+what happened so we are basically
+
+0:55:59.550,0:56:07.740
+falling outside a manifold the policy
+
+0:56:03.740,0:56:10.290
+manages to you know crank up those
+
+0:56:07.740,0:56:13.940
+actions and give predictions that are
+
+0:56:10.290,0:56:19.050
+all black and all black is good because
+
+0:56:13.940,0:56:21.180
+zero cost right so that's bad okay so
+
+0:56:19.050,0:56:22.950
+here we actually went outside the road
+
+0:56:21.180,0:56:25.590
+and here we actually collided in two
+
+0:56:22.950,0:56:27.780
+other vehicles so let's maybe try to
+
+0:56:25.590,0:56:30.869
+imitate other vehicles so how do you do
+
+0:56:27.780,0:56:32.609
+that well you can say that the loss is
+
+0:56:30.869,0:56:36.260
+gonna be you know the task that we were
+
+0:56:32.609,0:56:38.970
+trying to accomplish plus some you know
+
+0:56:36.260,0:56:39.690
+regularizer which is you know expert
+
+0:56:38.970,0:56:42.119
+regularizer
+
+0:56:39.690,0:56:46.290
+what is this stuff so here you try also
+
+0:56:42.119,0:56:48.750
+to get the prediction by you know that
+
+0:56:46.290,0:56:50.580
+you would get by taking a specific
+
+0:56:48.750,0:56:53.670
+action as close as possible to the
+
+0:56:50.580,0:56:56.400
+action the actual future so you do that
+
+0:56:53.670,0:56:58.380
+for everyone but in this case you
+
+0:56:56.400,0:57:01.320
+actually have to kind of remove this
+
+0:56:58.380,0:57:03.180
+latent variable because the latent
+
+0:57:01.320,0:57:05.940
+variable gives you a specific prediction
+
+0:57:03.180,0:57:09.660
+it works better if you just work with
+
+0:57:05.940,0:57:11.220
+the average prediction we trained
+
+0:57:09.660,0:57:13.730
+evaluation of the encoder to just remove
+
+0:57:11.220,0:57:15.869
+it hmm does it work actually yeah
+
+0:57:13.730,0:57:18.420
+imitating the expert work so this is
+
+0:57:15.869,0:57:20.280
+kind of imitation learning but imitation
+
+0:57:18.420,0:57:23.099
+learning with you know model day so I
+
+0:57:20.280,0:57:24.930
+mean model basing imitation learning you
+
+0:57:23.099,0:57:28.530
+use your brain in order to try to
+
+0:57:24.930,0:57:30.330
+imitate others all right can we do
+
+0:57:28.530,0:57:33.990
+better yes we can do better and that's
+
+0:57:30.330,0:57:36.390
+going to be the end of the class so how
+
+0:57:33.990,0:57:38.330
+can we add a different kind of manifold
+
+0:57:36.390,0:57:43.650
+attractor what am I talking about here
+
+0:57:38.330,0:57:46.320
+so forward model uncertainty so my
+
+0:57:43.650,0:57:48.599
+predictive model outputs a prediction
+
+0:57:46.320,0:57:51.599
+given you know a state and the action
+
+0:57:48.599,0:57:55.130
+and then I have my cost here so this is
+
+0:57:51.599,0:57:58.210
+for example my cost the point is that
+
+0:57:55.130,0:58:01.330
+you know there are
+
+0:57:58.210,0:58:04.570
+always this cost can go whenever you're
+
+0:58:01.330,0:58:06.490
+outside the training region the one with
+
+0:58:04.570,0:58:08.380
+the red points right so if you are
+
+0:58:06.490,0:58:11.020
+within the red points as I show you in
+
+0:58:08.380,0:58:13.180
+the lab number three when we were doing
+
+0:58:11.020,0:58:15.490
+regression if you're within this
+
+0:58:13.180,0:58:17.619
+training region you have zero variance
+
+0:58:15.490,0:58:20.170
+right across those points is it go away
+
+0:58:17.619,0:58:24.430
+from those training region the variance
+
+0:58:20.170,0:58:28.780
+increases right guess what the variance
+
+0:58:24.430,0:58:31.660
+is differentiable let's run within
+
+0:58:28.780,0:58:35.170
+descent so we can try to run gradient
+
+0:58:31.660,0:58:39.150
+descent over the variance and yeah so
+
+0:58:35.170,0:58:42.359
+you minimize the variance by using SGD
+
+0:58:39.150,0:58:46.330
+so this is my uncertainty regularizer
+
+0:58:42.359,0:58:49.480
+so I have my predicted my policy which
+
+0:58:46.330,0:58:52.180
+is feeding my you know action to the
+
+0:58:49.480,0:58:55.839
+world model you get this latent variable
+
+0:58:52.180,0:58:57.700
+here and you get a prediction also you
+
+0:58:55.839,0:59:00.130
+get the task cost here which is you know
+
+0:58:57.700,0:59:04.270
+the minimization of the lane and
+
+0:59:00.130,0:59:06.250
+proximity cost yep in there you actually
+
+0:59:04.270,0:59:08.440
+can get several models or you can use
+
+0:59:06.250,0:59:10.990
+some the drop out trick we haven't
+
+0:59:08.440,0:59:14.320
+talked about but you can leave the drop
+
+0:59:10.990,0:59:17.320
+out on during inference such that you
+
+0:59:14.320,0:59:19.559
+can have multiple predictions and now
+
+0:59:17.320,0:59:22.859
+you can compute the variance
+
+0:59:19.559,0:59:24.989
+right of these predictions and you
+
+0:59:22.859,0:59:29.729
+multiply by a thing whatever a lambda
+
+0:59:24.989,0:59:31.680
+scaler and then my model uncertainty
+
+0:59:29.729,0:59:35.069
+regularizer leave some of the two and
+
+0:59:31.680,0:59:38.689
+you get the final loss to optimize and
+
+0:59:35.069,0:59:41.699
+that's it so that's the whole model
+
+0:59:38.689,0:59:42.390
+where the final loss is going to be my
+
+0:59:41.699,0:59:46.140
+DC task
+
+0:59:42.390,0:59:48.479
+plus this uncertainty this slides are
+
+0:59:46.140,0:59:52.259
+going to be in the next slide I give you
+
+0:59:48.479,0:59:54.059
+the links so in this one I show you in
+
+0:59:52.259,0:59:56.459
+pink that they actually managed to learn
+
+0:59:54.059,0:59:58.380
+how to drive by minimizing the
+
+0:59:56.459,1:00:00.509
+uncertainty of the predictive model so
+
+0:59:58.380,1:00:02.939
+the action takes an taken by the policy
+
+1:00:00.509,1:00:05.910
+are minimizing the uncertainty with
+
+1:00:02.939,1:00:08.880
+which the predictive network makes
+
+1:00:05.910,1:00:13.380
+predictions right what a mouthful but it
+
+1:00:08.880,1:00:16.109
+works very well and evaluation I'll show
+
+1:00:13.380,1:00:18.809
+you just very quickly here in the yellow
+
+1:00:16.109,1:00:22.109
+is the original car and the blue is the
+
+1:00:18.809,1:00:24.059
+car controlled by our policy which got
+
+1:00:22.109,1:00:27.779
+lost because they already the other guy
+
+1:00:24.059,1:00:30.390
+got you know went to a different path so
+
+1:00:27.779,1:00:32.579
+our blue guy here has to survive this
+
+1:00:30.390,1:00:34.559
+jungle of other cars they cannot see us
+
+1:00:32.579,1:00:37.589
+right so in this case we are slightly
+
+1:00:34.559,1:00:40.019
+ahead slightly behind slightly we are
+
+1:00:37.589,1:00:42.209
+accelerating a lot and we survived in
+
+1:00:40.019,1:00:44.759
+the other case is well we are the blue
+
+1:00:42.209,1:00:48.209
+guy the yellow one is the original guy
+
+1:00:44.759,1:00:50.279
+in the in the data and oh we again
+
+1:00:48.209,1:00:53.099
+managed to diverge from the original
+
+1:00:50.279,1:00:57.689
+trajectory but we still survive until
+
+1:00:53.099,1:01:00.599
+the end and slides as we were mentioning
+
+1:00:57.689,1:01:02.759
+so okay this is like a summary of the
+
+1:01:00.599,1:01:04.410
+whole thing model predictive policy
+
+1:01:02.759,1:01:06.689
+learning with uncertainty repolarization
+
+1:01:04.410,1:01:10.349
+for driving during dense traffic you
+
+1:01:06.689,1:01:13.049
+should have understand everything now so
+
+1:01:10.349,1:01:14.910
+model prediction like okay and just you
+
+1:01:13.049,1:01:17.279
+have the four different points that are
+
+1:01:14.910,1:01:19.890
+uncertain in the regularizer letting
+
+1:01:17.279,1:01:23.969
+dropout large-scale data set and then
+
+1:01:19.890,1:01:26.900
+you have the additional cost for you
+
+1:01:23.969,1:01:28.970
+know trying to mimic the experts
+
+1:01:26.900,1:01:32.210
+information and these are the links for
+
+1:01:28.970,1:01:35.270
+everything so that's the title that's me
+
+1:01:32.210,1:01:37.339
+collaborators are well main authors we
+
+1:01:35.270,1:01:41.000
+are both first outers Micahel and myself
+
+1:01:37.339,1:01:43.190
+and then division slides are here the
+
+1:01:41.000,1:01:46.130
+article is here the code is available on
+
+1:01:43.190,1:01:50.779
+github on my github and this is a
+
+1:01:46.130,1:01:53.180
+website and we also have a poster sorry
+
+1:01:50.779,1:01:56.390
+it'll be running so so so late but I
+
+1:01:53.180,1:01:59.960
+hope you really enjoyed this small
+
+1:01:56.390,1:02:02.450
+project of ours there were so many
+
+1:01:59.960,1:02:05.690
+questions I didn't plan there is another
+
+1:02:02.450,1:02:07.839
+explanation of this there is another
+
+1:02:05.690,1:02:11.329
+explanation of this project on my
+
+1:02:07.839,1:02:15.260
+YouTube Israel is 20 minutes long maybe
+
+1:02:11.329,1:02:17.000
+I've done a better job than today but
+
+1:02:15.260,1:02:20.630
+maybe I did a better job today since I
+
+1:02:17.000,1:02:22.910
+was answering your questions so if there
+
+1:02:20.630,1:02:26.480
+are no other questions we gonna see each
+
+1:02:22.910,1:02:31.369
+other next week and again if someone can
+
+1:02:26.480,1:02:33.200
+help out with the review of last scribes
+
+1:02:31.369,1:02:37.039
+from the lab would be very helpful or
+
+1:02:33.200,1:02:40.730
+because I I have no idea how to deal
+
+1:02:37.039,1:02:42.440
+with this otherwise is the mall is a
+
+1:02:40.730,1:02:44.720
+word model frozen when training the
+
+1:02:42.440,1:02:47.270
+agent yeah as as we have seen last week
+
+1:02:44.720,1:02:49.670
+do we still have time for questions of
+
+1:02:47.270,1:02:51.619
+course any time since when you're
+
+1:02:49.670,1:02:56.710
+training the network since it's kind of
+
+1:02:51.619,1:03:00.369
+like a recurrent architecture are we
+
+1:02:56.710,1:03:06.789
+worried about like vanishing gradients
+
+1:03:00.369,1:03:11.240
+and how do you with with such a complex
+
+1:03:06.789,1:03:13.579
+model how do you like address that all
+
+1:03:11.240,1:03:16.400
+right so it's not that complex as in
+
+1:03:13.579,1:03:18.559
+this is two layer neural net so the
+
+1:03:16.400,1:03:22.630
+policy is very stupid policy like it's
+
+1:03:18.559,1:03:24.980
+very tiny the word model is a bit larger
+
+1:03:22.630,1:03:27.559
+but nevertheless we have batch norm
+
+1:03:24.980,1:03:31.970
+which is keep you know helping out
+
+1:03:27.559,1:03:33.910
+sending things through like the
+
+1:03:31.970,1:03:36.280
+gradients throw and then
+
+1:03:33.910,1:03:37.750
+I think we also used the Samsung
+
+1:03:36.280,1:03:40.869
+receiver connections because those are
+
+1:03:37.750,1:03:45.339
+units yeah so you know the gradients
+
+1:03:40.869,1:03:48.940
+didn't give us big issues for training
+
+1:03:45.339,1:03:50.950
+this model also we are doing 1330 times
+
+1:03:48.940,1:03:53.020
+steps in the future so it was like three
+
+1:03:50.950,1:03:54.849
+seconds in the future given that we
+
+1:03:53.020,1:03:57.369
+start from I think two seconds in the
+
+1:03:54.849,1:03:59.349
+past so we're always like five seconds
+
+1:03:57.369,1:04:03.299
+window temporal window for training the
+
+1:03:59.349,1:04:06.549
+system I didn't quite understand how the
+
+1:04:03.299,1:04:12.760
+when we're doing the latent dropout how
+
+1:04:06.549,1:04:15.599
+that works how that helps us with I
+
+1:04:12.760,1:04:18.039
+guess would you call it like like
+
+1:04:15.599,1:04:21.819
+disentangling the action versus the
+
+1:04:18.039,1:04:23.589
+latent right so the problem was here
+
+1:04:21.819,1:04:26.740
+right so the problem was that the fact
+
+1:04:23.589,1:04:29.650
+that we have access to the future if we
+
+1:04:26.740,1:04:32.980
+make a small tiny change in my steering
+
+1:04:29.650,1:04:34.539
+steering wheel control everything will
+
+1:04:32.980,1:04:38.170
+change which is a very large change
+
+1:04:34.539,1:04:40.329
+right and that MSC will to minimize that
+
+1:04:38.170,1:04:42.789
+MSE you know a lot of information will
+
+1:04:40.329,1:04:45.460
+go through that way because it's a big
+
+1:04:42.789,1:04:47.260
+change right so it's very is a brutal
+
+1:04:45.460,1:04:49.809
+change now and you know if that latent
+
+1:04:47.260,1:04:52.000
+variable that way little Bible will try
+
+1:04:49.809,1:04:55.569
+to to acknowledge the fact that
+
+1:04:52.000,1:04:57.250
+everything changes an 80 just changed
+
+1:04:55.569,1:05:00.490
+slightly right because it's just a tiny
+
+1:04:57.250,1:05:02.770
+change of the steering wheel the problem
+
+1:05:00.490,1:05:04.599
+is that if you're forward if your
+
+1:05:02.770,1:05:08.049
+predictive model on this is called
+
+1:05:04.599,1:05:11.200
+forward model is no longer looking at
+
+1:05:08.049,1:05:13.329
+what is the steering wheel then you know
+
+1:05:11.200,1:05:15.849
+you can steer around but the network
+
+1:05:13.329,1:05:18.039
+will not care about what is your control
+
+1:05:15.849,1:05:20.380
+may instead be you want to have a
+
+1:05:18.039,1:05:22.630
+network that if you steer to the left
+
+1:05:20.380,1:05:27.039
+he's gonna tell you everything steers to
+
+1:05:22.630,1:05:29.230
+the right by the fact that you steer to
+
+1:05:27.039,1:05:31.930
+the left so you had to disentangle this
+
+1:05:29.230,1:05:34.809
+and to fix that the thing that really
+
+1:05:31.930,1:05:37.869
+worked very well was this one which was
+
+1:05:34.809,1:05:40.210
+basically half of the time or maybe we
+
+1:05:37.869,1:05:42.069
+had some shading I forgot but you know
+
+1:05:40.210,1:05:44.600
+some some times instead of you know
+
+1:05:42.069,1:05:47.420
+sampling the latent variable
+
+1:05:44.600,1:05:50.270
+while training these automation of
+
+1:05:47.420,1:05:52.790
+encoder instead of sampling it all the
+
+1:05:50.270,1:05:54.200
+time from your encoder sometimes it's
+
+1:05:52.790,1:05:59.960
+just simple from the prior distribution
+
+1:05:54.200,1:06:02.180
+in this way rotation in the future
+
+1:05:59.960,1:06:05.680
+cannot be explained by the latent
+
+1:06:02.180,1:06:13.940
+variable therefore there must be a path
+
+1:06:05.680,1:06:16.310
+that connects the action to the future
+
+1:06:13.940,1:06:18.380
+state right so if you break this arrow
+
+1:06:16.310,1:06:20.360
+you have to break this arm if I do this
+
+1:06:18.380,1:06:22.460
+switching between this one and the other
+
+1:06:20.360,1:06:24.890
+you basically Blake you break this arrow
+
+1:06:22.460,1:06:27.380
+for you know a fraction of the
+
+1:06:24.890,1:06:30.050
+iterations and therefore the arrow will
+
+1:06:27.380,1:06:33.140
+not actually subsist because it cannot
+
+1:06:30.050,1:06:34.730
+use it right to make a prediction if
+
+1:06:33.140,1:06:37.040
+sometimes it happens sometimes it
+
+1:06:34.730,1:06:39.080
+doesn't happen the network always sees
+
+1:06:37.040,1:06:42.140
+this action right this action is gonna
+
+1:06:39.080,1:06:44.090
+be always turning left turn right that
+
+1:06:42.140,1:06:47.840
+are mystically determing the fact that
+
+1:06:44.090,1:06:50.320
+is steer to the left to the right this
+
+1:06:47.840,1:06:54.320
+is kind of a way to make the network
+
+1:06:50.320,1:06:56.140
+like see the action when it's performing
+
+1:06:54.320,1:06:58.940
+the training yeah this was a big issue
+
+1:06:56.140,1:07:00.470
+without these things it doesn't work
+
+1:06:58.940,1:07:03.350
+because you would have a network which
+
+1:07:00.470,1:07:05.030
+is not carrying at all something nice
+
+1:07:03.350,1:07:08.180
+you can do is gonna be like adversarial
+
+1:07:05.030,1:07:09.920
+adversarial something you want to want
+
+1:07:08.180,1:07:12.710
+to get a network which is gonna be
+
+1:07:09.920,1:07:14.960
+killing you like if the future changed
+
+1:07:12.710,1:07:16.910
+because of the action or not and it said
+
+1:07:14.960,1:07:19.700
+the prior distribution for the latent
+
+1:07:16.910,1:07:23.360
+variable is just like a Gaussian normal
+
+1:07:19.700,1:07:25.220
+okay all right cool thank you so much
+
+1:07:23.360,1:07:28.280
+Yan keeps saying that we sample from
+
+1:07:25.220,1:07:30.530
+zero that was the previous previous
+
+1:07:28.280,1:07:33.980
+version where we actually didn't even
+
+1:07:30.530,1:07:37.280
+have a variational encoder and we had
+
+1:07:33.980,1:07:40.100
+just a encoder which was encoding the
+
+1:07:37.280,1:07:42.320
+mean so we we didn't have the same thing
+
+1:07:40.100,1:07:44.360
+module we didn't have the variance just
+
+1:07:42.320,1:07:45.890
+we had an encoder which was just giving
+
+1:07:44.360,1:07:50.270
+me this latent so that was the previous
+
+1:07:45.890,1:07:52.970
+version no sampling no V you just F ank
+
+1:07:50.270,1:07:54.380
+you encode this guy and so sometimes you
+
+1:07:52.970,1:07:57.339
+were getting it from the encoder and
+
+1:07:54.380,1:07:58.979
+sometimes you were picking it from zero
+
+1:07:57.339,1:08:01.930
+because we trained this first branch
+
+1:07:58.979,1:08:03.539
+with this guy that was not here right so
+
+1:08:01.930,1:08:11.200
+we first trained this stuff
+
+1:08:03.539,1:08:13.690
+deterministically which is or is it here
+
+1:08:11.200,1:08:16.659
+so initially we trained these which
+
+1:08:13.690,1:08:19.299
+means set Z to 0 right so if you set the
+
+1:08:16.659,1:08:21.369
+Z to 0 there you go you get this back
+
+1:08:19.299,1:08:24.759
+deterministic so basically whenever you
+
+1:08:21.369,1:08:26.980
+do this dropouts trick you switch back
+
+1:08:24.759,1:08:29.650
+and forth between the deterministic and
+
+1:08:26.980,1:08:31.710
+the stochastic version of the predictive
+
+1:08:29.650,1:08:36.549
+model
+
+1:08:31.710,1:08:38.589
+kula sounds crazy I think well yeah I I
+
+1:08:36.549,1:08:40.750
+think you should be able to digest this
+
+1:08:38.589,1:08:46.390
+stuff because you're good you're good
+
+1:08:40.750,1:08:50.679
+students it might interest you more
+
+1:08:46.390,1:08:52.660
+questions yeah al yeah so I wanted I
+
+1:08:50.679,1:08:55.330
+just wanted to check my understanding of
+
+1:08:52.660,1:08:57.310
+latent variable models
+
+1:08:55.330,1:08:58.779
+it seems that different models use
+
+1:08:57.310,1:09:02.290
+latent variables for different
+
+1:08:58.779,1:09:03.759
+objectives like the auto encoder uses it
+
+1:09:02.290,1:09:07.449
+to learn a low dimensional
+
+1:09:03.759,1:09:09.640
+representation then we AE the
+
+1:09:07.449,1:09:11.770
+variational auto encoder builds on it to
+
+1:09:09.640,1:09:14.170
+regularize the latent space so that it
+
+1:09:11.770,1:09:18.069
+can randomly sample from the Nathan
+
+1:09:14.170,1:09:20.230
+space and then Gans and the model that
+
+1:09:18.069,1:09:24.370
+we just studied they use it to introduce
+
+1:09:20.230,1:09:28.089
+randomness so that when we have the same
+
+1:09:24.370,1:09:33.120
+input and different outcomes the network
+
+1:09:28.089,1:09:38.049
+doesn't have to output an average of the
+
+1:09:33.120,1:09:41.560
+predictions and so basically here we are
+
+1:09:38.049,1:09:43.989
+using latent space to provide more
+
+1:09:41.560,1:09:46.719
+dimension led to the input to introduce
+
+1:09:43.989,1:09:50.710
+randomness to the input so in this case
+
+1:09:46.719,1:09:56.350
+we have this latent variable to account
+
+1:09:50.710,1:09:58.989
+for what cannot be account from the past
+
+1:09:56.350,1:10:02.080
+array so the point is that you know not
+
+1:09:58.989,1:10:03.730
+everything is predictable and so if you
+
+1:10:02.080,1:10:06.130
+cannot predict everything you're gonna
+
+1:10:03.730,1:10:08.530
+make some errors so this latent variable
+
+1:10:06.130,1:10:11.550
+allow you to tune your algorithm to
+
+1:10:08.530,1:10:14.410
+actually you know zero out that error
+
+1:10:11.550,1:10:16.120
+and later on you can sample this latent
+
+1:10:14.410,1:10:17.770
+variable in order to get you know proper
+
+1:10:16.120,1:10:19.179
+predictions so without the laden bag
+
+1:10:17.770,1:10:22.210
+what you are getting that you know
+
+1:10:19.179,1:10:25.660
+masked version of the prediction it's
+
+1:10:22.210,1:10:28.270
+blurry prediction instead in order to
+
+1:10:25.660,1:10:32.020
+get you know Chris predictions you want
+
+1:10:28.270,1:10:36.730
+to refine your average prediction to the
+
+1:10:32.020,1:10:38.500
+specific case you have at hand right got
+
+1:10:36.730,1:10:40.510
+it so it is basically using it to add
+
+1:10:38.500,1:10:41.860
+dimensionality to the input to make
+
+1:10:40.510,1:10:44.350
+things more specific
+
+1:10:41.860,1:10:44.740
+I wouldn't say dimensionizer to the
+
+1:10:44.350,1:10:47.380
+import
+
+1:10:44.740,1:10:48.850
+I would say you add latent variables in
+
+1:10:47.380,1:10:51.850
+order to provide the missing information
+
+1:10:48.850,1:10:54.630
+that would be required for you to make a
+
+1:10:51.850,1:10:58.570
+proper prediction got it
+
+1:10:54.630,1:11:03.360
+good thank you of course more questions
+
+1:10:58.570,1:11:06.250
+I know it's so it's so late I'm taking
+
+1:11:03.360,1:11:13.860
+this was very extreme extremely lengthy
+
+1:11:06.250,1:11:17.550
+class I feel sorry more questions I
+
+1:11:13.860,1:11:18.730
+can't see you hold on stop share screen
+
+1:11:17.550,1:11:22.930
+okay
+
+1:11:18.730,1:11:28.990
+Oh 50 people still here okay what do you
+
+1:11:22.930,1:11:31.810
+want to know else I also want to check
+
+1:11:28.990,1:11:34.540
+my understanding for later was correct
+
+1:11:31.810,1:11:37.410
+so today tomorrow will tell us something
+
+1:11:34.540,1:11:40.960
+that we cannot predict from the future
+
+1:11:37.410,1:11:43.240
+but you just said if we turn lab
+
+1:11:40.960,1:11:45.490
+everything would be like to our right
+
+1:11:43.240,1:11:47.980
+but you don't want me to tell this
+
+1:11:45.490,1:11:51.490
+information you want this information
+
+1:11:47.980,1:11:53.710
+all it comes from our action yeah
+
+1:11:51.490,1:11:56.290
+exactly because if you if you if you
+
+1:11:53.710,1:11:57.670
+steer to their left everything will turn
+
+1:11:56.290,1:11:59.650
+to the right right if you if you're
+
+1:11:57.670,1:12:02.200
+riding a bicycle and you're doing like
+
+1:11:59.650,1:12:04.660
+that you're gonna go you exactly know
+
+1:12:02.200,1:12:06.460
+how you will evolve right you don't know
+
+1:12:04.660,1:12:08.350
+if you're gonna be crashing into someone
+
+1:12:06.460,1:12:10.320
+and that's gonna be taken care by the
+
+1:12:08.350,1:12:14.890
+latent variable and which is gonna be
+
+1:12:10.320,1:12:18.760
+you know patching your wrong prediction
+
+1:12:14.890,1:12:20.740
+due to unforeseen events but everything
+
+1:12:18.760,1:12:23.260
+that is you know predictable should be
+
+1:12:20.740,1:12:25.300
+done by the deterministic branch such
+
+1:12:23.260,1:12:26.650
+that you use the past information to
+
+1:12:25.300,1:12:28.450
+determine what's happening next
+
+1:12:26.650,1:12:31.030
+but then you can't really name so it's
+
+1:12:28.450,1:12:35.560
+like you know you're gonna be me trying
+
+1:12:31.030,1:12:38.560
+to touch the calm web web-cam here but
+
+1:12:35.560,1:12:40.630
+then there is some wind because I open
+
+1:12:38.560,1:12:42.460
+the window so I go here and it goes
+
+1:12:40.630,1:12:45.700
+there I go here and it goes here right
+
+1:12:42.460,1:12:48.760
+so if there is a additional component it
+
+1:12:45.700,1:12:50.770
+is like moving my hand I will have to
+
+1:12:48.760,1:12:53.050
+deal with that for the specific case so
+
+1:12:50.770,1:12:57.310
+I can only go here given that I know
+
+1:12:53.050,1:12:58.570
+that my finger will go forward from the
+
+1:12:57.310,1:13:00.190
+past to the future I
+
+1:12:58.570,1:13:02.950
+exactly nowhere to go but if there are
+
+1:13:00.190,1:13:05.350
+additional you know inputs that are not
+
+1:13:02.950,1:13:08.830
+under my control then you will not be
+
+1:13:05.350,1:13:11.470
+able to make accurate predictions unless
+
+1:13:08.830,1:13:14.650
+you have some knowledge it's like okay
+
+1:13:11.470,1:13:16.630
+like going back to the example yan makes
+
+1:13:14.650,1:13:18.610
+all the time with a pencil right so the
+
+1:13:16.630,1:13:20.160
+pen is gonna be falling one direction
+
+1:13:18.610,1:13:22.840
+let me get the pens
+
+1:13:20.160,1:13:25.570
+get the pen if you let it go it's gonna
+
+1:13:22.840,1:13:27.460
+be falling in one direction goes another
+
+1:13:25.570,1:13:32.020
+direction goes the third direction right
+
+1:13:27.460,1:13:34.780
+so you can first learn you know massive
+
+1:13:32.020,1:13:37.450
+Network which is learning the dynamics
+
+1:13:34.780,1:13:41.320
+of falling right so you learn how a pen
+
+1:13:37.450,1:13:42.970
+falls down the only little information
+
+1:13:41.320,1:13:44.920
+you know - you need to know that you
+
+1:13:42.970,1:13:47.320
+can't know in advance is in which
+
+1:13:44.920,1:13:51.040
+direction it will fall so you're gonna
+
+1:13:47.320,1:13:54.700
+have the big ass Network learning the
+
+1:13:51.040,1:13:56.770
+folding dynamics and then the last
+
+1:13:54.700,1:13:58.900
+minimal amount of information that is
+
+1:13:56.770,1:14:02.820
+missing is in which direction you should
+
+1:13:58.900,1:14:05.770
+actually you know initiate this folding
+
+1:14:02.820,1:14:09.550
+trajectory right so this is how it works
+
+1:14:05.770,1:14:12.460
+bid network to learn the big bulk of
+
+1:14:09.550,1:14:13.810
+prediction little tiny little variable
+
+1:14:12.460,1:14:15.640
+right so this latent variable again I
+
+1:14:13.810,1:14:18.220
+said is something like 16 dimensions
+
+1:14:15.640,1:14:20.980
+it's very tiny like a very short vector
+
+1:14:18.220,1:14:24.720
+which is just providing you the missing
+
+1:14:20.980,1:14:28.060
+information to make a sharp prediction
+
+1:14:24.720,1:14:30.220
+okay okay so to avoid the latent
+
+1:14:28.060,1:14:32.950
+variable to tell us information that
+
+1:14:30.220,1:14:35.290
+should be predictable we are trying to
+
+1:14:32.950,1:14:40.060
+approach the regularization term the KO
+
+1:14:35.290,1:14:45.310
+term from with the help of prior okay so
+
+1:14:40.060,1:14:49.510
+yes so the KL term it's necessary for
+
+1:14:45.310,1:14:51.190
+you otherwise things will explode as we
+
+1:14:49.510,1:14:53.950
+have seen in class right if you don't
+
+1:14:51.190,1:14:55.660
+have the KL this prediction will go as
+
+1:14:53.950,1:14:59.140
+far as possible because they don't want
+
+1:14:55.660,1:15:00.550
+to overlap the second term is going to
+
+1:14:59.140,1:15:02.680
+be the actual network will try to
+
+1:15:00.550,1:15:05.110
+collapse them right so whenever you
+
+1:15:02.680,1:15:08.230
+introduce this KL you enforce the bubble
+
+1:15:05.110,1:15:10.180
+to be having variants of one and also
+
+1:15:08.230,1:15:12.460
+all the mean to be close to zero such
+
+1:15:10.180,1:15:16.510
+that you feel that you know
+
+1:15:12.460,1:15:18.910
+fear with little bubbles and then later
+
+1:15:16.510,1:15:21.910
+on given that now all these fears are
+
+1:15:18.910,1:15:23.469
+within this bubble you can simple from
+
+1:15:21.910,1:15:25.770
+you know a Gaussian distribution like a
+
+1:15:23.469,1:15:30.610
+normal distribution from the same size
+
+1:15:25.770,1:15:33.160
+so that's why we use the KL the part
+
+1:15:30.610,1:15:34.780
+that allows you to be you know if you if
+
+1:15:33.160,1:15:36.870
+you have like if you put a lot of
+
+1:15:34.780,1:15:39.160
+strength on the KL you are going to be
+
+1:15:36.870,1:15:44.790
+also reducing the amount of information
+
+1:15:39.160,1:15:47.260
+so you can use that KL as a term to
+
+1:15:44.790,1:15:49.150
+reduce the amount of information coming
+
+1:15:47.260,1:15:53.410
+from the future so that's definitely one
+
+1:15:49.150,1:15:56.650
+way of regularizing the the latent
+
+1:15:53.410,1:15:59.290
+variable the other way is also the other
+
+1:15:56.650,1:16:01.420
+the other trick we are using is the drop
+
+1:15:59.290,1:16:03.340
+out streak for the latent which is
+
+1:16:01.420,1:16:05.969
+sometimes you know sampling completely
+
+1:16:03.340,1:16:11.140
+from the prior and such that now the
+
+1:16:05.969,1:16:13.180
+backbone the the big massive network the
+
+1:16:11.140,1:16:16.239
+deterministic one cannot rely on
+
+1:16:13.180,1:16:19.239
+information it is you know not always
+
+1:16:16.239,1:16:22.150
+present right okay and all this happen
+
+1:16:19.239,1:16:25.090
+in the training stage of the predictive
+
+1:16:22.150,1:16:30.820
+model yeah okay okay yeah thank you
+
+1:16:25.090,1:16:33.310
+thank you so much yeah yeah could you so
+
+1:16:30.820,1:16:37.510
+regarding that forward model uncertainty
+
+1:16:33.310,1:16:40.980
+is that uncertainty that comes from like
+
+1:16:37.510,1:16:44.860
+trying to predict more in the future or
+
+1:16:40.980,1:16:47.500
+so the uncertainty there I I think I
+
+1:16:44.860,1:16:49.510
+went a little faster the uncertainty
+
+1:16:47.500,1:16:50.980
+coming there is the fact that you know
+
+1:16:49.510,1:16:55.150
+whenever you have your policy
+
+1:16:50.980,1:16:57.850
+trying to control the other guy you can
+
+1:16:55.150,1:16:59.560
+you know press a lot the acceleration or
+
+1:16:57.850,1:17:00.910
+you can you know steer completely like
+
+1:16:59.560,1:17:03.070
+crazy
+
+1:17:00.910,1:17:05.770
+and if you give yeah you know some
+
+1:17:03.070,1:17:09.640
+actions that are far from the training
+
+1:17:05.770,1:17:14.170
+domain of that policy different policies
+
+1:17:09.640,1:17:16.360
+will reply will will respond in a
+
+1:17:14.170,1:17:20.860
+different way right because if you train
+
+1:17:16.360,1:17:24.160
+several models on the same training data
+
+1:17:20.860,1:17:26.470
+and then you test this multiple models
+
+1:17:24.160,1:17:28.270
+train on this data outside
+
+1:17:26.470,1:17:30.970
+the training interval let's say let's
+
+1:17:28.270,1:17:34.120
+say this is oh I cannot speak with a pen
+
+1:17:30.970,1:17:36.250
+in the mouth interval right and then we
+
+1:17:34.120,1:17:39.010
+had the you know a your test on our
+
+1:17:36.250,1:17:41.140
+fryer here right so if you in this
+
+1:17:39.010,1:17:43.630
+training interval here all the model
+
+1:17:41.140,1:17:46.660
+will agree and therefore the variance
+
+1:17:43.630,1:17:49.750
+across this training interval will be
+
+1:17:46.660,1:17:51.430
+very tiny as you go away from the
+
+1:17:49.750,1:17:55.060
+training interval the variance will
+
+1:17:51.430,1:17:57.280
+increase right the nice part is now that
+
+1:17:55.060,1:18:00.160
+given that this variance is you know
+
+1:17:57.280,1:18:04.060
+it's a scalar value you can minimize the
+
+1:18:00.160,1:18:06.790
+variance by having the action going from
+
+1:18:04.060,1:18:07.570
+clear draw here because here the
+
+1:18:06.790,1:18:09.160
+variance is tiny
+
+1:18:07.570,1:18:11.740
+right the variance here is minimum and
+
+1:18:09.160,1:18:14.920
+here the variance is very large so you
+
+1:18:11.740,1:18:19.210
+can have actions that might great in
+
+1:18:14.920,1:18:21.820
+your action space such that the variance
+
+1:18:19.210,1:18:26.320
+is minimized right so your variance now
+
+1:18:21.820,1:18:30.610
+is your loss you do gradient descent in
+
+1:18:26.320,1:18:32.970
+action space for variance minimization
+
+1:18:30.610,1:18:35.110
+and therefore you can travel no in this
+
+1:18:32.970,1:18:36.580
+action space which actually is to the
+
+1:18:35.110,1:18:38.260
+arc is actually two dimensional right
+
+1:18:36.580,1:18:40.990
+it's so cool so you have you know X
+
+1:18:38.260,1:18:43.630
+Direction y direction you have the day
+
+1:18:40.990,1:18:45.520
+the hill in this case you can plot the
+
+1:18:43.630,1:18:48.400
+variance right so if the variance goes
+
+1:18:45.520,1:18:50.800
+up here you can go in the center down
+
+1:18:48.400,1:18:54.190
+such that in this region where the
+
+1:18:50.800,1:18:57.670
+variance is low you know that all these
+
+1:18:54.190,1:19:00.190
+different models will agree for the
+
+1:18:57.670,1:19:05.820
+future predictions therefore and those
+
+1:19:00.190,1:19:09.970
+actions are coming from you know safe
+
+1:19:05.820,1:19:11.890
+Riaan right the actions are now coming
+
+1:19:09.970,1:19:14.560
+from more like the training points
+
+1:19:11.890,1:19:16.840
+rather than outside point a training
+
+1:19:14.560,1:19:18.490
+region let's say this way yeah right
+
+1:19:16.840,1:19:22.510
+okay thank you
+
+1:19:18.490,1:19:23.140
+of course more questions ask me
+
+1:19:22.510,1:19:28.480
+everything
+
+1:19:23.140,1:19:29.340
+Emma Emma how do you say MEA all right
+
+1:19:28.480,1:19:31.530
+mark
+
+1:19:29.340,1:19:34.409
+you're done am I gonna be cooking dinner
+
+1:19:31.530,1:19:37.230
+I have one question
+
+1:19:34.409,1:19:39.090
+so suppose we change the context of this
+
+1:19:37.230,1:19:41.130
+problem from regression to some
+
+1:19:39.090,1:19:43.020
+classification problem for example water
+
+1:19:41.130,1:19:44.670
+predict are we going to crash or not or
+
+1:19:43.020,1:19:46.440
+if you want to predict is there high
+
+1:19:44.670,1:19:48.630
+traffic or not then will the
+
+1:19:46.440,1:19:49.290
+effectiveness of latent variables still
+
+1:19:48.630,1:19:52.590
+be present
+
+1:19:49.290,1:19:54.510
+like would latent variables improve the
+
+1:19:52.590,1:19:57.360
+model even if it were a classification
+
+1:19:54.510,1:19:59.099
+setting and more because both from what
+
+1:19:57.360,1:20:02.219
+I've observed it seems like latent
+
+1:19:59.099,1:20:03.929
+variables always improve the performance
+
+1:20:02.219,1:20:05.340
+in like a generation when we want to
+
+1:20:03.929,1:20:07.739
+generate something like in generate an
+
+1:20:05.340,1:20:09.810
+image or a music synthesis or some
+
+1:20:07.739,1:20:12.150
+regression prediction but in a
+
+1:20:09.810,1:20:15.599
+classification setting how effective
+
+1:20:12.150,1:20:18.210
+will they be so we are actually working
+
+1:20:15.599,1:20:21.020
+on this right now we are working on
+
+1:20:18.210,1:20:21.020
+classification
+
+1:20:21.809,1:20:26.820
+and maybe we can hear about more about
+
+1:20:25.500,1:20:30.059
+this next week when we're going to be
+
+1:20:26.820,1:20:32.309
+talking about language this is actually
+
+1:20:30.059,1:20:35.000
+was another student of Leon is working
+
+1:20:32.309,1:20:37.679
+on using latent variable models for
+
+1:20:35.000,1:20:41.489
+performing classification that allows
+
+1:20:37.679,1:20:45.690
+you to pick for multiple multiple
+
+1:20:41.489,1:20:46.889
+options so I guess you're gonna hear
+
+1:20:45.690,1:20:49.760
+about this one
+
+1:20:46.889,1:20:49.760
+not not today
+
+1:20:50.070,1:20:54.690
+or you can ask yuan next time but again
+
+1:20:52.380,1:20:58.040
+we're gonna be I think we make it we can
+
+1:20:54.690,1:20:58.040
+mention this next week
+
+1:20:59.289,1:21:03.280
+okay thanks all right
+
+1:21:03.460,1:21:08.650
+that's it all right have a good night
+
+1:21:06.040,1:21:11.860
+have enjoy your meal I stay safe wash
+
+1:21:08.650,1:21:14.949
+your hands and the pen I don't was not
+
+1:21:11.860,1:21:15.340
+sanitized but I haven't used it so good
+
+1:21:14.949,1:21:19.290
+point
+
+1:21:15.340,1:21:21.600
+don't touch your face don't on stay safe
+
+1:21:19.290,1:21:23.790
+why
+
+1:21:21.600,1:21:26.010
+[Music]
+
+1:21:23.790,1:21:28.170
+how can you get more out of this course
+
+1:21:26.010,1:21:30.180
+right overall so let me give you a few
+
+1:21:28.170,1:21:32.460
+suggestions first comprehension if
+
+1:21:30.180,1:21:34.110
+something was still not clear just ask
+
+1:21:32.460,1:21:35.700
+me the question a section below the
+
+1:21:34.110,1:21:38.340
+video I will answer every question so
+
+1:21:35.700,1:21:40.800
+you will get it eventually if you'd like
+
+1:21:38.340,1:21:43.830
+to I get more news about the field
+
+1:21:40.800,1:21:45.660
+things I do on in terms of educational
+
+1:21:43.830,1:21:48.300
+content and things I find interesting
+
+1:21:45.660,1:21:50.220
+you can follow up on Twitter and there
+
+1:21:48.300,1:21:52.200
+you have my handle I've seen that if
+
+1:21:50.220,1:21:54.180
+you'd like to have updates about newer
+
+1:21:52.200,1:21:56.160
+videos don't forget to subscribe to the
+
+1:21:54.180,1:21:58.010
+channel and activate the notification
+
+1:21:56.160,1:22:00.780
+bell if you actually like this video
+
+1:21:58.010,1:22:03.090
+don't forget to put a thumbs up it helps
+
+1:22:00.780,1:22:05.220
+as well recommending this video to other
+
+1:22:03.090,1:22:06.960
+people if you'd like to search the
+
+1:22:05.220,1:22:09.330
+content of this lesson we have our
+
+1:22:06.960,1:22:11.700
+English transcription which is connected
+
+1:22:09.330,1:22:13.620
+directly to this video so every title in
+
+1:22:11.700,1:22:15.270
+the transcription is clickable if you
+
+1:22:13.620,1:22:16.950
+click on the title you get the right
+
+1:22:15.270,1:22:18.750
+director to the correct location on the
+
+1:22:16.950,1:22:20.310
+video in the same way each section of
+
+1:22:18.750,1:22:21.810
+the video is the same title is in
+
+1:22:20.310,1:22:25.020
+transcription so you can go back and
+
+1:22:21.810,1:22:27.660
+forth maybe English is not your first
+
+1:22:25.020,1:22:30.960
+language but l'italiano habla espanol
+
+1:22:27.660,1:22:32.940
+new Obama speak Korean have no idea how
+
+1:22:30.960,1:22:36.180
+to speak Korean well we have several
+
+1:22:32.940,1:22:37.950
+translations of this material available
+
+1:22:36.180,1:22:40.050
+on at the website so and we are also
+
+1:22:37.950,1:22:42.480
+looking for more translations if you can
+
+1:22:40.050,1:22:44.910
+help as well it's really important that
+
+1:22:42.480,1:22:47.460
+you actually try to do some of the
+
+1:22:44.910,1:22:48.900
+exercises and you play around with the
+
+1:22:47.460,1:22:51.240
+notebooks and the source code we
+
+1:22:48.900,1:22:53.130
+provided in order to internalize and
+
+1:22:51.240,1:22:56.520
+understand better the concepts we
+
+1:22:53.130,1:22:58.890
+explained during the lessons contribute
+
+1:22:56.520,1:23:01.170
+this is really giving you the
+
+1:22:58.890,1:23:03.060
+opportunity to show your contribution
+
+1:23:01.170,1:23:04.890
+for example you find some typos in the
+
+1:23:03.060,1:23:07.740
+write-up so you find some bugs in the
+
+1:23:04.890,1:23:10.500
+notebooks you can fix those and you know
+
+1:23:07.740,1:23:12.810
+be part of this whole project by sending
+
+1:23:10.500,1:23:16.110
+me a poor request on github or letting
+
+1:23:12.810,1:23:18.920
+me know otherwise and that was it so see
+
+1:23:16.110,1:23:18.920
+you next time bye bye
+
