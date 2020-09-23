@@ -1,0 +1,4878 @@
+0:00:01.480,0:00:10.040
+okay okay okay so today we're gonna be
+
+0:00:05.149,0:00:15.860
+sharing the screen okay sure screen sure
+
+0:00:10.040,0:00:17.900
+boom and here we go alright so
+
+0:00:15.860,0:00:19.340
+foundations of deep learning that's me
+
+0:00:17.900,0:00:23.990
+follow me on Twitter
+
+0:00:19.340,0:00:26.439
+yay of course okay so today we're going
+
+0:00:23.990,0:00:28.460
+to be talking about attention and
+
+0:00:26.439,0:00:31.160
+specifically there are two types of
+
+0:00:28.460,0:00:33.440
+attention there is self attention or
+
+0:00:31.160,0:00:37.040
+cross attention and there's going to be
+
+0:00:33.440,0:00:41.390
+also heart attention or soft attention
+
+0:00:37.040,0:00:42.920
+okay but in generally generally when we
+
+0:00:41.390,0:00:45.469
+talk about attention we're gonna be
+
+0:00:42.920,0:00:49.250
+talking about dealing with sets
+
+0:00:45.469,0:00:51.199
+so since I'm gonna give you a small
+
+0:00:49.250,0:00:54.199
+preview Transformers are made of
+
+0:00:51.199,0:00:57.590
+attention modules transformers are going
+
+0:00:54.199,0:00:59.570
+to be something that Maps sets to sets
+
+0:00:57.590,0:01:01.219
+they don't really deal with sequences
+
+0:00:59.570,0:01:04.700
+they can write a sequence can be thought
+
+0:01:01.219,0:01:08.150
+as a order set but they don't
+
+0:01:04.700,0:01:10.940
+necessarily need to have order sequences
+
+0:01:08.150,0:01:14.570
+that's the super cool part all right so
+
+0:01:10.940,0:01:17.540
+let's get started let's think let's
+
+0:01:14.570,0:01:21.530
+start first with self attention so we
+
+0:01:17.540,0:01:25.460
+have like a set of X's this my pink axis
+
+0:01:21.530,0:01:28.990
+which are X subscript I with I goes from
+
+0:01:25.460,0:01:32.630
+1 to T right so you have T different
+
+0:01:28.990,0:01:37.310
+elements in this set X 1 X 2 blah blah
+
+0:01:32.630,0:01:39.950
+blah XT so now we can think about each
+
+0:01:37.310,0:01:42.710
+of these X is is belonging to RN right
+
+0:01:39.950,0:01:45.590
+that's our classical representation we
+
+0:01:42.710,0:01:49.550
+have seen so far right so it's like n
+
+0:01:45.590,0:01:52.940
+dimensional vector so all there is to
+
+0:01:49.550,0:01:56.030
+this self attention is that my H my
+
+0:01:52.940,0:01:59.180
+hidden representation is going to be a
+
+0:01:56.030,0:02:03.560
+linear combination of these vectors
+
+0:01:59.180,0:02:06.470
+right and so I guess if you remember
+
+0:02:03.560,0:02:09.500
+from one of the classes early on like I
+
+0:02:06.470,0:02:12.380
+think the fourth class I show you how
+
+0:02:09.500,0:02:14.000
+you can do like a quick way like a quick
+
+0:02:12.380,0:02:18.140
+notation for a right in this
+
+0:02:14.000,0:02:21.110
+linear combination of vectors rain and
+
+0:02:18.140,0:02:24.530
+it's simply by using matrix
+
+0:02:21.110,0:02:28.220
+multiplication so this set of X's which
+
+0:02:24.530,0:02:31.160
+are T exists in dimension n can be
+
+0:02:28.220,0:02:34.790
+thought as a matrix capital X in pink
+
+0:02:31.160,0:02:38.330
+that has n rows no because the height of
+
+0:02:34.790,0:02:41.240
+these guys are n and then has T columns
+
+0:02:38.330,0:02:44.360
+right so you can think about that is
+
+0:02:41.240,0:02:47.650
+basically the stack the horizontal stack
+
+0:02:44.360,0:02:50.420
+of these vectors right so this is my set
+
+0:02:47.650,0:02:50.780
+in which again you have an order right
+
+0:02:50.420,0:02:53.750
+now
+
+0:02:50.780,0:02:57.140
+and so now this hidden representation
+
+0:02:53.750,0:03:00.980
+can be written as what the matrix x
+
+0:02:57.140,0:03:04.610
+times the vector of those alphas which
+
+0:03:00.980,0:03:08.420
+I'm going to be calling a in a bold bold
+
+0:03:04.610,0:03:13.100
+typeset okay so in this case my H is the
+
+0:03:08.420,0:03:14.750
+X matrix times a it's a bit funky right
+
+0:03:13.100,0:03:18.320
+usually when we think about the hidden
+
+0:03:14.750,0:03:23.269
+representation we have a rotation of my
+
+0:03:18.320,0:03:27.230
+input right with the weight matrix but
+
+0:03:23.269,0:03:29.540
+in this case is like huh what is this is
+
+0:03:27.230,0:03:31.640
+the rotation of the attention so it
+
+0:03:29.540,0:03:33.799
+doesn't kind of I can't really think
+
+0:03:31.640,0:03:35.450
+that way so I prefer to think about this
+
+0:03:33.799,0:03:38.209
+as you know the linear combination of
+
+0:03:35.450,0:03:42.500
+these columns of X range so the linear
+
+0:03:38.209,0:03:44.239
+combination of those X is cool so we can
+
+0:03:42.500,0:03:48.650
+write it there top right just to keep it
+
+0:03:44.239,0:03:52.310
+in in memory right now we can think
+
+0:03:48.650,0:03:55.579
+about hard attention if we impose that
+
+0:03:52.310,0:03:58.489
+the zero norm of these a vector it's
+
+0:03:55.579,0:04:01.640
+equal one and the nonzero term equal one
+
+0:03:58.489,0:04:04.640
+as well so which means a is a one hot
+
+0:04:01.640,0:04:07.220
+encoded vector and therefore what has
+
+0:04:04.640,0:04:10.820
+happen if you multiply these x times a
+
+0:04:07.220,0:04:13.340
+one hot vector you can select the you
+
+0:04:10.820,0:04:14.989
+know the specific where the one is
+
+0:04:13.340,0:04:18.470
+there's going to be that specific column
+
+0:04:14.989,0:04:20.299
+right so if the second element of a is
+
+0:04:18.470,0:04:25.070
+equal one and all the others are zero
+
+0:04:20.299,0:04:27.650
+when you multiply a capital X time
+
+0:04:25.070,0:04:30.320
+which is 0-1 or later or the others are
+
+0:04:27.650,0:04:33.470
+zero you can adjust retrieve the column
+
+0:04:30.320,0:04:37.160
+second column right so you can see now
+
+0:04:33.470,0:04:40.430
+how this can work out right so this
+
+0:04:37.160,0:04:44.720
+attention just pays attention to one
+
+0:04:40.430,0:04:47.240
+element of your set and one element only
+
+0:04:44.720,0:04:51.020
+in the case that we are when we are
+
+0:04:47.240,0:04:52.880
+talking about heart attention but we can
+
+0:04:51.020,0:04:55.400
+also have a different attention which is
+
+0:04:52.880,0:04:58.340
+the soft attention in the soft attention
+
+0:04:55.400,0:05:01.700
+instead the constraint is that the
+
+0:04:58.340,0:05:03.860
+summation of these elements all by a the
+
+0:05:01.700,0:05:05.360
+alphas they have to sum to one okay so
+
+0:05:03.860,0:05:07.970
+that's the difference
+
+0:05:05.360,0:05:10.180
+and in this case H is going to be just
+
+0:05:07.970,0:05:13.400
+you know a dinner combination of these
+
+0:05:10.180,0:05:17.150
+the columns of the matrix capital X
+
+0:05:13.400,0:05:21.170
+right so far could rain there is no
+
+0:05:17.150,0:05:25.040
+we're stuff right okay so second part
+
+0:05:21.170,0:05:26.720
+attention number two we're gonna figure
+
+0:05:25.040,0:05:30.440
+out where these a is coming from right
+
+0:05:26.720,0:05:33.020
+and so in this case a as I as you can
+
+0:05:30.440,0:05:37.340
+figure out is going to be the arc max or
+
+0:05:33.020,0:05:40.880
+the soft dark max of these capital X
+
+0:05:37.340,0:05:43.640
+where I transpose it so that you mean
+
+0:05:40.880,0:05:45.470
+every row is one sample and then I
+
+0:05:43.640,0:05:48.770
+compute the scalar product between the
+
+0:05:45.470,0:05:51.650
+the row and the vector let every element
+
+0:05:48.770,0:05:53.750
+in the final product every element is
+
+0:05:51.650,0:05:58.310
+going to be the scalar product of each
+
+0:05:53.750,0:06:01.490
+and every you know a vector X I that was
+
+0:05:58.310,0:06:05.450
+from 1 to T against these specific X
+
+0:06:01.490,0:06:08.990
+okay but so is it is it clear so far
+
+0:06:05.450,0:06:11.300
+so before we said what's beta beta is
+
+0:06:08.990,0:06:13.730
+the parameter for the soft arc max write
+
+0:06:11.300,0:06:16.460
+the inverse of the temperature whenever
+
+0:06:13.730,0:06:18.260
+you know soft dark mass right the expo
+
+0:06:16.460,0:06:20.990
+of the argument divided by the sum of
+
+0:06:18.260,0:06:24.290
+the X and then inside the X we have beta
+
+0:06:20.990,0:06:26.660
+right where does beta come from yeah and
+
+0:06:24.290,0:06:28.880
+that's the whenever you have these soft
+
+0:06:26.660,0:06:31.940
+arc max or what people call soft max
+
+0:06:28.880,0:06:33.530
+there is always a beta parameter usually
+
+0:06:31.940,0:06:36.700
+it's set to 1 so you don't see it
+
+0:06:33.530,0:06:43.639
+so before we saw that
+
+0:06:36.700,0:06:46.520
+my capital X okay I didn't okay I didn't
+
+0:06:43.639,0:06:50.120
+talk about yet so the big eggs right big
+
+0:06:46.520,0:06:52.340
+X is this set of columns Tata Tata Tata
+
+0:06:50.120,0:06:54.320
+and then the H is gonna be a linear
+
+0:06:52.340,0:06:56.240
+combination of these columns but where
+
+0:06:54.320,0:07:00.230
+are these alphas coming from right and
+
+0:06:56.240,0:07:04.270
+so my given alpha my first vector a is
+
+0:07:00.230,0:07:08.030
+going to be you know each and every
+
+0:07:04.270,0:07:10.040
+basically column of X so which means
+
+0:07:08.030,0:07:11.870
+every row in the X transpose u
+
+0:07:10.040,0:07:14.300
+multiplied by X right and you get the
+
+0:07:11.870,0:07:17.900
+scalar product of these two guys so you
+
+0:07:14.300,0:07:20.450
+get how much my X what is the value of
+
+0:07:17.900,0:07:25.510
+the scalar product of my X against every
+
+0:07:20.450,0:07:28.280
+other value every other X in my set okay
+
+0:07:25.510,0:07:33.169
+is X a column of vector
+
+0:07:28.280,0:07:35.090
+yeah X is one vector size n okay this
+
+0:07:33.169,0:07:40.820
+like it was written before X is a
+
+0:07:35.090,0:07:43.580
+generic X right so my square bracket
+
+0:07:40.820,0:07:45.860
+represents a optional argument so you
+
+0:07:43.580,0:07:49.850
+can have either the Arg max and
+
+0:07:45.860,0:07:53.090
+therefore you get a one hot a or if you
+
+0:07:49.850,0:07:54.740
+have this soft arcamax which is the the
+
+0:07:53.090,0:07:56.120
+one that we've been using all the course
+
+0:07:54.740,0:07:58.520
+so far you are going to get the
+
+0:07:56.120,0:07:59.930
+exponential divided by the summation of
+
+0:07:58.520,0:08:01.880
+the old exponential right that's the
+
+0:07:59.930,0:08:05.570
+classical one that the one that people
+
+0:08:01.880,0:08:07.760
+call softmax usually all right so but
+
+0:08:05.570,0:08:11.510
+then we said that we have a set of X's
+
+0:08:07.760,0:08:13.550
+right so if you have a set of X's these
+
+0:08:11.510,0:08:15.560
+will imply that you have a set of AIDS
+
+0:08:13.550,0:08:19.070
+right because for every X you're gonna
+
+0:08:15.560,0:08:21.680
+have an A and so if you have these many
+
+0:08:19.070,0:08:23.539
+aids that are vectors right you can
+
+0:08:21.680,0:08:26.780
+stack them one after each other tan-tan
+
+0:08:23.539,0:08:30.530
+tan tan-tan and you get capital A and so
+
+0:08:26.780,0:08:34.430
+capital a it's gonna have the height
+
+0:08:30.530,0:08:38.089
+it's gonna be of size T right because
+
+0:08:34.430,0:08:41.180
+the size T so you know the lowercase a
+
+0:08:38.089,0:08:45.950
+has size T just because you're gonna
+
+0:08:41.180,0:08:48.200
+have T rose in X transpose right and
+
+0:08:45.950,0:08:50.060
+then you stuck T's of them right because
+
+0:08:48.200,0:08:53.200
+you have T X's
+
+0:08:50.060,0:08:56.900
+I hope it's clear and so far all right
+
+0:08:53.200,0:08:58.790
+cool know what's missing right now so
+
+0:08:56.900,0:09:01.630
+what's missing is the following so given
+
+0:08:58.790,0:09:04.280
+it now we have a set of the AIDS
+
+0:09:01.630,0:09:06.770
+therefore you're gonna have a set of
+
+0:09:04.280,0:09:09.740
+ages right if you see from the top right
+
+0:09:06.770,0:09:13.100
+side of this slide you have H was this
+
+0:09:09.740,0:09:16.520
+you know matrix multiplication between
+
+0:09:13.100,0:09:20.210
+the capital X and the a right so H was
+
+0:09:16.520,0:09:24.470
+the linear combination of the columns of
+
+0:09:20.210,0:09:26.990
+my X matrix right but given that we have
+
+0:09:24.470,0:09:31.010
+many aids we are going to end up with
+
+0:09:26.990,0:09:33.530
+many ages right so how many H is the
+
+0:09:31.010,0:09:36.440
+same number of A's right and so you're
+
+0:09:33.530,0:09:38.450
+gonna have these capital X matrix which
+
+0:09:36.440,0:09:42.740
+is gonna have many many columns right
+
+0:09:38.450,0:09:45.410
+hey sorry so small X in the soft max
+
+0:09:42.740,0:09:47.240
+equation that belongs to our end right
+
+0:09:45.410,0:09:49.850
+that's one of the one of the columns of
+
+0:09:47.240,0:09:52.670
+X yeah yeah so I would you can call that
+
+0:09:49.850,0:09:54.890
+X I and I would have a would be a I
+
+0:09:52.670,0:09:57.710
+right about I remove the index so it
+
+0:09:54.890,0:10:01.340
+becomes a bit less cluttered okay but so
+
+0:09:57.710,0:10:04.880
+X is T by n right so X transpose should
+
+0:10:01.340,0:10:08.480
+be n by T so X is going to be n by T
+
+0:10:04.880,0:10:11.360
+grain Oh X is n by T also X is gonna be
+
+0:10:08.480,0:10:16.460
+the the stack of all these columns one
+
+0:10:11.360,0:10:18.170
+of three at each other right okay yeah I
+
+0:10:16.460,0:10:21.020
+saw there are two options you can think
+
+0:10:18.170,0:10:22.820
+about X being the the set of rows and
+
+0:10:21.020,0:10:25.130
+this I think what's done usually in code
+
+0:10:22.820,0:10:27.830
+but I think this is much easier to write
+
+0:10:25.130,0:10:31.220
+down in this way if you write the math I
+
+0:10:27.830,0:10:33.020
+mean I prefer okay and so again given
+
+0:10:31.220,0:10:36.710
+that we have many AIDS you're gonna have
+
+0:10:33.020,0:10:40.190
+many columns of the H matrix right and
+
+0:10:36.710,0:10:43.220
+so we can simply write that my capital H
+
+0:10:40.190,0:10:45.830
+which is the subset of these H's is
+
+0:10:43.220,0:10:49.380
+going to be the linear combination of
+
+0:10:45.830,0:10:51.600
+this element of X
+
+0:10:49.380,0:10:53.730
+using the factors like in the first
+
+0:10:51.600,0:10:57.600
+column of a and the second column of a
+
+0:10:53.730,0:11:00.120
+third column right so that was pretty
+
+0:10:57.600,0:11:05.100
+much it about attention so you basically
+
+0:11:00.120,0:11:07.380
+mix the components of this set of X's
+
+0:11:05.100,0:11:09.300
+which we can represent as a matrix by
+
+0:11:07.380,0:11:12.510
+using these coefficients that are
+
+0:11:09.300,0:11:15.150
+computed by using the Arg max of the
+
+0:11:12.510,0:11:18.120
+soft argh max where each component
+
+0:11:15.150,0:11:21.510
+inside we can call this stuff inside
+
+0:11:18.120,0:11:25.770
+here a score it's simply the scalar
+
+0:11:21.510,0:11:30.540
+product of 1 given X against all the
+
+0:11:25.770,0:11:34.200
+sets of my exes ok so this is the first
+
+0:11:30.540,0:11:36.980
+part of the lecture it should be clear
+
+0:11:34.200,0:11:40.670
+until here otherwise we can move forward
+
+0:11:36.980,0:11:43.950
+so is it clear so far or is not
+
+0:11:40.670,0:11:46.970
+explained the first equation again for
+
+0:11:43.950,0:11:51.180
+one what is soft Arg max and value a
+
+0:11:46.970,0:11:54.300
+multiplying big eggs with eggs right so
+
+0:11:51.180,0:11:56.550
+in the in the previous slide we simply
+
+0:11:54.300,0:11:59.100
+said there is one line only here
+
+0:11:56.550,0:12:01.800
+basically and we say that the hidden
+
+0:11:59.100,0:12:05.940
+layer it's gonna be a linear combination
+
+0:12:01.800,0:12:10.200
+of these X's right yes and this in a
+
+0:12:05.940,0:12:13.290
+combination is using these alphas which
+
+0:12:10.200,0:12:15.090
+is contained in this vector a yes and so
+
+0:12:13.290,0:12:17.010
+I wrote this one here right so H is
+
+0:12:15.090,0:12:20.580
+gonna be the linear combination of the
+
+0:12:17.010,0:12:23.910
+columns of the X where the column of X
+
+0:12:20.580,0:12:26.790
+is gonna be the elements in my set yes
+
+0:12:23.910,0:12:29.580
+ok so if we got this one we go to the
+
+0:12:26.790,0:12:33.320
+second slide and I tell you how to
+
+0:12:29.580,0:12:37.140
+compute one a ok so to compute one a
+
+0:12:33.320,0:12:40.770
+here this one a is going to be for
+
+0:12:37.140,0:12:44.130
+example the soft dark max which is again
+
+0:12:40.770,0:12:47.850
+people call the soft max of what so you
+
+0:12:44.130,0:12:50.040
+have a specific X here right when you
+
+0:12:47.850,0:12:52.950
+compute the product between these X
+
+0:12:50.040,0:12:56.910
+transpose X transpose is gonna have all
+
+0:12:52.950,0:12:59.220
+those X's in rows right so let me draw
+
+0:12:56.910,0:13:02.579
+this one right so X transpose gonna have
+
+0:12:59.220,0:13:04.589
+like first simple second guy
+
+0:13:02.579,0:13:07.499
+third guy right and then I do this one
+
+0:13:04.589,0:13:09.600
+against my guy here right so if you do
+
+0:13:07.499,0:13:11.970
+matrix vector multiplication the first
+
+0:13:09.600,0:13:14.209
+item is going to be this color scalar
+
+0:13:11.970,0:13:17.399
+product of the first guy against myself
+
+0:13:14.209,0:13:20.939
+then the second guy against myself and
+
+0:13:17.399,0:13:22.379
+the third guy against myself right then
+
+0:13:20.939,0:13:24.689
+I'm you get here for example three
+
+0:13:22.379,0:13:28.439
+scores right you're gonna see how close
+
+0:13:24.689,0:13:31.170
+how aligned basically your vector is
+
+0:13:28.439,0:13:33.839
+with respect to the three items in my
+
+0:13:31.170,0:13:36.749
+set and then I around the soft Arg max
+
+0:13:33.839,0:13:39.989
+right so I get these three values you
+
+0:13:36.749,0:13:42.629
+get at the end one value two second
+
+0:13:39.989,0:13:47.939
+value third value at the end is gonna
+
+0:13:42.629,0:13:50.970
+sum to one right yes I'll talk about it
+
+0:13:47.939,0:13:53.189
+it's not sure and you can have either
+
+0:13:50.970,0:13:54.989
+one you can have the soft calc max you
+
+0:13:53.189,0:13:57.269
+have the exponents of blah blah blah or
+
+0:13:54.989,0:13:59.699
+you can get the arc max right and you
+
+0:13:57.269,0:14:03.509
+get which is basically sending the beta
+
+0:13:59.699,0:14:05.040
+to very large values right so you can
+
+0:14:03.509,0:14:07.799
+just simply writes off target max and
+
+0:14:05.040,0:14:15.119
+have large beta I'm still confused why
+
+0:14:07.799,0:14:17.699
+is this a vector in R T which on line
+
+0:14:15.119,0:14:24.829
+defining a yes army okay
+
+0:14:17.699,0:14:24.829
+so X transpose is gonna be my axis right
+
+0:14:25.110,0:14:31.519
+direction right so this guy here is my X
+
+0:14:28.950,0:14:31.519
+transpose
+
+0:14:34.760,0:14:37.760
+okay
+
+0:14:38.620,0:14:55.600
+and this length here this is gonna be N
+
+0:14:42.460,0:15:00.510
+and this is gonna be T so if you do T
+
+0:14:55.600,0:15:00.510
+times this guy which is also n right
+
+0:15:02.640,0:15:07.430
+you're gonna get a vector of
+
+0:15:04.950,0:15:07.430
+steep right
+
+0:15:08.480,0:15:15.060
+does it make spell though is a are one
+
+0:15:11.009,0:15:17.579
+hot batter a can be a one hot if you use
+
+0:15:15.060,0:15:20.310
+arc Max or is going to be you know a
+
+0:15:17.579,0:15:22.350
+softer version if you use this soft dark
+
+0:15:20.310,0:15:29.819
+max right which is the X divided by the
+
+0:15:22.350,0:15:31.470
+sum of the X prime well when you
+
+0:15:29.819,0:15:34.680
+multiply a matrix by a vector you get a
+
+0:15:31.470,0:15:38.879
+vector so if you're taking an arm R max
+
+0:15:34.680,0:15:40.319
+over that you should get a scaler no no
+
+0:15:38.879,0:15:43.050
+the Arg max is gonna give you the index
+
+0:15:40.319,0:15:47.220
+ring like the one hot vector
+
+0:15:43.050,0:15:49.379
+corresponding to the the vector you can
+
+0:15:47.220,0:15:51.870
+think about art mass art max is giving
+
+0:15:49.379,0:15:54.029
+you like a one where you have the
+
+0:15:51.870,0:16:02.699
+maximum and all the rest are going to be
+
+0:15:54.029,0:16:07.829
+0 okay yeah does it make sense oh yeah
+
+0:16:02.699,0:16:11.129
+so if you have like 3 7 9 to a vector of
+
+0:16:07.829,0:16:13.439
+for the arc max you can give you 0 0 1 0
+
+0:16:11.129,0:16:18.389
+no it's gonna give you the one at the
+
+0:16:13.439,0:16:22.230
+position where the maximum is okay all
+
+0:16:18.389,0:16:24.329
+right well it's beta Skyler right now
+
+0:16:22.230,0:16:26.310
+you can think is that being equal to 1
+
+0:16:24.329,0:16:28.910
+there is no need here oh this one right
+
+0:16:26.310,0:16:32.370
+now okay for a little bit of additional
+
+0:16:28.910,0:16:36.029
+certification is our the X terms are
+
+0:16:32.370,0:16:41.430
+those are those one hot vectors that
+
+0:16:36.029,0:16:45.420
+represent our like our input X eyes are
+
+0:16:41.430,0:16:48.079
+sorry X eyes are just my input doesn't
+
+0:16:45.420,0:16:50.660
+have to be one hot
+
+0:16:48.079,0:16:54.050
+but they could be if they represent
+
+0:16:50.660,0:16:55.610
+words or no I think they are usually
+
+0:16:54.050,0:16:59.509
+they are embeddings so they are actually
+
+0:16:55.610,0:17:03.860
+dense so I don't think they're okay then
+
+0:16:59.509,0:17:06.679
+the X transpose by X is that kind of
+
+0:17:03.860,0:17:10.459
+multiplying that's that's determining
+
+0:17:06.679,0:17:13.520
+the similarity between okay so this is
+
+0:17:10.459,0:17:17.689
+determining how similar each element in
+
+0:17:13.520,0:17:21.740
+my set of X's it's similar to my X right
+
+0:17:17.689,0:17:24.079
+so this a tells me how these all of
+
+0:17:21.740,0:17:28.880
+these guys here are similar with respect
+
+0:17:24.079,0:17:29.450
+to this guy over here okay I think cool
+
+0:17:28.880,0:17:30.830
+cool cool
+
+0:17:29.450,0:17:33.260
+all right so this was the first part
+
+0:17:30.830,0:17:37.720
+let's move on and see how these can be
+
+0:17:33.260,0:17:37.720
+improved and like expanded
+
+0:17:43.210,0:17:48.670
+so here we have a definition the key
+
+0:17:46.450,0:17:50.590
+value store this is about data structure
+
+0:17:48.670,0:17:52.510
+just to give you a little bit of
+
+0:17:50.590,0:17:56.110
+definition right so this is a paradigm
+
+0:17:52.510,0:17:59.620
+for storing saving retrieving Aquarion
+
+0:17:56.110,0:18:01.870
+or managing an associative array or a
+
+0:17:59.620,0:18:04.860
+dictionary or a hash table what does it
+
+0:18:01.870,0:18:08.350
+mean so for example you want to type
+
+0:18:04.860,0:18:10.540
+some you know question on like let's say
+
+0:18:08.350,0:18:15.040
+you want to check a video about how to
+
+0:18:10.540,0:18:17.710
+make a lasagna on YouTube okay so you're
+
+0:18:15.040,0:18:20.230
+going YouTube you write lasagna lasagna
+
+0:18:17.710,0:18:22.900
+whatever you press enter so you have a
+
+0:18:20.230,0:18:25.810
+query and then the query is gonna be
+
+0:18:22.900,0:18:27.910
+checking against all possible keys in
+
+0:18:25.810,0:18:30.160
+your data set and the keys could be like
+
+0:18:27.910,0:18:32.290
+the title of the video or the
+
+0:18:30.160,0:18:35.500
+description right and so you check how a
+
+0:18:32.290,0:18:38.290
+line is your query against all those
+
+0:18:35.500,0:18:41.770
+titles that are available in the YouTube
+
+0:18:38.290,0:18:45.430
+data set right when you find the maximum
+
+0:18:41.770,0:18:46.870
+matching score you can retrieve that one
+
+0:18:45.430,0:18:49.420
+right so if you do the arc max you just
+
+0:18:46.870,0:18:51.940
+retrieve one video otherwise if you do
+
+0:18:49.420,0:18:54.490
+these soft arc max you can get basically
+
+0:18:51.940,0:18:56.560
+a probability distribution right and
+
+0:18:54.490,0:18:59.350
+then you can do retrieve in order right
+
+0:18:56.560,0:19:01.240
+you can retrieve first the most aligned
+
+0:18:59.350,0:19:04.060
+video that you have you know you can
+
+0:19:01.240,0:19:07.060
+have a sequence of less and less
+
+0:19:04.060,0:19:11.400
+relevant videos right so is it clear so
+
+0:19:07.060,0:19:13.840
+far about what is this key value store
+
+0:19:11.400,0:19:16.630
+paradigm right so you just have a query
+
+0:19:13.840,0:19:19.540
+which is your question given one query
+
+0:19:16.630,0:19:22.990
+you check all the keys and you can find
+
+0:19:19.540,0:19:25.450
+how matching the key is with respect to
+
+0:19:22.990,0:19:29.530
+your query and then you retrieve all
+
+0:19:25.450,0:19:32.410
+those videos all those values right all
+
+0:19:29.530,0:19:34.560
+those content so we're gonna do exactly
+
+0:19:32.410,0:19:37.150
+the same here
+
+0:19:34.560,0:19:39.400
+in in this case right so we're gonna be
+
+0:19:37.150,0:19:42.730
+specializing a little bit what we have
+
+0:19:39.400,0:19:46.900
+seen so far which was pretty you know
+
+0:19:42.730,0:19:48.640
+trivial the key here would be the title
+
+0:19:46.900,0:19:50.980
+of the video yeah that's correct right
+
+0:19:48.640,0:19:53.130
+so the keys are the title of all the
+
+0:19:50.980,0:19:54.890
+videos in YouTube you have one query
+
+0:19:53.130,0:19:58.010
+lasagna okay
+
+0:19:54.890,0:20:01.640
+how to cook lasagna is I've and I you
+
+0:19:58.010,0:20:05.240
+check this question against all the keys
+
+0:20:01.640,0:20:07.070
+and then when you find you know the art
+
+0:20:05.240,0:20:09.380
+max you find the index of the highest
+
+0:20:07.070,0:20:11.060
+you retrieve that one right or again if
+
+0:20:09.380,0:20:13.550
+you do the soft dark max you're gonna
+
+0:20:11.060,0:20:17.510
+get like probabilities now you can sort
+
+0:20:13.550,0:20:21.710
+by probability for example right so we
+
+0:20:17.510,0:20:24.650
+have now queries keys and values so what
+
+0:20:21.710,0:20:31.010
+are these well these are simply rotation
+
+0:20:24.650,0:20:34.100
+all my specific input X right so my Q is
+
+0:20:31.010,0:20:38.000
+going to be getting my X here I rotate
+
+0:20:34.100,0:20:41.480
+it by W Q then my key is going to be
+
+0:20:38.000,0:20:44.240
+again my X I rotated by W of K and then
+
+0:20:41.480,0:20:49.100
+I have my value of V sorry I'm gonna be
+
+0:20:44.240,0:20:52.310
+rotating the X by a WV okay so so far we
+
+0:20:49.100,0:20:55.310
+just added three matrices more and at it
+
+0:20:52.310,0:20:58.040
+so this is like how you can you know add
+
+0:20:55.310,0:21:00.680
+so much more well we finally add some
+
+0:20:58.040,0:21:02.720
+training parameters right so so far we
+
+0:21:00.680,0:21:05.480
+didn't have any training board
+
+0:21:02.720,0:21:11.690
+parameters so far what would be D would
+
+0:21:05.480,0:21:15.470
+be X in the lasagna metaphor X is me
+
+0:21:11.690,0:21:19.190
+very hungry and so me very hungry and
+
+0:21:15.470,0:21:24.230
+goes and try to write some question
+
+0:21:19.190,0:21:27.020
+about how to get the food done okay but
+
+0:21:24.230,0:21:29.900
+then given that I also know how to cook
+
+0:21:27.020,0:21:30.110
+I can also check against all okay there
+
+0:21:29.900,0:21:32.750
+you go
+
+0:21:30.110,0:21:34.760
+right so the the about cooking lasagna
+
+0:21:32.750,0:21:37.760
+all right so I'm hungry and it would be
+
+0:21:34.760,0:21:39.980
+my hacks X so my query would be what is
+
+0:21:37.760,0:21:42.110
+the best recipe I can find and then I
+
+0:21:39.980,0:21:46.310
+can check in my memory right in my own
+
+0:21:42.110,0:21:49.100
+head all the possible lasagna recipes I
+
+0:21:46.310,0:21:50.240
+have all my mother's cookbook right so I
+
+0:21:49.100,0:21:53.630
+can check check check check check and I
+
+0:21:50.240,0:21:55.670
+saw my grandmother lasagna and then I
+
+0:21:53.630,0:22:00.140
+retrieved the recipe from my granny
+
+0:21:55.670,0:22:02.620
+which is you know amazing makes sense
+
+0:22:00.140,0:22:05.590
+right I'm hungry
+
+0:22:02.620,0:22:07.940
+there a reason why we don't add
+
+0:22:05.590,0:22:13.460
+nonlinearities here yeah yeah so this is
+
+0:22:07.940,0:22:15.620
+just these attention thing it's
+
+0:22:13.460,0:22:17.420
+completely based on orientation right
+
+0:22:15.620,0:22:19.940
+we're gonna just check in what is the
+
+0:22:17.420,0:22:22.130
+orientation of these vectors so this is
+
+0:22:19.940,0:22:24.290
+how attention works okay we don't like
+
+0:22:22.130,0:22:26.150
+nonlinearities the only non-linearity is
+
+0:22:24.290,0:22:29.330
+whenever you try to get the probability
+
+0:22:26.150,0:22:31.910
+you know distribution right the the soft
+
+0:22:29.330,0:22:34.550
+dark max make sense okay cool
+
+0:22:31.910,0:22:36.440
+all right so you're on board so again we
+
+0:22:34.550,0:22:38.780
+first now introduce these learning
+
+0:22:36.440,0:22:41.890
+parameters such that we can train
+
+0:22:38.780,0:22:46.370
+something right machine learning yay
+
+0:22:41.890,0:22:48.080
+okay so Q and K have to have the same
+
+0:22:46.370,0:22:51.140
+length right the same dimensionality
+
+0:22:48.080,0:22:53.690
+because you're gonna check one query one
+
+0:22:51.140,0:22:55.820
+question how to make lasagna against all
+
+0:22:53.690,0:22:57.770
+the possible representation of the
+
+0:22:55.820,0:22:59.600
+titles right so they have to have the
+
+0:22:57.770,0:23:02.000
+same length because otherwise you can't
+
+0:22:59.600,0:23:06.680
+check the orientation right it'd have to
+
+0:23:02.000,0:23:08.810
+be in the same space V that's V is the
+
+0:23:06.680,0:23:11.090
+content of my recipe right I don't care
+
+0:23:08.810,0:23:14.510
+about the length it can be you know five
+
+0:23:11.090,0:23:17.540
+pages of my of the recipe right so it's
+
+0:23:14.510,0:23:20.450
+just you know that's the whole recipe
+
+0:23:17.540,0:23:22.460
+right so V in my case is huge and the
+
+0:23:20.450,0:23:24.020
+key is the representation of the title
+
+0:23:22.460,0:23:26.500
+which match the size of the
+
+0:23:24.020,0:23:30.530
+representation of the question right
+
+0:23:26.500,0:23:32.780
+cool let's make things you know simple
+
+0:23:30.530,0:23:36.680
+and down bend down everything we just
+
+0:23:32.780,0:23:40.520
+said D prime equal D second equal to D
+
+0:23:36.680,0:23:43.100
+right so everything is just D all right
+
+0:23:40.520,0:23:45.230
+so we said we have a sequence we know
+
+0:23:43.100,0:23:47.960
+sequence right and if I'm wrong we have
+
+0:23:45.230,0:23:50.960
+a set of X's right so given that we have
+
+0:23:47.960,0:23:53.840
+a set of X's therefore you're gonna get
+
+0:23:50.960,0:23:57.830
+a set of queries you get a set of keys
+
+0:23:53.840,0:23:59.930
+and a set a set of values named and yes
+
+0:23:57.830,0:24:02.780
+as you can imagine you're gonna get a
+
+0:23:59.930,0:24:05.210
+matrix which is you know stuck in all
+
+0:24:02.780,0:24:07.490
+those columns of all the cues that are
+
+0:24:05.210,0:24:09.230
+down all the case started at a time and
+
+0:24:07.490,0:24:11.540
+all the values down Bam Bam Bam Bam
+
+0:24:09.230,0:24:13.240
+so how many columns you have you have T
+
+0:24:11.540,0:24:15.740
+columns right because you stuck T
+
+0:24:13.240,0:24:16.450
+vectors right what is the height of the
+
+0:24:15.740,0:24:19.619
+vectors
+
+0:24:16.450,0:24:23.109
+well d right because you we just said
+
+0:24:19.619,0:24:26.320
+mmm quickly so what next
+
+0:24:23.109,0:24:30.669
+so before we said that my a was these
+
+0:24:26.320,0:24:33.580
+soft dark max over the arc max of ha
+
+0:24:30.669,0:24:37.809
+now you're gonna check one query against
+
+0:24:33.580,0:24:40.749
+all these keys right so we tilt first
+
+0:24:37.809,0:24:43.149
+the K such that I have my Rose right tan
+
+0:24:40.749,0:24:45.519
+tan tan tan and then I multiply my first
+
+0:24:43.149,0:24:47.950
+row my first key four times my query
+
+0:24:45.519,0:24:50.529
+second key times the K query
+
+0:24:47.950,0:24:53.769
+third key blah blah blah right how many
+
+0:24:50.529,0:24:56.739
+rows I have I have T lowercase T right
+
+0:24:53.769,0:24:58.590
+so at the end you have T scores and now
+
+0:24:56.739,0:25:01.769
+you compute the soft dark max and
+
+0:24:58.590,0:25:05.679
+therefore we get the probability right
+
+0:25:01.769,0:25:07.529
+hmm I think it makes sense I mean it
+
+0:25:05.679,0:25:12.399
+makes sense to me I spend a bit of time
+
+0:25:07.529,0:25:17.100
+but yeah does it make sense to you know
+
+0:25:12.399,0:25:20.289
+yes what's the difference in Q and K
+
+0:25:17.100,0:25:24.279
+okay he represents the key which is the
+
+0:25:20.289,0:25:26.980
+title in the recipe recipe book right q
+
+0:25:24.279,0:25:29.619
+is gonna be my question I want to make
+
+0:25:26.980,0:25:32.830
+lasagna and then I check all the titles
+
+0:25:29.619,0:25:35.200
+of my recipe book like how to make pizza
+
+0:25:32.830,0:25:37.690
+how to make pasta how to make ravioli
+
+0:25:35.200,0:25:39.789
+how to make tortellini how to make
+
+0:25:37.690,0:25:42.369
+pulpit Tony how to make lasagna hey
+
+0:25:39.789,0:25:47.409
+there you go you get a high score there
+
+0:25:42.369,0:25:49.269
+you retrieve that one okay cool so I
+
+0:25:47.409,0:25:52.239
+understand why the query is being
+
+0:25:49.269,0:25:54.369
+derived the biotransformation of X but I
+
+0:25:52.239,0:26:01.269
+don't understand why K and V are also
+
+0:25:54.369,0:26:04.869
+being derived from X there is a value so
+
+0:26:01.269,0:26:07.149
+in your analog II V would be a video so
+
+0:26:04.869,0:26:09.789
+why do we derive it from yes it says
+
+0:26:07.149,0:26:12.100
+you're completely right and so that's
+
+0:26:09.789,0:26:13.960
+gonna be the next slide but this one is
+
+0:26:12.100,0:26:17.350
+called self attention so you are
+
+0:26:13.960,0:26:19.359
+actually doing a retrospective work
+
+0:26:17.350,0:26:21.700
+you're actually thinking in your head I
+
+0:26:19.359,0:26:25.419
+want to make lasagna so let me think
+
+0:26:21.700,0:26:28.389
+even harder what are the recipes I can
+
+0:26:25.419,0:26:30.160
+make and aha found it then I have my
+
+0:26:28.389,0:26:32.740
+recipe so everything is my head
+
+0:26:30.160,0:26:35.740
+and given that my head is X I just have
+
+0:26:32.740,0:26:37.540
+the three things coming from my head and
+
+0:26:35.740,0:26:39.880
+this is called self attention right
+
+0:26:37.540,0:26:40.840
+otherwise if you're a bit more normal
+
+0:26:39.880,0:26:43.150
+than me
+
+0:26:40.840,0:26:45.910
+and you just go I get a recipe book
+
+0:26:43.150,0:26:47.860
+you're gonna get that the question comes
+
+0:26:45.910,0:26:49.390
+from your ex or your brain right
+
+0:26:47.860,0:26:51.190
+but then the keys and the values come
+
+0:26:49.390,0:26:53.230
+from the book right so keys and values
+
+0:26:51.190,0:26:54.940
+you're gonna get them somewhere else and
+
+0:26:53.230,0:26:58.000
+there's gonna be the cross attention
+
+0:26:54.940,0:27:00.100
+right and yeah you check your query
+
+0:26:58.000,0:27:04.240
+against all those kids and they you're
+
+0:27:00.100,0:27:07.990
+three of the final thing all right so
+
+0:27:04.240,0:27:10.810
+what's next next is going to be the fact
+
+0:27:07.990,0:27:13.840
+that yeah we said a hidden layer is
+
+0:27:10.810,0:27:16.480
+gonna be my linear combination of these
+
+0:27:13.840,0:27:19.630
+V's known these V columns that are
+
+0:27:16.480,0:27:22.860
+making my matrix again weighted by these
+
+0:27:19.630,0:27:25.960
+coefficients alphas that are inside my a
+
+0:27:22.860,0:27:29.130
+okay so this is exactly the same as we
+
+0:27:25.960,0:27:32.310
+have seen before but I just specified
+
+0:27:29.130,0:27:36.190
+specialized yet specialized those
+
+0:27:32.310,0:27:38.050
+instead of using all the time X and you
+
+0:27:36.190,0:27:40.240
+know X transpose I have now keys
+
+0:27:38.050,0:27:42.820
+Aquarians and values right queries keys
+
+0:27:40.240,0:27:46.410
+queries that one side and then keys and
+
+0:27:42.820,0:27:49.090
+by just on the other side um Alfredo
+
+0:27:46.410,0:27:52.210
+yesterday and lecture you and professor
+
+0:27:49.090,0:27:55.120
+Lacan says there is only one maybe like
+
+0:27:52.210,0:27:57.700
+one Curie but multiple you know one
+
+0:27:55.120,0:28:01.090
+curium multiple keys and value so here
+
+0:27:57.700,0:28:05.170
+one means there's only one Curie for 1x
+
+0:28:01.090,0:28:08.410
+I like 1qi current 1x I but it has to
+
+0:28:05.170,0:28:11.020
+interact all the other keys right right
+
+0:28:08.410,0:28:13.180
+so exactly that was okay thank you for
+
+0:28:11.020,0:28:15.010
+reminding me that's so the point here in
+
+0:28:13.180,0:28:18.430
+this line the last line I show you here
+
+0:28:15.010,0:28:20.440
+you have one Q in one Q this is one
+
+0:28:18.430,0:28:22.960
+question how to make lasagna you're
+
+0:28:20.440,0:28:25.270
+gonna check how these matches all the
+
+0:28:22.960,0:28:27.700
+titles in the book right so one question
+
+0:28:25.270,0:28:30.520
+is gonna be going through all the titles
+
+0:28:27.700,0:28:32.680
+Tata Tata ton in order to find where the
+
+0:28:30.520,0:28:34.690
+correct title is right it's a one
+
+0:28:32.680,0:28:36.280
+question how to make lasagna and you
+
+0:28:34.690,0:28:38.260
+check how to make pizza how to make
+
+0:28:36.280,0:28:41.440
+pasta how to make tortellini how to make
+
+0:28:38.260,0:28:43.000
+pulpit on it a name you retrieve the one
+
+0:28:41.440,0:28:44.200
+that the one that actually matches right
+
+0:28:43.000,0:28:46.720
+so you have one
+
+0:28:44.200,0:28:49.300
+you check that our many keys and then
+
+0:28:46.720,0:28:52.750
+you retrieve the value of the one that
+
+0:28:49.300,0:28:56.740
+matches or if you actually have two high
+
+0:28:52.750,0:28:59.770
+scores you can make a mixture of recipes
+
+0:28:56.740,0:29:05.310
+right and then I don't know how well
+
+0:28:59.770,0:29:05.310
+that interpolate does it make sense
+
+0:29:06.060,0:29:13.450
+someone was talking before by two
+
+0:29:09.940,0:29:17.610
+recipes right so if I check check how to
+
+0:29:13.450,0:29:20.680
+make lasagna and then in my book I have
+
+0:29:17.610,0:29:22.450
+lasagna with the e at the end and then I
+
+0:29:20.680,0:29:25.330
+don't know some other thing that sounds
+
+0:29:22.450,0:29:27.160
+very similar so maybe if the the word
+
+0:29:25.330,0:29:29.170
+you're looking for or let me think
+
+0:29:27.160,0:29:31.210
+another word like let's say I want to
+
+0:29:29.170,0:29:33.820
+make pizza but then there is another is
+
+0:29:31.210,0:29:36.460
+a recipe which is called chicken pizza
+
+0:29:33.820,0:29:38.320
+Allah with Allah is like like with pizza
+
+0:29:36.460,0:29:40.570
+but like similar with pizza but if I
+
+0:29:38.320,0:29:44.230
+look for pizza also Pizza Allah is gonna
+
+0:29:40.570,0:29:46.900
+be having like a higher matching score
+
+0:29:44.230,0:29:49.240
+right and so if I make pizza if I take
+
+0:29:46.900,0:29:50.860
+the art max it's gonna work fine if I
+
+0:29:49.240,0:29:52.690
+take the soft dark max I'm gonna get a
+
+0:29:50.860,0:29:55.360
+combination between pizza and pizza
+
+0:29:52.690,0:29:57.940
+Allah because they are similar so you're
+
+0:29:55.360,0:30:00.250
+gonna get some you know mass probability
+
+0:29:57.940,0:30:02.140
+mass cameo so in the other guy and then
+
+0:30:00.250,0:30:03.130
+when you retrieve the values the values
+
+0:30:02.140,0:30:06.160
+are going to be again the linear
+
+0:30:03.130,0:30:08.800
+combination of those columns using
+
+0:30:06.160,0:30:11.470
+multiplied by these coefficients and so
+
+0:30:08.800,0:30:13.420
+if you have a one hot you're gonna get
+
+0:30:11.470,0:30:16.600
+just one value but then if there are
+
+0:30:13.420,0:30:18.370
+multiple values which are you know known
+
+0:30:16.600,0:30:20.260
+like if you have like a soft dark max
+
+0:30:18.370,0:30:23.680
+you may have you know several values
+
+0:30:20.260,0:30:26.290
+that are gonna be mixed together and you
+
+0:30:23.680,0:30:29.380
+say we got two very close candidates
+
+0:30:26.290,0:30:32.800
+that has high a value say then it's
+
+0:30:29.380,0:30:35.560
+pizza and Yola but here my Curie the Q
+
+0:30:32.800,0:30:38.500
+is only one right so Q is gonna be pizza
+
+0:30:35.560,0:30:41.170
+but then inside the key there are two
+
+0:30:38.500,0:30:43.660
+recipes which is pizza and pizza Yola
+
+0:30:41.170,0:30:46.350
+and these two are very similar so both
+
+0:30:43.660,0:30:49.060
+of them the score will be somehow
+
+0:30:46.350,0:30:51.460
+similar right and so whenever you do the
+
+0:30:49.060,0:30:53.650
+soft arc max you don't exactly get only
+
+0:30:51.460,0:30:56.020
+one very high score maybe gonna get a
+
+0:30:53.650,0:30:57.540
+high score and then another high score
+
+0:30:56.020,0:30:58.980
+so H
+
+0:30:57.540,0:31:01.290
+is gonna be the linear combination of
+
+0:30:58.980,0:31:04.160
+these recipes are gonna be like the
+
+0:31:01.290,0:31:06.810
+average of the pizza and the pizza Ola
+
+0:31:04.160,0:31:07.560
+got it okay yeah I truly make sense
+
+0:31:06.810,0:31:12.060
+thank you
+
+0:31:07.560,0:31:13.980
+of course there was another question no
+
+0:31:12.060,0:31:18.390
+okay maybe we should move on because we
+
+0:31:13.980,0:31:22.530
+have 15 minutes left okay again how many
+
+0:31:18.390,0:31:24.960
+queues do we have we have T Q's right we
+
+0:31:22.530,0:31:25.320
+have many kills and therefore all hold
+
+0:31:24.960,0:31:30.510
+on
+
+0:31:25.320,0:31:33.320
+so what's beta beta we like to set that
+
+0:31:30.510,0:31:36.650
+to 1 over square root of D why is that
+
+0:31:33.320,0:31:39.750
+because if you have a vector of all ones
+
+0:31:36.650,0:31:43.140
+in one dimension the length of a vector
+
+0:31:39.750,0:31:45.360
+of one has is one in two dimensions the
+
+0:31:43.140,0:31:48.060
+vector which is all come coordinates one
+
+0:31:45.360,0:31:50.160
+is going to be square root of 2 a vector
+
+0:31:48.060,0:31:51.840
+that has all components one in the three
+
+0:31:50.160,0:31:55.800
+dimension is going to have square root
+
+0:31:51.840,0:31:57.690
+of three right if you have four
+
+0:31:55.800,0:32:00.150
+components can be square root of that so
+
+0:31:57.690,0:32:02.700
+you a vector in D dimension you're gonna
+
+0:32:00.150,0:32:04.710
+have that the magnitude grows with the
+
+0:32:02.700,0:32:07.230
+square root of the number of dimensions
+
+0:32:04.710,0:32:10.260
+and so in order to keep the temperature
+
+0:32:07.230,0:32:12.060
+constant of these soft arc max we want
+
+0:32:10.260,0:32:14.400
+to divide by the square root of the
+
+0:32:12.060,0:32:18.090
+number of dimensions again technicality
+
+0:32:14.400,0:32:20.730
+doesn't matter if you don't get it again
+
+0:32:18.090,0:32:25.440
+how many queries we have T and therefore
+
+0:32:20.730,0:32:28.140
+we can get T AIDS right and therefore we
+
+0:32:25.440,0:32:30.450
+get a matrix capital a so finally you're
+
+0:32:28.140,0:32:33.420
+gonna get a big H which is simply the
+
+0:32:30.450,0:32:36.990
+multiplication of these values by this
+
+0:32:33.420,0:32:40.200
+matrix of you know where the columns are
+
+0:32:36.990,0:32:44.400
+going to be the mixing components and it
+
+0:32:40.200,0:32:47.600
+was pretty much it about cross cross
+
+0:32:44.400,0:32:50.190
+attention could you just say exactly why
+
+0:32:47.600,0:32:53.280
+queue and care of the same dimension but
+
+0:32:50.190,0:32:56.310
+V is their friend I would expect key and
+
+0:32:53.280,0:32:58.130
+V K and V to be of the same dimension
+
+0:32:56.310,0:33:01.860
+but Q to be something else
+
+0:32:58.130,0:33:03.960
+V is gonna be my pizza recipe right it's
+
+0:33:01.860,0:33:07.410
+gonna be 10 pages long oh no can make
+
+0:33:03.960,0:33:10.050
+one page long instead Q and K is the
+
+0:33:07.410,0:33:11.160
+question and the title and they have to
+
+0:33:10.050,0:33:13.200
+match because I'm gonna
+
+0:33:11.160,0:33:17.610
+comparing like I'm gonna compare what is
+
+0:33:13.200,0:33:20.250
+the matching you know degree right how
+
+0:33:17.610,0:33:24.540
+these two are aligned this comes from
+
+0:33:20.250,0:33:27.270
+this thing over here right so whenever I
+
+0:33:24.540,0:33:30.180
+check my query against all keys
+
+0:33:27.270,0:33:32.640
+I do the roll times vector and they have
+
+0:33:30.180,0:33:34.700
+to be having the same size the same
+
+0:33:32.640,0:33:37.200
+length right otherwise I can't multiply
+
+0:33:34.700,0:33:40.220
+so you check your question against all
+
+0:33:37.200,0:33:42.390
+these keys you know you get a sports
+
+0:33:40.220,0:33:44.280
+yeah I think that matrix and then you
+
+0:33:42.390,0:33:46.920
+get the recipe which can be the whole
+
+0:33:44.280,0:33:49.400
+YouTube video or meat cooking whatever
+
+0:33:46.920,0:33:53.210
+right right okay
+
+0:33:49.400,0:33:57.630
+okay thank you sure anytime
+
+0:33:53.210,0:33:59.520
+I'm hungry okay okay so one
+
+0:33:57.630,0:34:01.350
+implementation detail known for example
+
+0:33:59.520,0:34:04.980
+to make things faster and we can stack
+
+0:34:01.350,0:34:07.470
+all those doubles in one whole W right
+
+0:34:04.980,0:34:10.650
+and then BOOM you compare you can you
+
+0:34:07.470,0:34:14.340
+compute all Q and K and D in one one one
+
+0:34:10.650,0:34:16.230
+second right in one iteration
+
+0:34:14.340,0:34:18.630
+nothing fancy Ryan we have done the same
+
+0:34:16.230,0:34:21.330
+before for the RNN right remember we
+
+0:34:18.630,0:34:23.400
+were stuck in the X and the H and
+
+0:34:21.330,0:34:25.620
+computing these with the stock version
+
+0:34:23.400,0:34:29.970
+of the W reign on the top right hand
+
+0:34:25.620,0:34:33.300
+side okay so nothing fancy well then
+
+0:34:29.970,0:34:36.300
+there is something else called heads so
+
+0:34:33.300,0:34:38.940
+this can represent one head but we may
+
+0:34:36.300,0:34:43.290
+have multiple heads for example H heads
+
+0:34:38.940,0:34:47.610
+so if I have h heads I'm gonna have h qs
+
+0:34:43.290,0:34:49.260
+and I have age case I'm gonna have H B's
+
+0:34:47.610,0:34:51.600
+and so you're going to end up with a
+
+0:34:49.260,0:34:53.970
+thing that is going to be H times taller
+
+0:34:51.600,0:34:56.460
+right but then you can still get it back
+
+0:34:53.970,0:34:59.040
+to whatever dimension if you multiply at
+
+0:34:56.460,0:35:01.620
+this big guy at the end now this final
+
+0:34:59.040,0:35:03.270
+big vector which is gonna be the vector
+
+0:35:01.620,0:35:05.880
+of the B's right at the end you can
+
+0:35:03.270,0:35:09.810
+multiply by a matrix to make it back to
+
+0:35:05.880,0:35:12.600
+this size of D this is a possible way of
+
+0:35:09.810,0:35:15.570
+implementing this stuff right but again
+
+0:35:12.600,0:35:17.580
+details not important so let's get
+
+0:35:15.570,0:35:20.190
+finally to this transformer what the
+
+0:35:17.580,0:35:22.170
+heck is this transformer so the
+
+0:35:20.190,0:35:24.099
+originary this transformer is made by
+
+0:35:22.170,0:35:26.710
+two blocks is a made of
+
+0:35:24.099,0:35:29.380
+encoder and a decoder okay so where have
+
+0:35:26.710,0:35:31.540
+we seen before is this encoder decoder
+
+0:35:29.380,0:35:34.640
+architecture
+
+0:35:31.540,0:35:36.680
+right in the janitors out encoders there
+
+0:35:34.640,0:35:39.349
+you go so recap from out encoders right
+
+0:35:36.680,0:35:40.490
+so out encoders we had the diagram on
+
+0:35:39.349,0:35:42.020
+the left today we're going to be
+
+0:35:40.490,0:35:43.880
+focusing the diagram on the right hand
+
+0:35:42.020,0:35:47.150
+side you have two blocks you have an
+
+0:35:43.880,0:35:49.700
+encoder and I have a decoder the encoder
+
+0:35:47.150,0:35:52.010
+Maps the X to the hidden representation
+
+0:35:49.700,0:35:54.290
+and then the decoder mapped the hidden
+
+0:35:52.010,0:35:56.810
+representation to these again
+
+0:35:54.290,0:35:59.540
+input again but we don't have to I mean
+
+0:35:56.810,0:36:02.359
+we have these two main major components
+
+0:35:59.540,0:36:03.710
+right in the app out encoder and so in
+
+0:36:02.359,0:36:06.080
+this case we're gonna have something
+
+0:36:03.710,0:36:09.140
+similar more or less so this is the
+
+0:36:06.080,0:36:11.720
+transformer encoder which is the purple
+
+0:36:09.140,0:36:14.270
+block right so in these guys in this guy
+
+0:36:11.720,0:36:18.260
+we're gonna have the self attention cool
+
+0:36:14.270,0:36:19.700
+we already know what it is in the upper
+
+0:36:18.260,0:36:23.060
+part we're going to be running a
+
+0:36:19.700,0:36:25.790
+basically a linear layer here every
+
+0:36:23.060,0:36:28.550
+component so if you think about a
+
+0:36:25.790,0:36:31.220
+convolutional a convolution with the
+
+0:36:28.550,0:36:33.530
+kernel size of one you basically apply
+
+0:36:31.220,0:36:37.609
+the same linear layer to every element
+
+0:36:33.530,0:36:40.190
+in the in the set right sometimes they
+
+0:36:37.609,0:36:41.510
+call it this you know feed-forward but
+
+0:36:40.190,0:36:43.040
+it's going to be a feed-forward applied
+
+0:36:41.510,0:36:44.630
+to every element in the set so it's
+
+0:36:43.040,0:36:48.410
+actually a convolution where the
+
+0:36:44.630,0:36:50.630
+convolutional kernel is equal one then
+
+0:36:48.410,0:36:53.599
+we apply some module which we can call
+
+0:36:50.630,0:36:54.200
+this ad and norm both after both of
+
+0:36:53.599,0:36:56.660
+these guys
+
+0:36:54.200,0:36:59.270
+what is this module here so this guy is
+
+0:36:56.660,0:37:01.700
+basically a box here which has two
+
+0:36:59.270,0:37:05.000
+components has a addition component and
+
+0:37:01.700,0:37:07.940
+then has a layer normalization okay and
+
+0:37:05.000,0:37:09.680
+so if we connect this guy here on the
+
+0:37:07.940,0:37:12.050
+right hand side you're gonna get that
+
+0:37:09.680,0:37:15.260
+the self attention basically has a
+
+0:37:12.050,0:37:17.150
+residual connection but like that is
+
+0:37:15.260,0:37:19.400
+bypassing it and then the layer
+
+0:37:17.150,0:37:22.460
+normalization and the same happens for
+
+0:37:19.400,0:37:24.530
+the other guy on top so also the the
+
+0:37:22.460,0:37:26.859
+convolutional part has these residual
+
+0:37:24.530,0:37:29.900
+connection and be a layer normalization
+
+0:37:26.859,0:37:32.839
+so how does it work over all this stuff
+
+0:37:29.900,0:37:35.570
+you wanna basically put the set of
+
+0:37:32.839,0:37:38.000
+inputs at the bottom and then you make
+
+0:37:35.570,0:37:40.880
+it blah blah blah bubble up right and
+
+0:37:38.000,0:37:42.920
+you get the hidden representation at the
+
+0:37:40.880,0:37:44.750
+output of the encoder right so this H
+
+0:37:42.920,0:37:47.180
+encoder
+
+0:37:44.750,0:37:50.300
+thing fancy right I just put two blocks
+
+0:37:47.180,0:37:52.820
+we have seen the self attention just
+
+0:37:50.300,0:37:55.220
+before the one deconvolution us actually
+
+0:37:52.820,0:37:57.890
+know how it works right is a applying
+
+0:37:55.220,0:37:59.900
+just you know the single multi-layer
+
+0:37:57.890,0:38:02.990
+perception to every component in this
+
+0:37:59.900,0:38:04.550
+set and then normalization helps you
+
+0:38:02.990,0:38:06.500
+know getting those gradients coming back
+
+0:38:04.550,0:38:09.100
+later on and the receiver connection
+
+0:38:06.500,0:38:13.100
+connection makes everything smooth
+
+0:38:09.100,0:38:15.830
+alright so this was the encoder how do
+
+0:38:13.100,0:38:18.350
+we how what is the decoder in this case
+
+0:38:15.830,0:38:21.590
+so let me clean up a little bit so let
+
+0:38:18.350,0:38:23.990
+me remove first the encoder box let me
+
+0:38:21.590,0:38:25.790
+remove that old zone Teledyne let me
+
+0:38:23.990,0:38:28.610
+actually even remove these X on the
+
+0:38:25.790,0:38:30.860
+bottom and the final out the drain so
+
+0:38:28.610,0:38:33.530
+this was the encoder but now I'm gonna
+
+0:38:30.860,0:38:36.560
+delete the connection there in the
+
+0:38:33.530,0:38:38.480
+center poof okay and so now we're going
+
+0:38:36.560,0:38:42.020
+to be talking about the decoder so the
+
+0:38:38.480,0:38:44.600
+decoder is exactly like the encoder but
+
+0:38:42.020,0:38:47.390
+I'm gonna have a cross attention like
+
+0:38:44.600,0:38:49.610
+some one of you was mentioning before of
+
+0:38:47.390,0:38:51.350
+course right they were you were asking
+
+0:38:49.610,0:38:53.540
+me why the heck are you checking these
+
+0:38:51.350,0:38:56.960
+keys from yourself so this cross
+
+0:38:53.540,0:39:00.590
+attention gets connected right after
+
+0:38:56.960,0:39:02.930
+these normalization module right and of
+
+0:39:00.590,0:39:05.270
+course cross attention gets these hidden
+
+0:39:02.930,0:39:08.330
+representation from the last layer of
+
+0:39:05.270,0:39:09.890
+the encoder and then what else you're
+
+0:39:08.330,0:39:12.350
+gonna have the same stuff so the
+
+0:39:09.890,0:39:14.150
+addition and normalization you connect
+
+0:39:12.350,0:39:16.070
+this stuff and then finally you plug it
+
+0:39:14.150,0:39:18.290
+back right so we have one extra module
+
+0:39:16.070,0:39:20.930
+and this is gonna be my decoder right so
+
+0:39:18.290,0:39:23.210
+the decoder is like the encoder but has
+
+0:39:20.930,0:39:27.440
+this additional module sandwiched
+
+0:39:23.210,0:39:29.210
+between these previous between it could
+
+0:39:27.440,0:39:31.190
+you say more about the cross attention
+
+0:39:29.210,0:39:34.289
+cross attention is exactly the self
+
+0:39:31.190,0:39:38.819
+attention but
+
+0:39:34.289,0:39:43.400
+you have the fact that my keys like this
+
+0:39:38.819,0:39:47.699
+X here and this guy here are no longer X
+
+0:39:43.400,0:39:50.489
+but these are gonna be my age from the
+
+0:39:47.699,0:39:57.089
+encoder right that's it
+
+0:39:50.489,0:40:01.199
+and coder and this was the set right so
+
+0:39:57.089,0:40:05.950
+I still like the set of Ages all the
+
+0:40:01.199,0:40:07.630
+same and whatever
+
+0:40:05.950,0:40:09.970
+try it with the mouse okay so this is
+
+0:40:07.630,0:40:14.829
+exactly the same where I just replaced
+
+0:40:09.970,0:40:16.869
+the X's with the final hidden
+
+0:40:14.829,0:40:18.760
+representation from the encode array so
+
+0:40:16.869,0:40:23.109
+that's it this guy here is gonna be
+
+0:40:18.760,0:40:24.550
+providing me the values and the keys so
+
+0:40:23.109,0:40:27.520
+we still use the original axis to
+
+0:40:24.550,0:40:31.839
+compute the query and then you use the
+
+0:40:27.520,0:40:35.859
+HS to compute the so the this one you're
+
+0:40:31.839,0:40:38.050
+gonna get these the X to compute the the
+
+0:40:35.859,0:40:40.630
+the D queries here here I compute the
+
+0:40:38.050,0:40:44.260
+queries and this one allows me to
+
+0:40:40.630,0:40:47.349
+compute the K keys and then the values
+
+0:40:44.260,0:40:49.300
+okay so how does it work how do we train
+
+0:40:47.349,0:40:51.400
+this stuff right so what we get there on
+
+0:40:49.300,0:40:55.630
+the bottom from the bottom there we're
+
+0:40:51.400,0:40:58.210
+gonna have the output these Y hat from
+
+0:40:55.630,0:41:00.250
+the previous iteration and so you're
+
+0:40:58.210,0:41:02.320
+gonna get a output there at the output
+
+0:41:00.250,0:41:04.780
+of the of the system maybe there is like
+
+0:41:02.320,0:41:06.820
+some additional layer missing there and
+
+0:41:04.780,0:41:09.130
+then in an autoregressive fashion you're
+
+0:41:06.820,0:41:11.290
+gonna get this output you feed it back
+
+0:41:09.130,0:41:13.900
+you know there's some additional layer
+
+0:41:11.290,0:41:15.640
+on top of it it doesn't matter I mean
+
+0:41:13.900,0:41:17.920
+it's not important and then you put it
+
+0:41:15.640,0:41:20.050
+back and then you you know you out
+
+0:41:17.920,0:41:22.240
+aggressively output a sequence of
+
+0:41:20.050,0:41:24.640
+outputs right and then every time you
+
+0:41:22.240,0:41:26.980
+have a new input this new input will ask
+
+0:41:24.640,0:41:28.599
+for a different query and a different
+
+0:41:26.980,0:41:31.569
+query is going to be asking about
+
+0:41:28.599,0:41:34.900
+different values from the encoder right
+
+0:41:31.569,0:41:39.490
+so the encoder basically summarized what
+
+0:41:34.900,0:41:43.869
+is the content of my input set right so
+
+0:41:39.490,0:41:47.349
+before we saw that this guy here yeah so
+
+0:41:43.869,0:41:48.940
+here we have a input set and then the
+
+0:41:47.349,0:41:51.310
+output of this guy is going to be a set
+
+0:41:48.940,0:41:53.230
+of hidden representation and then you
+
+0:41:51.310,0:41:57.910
+have the decoder is going to be querying
+
+0:41:53.230,0:42:02.050
+what is required through this cue from
+
+0:41:57.910,0:42:05.980
+this set of representations from the
+
+0:42:02.050,0:42:07.930
+encoder okay and we really have to go to
+
+0:42:05.980,0:42:12.369
+the notebook because otherwise we have
+
+0:42:07.930,0:42:14.200
+no time left so import stuff whatever so
+
+0:42:12.369,0:42:17.650
+here we have the multi-head attention
+
+0:42:14.200,0:42:19.869
+right how does this multi-head attention
+
+0:42:17.650,0:42:22.299
+work so in the init
+
+0:42:19.869,0:42:26.950
+part we're gonna have these three
+
+0:42:22.299,0:42:31.450
+matrices w-qm WK & WV that are allowing
+
+0:42:26.950,0:42:34.869
+me to rotate my current input right and
+
+0:42:31.450,0:42:37.990
+then we have this one that is allowing
+
+0:42:34.869,0:42:42.190
+me to merge together the heads at the
+
+0:42:37.990,0:42:44.619
+end and so how does this forward works
+
+0:42:42.190,0:42:47.920
+right so in the forward you're gonna get
+
+0:42:44.619,0:42:50.470
+a input X for the query and input X for
+
+0:42:47.920,0:42:53.049
+the keys and an input for the values and
+
+0:42:50.470,0:42:56.799
+now you have the Q the K and the V are
+
+0:42:53.049,0:43:01.119
+simply you know the multiplication of my
+
+0:42:56.799,0:43:03.220
+input for the specific item multiplied
+
+0:43:01.119,0:43:05.380
+by this matrix WQ right so this is the
+
+0:43:03.220,0:43:08.740
+rotation of my X and so here you have
+
+0:43:05.380,0:43:13.089
+the Q K and V then you're going to
+
+0:43:08.740,0:43:15.130
+compute this scale dot product so we can
+
+0:43:13.089,0:43:17.019
+go and see this on scale dot product
+
+0:43:15.130,0:43:20.200
+which are basically the dot product
+
+0:43:17.019,0:43:24.190
+between the one question against all the
+
+0:43:20.200,0:43:26.730
+keys so if we go up here I can't even
+
+0:43:24.190,0:43:33.999
+scroll sorry
+
+0:43:26.730,0:43:36.400
+let me zoom a little one second okay so
+
+0:43:33.999,0:43:39.849
+here you get these arrays so here you
+
+0:43:36.400,0:43:41.529
+get basically the discourse okay first
+
+0:43:39.849,0:43:42.880
+we divide by the square root of the
+
+0:43:41.529,0:43:45.579
+dimension because we said before
+
+0:43:42.880,0:43:47.589
+otherwise stuff starts exploding then we
+
+0:43:45.579,0:43:51.039
+have a matrix multiplication between one
+
+0:43:47.589,0:43:53.140
+query against all these keys right and
+
+0:43:51.039,0:43:54.819
+then at the end we apply the soft dark
+
+0:43:53.140,0:43:58.150
+max right such that we can compute the
+
+0:43:54.819,0:44:00.549
+squares they I'm sorry did we can
+
+0:43:58.150,0:44:04.720
+compute compute the mixing mixing
+
+0:44:00.549,0:44:07.630
+coefficient right and then finally you
+
+0:44:04.720,0:44:12.099
+multiply these mixing coefficients with
+
+0:44:07.630,0:44:14.920
+the V matrix you get basically the final
+
+0:44:12.099,0:44:18.910
+output right and that was pretty much it
+
+0:44:14.920,0:44:20.589
+this was the self attention right and
+
+0:44:18.910,0:44:22.420
+then finally since you have multiple
+
+0:44:20.589,0:44:24.519
+heads we're going to be squashing
+
+0:44:22.420,0:44:27.789
+everything together by using this final
+
+0:44:24.519,0:44:30.640
+WH so that was the first part they
+
+0:44:27.789,0:44:32.710
+dubbed the attention are there questions
+
+0:44:30.640,0:44:33.730
+on these attention I mean if you follow
+
+0:44:32.710,0:44:37.000
+this light this is
+
+0:44:33.730,0:44:41.130
+exactly the same okay just let me know
+
+0:44:37.000,0:44:44.560
+if you need me to go slower on this part
+
+0:44:41.130,0:44:46.359
+then on the bottom part so what do we
+
+0:44:44.560,0:44:50.560
+need we have the attention part so this
+
+0:44:46.359,0:44:52.240
+is the self attention right so what what
+
+0:44:50.560,0:44:55.240
+I what are we trying to do right this is
+
+0:44:52.240,0:44:56.500
+a multi-headed attention so what are we
+
+0:44:55.240,0:44:59.020
+trying to do here we are going to be
+
+0:44:56.500,0:45:02.260
+just using an encoder to classify some
+
+0:44:59.020,0:45:04.119
+sentences which are sentences described
+
+0:45:02.260,0:45:06.340
+in some movies has been a positive
+
+0:45:04.119,0:45:08.590
+review or a negative review so I'm just
+
+0:45:06.340,0:45:10.420
+gonna be using the encoder and then
+
+0:45:08.590,0:45:12.880
+train this encoder to perform a
+
+0:45:10.420,0:45:16.000
+classification task so what do we need
+
+0:45:12.880,0:45:18.790
+for the encoder the encoder if we check
+
+0:45:16.000,0:45:20.890
+from these slides so if we check here
+
+0:45:18.790,0:45:23.619
+what do we need for the encoder the
+
+0:45:20.890,0:45:26.050
+encoder has two components right there
+
+0:45:23.619,0:45:27.760
+is the self attention which we just saw
+
+0:45:26.050,0:45:29.890
+the code and then we had this
+
+0:45:27.760,0:45:32.260
+convolution right this MLP multi-layer
+
+0:45:29.890,0:45:33.850
+perceptron applied to every element in
+
+0:45:32.260,0:45:38.140
+the set so let's figure out where this
+
+0:45:33.850,0:45:40.540
+convolutional layer is some sanity check
+
+0:45:38.140,0:45:45.190
+hold on this stuff is gonna be online by
+
+0:45:40.540,0:45:47.200
+the end of today so there is this
+
+0:45:45.190,0:45:48.520
+encoder layer and the encoder layer has
+
+0:45:47.200,0:45:50.050
+this much attention plus the
+
+0:45:48.520,0:45:52.180
+convolutional net and the convolutional
+
+0:45:50.050,0:45:54.520
+net you pretty know pretty much know how
+
+0:45:52.180,0:45:56.109
+it works right so you can actually
+
+0:45:54.520,0:45:58.780
+figure out if you check the fight' or
+
+0:45:56.109,0:46:01.260
+documentation that the linear and then
+
+0:45:58.780,0:46:03.850
+linear acts is a one-dimensional
+
+0:46:01.260,0:46:05.830
+convolution so you can use you know n n
+
+0:46:03.850,0:46:07.840
+linear here so this is like a
+
+0:46:05.830,0:46:10.480
+convolutional net you have a convolution
+
+0:46:07.840,0:46:14.440
+the real o and then you have the final
+
+0:46:10.480,0:46:16.570
+convolution okay I think I'm not running
+
+0:46:14.440,0:46:18.609
+because I think you already know how to
+
+0:46:16.570,0:46:21.460
+make convolutional net and then we have
+
+0:46:18.609,0:46:23.920
+the tool layer normalization right so
+
+0:46:21.460,0:46:26.770
+first you have multi-head attention it's
+
+0:46:23.920,0:46:30.810
+a self attention so we provide X X and X
+
+0:46:26.770,0:46:33.130
+for all the inputs right then use a
+
+0:46:30.810,0:46:36.369
+stupid question but why call it a
+
+0:46:33.130,0:46:38.859
+convolution at all is it's just a no
+
+0:46:36.369,0:46:42.550
+okay it's not it's not stupid it's very
+
+0:46:38.859,0:46:45.820
+important because a linear layer would
+
+0:46:42.550,0:46:47.520
+be mapping you know some representation
+
+0:46:45.820,0:46:51.490
+into some other representation
+
+0:46:47.520,0:46:55.150
+is applied to every component in the set
+
+0:46:51.490,0:46:57.550
+right so I have a set here right yeah a
+
+0:46:55.150,0:47:01.690
+set of inputs and over here I'm gonna
+
+0:46:57.550,0:47:07.210
+have a set of representation right so I
+
+0:47:01.690,0:47:10.690
+have a set here yeah then I apply the
+
+0:47:07.210,0:47:13.570
+linear layer to every element separately
+
+0:47:10.690,0:47:16.359
+okay mm-hmm so if you apply the same
+
+0:47:13.570,0:47:18.150
+linear layer to every element in a
+
+0:47:16.359,0:47:21.340
+sequence Oh
+
+0:47:18.150,0:47:24.850
+Bhushan right okay so everyone could
+
+0:47:21.340,0:47:27.040
+each each each hidden representation is
+
+0:47:24.850,0:47:29.650
+going to be M going through the one
+
+0:47:27.040,0:47:32.140
+contribution separately yeah so in the
+
+0:47:29.650,0:47:35.500
+in the original paper they call it a
+
+0:47:32.140,0:47:37.300
+linear layer but it's not because it's
+
+0:47:35.500,0:47:39.220
+actually a convolution right so again
+
+0:47:37.300,0:47:41.080
+every every time you're gonna see the
+
+0:47:39.220,0:47:42.850
+every implementation is gonna use a
+
+0:47:41.080,0:47:46.300
+linear layer all of them are going to be
+
+0:47:42.850,0:47:48.490
+calling a feed-forward but are these are
+
+0:47:46.300,0:47:50.560
+convolution it does some broadcasting
+
+0:47:48.490,0:47:52.300
+but I can eat a convolution the same way
+
+0:47:50.560,0:47:54.369
+we call soft arcamax
+
+0:47:52.300,0:47:56.320
+and we called with I don't call it soft
+
+0:47:54.369,0:48:00.630
+max because you know it's it's wrong
+
+0:47:56.320,0:48:05.460
+right okay but it's very good question
+
+0:48:00.630,0:48:08.410
+I'm almost done I understand okay so
+
+0:48:05.460,0:48:11.290
+this is my convolutional net and then
+
+0:48:08.410,0:48:14.650
+you have multi-layer attention and this
+
+0:48:11.290,0:48:17.880
+CN n right and again this is simply a
+
+0:48:14.650,0:48:20.950
+one dimensional one dimensional like
+
+0:48:17.880,0:48:23.650
+it's a one dimensional convolution where
+
+0:48:20.950,0:48:26.320
+the kernel size is also one right and so
+
+0:48:23.650,0:48:28.990
+it can be implemented with a linear but
+
+0:48:26.320,0:48:30.850
+I would write here and then one
+
+0:48:28.990,0:48:33.700
+deconvolution right with the kernel of
+
+0:48:30.850,0:48:35.920
+size one actually they are implemented
+
+0:48:33.700,0:48:38.440
+in exactly the same way in in if you
+
+0:48:35.920,0:48:40.090
+check the code on Phi torch but this
+
+0:48:38.440,0:48:42.190
+would be the correct like is a
+
+0:48:40.090,0:48:44.140
+convolution way all right so you have
+
+0:48:42.190,0:48:46.720
+the multi lytic Multi multi head
+
+0:48:44.140,0:48:50.260
+attention you get the first output then
+
+0:48:46.720,0:48:52.000
+you send this output you sum this to the
+
+0:48:50.260,0:48:53.619
+input right because we had the residual
+
+0:48:52.000,0:48:56.020
+connection you send it through the layer
+
+0:48:53.619,0:48:57.860
+normalization and then you have an
+
+0:48:56.020,0:49:00.440
+output
+
+0:48:57.860,0:49:02.000
+so you have an output oh one you send
+
+0:49:00.440,0:49:04.220
+the output inside the convolution you
+
+0:49:02.000,0:49:06.320
+get this guy which you're gonna be
+
+0:49:04.220,0:49:07.790
+bypassing now with a residual connection
+
+0:49:06.320,0:49:10.100
+and you feed it to the layer
+
+0:49:07.790,0:49:13.580
+normalization so that's the encoder
+
+0:49:10.100,0:49:16.370
+right so the encoder puts all that was
+
+0:49:13.580,0:49:20.420
+the encoder finnaly fit finish something
+
+0:49:16.370,0:49:24.680
+I didn't mention was that let me go back
+
+0:49:20.420,0:49:26.990
+here so I'm using this encoder to do
+
+0:49:24.680,0:49:30.410
+some sentence classification right
+
+0:49:26.990,0:49:32.930
+and so each there is there is actually a
+
+0:49:30.410,0:49:35.570
+order now in the in the words if you put
+
+0:49:32.930,0:49:39.050
+a bag of word this is basically like
+
+0:49:35.570,0:49:40.400
+acting and working on a bag of words but
+
+0:49:39.050,0:49:42.980
+if you actually would like to make sense
+
+0:49:40.400,0:49:46.730
+you'd like to also send an index right
+
+0:49:42.980,0:49:48.740
+so the first item should also in the set
+
+0:49:46.730,0:49:52.130
+should have or this was first item so
+
+0:49:48.740,0:49:55.250
+your house should send information about
+
+0:49:52.130,0:49:59.240
+what position that item an item takes
+
+0:49:55.250,0:50:01.130
+okay so so far this encoder in this
+
+0:49:59.240,0:50:04.970
+transformer and this attention is
+
+0:50:01.130,0:50:06.950
+completely permutation equivalent right
+
+0:50:04.970,0:50:09.710
+because we don't have any information
+
+0:50:06.950,0:50:11.930
+about order but if I'd like to do
+
+0:50:09.710,0:50:14.270
+classification of sentences maybe make
+
+0:50:11.930,0:50:16.970
+sense to take an account the order of
+
+0:50:14.270,0:50:19.910
+words right because you know order my
+
+0:50:16.970,0:50:22.070
+matter so we can add some kind of
+
+0:50:19.910,0:50:25.760
+position information but again it's not
+
+0:50:22.070,0:50:29.570
+important all right so I have my encoder
+
+0:50:25.760,0:50:31.550
+which is gonna be just having the
+
+0:50:29.570,0:50:35.450
+embeddings for the input and then it has
+
+0:50:31.550,0:50:38.740
+several layers of the encoder so over
+
+0:50:35.450,0:50:41.960
+here I just show you where the become
+
+0:50:38.740,0:50:44.960
+okay okay so this is just one encoder
+
+0:50:41.960,0:50:47.870
+but since we are doing deep networks you
+
+0:50:44.960,0:50:51.320
+can you know you have multiple encoders
+
+0:50:47.870,0:50:55.870
+after you know deep networks each of
+
+0:50:51.320,0:50:58.460
+these is an encoder right and coder so
+
+0:50:55.870,0:51:02.060
+you can stack multiple of these encoders
+
+0:50:58.460,0:51:05.300
+to make your network more powerful and
+
+0:51:02.060,0:51:07.160
+so here you have like a list for a
+
+0:51:05.300,0:51:09.110
+number of layers you attend several
+
+0:51:07.160,0:51:12.020
+encoders together
+
+0:51:09.110,0:51:14.810
+then we train this stuff on these IMDB
+
+0:51:12.020,0:51:17.090
+data set which is basically giving me
+
+0:51:14.810,0:51:18.740
+the reviews of the of the movie and then
+
+0:51:17.090,0:51:22.970
+we have to figure out whether it was a
+
+0:51:18.740,0:51:23.900
+good or a bad movie and pretty much
+
+0:51:22.970,0:51:30.110
+that's it
+
+0:51:23.900,0:51:31.400
+so we train these big guy and I just
+
+0:51:30.110,0:51:33.260
+keep the training loop because it's
+
+0:51:31.400,0:51:37.190
+gonna be exactly the same train loop we
+
+0:51:33.260,0:51:39.260
+have seen so many times you get some you
+
+0:51:37.190,0:51:41.150
+know accuracy at the beginning it's 50
+
+0:51:39.260,0:51:43.670
+percent because it doesn't know better
+
+0:51:41.150,0:51:47.510
+and then as you keep training we get up
+
+0:51:43.670,0:51:50.000
+to some kind of 1992 and we start maybe
+
+0:51:47.510,0:51:53.260
+overfitting a little bit and this is the
+
+0:51:50.000,0:51:55.730
+test accuracy which is 83 percent okay
+
+0:51:53.260,0:52:00.190
+so something you want to really pay
+
+0:51:55.730,0:52:03.920
+attention is the fact that when you do
+
+0:52:00.190,0:52:06.470
+sentence classification with a RNN you
+
+0:52:03.920,0:52:08.150
+have to send it multiple times right you
+
+0:52:06.470,0:52:10.340
+have to send the first word inside
+
+0:52:08.150,0:52:13.700
+they've sent the second word then it's a
+
+0:52:10.340,0:52:16.130
+sequential set of operations instead in
+
+0:52:13.700,0:52:18.200
+this case these attention mechanism I
+
+0:52:16.130,0:52:19.880
+show you right now there is no
+
+0:52:18.200,0:52:23.060
+sequential operation everything is
+
+0:52:19.880,0:52:26.630
+computed in one go right so in this case
+
+0:52:23.060,0:52:29.810
+here you get these final age matrix
+
+0:52:26.630,0:52:33.620
+which is the representational of all the
+
+0:52:29.810,0:52:35.290
+element in my sentence it's computing
+
+0:52:33.620,0:52:38.780
+one goal right so there is no more
+
+0:52:35.290,0:52:40.930
+temporal loop there is no more waiting
+
+0:52:38.780,0:52:43.580
+time right it's like boom immediately
+
+0:52:40.930,0:52:47.000
+immediately done right so this allow you
+
+0:52:43.580,0:52:48.650
+to paralyze so much because this is just
+
+0:52:47.000,0:52:52.400
+matrix multiplication right so this is
+
+0:52:48.650,0:52:57.010
+like stupid to paralyze one more thing
+
+0:52:52.400,0:53:01.190
+to pay attention is that where is it
+
+0:52:57.010,0:53:05.300
+there is a matrix the a matrix okay this
+
+0:53:01.190,0:53:07.820
+guy here this is very dangerous right T
+
+0:53:05.300,0:53:09.110
+is the number of T is the number of
+
+0:53:07.820,0:53:13.130
+titles right okay and there you go
+
+0:53:09.110,0:53:14.990
+so my recipe book has thousand recipes
+
+0:53:13.130,0:53:16.880
+because it's the one thousand I'll free
+
+0:53:14.990,0:53:19.340
+the recipe book
+
+0:53:16.880,0:53:21.260
+what's the size of these metrics is a
+
+0:53:19.340,0:53:24.470
+thousand times a thousand right
+
+0:53:21.260,0:53:28.340
+1 million dimension is huge
+
+0:53:24.470,0:53:32.300
+and so you can can see clearly here the
+
+0:53:28.340,0:53:34.850
+fact that if you have many indexes many
+
+0:53:32.300,0:53:37.400
+many many keys right this stuff starts
+
+0:53:34.850,0:53:39.230
+blowing up quickly pretty quickly right
+
+0:53:37.400,0:53:40.580
+so you have to pay attention about that
+
+0:53:39.230,0:53:44.390
+and you know there are different ways to
+
+0:53:40.580,0:53:47.270
+handle this as well for example you can
+
+0:53:44.390,0:53:50.990
+split it in half and do something up but
+
+0:53:47.270,0:53:53.360
+again implementation detail so right now
+
+0:53:50.990,0:53:54.920
+we are 10 minutes after class I am here
+
+0:53:53.360,0:53:56.750
+for you and answer every kind of
+
+0:53:54.920,0:53:59.270
+question but I think we managed to go
+
+0:53:56.750,0:54:08.390
+through the notebook in a ok
+
+0:53:59.270,0:54:13.100
+manner questions as to questions yes so
+
+0:54:08.390,0:54:18.410
+in one head in one attention head you
+
+0:54:13.100,0:54:21.830
+will only use one matrix one weight
+
+0:54:18.410,0:54:24.290
+matrix each for the query the key and
+
+0:54:21.830,0:54:27.500
+the value yes yeah I know you stuck all
+
+0:54:24.290,0:54:30.890
+the final v's together and then you can
+
+0:54:27.500,0:54:36.560
+squash them back so at the end I may
+
+0:54:30.890,0:54:40.160
+have H V then I can use this matrix here
+
+0:54:36.560,0:54:43.040
+to squash down everything to D dimension
+
+0:54:40.160,0:54:45.350
+this is a way of doing this ok ok so
+
+0:54:43.040,0:54:48.710
+multi descent multi-headed attention
+
+0:54:45.350,0:54:52.000
+essentially is just using multiple
+
+0:54:48.710,0:54:54.890
+weight matrices that don't share that
+
+0:54:52.000,0:54:57.470
+yeah something happened in the between
+
+0:54:54.890,0:55:01.100
+by yes the the multi-headed attention
+
+0:54:57.470,0:55:03.680
+means you have multiple queries for the
+
+0:55:01.100,0:55:06.410
+same input right and then allows you to
+
+0:55:03.680,0:55:09.470
+have multiple questions about the same
+
+0:55:06.410,0:55:11.870
+wheel like you're hungry so one question
+
+0:55:09.470,0:55:13.880
+would be how can I make lasagna but you
+
+0:55:11.870,0:55:14.300
+know that you don't have ground beef at
+
+0:55:13.880,0:55:17.300
+home
+
+0:55:14.300,0:55:19.640
+so a second question would be mmm can I
+
+0:55:17.300,0:55:21.140
+do a vegetarian dish and so you know
+
+0:55:19.640,0:55:24.020
+given that you're still hungry you may
+
+0:55:21.140,0:55:26.820
+have different questions your mind
+
+0:55:24.020,0:55:29.700
+okay and can you go to the slide with
+
+0:55:26.820,0:55:34.490
+the encoder/decoder structure that used
+
+0:55:29.700,0:55:38.100
+cross attention yeah sure here okay so
+
+0:55:34.490,0:55:41.220
+the input to the first self attention
+
+0:55:38.100,0:55:44.520
+layer would be the way you calculate the
+
+0:55:41.220,0:55:47.460
+query in that case would be W Q times X
+
+0:55:44.520,0:55:50.100
+I say Q I will be called attack so in
+
+0:55:47.460,0:55:53.130
+this in the self attention right yeah so
+
+0:55:50.100,0:55:56.820
+in the self attention all those are hold
+
+0:55:53.130,0:56:01.590
+on those q qk and V are coming from the
+
+0:55:56.820,0:56:04.130
+Y hat right instead of X you want to
+
+0:56:01.590,0:56:06.420
+replace this X with Y hat right
+
+0:56:04.130,0:56:09.030
+so what was that again what was the
+
+0:56:06.420,0:56:11.520
+white hat again Y hat is gonna be my so
+
+0:56:09.030,0:56:13.560
+whenever you train this system here
+
+0:56:11.520,0:56:15.600
+you're gonna be predicting the first
+
+0:56:13.560,0:56:16.710
+word okay aha I didn't even tell you
+
+0:56:15.600,0:56:19.580
+you're you're right
+
+0:56:16.710,0:56:22.530
+so this system is trained to do
+
+0:56:19.580,0:56:26.160
+translation you put a sentence in input
+
+0:56:22.530,0:56:27.510
+in a one language I'm happy hungry I'm
+
+0:56:26.160,0:56:29.790
+hungry and then you put the other
+
+0:56:27.510,0:56:33.180
+language like in Italian for example or
+
+0:56:29.790,0:56:35.040
+famine and you want to make you know you
+
+0:56:33.180,0:56:37.320
+feed here and I'm hangry
+
+0:56:35.040,0:56:39.480
+and it's gonna be the representation of
+
+0:56:37.320,0:56:42.150
+the I'm hungry hungry not hungry I'm
+
+0:56:39.480,0:56:45.000
+hungry in English and then after you
+
+0:56:42.150,0:56:47.160
+feed you put here I'm hungry the first
+
+0:56:45.000,0:56:50.640
+word you're gonna be outputting is gonna
+
+0:56:47.160,0:56:53.070
+be here in Inked in Italian oh and if I
+
+0:56:50.640,0:56:55.860
+you put all down here you enforce the
+
+0:56:53.070,0:57:00.030
+system to put family as output which is
+
+0:56:55.860,0:57:02.100
+hungry in Italian so if I say okay let
+
+0:57:00.030,0:57:07.680
+me let me put a minute write down maybe
+
+0:57:02.100,0:57:10.410
+if I want to say okay so it's so it's a
+
+0:57:07.680,0:57:14.520
+cut yeah so let's say a cut in English
+
+0:57:10.410,0:57:23.490
+and then you have in Italian oh god oh
+
+0:57:14.520,0:57:25.350
+god got oh okay so first you have a cut
+
+0:57:23.490,0:57:27.900
+that goes inside the encoder and then
+
+0:57:25.350,0:57:30.330
+the encoder spits this guy here and
+
+0:57:27.900,0:57:33.930
+there is one H associated to each of
+
+0:57:30.330,0:57:35.910
+these inputs and then these if you put
+
+0:57:33.930,0:57:36.700
+this stuff inside here at the beginning
+
+0:57:35.910,0:57:39.430
+you're going to
+
+0:57:36.700,0:57:43.599
+a big zero here and this stuff is gonna
+
+0:57:39.430,0:57:47.650
+spit out a one which is the a now you
+
+0:57:43.599,0:57:49.810
+put the one down here and then this guy
+
+0:57:47.650,0:57:51.640
+is gonna be spitting out got oh they put
+
+0:57:49.810,0:57:56.410
+got to inciting us in this guy this
+
+0:57:51.640,0:58:00.579
+guy's gonna say finish that's it it will
+
+0:57:56.410,0:58:02.710
+go to the end right II yes okay every
+
+0:58:00.579,0:58:06.280
+time you get a different input here at
+
+0:58:02.710,0:58:08.470
+the bottom the decoder can decide to
+
+0:58:06.280,0:58:11.470
+look at different components of these
+
+0:58:08.470,0:58:15.940
+eight encoder okay that doesn't make
+
+0:58:11.470,0:58:18.280
+sense yes and what's going to the class
+
+0:58:15.940,0:58:21.150
+attention module in that case the cross
+
+0:58:18.280,0:58:23.829
+attention module is getting the output
+
+0:58:21.150,0:58:28.380
+this wire here is the output of this add
+
+0:58:23.829,0:58:31.930
+norm so the output of this add norm goes
+
+0:58:28.380,0:58:34.540
+inside the heater for the Q the the
+
+0:58:31.930,0:58:38.890
+query in the cross attention and then is
+
+0:58:34.540,0:58:41.410
+getting this guy here the the values and
+
+0:58:38.890,0:58:47.470
+the the keys from the you know the
+
+0:58:41.410,0:58:52.440
+encoder okay thanks okay there were take
+
+0:58:47.470,0:58:56.730
+questions you said the first was about
+
+0:58:52.440,0:58:58.900
+how many matrices you'd use for a single
+
+0:58:56.730,0:59:01.150
+thank you sure of course
+
+0:58:58.900,0:59:03.190
+I hope it was a bit more clear than
+
+0:59:01.150,0:59:05.670
+yesterday but again I noticed there is a
+
+0:59:03.190,0:59:08.920
+lot of it was pretty dense today class I
+
+0:59:05.670,0:59:10.599
+hope like I was just confused about what
+
+0:59:08.920,0:59:15.369
+the cells refer to and what the cross
+
+0:59:10.599,0:59:22.329
+referred yeah yeah yeah more questions
+
+0:59:15.369,0:59:26.530
+in this example of the cat on gato mum
+
+0:59:22.329,0:59:29.050
+so you said out of the decoder you get
+
+0:59:26.530,0:59:35.890
+some representation and you pass that
+
+0:59:29.050,0:59:40.119
+back into as a why so to me that looks
+
+0:59:35.890,0:59:41.980
+like like some kind of recurrence is it
+
+0:59:40.119,0:59:42.730
+not this is this is called auto
+
+0:59:41.980,0:59:45.490
+regressive
+
+0:59:42.730,0:59:47.890
+right so this is for generating text and
+
+0:59:45.490,0:59:50.589
+so to generate text you have to generate
+
+0:59:47.890,0:59:52.329
+the first output now you feed the
+
+0:59:50.589,0:59:54.430
+and that output inside you're gonna get
+
+0:59:52.329,0:59:56.859
+the second guy right so the encoder
+
+0:59:54.430,1:00:01.119
+doesn't have any auto regressive thing
+
+0:59:56.859,1:00:03.999
+yeah the encoder just generates this H
+
+1:00:01.119,1:00:06.069
+encoder then the decoder is gonna be
+
+1:00:03.999,1:00:09.849
+generating one word at a time in an
+
+1:00:06.069,1:00:12.029
+autoregressive fashion so the right guy
+
+1:00:09.849,1:00:15.099
+is a generative model right
+
+1:00:12.029,1:00:17.279
+but d-train the encoder and decoder at
+
+1:00:15.099,1:00:21.160
+all at once when you're training this
+
+1:00:17.279,1:00:24.309
+model yeah so how does it how do you
+
+1:00:21.160,1:00:28.059
+train it if it's auto regressive and one
+
+1:00:24.309,1:00:29.859
+step depends on the previous step your
+
+1:00:28.059,1:00:33.609
+sentence when you're doing inference is
+
+1:00:29.859,1:00:35.920
+auto regressive oh so inference is auto
+
+1:00:33.609,1:00:37.349
+regressive but training is yeah because
+
+1:00:35.920,1:00:40.239
+you have the wrong ones
+
+1:00:37.349,1:00:42.099
+okay you just mask the future time step
+
+1:00:40.239,1:00:43.809
+so that you don't show it if you're
+
+1:00:42.099,1:00:45.969
+trying to do it for the first word it
+
+1:00:43.809,1:00:47.200
+receives only the first not everything
+
+1:00:45.969,1:00:51.180
+else and so on
+
+1:00:47.200,1:00:57.609
+let's call like a look ahead mask okay
+
+1:00:51.180,1:01:00.160
+Jesus thanks I'm just going with your
+
+1:00:57.609,1:01:02.019
+examples from earlier with this the cat
+
+1:01:00.160,1:01:03.940
+and we were saying to cue in this case
+
+1:01:02.019,1:01:06.900
+would be like an Italian word right I
+
+1:01:03.940,1:01:09.759
+like pudding the second time around and
+
+1:01:06.900,1:01:11.349
+one top right right right and then it
+
+1:01:09.759,1:01:15.130
+comes down and then we feed it through
+
+1:01:11.349,1:01:19.390
+and it the cue goes into the cross
+
+1:01:15.130,1:01:23.829
+attention and at that point K is gonna
+
+1:01:19.390,1:01:29.259
+be the key for the English the encoded
+
+1:01:23.829,1:01:32.349
+English word but then the value is also
+
+1:01:29.259,1:01:34.420
+gonna be from the English representation
+
+1:01:32.349,1:01:38.309
+right so how does that end up spitting
+
+1:01:34.420,1:01:41.319
+out like an Italian word good question
+
+1:01:38.309,1:01:46.109
+you stuck multiple of these modules and
+
+1:01:41.319,1:01:46.109
+somehow the magic happens I don't know
+
+1:01:46.289,1:01:52.599
+the values and the keys are coming from
+
+1:01:49.660,1:01:54.969
+the English but again this okay so
+
+1:01:52.599,1:01:57.190
+whenever you train this system you will
+
+1:01:54.969,1:01:59.440
+end up with representations that are
+
+1:01:57.190,1:02:02.019
+basically language agnostic I would
+
+1:01:59.440,1:02:04.720
+assume therefore you have on one side
+
+1:02:02.019,1:02:06.910
+English the other side Italian
+
+1:02:04.720,1:02:08.710
+but in the middle part whenever you have
+
+1:02:06.910,1:02:11.470
+these kind of embeddings we can assume
+
+1:02:08.710,1:02:13.600
+this to be like language agnostic right
+
+1:02:11.470,1:02:16.510
+and so the question is gonna just figure
+
+1:02:13.600,1:02:18.460
+out hey this Italian word is looking for
+
+1:02:16.510,1:02:21.190
+something that looks like this what are
+
+1:02:18.460,1:02:23.650
+the encoding what are the embeddings
+
+1:02:21.190,1:02:26.920
+here that are you know matching my
+
+1:02:23.650,1:02:28.090
+specific question right now okay so I
+
+1:02:26.920,1:02:30.370
+think that could be like an
+
+1:02:28.090,1:02:33.490
+interpretation I guess so you have
+
+1:02:30.370,1:02:35.710
+Italian down English down here and as
+
+1:02:33.490,1:02:38.920
+you bubble up the encoder you remove the
+
+1:02:35.710,1:02:41.740
+language specificity and then you kind
+
+1:02:38.920,1:02:44.950
+of reuse this kind of you know encoders
+
+1:02:41.740,1:02:47.560
+I guess I mean this is similar to how it
+
+1:02:44.950,1:02:49.420
+works in the encoder decoder recurrent
+
+1:02:47.560,1:02:53.200
+neural network you have an encoder which
+
+1:02:49.420,1:02:55.120
+is encoding one whole sentence and then
+
+1:02:53.200,1:02:56.920
+you can have like a representation of
+
+1:02:55.120,1:02:58.600
+that sentence that doesn't depend on the
+
+1:02:56.920,1:03:00.640
+language anymore right
+
+1:02:58.600,1:03:02.950
+and then actually after having the
+
+1:03:00.640,1:03:06.190
+recurrent Network you used to have a
+
+1:03:02.950,1:03:07.990
+dick like a decoder which is or just
+
+1:03:06.190,1:03:09.520
+using that final representation or you
+
+1:03:07.990,1:03:13.300
+can also have an attention which is
+
+1:03:09.520,1:03:17.200
+looking at specific I think time steps
+
+1:03:13.300,1:03:22.450
+in the in the past so it's it's part of
+
+1:03:17.200,1:03:26.530
+the language the natural neural language
+
+1:03:22.450,1:03:30.280
+translation NTM brain neural language
+
+1:03:26.530,1:03:32.320
+and nltc machine machine translation and
+
+1:03:30.280,1:03:37.270
+it that yeah that's part of that kind of
+
+1:03:32.320,1:03:38.920
+stuff sorry so just last question
+
+1:03:37.270,1:03:40.780
+somewhat did I answer your question
+
+1:03:38.920,1:03:44.680
+before I mean this is my guess right
+
+1:03:40.780,1:03:47.620
+it's like that the embedding is gonna be
+
+1:03:44.680,1:03:49.930
+the day H H encoder are like they are
+
+1:03:47.620,1:03:52.390
+stripping off the the language specific
+
+1:03:49.930,1:03:55.480
+information they are just concepts right
+
+1:03:52.390,1:03:56.590
+they are just the the representation of
+
+1:03:55.480,1:04:00.540
+the concept without the language
+
+1:03:56.590,1:04:03.370
+attached there you go that would be my
+
+1:04:00.540,1:04:07.180
+it sounds like thank you in a sense it's
+
+1:04:03.370,1:04:08.860
+gonna be an embedding that's in itself
+
+1:04:07.180,1:04:11.050
+so it's and then that's going to be
+
+1:04:08.860,1:04:13.140
+compared with the K that's correct and
+
+1:04:11.050,1:04:16.390
+the Q in this case comes from your
+
+1:04:13.140,1:04:17.630
+language that is gonna be the target
+
+1:04:16.390,1:04:21.590
+language right
+
+1:04:17.630,1:04:24.500
+right okay make sense
+
+1:04:21.590,1:04:28.210
+thank you I would really recommend
+
+1:04:24.500,1:04:31.460
+having a look to the blog from my friend
+
+1:04:28.210,1:04:35.360
+which is called illustrated transformer
+
+1:04:31.460,1:04:37.580
+it's very very very nicely written and
+
+1:04:35.360,1:04:40.250
+it's a bit maybe it has a bit more
+
+1:04:37.580,1:04:42.920
+context about the the language part I
+
+1:04:40.250,1:04:45.350
+try to do you know I try not to have the
+
+1:04:42.920,1:04:46.760
+language inside this presentation
+
+1:04:45.350,1:04:49.070
+because you know you can use this
+
+1:04:46.760,1:04:52.040
+transformer for any kind of data right
+
+1:04:49.070,1:04:54.860
+and basically these are mapping sets to
+
+1:04:52.040,1:04:57.230
+sets but again maybe this example here
+
+1:04:54.860,1:05:01.310
+was just you know very tailored to the
+
+1:04:57.230,1:05:04.960
+translation part but translation you can
+
+1:05:01.310,1:05:07.640
+also have like transformers for making
+
+1:05:04.960,1:05:10.280
+generative models pixel by pixel so you
+
+1:05:07.640,1:05:13.220
+can actually draw things with this thing
+
+1:05:10.280,1:05:16.090
+with this architecture is very
+
+1:05:13.220,1:05:17.620
+transformed by J Alomar yeah yeah him
+
+1:05:16.090,1:05:21.280
+okay
+
+1:05:17.620,1:05:23.840
+yeah I really I really like the way he
+
+1:05:21.280,1:05:27.650
+sees things but here's all my matrices
+
+1:05:23.840,1:05:29.930
+transposed so that is like bugging me I
+
+1:05:27.650,1:05:33.380
+think I'm the one who transposed the
+
+1:05:29.930,1:05:36.710
+matrices everyone has them horizontal I
+
+1:05:33.380,1:05:40.880
+I think it was the math was nicer with a
+
+1:05:36.710,1:05:43.940
+vertical okay more questions you said
+
+1:05:40.880,1:05:46.510
+that the encoded representations would
+
+1:05:43.940,1:05:50.210
+be language agnostic doesn't that assume
+
+1:05:46.510,1:05:51.770
+some sort of similarity in the way that
+
+1:05:50.210,1:05:56.810
+I'm in both the languages you're
+
+1:05:51.770,1:05:58.310
+translating to and strong like as
+
+1:05:56.810,1:06:00.140
+language is like for example something
+
+1:05:58.310,1:06:02.090
+that case for the representations to be
+
+1:06:00.140,1:06:03.530
+language agnostic you have the same
+
+1:06:02.090,1:06:05.060
+between English and English in French
+
+1:06:03.530,1:06:08.000
+there's more of a similarity then say
+
+1:06:05.060,1:06:09.650
+English and Chinese not just with
+
+1:06:08.000,1:06:12.400
+respect to the kind of data that's
+
+1:06:09.650,1:06:14.330
+available but also the combat experience
+
+1:06:12.400,1:06:17.060
+reports of the languages so does this
+
+1:06:14.330,1:06:20.990
+work as well across languages languages
+
+1:06:17.060,1:06:22.700
+that aren't as similar or does it how
+
+1:06:20.990,1:06:25.010
+much worse does it perform does it work
+
+1:06:22.700,1:06:26.180
+as well you know any sorts languages or
+
+1:06:25.010,1:06:28.550
+like languages which are not very
+
+1:06:26.180,1:06:30.060
+similar is a problem for any any model
+
+1:06:28.550,1:06:32.370
+like and of course on something
+
+1:06:30.060,1:06:34.290
+I should that can solve it so I don't
+
+1:06:32.370,1:06:38.280
+think it's it's going to attack that
+
+1:06:34.290,1:06:40.980
+problem what all classes of models have
+
+1:06:38.280,1:06:43.710
+issues with like when the target and
+
+1:06:40.980,1:06:45.360
+source language is a very different his
+
+1:06:43.710,1:06:48.380
+Libyan work surrounding trying to bridge
+
+1:06:45.360,1:06:51.950
+that gap just out of curiosity and yes
+
+1:06:48.380,1:06:53.130
+but like it's an open problem for sure
+
+1:06:51.950,1:06:55.950
+okay
+
+1:06:53.130,1:06:59.580
+more questions for me or for Australia
+
+1:06:55.950,1:07:03.750
+language question for hair and content
+
+1:06:59.580,1:07:07.730
+maybe questions for me um Carol again
+
+1:07:03.750,1:07:11.280
+asked about encoder and decoder that
+
+1:07:07.730,1:07:14.000
+could we go back to the page yeah thank
+
+1:07:11.280,1:07:17.580
+you so I understand cross attention is
+
+1:07:14.000,1:07:19.980
+we have attention with the encoder you
+
+1:07:17.580,1:07:22.620
+know States I'm a bit confused about the
+
+1:07:19.980,1:07:26.130
+self attention part so here self
+
+1:07:22.620,1:07:28.440
+attention only happens in why because we
+
+1:07:26.130,1:07:31.260
+couldn't see the words in the future
+
+1:07:28.440,1:07:34.770
+right so when I input like when I'm in
+
+1:07:31.260,1:07:37.320
+time T then the sava would the self
+
+1:07:34.770,1:07:40.910
+attention to does it do attention amount
+
+1:07:37.320,1:07:44.700
+order why that hat although why that is
+
+1:07:40.910,1:07:46.620
+before the time sake so we had to
+
+1:07:44.700,1:07:48.540
+specify actually I think I'd done a poor
+
+1:07:46.620,1:07:51.150
+job explaining here so there are two
+
+1:07:48.540,1:07:53.360
+parts of this the first is training and
+
+1:07:51.150,1:07:57.810
+in training you have the whole sequence
+
+1:07:53.360,1:08:00.540
+but then of course you can't look at the
+
+1:07:57.810,1:08:02.910
+future output right so the first why
+
+1:08:00.540,1:08:05.310
+here at the bottom you cannot look at
+
+1:08:02.910,1:08:07.020
+the second why right and the second why
+
+1:08:05.310,1:08:08.430
+cannot look at the third and so like the
+
+1:08:07.020,1:08:11.160
+first one cannot look at the whole
+
+1:08:08.430,1:08:13.470
+future wise but the future wise can look
+
+1:08:11.160,1:08:15.570
+at the previous wise right because you
+
+1:08:13.470,1:08:17.460
+can always know what you are gonna be
+
+1:08:15.570,1:08:19.350
+outputting but you cannot know what you
+
+1:08:17.460,1:08:22.050
+might output in the future so whenever
+
+1:08:19.350,1:08:24.630
+you train this system you also need to
+
+1:08:22.050,1:08:26.700
+somehow mask the future information that
+
+1:08:24.630,1:08:28.080
+you're providing to the system and so
+
+1:08:26.700,1:08:31.560
+here you're gonna have the whole set
+
+1:08:28.080,1:08:34.290
+going in this basically first module of
+
+1:08:31.560,1:08:36.600
+the end of the decoder generates the
+
+1:08:34.290,1:08:39.000
+questions and the questions come down
+
+1:08:36.600,1:08:42.690
+here are going to be retrieving the
+
+1:08:39.000,1:08:43.560
+information from the encoded sentence
+
+1:08:42.690,1:08:45.839
+and
+
+1:08:43.560,1:08:49.020
+and is encoded sentence somehow gets
+
+1:08:45.839,1:08:51.350
+converted into the other language and
+
+1:08:49.020,1:08:54.120
+then this is done all in one pass boom
+
+1:08:51.350,1:08:56.490
+whenever you actually do inference in
+
+1:08:54.120,1:08:58.200
+this case you're gonna have you
+
+1:08:56.490,1:09:01.109
+basically start with a specific
+
+1:08:58.200,1:09:03.359
+representation from the encoder you get
+
+1:09:01.109,1:09:06.390
+no initial value so you get like a zero
+
+1:09:03.359,1:09:08.040
+maybe and then you you're gonna ask an
+
+1:09:06.390,1:09:10.319
+old question what is gonna be the first
+
+1:09:08.040,1:09:11.430
+word I should start with and then this
+
+1:09:10.319,1:09:13.140
+one's gonna tell you all you should
+
+1:09:11.430,1:09:16.819
+start with the translation of a maybe
+
+1:09:13.140,1:09:20.940
+right so you go end up with a una una
+
+1:09:16.819,1:09:23.760
+and and then you go you place this on
+
+1:09:20.940,1:09:25.770
+down to the input and so given that now
+
+1:09:23.760,1:09:28.710
+the network knows that oh I already
+
+1:09:25.770,1:09:31.230
+outputted one then what is gonna be the
+
+1:09:28.710,1:09:33.839
+next question is going to be all alone
+
+1:09:31.230,1:09:37.920
+listen what's gonna be my next word
+
+1:09:33.839,1:09:39.150
+after I have inputted une and this is my
+
+1:09:37.920,1:09:40.650
+second question right the second
+
+1:09:39.150,1:09:42.839
+question is going to retrieve or you
+
+1:09:40.650,1:09:45.089
+should talk about the cut and the cut is
+
+1:09:42.839,1:09:47.640
+this representation and is this cut
+
+1:09:45.089,1:09:51.300
+representation gets therefore converted
+
+1:09:47.640,1:09:54.690
+here into the corresponding gato that is
+
+1:09:51.300,1:09:57.660
+you know cat in Italian and then you put
+
+1:09:54.690,1:09:59.700
+cut gato back here and then same process
+
+1:09:57.660,1:10:02.480
+is gonna say oh you reach the end of the
+
+1:09:59.700,1:10:06.720
+sentence you have like period at the end
+
+1:10:02.480,1:10:09.960
+we get all have attention with own when
+
+1:10:06.720,1:10:14.130
+Godot is the second word you can see
+
+1:10:09.960,1:10:15.960
+everything at all time steps before so
+
+1:10:14.130,1:10:19.560
+when they see it it means they can have
+
+1:10:15.960,1:10:22.290
+like attention yes yes it is overall
+
+1:10:19.560,1:10:25.680
+time steps before the like a builder
+
+1:10:22.290,1:10:25.950
+current actor internship okay okay thank
+
+1:10:25.680,1:10:27.780
+you
+
+1:10:25.950,1:10:30.810
+and I would recommend to watch those
+
+1:10:27.780,1:10:33.300
+animations from the Distilled dot pub
+
+1:10:30.810,1:10:36.450
+they have like an article about the
+
+1:10:33.300,1:10:39.420
+attention and they show you how each
+
+1:10:36.450,1:10:42.750
+word looks at different specific other
+
+1:10:39.420,1:10:48.470
+words like if you want to say I couldn't
+
+1:10:42.750,1:10:52.370
+fit my I couldn't fit my trophy in my
+
+1:10:48.470,1:10:55.890
+suitcase because it was too large I
+
+1:10:52.370,1:10:57.210
+guess is the trophy was too large so it
+
+1:10:55.890,1:10:59.760
+wasn't fitting but if you
+
+1:10:57.210,1:11:02.370
+say my trophy wasn't couldn't fit in my
+
+1:10:59.760,1:11:04.620
+luggage because it was too small then
+
+1:11:02.370,1:11:07.950
+the small is gonna be attending now to
+
+1:11:04.620,1:11:09.510
+the luggage right because it was too
+
+1:11:07.950,1:11:11.790
+small then you actually can fit it and
+
+1:11:09.510,1:11:14.100
+so if you check for example like the
+
+1:11:11.790,1:11:16.830
+sentence is actually the same the small
+
+1:11:14.100,1:11:19.380
+or large are both adjectives but one
+
+1:11:16.830,1:11:20.940
+objective we look at the trophy and the
+
+1:11:19.380,1:11:23.760
+other objective we look at the luggage
+
+1:11:20.940,1:11:25.860
+or the suitcase and so again I would
+
+1:11:23.760,1:11:27.420
+recommend watching the check-in this
+
+1:11:25.860,1:11:29.610
+distilled out pub article where they
+
+1:11:27.420,1:11:31.850
+actually give you some nice visuals
+
+1:11:29.610,1:11:34.560
+about how these attention checks
+
+1:11:31.850,1:11:37.410
+different parts of a sentence and these
+
+1:11:34.560,1:11:40.170
+are called something fancy maybe a Shia
+
+1:11:37.410,1:11:41.850
+knows these sentences I forgot well you
+
+1:11:40.170,1:11:42.030
+guys give my channel yeah yeah there you
+
+1:11:41.850,1:11:45.090
+go
+
+1:11:42.030,1:11:47.340
+II know grad schemes and these are like
+
+1:11:45.090,1:11:48.989
+do you mind sending that link or at
+
+1:11:47.340,1:11:52.320
+least directing us what is it called D
+
+1:11:48.989,1:11:54.890
+still dot pub yeah B still dot tu b
+
+1:11:52.320,1:11:58.230
+that's from my friend Chris Christopher
+
+1:11:54.890,1:12:01.920
+Ola he used to be a Google brain now
+
+1:11:58.230,1:12:03.690
+he's at the open eye eye and he's he's
+
+1:12:01.920,1:12:06.090
+basically sponsoring himself this
+
+1:12:03.690,1:12:10.670
+website which is actually basically a
+
+1:12:06.090,1:12:13.739
+online journal where you have very cute
+
+1:12:10.670,1:12:15.690
+visualizations right so I make videos
+
+1:12:13.739,1:12:19.770
+and presentation he makes you know
+
+1:12:15.690,1:12:21.660
+interactive articles and yeah I really
+
+1:12:19.770,1:12:24.960
+recommend reading everything from there
+
+1:12:21.660,1:12:32.390
+I really like it yeah I have nice
+
+1:12:24.960,1:12:34.950
+friends on the internet more questions I
+
+1:12:32.390,1:12:37.969
+think this should have been spread
+
+1:12:34.950,1:12:40.380
+across two lessons to split the dance
+
+1:12:37.969,1:12:43.410
+I'm sorry do you have any idea about
+
+1:12:40.380,1:12:44.910
+what the reformer network does yeah so
+
+1:12:43.410,1:12:49.050
+you can actually check the reformer
+
+1:12:44.910,1:12:53.489
+Network on author blog post I forgot
+
+1:12:49.050,1:12:56.070
+them deal with longer sequences because
+
+1:12:53.489,1:12:58.140
+like the current ones were are not able
+
+1:12:56.070,1:13:00.960
+to deal with like more than 512 for
+
+1:12:58.140,1:13:05.190
+example but but yeah they do some fancy
+
+1:13:00.960,1:13:07.830
+LSH attention I don't know like it was
+
+1:13:05.190,1:13:09.690
+the back of my hand and the problem with
+
+1:13:07.830,1:13:11.100
+having those long sequences is this
+
+1:13:09.690,1:13:17.040
+alright so this one blows
+
+1:13:11.100,1:13:20.040
+right there is a again there is a blog
+
+1:13:17.040,1:13:25.020
+post from a girl I forgot her name
+
+1:13:20.040,1:13:27.630
+Lillian Lillian Lillian has a nice blog
+
+1:13:25.020,1:13:31.100
+post from two days ago or three days ago
+
+1:13:27.630,1:13:34.140
+which is called a transformer family
+
+1:13:31.100,1:13:41.850
+okay there are some errors in the blog
+
+1:13:34.140,1:13:45.290
+post but ok I think it's good more
+
+1:13:41.850,1:13:48.150
+questions or I'm gonna be cooking dinner
+
+1:13:45.290,1:13:50.010
+sorry I could you just say one more time
+
+1:13:48.150,1:13:52.860
+that they titled the article from this
+
+1:13:50.010,1:13:55.370
+table pub so the Bastille a pub let me
+
+1:13:52.860,1:14:01.370
+check I actually don't know exactly
+
+1:13:55.370,1:14:04.710
+okay this is Jay supercool guy and the
+
+1:14:01.370,1:14:07.260
+article he actually I didn't write so
+
+1:14:04.710,1:14:13.500
+this should be coming from the Distilled
+
+1:14:07.260,1:14:15.090
+dot pub if I'm not mistaken so the thing
+
+1:14:13.500,1:14:17.010
+I was referring is this one okay this
+
+1:14:15.090,1:14:20.820
+this illustration these pictures from
+
+1:14:17.010,1:14:23.490
+this Illustrated transformer and I
+
+1:14:20.820,1:14:25.890
+believe this is coming from the
+
+1:14:23.490,1:14:29.340
+distilled of pub from a Christopher Ola
+
+1:14:25.890,1:14:34.520
+so the other website is the still dot
+
+1:14:29.340,1:14:44.100
+pub yeah there we go so here you have
+
+1:14:34.520,1:14:47.090
+the attention sequence modeling
+
+1:14:44.100,1:14:52.020
+[Music]
+
+1:14:47.090,1:14:53.290
+attention they're gone I think this I
+
+1:14:52.020,1:14:57.189
+think it's coming from here
+
+1:14:53.290,1:14:57.189
+[Music]
+
+1:15:02.179,1:15:10.699
+it talks about the heart attention and
+
+1:15:04.100,1:15:13.400
+soft attention I think okay maybe I lied
+
+1:15:10.699,1:15:15.199
+I was talking about these pictures here
+
+1:15:13.400,1:15:17.060
+okay so I thought this was coming from
+
+1:15:15.199,1:15:19.040
+this table pub that maybe I was mistaken
+
+1:15:17.060,1:15:23.090
+these are the pictures that was talking
+
+1:15:19.040,1:15:26.179
+like the their name they attend to
+
+1:15:23.090,1:15:28.100
+different words okay okay the animal
+
+1:15:26.179,1:15:30.830
+didn't cross the street because it was
+
+1:15:28.100,1:15:33.199
+too tired and then you have here that it
+
+1:15:30.830,1:15:35.570
+was the only more atom anima right but
+
+1:15:33.199,1:15:38.120
+then it was - maybe the animal didn't
+
+1:15:35.570,1:15:40.880
+cross the street because it was too wide
+
+1:15:38.120,1:15:43.250
+in this case white instead of tired
+
+1:15:40.880,1:15:45.920
+should be you know attending to street
+
+1:15:43.250,1:15:47.840
+in this case right both it can be street
+
+1:15:45.920,1:15:51.199
+and animal but you know you have higher
+
+1:15:47.840,1:15:54.320
+scores here right so the scalar product
+
+1:15:51.199,1:15:56.510
+is a has a higher score in this region
+
+1:15:54.320,1:15:58.739
+here right you need anything from me
+
+1:15:56.510,1:16:02.969
+more
+
+1:15:58.739,1:16:06.059
+no nope okay right
+
+1:16:02.969,1:16:10.139
+what why nice seeing you and nice
+
+1:16:06.059,1:16:12.960
+talking to you so we are done now it was
+
+1:16:10.139,1:16:15.030
+quite a substantial lesson right so
+
+1:16:12.960,1:16:15.719
+again how can you get more out of these
+
+1:16:15.030,1:16:18.360
+lessons
+
+1:16:15.719,1:16:20.789
+so again comprehension something was not
+
+1:16:18.360,1:16:23.210
+clear I've done a poor job just then ask
+
+1:16:20.789,1:16:26.309
+me anything in the comment section below
+
+1:16:23.210,1:16:27.869
+news you can find everything about what
+
+1:16:26.309,1:16:32.820
+I'm doing and what I'm teaching on
+
+1:16:27.869,1:16:35.280
+Twitter at the FCN said handle updates
+
+1:16:32.820,1:16:36.539
+again if you subscribe to this YouTube
+
+1:16:35.280,1:16:39.260
+channel you're gonna have the latest
+
+1:16:36.539,1:16:41.730
+videos as soon as I upload them online
+
+1:16:39.260,1:16:43.650
+if you like my work and this video in
+
+1:16:41.730,1:16:46.050
+particular just press the like button
+
+1:16:43.650,1:16:49.829
+this video has an English transcript you
+
+1:16:46.050,1:16:52.860
+can find in the course website where all
+
+1:16:49.829,1:16:53.789
+the titles are linked to the sections of
+
+1:16:52.860,1:16:57.179
+this video
+
+1:16:53.789,1:17:00.150
+parla Italiano hablas espanol new Ohama
+
+1:16:57.179,1:17:01.590
+you speak Korean you speak Turkish we
+
+1:17:00.150,1:17:04.289
+have all these translations now
+
+1:17:01.590,1:17:05.429
+available on the course website so go
+
+1:17:04.289,1:17:07.499
+out there and check it out
+
+1:17:05.429,1:17:09.239
+if you'd like to have your own language
+
+1:17:07.499,1:17:11.550
+available as well feel free to contact
+
+1:17:09.239,1:17:14.670
+me such that we can get started with the
+
+1:17:11.550,1:17:16.980
+translation part and finally you should
+
+1:17:14.670,1:17:19.440
+try to go over the piperj
+
+1:17:16.980,1:17:22.079
+notebook we have core in this class and
+
+1:17:19.440,1:17:24.749
+make yourself familiar with all the
+
+1:17:22.079,1:17:26.280
+methods and classes and all the little
+
+1:17:24.749,1:17:29.010
+things you should try to train this
+
+1:17:26.280,1:17:31.349
+notebook change parameters such that you
+
+1:17:29.010,1:17:34.440
+can get you know some good understanding
+
+1:17:31.349,1:17:36.510
+of what it was all about okay it was
+
+1:17:34.440,1:17:38.880
+quite a lot this time so you'd better
+
+1:17:36.510,1:17:42.239
+check out this notebook right and
+
+1:17:38.880,1:17:44.130
+finally if you find errors typos and you
+
+1:17:42.239,1:17:46.800
+know everything you think I can do
+
+1:17:44.130,1:17:48.690
+better we can do better we can improve
+
+1:17:46.800,1:17:50.249
+the content with your help if you
+
+1:17:48.690,1:17:53.400
+contribute to the github repository
+
+1:17:50.249,1:17:55.530
+where the website is hosted and that was
+
+1:17:53.400,1:18:00.110
+pretty much it again thank you so much
+
+1:17:55.530,1:18:00.110
+for sticking around with us and bye-bye
+
