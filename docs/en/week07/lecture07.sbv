@@ -1,0 +1,6072 @@
+0:00:00.410,0:00:04.529
+right so we're going to talk about
+
+0:00:02.010,0:00:07.140
+energy based models and it's basically a
+
+0:00:04.529,0:00:09.090
+farm arc which we can through which we
+
+0:00:07.140,0:00:11.340
+can express a lot of different learning
+
+0:00:09.090,0:00:12.570
+algorithms not the ones that are kind
+
+0:00:11.340,0:00:16.230
+simple like like we've seen in
+
+0:00:12.570,0:00:18.869
+supervised running but but the things
+
+0:00:16.230,0:00:20.820
+that are a little more sophisticated and
+
+0:00:18.869,0:00:23.100
+it sort of encompasses also a lot of
+
+0:00:20.820,0:00:25.920
+artistic methods but it's a little
+
+0:00:23.100,0:00:27.599
+simpler to understand I think then the
+
+0:00:25.920,0:00:30.179
+probably sick methods and probably sick
+
+0:00:27.599,0:00:32.880
+methods really are kind of a special
+
+0:00:30.179,0:00:36.870
+case if you want off of energy based
+
+0:00:32.880,0:00:38.070
+models and I think it's kind of
+
+0:00:36.870,0:00:39.750
+informally that's a little sort of
+
+0:00:38.070,0:00:41.760
+enlightening in the sense that it
+
+0:00:39.750,0:00:44.430
+explains a lot of things that seem very
+
+0:00:41.760,0:00:49.379
+different when when you don't get this
+
+0:00:44.430,0:00:51.510
+sort of unifying view of things so what
+
+0:00:49.379,0:00:54.930
+I'm going to talk about first applies
+
+0:00:51.510,0:00:56.550
+equally well to supervised learning what
+
+0:00:54.930,0:00:59.190
+some people call supervised running or
+
+0:00:56.550,0:01:00.920
+whatever we call self supervised running
+
+0:00:59.190,0:01:09.000
+we shall talk about a little bit today
+
+0:01:00.920,0:01:10.710
+and it's basically we're going to talk
+
+0:01:09.000,0:01:14.369
+about models that observe a set of
+
+0:01:10.710,0:01:16.890
+variables X and we're asking the model
+
+0:01:14.369,0:01:18.960
+to predict a set of variables Y and I'm
+
+0:01:16.890,0:01:21.869
+not specifying that X is an image or
+
+0:01:18.960,0:01:24.689
+whatever and Y is a is a discrete
+
+0:01:21.869,0:01:27.150
+variable like for classification Y could
+
+0:01:24.689,0:01:30.869
+be like an integral Y and X could be an
+
+0:01:27.150,0:01:34.079
+interview or X could be an image and Y a
+
+0:01:30.869,0:01:35.490
+piece of text that describes it or X
+
+0:01:34.079,0:01:36.990
+could be a sentence in one language and
+
+0:01:35.490,0:01:39.720
+Y sentence in another language
+
+0:01:36.990,0:01:41.369
+X could be an entire text and Y could be
+
+0:01:39.720,0:01:44.240
+a simplified version of that text or an
+
+0:01:41.369,0:01:47.820
+abstract so it could be anything really
+
+0:01:44.240,0:01:52.009
+I'm not kind of specifying this a Sara
+
+0:01:47.820,0:01:54.420
+Lee here but it comes from the fact that
+
+0:01:52.009,0:01:57.060
+these two issues with sort of
+
+0:01:54.420,0:01:58.140
+feed-forward models whether they are
+
+0:01:57.060,0:02:05.100
+neural nets or something else doesn't
+
+0:01:58.140,0:02:09.110
+matter a classical model precedes by you
+
+0:02:05.100,0:02:12.060
+know doing if a finite fixed number of
+
+0:02:09.110,0:02:12.870
+calculations to produce an output if you
+
+0:02:12.060,0:02:14.790
+have a multi-layer
+
+0:02:12.870,0:02:16.500
+that you know there is a fixed number of
+
+0:02:14.790,0:02:17.760
+layers even if you have a recurrent net
+
+0:02:16.500,0:02:21.090
+there is some sort of limit to how many
+
+0:02:17.760,0:02:24.950
+times you can unfold it so it's you know
+
+0:02:21.090,0:02:27.180
+basically a fixed amount of computation
+
+0:02:24.950,0:02:28.349
+but there are there are two issues for
+
+0:02:27.180,0:02:30.959
+which this is not entirely appropriate
+
+0:02:28.349,0:02:33.510
+the the the first one or two situations
+
+0:02:30.959,0:02:35.700
+the first situation is when computing
+
+0:02:33.510,0:02:37.739
+the output requires some more complex
+
+0:02:35.700,0:02:40.709
+calculation and just virtual weighted
+
+0:02:37.739,0:02:44.730
+sums and non-linearity in a kind of
+
+0:02:40.709,0:02:48.959
+finite number when the inference is
+
+0:02:44.730,0:02:50.280
+complex and the second situation is when
+
+0:02:48.959,0:02:51.780
+we are trying to train the machine to
+
+0:02:50.280,0:02:54.989
+produce not a single output but a
+
+0:02:51.780,0:02:56.129
+possible set of outputs so in the case
+
+0:02:54.989,0:02:57.510
+of classification we're actually
+
+0:02:56.129,0:02:59.549
+training a machine to produce multiple
+
+0:02:57.510,0:03:01.680
+outputs we are training it to produce a
+
+0:02:59.549,0:03:03.329
+separate score for every possible
+
+0:03:01.680,0:03:06.030
+category that we have in our you know
+
+0:03:03.329,0:03:08.190
+system ideally the system would prove we
+
+0:03:06.030,0:03:10.620
+produce the the best score for the
+
+0:03:08.190,0:03:12.540
+correct class and you know if you need a
+
+0:03:10.620,0:03:16.019
+small scores for for the other ones in
+
+0:03:12.540,0:03:17.940
+practice you know when we run the output
+
+0:03:16.019,0:03:19.950
+of a normal to soft max it produces the
+
+0:03:17.940,0:03:22.859
+kind of scores and we just pick the one
+
+0:03:19.950,0:03:24.900
+that has a high score but basically what
+
+0:03:22.859,0:03:26.669
+we are telling the machine to do is
+
+0:03:24.900,0:03:30.870
+produce a score for every category and
+
+0:03:26.669,0:03:33.079
+then we'll pick the best okay now this
+
+0:03:30.870,0:03:35.849
+is not possible when the output is
+
+0:03:33.079,0:03:39.660
+continuous and high-dimensional so the
+
+0:03:35.849,0:03:42.150
+output is let's say an image we don't
+
+0:03:39.660,0:03:45.720
+have soft maxes over images okay we
+
+0:03:42.150,0:03:47.579
+don't have a way of listing all possible
+
+0:03:45.720,0:03:49.650
+images and then you know normalizing a
+
+0:03:47.579,0:03:51.599
+distribution over them because it's high
+
+0:03:49.650,0:03:52.919
+dimensional continuous space even if it
+
+0:03:51.599,0:03:54.629
+were a really rational continuous space
+
+0:03:52.919,0:03:57.060
+it would not be possible we will have to
+
+0:03:54.629,0:03:59.069
+bin that continuous space into discrete
+
+0:03:57.060,0:04:00.840
+discrete bins and then do a swap max
+
+0:03:59.069,0:04:02.579
+over that but that doesn't work very
+
+0:04:00.840,0:04:04.440
+well all right
+
+0:04:02.579,0:04:07.650
+it only works in small dimension in low
+
+0:04:04.440,0:04:09.030
+dimension okay so when we have a high
+
+0:04:07.650,0:04:11.160
+dimensional continuous space we can do
+
+0:04:09.030,0:04:13.669
+soft max we can't ask the system to give
+
+0:04:11.160,0:04:16.470
+us a score for all possible outputs
+
+0:04:13.669,0:04:17.880
+similarly even if it's discrete but
+
+0:04:16.470,0:04:19.380
+potentially infinite so things like
+
+0:04:17.880,0:04:22.830
+we're producing text text is
+
+0:04:19.380,0:04:24.639
+compositional and there is a very very
+
+0:04:22.830,0:04:26.680
+large number of
+
+0:04:24.639,0:04:28.840
+of possible text of a given length and
+
+0:04:26.680,0:04:31.150
+we can't just do a sub snacks over all
+
+0:04:28.840,0:04:33.370
+possible texts same problem so how do we
+
+0:04:31.150,0:04:35.439
+how do we represent a distribution or a
+
+0:04:33.370,0:04:37.409
+bunch of scores over all possible texts
+
+0:04:35.439,0:04:39.610
+in a compact form
+
+0:04:37.409,0:04:41.199
+that's where energy based models come in
+
+0:04:39.610,0:04:42.520
+or probably seek model so that matter
+
+0:04:41.199,0:04:47.560
+but energy business models in particular
+
+0:04:42.520,0:04:50.560
+and the solution that energy based
+
+0:04:47.560,0:04:51.669
+models give us there is the idea that
+
+0:04:50.560,0:04:54.219
+we're going to use an implicit function
+
+0:04:51.669,0:04:56.219
+in other words we're gonna we're not
+
+0:04:54.219,0:04:58.659
+going to a score system to produce a why
+
+0:04:56.219,0:05:01.419
+we're just going to ask you to tell us
+
+0:04:58.659,0:05:02.680
+whether an X and a particular Y will
+
+0:05:01.419,0:05:06.250
+show it are compatible with each other
+
+0:05:02.680,0:05:09.430
+so it's this text a good translation of
+
+0:05:06.250,0:05:12.189
+that text okay that sounds kind of weak
+
+0:05:09.430,0:05:15.370
+right because how are we going to come
+
+0:05:12.189,0:05:19.569
+up with with that text or machine is
+
+0:05:15.370,0:05:23.919
+comparing but let's let's hold this hold
+
+0:05:19.569,0:05:26.439
+this for a bit okay so we're a ninja's
+
+0:05:23.919,0:05:28.930
+function f of XY is going to take an x
+
+0:05:26.439,0:05:30.759
+on a wine it's going to tell us if those
+
+0:05:28.930,0:05:34.089
+two values are compatible with each
+
+0:05:30.759,0:05:37.180
+other or not okay so if is why a good
+
+0:05:34.089,0:05:39.849
+label for the image X is y with a good
+
+0:05:37.180,0:05:43.029
+height high resolution version of the
+
+0:05:39.849,0:05:45.599
+story low resolution image if Y a good
+
+0:05:43.029,0:05:53.710
+translation of that sentence in German
+
+0:05:45.599,0:05:56.860
+etc and so the inference procedure now
+
+0:05:53.710,0:05:59.110
+is going to be given an X find a Y that
+
+0:05:56.860,0:06:01.000
+produces a low value for which f of X Y
+
+0:05:59.110,0:06:03.610
+produces a low value in other words
+
+0:06:01.000,0:06:07.360
+finally Y that's compatible with X okay
+
+0:06:03.610,0:06:10.180
+so search over over possible wise for a
+
+0:06:07.360,0:06:13.990
+value of y that produces a low value for
+
+0:06:10.180,0:06:16.449
+f of X Y okay so we see idea of
+
+0:06:13.990,0:06:19.449
+influenced by minimizing some function
+
+0:06:16.449,0:06:21.129
+and pretty much every model probably
+
+0:06:19.449,0:06:23.259
+signal probably stick whatever that you
+
+0:06:21.129,0:06:26.800
+can that people have thought about gonna
+
+0:06:23.259,0:06:27.969
+work this way I mean except you even
+
+0:06:26.800,0:06:29.349
+classification multi-class
+
+0:06:27.969,0:06:31.930
+classification with neural nets or
+
+0:06:29.349,0:06:35.199
+whatever implicitly worked by energy
+
+0:06:31.930,0:06:37.400
+minimization by basically finding the
+
+0:06:35.199,0:06:39.110
+class that has the
+
+0:06:37.400,0:06:46.160
+the best score which you can think of as
+
+0:06:39.110,0:06:47.510
+the lowest energy so basically we're
+
+0:06:46.160,0:06:49.310
+going to try to find an output that
+
+0:06:47.510,0:06:51.440
+satisfies a bunch of constraints and
+
+0:06:49.310,0:06:54.860
+those constraints are implemented by
+
+0:06:51.440,0:06:56.210
+this function f of X Y okay and if
+
+0:06:54.860,0:06:57.770
+you've heard of graphical models
+
+0:06:56.210,0:07:02.330
+Bayesian networks you know all that
+
+0:06:57.770,0:07:04.669
+stuff or even classical AI or Sat
+
+0:07:02.330,0:07:06.979
+problems they basically they can all be
+
+0:07:04.669,0:07:08.180
+formulated in those terms as finding the
+
+0:07:06.979,0:07:09.650
+value of a set of variables that will
+
+0:07:08.180,0:07:15.500
+mean by some function that measures
+
+0:07:09.650,0:07:17.000
+their compatibility okay so we're not
+
+0:07:15.500,0:07:19.340
+talking about running right now okay
+
+0:07:17.000,0:07:21.410
+we're just talking about inference we're
+
+0:07:19.340,0:07:22.550
+assuming this function f of X Y is given
+
+0:07:21.410,0:07:27.650
+to you we're gonna talk about how we
+
+0:07:22.550,0:07:30.200
+learn it a little later okay so the
+
+0:07:27.650,0:07:32.030
+energy function is not what we mean by
+
+0:07:30.200,0:07:34.550
+xoring running it's what we relieve eyes
+
+0:07:32.030,0:07:39.830
+during inference so inference is
+
+0:07:34.550,0:07:42.560
+competing Y from X so this energy
+
+0:07:39.830,0:07:44.840
+function is scalar value it takes small
+
+0:07:42.560,0:07:46.639
+values when Y is compatible with X and
+
+0:07:44.840,0:07:49.789
+higher values when Y is not compatible
+
+0:07:46.639,0:07:52.729
+with X so you'd like this function to
+
+0:07:49.789,0:07:55.460
+have shape in such a way that for given
+
+0:07:52.729,0:07:57.229
+X all the values of Y that are
+
+0:07:55.460,0:07:58.729
+compatible with this X have low energy
+
+0:07:57.229,0:08:00.110
+and all the values that are not
+
+0:07:58.729,0:08:03.710
+compatible with that given X have higher
+
+0:08:00.110,0:08:06.800
+energy and that's all you need because
+
+0:08:03.710,0:08:11.150
+then the inference procedure is going to
+
+0:08:06.800,0:08:13.460
+find the Y Y check that written here
+
+0:08:11.150,0:08:15.919
+which is the value of y that minimizes F
+
+0:08:13.460,0:08:17.240
+of XY it's not gonna be the value is
+
+0:08:15.919,0:08:19.490
+gonna be a value because there might be
+
+0:08:17.240,0:08:21.139
+multiple values okay and your inference
+
+0:08:19.490,0:08:22.940
+algorithm might actually go through
+
+0:08:21.139,0:08:26.720
+multiple values or examine multiple
+
+0:08:22.940,0:08:32.510
+values before kind of giving you one or
+
+0:08:26.720,0:08:35.360
+several okay let's take an example very
+
+0:08:32.510,0:08:38.950
+simple example in when dimension of
+
+0:08:35.360,0:08:43.099
+scalar variable so X here is a is a real
+
+0:08:38.950,0:08:48.650
+value and Y is a real value and the blue
+
+0:08:43.099,0:08:50.600
+dots here are data points okay so what
+
+0:08:48.650,0:08:51.080
+you want is if you want to capture the
+
+0:08:50.600,0:08:54.080
+dependence
+
+0:08:51.080,0:08:55.640
+between x and y in the data is that you
+
+0:08:54.080,0:08:57.440
+would like an energy function that has
+
+0:08:55.640,0:09:00.440
+either this shape or that shape or some
+
+0:08:57.440,0:09:02.210
+other shape but which is as a shape that
+
+0:09:00.440,0:09:04.040
+in such a way that if you take a
+
+0:09:02.210,0:09:05.960
+particular value of x the value of
+
+0:09:04.040,0:09:07.550
+weather has a rose value is near the
+
+0:09:05.960,0:09:10.490
+blue points near the blue dots which are
+
+0:09:07.550,0:09:12.500
+the data points okay so a function like
+
+0:09:10.490,0:09:16.820
+this captures the dependency between x
+
+0:09:12.500,0:09:18.860
+and y now to do the inference of what is
+
+0:09:16.820,0:09:20.480
+the best y for given X if you have a
+
+0:09:18.860,0:09:22.670
+function like this you can use gradient
+
+0:09:20.480,0:09:24.710
+descent so if I give you an X to figure
+
+0:09:22.670,0:09:26.450
+out what's the best value of y that
+
+0:09:24.710,0:09:28.820
+corresponds to this X you can start from
+
+0:09:26.450,0:09:31.040
+some random Y and then back right into
+
+0:09:28.820,0:09:33.140
+sin find the minimum of the function and
+
+0:09:31.040,0:09:35.380
+you'll fall down to the boobies here
+
+0:09:33.140,0:09:37.760
+might be a little harder for this one
+
+0:09:35.380,0:09:39.500
+but from the point of view of
+
+0:09:37.760,0:09:41.150
+characterizing the dependency between
+
+0:09:39.500,0:09:43.790
+those two variables those two energy
+
+0:09:41.150,0:09:58.520
+functions are just about as good as each
+
+0:09:43.790,0:10:00.590
+other I come to this the discrete case
+
+0:09:58.520,0:10:02.510
+when y is discrete is the easy is the
+
+0:10:00.590,0:10:04.010
+easy case ok and we've already talked
+
+0:10:02.510,0:10:05.960
+about this and I'll kind of reformulate
+
+0:10:04.010,0:10:09.260
+this in terms of energy in interested a
+
+0:10:05.960,0:10:14.360
+couple of minutes ok
+
+0:10:09.260,0:10:16.190
+so a FIFO model is an explicit function
+
+0:10:14.360,0:10:18.350
+in that it computes the prediction Y
+
+0:10:16.190,0:10:20.630
+from from X but it can only make one
+
+0:10:18.350,0:10:22.480
+prediction we can cheating in the case
+
+0:10:20.630,0:10:24.500
+of a discrete value but putting out
+
+0:10:22.480,0:10:27.920
+multiple outputs which correspond to a
+
+0:10:24.500,0:10:31.100
+skort for every possible classification
+
+0:10:27.920,0:10:32.720
+but it effect but you can't use this
+
+0:10:31.100,0:10:34.700
+trick for high dimensional continuous
+
+0:10:32.720,0:10:38.690
+values or compositional values as as I
+
+0:10:34.700,0:10:41.480
+said earlier so animation is model is
+
+0:10:38.690,0:10:43.640
+really an implicit function so remember
+
+0:10:41.480,0:10:45.170
+you know in calculus for an implicit
+
+0:10:43.640,0:10:47.810
+function you want the equation of a
+
+0:10:45.170,0:10:50.390
+circle as a function of x and y you
+
+0:10:47.810,0:10:53.390
+can't write Y as a function of X you
+
+0:10:50.390,0:10:55.280
+write an equation that says you know X
+
+0:10:53.390,0:10:57.800
+square plus y square equal 1 that gives
+
+0:10:55.280,0:11:00.950
+you the unit circle ok
+
+0:10:57.800,0:11:03.510
+so XY plus y square equal 1 is I mean s
+
+0:11:00.950,0:11:05.670
+square plus y square minus 1 isn't it
+
+0:11:03.510,0:11:07.350
+an implicit function and when you solve
+
+0:11:05.670,0:11:14.700
+it equal to zero
+
+0:11:07.350,0:11:17.790
+you get the you get the circle so here's
+
+0:11:14.700,0:11:21.450
+another example here again scalar values
+
+0:11:17.790,0:11:25.700
+for x and y and the black dots here are
+
+0:11:21.450,0:11:28.260
+data points so for the three value of x
+
+0:11:25.700,0:11:31.320
+indicated by the red bar there's
+
+0:11:28.260,0:11:33.540
+multiple value of y that are compatible
+
+0:11:31.320,0:11:39.810
+ones and some of them are actually sort
+
+0:11:33.540,0:11:42.360
+of continuum of values so we'd like our
+
+0:11:39.810,0:11:45.270
+energy function to be is something that
+
+0:11:42.360,0:11:48.210
+looks like this it's basically here I'm
+
+0:11:45.270,0:11:52.080
+sort of drawing the sort of level level
+
+0:11:48.210,0:11:53.700
+set of that of that energy function so
+
+0:11:52.080,0:11:55.890
+it takes low energy on the data points
+
+0:11:53.700,0:11:57.270
+on higher energy outside this is kind of
+
+0:11:55.890,0:12:01.320
+a slightly more complicated version of
+
+0:11:57.270,0:12:08.280
+the module kind of 3d models that I
+
+0:12:01.320,0:12:11.400
+showed earlier and the question is how
+
+0:12:08.280,0:12:13.410
+do we train the system so that it adapts
+
+0:12:11.400,0:12:20.430
+so that the energy function it computes
+
+0:12:13.410,0:12:25.410
+actually has the proper shape it's nice
+
+0:12:20.430,0:12:26.970
+when y is continuous that F be smooth
+
+0:12:25.410,0:12:28.200
+and differentiable so that we can use
+
+0:12:26.970,0:12:29.790
+gradient based inference algorithms
+
+0:12:28.200,0:12:32.610
+right so if we have a function like this
+
+0:12:29.790,0:12:33.750
+and I give you a point X Y you can you
+
+0:12:32.610,0:12:35.640
+know through gradient descent you can
+
+0:12:33.750,0:12:36.900
+find the point on the data of any fall
+
+0:12:35.640,0:12:39.690
+that is closest to it or something
+
+0:12:36.900,0:12:42.150
+similar to that if I give you a value
+
+0:12:39.690,0:12:43.770
+for x you can you know search by
+
+0:12:42.150,0:12:45.930
+gradient descent along the y direction
+
+0:12:43.770,0:12:48.770
+for a value that kind of minimizes it so
+
+0:12:45.930,0:12:48.770
+that's the inference algorithm
+
+0:12:49.070,0:12:52.860
+well sorry an algorithm is really a
+
+0:12:51.150,0:12:55.590
+prescription then the algorithm is how
+
+0:12:52.860,0:12:57.320
+you do this minimization and for that
+
+0:12:55.590,0:13:00.080
+there's all kinds of different methods
+
+0:12:57.320,0:13:02.400
+gradient based methods are one of them
+
+0:13:00.080,0:13:05.730
+there are all kinds of methods that are
+
+0:13:02.400,0:13:07.980
+in the case where F is complicated you
+
+0:13:05.730,0:13:11.880
+you may not have it may not be possible
+
+0:13:07.980,0:13:16.010
+to to rely on the search methods so you
+
+0:13:11.880,0:13:16.010
+may have to use other tricks
+
+0:13:16.030,0:13:22.960
+in most cases though it simplifies so
+
+0:13:20.770,0:13:24.700
+just as an aside for those of you who
+
+0:13:22.960,0:13:27.390
+know a graphical models are a graphical
+
+0:13:24.700,0:13:30.400
+model is basically an energy based model
+
+0:13:27.390,0:13:33.880
+where the energy function decomposes as
+
+0:13:30.400,0:13:35.890
+a sum of energy terms and each energy
+
+0:13:33.880,0:13:40.500
+turn takes into account a subset of the
+
+0:13:35.890,0:13:43.000
+variables that you're dealing with so
+
+0:13:40.500,0:13:45.850
+the beacon of a collection of F's and
+
+0:13:43.000,0:13:47.830
+some of some FS would take a subset of Y
+
+0:13:45.850,0:13:50.320
+someone else who take a subset of x and
+
+0:13:47.830,0:13:52.830
+y's etc and if they organize in a
+
+0:13:50.320,0:13:54.880
+particular form then there are efficient
+
+0:13:52.830,0:13:56.680
+inference algorithms to find the minimum
+
+0:13:54.880,0:13:58.560
+of the sum of those terms with respect
+
+0:13:56.680,0:14:03.580
+to the variable you're interested in
+
+0:13:58.560,0:14:06.190
+inferring so this is what you know beef
+
+0:14:03.580,0:14:08.230
+application and all those algorithms do
+
+0:14:06.190,0:14:09.730
+for in graphical models this is an aside
+
+0:14:08.230,0:14:20.320
+you don't if you don't know what I'm
+
+0:14:09.730,0:14:22.480
+talking about doesn't matter so as I
+
+0:14:20.320,0:14:25.390
+said the situations where you might want
+
+0:14:22.480,0:14:28.420
+to use this is when influence basically
+
+0:14:25.390,0:14:29.650
+is more complex than just you know
+
+0:14:28.420,0:14:32.140
+running through a few layers of neural
+
+0:14:29.650,0:14:35.770
+net when the output is high dimensional
+
+0:14:32.140,0:14:37.060
+and has structure like a sequence or C
+
+0:14:35.770,0:14:39.580
+or an image or a sequence of images
+
+0:14:37.060,0:14:41.110
+which is a video when the output has
+
+0:14:39.580,0:14:43.690
+compositional structure whether it's
+
+0:14:41.110,0:14:47.830
+text action sequences you know things
+
+0:14:43.690,0:14:49.360
+like that or when the applet should
+
+0:14:47.830,0:14:52.000
+resolve from server long chain of
+
+0:14:49.360,0:14:53.290
+reasoning so it's not just you know I
+
+0:14:52.000,0:14:55.570
+can just compute the output you need to
+
+0:14:53.290,0:14:59.640
+kind of solve a constraint satisfaction
+
+0:14:55.570,0:15:02.140
+problem to basically produce e output or
+
+0:14:59.640,0:15:04.620
+you know do kind of long chains of
+
+0:15:02.140,0:15:04.620
+reasoning
+
+0:15:09.300,0:15:14.640
+okay this is a particular type of energy
+
+0:15:12.450,0:15:17.120
+based models which is really where where
+
+0:15:14.640,0:15:19.170
+they start becoming interesting is
+
+0:15:17.120,0:15:25.050
+energy base model and involve latent
+
+0:15:19.170,0:15:28.230
+variables okay so so the initiative is
+
+0:15:25.050,0:15:30.780
+modeled that depends on latent variable
+
+0:15:28.230,0:15:32.760
+written variable EVM in this case we
+
+0:15:30.780,0:15:34.140
+depend not just on the variable that you
+
+0:15:32.760,0:15:35.880
+observe X and the variable Y want to
+
+0:15:34.140,0:15:37.680
+predict Y but also we depend on some
+
+0:15:35.880,0:15:43.350
+extra variable Z that nobody tells you
+
+0:15:37.680,0:15:47.070
+the value of okay and the way you use
+
+0:15:43.350,0:15:49.500
+this latent variable is is that you
+
+0:15:47.070,0:15:51.180
+build your model in such a way that the
+
+0:15:49.500,0:15:52.590
+it depends on the latent variable that
+
+0:15:51.180,0:15:54.150
+if you use a value of this latent
+
+0:15:52.590,0:15:58.350
+variable the inference problem would
+
+0:15:54.150,0:16:00.960
+become easier so let's say you want to
+
+0:15:58.350,0:16:02.820
+do hang my team recognition and I like
+
+0:16:00.960,0:16:05.250
+this example which I told you about
+
+0:16:02.820,0:16:07.920
+already if you know where the characters
+
+0:16:05.250,0:16:11.310
+are you reading this where it becomes
+
+0:16:07.920,0:16:13.260
+much easier okay
+
+0:16:11.310,0:16:14.970
+the main problem here in reading this
+
+0:16:13.260,0:16:16.140
+word is not just to read the individual
+
+0:16:14.970,0:16:17.880
+characters but you actually figure out
+
+0:16:16.140,0:16:19.830
+what the characters are like where where
+
+0:16:17.880,0:16:21.840
+one character ends well where the other
+
+0:16:19.830,0:16:23.340
+one begins and if I were to tell you
+
+0:16:21.840,0:16:28.830
+that it would be much easier for you to
+
+0:16:23.340,0:16:30.840
+read that to read to read that word if I
+
+0:16:28.830,0:16:33.750
+were quite good at this so if you if you
+
+0:16:30.840,0:16:35.430
+read this sequence of characters here in
+
+0:16:33.750,0:16:36.840
+English if you understand English you
+
+0:16:35.430,0:16:38.280
+can probably parse it you can probably
+
+0:16:36.840,0:16:39.720
+figure out where the word boundaries are
+
+0:16:38.280,0:16:41.280
+because you have this sort of high level
+
+0:16:39.720,0:16:44.820
+knowledge for whether or you know what
+
+0:16:41.280,0:16:46.050
+the words are in English I think the
+
+0:16:44.820,0:16:47.630
+same thing to you inferential you have
+
+0:16:46.050,0:16:56.300
+no idea what the word boundaries are
+
+0:16:47.630,0:16:59.590
+okay unless you speak French so
+
+0:16:56.300,0:17:02.810
+the word batteries in this case and the
+
+0:16:59.590,0:17:06.050
+character boundaries on top would be
+
+0:17:02.810,0:17:09.800
+useful to solve the problem it would
+
+0:17:06.050,0:17:11.540
+allow you for example to in the case of
+
+0:17:09.800,0:17:13.010
+character recognition to have individual
+
+0:17:11.540,0:17:14.000
+character recognizers applied to each
+
+0:17:13.010,0:17:15.620
+character but you don't know where they
+
+0:17:14.000,0:17:22.160
+are so how do you know how do you solve
+
+0:17:15.620,0:17:28.510
+that problem so that's that would be a
+
+0:17:22.160,0:17:31.520
+useful latent variable if I told you
+
+0:17:28.510,0:17:34.790
+so for speech recognition the problem is
+
+0:17:31.520,0:17:36.290
+is that you don't know where other
+
+0:17:34.790,0:17:37.340
+boundaries between the words are you
+
+0:17:36.290,0:17:39.290
+don't know where the boundaries between
+
+0:17:37.340,0:17:41.530
+the phonemes are either speech is very
+
+0:17:39.290,0:17:44.540
+much like like this continuous text
+
+0:17:41.530,0:17:46.130
+continuous speech we can parse the words
+
+0:17:44.540,0:17:48.230
+because we know where the words are
+
+0:17:46.130,0:17:49.550
+because we understand the language but
+
+0:17:48.230,0:17:51.290
+someone's speaking a language you don't
+
+0:17:49.550,0:17:55.700
+understand you have a very faint idea
+
+0:17:51.290,0:17:57.590
+where the word boundaries are most of
+
+0:17:55.700,0:18:00.620
+the time you can't in languages where
+
+0:17:57.590,0:18:02.930
+there is no stress in English it's kind
+
+0:18:00.620,0:18:04.760
+of easy because the stress on the word
+
+0:18:02.930,0:18:06.200
+so if you can figure out what the stress
+
+0:18:04.760,0:18:07.490
+is you can probably figure out more or
+
+0:18:06.200,0:18:09.110
+less where the word boundaries are in
+
+0:18:07.490,0:18:12.730
+French where there is no stress you
+
+0:18:09.110,0:18:15.560
+can't have like no way of figuring out
+
+0:18:12.730,0:18:18.860
+your video now phasma won't say ok
+
+0:18:15.560,0:18:20.360
+there's only a font where you move right
+
+0:18:18.860,0:18:23.660
+so you know it's it's kind of a
+
+0:18:20.360,0:18:25.610
+continuous string of phonemes and it's
+
+0:18:23.660,0:18:26.690
+very hard to tell where the word
+
+0:18:25.610,0:18:28.970
+boundaries are unless you know the
+
+0:18:26.690,0:18:31.010
+language so that would be a useful
+
+0:18:28.970,0:18:32.750
+relation viable to have because if
+
+0:18:31.010,0:18:34.130
+someone told you where where those
+
+0:18:32.750,0:18:37.310
+boundaries were then you will be able to
+
+0:18:34.130,0:18:40.000
+do the to do the task so that's that's
+
+0:18:37.310,0:18:43.730
+how you would use latent variables and
+
+0:18:40.000,0:18:46.040
+this way of using latent variable latent
+
+0:18:43.730,0:18:48.230
+variables has been used for decades in
+
+0:18:46.040,0:18:50.590
+the context of speech recognition in the
+
+0:18:48.230,0:18:52.730
+context of natural language processing
+
+0:18:50.590,0:18:57.830
+in the context of character recognition
+
+0:18:52.730,0:19:01.630
+as I said OCR and in a number of
+
+0:18:57.830,0:19:06.070
+different other applications
+
+0:19:01.630,0:19:06.070
+particularly ones that involve sequences
+
+0:19:06.520,0:19:16.929
+but also in computer vision so things
+
+0:19:09.910,0:19:20.380
+like you know you want to kind of detect
+
+0:19:16.929,0:19:25.740
+where a person is but you don't know how
+
+0:19:20.380,0:19:28.030
+that person is is dressed or what what
+
+0:19:25.740,0:19:29.830
+position that person is in things like
+
+0:19:28.030,0:19:31.059
+this so you know those are variables
+
+0:19:29.830,0:19:33.460
+that if you knew that I'm would can I
+
+0:19:31.059,0:19:44.140
+help you solve the task although
+
+0:19:33.460,0:19:46.450
+nowadays vision just works okay so if
+
+0:19:44.140,0:19:49.000
+you have a little variable model this is
+
+0:19:46.450,0:19:51.820
+how you do inference so you have a new
+
+0:19:49.000,0:19:55.840
+energy function now it's called not F G
+
+0:19:51.820,0:19:58.600
+of X Y Z and so in France you're 1703
+
+0:19:55.840,0:20:00.940
+minimize it with respect to Z and Y okay
+
+0:19:58.600,0:20:02.980
+so you ask the system give me the
+
+0:20:00.940,0:20:04.929
+combination of variables of y&z that
+
+0:20:02.980,0:20:06.550
+mean is this energy function I actually
+
+0:20:04.929,0:20:08.380
+don't care about the values of Z I only
+
+0:20:06.550,0:20:14.340
+care about the value of y but I have to
+
+0:20:08.380,0:20:14.340
+do this simultaneous minimization okay
+
+0:20:15.210,0:20:20.010
+and I'll give you some more concrete
+
+0:20:17.050,0:20:20.010
+examples a little later
+
+0:20:21.600,0:20:28.000
+in fact that's equivalent to defining a
+
+0:20:25.390,0:20:29.830
+new energy a new energy function f which
+
+0:20:28.000,0:20:32.380
+I call F infinity here that only depends
+
+0:20:29.830,0:20:36.850
+on X and y F infinity of X Y is the min
+
+0:20:32.380,0:20:38.530
+over Z of a of X Y Z you take a function
+
+0:20:36.850,0:20:40.570
+of X Y Z you find the minimum of this
+
+0:20:38.530,0:20:43.420
+function over Z Z now gets eliminated
+
+0:20:40.570,0:20:45.160
+you get a function of x and y ok
+
+0:20:43.420,0:20:46.960
+in practice you never do that so I
+
+0:20:45.160,0:20:50.050
+didn't practice to minimize with respect
+
+0:20:46.960,0:20:54.940
+to Z in y17 history because we don't
+
+0:20:50.050,0:20:56.770
+know how to represent a function but
+
+0:20:54.940,0:21:00.460
+there is an alternative to this which is
+
+0:20:56.770,0:21:08.200
+to define f here with her I write F of
+
+0:21:00.460,0:21:11.500
+beta or FF index beta of X Y is minus 1
+
+0:21:08.200,0:21:15.550
+over beta log so I'm or integral over Z
+
+0:21:11.500,0:21:18.179
+of e to the minus beta e of XYZ now a
+
+0:21:15.550,0:21:18.179
+little bit of
+
+0:21:19.070,0:21:25.480
+Titian will you will see that if you
+
+0:21:21.679,0:21:28.490
+make beta go to infinity this kind of
+
+0:21:25.480,0:21:31.549
+beta converges to F infinity which is
+
+0:21:28.490,0:21:34.610
+why I called it F infinity and I went to
+
+0:21:31.549,0:21:39.380
+this exercise a little earlier in the
+
+0:21:34.610,0:21:41.210
+class in this integral over Z if beta is
+
+0:21:39.380,0:21:44.330
+very large the only term that is going
+
+0:21:41.210,0:21:47.210
+to matter is the term Y of X Y Z de has
+
+0:21:44.330,0:21:50.120
+the lowest value which is the the one
+
+0:21:47.210,0:21:52.220
+that has the the lowest value over all
+
+0:21:50.120,0:21:53.090
+possible values of Z right because all
+
+0:21:52.220,0:21:54.500
+the other ones are going to be much
+
+0:21:53.090,0:21:56.990
+bigger because beta is very very large
+
+0:21:54.500,0:21:58.220
+and so they are that even the
+
+0:21:56.990,0:21:59.450
+exponential is not going to count
+
+0:21:58.220,0:22:01.250
+really the only one that's going to
+
+0:21:59.450,0:22:04.879
+count is the one that has the lowest
+
+0:22:01.250,0:22:08.720
+value and so if you have only one term
+
+0:22:04.879,0:22:10.519
+in there which is e of X Y Z for the
+
+0:22:08.720,0:22:13.720
+value of Z that produces the smallest
+
+0:22:10.519,0:22:15.769
+value then the log cancels the
+
+0:22:13.720,0:22:17.659
+exponential and the minus one over beta
+
+0:22:15.769,0:22:20.779
+can't cancel the minus beta and you're
+
+0:22:17.659,0:22:24.440
+left with just mean over Z of Z of X Y Z
+
+0:22:20.779,0:22:32.090
+ok so that's the limit that you see
+
+0:22:24.440,0:22:36.019
+above so if I define f of X Y in this
+
+0:22:32.090,0:22:38.870
+way and again then I'm back to the
+
+0:22:36.019,0:22:42.580
+previous problem of just minimizing F of
+
+0:22:38.870,0:22:42.580
+XY with respect to Y for doing inference
+
+0:22:43.600,0:22:48.980
+ok so I think an H and viable model
+
+0:22:47.870,0:22:50.450
+doesn't make much of a difference you
+
+0:22:48.980,0:22:51.889
+have an extra minimization with respect
+
+0:22:50.450,0:22:57.289
+to the latent variable to do but other
+
+0:22:51.889,0:22:59.779
+than that is fine so there is a big
+
+0:22:57.289,0:23:04.009
+advantage also to allowing latent
+
+0:22:59.779,0:23:07.100
+variables which is said by varying the
+
+0:23:04.009,0:23:08.990
+latent variable over a set I can make
+
+0:23:07.100,0:23:12.889
+the output the prediction of the system
+
+0:23:08.990,0:23:15.559
+vary over a set as well so here's a
+
+0:23:12.889,0:23:18.470
+particular architecture here where X
+
+0:23:15.559,0:23:19.820
+goes into what I'll call a predictor
+
+0:23:18.470,0:23:21.620
+which is some sort of neural net it
+
+0:23:19.820,0:23:26.330
+produces some representation feature
+
+0:23:21.620,0:23:27.680
+representation of X and then X and Z the
+
+0:23:26.330,0:23:30.320
+little I will go into
+
+0:23:27.680,0:23:33.230
+was what I call here decoder which
+
+0:23:30.320,0:23:35.540
+produces a prediction y-bar okay it's a
+
+0:23:33.230,0:23:38.120
+prediction for the variable Y that is
+
+0:23:35.540,0:23:40.190
+the one that we want to predict and our
+
+0:23:38.120,0:23:41.960
+energy function here just compares Y bar
+
+0:23:40.190,0:23:43.970
+and y it's simply the distance between
+
+0:23:41.960,0:23:45.560
+them okay you're familiar with this kind
+
+0:23:43.970,0:23:49.460
+of diagram we talked about it about them
+
+0:23:45.560,0:23:52.280
+earlier so if I choose to vary Z over a
+
+0:23:49.460,0:23:56.590
+set let's say the two dimensional square
+
+0:23:52.280,0:23:59.270
+here symbolized by this gray diagram
+
+0:23:56.590,0:24:01.400
+then the the prediction Y bar is going
+
+0:23:59.270,0:24:03.470
+to vary also over a set in this case
+
+0:24:01.400,0:24:06.920
+here some sort of ribbon to the mercial
+
+0:24:03.470,0:24:09.500
+ribbon and what that allows me to do is
+
+0:24:06.920,0:24:12.530
+basically have a machine now they can
+
+0:24:09.500,0:24:13.790
+produce multiple outputs okay by varying
+
+0:24:12.530,0:24:15.410
+the latent variable I can have this
+
+0:24:13.790,0:24:20.530
+machine produce multiple outputs not
+
+0:24:15.410,0:24:20.530
+just one that's crucially importance
+
+0:24:24.820,0:24:27.740
+right
+
+0:24:26.000,0:24:32.420
+so let's say you're trying to do a video
+
+0:24:27.740,0:24:33.860
+prediction so there's many ways many
+
+0:24:32.420,0:24:36.260
+reason why you might want to do video
+
+0:24:33.860,0:24:37.760
+prediction when one good reason is to
+
+0:24:36.260,0:24:40.160
+build a very good video compression
+
+0:24:37.760,0:24:42.650
+compression system for example another
+
+0:24:40.160,0:24:44.720
+good reason is the video you're trying
+
+0:24:42.650,0:24:46.580
+to predict is the video you are looking
+
+0:24:44.720,0:24:47.960
+at from your windshield when you're
+
+0:24:46.580,0:24:49.190
+driving a car and you'd like to be able
+
+0:24:47.960,0:24:50.690
+to predict what cars around you are
+
+0:24:49.190,0:24:55.520
+going to do this is what fray was
+
+0:24:50.690,0:24:56.420
+working on and so it's very useful to be
+
+0:24:55.520,0:24:57.860
+able to predict what's going to happen
+
+0:24:56.420,0:24:59.180
+before before it happens
+
+0:24:57.860,0:25:00.440
+in fact that's kind of the essence of
+
+0:24:59.180,0:25:03.740
+intelligence really the ability to
+
+0:25:00.440,0:25:04.630
+predict now you're looking at me right
+
+0:25:03.740,0:25:07.520
+now
+
+0:25:04.630,0:25:10.970
+just a minute you're looking at me right
+
+0:25:07.520,0:25:12.470
+now I'm talking you're some idea of the
+
+0:25:10.970,0:25:15.020
+word that is going to come out of my
+
+0:25:12.470,0:25:17.270
+mouth in a few seconds it's some idea of
+
+0:25:15.020,0:25:18.620
+what gesture I'm going to do yet some
+
+0:25:17.270,0:25:21.920
+idea or what direction are going to move
+
+0:25:18.620,0:25:23.600
+in but not a precise idea right so if
+
+0:25:21.920,0:25:25.310
+you train your own neural net to make a
+
+0:25:23.600,0:25:28.850
+single prediction for what I'm gonna
+
+0:25:25.310,0:25:29.750
+look like two seconds from now there's
+
+0:25:28.850,0:25:32.180
+no way you can make an accurate
+
+0:25:29.750,0:25:33.770
+prediction if you train yourself with
+
+0:25:32.180,0:25:35.980
+least square okay we should train a
+
+0:25:33.770,0:25:39.560
+comes on that or something to predict
+
+0:25:35.980,0:25:41.300
+the view of me here Willie square the
+
+0:25:39.560,0:25:43.640
+best the system can do is produce a
+
+0:25:41.300,0:25:44.570
+blurry image of me because it doesn't
+
+0:25:43.640,0:25:46.010
+know if I'm going to move left or right
+
+0:25:44.570,0:25:49.010
+doesn't know if my hands are going to be
+
+0:25:46.010,0:25:50.060
+like this or like that and so it's going
+
+0:25:49.010,0:25:51.410
+to produce the average of all the
+
+0:25:50.060,0:25:55.250
+possible outcomes and that's gonna be a
+
+0:25:51.410,0:25:57.770
+blurry image okay so it's very important
+
+0:25:55.250,0:25:59.510
+that your predictor whatever it is be
+
+0:25:57.770,0:26:00.980
+able to deal with uncertainty and be
+
+0:25:59.510,0:26:02.900
+able to make multiple predictions and
+
+0:26:00.980,0:26:05.270
+the way to parameterize the set of
+
+0:26:02.900,0:26:08.270
+predictions is through a little variable
+
+0:26:05.270,0:26:12.170
+and not yet talking about distributions
+
+0:26:08.270,0:26:14.150
+or probably sick modeling this is this
+
+0:26:12.170,0:26:18.410
+is way before okay way before we're
+
+0:26:14.150,0:26:20.560
+talking about this question there see
+
+0:26:18.410,0:26:24.380
+again
+
+0:26:20.560,0:26:26.990
+well Susie Zen is not a is not a a
+
+0:26:24.380,0:26:30.650
+parameter it's not a weight it's a value
+
+0:26:26.990,0:26:33.890
+that changes for every sample right so
+
+0:26:30.650,0:26:35.120
+basically during training we haven't
+
+0:26:33.890,0:26:36.500
+talked about training yet but during
+
+0:26:35.120,0:26:39.050
+training
+
+0:26:36.500,0:26:39.500
+I'll give you an X and y you find a Z
+
+0:26:39.050,0:26:41.960
+that
+
+0:26:39.500,0:26:44.330
+the energy function with the current
+
+0:26:41.960,0:26:46.610
+values of the parameters of of those
+
+0:26:44.330,0:26:48.980
+neural nets okay that's the best yes
+
+0:26:46.610,0:26:53.659
+your best guess for what the value of Z
+
+0:26:48.980,0:26:55.159
+is and then you feed that to some loss
+
+0:26:53.659,0:26:56.570
+function that you're going to minimize
+
+0:26:55.159,0:26:58.100
+with respect to the parameters of the
+
+0:26:56.570,0:27:00.559
+network the Ross function is not
+
+0:26:58.100,0:27:02.409
+necessarily the average not necessarily
+
+0:27:00.559,0:27:03.590
+the energy it might be something else
+
+0:27:02.409,0:27:04.970
+okay
+
+0:27:03.590,0:27:09.049
+in fact most of the time is something
+
+0:27:04.970,0:27:11.659
+else so in that sense you you run Z you
+
+0:27:09.049,0:27:14.750
+info Z okay you don't want to use the
+
+0:27:11.659,0:27:17.809
+term run because learning means you have
+
+0:27:14.750,0:27:21.530
+one value of the vibe all you you learn
+
+0:27:17.809,0:27:23.270
+for a whole training set here for Z you
+
+0:27:21.530,0:27:24.679
+have different value for every sample in
+
+0:27:23.270,0:27:27.650
+your training set or every time put your
+
+0:27:24.679,0:27:28.820
+test site for that matter okay so
+
+0:27:27.650,0:27:38.510
+they're not learned in that sense
+
+0:27:28.820,0:27:44.720
+they're inferred yeah another example of
+
+0:27:38.510,0:27:47.059
+this is his translation so translation
+
+0:27:44.720,0:27:49.220
+has a is a big problem language
+
+0:27:47.059,0:27:51.110
+translation because there is no single
+
+0:27:49.220,0:27:53.600
+correct translation of a piece of text
+
+0:27:51.110,0:27:56.120
+from one language to another usually
+
+0:27:53.600,0:28:00.740
+there is a lot of different ways to
+
+0:27:56.120,0:28:04.610
+express the same idea and and why would
+
+0:28:00.740,0:28:05.929
+you pick one over the other and so it
+
+0:28:04.610,0:28:07.429
+might be nice if there was some way of
+
+0:28:05.929,0:28:09.620
+privatizing all the possible
+
+0:28:07.429,0:28:11.179
+translations that the system could
+
+0:28:09.620,0:28:13.940
+produce that would correspond to a given
+
+0:28:11.179,0:28:15.350
+text it's in German that you want to
+
+0:28:13.940,0:28:16.789
+translate into English there could be
+
+0:28:15.350,0:28:19.520
+multiple translation you need lists are
+
+0:28:16.789,0:28:21.110
+all correct and by varying some latent
+
+0:28:19.520,0:28:25.940
+variable you might you know vary the
+
+0:28:21.110,0:28:27.580
+translation that is produced okay so now
+
+0:28:25.940,0:28:32.860
+let's connect this with probabilistic
+
+0:28:27.580,0:28:35.990
+pricing model there is a way of turning
+
+0:28:32.860,0:28:39.950
+energies which you can think of as kind
+
+0:28:35.990,0:28:42.580
+of negative scores if you want because
+
+0:28:39.950,0:28:45.669
+low energy is good and hydrogen is bad
+
+0:28:42.580,0:28:47.539
+to turn energies into probabilities and
+
+0:28:45.669,0:28:48.710
+the way to twenty illusion to
+
+0:28:47.539,0:28:49.910
+probabilities we talked about this
+
+0:28:48.710,0:28:51.440
+already
+
+0:28:49.910,0:28:55.130
+it is to use what's called a Gibbs
+
+0:28:51.440,0:28:56.990
+Boltzmann distribution so the the form
+
+0:28:55.130,0:28:58.790
+of this you know goes back to classical
+
+0:28:56.990,0:29:05.110
+statistical physics in the nineteenth
+
+0:28:58.790,0:29:07.700
+century and the peer we're given X is
+
+0:29:05.110,0:29:11.510
+exponential minus beta where beta is
+
+0:29:07.700,0:29:14.870
+some constant the energy of x and y and
+
+0:29:11.510,0:29:16.280
+then you want to so that turns all those
+
+0:29:14.870,0:29:18.260
+energies into positive numbers where we
+
+0:29:16.280,0:29:21.290
+take the exponential of a number makes
+
+0:29:18.260,0:29:22.850
+it positive and the minus sign is there
+
+0:29:21.290,0:29:24.350
+to return low energy into high
+
+0:29:22.850,0:29:28.100
+probabilities and vice versa
+
+0:29:24.350,0:29:29.960
+okay and I'm using this convention
+
+0:29:28.100,0:29:33.970
+because this is what physicists have
+
+0:29:29.960,0:29:36.910
+been using for the last century more
+
+0:29:33.970,0:29:41.300
+century and a half
+
+0:29:36.910,0:29:43.610
+so taking Exponential's you you turn the
+
+0:29:41.300,0:29:45.620
+energies into positive numbers and then
+
+0:29:43.610,0:29:48.110
+you normalize so you normalize in such a
+
+0:29:45.620,0:29:51.560
+way that the the pyx is a properly
+
+0:29:48.110,0:29:53.360
+normalized distribution over Y and to
+
+0:29:51.560,0:29:54.980
+make it a properly distribution normal
+
+0:29:53.360,0:29:56.720
+distribution for y you divide by the
+
+0:29:54.980,0:29:59.540
+integral or the sum if where it's
+
+0:29:56.720,0:30:01.400
+discrete over Y of e to the minus beta F
+
+0:29:59.540,0:30:05.510
+of XY which is the same thing as the top
+
+0:30:01.400,0:30:10.790
+except you you integrate over all
+
+0:30:05.510,0:30:13.190
+possible values of Y now if you compute
+
+0:30:10.790,0:30:14.390
+the integral of this over Y is equal to
+
+0:30:13.190,0:30:15.560
+one because obviously you get the
+
+0:30:14.390,0:30:17.360
+integral on top the integral at the
+
+0:30:15.560,0:30:20.990
+bottom which is a constant and you get
+
+0:30:17.360,0:30:23.830
+one okay so that confirms that this is
+
+0:30:20.990,0:30:26.240
+kind of this has this satisfies the
+
+0:30:23.830,0:30:28.610
+axioms of probability distributions that
+
+0:30:26.240,0:30:35.150
+it has to be positive numbers that
+
+0:30:28.610,0:30:36.800
+integrate to one it's a particular like
+
+0:30:35.150,0:30:39.260
+there's many ways to turn a bunch of
+
+0:30:36.800,0:30:40.610
+like a function into a function that
+
+0:30:39.260,0:30:43.580
+integrates to one opposed to a function
+
+0:30:40.610,0:30:44.750
+in two ways to one what's this one has
+
+0:30:43.580,0:30:48.320
+interesting properties which are not
+
+0:30:44.750,0:30:49.970
+going to go through but corresponds to
+
+0:30:48.320,0:30:52.660
+the so-called maximum entropy
+
+0:30:49.970,0:30:52.660
+distribution
+
+0:30:53.400,0:30:57.720
+the beta parameter is kind of arbitrary
+
+0:30:55.190,0:30:59.760
+it's it's the way you calibrate your
+
+0:30:57.720,0:31:02.670
+probabilities is as a function of your
+
+0:30:59.760,0:31:04.590
+energy so the larger the beta the more
+
+0:31:02.670,0:31:09.210
+sort of binary or at your probability
+
+0:31:04.590,0:31:11.280
+will be for a given energy function the
+
+0:31:09.210,0:31:16.140
+beta is very very large is basically
+
+0:31:11.280,0:31:17.430
+just the the the U of XY that pretty for
+
+0:31:16.140,0:31:18.690
+the Y that produces the lowest energy
+
+0:31:17.430,0:31:19.800
+that will have high probability and
+
+0:31:18.690,0:31:22.440
+everything else will have very low
+
+0:31:19.800,0:31:24.900
+probability and for small beta for a
+
+0:31:22.440,0:31:29.880
+small beta then you get kind of a
+
+0:31:24.900,0:31:31.890
+smoother distribution okay beta in
+
+0:31:29.880,0:31:35.130
+physics term is a came to an inverse
+
+0:31:31.890,0:31:38.900
+temperature okay so the beta goes to
+
+0:31:35.130,0:31:38.900
+infinity is equal to zero temperature
+
+0:31:44.360,0:31:52.500
+okay a little bit of math it's not that
+
+0:31:46.920,0:31:54.720
+scary to show you where the formula for
+
+0:31:52.500,0:32:03.720
+F beta comes from that I talked about
+
+0:31:54.720,0:32:09.330
+earlier so let's go through this slowly
+
+0:32:03.720,0:32:13.620
+here the joint probability of P of y and
+
+0:32:09.330,0:32:15.930
+z given x okay I apply the same bossman
+
+0:32:13.620,0:32:18.690
+gives Boltzmann distribution formula as
+
+0:32:15.930,0:32:20.850
+I used before except now it's a joint
+
+0:32:18.690,0:32:22.530
+distribution over y&z instead of just
+
+0:32:20.850,0:32:26.460
+the distribution over Y this is for a
+
+0:32:22.530,0:32:28.800
+latent variable model okay so it's e to
+
+0:32:26.460,0:32:32.100
+the minus the energy of X Y Z and then I
+
+0:32:28.800,0:32:33.750
+have to normalize I have to integrate in
+
+0:32:32.100,0:32:35.630
+the denominator with respect to y and z
+
+0:32:33.750,0:32:40.200
+so that I get a normalized distribution
+
+0:32:35.630,0:32:44.640
+over the joint domain of y&z okay so
+
+0:32:40.200,0:32:47.040
+that's the formula at the top left I can
+
+0:32:44.640,0:32:50.760
+marginalize in so if I integrate P of y
+
+0:32:47.040,0:32:52.650
+and z given x I integrate this over Z I
+
+0:32:50.760,0:32:54.840
+get just P of Y okay that's the
+
+0:32:52.650,0:33:00.330
+marginalization formula which is at the
+
+0:32:54.840,0:33:02.970
+top right and so now if I write P of Y X
+
+0:33:00.330,0:33:06.269
+is simply the integral over Z of the one
+
+0:33:02.970,0:33:08.609
+at the top left okay which is written
+
+0:33:06.269,0:33:10.709
+and the second line so at the top we
+
+0:33:08.609,0:33:12.889
+have integral over zero e to the minus
+
+0:33:10.709,0:33:15.570
+beta energy of XYZ and at the bottom
+
+0:33:12.889,0:33:19.289
+integral over y integral over Z of e to
+
+0:33:15.570,0:33:20.839
+the minus beta e to the X Y Z alright ok
+
+0:33:19.289,0:33:25.349
+now I'm going to do something very
+
+0:33:20.839,0:33:28.649
+sneaky no stupid which is that I'm going
+
+0:33:25.349,0:33:31.709
+to take the log of this formula x minus
+
+0:33:28.649,0:33:33.570
+1 over beta then x minus beta and then
+
+0:33:31.709,0:33:36.089
+take the exponential all of those things
+
+0:33:33.570,0:33:37.919
+cancel out ok the log cancels the
+
+0:33:36.089,0:33:39.959
+exponential the minus 1 over beta
+
+0:33:37.919,0:33:43.109
+cancels the minus beta right so I
+
+0:33:39.959,0:33:45.809
+haven't done anything by doing this e to
+
+0:33:43.109,0:33:48.139
+the minus beta times minus 1 over beta
+
+0:33:45.809,0:33:52.109
+log I've done nothing
+
+0:33:48.139,0:33:56.609
+because everything cancels ok and I do
+
+0:33:52.109,0:34:00.570
+the same at the bottom and what I see
+
+0:33:56.609,0:34:03.359
+now is that the stuff in the bracket in
+
+0:34:00.570,0:34:05.849
+store for me I were previously F beta of
+
+0:34:03.359,0:34:07.679
+X y equals minus 1 over beta log some
+
+0:34:05.849,0:34:11.069
+over Z you to go over 0 of e to the
+
+0:34:07.679,0:34:12.960
+minus beta e of X Y Z and so I can
+
+0:34:11.069,0:34:16.649
+rewrite this horrible complicated
+
+0:34:12.960,0:34:19.770
+formula here as e to the minus beta F
+
+0:34:16.649,0:34:23.220
+theta of X Y divided by integral over Y
+
+0:34:19.770,0:34:24.750
+of ETA minus beta F of XY what does this
+
+0:34:23.220,0:34:28.220
+all mean it means that if you have a
+
+0:34:24.750,0:34:31.049
+latent viable model and you want to
+
+0:34:28.220,0:34:33.480
+eliminate the Z variable the latent
+
+0:34:31.049,0:34:37.470
+variable in a probabilistic correct way
+
+0:34:33.480,0:34:45.869
+you just really find that in the energy
+
+0:34:37.470,0:34:49.589
+F as this as a function of V or XYZ and
+
+0:34:45.869,0:34:52.039
+you're done okay you're done is a little
+
+0:34:49.589,0:34:56.609
+bit of a shortcut because actually
+
+0:34:52.039,0:34:58.200
+computing this can be very hard ok can
+
+0:34:56.609,0:35:00.920
+be intractable in fact in most cases
+
+0:34:58.200,0:35:00.920
+probably it's intractable
+
+0:35:02.440,0:35:18.190
+I am missing a - in the denominator you
+
+0:35:05.740,0:35:20.289
+are correct okay so the last few slides
+
+0:35:18.190,0:35:22.780
+were to say if you have an it enjoyable
+
+0:35:20.289,0:35:24.640
+that you minimize over inside of your
+
+0:35:22.780,0:35:26.260
+model or you have a little variable that
+
+0:35:24.640,0:35:29.890
+you want to marginalize over which is
+
+0:35:26.260,0:35:33.630
+which you do by defining this new this
+
+0:35:29.890,0:35:37.589
+energy function f this way
+
+0:35:33.630,0:35:41.829
+and memorizing corresponds to the
+
+0:35:37.589,0:35:59.200
+infinite beta limit of this formula it
+
+0:35:41.829,0:36:01.270
+can be done okay
+
+0:35:59.200,0:36:03.609
+I mean just to get a substitution in the
+
+0:36:01.270,0:36:06.970
+second line okay the last two terms in
+
+0:36:03.609,0:36:08.980
+the second line the bracket are replaced
+
+0:36:06.970,0:36:12.190
+by F theta of X Y because and I just
+
+0:36:08.980,0:36:16.589
+defined a bit of X Y this way okay so
+
+0:36:12.190,0:36:20.410
+just define it this way and if I define
+
+0:36:16.589,0:36:22.270
+f of X Y this way then P of Y given X is
+
+0:36:20.410,0:36:27.339
+just an application of the gift awesome
+
+0:36:22.270,0:36:29.920
+and formula right and Z has been kind of
+
+0:36:27.339,0:36:32.380
+marginalize implicitly inside of of this
+
+0:36:29.920,0:36:33.849
+okay so physicists call this a free
+
+0:36:32.380,0:36:36.849
+energy by the way which is why I call it
+
+0:36:33.849,0:36:39.270
+f okay so here's the energy and F is a
+
+0:36:36.849,0:36:39.270
+free energy
+
+0:36:54.050,0:37:00.870
+so the difference is in prognostic
+
+0:36:58.050,0:37:04.770
+models you basically don't have the
+
+0:37:00.870,0:37:08.220
+choice of the objective function you're
+
+0:37:04.770,0:37:12.090
+gonna minimize and you have to stay true
+
+0:37:08.220,0:37:13.860
+to the sort of probability for marking
+
+0:37:12.090,0:37:15.030
+in a sense that every object you
+
+0:37:13.860,0:37:17.820
+manipulate has to be a normalize
+
+0:37:15.030,0:37:19.520
+distribution which you may approximate
+
+0:37:17.820,0:37:23.070
+using variational methods or whatever
+
+0:37:19.520,0:37:24.570
+here I'm saying ultimately what you want
+
+0:37:23.070,0:37:27.110
+to make you know what you want to do
+
+0:37:24.570,0:37:29.910
+with those models is make decisions and
+
+0:37:27.110,0:37:32.790
+if you're if you're if you build a
+
+0:37:29.910,0:37:36.390
+system that drives a car and the system
+
+0:37:32.790,0:37:37.800
+tells you you know I need to turn left
+
+0:37:36.390,0:37:40.230
+with probably tip on a tour TURN RIGHT
+
+0:37:37.800,0:37:44.190
+fits for you to point to you're gonna
+
+0:37:40.230,0:37:46.530
+turn left okay the the fact that the
+
+0:37:44.190,0:37:47.970
+probabilities there are point two and
+
+0:37:46.530,0:37:49.440
+point eight doesn't matter what you
+
+0:37:47.970,0:37:51.840
+wanted to make the decision that is the
+
+0:37:49.440,0:37:52.920
+the best right because you have to make
+
+0:37:51.840,0:37:56.580
+a decision you're forced to make a
+
+0:37:52.920,0:37:58.080
+decision so if you want a system that so
+
+0:37:56.580,0:38:01.590
+so probabilities are completely useless
+
+0:37:58.080,0:38:03.660
+if you want to make decisions okay if
+
+0:38:01.590,0:38:06.120
+you want to combine the output of a
+
+0:38:03.660,0:38:09.780
+automated system with another one for
+
+0:38:06.120,0:38:11.280
+example a human or some other system and
+
+0:38:09.780,0:38:12.240
+this system haven't been trained
+
+0:38:11.280,0:38:12.840
+together but they've been trained
+
+0:38:12.240,0:38:14.370
+separately
+
+0:38:12.840,0:38:15.540
+then what you want is calibrate its
+
+0:38:14.370,0:38:16.980
+course so that you can combine the
+
+0:38:15.540,0:38:19.440
+scores of the two systems to make a good
+
+0:38:16.980,0:38:20.970
+decision and there is only one way to
+
+0:38:19.440,0:38:22.830
+calibrate scores and is to kind of turn
+
+0:38:20.970,0:38:26.150
+them into probabilities all other ways
+
+0:38:22.830,0:38:27.930
+are either inferior or equivalent okay
+
+0:38:26.150,0:38:31.890
+but if you're gonna train the system
+
+0:38:27.930,0:38:36.480
+end-to-end to make decisions then then
+
+0:38:31.890,0:38:38.850
+know then whatever scoring function you
+
+0:38:36.480,0:38:41.070
+use is fine as long as it gives the best
+
+0:38:38.850,0:38:46.800
+score to the decision that to the best
+
+0:38:41.070,0:38:48.210
+decision that gives you way more choices
+
+0:38:46.800,0:38:49.560
+in how you head all the model where more
+
+0:38:48.210,0:38:51.090
+choices of how you train it
+
+0:38:49.560,0:38:54.360
+what objective function you use
+
+0:38:51.090,0:38:55.860
+basically if you if you insist that your
+
+0:38:54.360,0:38:57.990
+model be probabilistic you have to do
+
+0:38:55.860,0:38:59.910
+maximum likelihood so we basically have
+
+0:38:57.990,0:39:02.250
+to train your model in such a way that
+
+0:38:59.910,0:39:06.660
+the probability gives to the data you
+
+0:39:02.250,0:39:09.420
+is maximum okay the problem is that this
+
+0:39:06.660,0:39:10.980
+is this can only be proven to work in
+
+0:39:09.420,0:39:12.900
+the case where your model is correct and
+
+0:39:10.980,0:39:15.300
+your model is never correct in a sense
+
+0:39:12.900,0:39:17.430
+that you know there's this famous quit
+
+0:39:15.300,0:39:21.440
+by the famous aesthetician box that said
+
+0:39:17.430,0:39:23.640
+all models are wrong but some are useful
+
+0:39:21.440,0:39:25.050
+so probably sick models particularly
+
+0:39:23.640,0:39:26.610
+artistic models in high dimensional
+
+0:39:25.050,0:39:28.440
+spaces and probably sick models in
+
+0:39:26.610,0:39:29.850
+communica minute or old situations like
+
+0:39:28.440,0:39:33.180
+texts and things like this our
+
+0:39:29.850,0:39:35.700
+approximate models they're all wrong in
+
+0:39:33.180,0:39:37.650
+a way and if you try to normalize them
+
+0:39:35.700,0:39:40.950
+you make them more wrong so you better
+
+0:39:37.650,0:39:42.690
+off kind of not normalizing them there's
+
+0:39:40.950,0:39:50.310
+another point that's actually more
+
+0:39:42.690,0:39:58.380
+important and I come back to this little
+
+0:39:50.310,0:39:59.520
+diagram and had this one so this is
+
+0:39:58.380,0:40:00.960
+meant to be an energy function that
+
+0:39:59.520,0:40:04.290
+captures the dependency between x and y
+
+0:40:00.960,0:40:06.540
+okay and it's it's like a mountain range
+
+0:40:04.290,0:40:08.970
+if you want okay
+
+0:40:06.540,0:40:11.130
+the values are where the black dots are
+
+0:40:08.970,0:40:14.280
+these are the data points and then
+
+0:40:11.130,0:40:15.810
+there's kind of mountains all around now
+
+0:40:14.280,0:40:17.880
+if you try to progress it model with
+
+0:40:15.810,0:40:20.280
+this imagine that the points are
+
+0:40:17.880,0:40:22.670
+actually on a thin manifold of of
+
+0:40:20.280,0:40:26.160
+infinitely an infinitely thin manifold
+
+0:40:22.670,0:40:27.600
+okay so the the data distribution for
+
+0:40:26.160,0:40:32.280
+the white dot for the black dots is
+
+0:40:27.600,0:40:34.590
+actually a just a line okay is one line
+
+0:40:32.280,0:40:37.530
+to line three lines for their lines they
+
+0:40:34.590,0:40:38.670
+don't have any any width if you want so
+
+0:40:37.530,0:40:39.810
+if you're trying to probably sick model
+
+0:40:38.670,0:40:41.370
+on this you're probably sick model
+
+0:40:39.810,0:40:43.350
+should give you your density model
+
+0:40:41.370,0:40:47.190
+should tell you when you are on this
+
+0:40:43.350,0:40:49.910
+manifold the the outputs should be
+
+0:40:47.190,0:40:52.020
+infinite the density is infinite and
+
+0:40:49.910,0:40:55.830
+just actually on that side of it it
+
+0:40:52.020,0:40:58.020
+should be zero okay that would be the
+
+0:40:55.830,0:41:02.510
+correct model distribution of the of
+
+0:40:58.020,0:41:02.510
+this distribution it's a thin plate
+
+0:41:04.880,0:41:08.510
+not immediately should be infinite but
+
+0:41:06.770,0:41:10.220
+the integral of it should be one okay
+
+0:41:08.510,0:41:12.620
+it's very difficult to implement on the
+
+0:41:10.220,0:41:14.960
+computer not only that is basically
+
+0:41:12.620,0:41:16.910
+impossible because let's say you want to
+
+0:41:14.960,0:41:18.980
+compute this function through some sort
+
+0:41:16.910,0:41:21.020
+of neural net your neural net will have
+
+0:41:18.980,0:41:22.310
+to have infinite weights and infinite
+
+0:41:21.020,0:41:24.350
+ways that are calibrated in such a way
+
+0:41:22.310,0:41:26.240
+that the integral of the output of that
+
+0:41:24.350,0:41:29.390
+of that system over the entire domain is
+
+0:41:26.240,0:41:31.370
+1 it's basically impossible you cannot
+
+0:41:29.390,0:41:33.320
+have accurate probablistic model the
+
+0:41:31.370,0:41:34.610
+accurate correct probably stick model
+
+0:41:33.320,0:41:40.400
+for this particular data that I just
+
+0:41:34.610,0:41:42.350
+told you is impossible this is what
+
+0:41:40.400,0:41:45.260
+maximum likelihood we want you to
+
+0:41:42.350,0:41:50.510
+produce and there's no computer in the
+
+0:41:45.260,0:41:51.890
+world I can compute this okay so in fact
+
+0:41:50.510,0:41:54.290
+it's not even interesting because
+
+0:41:51.890,0:41:56.650
+imagine that you had a perfect density
+
+0:41:54.290,0:42:00.160
+model for the density I just I just
+
+0:41:56.650,0:42:07.460
+mentioned which is a thin plate in that
+
+0:42:00.160,0:42:12.140
+XY space you can't do inference if I
+
+0:42:07.460,0:42:15.020
+give you a value of x and I ask you
+
+0:42:12.140,0:42:19.640
+where's the best value of y you will be
+
+0:42:15.020,0:42:23.540
+able to find it because all values of Y
+
+0:42:19.640,0:42:26.480
+except a set of 0 probability of
+
+0:42:23.540,0:42:29.540
+probability 0 and it's just you know a
+
+0:42:26.480,0:42:31.340
+few values like for example for this
+
+0:42:29.540,0:42:33.140
+value of x there are 3 values that are
+
+0:42:31.340,0:42:35.600
+possible ok
+
+0:42:33.140,0:42:37.070
+and there are infinitely now and so he
+
+0:42:35.600,0:42:38.990
+won't be able to find them there is no
+
+0:42:37.070,0:42:44.690
+inference algorithm that will allow you
+
+0:42:38.990,0:42:47.660
+to find them because they're a seraph
+
+0:42:44.690,0:42:50.930
+they're just derive functions hey how do
+
+0:42:47.660,0:42:52.970
+you find him so the only way you can
+
+0:42:50.930,0:42:57.470
+find them is if you make it if you make
+
+0:42:52.970,0:42:59.330
+your contrast function smooth and
+
+0:42:57.470,0:43:00.740
+differentiable and then you know you can
+
+0:42:59.330,0:43:02.360
+start from any point and very gradient
+
+0:43:00.740,0:43:05.570
+descent you can find a good value for y
+
+0:43:02.360,0:43:07.280
+for any value of x but this is not
+
+0:43:05.570,0:43:09.410
+really a good probabilistic model of the
+
+0:43:07.280,0:43:12.770
+distribution if the distribution is of
+
+0:43:09.410,0:43:16.250
+the type I mentioned ok so here is a
+
+0:43:12.770,0:43:18.010
+case where insisting to have a good
+
+0:43:16.250,0:43:21.730
+politic model actually
+
+0:43:18.010,0:43:23.380
+is bad ok maximum likelihood sucks so if
+
+0:43:21.730,0:43:26.410
+you are a true Bayesian you say oh but
+
+0:43:23.380,0:43:28.600
+like you know you can correct this by I
+
+0:43:26.410,0:43:31.090
+think of strong prior where the prior
+
+0:43:28.600,0:43:34.570
+says your density function has to be
+
+0:43:31.090,0:43:37.600
+smooth and you know you can think of
+
+0:43:34.570,0:43:40.150
+this as a prior so but everything you're
+
+0:43:37.600,0:43:42.070
+doing so Bayesian terms take the
+
+0:43:40.150,0:43:43.810
+logarithm thereof forget about
+
+0:43:42.070,0:43:46.570
+normalization and you get energy based
+
+0:43:43.810,0:43:48.609
+models so energy based models that have
+
+0:43:46.570,0:43:51.340
+a regularizer which is additive to your
+
+0:43:48.609,0:43:54.130
+energy function a completely equivalent
+
+0:43:51.340,0:43:56.260
+to Bayesian models where the likelihood
+
+0:43:54.130,0:44:00.730
+is mixed exponential of the energy and
+
+0:43:56.260,0:44:02.500
+now you get exponential one term in the
+
+0:44:00.730,0:44:03.310
+energy you know times exponential
+
+0:44:02.500,0:44:06.190
+regularizer
+
+0:44:03.310,0:44:08.290
+and so it's equal to exponential energy
+
+0:44:06.190,0:44:09.400
+plus regularizer and if you remove the
+
+0:44:08.290,0:44:12.660
+exponential you have an energy based
+
+0:44:09.400,0:44:14.950
+model with an additive regularizer
+
+0:44:12.660,0:44:16.990
+so there is kind of a correspondence
+
+0:44:14.950,0:44:19.869
+between you know probably seek invasion
+
+0:44:16.990,0:44:22.300
+methods there but insisting that you do
+
+0:44:19.869,0:44:24.520
+maximum likelihood is sometimes bad for
+
+0:44:22.300,0:44:26.859
+you particularly in high dimensional
+
+0:44:24.520,0:44:29.680
+spaces or community or spaces where your
+
+0:44:26.859,0:44:31.210
+politic model is very wrong it's not
+
+0:44:29.680,0:44:32.590
+very wrong in discrete distributions
+
+0:44:31.210,0:44:35.380
+it's okay
+
+0:44:32.590,0:44:44.980
+but in that case you know it's really
+
+0:44:35.380,0:44:48.010
+one and all models are wrong okay so
+
+0:44:44.980,0:44:51.700
+there is a form of learning and I'll
+
+0:44:48.010,0:44:53.710
+come back to this to this at length in
+
+0:44:51.700,0:44:55.060
+future lectures called supervised
+
+0:44:53.710,0:44:57.609
+running and it's really sort of
+
+0:44:55.060,0:44:59.740
+encompasses first of all supervised
+
+0:44:57.609,0:45:02.440
+running but also kind of what people
+
+0:44:59.740,0:45:03.550
+used to call unsupervised running and a
+
+0:45:02.440,0:45:05.590
+lot of things and I think it's the
+
+0:45:03.550,0:45:07.240
+really the future of machine learning is
+
+0:45:05.590,0:45:10.690
+in sub supervised running and you start
+
+0:45:07.240,0:45:12.840
+seeing this these days you know over the
+
+0:45:10.690,0:45:15.580
+last year and a half there's been
+
+0:45:12.840,0:45:19.600
+enormous progress in NLP because of
+
+0:45:15.580,0:45:21.240
+systems like Bert and those systems are
+
+0:45:19.600,0:45:23.230
+trying using sub supervised running a
+
+0:45:21.240,0:45:24.369
+particular form of stuff super arginine
+
+0:45:23.230,0:45:27.760
+called denoising auto-encoder which
+
+0:45:24.369,0:45:29.320
+we'll talk about there's been also quite
+
+0:45:27.760,0:45:30.700
+a bit of progress over the last three
+
+0:45:29.320,0:45:32.320
+months or so in
+
+0:45:30.700,0:45:35.170
+using some supervised learning to train
+
+0:45:32.320,0:45:39.100
+systems to learn vision systems to learn
+
+0:45:35.170,0:45:45.670
+features using a you know it's all
+
+0:45:39.100,0:45:47.200
+supervised pretext tasks and the purpose
+
+0:45:45.670,0:45:48.970
+of such supervised learning is to train
+
+0:45:47.200,0:45:51.070
+a system to learn good representations
+
+0:45:48.970,0:45:52.510
+of the input so that you can
+
+0:45:51.070,0:45:54.970
+subsequently use those representations
+
+0:45:52.510,0:45:57.990
+as input to a supervised task or
+
+0:45:54.970,0:46:00.070
+reinforcement learning task or whatever
+
+0:45:57.990,0:46:02.320
+the thing is there is a lot more
+
+0:46:00.070,0:46:03.610
+information that the system can use in
+
+0:46:02.320,0:46:06.460
+the context of such supervised running
+
+0:46:03.610,0:46:08.980
+so if you tell you what I mean by itself
+
+0:46:06.460,0:46:10.300
+supervised learning so sorry poisoning
+
+0:46:08.980,0:46:13.590
+is that someone gives you a chunk of
+
+0:46:10.300,0:46:17.110
+data and you're going to train a system
+
+0:46:13.590,0:46:20.590
+to predict a piece of that data given
+
+0:46:17.110,0:46:22.770
+another piece of that data okay so for
+
+0:46:20.590,0:46:26.770
+example I give you a piece of video and
+
+0:46:22.770,0:46:29.770
+ask you use the first half of the video
+
+0:46:26.770,0:46:34.000
+and train a model to predict the second
+
+0:46:29.770,0:46:35.620
+half of that video why would that be
+
+0:46:34.000,0:46:37.210
+good
+
+0:46:35.620,0:46:40.330
+why would that be good in the context of
+
+0:46:37.210,0:46:47.350
+learning features for for vision systems
+
+0:46:40.330,0:46:48.850
+for example if I trained myself to
+
+0:46:47.350,0:46:51.400
+predict what the world is going to look
+
+0:46:48.850,0:46:53.170
+like what my view of this room will look
+
+0:46:51.400,0:46:58.200
+like if I shave my head a little bit to
+
+0:46:53.170,0:47:02.440
+the left the best explanation for how to
+
+0:46:58.200,0:47:04.780
+how the view changes is that every point
+
+0:47:02.440,0:47:09.480
+in space as a depth as a distance from
+
+0:47:04.780,0:47:12.520
+our eyes okay
+
+0:47:09.480,0:47:14.050
+in fact if I sort of inferred somehow
+
+0:47:12.520,0:47:16.240
+that every point has a distance from I
+
+0:47:14.050,0:47:17.710
+is then I can very simply explain how
+
+0:47:16.240,0:47:20.020
+the world changes when I move because
+
+0:47:17.710,0:47:22.030
+things are closer can have more products
+
+0:47:20.020,0:47:24.210
+motion than things that are far and you
+
+0:47:22.030,0:47:31.410
+get this sort of you know perspective
+
+0:47:24.210,0:47:31.410
+distortion and so
+
+0:47:32.390,0:47:37.220
+there is this idea somehow that if I
+
+0:47:34.700,0:47:38.869
+train a system to predict whether what
+
+0:47:37.220,0:47:41.029
+is going to look like if I move a camera
+
+0:47:38.869,0:47:43.010
+the system implicitly will run about
+
+0:47:41.029,0:47:45.980
+depth you will not have you will not
+
+0:47:43.010,0:47:48.170
+have to be training it to predict depth
+
+0:47:45.980,0:47:51.980
+in a supervised fashion it will have to
+
+0:47:48.170,0:47:53.510
+internally kind of discover that there
+
+0:47:51.980,0:47:59.359
+is such a thing as depth if you wants to
+
+0:47:53.510,0:48:00.950
+do a good job at that prediction which
+
+0:47:59.359,0:48:02.000
+means you don't have to hardwired into
+
+0:48:00.950,0:48:03.140
+the system that the world is
+
+0:48:02.000,0:48:06.170
+three-dimensional is going to learn this
+
+0:48:03.140,0:48:07.700
+in minutes by just predicting highs view
+
+0:48:06.170,0:48:10.700
+of the world changes but you know when
+
+0:48:07.700,0:48:12.349
+you move the camera now once the system
+
+0:48:10.700,0:48:17.450
+has figured out that every point has a
+
+0:48:12.349,0:48:19.970
+depth in the world then the notion that
+
+0:48:17.450,0:48:22.519
+there are distinct objects that are in
+
+0:48:19.970,0:48:25.150
+front of the background immediately pops
+
+0:48:22.519,0:48:31.150
+up because objects are things that move
+
+0:48:25.150,0:48:33.500
+differently from things are behind okay
+
+0:48:31.150,0:48:38.210
+there's nothing that pops up immediately
+
+0:48:33.500,0:48:41.000
+which is the fact that objects that are
+
+0:48:38.210,0:48:43.490
+now not visible hidden by another one or
+
+0:48:41.000,0:48:44.660
+still there okay it's just that you
+
+0:48:43.490,0:48:48.920
+don't see them because they are behind
+
+0:48:44.660,0:48:50.990
+but this concept that objects still
+
+0:48:48.920,0:48:53.750
+exist when you don't see them it's not
+
+0:48:50.990,0:48:55.579
+completely obvious your babies around
+
+0:48:53.750,0:48:57.559
+this really really early but it's not
+
+0:48:55.579,0:49:00.579
+clear exactly when because we can
+
+0:48:57.559,0:49:04.599
+measure that when they are very little
+
+0:49:00.579,0:49:04.599
+but it probably learned this very quick
+
+0:49:05.829,0:49:12.349
+once you have identified this concept of
+
+0:49:09.019,0:49:14.569
+objects perhaps you'll you'll figure out
+
+0:49:12.349,0:49:18.079
+that a lot of objects in the world
+
+0:49:14.569,0:49:20.150
+don't move spontaneously okay so there
+
+0:49:18.079,0:49:21.529
+are inanimate objects and then there are
+
+0:49:20.150,0:49:23.269
+objects whose trajectories are not
+
+0:49:21.529,0:49:27.740
+entirely predictable and those are
+
+0:49:23.269,0:49:30.200
+animate objects or other types of
+
+0:49:27.740,0:49:32.029
+objects that you know move in not
+
+0:49:30.200,0:49:34.339
+entirely predictable ways like like you
+
+0:49:32.029,0:49:36.859
+know the waves in the water on water but
+
+0:49:34.339,0:49:41.269
+are not animate this is Sally or like
+
+0:49:36.859,0:49:43.930
+the leaves of a tree and then after a
+
+0:49:41.269,0:49:45.890
+while you also we you also realize that
+
+0:49:43.930,0:49:48.860
+objects that
+
+0:49:45.890,0:49:50.330
+have predictable trajectories generally
+
+0:49:48.860,0:49:53.630
+don't float in the air if they're not
+
+0:49:50.330,0:49:55.160
+supported default okay so you you can
+
+0:49:53.630,0:49:56.960
+start learning about so intuitive
+
+0:49:55.160,0:49:59.000
+physics about gravity about inertia
+
+0:49:56.960,0:50:01.400
+babies run this around the age of nine
+
+0:49:59.000,0:50:03.710
+months so this is not something you're
+
+0:50:01.400,0:50:06.410
+born with you cannot run this around
+
+0:50:03.710,0:50:10.430
+nine months you as a baby you run that
+
+0:50:06.410,0:50:15.470
+gravity is a thing before that you don't
+
+0:50:10.430,0:50:17.450
+know so the motivation for such
+
+0:50:15.470,0:50:19.280
+supervised learning and this is one
+
+0:50:17.450,0:50:21.260
+reason I think such supervised learning
+
+0:50:19.280,0:50:24.700
+is really the future of machine learning
+
+0:50:21.260,0:50:27.020
+so in the future of AI is the fact that
+
+0:50:24.700,0:50:28.070
+animals and humans seem to run an
+
+0:50:27.020,0:50:29.930
+enormous amount of background knowledge
+
+0:50:28.070,0:50:33.040
+about the world just by observation by
+
+0:50:29.930,0:50:35.540
+basically training themselves to predict
+
+0:50:33.040,0:50:38.150
+so one big question in AI in fact the
+
+0:50:35.540,0:50:38.960
+question I almost exclusively walk on is
+
+0:50:38.150,0:50:44.770
+how do we do this
+
+0:50:38.960,0:50:49.430
+ok we haven't found a complete answer
+
+0:50:44.770,0:50:52.340
+yet right so I give you a piece of data
+
+0:50:49.430,0:50:53.570
+it's a video and the machine is going to
+
+0:50:52.340,0:50:57.080
+pretend there is a piece of that data
+
+0:50:53.570,0:50:58.400
+that it doesn't see and then another
+
+0:50:57.080,0:50:59.930
+piece that it season it's going to try
+
+0:50:58.400,0:51:01.850
+to predict the piece that it doesn't see
+
+0:50:59.930,0:51:03.490
+from the piece that it sees okay so
+
+0:51:01.850,0:51:07.790
+pretty future friends in the video
+
+0:51:03.490,0:51:09.530
+predict missing words in the sentence or
+
+0:51:07.790,0:51:13.910
+I give you a sentence I block some of
+
+0:51:09.530,0:51:16.480
+the words and the system trends itself
+
+0:51:13.910,0:51:19.250
+to predict the words that are missing or
+
+0:51:16.480,0:51:21.200
+I show you a bunch of a video when I
+
+0:51:19.250,0:51:23.150
+block you a piece of the frames of some
+
+0:51:21.200,0:51:25.100
+of the some of the frames piece of the
+
+0:51:23.150,0:51:26.390
+image for some of the frames you know
+
+0:51:25.100,0:51:28.460
+predict the less half from the right
+
+0:51:26.390,0:51:29.990
+half you know right now right now you
+
+0:51:28.460,0:51:31.160
+only see my right side but even if
+
+0:51:29.990,0:51:32.750
+you've never seen my left side you could
+
+0:51:31.160,0:51:34.640
+more or less predict what I look like on
+
+0:51:32.750,0:51:40.670
+the other side most people are more or
+
+0:51:34.640,0:51:43.090
+less symmetric except scary Hollywood
+
+0:51:40.670,0:51:43.090
+characters
+
+0:51:44.230,0:51:48.339
+so when instance we're so surprised
+
+0:51:46.569,0:51:50.829
+earning has been unbelievably successful
+
+0:51:48.339,0:51:58.839
+and it it only happens over the last
+
+0:51:50.829,0:52:00.130
+year and a half is is text so texts use
+
+0:51:58.839,0:52:01.450
+a particular type it's a supervised
+
+0:52:00.130,0:52:05.290
+learning called denoising auto-encoder
+
+0:52:01.450,0:52:08.020
+so you take a piece of text you remove
+
+0:52:05.290,0:52:10.780
+some of the words typically ten fifteen
+
+0:52:08.020,0:52:12.880
+twenty percent of the words so you
+
+0:52:10.780,0:52:15.940
+replace the the token indicates a word
+
+0:52:12.880,0:52:17.290
+by basically blank and then you train
+
+0:52:15.940,0:52:18.960
+some giant and all that to predict the
+
+0:52:17.290,0:52:23.380
+words that are missing
+
+0:52:18.960,0:52:25.030
+it's the system cannot make an exact
+
+0:52:23.380,0:52:27.700
+prediction about which words are missing
+
+0:52:25.030,0:52:29.470
+and so you train it as a classifier by
+
+0:52:27.700,0:52:31.390
+producing a big softmax factor for each
+
+0:52:29.470,0:52:36.690
+word which corresponds to a probability
+
+0:52:31.390,0:52:36.690
+probability distribution over words okay
+
+0:52:38.650,0:52:44.770
+and once you've trained this system you
+
+0:52:42.819,0:52:47.109
+chop off the last layer and you use the
+
+0:52:44.770,0:52:50.260
+second last layer as a representation of
+
+0:52:47.109,0:52:51.609
+any text you feed it there's a
+
+0:52:50.260,0:52:54.130
+particular architecture of this network
+
+0:52:51.609,0:52:55.240
+that makes it work well but it's
+
+0:52:54.130,0:52:58.359
+irrelevant to the point that we're
+
+0:52:55.240,0:53:00.099
+making I'm making right now does
+
+0:52:58.359,0:53:03.430
+transformer networks that we talked
+
+0:53:00.099,0:53:05.109
+about last week a little bit so but it's
+
+0:53:03.430,0:53:07.089
+a reasonable task of completion tasks
+
+0:53:05.109,0:53:08.170
+filling in the blanks take a sentence
+
+0:53:07.089,0:53:09.190
+remove some of the words train the
+
+0:53:08.170,0:53:16.530
+system to predict the words that are
+
+0:53:09.190,0:53:18.880
+missing that works amazingly well
+
+0:53:16.530,0:53:20.140
+although type in our pieces stands now
+
+0:53:18.880,0:53:22.059
+they have the best performance of all
+
+0:53:20.140,0:53:24.549
+the benchmarks basically are pre-trained
+
+0:53:22.059,0:53:26.650
+using a method like this and the cool
+
+0:53:24.549,0:53:29.230
+thing about it is that you know you have
+
+0:53:26.650,0:53:30.670
+as much text as you want on the web to
+
+0:53:29.230,0:53:32.950
+pre train those systems you don't need
+
+0:53:30.670,0:53:34.089
+to label anything is very cheap is very
+
+0:53:32.950,0:53:35.349
+expensive in terms of computation
+
+0:53:34.089,0:53:37.809
+because those networks are enormous for
+
+0:53:35.349,0:53:38.940
+them to work well but it works really
+
+0:53:37.809,0:53:42.339
+well
+
+0:53:38.940,0:53:46.329
+so immediately people try to translate
+
+0:53:42.339,0:53:49.109
+that success into a similar success for
+
+0:53:46.329,0:53:52.809
+images so let's say I take an image
+
+0:53:49.109,0:53:56.690
+broke out some pieces of it and then
+
+0:53:52.809,0:54:00.490
+train some commercial net or something
+
+0:53:56.690,0:54:03.109
+predict the missing pieces in the image
+
+0:54:00.490,0:54:08.329
+and the results have been extremely
+
+0:54:03.109,0:54:10.550
+disappointing doesn't work really I mean
+
+0:54:08.329,0:54:13.010
+it works well in the sense that the
+
+0:54:10.550,0:54:14.720
+images get completed with sort of you
+
+0:54:13.010,0:54:15.940
+know things that make sense but then if
+
+0:54:14.720,0:54:19.670
+you use the internal representation
+
+0:54:15.940,0:54:23.089
+learn this way as input to a computer
+
+0:54:19.670,0:54:24.349
+vision system you can't beat a computer
+
+0:54:23.089,0:54:34.609
+vision system that has been pre trained
+
+0:54:24.349,0:54:35.240
+supervised on the image net so what's
+
+0:54:34.609,0:54:36.619
+the difference
+
+0:54:35.240,0:54:38.329
+you know why does it work for an LP and
+
+0:54:36.619,0:54:40.930
+it doesn't work for images and it is the
+
+0:54:38.329,0:54:44.030
+the difference is that NLP is discrete
+
+0:54:40.930,0:54:46.130
+or as images or continuous people also
+
+0:54:44.030,0:54:49.490
+try to do this for video so same idea as
+
+0:54:46.130,0:54:53.930
+as both accept replaced words by video
+
+0:54:49.490,0:54:56.050
+frames so here the video to transform a
+
+0:54:53.930,0:54:58.190
+light system or something similar
+
+0:54:56.050,0:55:00.560
+remove some of the frames or blocks of
+
+0:54:58.190,0:55:03.109
+frames and in train the system to
+
+0:55:00.560,0:55:06.670
+predict the missing frames and the
+
+0:55:03.109,0:55:06.670
+features you get or not the not-so-great
+
+0:55:07.450,0:55:13.369
+so that's the the difference is things
+
+0:55:10.970,0:55:15.440
+seems to work in the discrete world they
+
+0:55:13.369,0:55:22.130
+don't seem to work in the continuous
+
+0:55:15.440,0:55:24.050
+world and the reason is because in
+
+0:55:22.130,0:55:25.730
+discrete in the discrete world we don't
+
+0:55:24.050,0:55:29.150
+have to represent uncertainty by a big
+
+0:55:25.730,0:55:33.470
+softmax vector over words in continuous
+
+0:55:29.150,0:55:38.660
+spaces we don't so if I want to train a
+
+0:55:33.470,0:55:40.760
+system to do video production I don't
+
+0:55:38.660,0:55:45.069
+know how to represent a probability
+
+0:55:40.760,0:55:45.069
+distribution over multiple video frames
+
+0:55:49.930,0:55:55.930
+um so here's another reason why we might
+
+0:55:52.270,0:55:57.880
+want to use a supervisor only and deal
+
+0:55:55.930,0:56:02.260
+with uncertainty and again this is what
+
+0:55:57.880,0:56:05.170
+her father was working on mothers it's
+
+0:56:02.260,0:56:06.700
+the fact that we'd like to have we like
+
+0:56:05.170,0:56:08.319
+our machines to be able to kind of
+
+0:56:06.700,0:56:09.910
+reason about the world predict what's
+
+0:56:08.319,0:56:12.309
+going to happen so I told you before an
+
+0:56:09.910,0:56:14.170
+example where to be able to build a
+
+0:56:12.309,0:56:15.760
+machine that drives a car you it's
+
+0:56:14.170,0:56:17.339
+probably good idea to be able to predict
+
+0:56:15.760,0:56:21.369
+what caused around you are going to do
+
+0:56:17.339,0:56:23.140
+be able to predict what your car is
+
+0:56:21.369,0:56:24.279
+going to do if you run you know if
+
+0:56:23.140,0:56:26.260
+you're driving you're a cliff and you
+
+0:56:24.279,0:56:27.430
+turn the wheel to the right and you want
+
+0:56:26.260,0:56:28.510
+to predict in advance that your car is
+
+0:56:27.430,0:56:31.029
+going to run off the cliff and you don't
+
+0:56:28.510,0:56:34.119
+you can if you can predict that you're
+
+0:56:31.029,0:56:36.279
+not gonna do it okay so if you have a
+
+0:56:34.119,0:56:37.690
+good predictive model of the world the
+
+0:56:36.279,0:56:38.890
+system that will predict the next state
+
+0:56:37.690,0:56:39.849
+of the world as a function of the
+
+0:56:38.890,0:56:44.200
+current state of the world and the
+
+0:56:39.849,0:56:50.200
+action you take then you can do you can
+
+0:56:44.200,0:56:51.430
+be you can act intelligently okay well
+
+0:56:50.200,0:56:55.950
+you need other components to act
+
+0:56:51.430,0:56:59.380
+intelligently but I'll come back to that
+
+0:56:55.950,0:57:01.750
+but again this ability to predict is the
+
+0:56:59.380,0:57:03.910
+essence of intelligence really the fact
+
+0:57:01.750,0:57:05.529
+that you know some animals are
+
+0:57:03.910,0:57:07.000
+intelligent is because they really have
+
+0:57:05.529,0:57:11.619
+a much better model of the world and the
+
+0:57:07.000,0:57:13.000
+as a consequence are better at acting on
+
+0:57:11.619,0:57:18.279
+this world - can I get the result they
+
+0:57:13.000,0:57:20.260
+want so the problem with the world is
+
+0:57:18.279,0:57:22.420
+that the world is not deterministic or I
+
+0:57:20.260,0:57:24.400
+mean maybe it is deterministic but we
+
+0:57:22.420,0:57:26.680
+can't predict exactly what's going to
+
+0:57:24.400,0:57:30.130
+happen so the fact that is deterministic
+
+0:57:26.680,0:57:31.510
+or not is irrelevant or will have a
+
+0:57:30.130,0:57:33.970
+limited capacity or computers have
+
+0:57:31.510,0:57:35.319
+limited capacity and we can't exactly
+
+0:57:33.970,0:57:38.349
+predict what's going to what's going to
+
+0:57:35.319,0:57:40.390
+happen and so we need to be able to
+
+0:57:38.349,0:57:42.910
+train our system to train our brains to
+
+0:57:40.390,0:57:47.130
+train our AI systems to predict in the
+
+0:57:42.910,0:57:49.720
+presence of uncertainty and that's the
+
+0:57:47.130,0:57:51.819
+most difficult problem that we need to
+
+0:57:49.720,0:57:54.490
+solve today to make significant progress
+
+0:57:51.819,0:57:56.920
+in AI how to train the system to make
+
+0:57:54.490,0:57:58.029
+high dimensional predictions under
+
+0:57:56.920,0:58:00.480
+uncertainty and here with this
+
+0:57:58.029,0:58:00.480
+uncertainty
+
+0:58:00.490,0:58:15.410
+and as I said before probably seek
+
+0:58:04.880,0:58:17.920
+models are basically gopis okay so let's
+
+0:58:15.410,0:58:19.610
+take an example with video prediction
+
+0:58:17.920,0:58:21.620
+here are four frames
+
+0:58:19.610,0:58:23.390
+what's the continuation of those frames
+
+0:58:21.620,0:58:28.990
+so it's hard to see that the little girl
+
+0:58:23.390,0:58:32.630
+is about to grow on her birthday cake
+
+0:58:28.990,0:58:34.430
+and if you train a neural net with least
+
+0:58:32.630,0:58:36.050
+square to make predictions so you train
+
+0:58:34.430,0:58:38.360
+it on thousands of videos of this type
+
+0:58:36.050,0:58:41.390
+if not millions this is the kind of
+
+0:58:38.360,0:58:43.190
+prediction you get very blurry why
+
+0:58:41.390,0:58:44.570
+system cannot predict exactly what's
+
+0:58:43.190,0:58:46.610
+gonna happen so it predicts the average
+
+0:58:44.570,0:58:48.550
+of all the possible futures which is the
+
+0:58:46.610,0:58:52.190
+best way to minimize the squared error
+
+0:58:48.550,0:58:54.710
+okay and if you want sort of a model
+
+0:58:52.190,0:58:57.800
+version of this let's say your entire
+
+0:58:54.710,0:58:59.660
+training set consists of someone putting
+
+0:58:57.800,0:59:02.870
+a pen on the table and letting it go and
+
+0:58:59.660,0:59:06.530
+the person always put the pen exactly at
+
+0:59:02.870,0:59:08.060
+the same place the same way but every
+
+0:59:06.530,0:59:10.010
+time you do the experiment the pen falls
+
+0:59:08.060,0:59:14.090
+into you know in a different direction
+
+0:59:10.010,0:59:16.010
+so basically X is the same for every
+
+0:59:14.090,0:59:17.960
+training sample but Y is different
+
+0:59:16.010,0:59:19.310
+because the the pen can fold in any
+
+0:59:17.960,0:59:21.800
+direction probably with a uniform
+
+0:59:19.310,0:59:24.470
+distribution so if you try and hour on
+
+0:59:21.800,0:59:26.450
+that to predict Polly square you'll get
+
+0:59:24.470,0:59:29.020
+the average of all the possible
+
+0:59:26.450,0:59:31.820
+predictions which is a transparent pen
+
+0:59:29.020,0:59:34.750
+you know all around the circle which is
+
+0:59:31.820,0:59:34.750
+not a good prediction
+
+0:59:34.930,0:59:43.630
+that's why you need latent variable
+
+0:59:36.860,0:59:46.220
+models okay so if you make a prediction
+
+0:59:43.630,0:59:48.170
+by the system but you have latent
+
+0:59:46.220,0:59:48.910
+variables which indicate what you don't
+
+0:59:48.170,0:59:51.890
+know about the world
+
+0:59:48.910,0:59:55.040
+okay so X is what you know about the
+
+0:59:51.890,0:59:57.740
+well here is the initial segment of the
+
+0:59:55.040,1:00:00.710
+video of someone putting a pen you know
+
+0:59:57.740,1:00:02.210
+that when the person gives the figure
+
+1:00:00.710,1:00:04.790
+the pen will fall but you don't know in
+
+1:00:02.210,1:00:07.490
+which direction so what you want the
+
+1:00:04.790,1:00:09.860
+system to tell you is the particular
+
+1:00:07.490,1:00:10.720
+here that goes from x 2h h to be a
+
+1:00:09.860,1:00:12.250
+representation
+
+1:00:10.720,1:00:14.710
+that tells you the penny is going to be
+
+1:00:12.250,1:00:17.500
+on the on the table but I can tell you
+
+1:00:14.710,1:00:19.000
+in which direction and then Z will have
+
+1:00:17.500,1:00:20.500
+the complimentary variable here is the
+
+1:00:19.000,1:00:22.930
+direction in which the pen actually fell
+
+1:00:20.500,1:00:24.490
+and then the combination of those two
+
+1:00:22.930,1:00:26.560
+pieces of information the stuff you can
+
+1:00:24.490,1:00:28.599
+extract from the observation and stuff
+
+1:00:26.560,1:00:32.680
+you cannot gives you the prediction Y
+
+1:00:28.599,1:00:39.810
+bar which hopefully is close to what
+
+1:00:32.680,1:00:42.700
+actually occurs okay so the way you use
+
+1:00:39.810,1:00:47.109
+something like this you don't use it for
+
+1:00:42.700,1:00:50.890
+I mean if you want to use it to kind of
+
+1:00:47.109,1:00:54.670
+rate a particular scenario you give it X
+
+1:00:50.890,1:00:56.950
+you give it Y then you ask it what's the
+
+1:00:54.670,1:01:01.200
+value of the Z variable that minimizes
+
+1:00:56.950,1:01:04.210
+the prediction error in my model and
+
+1:01:01.200,1:01:07.660
+then the resulting prediction error is
+
+1:01:04.210,1:01:10.980
+the energy and it's how you model rate
+
+1:01:07.660,1:01:10.980
+the compatibility between x and y
+
+1:01:14.119,1:01:19.839
+you want to predict wise but you have to
+
+1:01:16.039,1:01:22.369
+do is you observe X and then you kind of
+
+1:01:19.839,1:01:25.180
+dream up a value of y within a certain
+
+1:01:22.369,1:01:27.559
+domain and that produces a y bar and
+
+1:01:25.180,1:01:29.269
+then dream up another value of Z and
+
+1:01:27.559,1:01:32.390
+that will produce it and produce another
+
+1:01:29.269,1:01:34.490
+y bar and you can produce a whole set of
+
+1:01:32.390,1:01:37.099
+Y bars but I kind of draw multiple
+
+1:01:34.490,1:01:54.259
+values of Z with either set or within
+
+1:01:37.099,1:01:55.519
+the distribution yes well so if what
+
+1:01:54.259,1:01:58.039
+you're predicting are the future frames
+
+1:01:55.519,1:02:01.759
+which observing other the past and
+
+1:01:58.039,1:02:02.869
+current frame like increasing you mean
+
+1:02:01.759,1:02:05.599
+increasing the past frames are you
+
+1:02:02.869,1:02:06.950
+looking at a little bit but you know
+
+1:02:05.599,1:02:09.200
+after a while things are gonna happen
+
+1:02:06.950,1:02:10.279
+that really don't depend I mean the
+
+1:02:09.200,1:02:14.049
+information about what's gonna happen
+
+1:02:10.279,1:02:32.269
+new future really is not present in the
+
+1:02:14.049,1:02:35.509
+in the past friends yes so in this
+
+1:02:32.269,1:02:37.839
+particular case there would be variables
+
+1:02:35.509,1:02:42.999
+are necessary to make a good prediction
+
+1:02:37.839,1:02:46.970
+but the information is not present in X
+
+1:02:42.999,1:02:48.410
+ok so the question was what's the wall
+
+1:02:46.970,1:02:49.730
+of Z really like you know doesn't
+
+1:02:48.410,1:02:52.880
+implement a constraint between x and y
+
+1:02:49.730,1:02:55.160
+or something else and in this particular
+
+1:02:52.880,1:02:55.670
+example here that i showed the latent
+
+1:02:55.160,1:02:57.079
+variable
+
+1:02:55.670,1:02:58.940
+I should several example right one
+
+1:02:57.079,1:03:00.499
+example I showed is character
+
+1:02:58.940,1:03:01.730
+recognition if you knew where the
+
+1:03:00.499,1:03:02.690
+characters are then the task of
+
+1:03:01.730,1:03:04.519
+recognizing the characters would be
+
+1:03:02.690,1:03:07.430
+easier and so by making the inference
+
+1:03:04.519,1:03:09.829
+about where the characters are you know
+
+1:03:07.430,1:03:12.109
+you sir help you system you have you
+
+1:03:09.829,1:03:14.869
+build the system in such a way that it
+
+1:03:12.109,1:03:16.549
+can use that in this particular case
+
+1:03:14.869,1:03:17.480
+here it's different here the role of the
+
+1:03:16.549,1:03:19.460
+latent variable is to basically
+
+1:03:17.480,1:03:23.059
+parameterize the set of possible outputs
+
+1:03:19.460,1:03:26.280
+that can occur and in the end what you
+
+1:03:23.059,1:03:30.030
+want is Z to contain
+
+1:03:26.280,1:03:34.770
+the information about the about why that
+
+1:03:30.030,1:03:36.330
+is not present in X okay so the
+
+1:03:34.770,1:03:37.770
+information about you know where I'm
+
+1:03:36.330,1:03:41.520
+gonna move next I'm going to move left
+
+1:03:37.770,1:03:43.800
+or right this is not present in anything
+
+1:03:41.520,1:03:49.440
+you can observe right now it's inside my
+
+1:03:43.800,1:03:54.660
+brain you can you know you can tell yes
+
+1:03:49.440,1:03:57.510
+I mean right now here I'm not assuming
+
+1:03:54.660,1:03:59.900
+anything other than you know pret of X
+
+1:03:57.510,1:04:03.560
+is a big neural net and decorative
+
+1:03:59.900,1:04:03.560
+agency is being on that
+
+1:04:17.620,1:04:29.590
+okay so this is sort of an example of a
+
+1:04:26.480,1:04:32.810
+visualization of a energy landscape
+
+1:04:29.590,1:04:34.930
+where we've trained a neural net
+
+1:04:32.810,1:04:36.980
+basically to compute an energy function
+
+1:04:34.930,1:04:40.910
+here it's not a neural net it's a very
+
+1:04:36.980,1:04:43.070
+simple thing actually to capture the
+
+1:04:40.910,1:04:44.690
+dependency between two variables x and y
+
+1:04:43.070,1:04:46.700
+and the data points are along this
+
+1:04:44.690,1:04:48.410
+little spiral here so data points are
+
+1:04:46.700,1:04:51.170
+kind of sample uniformly along this
+
+1:04:48.410,1:04:53.960
+spiral and then we train a system to
+
+1:04:51.170,1:05:03.230
+give you energy to to those points and
+
+1:04:53.960,1:05:06.440
+and higher energy to everything else now
+
+1:05:03.230,1:05:08.150
+these two forms there is this is sort of
+
+1:05:06.440,1:05:09.980
+a conditional but you could call
+
+1:05:08.150,1:05:12.620
+conditional energy base model which
+
+1:05:09.980,1:05:15.920
+where there is two sets of viable X&Y
+
+1:05:12.620,1:05:18.980
+and you're trying to predict Y from X
+
+1:05:15.920,1:05:20.750
+but it's also another form of energy
+
+1:05:18.980,1:05:23.540
+based model which are unconditional
+
+1:05:20.750,1:05:25.700
+there's only a Y no X okay so you're
+
+1:05:23.540,1:05:26.810
+trying to predict the mutual
+
+1:05:25.700,1:05:29.390
+dependencies between the various
+
+1:05:26.810,1:05:33.380
+components of Y the distribution over Y
+
+1:05:29.390,1:05:35.030
+if you want but there's no X ok so this
+
+1:05:33.380,1:05:37.760
+is something you won't want to use if
+
+1:05:35.030,1:05:40.930
+you want to say to image generation
+
+1:05:37.760,1:05:40.930
+unconditionally right
+
+1:05:42.400,1:05:47.240
+are you want to just you know model the
+
+1:05:45.770,1:05:49.580
+mutual dependencies between things but
+
+1:05:47.240,1:05:50.930
+you don't know which you don't know at
+
+1:05:49.580,1:05:54.970
+any point if you're going to be able to
+
+1:05:50.930,1:05:54.970
+observe why why Norway - or none of them
+
+1:05:55.420,1:05:59.230
+the math is the same really
+
+1:06:05.369,1:06:09.010
+okay so how are you going to trade those
+
+1:06:07.510,1:06:12.099
+energy this model this is really where
+
+1:06:09.010,1:06:14.770
+things become interesting it's the
+
+1:06:12.099,1:06:17.109
+question of training so training should
+
+1:06:14.770,1:06:18.910
+do something like the real animation at
+
+1:06:17.109,1:06:21.220
+the top here it should kind of shape the
+
+1:06:18.910,1:06:23.140
+energy function because or machine now
+
+1:06:21.220,1:06:25.150
+is convinced an energy function as a
+
+1:06:23.140,1:06:26.470
+function of X and why it should shape
+
+1:06:25.150,1:06:28.599
+the energy function in such a way that
+
+1:06:26.470,1:06:32.500
+the data points have lower energy than
+
+1:06:28.599,1:06:36.670
+everything else okay because that's the
+
+1:06:32.500,1:06:39.040
+way the inference is going to work if if
+
+1:06:36.670,1:06:40.630
+the correct value of y has really lower
+
+1:06:39.040,1:06:42.280
+energy than the incorrect values of Y
+
+1:06:40.630,1:06:44.320
+then or inference algorithm that finds
+
+1:06:42.280,1:06:46.930
+the value of y that produces the lowest
+
+1:06:44.320,1:06:48.670
+energy is going to work ok so we need to
+
+1:06:46.930,1:06:51.520
+shade the energy function so that gives
+
+1:06:48.670,1:06:56.040
+you energy to the good wise for a given
+
+1:06:51.520,1:06:56.040
+X and high energy to bad Y's for given X
+
+1:07:02.130,1:07:09.150
+it goes from our mean it goes from any
+
+1:07:05.080,1:07:09.150
+domain you want to scaler yes
+
+1:07:26.640,1:07:34.569
+that is salli so this model actually is
+
+1:07:29.650,1:07:36.069
+a latent variable model in fact most of
+
+1:07:34.569,1:07:40.680
+you are probably very familiar with the
+
+1:07:36.069,1:07:40.680
+energy the model is used here is k-means
+
+1:07:41.009,1:07:53.740
+so how is this produced okay okay let me
+
+1:07:49.779,1:07:58.450
+delay this for a bit okay but this is
+
+1:07:53.740,1:08:03.519
+the energy surface of cádiz which is a
+
+1:07:58.450,1:08:05.349
+latent variable model let's let's keep
+
+1:08:03.519,1:08:07.150
+the little viable thing kind of aside
+
+1:08:05.349,1:08:10.180
+for a minute you know just think of this
+
+1:08:07.150,1:08:13.509
+as you have an energy f of X Y and the
+
+1:08:10.180,1:08:15.670
+fact that there may be underlying latent
+
+1:08:13.509,1:08:18.969
+variable if for now is literally
+
+1:08:15.670,1:08:20.799
+relevant okay there's two classes of
+
+1:08:18.969,1:08:23.139
+methods to train energy based models and
+
+1:08:20.799,1:08:26.460
+again probably seek methods are all kind
+
+1:08:23.139,1:08:28.839
+of you know special cases within those
+
+1:08:26.460,1:08:32.889
+one class is called contrasting methods
+
+1:08:28.839,1:08:37.020
+and this idea is very natural take your
+
+1:08:32.889,1:08:39.040
+training sample X X over X I Y I and
+
+1:08:37.020,1:08:40.299
+change the parameters of the energy
+
+1:08:39.040,1:08:47.620
+function so that its energy goes down
+
+1:08:40.299,1:08:49.929
+okay easy enough conversely take other
+
+1:08:47.620,1:08:53.069
+points outside of the manifold of data
+
+1:08:49.929,1:08:56.290
+so have some process by which you pick
+
+1:08:53.069,1:09:00.670
+for given X you keep you pick a bad Y
+
+1:08:56.290,1:09:02.650
+and then push that guy out okay if you
+
+1:09:00.670,1:09:05.650
+keep doing this with the Rost function
+
+1:09:02.650,1:09:09.069
+that takes into account those different
+
+1:09:05.650,1:09:10.810
+different energies then the energy
+
+1:09:09.069,1:09:13.239
+function is going to take a shape such
+
+1:09:10.810,1:09:16.000
+that the correct wire will have lower
+
+1:09:13.239,1:09:17.409
+lower energy than the value wise okay
+
+1:09:16.000,1:09:18.969
+keep pushing down on the good values of
+
+1:09:17.409,1:09:23.739
+Y keep pushing up on the dead values of
+
+1:09:18.969,1:09:27.100
+Y so those are called contrastive
+
+1:09:23.739,1:09:31.359
+methods and they all differ by how you
+
+1:09:27.100,1:09:33.190
+pick the Y's that you push up and they
+
+1:09:31.359,1:09:34.549
+all differ by the last function you use
+
+1:09:33.190,1:09:38.359
+to
+
+1:09:34.549,1:09:41.210
+do this pushing up and pushing down
+
+1:09:38.359,1:09:45.779
+there's a second category of methods and
+
+1:09:41.210,1:09:47.759
+I'll call them architectural methods in
+
+1:09:45.779,1:09:50.009
+that case you build the energy function
+
+1:09:47.759,1:09:53.400
+f of X Y so that the volume of
+
+1:09:50.009,1:09:56.699
+low-energy regions is limited or is
+
+1:09:53.400,1:09:58.159
+minimized through regularization so you
+
+1:09:56.699,1:10:01.920
+build a model in such a way that
+
+1:09:58.159,1:10:06.659
+whatever you push down on the energy of
+
+1:10:01.920,1:10:08.130
+data points the rest goes up more or
+
+1:10:06.659,1:10:09.650
+less automatically because the volume of
+
+1:10:08.130,1:10:14.119
+cells I can take your energy is limited
+
+1:10:09.650,1:10:19.070
+or minimized through some regularization
+
+1:10:14.119,1:10:28.880
+okay those are very broad concepts okay
+
+1:10:19.070,1:10:39.210
+yes that's one set of techniques but
+
+1:10:28.880,1:10:42.449
+there's many so there is a set of
+
+1:10:39.210,1:10:44.190
+methods like score matching for example
+
+1:10:42.449,1:10:47.039
+that says the gradient of the energy
+
+1:10:44.190,1:10:48.900
+around the sample should be zero and the
+
+1:10:47.039,1:10:50.880
+second derivative should be as large as
+
+1:10:48.900,1:10:52.289
+possible the trace of the Hessian should
+
+1:10:50.880,1:10:55.619
+be large and so basically you're telling
+
+1:10:52.289,1:10:59.099
+it you know make the make every data
+
+1:10:55.619,1:11:00.900
+point a minimum of the energy by making
+
+1:10:59.099,1:11:02.880
+sure the energy curls up around a
+
+1:11:00.900,1:11:05.130
+retraining sample it's very very hard to
+
+1:11:02.880,1:11:07.409
+apply in practice because you have to
+
+1:11:05.130,1:11:09.059
+compute the gradient with respect to the
+
+1:11:07.409,1:11:10.139
+waste of the trace of the Hessian of the
+
+1:11:09.059,1:11:16.590
+energy function with respect to the
+
+1:11:10.139,1:11:18.179
+inputs that means compute L but yeah for
+
+1:11:16.590,1:11:20.190
+simple models by touch you can do it
+
+1:11:18.179,1:11:25.619
+yeah simple models like for linear
+
+1:11:20.190,1:11:34.079
+models but it's hell I'd stay away from
+
+1:11:25.619,1:11:36.119
+it okay so there's a number of different
+
+1:11:34.079,1:11:37.920
+strategies here it says seven strategies
+
+1:11:36.119,1:11:40.019
+but I can Rev an Isis into those two
+
+1:11:37.920,1:11:42.300
+categories of contrastive methods and
+
+1:11:40.019,1:11:44.820
+architectural methods and there are kind
+
+1:11:42.300,1:11:46.409
+of three sub categories but you know in
+
+1:11:44.820,1:11:47.860
+contrast even for subcategories in
+
+1:11:46.409,1:11:49.630
+architectural
+
+1:11:47.860,1:11:50.889
+and there's some names or voice
+
+1:11:49.630,1:11:52.210
+algorithms here that you might recognize
+
+1:11:50.889,1:11:55.540
+some other that you may not recognize
+
+1:11:52.210,1:11:58.800
+which is okay and I'm gonna try to go
+
+1:11:55.540,1:11:58.800
+through some of them
+
+1:12:00.810,1:12:22.449
+now what I need to do it's called score
+
+1:12:12.699,1:12:24.840
+matching okay bear with me for just one
+
+1:12:22.449,1:12:24.840
+second
+
+1:12:40.650,1:12:43.650
+oops
+
+1:12:58.560,1:13:05.860
+okay so c1 contrastive surg everyone
+
+1:13:04.540,1:13:09.489
+pushed down the energy of data point
+
+1:13:05.860,1:13:12.130
+push up everywhere else and this is what
+
+1:13:09.489,1:13:13.810
+maximum likelihood does and maximum
+
+1:13:12.130,1:13:15.790
+likelihood pushes down the energy of
+
+1:13:13.810,1:13:17.530
+data points to minus infinity and pushes
+
+1:13:15.790,1:13:20.410
+up the energy of other points to plus
+
+1:13:17.530,1:13:23.429
+infinity which is the problem that we
+
+1:13:20.410,1:13:28.500
+were just talking about earlier and so
+
+1:13:23.429,1:13:29.620
+here is what happens so you have this
+
+1:13:28.500,1:13:31.570
+gift
+
+1:13:29.620,1:13:35.590
+boss Joint Distribution that gives the
+
+1:13:31.570,1:13:38.890
+likelihood of Y given X which is for a
+
+1:13:35.590,1:13:39.940
+particular data point y I X I it gives
+
+1:13:38.890,1:13:41.199
+you the probability that your model
+
+1:13:39.940,1:13:44.020
+gives to this particular value of y I
+
+1:13:41.199,1:13:46.330
+forgiving X I and it's you know
+
+1:13:44.020,1:13:47.860
+exponential minus beta the energy
+
+1:13:46.330,1:13:51.280
+divided by exponential minus beta the
+
+1:13:47.860,1:13:53.410
+energy integrated over all wise okay so
+
+1:13:51.280,1:13:57.000
+if you want to maximize so let's say
+
+1:13:53.410,1:14:00.280
+you're a bunch of data points and you
+
+1:13:57.000,1:14:03.280
+want to maximize so here not writing X
+
+1:14:00.280,1:14:05.230
+because it doesn't matter and you want
+
+1:14:03.280,1:14:09.520
+to maximize the poverty your model gives
+
+1:14:05.230,1:14:14.949
+to this particular value of y you want
+
+1:14:09.520,1:14:16.390
+to make the energy of this Y small which
+
+1:14:14.949,1:14:21.219
+means you want to make the e to the
+
+1:14:16.390,1:14:23.500
+minus beta the energy of this big and
+
+1:14:21.219,1:14:27.040
+you want to make the stuff at the bottom
+
+1:14:23.500,1:14:29.110
+as small as possible so instead of
+
+1:14:27.040,1:14:32.170
+maximizing P of Y we're going to
+
+1:14:29.110,1:14:35.110
+minimize minus log P of Y okay so minus
+
+1:14:32.170,1:14:36.760
+log P of Y so if I take the log of this
+
+1:14:35.110,1:14:40.000
+ratio I'm going to die I'm going to get
+
+1:14:36.760,1:14:41.880
+the difference of those two terms the
+
+1:14:40.000,1:14:44.790
+log of the difference you know the
+
+1:14:41.880,1:14:45.840
+the logs of those two terms the log of
+
+1:14:44.790,1:14:48.360
+the ratio is the difference of the logs
+
+1:14:45.840,1:14:53.790
+right so I get log of e to the minus
+
+1:14:48.360,1:14:57.900
+beta e of Y and then I guess I get minus
+
+1:14:53.790,1:15:06.540
+log integral over Y you eaten minus beta
+
+1:14:57.900,1:15:08.900
+Y of Y I did I take the negative of this
+
+1:15:06.540,1:15:12.000
+because I want to minimize okay so
+
+1:15:08.900,1:15:13.139
+negative log probability is what I want
+
+1:15:12.000,1:15:15.389
+to Levis and I get the last function
+
+1:15:13.139,1:15:17.340
+here at the bottom I divided everything
+
+1:15:15.389,1:15:20.730
+by beta which makes no difference as far
+
+1:15:17.340,1:15:22.560
+as the minimum is concerned okay so to
+
+1:15:20.730,1:15:24.810
+go from the top formula to the bottom
+
+1:15:22.560,1:15:27.889
+formula you take minus log of the top
+
+1:15:24.810,1:15:30.659
+formula and you divide by beta
+
+1:15:27.889,1:15:32.370
+so now we have a that gives us a loss
+
+1:15:30.659,1:15:34.980
+function and this is our function where
+
+1:15:32.370,1:15:37.260
+we memorize it says make the energy of
+
+1:15:34.980,1:15:41.760
+the data point y as low as possible
+
+1:15:37.260,1:15:44.130
+yi of Y should be small and make the
+
+1:15:41.760,1:15:45.960
+second term as small as possible which
+
+1:15:44.130,1:15:48.530
+means which means make the energies that
+
+1:15:45.960,1:15:56.040
+are inside of this exponential minus as
+
+1:15:48.530,1:15:57.960
+large as possible so the second term is
+
+1:15:56.040,1:16:03.570
+going to push up on the energy of every
+
+1:15:57.960,1:16:04.770
+point including the data point now if I
+
+1:16:03.570,1:16:06.570
+compute the gradient of this objective
+
+1:16:04.770,1:16:09.600
+function so this is the poverty stick
+
+1:16:06.570,1:16:11.550
+approach okay thanks America so compute
+
+1:16:09.600,1:16:13.350
+the gradient of this jockey function I
+
+1:16:11.550,1:16:20.429
+get the gradient of the energy at the
+
+1:16:13.350,1:16:24.900
+data point y okay - this formula here
+
+1:16:20.429,1:16:26.820
+which is the expected value over Y of
+
+1:16:24.900,1:16:29.820
+the probability that my model gives to Y
+
+1:16:26.820,1:16:32.489
+that is given by the gives horsemen
+
+1:16:29.820,1:16:34.830
+distribution and that is used as a
+
+1:16:32.489,1:16:37.889
+coefficient to weigh the gradient of the
+
+1:16:34.830,1:16:39.900
+energy function at that location okay so
+
+1:16:37.889,1:16:41.340
+this integral here the second term is
+
+1:16:39.900,1:16:44.460
+basically an expected value of the
+
+1:16:41.340,1:16:47.159
+gradient I compute the gradient for the
+
+1:16:44.460,1:16:48.719
+energy function at every point I weigh
+
+1:16:47.159,1:16:50.880
+every point by the probability that the
+
+1:16:48.719,1:16:53.790
+model gives to my to that particular Y
+
+1:16:50.880,1:16:55.650
+and I compute that weighted sum
+
+1:16:53.790,1:16:58.110
+essentially if Y is discrete this is
+
+1:16:55.650,1:17:06.750
+discreet some where is continuous is an
+
+1:16:58.110,1:17:09.270
+integral so the first term so now if I
+
+1:17:06.750,1:17:11.490
+use this another gradient stochastic
+
+1:17:09.270,1:17:13.230
+gradient algorithm the first term is
+
+1:17:11.490,1:17:15.930
+going to try to make the energy of my
+
+1:17:13.230,1:17:17.550
+data point as well as possible and the
+
+1:17:15.930,1:17:20.450
+second term is going to push out the
+
+1:17:17.550,1:17:21.570
+energy of every single point every why
+
+1:17:20.450,1:17:23.880
+okay
+
+1:17:21.570,1:17:28.020
+and the problem is can i compute this at
+
+1:17:23.880,1:17:29.820
+all can i compute this integral so in an
+
+1:17:28.020,1:17:31.770
+honest chunk of publications in
+
+1:17:29.820,1:17:35.190
+probabilistic modeling have to do with
+
+1:17:31.770,1:17:37.710
+how do you either compute this estimate
+
+1:17:35.190,1:17:40.920
+this or approximate this because that
+
+1:17:37.710,1:17:46.620
+integral is in interesting cases is
+
+1:17:40.920,1:17:48.660
+intractable okay if Y is a space of
+
+1:17:46.620,1:17:51.350
+images I cannot compute an integral over
+
+1:17:48.660,1:17:54.060
+all possible images there's no way
+
+1:17:51.350,1:17:55.320
+except if the energy function or the
+
+1:17:54.060,1:17:58.230
+gradient of the energy function is very
+
+1:17:55.320,1:17:59.430
+very simple okay most of the time it's
+
+1:17:58.230,1:18:01.800
+not that simple if you want a complex
+
+1:17:59.430,1:18:02.850
+model to capture the dependency of the
+
+1:18:01.800,1:18:04.170
+world it's not going to be that simple
+
+1:18:02.850,1:18:05.280
+it's gonna be some big neural net so
+
+1:18:04.170,1:18:12.510
+this an integral is going to be
+
+1:18:05.280,1:18:14.370
+completely intractable now there is a
+
+1:18:12.510,1:18:16.410
+huge salvation in the fact that this is
+
+1:18:14.370,1:18:18.450
+an expected value and so to compute an
+
+1:18:16.410,1:18:19.860
+approximation and an expected value you
+
+1:18:18.450,1:18:23.880
+can compute an average of a finite
+
+1:18:19.860,1:18:25.590
+number of samples so if I sample why
+
+1:18:23.880,1:18:27.990
+it's from this distribution which is the
+
+1:18:25.590,1:18:29.850
+distribution of my model gives to Y and
+
+1:18:27.990,1:18:32.670
+I compute the average of the gradient
+
+1:18:29.850,1:18:34.140
+over those samples I get some finite
+
+1:18:32.670,1:18:37.770
+approximation of this it's called Monte
+
+1:18:34.140,1:18:40.380
+Carlo methods okay it's called a Monte
+
+1:18:37.770,1:18:41.490
+Carlo approximation invented by
+
+1:18:40.380,1:18:48.060
+physicists when they were trying to
+
+1:18:41.490,1:18:50.340
+build a time bomb in the 40s there are
+
+1:18:48.060,1:18:52.350
+other methods that are based on rational
+
+1:18:50.340,1:18:54.240
+methods so I don't really know how to
+
+1:18:52.350,1:18:56.130
+compute P I can't compute the city world
+
+1:18:54.240,1:18:58.290
+but let's say I replace K by another
+
+1:18:56.130,1:18:59.880
+distribution Q for which I can't compute
+
+1:18:58.290,1:19:03.540
+this average let's say Gaussian or
+
+1:18:59.880,1:19:04.980
+something and then I try to make you as
+
+1:19:03.540,1:19:07.020
+close to P as possible that's called
+
+1:19:04.980,1:19:09.480
+variational methods okay you probably
+
+1:19:07.020,1:19:11.650
+heard that term anytime
+
+1:19:09.480,1:19:15.430
+that's a basic idea variational methods
+
+1:19:11.650,1:19:17.170
+you approximate an expectation over a
+
+1:19:15.430,1:19:18.370
+distribution by replacing the
+
+1:19:17.170,1:19:20.170
+distribution by something you can
+
+1:19:18.370,1:19:22.450
+actually compute and you try to make
+
+1:19:20.170,1:19:24.760
+this computable distribution as close as
+
+1:19:22.450,1:19:31.270
+possible to the real distribution using
+
+1:19:24.760,1:19:33.970
+some measure KL divergence right so
+
+1:19:31.270,1:19:35.740
+here's came in so k-means is a you can
+
+1:19:33.970,1:19:37.210
+think of k-means as a energy based model
+
+1:19:35.740,1:19:40.710
+energy based model you can interpret
+
+1:19:37.210,1:19:40.710
+candies in terms of energy of this model
+
+1:19:43.020,1:19:48.730
+is anyone okay with what Keynes is or
+
+1:19:46.560,1:19:52.360
+you forgotten we can use this
+
+1:19:48.730,1:19:55.360
+okay so k-means is this very simple
+
+1:19:52.360,1:19:57.040
+clustering algorithm where the energy
+
+1:19:55.360,1:19:59.230
+function if you've never heard of it
+
+1:19:57.040,1:20:00.790
+this is a way to explain he means the
+
+1:19:59.230,1:20:04.330
+energy function is written at the top
+
+1:20:00.790,1:20:07.540
+here ye of Y Z is y minus W Z where W is
+
+1:20:04.330,1:20:09.940
+a matrix and Z is a set of one hot
+
+1:20:07.540,1:20:13.120
+vectors okay so see this discrete
+
+1:20:09.940,1:20:15.040
+variable with K possible values and it's
+
+1:20:13.120,1:20:16.360
+a K dimensional vector with one
+
+1:20:15.040,1:20:20.800
+component equal to 1 and all the other
+
+1:20:16.360,1:20:26.410
+ones equal to 0 ok so you multiply Z by
+
+1:20:20.800,1:20:28.450
+the matrix W the effect is that what you
+
+1:20:26.410,1:20:32.110
+get as this product is one of the
+
+1:20:28.450,1:20:34.060
+columns of W ok the kernel W that gets
+
+1:20:32.110,1:20:34.810
+multiplied by the component of Z that's
+
+1:20:34.060,1:20:36.790
+equal to 1
+
+1:20:34.810,1:20:41.200
+yes we produced and everything else is
+
+1:20:36.790,1:20:43.660
+is gone ok so that product selects one
+
+1:20:41.200,1:20:46.360
+column from the beam the columns of W
+
+1:20:43.660,1:20:49.270
+are called prototypes ok
+
+1:20:46.360,1:20:51.550
+and if I give you a Y the way you do
+
+1:20:49.270,1:20:53.970
+inference is that you figure out which Z
+
+1:20:51.550,1:20:55.990
+which of the K possible vectors of Z
+
+1:20:53.970,1:20:58.420
+minimizes the reconstruction error
+
+1:20:55.990,1:21:01.600
+realizes the squared distance between
+
+1:20:58.420,1:21:04.750
+the corresponding column of W and the
+
+1:21:01.600,1:21:06.010
+data point that I'm looking at and the
+
+1:21:04.750,1:21:12.250
+energy is just is quite distance between
+
+1:21:06.010,1:21:18.850
+the two ok now the energy function you
+
+1:21:12.250,1:21:23.659
+see here represented in this chart you
+
+1:21:18.850,1:21:28.630
+right here what you see here are kind of
+
+1:21:23.659,1:21:28.630
+black blobs and those correspond to
+
+1:21:28.840,1:21:34.130
+quadratic wells around each of the
+
+1:21:31.670,1:21:36.320
+prototypes of W so the system he has
+
+1:21:34.130,1:21:39.560
+been trained and he placed the columns
+
+1:21:36.320,1:21:41.120
+of W along the manifold of training
+
+1:21:39.560,1:21:42.590
+samples which is this spiral that's
+
+1:21:41.120,1:21:46.130
+where all the training samples are
+
+1:21:42.590,1:21:48.409
+selected and the way this is trained is
+
+1:21:46.130,1:21:53.570
+very simple you just memorize the
+
+1:21:48.409,1:21:56.330
+expected the average energy over a
+
+1:21:53.570,1:22:00.530
+training set okay so basically I give
+
+1:21:56.330,1:22:02.570
+you why why is a training sample you
+
+1:22:00.530,1:22:04.219
+find a Z that minimizes the energy so
+
+1:22:02.570,1:22:08.199
+you find the prototype that is closest
+
+1:22:04.219,1:22:09.920
+to Y the comma W that's closest to Y and
+
+1:22:08.199,1:22:12.710
+then they do one step of gradient
+
+1:22:09.920,1:22:18.159
+descent so you move that vector close to
+
+1:22:12.710,1:22:21.980
+Y closer to Y then you take another Y
+
+1:22:18.159,1:22:23.239
+select which columns of W is closest to
+
+1:22:21.980,1:22:25.280
+it and move that column little bit
+
+1:22:23.239,1:22:27.380
+closer to Y then you keep doing this
+
+1:22:25.280,1:22:29.510
+that's not exactly the KB's algorithm
+
+1:22:27.380,1:22:31.790
+this is the kind of stochastic gradient
+
+1:22:29.510,1:22:36.130
+form of the k-means algorithm the real
+
+1:22:31.790,1:22:38.480
+k-means algorithm actually kind of does
+
+1:22:36.130,1:22:40.219
+sort of coordinate descent if you want
+
+1:22:38.480,1:22:41.989
+so it fails both with the entire
+
+1:22:40.219,1:22:45.040
+training set and figures out for each
+
+1:22:41.989,1:22:48.469
+data point which column of W is closest
+
+1:22:45.040,1:22:52.130
+to it and then after you've done this
+
+1:22:48.469,1:22:55.340
+you compute every data point every
+
+1:22:52.130,1:22:58.340
+corner W as the average of all the data
+
+1:22:55.340,1:23:00.080
+points to which is associated and it
+
+1:22:58.340,1:23:04.520
+goes a bit faster if you do it this way
+
+1:23:00.080,1:23:06.020
+as opposed to stochastic gradient but
+
+1:23:04.520,1:23:08.900
+the result of the same in the end you
+
+1:23:06.020,1:23:12.679
+minimize the average of the energy over
+
+1:23:08.900,1:23:14.000
+the training set okay so that's an
+
+1:23:12.679,1:23:15.560
+example if there was a question of a
+
+1:23:14.000,1:23:17.360
+latent variable earlier that's an
+
+1:23:15.560,1:23:19.070
+example of a latent variable model very
+
+1:23:17.360,1:23:22.040
+simple one where the decoder is linear
+
+1:23:19.070,1:23:23.210
+is no dependency on X and what you're
+
+1:23:22.040,1:23:25.010
+just trying to do is model the
+
+1:23:23.210,1:23:26.929
+distribution over Y okay here y is
+
+1:23:25.010,1:23:29.269
+two-dimensional and you're just trying
+
+1:23:26.929,1:23:31.549
+to say you know if I do one value of y
+
+1:23:29.269,1:23:32.659
+can you tell me if I knew why one can
+
+1:23:31.549,1:23:34.429
+you tell me anything about the way you
+
+1:23:32.659,1:23:37.549
+y2 and once you have this energy
+
+1:23:34.429,1:23:38.599
+function you can I give you y one you
+
+1:23:37.549,1:23:42.019
+can predict what the value of y two
+
+1:23:38.599,1:23:43.429
+should be I give you a random point you
+
+1:23:42.019,1:23:45.469
+can tell me what's the closest point on
+
+1:23:43.429,1:23:51.309
+the day of any fold by just searching
+
+1:23:45.469,1:23:51.309
+for the closest prototype basically okay
+
+1:23:51.609,1:23:57.649
+so he means that just explained here
+
+1:23:54.979,1:24:00.529
+belongs to the architectural methods
+
+1:23:57.649,1:24:03.679
+it's not a contrasting methods as you
+
+1:24:00.529,1:24:05.299
+can observe I did not push up on the
+
+1:24:03.679,1:24:09.019
+energy of anything I just push down on
+
+1:24:05.299,1:24:10.639
+the energy of stuff the k-means is built
+
+1:24:09.019,1:24:12.679
+in such a way that there is only K
+
+1:24:10.639,1:24:13.969
+points in the space that can have zero
+
+1:24:12.679,1:24:17.899
+energy and everything else will have
+
+1:24:13.969,1:24:20.209
+higher energy okay it's just designed
+
+1:24:17.899,1:24:23.119
+this way right so it's architectural in
+
+1:24:20.209,1:24:26.209
+that sense once I've decided on K have
+
+1:24:23.119,1:24:28.369
+limited the volume of space in a in Y
+
+1:24:26.209,1:24:32.169
+they can take low energy because there's
+
+1:24:28.369,1:24:32.169
+only K points that can have zero energy
+
+1:24:32.409,1:24:38.869
+everything else grows quadratically as I
+
+1:24:35.209,1:24:41.449
+move away from them now let's talk about
+
+1:24:38.869,1:24:43.099
+if there's a bunch of other methods
+
+1:24:41.449,1:24:44.679
+these are my favorite methods I think
+
+1:24:43.099,1:24:48.289
+ultimately everybody will be using
+
+1:24:44.679,1:24:52.999
+architectural methods but right now the
+
+1:24:48.289,1:24:56.989
+stuff that works in images is
+
+1:24:52.999,1:25:10.940
+contrastive per se okay so contrastive
+
+1:24:56.989,1:25:13.340
+methods I have data points and
+
+1:25:10.940,1:25:19.610
+my model computes an energy function
+
+1:25:13.340,1:25:23.710
+let's say that looks like this so I'm
+
+1:25:19.610,1:25:29.320
+cool I'm drawing the contours of equal
+
+1:25:23.710,1:25:31.670
+cost okay it's like a topographic map
+
+1:25:29.320,1:25:32.930
+so obviously that model is bad right
+
+1:25:31.670,1:25:36.590
+because it gives you energy to those
+
+1:25:32.930,1:25:40.190
+points here right those points have low
+
+1:25:36.590,1:25:42.199
+energy and they should not and then
+
+1:25:40.190,1:25:47.170
+those points have high energy and they
+
+1:25:42.199,1:25:51.710
+should not so what should I do
+
+1:25:47.170,1:25:58.130
+so obviously if I take if I take a a
+
+1:25:51.710,1:26:00.290
+training sample here and I change the
+
+1:25:58.130,1:26:01.820
+parameters of F F of an X Y so that the
+
+1:26:00.290,1:26:05.300
+energy goes down it's really going to
+
+1:26:01.820,1:26:09.050
+move the the function to have Canha
+
+1:26:05.300,1:26:10.520
+lower values in that region but that may
+
+1:26:09.050,1:26:12.620
+not be sufficient because it could be
+
+1:26:10.520,1:26:14.420
+that my energy function is permit rise
+
+1:26:12.620,1:26:17.690
+in such a way that it could be flat
+
+1:26:14.420,1:26:20.449
+could be zero everywhere so I need to
+
+1:26:17.690,1:26:24.860
+explicitly push up on other places okay
+
+1:26:20.449,1:26:27.170
+and so a good a good location to push up
+
+1:26:24.860,1:26:28.670
+would be those red locations here these
+
+1:26:27.170,1:26:33.610
+are locations that my model gives you
+
+1:26:28.670,1:26:41.060
+energy to but should not have low energy
+
+1:26:33.610,1:26:44.239
+okay so let's say let's say this is my
+
+1:26:41.060,1:26:46.100
+training sample right now okay the the
+
+1:26:44.239,1:26:49.489
+big black dot here that's my training
+
+1:26:46.100,1:26:51.680
+sample one way I can try to contrastive
+
+1:26:49.489,1:26:54.830
+system is by saying I'm going to push
+
+1:26:51.680,1:26:57.260
+down on the energy of that point and I'm
+
+1:26:54.830,1:27:01.940
+going to retrieve that point a little
+
+1:26:57.260,1:27:04.820
+bit by corrupting it some way adding
+
+1:27:01.940,1:27:08.090
+noise to it and we will push up on the
+
+1:27:04.820,1:27:11.380
+energy of a point that's near body okay
+
+1:27:08.090,1:27:11.380
+and I'm going to do some multiple times
+
+1:27:14.050,1:27:20.290
+this sufficiently many times eventually
+
+1:27:18.040,1:27:22.810
+the energy function is going to curl up
+
+1:27:20.290,1:27:25.390
+around every sample because I modify the
+
+1:27:22.810,1:27:26.740
+sample and I push up you know I corrupt
+
+1:27:25.390,1:27:28.720
+it a little bit and I push up on the
+
+1:27:26.740,1:27:32.380
+energy of that corrected sample the
+
+1:27:28.720,1:27:34.290
+contrastive sample so eventually the
+
+1:27:32.380,1:27:37.600
+energy is going to take the right pace
+
+1:27:34.290,1:27:40.510
+something a little smarter instead of
+
+1:27:37.600,1:27:42.940
+sort of randomly perturbing the this
+
+1:27:40.510,1:27:46.300
+Trini sample by you know some
+
+1:27:42.940,1:27:50.200
+perturbation around it I'm going to use
+
+1:27:46.300,1:27:56.590
+gradient descent to kind of go down in
+
+1:27:50.200,1:28:01.000
+the energy surface and then I'm going to
+
+1:27:56.590,1:28:03.340
+get this point and push it up okay that
+
+1:28:01.000,1:28:06.640
+makes more sense right because I'm going
+
+1:28:03.340,1:28:08.770
+for the jiggler here I you know the
+
+1:28:06.640,1:28:11.850
+system can finds the point that the
+
+1:28:08.770,1:28:18.130
+system gives that it gives her energy to
+
+1:28:11.850,1:28:21.990
+currently and it pushes up right so the
+
+1:28:18.130,1:28:21.990
+procedure is here is a training sample
+
+1:28:23.070,1:28:29.110
+move down in the energy surface you'll
+
+1:28:26.470,1:28:34.000
+find a value of y that has lower energy
+
+1:28:29.110,1:28:35.410
+than the one you started from and then
+
+1:28:34.000,1:28:37.900
+that's the contracted sample push it up
+
+1:28:35.410,1:28:40.510
+push down on the original sample push up
+
+1:28:37.900,1:28:42.340
+on this new sample you just got now this
+
+1:28:40.510,1:28:43.660
+might be expensive and your energy
+
+1:28:42.340,1:28:46.120
+function may be complicated may have
+
+1:28:43.660,1:28:49.720
+local minima so here's another technique
+
+1:28:46.120,1:28:52.570
+the other technique is start from the
+
+1:28:49.720,1:28:58.510
+same training sample and imagine that
+
+1:28:52.570,1:29:03.460
+this surface is like is like a you know
+
+1:28:58.510,1:29:07.450
+like your smooth mountain range and then
+
+1:29:03.460,1:29:09.190
+give a random kick to the to this marble
+
+1:29:07.450,1:29:11.050
+think of it as a marble you're going to
+
+1:29:09.190,1:29:12.940
+give it a random kick in a random
+
+1:29:11.050,1:29:15.000
+direction and you're going to simulate
+
+1:29:12.940,1:29:17.470
+this as a marble rolling down this
+
+1:29:15.000,1:29:19.870
+energy surface so let's say I'm going to
+
+1:29:17.470,1:29:21.100
+kick it in this direction it's going to
+
+1:29:19.870,1:29:22.120
+go in this direction for a while and
+
+1:29:21.100,1:29:26.460
+then it's going to go down and the
+
+1:29:22.120,1:29:26.460
+energy after a while cut it off
+
+1:29:26.640,1:29:32.040
+you get a point at the end of this
+
+1:29:27.870,1:29:33.840
+church actually push it up okay so I'm
+
+1:29:32.040,1:29:35.580
+doing this very informally but in fact
+
+1:29:33.840,1:29:37.260
+there are so depending on how you do
+
+1:29:35.580,1:29:42.210
+this here I'm explaining the principles
+
+1:29:37.260,1:29:43.830
+of how those methods work but in fact if
+
+1:29:42.210,1:29:45.180
+you are interested in producing modeling
+
+1:29:43.830,1:29:47.850
+and what you're interested in is doing
+
+1:29:45.180,1:29:50.460
+maximum likelihood what you need to do
+
+1:29:47.850,1:29:52.050
+is send sample produce samples according
+
+1:29:50.460,1:29:53.910
+to the probability your model gives to
+
+1:29:52.050,1:29:56.880
+the same thing the samples and there's
+
+1:29:53.910,1:29:58.410
+ways to run those algorithms in such a
+
+1:29:56.880,1:30:00.540
+way that the ratio of the probability
+
+1:29:58.410,1:30:03.330
+with which you will you will pick two
+
+1:30:00.540,1:30:05.070
+samples corresponds to the ratio of
+
+1:30:03.330,1:30:09.650
+their probabilities in the given by the
+
+1:30:05.070,1:30:12.600
+model which is all you need and that's
+
+1:30:09.650,1:30:15.060
+essentially done by you know the details
+
+1:30:12.600,1:30:16.830
+of how you implement those kind of
+
+1:30:15.060,1:30:20.280
+trajectories basically and like the
+
+1:30:16.830,1:30:24.690
+noise that you used to so okay so did he
+
+1:30:20.280,1:30:28.320
+give you names for this okay the the
+
+1:30:24.690,1:30:31.730
+random noise e corresponds to an
+
+1:30:28.320,1:30:35.670
+algorithm called denoising auto-encoder
+
+1:30:31.730,1:30:41.280
+and Fredo is going to tell you more
+
+1:30:35.670,1:30:47.330
+about this the the gradient descent and
+
+1:30:41.280,1:30:47.330
+random kick versions the random kick
+
+1:30:47.990,1:30:51.230
+that's called
+
+1:30:52.160,1:31:00.810
+contrastive divergence and their form of
+
+1:30:54.510,1:31:03.300
+this for and if you do a search through
+
+1:31:00.810,1:31:05.220
+the space by kind of random perturbation
+
+1:31:03.300,1:31:11.580
+sort of trying to find low-energy space
+
+1:31:05.220,1:31:17.490
+with noise it's a special case of Monte
+
+1:31:11.580,1:31:19.740
+Carlo methods and if it's a continuous
+
+1:31:17.490,1:31:22.350
+trajectory or not a continuous but if
+
+1:31:19.740,1:31:25.850
+it's a trajectory could be discrete it's
+
+1:31:22.350,1:31:25.850
+called Markov chain Monte Carlo methods
+
+1:31:27.050,1:31:33.610
+or
+
+1:31:28.360,1:31:35.800
+CMC and if it's in a continuous space
+
+1:31:33.610,1:31:41.040
+where you use kind of this rolling ball
+
+1:31:35.800,1:31:49.210
+with a random kick method that's called
+
+1:31:41.040,1:31:58.239
+Hamiltonian Monte Carlo agency there's a
+
+1:31:49.210,1:32:01.360
+question no okay where the time you let
+
+1:31:58.239,1:32:05.440
+me just talk about denoising
+
+1:32:01.360,1:32:07.000
+auto-encoder so what's the Dinos in
+
+1:32:05.440,1:32:10.480
+go-to encoder it's a particular type of
+
+1:32:07.000,1:32:20.920
+energy based model where you start with
+
+1:32:10.480,1:32:28.050
+a Y so that you only have Y's go so you
+
+1:32:20.920,1:32:31.989
+start with why you corrupt it
+
+1:32:28.050,1:32:34.380
+so this is the little diagram that I
+
+1:32:31.989,1:32:37.900
+showed earlier you correct this sample
+
+1:32:34.380,1:32:43.139
+okay you get another sample that I I'm
+
+1:32:37.900,1:32:46.900
+not gonna call and you pass this through
+
+1:32:43.139,1:32:51.030
+an encoder which is a neural net and a
+
+1:32:46.900,1:32:54.190
+decoder which is another neural net and
+
+1:32:51.030,1:33:03.239
+then you compare the output which is a
+
+1:32:54.190,1:33:05.560
+reconstruction for Y with Y this is just
+
+1:33:03.239,1:33:09.630
+in the classical form this is the
+
+1:33:05.560,1:33:09.630
+distance between y and y bar squared
+
+1:33:10.230,1:33:14.650
+okay
+
+1:33:11.409,1:33:16.119
+and you see here in the network on the
+
+1:33:14.650,1:33:17.590
+left is just some some neural net that
+
+1:33:16.119,1:33:18.010
+you train the corruption is built by
+
+1:33:17.590,1:33:23.949
+hand
+
+1:33:18.010,1:33:29.409
+okay it's not trained so what does that
+
+1:33:23.949,1:33:34.540
+do for you this actually pushes up the
+
+1:33:29.409,1:33:39.969
+energy of corrupted points okay so here
+
+1:33:34.540,1:33:41.980
+the energy is so this is how you train
+
+1:33:39.969,1:33:43.810
+the system but the actual system doesn't
+
+1:33:41.980,1:33:48.219
+have the corruption you give it a why
+
+1:33:43.810,1:33:52.989
+you run it through the encoder and the
+
+1:33:48.219,1:33:58.050
+decoder and measure the reconstruction
+
+1:33:52.989,1:34:02.469
+error okay so it's exactly the same
+
+1:33:58.050,1:34:08.560
+diagram except no corruption so the
+
+1:34:02.469,1:34:13.210
+corruption is for training and this is
+
+1:34:08.560,1:34:16.750
+how you use it okay what does that do
+
+1:34:13.210,1:34:24.130
+for you you have space of Y you have
+
+1:34:16.750,1:34:26.340
+data points take a point Y and corrupt
+
+1:34:24.130,1:34:26.340
+it
+
+1:34:28.049,1:34:33.129
+okay and now you train this new on that
+
+1:34:30.849,1:34:39.939
+this encoder/decoder to basically
+
+1:34:33.129,1:34:41.889
+reconstruct this corrupted point - from
+
+1:34:39.939,1:34:44.019
+the corrupted point to produce the
+
+1:34:41.889,1:34:47.199
+original point the original training
+
+1:34:44.019,1:34:52.239
+point okay so the the neural net
+
+1:34:47.199,1:34:59.409
+function is going to map it's going to
+
+1:34:52.239,1:35:00.879
+map this point to that point okay what
+
+1:34:59.409,1:35:04.149
+does that mean that means when you when
+
+1:35:00.879,1:35:05.739
+you plug a vector here why and you do
+
+1:35:04.149,1:35:09.039
+this for every training sample and a
+
+1:35:05.739,1:35:11.349
+large number of corruptions okay well
+
+1:35:09.039,1:35:14.439
+that means is that when you plug a a
+
+1:35:11.349,1:35:15.519
+point Y here on the input and you
+
+1:35:14.439,1:35:18.969
+measure its energy which is a
+
+1:35:15.519,1:35:21.609
+reconstruction error this point if it's
+
+1:35:18.969,1:35:23.709
+on the manifold if it's on the menu full
+
+1:35:21.609,1:35:26.499
+of data is going to be reconstructed as
+
+1:35:23.709,1:35:28.919
+itself therefore its energy here which
+
+1:35:26.499,1:35:32.889
+is a reconstruction air will be zero
+
+1:35:28.919,1:35:36.399
+okay if he's trained properly whereas if
+
+1:35:32.889,1:35:38.679
+you put on the input a point that is
+
+1:35:36.399,1:35:44.229
+outside the manifold it's going to get
+
+1:35:38.679,1:35:45.399
+reconstructed as the closest point on
+
+1:35:44.229,1:35:49.389
+the manifold because it's been trying to
+
+1:35:45.399,1:35:50.889
+do that therefore the reconstruction
+
+1:35:49.389,1:35:54.849
+error here will be that this will be
+
+1:35:50.889,1:35:59.529
+this distance okay well that means is
+
+1:35:54.849,1:36:05.709
+now that the energy computed by this
+
+1:35:59.529,1:36:08.109
+delusion go to an encoder it's such that
+
+1:36:05.709,1:36:09.969
+it grows quadratically as you move away
+
+1:36:08.109,1:36:15.549
+from the manifold of data if the thing
+
+1:36:09.969,1:36:19.479
+is properly trained okay so that's an
+
+1:36:15.549,1:36:23.379
+example of contrastive methods because
+
+1:36:19.479,1:36:25.509
+you you say all the manifold things
+
+1:36:23.379,1:36:26.139
+should be zero the reconstruction energy
+
+1:36:25.509,1:36:28.749
+should be zero
+
+1:36:26.139,1:36:29.979
+outside the manifold the reconstruction
+
+1:36:28.749,1:36:33.869
+energy should be the distance to the
+
+1:36:29.979,1:36:33.869
+medical okay
+
+1:36:33.889,1:36:39.199
+this is big so bird is trained this way
+
+1:36:36.040,1:36:41.000
+except the space is discrete
+
+1:36:39.199,1:36:44.840
+they'll come in at Oriel because it's
+
+1:36:41.000,1:36:47.750
+text and the corruption technique
+
+1:36:44.840,1:36:50.510
+consists in masking some of the some of
+
+1:36:47.750,1:36:51.949
+the words and then the reconstruction
+
+1:36:50.510,1:36:52.369
+consists in predicting the words are
+
+1:36:51.949,1:36:53.989
+missing
+
+1:36:52.369,1:36:56.290
+you can always copy the words that are
+
+1:36:53.989,1:36:57.440
+not missing so you don't need to do it
+
+1:36:56.290,1:37:00.710
+okay
+
+1:36:57.440,1:37:02.510
+so it's a special case of you as you go
+
+1:37:00.710,1:37:05.110
+to encoder it's actually called a masked
+
+1:37:02.510,1:37:07.580
+rotary encoder because the type of
+
+1:37:05.110,1:37:14.449
+corruption you do is masking pieces of
+
+1:37:07.580,1:37:16.040
+the input okay all right out of time
+
+1:37:14.449,1:37:19.119
+we'll talk about more of those
+
+1:37:16.040,1:37:19.119
+techniques next time
+
