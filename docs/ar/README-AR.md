@@ -1,3 +1,5 @@
+<span dir="rtl" align="right"> 
+ 
 <!-- Deep Learning (with PyTorch)
 -->
 # التعلم العميق (باستعمال PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
@@ -95,3 +97,6 @@ To see the content appropriately in the classic interface install the following:
 -->
  - [النمط الداكن *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
  - [النمط الداكن *GitHub*](https://userstyles.org/styles/37035/github-dark) وقم بالتعليق خارج كتلة الكود `عكس #fff إلى # 181818`.
+
+
+</span>
