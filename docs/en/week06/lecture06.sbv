@@ -1,0 +1,5448 @@
+0:00:04.460,0:00:13.139
+so I want to do two things talk about
+
+0:00:10.519,0:00:14.730
+talk a little bit about like some some
+
+0:00:13.139,0:00:18.330
+ways to use commercial Nets in various
+
+0:00:14.730,0:00:27.180
+ways which I haven't gone through last
+
+0:00:18.330,0:00:30.320
+time and and I'll also talk about
+
+0:00:27.180,0:00:33.559
+different types of architectures that
+
+0:00:30.320,0:00:36.450
+some of which are very recent design
+
+0:00:33.559,0:00:38.640
+that people have been kind of playing
+
+0:00:36.450,0:00:45.360
+with for for quite a while
+
+0:00:38.640,0:00:47.160
+so it's C so last time when we talked
+
+0:00:45.360,0:00:49.920
+about commercial Nets we stopped that
+
+0:00:47.160,0:00:51.899
+the idea that we can use commercial Nets
+
+0:00:49.920,0:00:55.050
+with kind of a sliding we do over large
+
+0:00:51.899,0:00:57.690
+images and it consists in just applying
+
+0:00:55.050,0:01:00.059
+the completions on large images which is
+
+0:00:57.690,0:01:04.470
+a very general image a very general
+
+0:01:00.059,0:01:06.030
+method so we're gonna see a few more
+
+0:01:04.470,0:01:08.700
+things on how you use how you use
+
+0:01:06.030,0:01:12.090
+commercial Nets and to some extent I'm
+
+0:01:08.700,0:01:14.220
+going to rely on a bit of sir historical
+
+0:01:12.090,0:01:15.810
+papers and things like this to explain
+
+0:01:14.220,0:01:20.939
+kind of simple forms of all of those
+
+0:01:15.810,0:01:24.090
+ideas so the as I as I said last time
+
+0:01:20.939,0:01:25.950
+the I had this example where there's
+
+0:01:24.090,0:01:28.860
+multiple characters on an image and you
+
+0:01:25.950,0:01:30.240
+can you have a commercial net that whose
+
+0:01:28.860,0:01:31.740
+output is also a coefficient like
+
+0:01:30.240,0:01:34.110
+everyday air is a convolution so you can
+
+0:01:31.740,0:01:36.240
+interpret the output as basically giving
+
+0:01:34.110,0:01:39.270
+you a score for every category and for
+
+0:01:36.240,0:01:42.360
+every window on the input and the the
+
+0:01:39.270,0:01:45.960
+framing of the window depends on like
+
+0:01:42.360,0:01:47.549
+the the windows that the system observes
+
+0:01:45.960,0:01:51.180
+when your back project for my particular
+
+0:01:47.549,0:01:53.399
+output kind of steps by the amount of
+
+0:01:51.180,0:01:55.259
+subsampling the total amount of sub
+
+0:01:53.399,0:01:57.810
+something you have in a network so if
+
+0:01:55.259,0:01:59.040
+you have two layers that subsample by a
+
+0:01:57.810,0:02:00.840
+factor of two you have two pooling
+
+0:01:59.040,0:02:04.409
+layers for example that's a factor of
+
+0:02:00.840,0:02:06.750
+two the overall subsampling ratio is 4
+
+0:02:04.409,0:02:09.720
+and what that means is that every output
+
+0:02:06.750,0:02:11.400
+is gonna basically look at a window on
+
+0:02:09.720,0:02:12.250
+the input and successive outputs is
+
+0:02:11.400,0:02:14.020
+going to look at
+
+0:02:12.250,0:02:16.480
+the windows that are separated by four
+
+0:02:14.020,0:02:22.480
+pixels okay it's just a product of all
+
+0:02:16.480,0:02:24.220
+the subsampling layers so this this is
+
+0:02:22.480,0:02:28.060
+nice but then you can have to make sense
+
+0:02:24.220,0:02:30.810
+of all the stuff that's on the input how
+
+0:02:28.060,0:02:35.350
+do you pick out objects objects that
+
+0:02:30.810,0:02:38.050
+overlap each other etc and one thing you
+
+0:02:35.350,0:02:42.190
+can do for this is is called normal no
+
+0:02:38.050,0:02:45.250
+maximum suppression which is what people
+
+0:02:42.190,0:02:46.989
+use in sort of object detection so
+
+0:02:45.250,0:02:52.120
+basically what a consistent is that if
+
+0:02:46.989,0:02:54.820
+you have outputs that kind of or more or
+
+0:02:52.120,0:02:57.220
+less at the same place and also over
+
+0:02:54.820,0:02:59.980
+like overlapping places and one of them
+
+0:02:57.220,0:03:02.280
+tells you I see a bear and the other one
+
+0:02:59.980,0:03:05.200
+tells you I see a horse one of them wins
+
+0:03:02.280,0:03:06.580
+okay it's probably one that's wrong and
+
+0:03:05.200,0:03:07.930
+you can't have a bear on a horse at the
+
+0:03:06.580,0:03:09.940
+same time at the same place so you do
+
+0:03:07.930,0:03:13.090
+what's called no maximum suppression you
+
+0:03:09.940,0:03:14.680
+can look at which which of those has the
+
+0:03:13.090,0:03:16.720
+highest score and you kind of pick that
+
+0:03:14.680,0:03:18.790
+one or you see if any neighbors also
+
+0:03:16.720,0:03:21.850
+recognize that a bear or a horse and you
+
+0:03:18.790,0:03:22.660
+can make a vote if you want local vote
+
+0:03:21.850,0:03:24.580
+okay
+
+0:03:22.660,0:03:27.459
+and I'm gonna go to the details of this
+
+0:03:24.580,0:03:31.239
+because just just kind of rough ideas
+
+0:03:27.459,0:03:32.799
+well this is already implemented in code
+
+0:03:31.239,0:03:35.640
+that you can download and also it's kind
+
+0:03:32.799,0:03:39.040
+of the topic of a a full-fledged
+
+0:03:35.640,0:03:41.590
+computer vision course so here we just
+
+0:03:39.040,0:03:44.940
+allowed to kind of how we use deep
+
+0:03:41.590,0:03:44.940
+running for for this kind of application
+
+0:03:46.470,0:03:55.239
+let's see so here's again going back to
+
+0:03:51.610,0:03:58.900
+history a little bit some ideas of how
+
+0:03:55.239,0:04:01.420
+you use neural nets to or conditional
+
+0:03:58.900,0:04:02.769
+nets in this case to recognize strings
+
+0:04:01.420,0:04:04.420
+of characters which is kind of the same
+
+0:04:02.769,0:04:07.510
+program is recognizing multiple objects
+
+0:04:04.420,0:04:10.570
+really so if you have you have an image
+
+0:04:07.510,0:04:13.209
+that contains the image at the top two
+
+0:04:10.570,0:04:14.650
+three two zero six it's a zip code and
+
+0:04:13.209,0:04:16.510
+the characters touch so you don't know
+
+0:04:14.650,0:04:18.310
+how to separate them in advance so you
+
+0:04:16.510,0:04:19.720
+just apply accomplish on there to the
+
+0:04:18.310,0:04:21.849
+entire string we don't know in advance
+
+0:04:19.720,0:04:25.190
+what with the characters will take and
+
+0:04:21.849,0:04:28.040
+so which
+
+0:04:25.190,0:04:29.900
+what you see here are four different
+
+0:04:28.040,0:04:32.600
+sets of outputs and those four different
+
+0:04:29.900,0:04:35.210
+sets of outputs of the of the commercial
+
+0:04:32.600,0:04:36.620
+net each of which has ten rows and the
+
+0:04:35.210,0:04:39.740
+ten words corresponds to each of the ten
+
+0:04:36.620,0:04:43.720
+categories so if you look at the top for
+
+0:04:39.740,0:04:46.430
+example the top the top block the the
+
+0:04:43.720,0:04:48.410
+the white squares represent high-scoring
+
+0:04:46.430,0:04:50.000
+category so what you see on the left is
+
+0:04:48.410,0:04:53.620
+that the number two is being recognized
+
+0:04:50.000,0:04:55.640
+so the window that is wrote at by the
+
+0:04:53.620,0:04:57.860
+output units that are on the first
+
+0:04:55.640,0:04:59.830
+column is on the on the left side of the
+
+0:04:57.860,0:05:03.050
+image and it and it detects a two
+
+0:04:59.830,0:05:05.630
+because the you know their order 0 1 2 3
+
+0:05:03.050,0:05:08.270
+4 etc so you see a white square that
+
+0:05:05.630,0:05:12.290
+corresponds to the detection of a 2 and
+
+0:05:08.270,0:05:16.220
+then as the window is shifted over the
+
+0:05:12.290,0:05:18.710
+over the input is a 3 or low scoring 3
+
+0:05:16.220,0:05:20.450
+that is seen then the 2 again there's
+
+0:05:18.710,0:05:23.780
+three character it's three detectives
+
+0:05:20.450,0:05:29.080
+that see this 2 and then nothing then
+
+0:05:23.780,0:05:31.970
+the 0 and then the 6 now this first
+
+0:05:29.080,0:05:37.700
+system looks at a fairly narrow window
+
+0:05:31.970,0:05:39.169
+and or maybe it's a wide window no I
+
+0:05:37.700,0:05:42.980
+think it's a wide window so it looks at
+
+0:05:39.169,0:05:47.060
+a pretty wide window and it when it
+
+0:05:42.980,0:05:48.740
+looks at the the the two the two that's
+
+0:05:47.060,0:05:50.510
+on the left for example it actually sees
+
+0:05:48.740,0:05:52.880
+a piece of the three with it with it so
+
+0:05:50.510,0:05:54.590
+it's kind of in the window the different
+
+0:05:52.880,0:05:57.650
+sets of outputs here correspond to
+
+0:05:54.590,0:06:01.390
+different size of the kernel of the last
+
+0:05:57.650,0:06:04.340
+layer so the second row the second block
+
+0:06:01.390,0:06:08.600
+the the size of the kernel is four in
+
+0:06:04.340,0:06:10.730
+the horizontal dimension the next one is
+
+0:06:08.600,0:06:14.270
+3 and x1 is 2 what this allows the
+
+0:06:10.730,0:06:16.160
+system to do is look at regions of virus
+
+0:06:14.270,0:06:17.810
+with on the input without being kind of
+
+0:06:16.160,0:06:20.630
+too confused by the characters that are
+
+0:06:17.810,0:06:24.740
+on the side if you want so for example
+
+0:06:20.630,0:06:29.870
+the the the second to the zero is very
+
+0:06:24.740,0:06:31.520
+high-scoring on the on the the second
+
+0:06:29.870,0:06:33.500
+third and fourth matte but not very
+
+0:06:31.520,0:06:36.520
+high-scoring on the top map similarly
+
+0:06:33.500,0:06:38.400
+the three is kind of high-scoring on the
+
+0:06:36.520,0:06:40.020
+second third and fourth
+
+0:06:38.400,0:06:41.669
+but not on the first map because the
+
+0:06:40.020,0:06:43.560
+three kind of overlaps with the two and
+
+0:06:41.669,0:06:46.139
+so it wants to really look at in our
+
+0:06:43.560,0:06:52.740
+window to be able to recognize it okay
+
+0:06:46.139,0:06:57.259
+yes so it's the size of the white square
+
+0:06:52.740,0:07:00.720
+that indicates the score basically okay
+
+0:06:57.259,0:07:03.509
+so look at you know this this column
+
+0:07:00.720,0:07:04.979
+here you have a high-scoring zero here
+
+0:07:03.509,0:07:07.199
+because it's the first the first world
+
+0:07:04.979,0:07:09.150
+correspond to the category zero but it's
+
+0:07:07.199,0:07:12.720
+not so high-scoring from the top the top
+
+0:07:09.150,0:07:14.430
+one because that I put you need looks at
+
+0:07:12.720,0:07:17.010
+a pretty wide input and it gets confused
+
+0:07:14.430,0:07:18.240
+by the stuff that's on the side okay so
+
+0:07:17.010,0:07:19.740
+you have something like this so now you
+
+0:07:18.240,0:07:22.949
+have to make sense out of it and extract
+
+0:07:19.740,0:07:26.130
+the best interpretation of that of that
+
+0:07:22.949,0:07:28.320
+sequence and it's true for zip code but
+
+0:07:26.130,0:07:30.720
+it's true for just about every piece of
+
+0:07:28.320,0:07:31.470
+text not every combination of characters
+
+0:07:30.720,0:07:33.599
+is possible
+
+0:07:31.470,0:07:35.639
+so when you read English text there is
+
+0:07:33.599,0:07:38.039
+you know an English dictionary English
+
+0:07:35.639,0:07:39.780
+grammar and not every combination of
+
+0:07:38.039,0:07:43.229
+character is possible so you can have a
+
+0:07:39.780,0:07:44.820
+language model that attempts to tell you
+
+0:07:43.229,0:07:46.050
+what is the most likely sequence of
+
+0:07:44.820,0:07:48.570
+characters so we're looking at here
+
+0:07:46.050,0:07:51.090
+given that this is English or whatever
+
+0:07:48.570,0:07:53.610
+language or given that this is a zip
+
+0:07:51.090,0:07:54.810
+code not every zip code are possible so
+
+0:07:53.610,0:07:58.199
+this is fun possibility for error
+
+0:07:54.810,0:07:59.130
+correction so how do we take that into
+
+0:07:58.199,0:08:03.960
+account
+
+0:07:59.130,0:08:06.810
+I'll come to this in a second but but
+
+0:08:03.960,0:08:09.479
+here what we need to do is kind of you
+
+0:08:06.810,0:08:11.460
+know come up with a consistent
+
+0:08:09.479,0:08:13.680
+interpretation that you know there's
+
+0:08:11.460,0:08:16.130
+obviously a three there's obviously is
+
+0:08:13.680,0:08:20.729
+over here two or three zero somewhere
+
+0:08:16.130,0:08:22.970
+another two etc I returned this array of
+
+0:08:20.729,0:08:25.970
+scores into into a consistent
+
+0:08:22.970,0:08:25.970
+interpretation
+
+0:08:28.610,0:08:36.250
+is the width of the the horizontal width
+
+0:08:31.340,0:08:39.500
+of the the kernel of the last layer okay
+
+0:08:36.250,0:08:41.330
+which means when your backpack back
+
+0:08:39.500,0:08:43.520
+project on the input the the viewing
+
+0:08:41.330,0:08:46.550
+window on the input that influences that
+
+0:08:43.520,0:08:53.180
+particular unit as very size depending
+
+0:08:46.550,0:08:58.250
+on which unit you look at yes the width
+
+0:08:53.180,0:09:00.650
+of the block yeah it's a croissants it's
+
+0:08:58.250,0:09:02.450
+how I the input image is divided by 4
+
+0:09:00.650,0:09:04.610
+because the substantive issue is 4 so
+
+0:09:02.450,0:09:07.460
+you get one of one column of those every
+
+0:09:04.610,0:09:09.680
+four pixel so remember we had this this
+
+0:09:07.460,0:09:11.300
+way of using a neural net commercial net
+
+0:09:09.680,0:09:14.360
+which is that you you basically make
+
+0:09:11.300,0:09:16.040
+every convolution larger and usually
+
+0:09:14.360,0:09:18.290
+lastly or as a convolution as well and
+
+0:09:16.040,0:09:20.780
+now what you get is multiple outputs
+
+0:09:18.290,0:09:24.890
+okay so what I'm representing here on
+
+0:09:20.780,0:09:27.170
+the slide you just solve is the is this
+
+0:09:24.890,0:09:29.900
+2d array on the output which corresponds
+
+0:09:27.170,0:09:32.630
+where where the the row corresponds to
+
+0:09:29.900,0:09:34.640
+categories okay and each column
+
+0:09:32.630,0:09:40.190
+corresponds to a different location on
+
+0:09:34.640,0:09:43.100
+the input and I showed you those
+
+0:09:40.190,0:09:45.320
+examples here so here this is a
+
+0:09:43.100,0:09:47.240
+different representation here where the
+
+0:09:45.320,0:09:50.030
+the character that is displayed just
+
+0:09:47.240,0:09:51.740
+before the title bar is you know
+
+0:09:50.030,0:09:53.300
+indicates the winning category so I'm
+
+0:09:51.740,0:09:55.220
+not displaying the scores of every
+
+0:09:53.300,0:09:57.920
+category I'm just just just just feeling
+
+0:09:55.220,0:10:00.770
+the winning category here but each
+
+0:09:57.920,0:10:03.440
+output looks at a 32 by 32 window and
+
+0:10:00.770,0:10:07.600
+the next output by looks at a 32 by 32
+
+0:10:03.440,0:10:07.600
+window shifted by 4 pixels ok excetera
+
+0:10:07.840,0:10:13.340
+so how do you turn this you know
+
+0:10:11.510,0:10:16.810
+sequence of characters into the fact
+
+0:10:13.340,0:10:16.810
+that is either 3 5 or 5 3
+
+0:10:29.380,0:10:33.770
+ok so here the reason where we have four
+
+0:10:31.760,0:10:37.760
+of those is so that is because the last
+
+0:10:33.770,0:10:39.440
+player this different is different last
+
+0:10:37.760,0:10:41.089
+layers if you want this for like
+
+0:10:39.440,0:10:43.210
+different last layers each of which is
+
+0:10:41.089,0:10:45.430
+trained to recognize the ten categories
+
+0:10:43.210,0:10:48.320
+and those last failures have different
+
+0:10:45.430,0:10:52.839
+kernel with so they essentially look at
+
+0:10:48.320,0:10:52.839
+different width of Windows on the input
+
+0:10:53.170,0:10:57.080
+so you want some that look at why
+
+0:10:55.370,0:10:58.700
+windows so they can they can recognize
+
+0:10:57.080,0:11:00.440
+kind of large characters and some that
+
+0:10:58.700,0:11:01.910
+looked at look at narrow windows so they
+
+0:11:00.440,0:11:04.790
+can recognize our characters without
+
+0:11:01.910,0:11:10.910
+being perturbed by the the neighboring
+
+0:11:04.790,0:11:13.279
+characters so if you know a priori that
+
+0:11:10.910,0:11:17.690
+there are five five characters here
+
+0:11:13.279,0:11:20.720
+because it's a zip code you can do you
+
+0:11:17.690,0:11:24.500
+can use a trick and this sort of
+
+0:11:20.720,0:11:26.210
+specific tricks that I can explain but
+
+0:11:24.500,0:11:28.760
+I'm going to explain sort of the general
+
+0:11:26.210,0:11:31.209
+trick if you want I didn't want to talk
+
+0:11:28.760,0:11:33.770
+about this actually at least not now
+
+0:11:31.209,0:11:36.230
+okay here so here's a general trick the
+
+0:11:33.770,0:11:39.020
+general trick is or the you know kind of
+
+0:11:36.230,0:11:44.390
+a somewhat specific trick oops
+
+0:11:39.020,0:11:46.370
+I don't know way keep changing side you
+
+0:11:44.390,0:11:58.790
+say I have I know I have fat characters
+
+0:11:46.370,0:12:00.709
+in this word is there a a so that's a
+
+0:11:58.790,0:12:03.980
+one of those arrays that produces scores
+
+0:12:00.709,0:12:09.279
+so for each category let's say I have
+
+0:12:03.980,0:12:09.279
+four categories here and each location
+
+0:12:10.839,0:12:17.420
+there's a score okay
+
+0:12:14.690,0:12:21.319
+and I say I know that I want five
+
+0:12:17.420,0:12:26.660
+characters out I'm gonna draw them
+
+0:12:21.319,0:12:30.440
+vertically one two three four five
+
+0:12:26.660,0:12:32.870
+because it's a zip code so the question
+
+0:12:30.440,0:12:36.199
+I'm going to ask now is what is the best
+
+0:12:32.870,0:12:40.160
+character I can put in this and in this
+
+0:12:36.199,0:12:42.889
+slot in the first slot and the way I'm
+
+0:12:40.160,0:12:54.949
+going to do this is I'm gonna draw an
+
+0:12:42.889,0:13:00.170
+array and on this array I'm going to say
+
+0:12:54.949,0:13:08.930
+where's the score here for at every
+
+0:13:00.170,0:13:11.769
+intersection in the array it's good well
+
+0:13:08.930,0:13:14.420
+what is the what is the score of putting
+
+0:13:11.769,0:13:16.850
+a particular character here at that
+
+0:13:14.420,0:13:20.449
+location given the score that I have at
+
+0:13:16.850,0:13:25.550
+the output of manual net okay so let's
+
+0:13:20.449,0:13:29.050
+say that so what I'm gonna have to
+
+0:13:25.550,0:13:32.829
+decide is since I have fewer characters
+
+0:13:29.050,0:13:36.680
+on the on the output to the system five
+
+0:13:32.829,0:13:38.720
+then I have viewing windows and scores
+
+0:13:36.680,0:13:41.630
+produced by the by the system I'm gonna
+
+0:13:38.720,0:13:47.240
+have to figure out which one I drop okay
+
+0:13:41.630,0:13:49.689
+and what I can do is build this though
+
+0:13:47.240,0:13:49.689
+this array
+
+0:13:55.030,0:13:58.030
+and
+
+0:14:01.030,0:14:07.720
+what I need to do is go from here to
+
+0:14:04.030,0:14:16.870
+here by finding a path through this
+
+0:14:07.720,0:14:22.180
+through this array in such a way that I
+
+0:14:16.870,0:14:24.010
+have exactly five steps if you want so
+
+0:14:22.180,0:14:27.370
+each step corresponds to to a character
+
+0:14:24.010,0:14:30.700
+and the overall score of a particular
+
+0:14:27.370,0:14:35.920
+string is the overall is the sum of all
+
+0:14:30.700,0:14:42.430
+the scores that are along this path in
+
+0:14:35.920,0:14:43.900
+other words if I get three instances
+
+0:14:42.430,0:14:46.180
+here three locations we have a high
+
+0:14:43.900,0:14:49.330
+score for this particular category which
+
+0:14:46.180,0:14:53.740
+is category one okay as tall as 0 so 1 2
+
+0:14:49.330,0:14:59.080
+3 I'm gonna say this is the same guy and
+
+0:14:53.740,0:15:01.420
+it's a 1 and here if I have two guys I
+
+0:14:59.080,0:15:04.810
+have I score for 3 I'm gonna say those
+
+0:15:01.420,0:15:08.020
+are the 3 and yeah I have only one guy
+
+0:15:04.810,0:15:15.430
+that has high score for 2 so that's a 2
+
+0:15:08.020,0:15:19.000
+etc so this path here has to be sort of
+
+0:15:15.430,0:15:20.380
+continuous I can't jump from one
+
+0:15:19.000,0:15:21.580
+position to another because that would
+
+0:15:20.380,0:15:26.140
+be kind of breaking the order of the
+
+0:15:21.580,0:15:28.680
+characters okay and are you to find a
+
+0:15:26.140,0:15:33.000
+path that goes through high-scoring
+
+0:15:28.680,0:15:35.470
+cells if you want that correspond to
+
+0:15:33.000,0:15:38.800
+high scoring categories along this path
+
+0:15:35.470,0:15:44.500
+and it's a way of saying you know if I
+
+0:15:38.800,0:15:46.060
+have if those three cells here or give
+
+0:15:44.500,0:15:48.940
+me the same character it's only one
+
+0:15:46.060,0:15:52.030
+character I'm just going to output one
+
+0:15:48.940,0:15:53.920
+here that corresponds to this ok
+
+0:15:52.030,0:15:56.440
+those three guys are high score I stay
+
+0:15:53.920,0:15:59.140
+on the one on the one and then I I
+
+0:15:56.440,0:16:00.400
+transition to the second character so
+
+0:15:59.140,0:16:03.339
+now I'm going to fill out this chart and
+
+0:16:00.400,0:16:05.470
+this guy has high score for three so I'm
+
+0:16:03.339,0:16:11.430
+going to put three here and this guy has
+
+0:16:05.470,0:16:11.430
+a high score for two as two etc
+
+0:16:13.870,0:16:20.150
+the principle to find this this path is
+
+0:16:18.410,0:16:22.640
+a shortest path algorithm you can think
+
+0:16:20.150,0:16:24.920
+of this as a graph where I can go from
+
+0:16:22.640,0:16:28.910
+the lower left cell to the upper right
+
+0:16:24.920,0:16:36.050
+cell by either going to the left or
+
+0:16:28.910,0:16:37.520
+going up and to the left and for each of
+
+0:16:36.050,0:16:39.950
+those transitions there is a there's a
+
+0:16:37.520,0:16:41.810
+cost and for each of the four putting a
+
+0:16:39.950,0:16:48.080
+character at that location there is also
+
+0:16:41.810,0:16:52.430
+a cost or a score if you want so the
+
+0:16:48.080,0:16:54.530
+overall score of the one at the bottom
+
+0:16:52.430,0:16:58.630
+would be the combined score of the three
+
+0:16:54.530,0:17:02.230
+locations that detect that one and
+
+0:16:58.630,0:17:04.190
+because it's more all three of them are
+
+0:17:02.230,0:17:08.120
+contributing evidence to the fact that
+
+0:17:04.190,0:17:12.650
+there is a 1 when you constrain the path
+
+0:17:08.120,0:17:16.579
+to have 5 steps ok it has to go from the
+
+0:17:12.650,0:17:18.250
+bottom left to the top right and it has
+
+0:17:16.579,0:17:21.199
+5 steps so it has to go through 5 steps
+
+0:17:18.250,0:17:22.939
+there's no choice that's that's how you
+
+0:17:21.199,0:17:26.000
+force the system to kind of give you 5
+
+0:17:22.939,0:17:27.770
+characters basically right and because
+
+0:17:26.000,0:17:31.430
+the path can only go from left to right
+
+0:17:27.770,0:17:33.020
+and from top to bottom it has to give
+
+0:17:31.430,0:17:35.150
+you the characters in the order in which
+
+0:17:33.020,0:17:36.740
+they appear in the image so it's a way
+
+0:17:35.150,0:17:39.380
+of imposing the order of the character
+
+0:17:36.740,0:17:42.340
+and imposing that there are fives there
+
+0:17:39.380,0:17:50.170
+are five characters in the string yes
+
+0:17:42.340,0:17:50.170
+yes okay in the back yes right yes
+
+0:17:51.550,0:17:56.360
+well so we should have just the string
+
+0:17:53.870,0:17:58.670
+of one you have to have trained the
+
+0:17:56.360,0:18:00.260
+system in advance so that when it's in
+
+0:17:58.670,0:18:02.660
+between two ones or two characters
+
+0:18:00.260,0:18:05.600
+whatever they are it says nothing he
+
+0:18:02.660,0:18:06.640
+says none of the above otherwise you can
+
+0:18:05.600,0:18:09.350
+tell right
+
+0:18:06.640,0:18:10.550
+yeah a system like this needs to be able
+
+0:18:09.350,0:18:12.140
+to tell you this is none of the above
+
+0:18:10.550,0:18:14.270
+it's not a character it's a piece of it
+
+0:18:12.140,0:18:16.340
+or I'm in the middle of two characters
+
+0:18:14.270,0:18:20.260
+or I have two characters on the side but
+
+0:18:16.340,0:18:20.260
+nothing in the middle yeah absolutely
+
+0:18:23.800,0:18:27.410
+it's a form of non maximum suppression
+
+0:18:26.300,0:18:28.910
+so you can think of this as kind of a
+
+0:18:27.410,0:18:30.500
+smartphone and on maximum suppression
+
+0:18:28.910,0:18:35.350
+where you say like for every location
+
+0:18:30.500,0:18:37.460
+you can only have one character and the
+
+0:18:35.350,0:18:39.440
+order in which you produce the five
+
+0:18:37.460,0:18:42.140
+characters must correspond to the order
+
+0:18:39.440,0:18:43.880
+in which they appear on the image what
+
+0:18:42.140,0:18:46.970
+you don't know is how to warp one into
+
+0:18:43.880,0:18:49.370
+the other okay so how do you kind of you
+
+0:18:46.970,0:18:51.890
+know how many detectors are gonna see
+
+0:18:49.370,0:18:53.750
+the number two it may be three of them
+
+0:18:51.890,0:18:55.780
+and we're gonna decide they're all the
+
+0:18:53.750,0:18:55.780
+same
+
+0:18:59.929,0:19:07.090
+so the thing is for all of you who run
+
+0:19:04.129,0:19:09.679
+computer science which is not everyone
+
+0:19:07.090,0:19:11.179
+the the way you compute this path is
+
+0:19:09.679,0:19:15.590
+just a shortest path algorithm you do
+
+0:19:11.179,0:19:17.330
+this with dynamic programming okay so
+
+0:19:15.590,0:19:20.600
+find the shortest path to go from bottom
+
+0:19:17.330,0:19:23.539
+left to top right by going through by
+
+0:19:20.600,0:19:26.869
+only going to only taking transition to
+
+0:19:23.539,0:19:30.769
+the right or diagonally and but
+
+0:19:26.869,0:19:34.190
+minimizing the cost so if you think each
+
+0:19:30.769,0:19:36.379
+of those is is filled by a cost or
+
+0:19:34.190,0:19:38.299
+maximizing the score if you think that
+
+0:19:36.379,0:19:40.700
+scores there are probabilities for
+
+0:19:38.299,0:19:55.639
+example and it's just a shortest path
+
+0:19:40.700,0:19:58.730
+algorithm in a graph this kind of method
+
+0:19:55.639,0:20:00.919
+by the way was so many methods of speech
+
+0:19:58.730,0:20:03.679
+recognition can it work this way not
+
+0:20:00.919,0:20:06.619
+with neural net so we sort of hand
+
+0:20:03.679,0:20:08.990
+extracted features from but it would
+
+0:20:06.619,0:20:11.090
+basically match the sequence of vectors
+
+0:20:08.990,0:20:14.059
+extracted from a speech signal to a
+
+0:20:11.090,0:20:17.059
+template of a word and then you know try
+
+0:20:14.059,0:20:21.110
+to see how you warp the time to match
+
+0:20:17.059,0:20:22.700
+the the the word to be recognized to to
+
+0:20:21.110,0:20:26.330
+the templates and you had a template for
+
+0:20:22.700,0:20:28.399
+every word over fixed size this was
+
+0:20:26.330,0:20:30.259
+called detail DTW dynamic time working
+
+0:20:28.399,0:20:31.999
+there's more sophisticated version of it
+
+0:20:30.259,0:20:34.909
+called hidden markov models but it's
+
+0:20:31.999,0:20:37.149
+very similar people still do this to
+
+0:20:34.909,0:20:37.149
+some extent
+
+0:20:42.500,0:20:51.330
+okay so detection so if you want to
+
+0:20:48.390,0:20:53.730
+apply commercial net for detection it
+
+0:20:51.330,0:20:56.610
+works amazingly well and it's
+
+0:20:53.730,0:20:57.900
+surprisingly simple but you you know
+
+0:20:56.610,0:20:59.940
+what you need to do you basically need
+
+0:20:57.900,0:21:01.650
+to let's say we do face detection which
+
+0:20:59.940,0:21:03.090
+is a very easy problem one of the first
+
+0:21:01.650,0:21:04.740
+problems that computer vision started
+
+0:21:03.090,0:21:07.760
+solving really well for kind of
+
+0:21:04.740,0:21:10.559
+recognition you collect a data set of
+
+0:21:07.760,0:21:14.580
+images with faces and images without
+
+0:21:10.559,0:21:16.740
+faces and you train a commercial net
+
+0:21:14.580,0:21:20.669
+with this input window is something like
+
+0:21:16.740,0:21:23.070
+20 by 20 or 30 by 30 pixels to tell you
+
+0:21:20.669,0:21:25.260
+what other is a face in it or not okay
+
+0:21:23.070,0:21:27.150
+now you take this accomplished on that
+
+0:21:25.260,0:21:29.880
+you apply it on an image and if there is
+
+0:21:27.150,0:21:33.120
+a face that happens to be roughly 30 by
+
+0:21:29.880,0:21:35.960
+30 pixels the the content will will
+
+0:21:33.120,0:21:39.630
+light up at the corresponding output and
+
+0:21:35.960,0:21:41.640
+not light up when there is no face now
+
+0:21:39.630,0:21:44.760
+these two points with this the first
+
+0:21:41.640,0:21:47.630
+problem is there is many many ways a
+
+0:21:44.760,0:21:49.770
+patch of an image can be a non face and
+
+0:21:47.630,0:21:51.540
+during your training you probably
+
+0:21:49.770,0:21:53.490
+haven't seen all of them you haven't
+
+0:21:51.540,0:21:55.590
+seen even a representative set of them
+
+0:21:53.490,0:21:59.520
+so your system is gonna have lots of
+
+0:21:55.590,0:22:02.429
+false positives that's the first problem
+
+0:21:59.520,0:22:04.410
+second problem is in the picture not all
+
+0:22:02.429,0:22:07.650
+faces are 30 by 30 pixels so how do you
+
+0:22:04.410,0:22:09.870
+handle size variation so one way to
+
+0:22:07.650,0:22:12.840
+handle size variation which is very
+
+0:22:09.870,0:22:15.750
+simple but it's mostly unnecessary in
+
+0:22:12.840,0:22:17.700
+modern versions but what it's not
+
+0:22:15.750,0:22:18.960
+completely necessary is you do a
+
+0:22:17.700,0:22:21.570
+multiscale approach so you take your
+
+0:22:18.960,0:22:24.150
+image you run your detector on it it
+
+0:22:21.570,0:22:26.040
+fires whenever it wants and you will
+
+0:22:24.150,0:22:29.610
+detect faces are small then you reduce
+
+0:22:26.040,0:22:30.960
+the image by some scale in this case in
+
+0:22:29.610,0:22:33.210
+this case here I take a square root of
+
+0:22:30.960,0:22:34.890
+two you apply the control net again on
+
+0:22:33.210,0:22:38.850
+that small image and now it's going to
+
+0:22:34.890,0:22:40.470
+be able to detect cases that are that
+
+0:22:38.850,0:22:43.440
+were larger in the original image
+
+0:22:40.470,0:22:44.910
+because now what was 30 by 30 pixel is
+
+0:22:43.440,0:22:49.860
+now about 20 by 20 pixels
+
+0:22:44.910,0:22:51.990
+roughly okay but there may be bigger
+
+0:22:49.860,0:22:53.640
+faces there so you scale the image again
+
+0:22:51.990,0:22:54.290
+by a factor of square root of 2 so now
+
+0:22:53.640,0:22:56.630
+the images
+
+0:22:54.290,0:22:58.280
+the size of the original one and you're
+
+0:22:56.630,0:23:00.440
+under the commercial net again and now
+
+0:22:58.280,0:23:03.620
+it's going to detect faces that were 60
+
+0:23:00.440,0:23:05.390
+by 60 pixels in the original image but
+
+0:23:03.620,0:23:08.900
+are now 30 by 30 because you reduce the
+
+0:23:05.390,0:23:12.710
+size by half you might think that this
+
+0:23:08.900,0:23:16.580
+is expensive but it's not the expense is
+
+0:23:12.710,0:23:18.110
+half of the expenses the final scale the
+
+0:23:16.580,0:23:21.380
+sum of the expense of the other networks
+
+0:23:18.110,0:23:28.460
+are combined is about the same as the
+
+0:23:21.380,0:23:30.800
+final scale it's because the size of the
+
+0:23:28.460,0:23:33.020
+network is you know kind of the square
+
+0:23:30.800,0:23:35.360
+of the the size of the image on one side
+
+0:23:33.020,0:23:36.920
+and so you scale down the image by
+
+0:23:35.360,0:23:41.180
+square root of 2 the network you have to
+
+0:23:36.920,0:23:43.100
+run is smaller by a factor of 2 okay so
+
+0:23:41.180,0:23:46.670
+the overall cost of this is 1 plus 1/2
+
+0:23:43.100,0:23:49.340
+plus 1/4 plus 1/8 plus 1/16 etc which is
+
+0:23:46.670,0:23:51.530
+2 you waste a factor of 2 by doing multi
+
+0:23:49.340,0:23:55.250
+scale which is very small ok you can
+
+0:23:51.530,0:23:55.940
+afford a factor of 2 so this is a
+
+0:23:55.250,0:23:58.670
+computer
+
+0:23:55.940,0:24:02.000
+ancient face detection system from the
+
+0:23:58.670,0:24:05.120
+early 90s and the maps that you see here
+
+0:24:02.000,0:24:08.900
+are all kind of maps that indicate kind
+
+0:24:05.120,0:24:11.120
+of scores of phase detectors the face
+
+0:24:08.900,0:24:14.840
+detector here I think is 20 by 20 pixels
+
+0:24:11.120,0:24:16.820
+so it's very low res and it's a big mess
+
+0:24:14.840,0:24:18.410
+at the fine scales you see kind of
+
+0:24:16.820,0:24:23.030
+high-scoring areas but it's not really
+
+0:24:18.410,0:24:26.480
+very definite but you see more more
+
+0:24:23.030,0:24:29.840
+definite things down here so here you
+
+0:24:26.480,0:24:31.910
+see a white blob here web block here
+
+0:24:29.840,0:24:34.670
+white blob here same here you see white
+
+0:24:31.910,0:24:38.150
+blob here what blob here and those are
+
+0:24:34.670,0:24:39.890
+faces those other and so that's now how
+
+0:24:38.150,0:24:43.370
+you you need to do maximum suppression
+
+0:24:39.890,0:24:44.810
+to get those little red squares that are
+
+0:24:43.370,0:24:46.010
+kind of the winning categories if you
+
+0:24:44.810,0:24:53.270
+want the winning locations where you
+
+0:24:46.010,0:24:55.730
+have your face so known as sumo
+
+0:24:53.270,0:24:57.770
+suppression in this case means I have a
+
+0:24:55.730,0:24:58.880
+high-scoring white white blob here that
+
+0:24:57.770,0:25:01.520
+means there is probably the face
+
+0:24:58.880,0:25:02.790
+underneath which is roughly 20 by 20 it
+
+0:25:01.520,0:25:05.490
+is another face
+
+0:25:02.790,0:25:07.470
+in a window of 20 by 20 that means one
+
+0:25:05.490,0:25:09.090
+of those two is wrong so I'm just gonna
+
+0:25:07.470,0:25:11.340
+take the highest-scoring one within the
+
+0:25:09.090,0:25:13.560
+window of 20 by 20 and suppress all the
+
+0:25:11.340,0:25:16.770
+others and you'll surprise the others at
+
+0:25:13.560,0:25:18.570
+that location at that scale I mean that
+
+0:25:16.770,0:25:22.020
+nearby location at that scale but also
+
+0:25:18.570,0:25:27.060
+at other scales okay so you you pick the
+
+0:25:22.020,0:25:29.430
+highest-scoring blob if you want for
+
+0:25:27.060,0:25:31.740
+every location every scale and whenever
+
+0:25:29.430,0:25:33.720
+you pick one you you suppress the other
+
+0:25:31.740,0:25:36.000
+ones that could be conflicting with it
+
+0:25:33.720,0:25:38.730
+either because they are a different
+
+0:25:36.000,0:25:44.910
+scale to the same place or at the same
+
+0:25:38.730,0:25:48.090
+scale but you know in your body okay so
+
+0:25:44.910,0:25:51.090
+that's the that's the first problem and
+
+0:25:48.090,0:25:53.010
+the second problem is the fact that as I
+
+0:25:51.090,0:25:55.620
+said there's many ways to be different
+
+0:25:53.010,0:25:57.020
+from your face and most likely your
+
+0:25:55.620,0:26:01.290
+training set doesn't have all the
+
+0:25:57.020,0:26:03.960
+non-faces things that look like faces so
+
+0:26:01.290,0:26:06.890
+the way people deal with this is that
+
+0:26:03.960,0:26:08.940
+they do what's called negative mining so
+
+0:26:06.890,0:26:10.740
+you go through a large collection of
+
+0:26:08.940,0:26:12.510
+images when you know for a fact that
+
+0:26:10.740,0:26:17.270
+there is no face and you run your
+
+0:26:12.510,0:26:22.170
+detector and you keep all the patches
+
+0:26:17.270,0:26:24.480
+where you detector fires you verify that
+
+0:26:22.170,0:26:26.220
+there is no faces in them and if there
+
+0:26:24.480,0:26:29.430
+is no face you add them to your negative
+
+0:26:26.220,0:26:31.260
+set okay then you retrain your detector
+
+0:26:29.430,0:26:33.240
+and then you use your rich mine detector
+
+0:26:31.260,0:26:35.580
+to do the same go again through a large
+
+0:26:33.240,0:26:38.040
+dataset of images where there you know
+
+0:26:35.580,0:26:40.170
+there is no face and whenever your
+
+0:26:38.040,0:26:42.780
+detector fires add that as a negative
+
+0:26:40.170,0:26:46.260
+sample you do this four or five times
+
+0:26:42.780,0:26:48.990
+and in the end you have a very robust
+
+0:26:46.260,0:26:53.880
+face detector that it does not fall
+
+0:26:48.990,0:26:55.500
+victim to negative samples these are all
+
+0:26:53.880,0:26:58.670
+things that look like faces in natural
+
+0:26:55.500,0:26:58.670
+images are not faces
+
+0:27:03.049,0:27:15.260
+this works really well this is over 15
+
+0:27:12.169,0:27:21.250
+years old work this is my grandparents
+
+0:27:15.260,0:27:21.250
+marriage buy their wedding their wedding
+
+0:27:21.910,0:27:27.320
+okay
+
+0:27:24.500,0:27:29.799
+so here's a another interesting use of
+
+0:27:27.320,0:27:31.640
+convolutional nets and this is for
+
+0:27:29.799,0:27:33.740
+semantic segmentation what's called
+
+0:27:31.640,0:27:37.100
+semantic segmentation alluded to this in
+
+0:27:33.740,0:27:40.070
+the first the first lecture so what is
+
+0:27:37.100,0:27:42.919
+17 segmentation is the problem of
+
+0:27:40.070,0:27:47.600
+assigning a category to every pixel in
+
+0:27:42.919,0:27:49.070
+an image and every pixel will be labeled
+
+0:27:47.600,0:27:51.799
+with a category of the object you belong
+
+0:27:49.070,0:27:54.230
+soon so imagine this would be very
+
+0:27:51.799,0:27:56.900
+useful if you want to say drive a robot
+
+0:27:54.230,0:27:59.450
+in nature so this is a robotics project
+
+0:27:56.900,0:28:03.470
+that I worked on my students and I
+
+0:27:59.450,0:28:05.270
+worked on a long time ago and what you
+
+0:28:03.470,0:28:09.320
+like is to label the image so that
+
+0:28:05.270,0:28:12.230
+regions that the robot can drive on are
+
+0:28:09.320,0:28:13.909
+indicated and areas that are obstacles
+
+0:28:12.230,0:28:17.330
+also indicated so the robot doesn't
+
+0:28:13.909,0:28:19.400
+right there okay so here the green areas
+
+0:28:17.330,0:28:21.950
+are things that the robot can drive on
+
+0:28:19.400,0:28:29.750
+and the red areas are obstacles like
+
+0:28:21.950,0:28:31.970
+tall grass in decades so the way you you
+
+0:28:29.750,0:28:33.679
+train a convolutional net to do to do
+
+0:28:31.970,0:28:36.020
+this kind of semantic segmentation is
+
+0:28:33.679,0:28:39.860
+very similar to what I just described
+
+0:28:36.020,0:28:43.010
+you you take a patch from the image in
+
+0:28:39.860,0:28:44.480
+this case I think the patches were 20 by
+
+0:28:43.010,0:28:47.780
+40 or something like that right sorry
+
+0:28:44.480,0:28:49.970
+small for which you know what the
+
+0:28:47.780,0:28:51.530
+central pixel is whether it's
+
+0:28:49.970,0:28:54.049
+traversable or not whether it's green or
+
+0:28:51.530,0:28:55.669
+red okay either is being manually
+
+0:28:54.049,0:28:58.490
+labeled or the label has been obtained
+
+0:28:55.669,0:29:00.110
+in some way and you're going to comment
+
+0:28:58.490,0:29:01.610
+on this patch and you train it you know
+
+0:29:00.110,0:29:06.470
+tell me if it's if he's green or red
+
+0:29:01.610,0:29:08.090
+tell me if it's drivable area or not and
+
+0:29:06.470,0:29:10.549
+once the system is trying to apply it on
+
+0:29:08.090,0:29:12.980
+the entire image and it you know it puts
+
+0:29:10.549,0:29:14.240
+green or red depending on where it is in
+
+0:29:12.980,0:29:14.730
+this particular case actually there were
+
+0:29:14.240,0:29:17.669
+five
+
+0:29:14.730,0:29:20.549
+there's the super green green purple
+
+0:29:17.669,0:29:21.840
+which is a foot of an object red which
+
+0:29:20.549,0:29:23.730
+is an obstacle that you know chew off
+
+0:29:21.840,0:29:26.910
+and super red which is like a definite
+
+0:29:23.730,0:29:29.940
+obstacle over here we're only showing
+
+0:29:26.910,0:29:35.250
+three three colors now in this
+
+0:29:29.940,0:29:36.540
+particular project the the labels were
+
+0:29:35.250,0:29:40.530
+actually collected automatically you
+
+0:29:36.540,0:29:42.630
+didn't have to manually label the images
+
+0:29:40.530,0:29:45.390
+and the patches what we do would be to
+
+0:29:42.630,0:29:50.630
+run the robot around and then through
+
+0:29:45.390,0:29:52.559
+stereo vision figure out if a pixel is a
+
+0:29:50.630,0:29:56.669
+correspond to an object that sticks out
+
+0:29:52.559,0:29:58.230
+of the ground or is on the ground so the
+
+0:29:56.669,0:30:01.799
+the middle column here it says stereo
+
+0:29:58.230,0:30:04.140
+labels these are labels so the color
+
+0:30:01.799,0:30:06.049
+green or red is computed from stereo
+
+0:30:04.140,0:30:08.809
+vision from basically 3d reconstruction
+
+0:30:06.049,0:30:11.160
+okay so four you have two cameras and
+
+0:30:08.809,0:30:12.990
+the two cameras can estimate the
+
+0:30:11.160,0:30:14.520
+distance of every pixel by basically
+
+0:30:12.990,0:30:16.380
+comparing patches it's relatively
+
+0:30:14.520,0:30:18.320
+expensive but it kind of works it's not
+
+0:30:16.380,0:30:20.429
+completely reliable but it sort of works
+
+0:30:18.320,0:30:22.860
+so we're not for every pixel you have a
+
+0:30:20.429,0:30:24.150
+depth the distance from the camera which
+
+0:30:22.860,0:30:26.130
+means you know the position of that
+
+0:30:24.150,0:30:27.570
+pixel in 3d which means you know if it
+
+0:30:26.130,0:30:28.770
+sticks out out of the ground or if it's
+
+0:30:27.570,0:30:31.919
+on the ground because you can fit a
+
+0:30:28.770,0:30:33.950
+plane to the ground okay so the green
+
+0:30:31.919,0:30:36.630
+pixels are the ones that are basically
+
+0:30:33.950,0:30:39.990
+you know near the ground and the red
+
+0:30:36.630,0:30:41.880
+ones are the ones that are up so now you
+
+0:30:39.990,0:30:45.540
+have labels you can try and accomplish
+
+0:30:41.880,0:30:47.400
+on that to predict those labels then you
+
+0:30:45.540,0:30:48.600
+will tell me why would you want to try
+
+0:30:47.400,0:30:51.540
+to accomplish on that to do this if you
+
+0:30:48.600,0:30:53.400
+can do this from stereo and the answer
+
+0:30:51.540,0:30:56.250
+is stereo and it works out to ten meters
+
+0:30:53.400,0:30:58.110
+roughly past ten meters you can't really
+
+0:30:56.250,0:30:59.490
+using binocular vision and stereo vision
+
+0:30:58.110,0:31:01.620
+you can really estimate the distance
+
+0:30:59.490,0:31:04.080
+very well and so the only works out to
+
+0:31:01.620,0:31:07.230
+about ten meters and driving a robot by
+
+0:31:04.080,0:31:10.080
+only looking ten meters ahead of you is
+
+0:31:07.230,0:31:10.919
+not a good idea it's like driving a car
+
+0:31:10.080,0:31:13.880
+in the fog
+
+0:31:10.919,0:31:16.590
+right it's gonna it's not very efficient
+
+0:31:13.880,0:31:19.799
+so what you used accomplished on that
+
+0:31:16.590,0:31:23.630
+for is to label every pixel in the image
+
+0:31:19.799,0:31:26.159
+up to the horizon essentially
+
+0:31:23.630,0:31:27.140
+okay so the cool thing about about this
+
+0:31:26.159,0:31:29.550
+this
+
+0:31:27.140,0:31:34.230
+as I said the labels were connected in a
+
+0:31:29.550,0:31:37.410
+medically but also the robot adapted
+
+0:31:34.230,0:31:40.020
+itself as it run because he collects
+
+0:31:37.410,0:31:42.750
+Osteria labels constantly it can
+
+0:31:40.020,0:31:45.030
+constantly retrain its neural net to
+
+0:31:42.750,0:31:47.100
+adapt to the environment it's in in this
+
+0:31:45.030,0:31:48.990
+particular instance of this robot
+
+0:31:47.100,0:31:51.690
+it would only will only return the last
+
+0:31:48.990,0:31:53.490
+layer so the N minus 1 layers of the
+
+0:31:51.690,0:31:55.770
+complet were fixed were trained in the
+
+0:31:53.490,0:32:00.180
+in the lab and then the last layer was
+
+0:31:55.770,0:32:01.590
+kind of adapted as the robot run a lot
+
+0:32:00.180,0:32:02.340
+of about to deal with environments he'd
+
+0:32:01.590,0:32:05.340
+never seen before
+
+0:32:02.340,0:32:12.150
+essentially you still have long-range
+
+0:32:05.340,0:32:15.000
+vision the input to the the comp network
+
+0:32:12.150,0:32:18.200
+basically multiscale views of sort of
+
+0:32:15.000,0:32:23.370
+bands of the image around the horizon
+
+0:32:18.200,0:32:24.720
+the need to into details is a very small
+
+0:32:23.370,0:32:27.600
+neural net by today's standard but
+
+0:32:24.720,0:32:29.400
+that's what we could afford I have a
+
+0:32:27.600,0:32:34.850
+video I'm not sure it's gonna work but
+
+0:32:29.400,0:32:34.850
+I'll try yeah it works
+
+0:32:40.860,0:32:44.740
+so I should tell you a little bit about
+
+0:32:42.880,0:32:55.870
+the castor character he characters here
+
+0:32:44.740,0:32:58.060
+so huh you don't want the audio so
+
+0:32:55.870,0:33:00.310
+custom in our way ahead sales were right
+
+0:32:58.060,0:33:03.670
+headset with two students working with
+
+0:33:00.310,0:33:05.380
+me on this project two PhD students tRNA
+
+0:33:03.670,0:33:06.610
+is a Google brain he works on robotics
+
+0:33:05.380,0:33:08.550
+and right ahead sales director of
+
+0:33:06.610,0:33:12.160
+Robotics at deep mind
+
+0:33:08.550,0:33:14.710
+Marcus coach is NVIDIA my Grimes is a
+
+0:33:12.160,0:33:17.760
+deep mind young Ben is at mobilize which
+
+0:33:14.710,0:33:21.580
+is not Intel actually Eric Allen is at
+
+0:33:17.760,0:33:24.520
+Twitter and what smarter is still
+
+0:33:21.580,0:33:25.870
+working with us is actually head of a
+
+0:33:24.520,0:33:28.330
+big group that works on autonomous
+
+0:33:25.870,0:33:33.520
+driving at Nvidia and he is
+
+0:33:28.330,0:33:37.630
+collaborating with us actually our
+
+0:33:33.520,0:33:43.240
+further works on this project so this is
+
+0:33:37.630,0:33:46.960
+a robot and it can drive it about you
+
+0:33:43.240,0:33:48.580
+know sort of fast walking speed and it's
+
+0:33:46.960,0:33:52.330
+supposed to drive itself in sort of
+
+0:33:48.580,0:33:54.760
+nature so it's got this mass with four
+
+0:33:52.330,0:33:58.420
+eyes there are two stereo pairs to two
+
+0:33:54.760,0:34:00.220
+stereo camera pairs and it has three
+
+0:33:58.420,0:34:01.600
+computers in the belly so it's
+
+0:34:00.220,0:34:04.510
+completely autonomous it doesn't talk to
+
+0:34:01.600,0:34:08.919
+the network or anything and those those
+
+0:34:04.510,0:34:14.860
+three computers I'm on the left that's
+
+0:34:08.919,0:34:17.500
+when I had a pony tail okay so here the
+
+0:34:14.860,0:34:19.300
+the system is the the neural net is
+
+0:34:17.500,0:34:20.500
+crippled so the we didn't turn on the
+
+0:34:19.300,0:34:22.030
+neural Nets it's only using stereo
+
+0:34:20.500,0:34:24.130
+vision and now it's using the neural net
+
+0:34:22.030,0:34:25.929
+so it's it's pretty far away from this
+
+0:34:24.130,0:34:28.360
+bear barrier but it sees it and so it
+
+0:34:25.929,0:34:30.280
+directly goes to the side it wants to go
+
+0:34:28.360,0:34:30.610
+to a goal a GPS coordinate that's behind
+
+0:34:30.280,0:34:32.620
+it
+
+0:34:30.610,0:34:34.450
+same here he wants to go to a GPS
+
+0:34:32.620,0:34:36.970
+coordinate behind it and it sees right
+
+0:34:34.450,0:34:39.070
+away that there is this war with people
+
+0:34:36.970,0:34:40.810
+that he can go through the guy on the
+
+0:34:39.070,0:34:42.370
+right here is Marcos coach he is holding
+
+0:34:40.810,0:34:45.540
+the transmitter is not driving the robot
+
+0:34:42.370,0:34:45.540
+but is holding the kill switch
+
+0:34:48.349,0:34:56.519
+and so you know that's what the the the
+
+0:34:53.759,0:35:04.619
+commercial net looks like we're really
+
+0:34:56.519,0:35:07.619
+small but to the standard and and it
+
+0:35:04.619,0:35:09.990
+produces for every every location every
+
+0:35:07.619,0:35:11.970
+patch on the input the second last layer
+
+0:35:09.990,0:35:13.410
+is a 100 100 dimensional vector that
+
+0:35:11.970,0:35:15.599
+goes into a classifier that classifies
+
+0:35:13.410,0:35:17.819
+into five categories so once the system
+
+0:35:15.599,0:35:19.890
+classifies each of those five categories
+
+0:35:17.819,0:35:21.900
+in the image you can you can warp the
+
+0:35:19.890,0:35:23.940
+image into a map that's centered on the
+
+0:35:21.900,0:35:25.980
+robot and you can you can do planning in
+
+0:35:23.940,0:35:27.359
+this map to figure out like how to avoid
+
+0:35:25.980,0:35:29.490
+obstacles and stuff like that
+
+0:35:27.359,0:35:31.109
+so this is what this thing does it's a
+
+0:35:29.490,0:35:40.009
+particular map called a hyperbolic map
+
+0:35:31.109,0:35:44.249
+but it's not important for now now that
+
+0:35:40.009,0:35:46.349
+because this was you know 2007 the
+
+0:35:44.249,0:35:48.150
+computers were slowly with no GPUs so we
+
+0:35:46.349,0:35:50.359
+could run this we could run this neural
+
+0:35:48.150,0:35:52.980
+net only at about one frame per second
+
+0:35:50.359,0:35:54.420
+as you can see here the at the bottom it
+
+0:35:52.980,0:35:56.549
+updates about one frame per second and
+
+0:35:54.420,0:35:58.109
+so if you have someone kind of walking
+
+0:35:56.549,0:35:59.609
+in front of the robot the robot won't
+
+0:35:58.109,0:36:02.400
+see it for a second and will you know
+
+0:35:59.609,0:36:04.440
+run over it so that's why we have a
+
+0:36:02.400,0:36:06.569
+second vision system here at the top
+
+0:36:04.440,0:36:10.170
+this one is stereo it doesn't use a
+
+0:36:06.569,0:36:11.970
+neural net odometry I think we don't
+
+0:36:10.170,0:36:16.230
+care this is the controller which is
+
+0:36:11.970,0:36:19.289
+also learned but we don't care and this
+
+0:36:16.230,0:36:20.970
+is the the system here again it's vision
+
+0:36:19.289,0:36:22.589
+is crippled they can only see up to two
+
+0:36:20.970,0:36:26.029
+point two and a half meters so it's very
+
+0:36:22.589,0:36:30.809
+short but it kind of does a decent job
+
+0:36:26.029,0:36:32.430
+and this is to test this sort of fast
+
+0:36:30.809,0:36:33.930
+reacting vision systems or here
+
+0:36:32.430,0:36:38.039
+pierre-simon a is jumping in front of it
+
+0:36:33.930,0:36:39.359
+and the robot stops right away so that
+
+0:36:38.039,0:36:43.019
+now that's the full system with
+
+0:36:39.359,0:36:45.470
+long-range vision and I know in grad
+
+0:36:43.019,0:36:45.470
+students
+
+0:36:48.870,0:36:54.150
+right so it's kind of giving up
+
+0:37:03.470,0:37:14.249
+okay oops okay so that's called semantic
+
+0:37:12.089,0:37:15.960
+segmentation but the real form of sanity
+
+0:37:14.249,0:37:17.880
+segmentation is one in which you you
+
+0:37:15.960,0:37:20.430
+give an object category for every
+
+0:37:17.880,0:37:23.069
+location so that's the kind of problem
+
+0:37:20.430,0:37:26.269
+here we're talking about where every
+
+0:37:23.069,0:37:29.299
+pixel is either building or sky or
+
+0:37:26.269,0:37:32.910
+Street or a car or something like this
+
+0:37:29.299,0:37:34.319
+and around 2010 a couple datasets
+
+0:37:32.910,0:37:36.539
+started appearing with a few thousand
+
+0:37:34.319,0:37:41.819
+images where you could train vision
+
+0:37:36.539,0:37:44.609
+systems to do this and so they technique
+
+0:37:41.819,0:37:48.690
+here is essentially identical to the one
+
+0:37:44.609,0:37:52.200
+I described it's also multi scale so you
+
+0:37:48.690,0:37:55.259
+basically have an input image you have
+
+0:37:52.200,0:37:57.720
+accomplish on that that has a set of
+
+0:37:55.259,0:37:59.729
+outputs that you know one for each
+
+0:37:57.720,0:38:03.599
+category of objects for which you
+
+0:37:59.729,0:38:05.489
+available which is 33 when you back for
+
+0:38:03.599,0:38:07.680
+Jack why not put accomplish on it onto
+
+0:38:05.489,0:38:09.900
+the input it corresponds to an input
+
+0:38:07.680,0:38:13.829
+window of 46 by 46 windows so it's using
+
+0:38:09.900,0:38:16.140
+a context of 46 546 pixels to make the
+
+0:38:13.829,0:38:18.719
+decision about a single pixel at least
+
+0:38:16.140,0:38:22.079
+that's the the denominator the back at
+
+0:38:18.719,0:38:23.640
+the bottom but it has out 46 but 46 is
+
+0:38:22.079,0:38:25.680
+not enough if you want to decide what a
+
+0:38:23.640,0:38:28.619
+great pixel is is it the shirt of the
+
+0:38:25.680,0:38:30.660
+person is it the street is it the cloud
+
+0:38:28.619,0:38:33.269
+or kind of pixel on the mountain
+
+0:38:30.660,0:38:36.509
+you have to look at a wider context to
+
+0:38:33.269,0:38:37.680
+be able to make that decision so we use
+
+0:38:36.509,0:38:40.529
+again this kind of multiscale approach
+
+0:38:37.680,0:38:42.569
+where the same image is reduced by a
+
+0:38:40.529,0:38:44.339
+factor of 2 and a factor of 4 and you
+
+0:38:42.569,0:38:46.440
+run those to those those two extra
+
+0:38:44.339,0:38:48.440
+images to the same commercial net same
+
+0:38:46.440,0:38:50.999
+weight same kernel same everything
+
+0:38:48.440,0:38:52.950
+except the the last feature map you
+
+0:38:50.999,0:38:54.900
+upscale them so that they have the same
+
+0:38:52.950,0:38:56.460
+size as the original one and now you
+
+0:38:54.900,0:38:58.410
+take those combined feature Maps and
+
+0:38:56.460,0:39:00.960
+send them to a couple layers of a
+
+0:38:58.410,0:39:04.410
+classifier so now the classifier to make
+
+0:39:00.960,0:39:07.229
+its decision has for 46 by 46 windows on
+
+0:39:04.410,0:39:10.650
+images of the rescaled and so the
+
+0:39:07.229,0:39:14.130
+effective size of the context now is is
+
+0:39:10.650,0:39:16.740
+184 by 184 window because the
+
+0:39:14.130,0:39:25.050
+the course kale Network basically looks
+
+0:39:16.740,0:39:26.670
+at more this entire image then you can
+
+0:39:25.050,0:39:29.550
+clean it up in various way I'm not gonna
+
+0:39:26.670,0:39:38.490
+go to details for this but it works
+
+0:39:29.550,0:39:40.470
+quite well so this is the result the guy
+
+0:39:38.490,0:39:43.800
+who did this in my lab is kemo sabe he's
+
+0:39:40.470,0:39:45.660
+a VP at Nvidia now in charge of all of
+
+0:39:43.800,0:39:51.600
+machine learning infrastructure and the
+
+0:39:45.660,0:39:55.440
+tournament driving not surprisingly and
+
+0:39:51.600,0:39:56.670
+and so that system you know this is this
+
+0:39:55.440,0:40:00.210
+is what she saw Square Park by the way
+
+0:39:56.670,0:40:02.220
+so this is the NYU campus it's not
+
+0:40:00.210,0:40:05.700
+perfect far from that from that you know
+
+0:40:02.220,0:40:10.740
+it identified some areas of the street
+
+0:40:05.700,0:40:13.250
+as sand or desert and there's no beach
+
+0:40:10.740,0:40:18.390
+I'm aware of in Washington Square Park
+
+0:40:13.250,0:40:20.580
+and but you know at the time this was
+
+0:40:18.390,0:40:21.840
+the kind of system of this kind at the
+
+0:40:20.580,0:40:24.960
+the number of training samples for this
+
+0:40:21.840,0:40:26.970
+was very small so it was kind of it was
+
+0:40:24.960,0:40:33.660
+about 2,000 or 3,000 images something
+
+0:40:26.970,0:40:37.140
+like that you run you take a you take a
+
+0:40:33.660,0:40:40.320
+full resolution image you run it to the
+
+0:40:37.140,0:40:42.690
+first n minus 2 layers of your jewel
+
+0:40:40.320,0:40:44.670
+ComNet that gives you your future Maps
+
+0:40:42.690,0:40:46.440
+then you reduce the image by a factor of
+
+0:40:44.670,0:40:48.270
+two run it again you get a bunch of
+
+0:40:46.440,0:40:50.820
+teacher map sort of smaller then running
+
+0:40:48.270,0:40:53.310
+again by reducing by five to a four you
+
+0:40:50.820,0:40:54.720
+get smaller future maps now you take the
+
+0:40:53.310,0:40:56.130
+small feature map and you Rin scale it
+
+0:40:54.720,0:40:57.660
+you're up sample it so it's the same
+
+0:40:56.130,0:40:59.760
+size as the first one same for the
+
+0:40:57.660,0:41:03.450
+second one you stack all those feature
+
+0:40:59.760,0:41:07.020
+maps together okay and that UN you heed
+
+0:41:03.450,0:41:07.980
+to two layers for a classifier for every
+
+0:41:07.020,0:41:10.290
+patch
+
+0:41:07.980,0:41:12.590
+yeah the paper was rejected from cvpr
+
+0:41:10.290,0:41:16.020
+2012 even though the results were
+
+0:41:12.590,0:41:21.450
+record-breaking and it was faster than
+
+0:41:16.020,0:41:22.890
+the best competing method by 5050 even
+
+0:41:21.450,0:41:25.140
+running on standard hardware but we also
+
+0:41:22.890,0:41:26.980
+had implementation on special hardware
+
+0:41:25.140,0:41:29.140
+that was incredibly fast
+
+0:41:26.980,0:41:31.119
+and people didn't know what the
+
+0:41:29.140,0:41:33.390
+commercial net was at the time and so
+
+0:41:31.119,0:41:36.640
+the reviewer is basically you could not
+
+0:41:33.390,0:41:38.410
+fathom that the method they'd never
+
+0:41:36.640,0:41:40.480
+heard of could work so well this is
+
+0:41:38.410,0:41:42.490
+probably one is way more to say about
+
+0:41:40.480,0:41:44.500
+called nets but I encourage you to take
+
+0:41:42.490,0:41:47.980
+a computer vision course for to hear
+
+0:41:44.500,0:41:49.390
+about this yeah this is okay this data
+
+0:41:47.980,0:41:53.770
+set this particular leaders said that we
+
+0:41:49.390,0:41:56.560
+use is a collection of images street
+
+0:41:53.770,0:42:04.630
+images that was collected mostly by
+
+0:41:56.560,0:42:07.600
+antonio de alba at MIT and he had a sort
+
+0:42:04.630,0:42:09.640
+of a tool for kind of labeling so you
+
+0:42:07.600,0:42:11.080
+could you know you could sort of draw
+
+0:42:09.640,0:42:13.900
+the control over the object and then
+
+0:42:11.080,0:42:16.119
+label of the object and so if it would
+
+0:42:13.900,0:42:17.830
+kind of you know fill up the object
+
+0:42:16.119,0:42:23.200
+most of the segmentations were done by
+
+0:42:17.830,0:42:29.800
+his mother who's in Spain she had a lot
+
+0:42:23.200,0:42:32.260
+of time to spend doing this huh his
+
+0:42:29.800,0:42:38.710
+mother yeah labeled that stuff yeah this
+
+0:42:32.260,0:42:40.240
+wasn't a late late 2000 okay now let's
+
+0:42:38.710,0:42:44.740
+talk about a bunch of different
+
+0:42:40.240,0:42:47.290
+architectures right so you know as I
+
+0:42:44.740,0:42:49.330
+mentioned before the idea of decoding is
+
+0:42:47.290,0:42:50.410
+that you have this catalog of modules
+
+0:42:49.330,0:42:53.710
+that you can assemble in sort of
+
+0:42:50.410,0:42:57.130
+different graphs and and know together
+
+0:42:53.710,0:43:00.730
+to do different functions and and all of
+
+0:42:57.130,0:43:02.740
+the expertise in deep learning is to
+
+0:43:00.730,0:43:04.390
+design those architectures to do
+
+0:43:02.740,0:43:05.800
+something in particular it's a little
+
+0:43:04.390,0:43:09.100
+bit like you know in the early days of
+
+0:43:05.800,0:43:11.530
+computer science coming up with an
+
+0:43:09.100,0:43:15.060
+algorithm to write a program was kind of
+
+0:43:11.530,0:43:17.590
+a new concept you know reducing a
+
+0:43:15.060,0:43:19.390
+problem to kind of a set of instructions
+
+0:43:17.590,0:43:21.190
+that could be run on a computer it was
+
+0:43:19.390,0:43:22.840
+kind of something new and here it's the
+
+0:43:21.190,0:43:25.570
+same problem you have to sort of imagine
+
+0:43:22.840,0:43:29.560
+how to reduce a complex function in to
+
+0:43:25.570,0:43:31.540
+serve a graph possibly dynamic graph of
+
+0:43:29.560,0:43:32.980
+functional modules that you don't need
+
+0:43:31.540,0:43:34.930
+to know completely the function of but
+
+0:43:32.980,0:43:36.730
+that you're going to whose function is
+
+0:43:34.930,0:43:37.990
+gonna be finalized by learning but the
+
+0:43:36.730,0:43:38.920
+architecture is super important of
+
+0:43:37.990,0:43:41.230
+course
+
+0:43:38.920,0:43:43.680
+as we saw with commercial Nets the first
+
+0:43:41.230,0:43:46.000
+important category is recurrent net so
+
+0:43:43.680,0:43:50.010
+we've we've seen when we talked about
+
+0:43:46.000,0:43:52.000
+the backpropagation there's a big
+
+0:43:50.010,0:43:53.980
+condition of the condition was that the
+
+0:43:52.000,0:43:57.250
+graph of the interconnection of the
+
+0:43:53.980,0:44:00.760
+module could not have loops okay it had
+
+0:43:57.250,0:44:02.529
+to be a graph for which there is sort of
+
+0:44:00.760,0:44:05.589
+at least a partial order of the module
+
+0:44:02.529,0:44:07.539
+so that you can compute the the the
+
+0:44:05.589,0:44:08.859
+modules in such a way that when you
+
+0:44:07.539,0:44:12.250
+compute the output of a module all of
+
+0:44:08.859,0:44:15.099
+its inputs are available but Rakata net
+
+0:44:12.250,0:44:16.599
+is one in which your groups how do you
+
+0:44:15.099,0:44:19.569
+deal with this so here is an example of
+
+0:44:16.599,0:44:21.490
+a recurrent net architecture where you
+
+0:44:19.569,0:44:23.920
+have an input which varies over time X
+
+0:44:21.490,0:44:26.289
+of T that goes through the first neural
+
+0:44:23.920,0:44:29.049
+net let's call it an encoder that
+
+0:44:26.289,0:44:31.779
+produces a representation of the of the
+
+0:44:29.049,0:44:33.579
+input let's go eat H of T and it goes
+
+0:44:31.779,0:44:35.260
+into a record layer this recurrent layer
+
+0:44:33.579,0:44:37.180
+is a function G that depends on
+
+0:44:35.260,0:44:38.650
+trainable parameters W this trainable
+
+0:44:37.180,0:44:39.400
+parameters also for the encoder but I
+
+0:44:38.650,0:44:43.930
+didn't mention it
+
+0:44:39.400,0:44:45.460
+and that recurrent layer takes you to
+
+0:44:43.930,0:44:46.839
+account H of T which is the
+
+0:44:45.460,0:44:48.730
+representation of the input but it also
+
+0:44:46.839,0:44:51.279
+takes into account Z of T minus one
+
+0:44:48.730,0:44:52.960
+which is the sort of a hidden state
+
+0:44:51.279,0:44:55.450
+which is its I put at a previous time
+
+0:44:52.960,0:44:58.420
+step its own output at a previous time
+
+0:44:55.450,0:45:00.450
+step okay this G function can be a very
+
+0:44:58.420,0:45:02.859
+complicated neural net inside
+
+0:45:00.450,0:45:04.839
+conditioned net whatever could be as
+
+0:45:02.859,0:45:08.369
+complicated as you want but what's
+
+0:45:04.839,0:45:12.660
+important is that one of its inputs is
+
+0:45:08.369,0:45:16.269
+its output at a previous time step okay
+
+0:45:12.660,0:45:20.200
+0 of T minus 1 so that's why this delay
+
+0:45:16.269,0:45:22.690
+indicates here the input of G at time T
+
+0:45:20.200,0:45:24.309
+is actually Z of T minus 1 which is the
+
+0:45:22.690,0:45:29.559
+output its output at a previous time
+
+0:45:24.309,0:45:31.630
+step ok then I put of that record module
+
+0:45:29.559,0:45:33.670
+goes into a decoder which basically
+
+0:45:31.630,0:45:37.710
+produces an output ok so it turns a
+
+0:45:33.670,0:45:37.710
+heater representation Z into an output
+
+0:45:39.359,0:45:43.980
+so how do you do this
+
+0:45:41.319,0:45:43.980
+you unroll the loop
+
+0:45:44.230,0:45:49.990
+so this is basically the same diagram
+
+0:45:45.910,0:45:53.260
+but I've unrolled it in time okay so I
+
+0:45:49.990,0:45:55.150
+time I times 0 I have X of 0 that goes
+
+0:45:53.260,0:45:57.760
+through the encoder produces H of 0 and
+
+0:45:55.150,0:46:00.660
+then I apply the G function I start with
+
+0:45:57.760,0:46:04.119
+a Z arbitrary Z that is 0 or something
+
+0:46:00.660,0:46:05.740
+and I apply the function and I get 0 0
+
+0:46:04.119,0:46:11.410
+and that goes into the decoder produces
+
+0:46:05.740,0:46:14.170
+an output okay and then nada has Z 0 at
+
+0:46:11.410,0:46:18.070
+time step 1 I can use the 0 as the
+
+0:46:14.170,0:46:20.290
+previous output for the time step ok now
+
+0:46:18.070,0:46:21.970
+the output is X of 1 and time 1 I run
+
+0:46:20.290,0:46:23.650
+through the encoder I run through the
+
+0:46:21.970,0:46:26.890
+recurrent layer which is now no longer
+
+0:46:23.650,0:46:30.970
+recurrent and run through the decoder
+
+0:46:26.890,0:46:32.589
+and then the next time step etc ok this
+
+0:46:30.970,0:46:38.200
+network that's involved in time doesn't
+
+0:46:32.589,0:46:39.790
+have a tubes anymore which means I can
+
+0:46:38.200,0:46:42.250
+run back fought through it so if I have
+
+0:46:39.790,0:46:45.520
+an objective function that says the last
+
+0:46:42.250,0:46:47.109
+output should be the particular one or
+
+0:46:45.520,0:46:50.440
+maybe the trajectory should be a
+
+0:46:47.109,0:46:51.550
+particular one of the outputs I can just
+
+0:46:50.440,0:46:56.400
+back propagate gradient through this
+
+0:46:51.550,0:46:58.780
+thing it's a regular network with one
+
+0:46:56.400,0:47:03.099
+particular characteristic which is that
+
+0:46:58.780,0:47:07.119
+every block shares to share the same
+
+0:47:03.099,0:47:09.460
+weights okay so the three instances of
+
+0:47:07.119,0:47:10.810
+the encoder they are the same in quarter
+
+0:47:09.460,0:47:11.829
+at two different time steps three
+
+0:47:10.810,0:47:13.750
+different time steps so they have the
+
+0:47:11.829,0:47:16.030
+same weights the same G functions has
+
+0:47:13.750,0:47:22.569
+the same ways to the three decoders are
+
+0:47:16.030,0:47:25.690
+the same ways yes it can be variable you
+
+0:47:22.569,0:47:27.069
+know I have to decide in advance but it
+
+0:47:25.690,0:47:31.240
+depends on the length of your input
+
+0:47:27.069,0:47:32.770
+sequence basically right and you know
+
+0:47:31.240,0:47:36.010
+it's you can you can run it for as long
+
+0:47:32.770,0:47:37.690
+as you want you know it's the same way
+
+0:47:36.010,0:47:41.859
+it's all over so you can just you know
+
+0:47:37.690,0:47:43.690
+repeat the operation okay this technique
+
+0:47:41.859,0:47:45.670
+of unrolling and then back propagating
+
+0:47:43.690,0:47:49.500
+through time basically is called
+
+0:47:45.670,0:47:52.970
+surprisingly PTT back prop through time
+
+0:47:49.500,0:47:56.210
+it's pretty obvious
+
+0:47:52.970,0:47:58.820
+that's all there is to it
+
+0:47:56.210,0:48:05.340
+unfortunately they don't work very well
+
+0:47:58.820,0:48:08.730
+at least not in their naive form so in
+
+0:48:05.340,0:48:10.590
+the net form so a simple form of
+
+0:48:08.730,0:48:13.140
+recurrent net is one in which the
+
+0:48:10.590,0:48:14.880
+encoder is linear the G function is
+
+0:48:13.140,0:48:18.390
+linear with high probably tangent or
+
+0:48:14.880,0:48:20.070
+sigmoid or perhaps value and the decoder
+
+0:48:18.390,0:48:21.780
+also is linear something like this maybe
+
+0:48:20.070,0:48:25.320
+with a regular or something like that
+
+0:48:21.780,0:48:26.730
+right so it could be very simple and you
+
+0:48:25.320,0:48:30.450
+get a number of problems with this and
+
+0:48:26.730,0:48:32.640
+one problem is the so called vanishing
+
+0:48:30.450,0:48:35.370
+gradient problem or exploding gradient
+
+0:48:32.640,0:48:37.590
+problem and it comes from the fact that
+
+0:48:35.370,0:48:41.600
+if you have a long sequence let's say I
+
+0:48:37.590,0:48:46.590
+don't know 50 10 steps every time you
+
+0:48:41.600,0:48:48.120
+back propagate gradients the gradients
+
+0:48:46.590,0:48:51.360
+that get multiplied by the weight matrix
+
+0:48:48.120,0:48:54.930
+of the G function okay
+
+0:48:51.360,0:48:57.450
+at every time step the gradients get
+
+0:48:54.930,0:48:59.610
+multiplied by the the weight matrix now
+
+0:48:57.450,0:49:02.280
+imagine the weight matrix has small
+
+0:48:59.610,0:49:04.140
+values in it which means that means that
+
+0:49:02.280,0:49:05.580
+every time you take your gradient you
+
+0:49:04.140,0:49:07.200
+multiply by the transpose of this matrix
+
+0:49:05.580,0:49:10.080
+to get the gradient at previous time
+
+0:49:07.200,0:49:12.390
+step you get a shorter vector you get a
+
+0:49:10.080,0:49:13.740
+smaller vector and you keep rolling the
+
+0:49:12.390,0:49:15.690
+the vector gets shorter and shorter
+
+0:49:13.740,0:49:17.370
+exponentially that's called the
+
+0:49:15.690,0:49:21.120
+vanishing gradient problem by the time
+
+0:49:17.370,0:49:22.710
+you get to the 50th time steps which is
+
+0:49:21.120,0:49:30.000
+really the first time step you don't get
+
+0:49:22.710,0:49:31.590
+any gradient conversely if the weight
+
+0:49:30.000,0:49:35.010
+matrix is really large and the
+
+0:49:31.590,0:49:37.860
+non-linearity and your recurrent layer
+
+0:49:35.010,0:49:40.140
+is not saturating your gradients can
+
+0:49:37.860,0:49:42.240
+explode if the weight matrix is large
+
+0:49:40.140,0:49:44.670
+every time you multiply the gradient by
+
+0:49:42.240,0:49:46.920
+the transpose of the matrix the vector
+
+0:49:44.670,0:49:48.810
+gets larger and it explodes which means
+
+0:49:46.920,0:49:50.160
+your weights are going to diverge when
+
+0:49:48.810,0:49:51.660
+you do a gradient step or you're gonna
+
+0:49:50.160,0:49:57.510
+have to use a tiny learning rate for it
+
+0:49:51.660,0:50:00.360
+to work so you have to use a lot of
+
+0:49:57.510,0:50:01.950
+tricks to make those things work here's
+
+0:50:00.360,0:50:03.630
+another problem the reason why you would
+
+0:50:01.950,0:50:05.190
+want to use a recurrent net why would
+
+0:50:03.630,0:50:09.190
+you want to use a recurrent net
+
+0:50:05.190,0:50:11.410
+the purported advantage of the current
+
+0:50:09.190,0:50:16.350
+net is that they can remember remember
+
+0:50:11.410,0:50:16.350
+things from far away in the past okay
+
+0:50:16.470,0:50:24.130
+if for example you imagine that the the
+
+0:50:20.950,0:50:28.060
+X's are our characters that you enter
+
+0:50:24.130,0:50:30.820
+one by one the characters come from I
+
+0:50:28.060,0:50:33.300
+don't know a C program or something like
+
+0:50:30.820,0:50:33.300
+that right
+
+0:50:33.700,0:50:38.740
+and what your system is supposed to tell
+
+0:50:37.060,0:50:40.090
+you at the end you know it reads a few
+
+0:50:38.740,0:50:42.520
+hundred characters corresponding to the
+
+0:50:40.090,0:50:45.280
+source code of a function and at the end
+
+0:50:42.520,0:50:48.100
+is you want to train your system so that
+
+0:50:45.280,0:50:50.800
+it produces one if it's a syntactically
+
+0:50:48.100,0:50:54.820
+correct program and minus one if it's
+
+0:50:50.800,0:50:56.140
+not okay hypothetical problem recurrent
+
+0:50:54.820,0:50:59.890
+Nets won't do it okay
+
+0:50:56.140,0:51:02.290
+at least not with our tricks now there
+
+0:50:59.890,0:51:05.320
+is a thing here which is the issue which
+
+0:51:02.290,0:51:07.150
+is that among other things this program
+
+0:51:05.320,0:51:11.590
+has to have balanced braces and
+
+0:51:07.150,0:51:13.330
+parentheses so it has to have a way of
+
+0:51:11.590,0:51:15.610
+remembering how many open panties is
+
+0:51:13.330,0:51:18.160
+there there are so that it can check
+
+0:51:15.610,0:51:20.170
+that you're closing them all or how many
+
+0:51:18.160,0:51:23.790
+open braces there are so so all of them
+
+0:51:20.170,0:51:28.330
+get get closed right so it has to store
+
+0:51:23.790,0:51:30.910
+eventually you know essentially within
+
+0:51:28.330,0:51:33.250
+its hidden state Z it has to store like
+
+0:51:30.910,0:51:35.800
+how many braces and and parentheses were
+
+0:51:33.250,0:51:37.000
+open if it wants to be able to tell at
+
+0:51:35.800,0:51:39.940
+the end that all of them have been
+
+0:51:37.000,0:51:45.790
+closed so it has to have some sort of
+
+0:51:39.940,0:51:49.830
+counter inside might yes it's going to
+
+0:51:45.790,0:51:49.830
+be a topic tomorrow
+
+0:51:50.550,0:51:54.520
+now if the program is very long that
+
+0:51:52.780,0:51:56.730
+means you know Z has to kind of preserve
+
+0:51:54.520,0:51:58.930
+information for a long time and
+
+0:51:56.730,0:52:00.490
+recurrent net you know give you the hope
+
+0:51:58.930,0:52:02.170
+that maybe a system like this can do
+
+0:52:00.490,0:52:04.870
+this but because of a vanishing gradient
+
+0:52:02.170,0:52:10.690
+problem they actually don't at least not
+
+0:52:04.870,0:52:12.040
+simple recurrent Nets of the type I just
+
+0:52:10.690,0:52:14.200
+described
+
+0:52:12.040,0:52:15.820
+so you have to use a bunch of tricks
+
+0:52:14.200,0:52:17.080
+those are tricks from you know your
+
+0:52:15.820,0:52:18.160
+ventures lab but there is a bunch of
+
+0:52:17.080,0:52:21.190
+them that were published by various
+
+0:52:18.160,0:52:25.090
+people like Thomas we cut off and
+
+0:52:21.190,0:52:26.620
+various other people so to avoid extra
+
+0:52:25.090,0:52:28.120
+ingredients you can clip the gradients
+
+0:52:26.620,0:52:29.650
+just you know make it you know if the
+
+0:52:28.120,0:52:34.050
+gradients get too large you just kind of
+
+0:52:29.650,0:52:34.050
+squash them down just normalize them
+
+0:52:34.680,0:52:39.550
+weak integration momentum I'm gonna
+
+0:52:37.030,0:52:40.960
+mention that a good initialization so
+
+0:52:39.550,0:52:43.690
+you want to neutralize the weight
+
+0:52:40.960,0:52:45.820
+matrices so that they preserves the norm
+
+0:52:43.690,0:52:47.440
+more or less this is actually a whole
+
+0:52:45.820,0:52:50.200
+bunch of papers on this on orthogonal
+
+0:52:47.440,0:52:58.420
+neural nets and invertible the recurrent
+
+0:52:50.200,0:53:02.350
+Nets but the big trick is SC m and gr
+
+0:52:58.420,0:53:03.610
+use okay so what is that before I talk
+
+0:53:02.350,0:53:07.750
+about that I'm gonna talk about
+
+0:53:03.610,0:53:11.500
+multiplicative modules so what I want to
+
+0:53:07.750,0:53:14.050
+get to modules they're basically modules
+
+0:53:11.500,0:53:15.430
+in which you you can multiply things
+
+0:53:14.050,0:53:16.930
+with each other so instead of just
+
+0:53:15.430,0:53:19.810
+computing a weighted sum of inputs you
+
+0:53:16.930,0:53:21.940
+compute products of inputs and then
+
+0:53:19.810,0:53:24.280
+weighted sum of that okay so you have an
+
+0:53:21.940,0:53:28.120
+example of this on the top left on the
+
+0:53:24.280,0:53:30.820
+top so the output of a system here is
+
+0:53:28.120,0:53:32.890
+just a weighted sum of weights and
+
+0:53:30.820,0:53:35.470
+inputs okay
+
+0:53:32.890,0:53:37.390
+classic but the weights actually
+
+0:53:35.470,0:53:39.430
+themselves are weighted sums of weights
+
+0:53:37.390,0:53:42.250
+and inputs okay
+
+0:53:39.430,0:53:44.770
+so W IJ here which is the IJ s term in
+
+0:53:42.250,0:53:47.770
+the weight matrix of the module we're
+
+0:53:44.770,0:53:52.090
+considering is actually itself a
+
+0:53:47.770,0:53:58.720
+weighted sum of three third order tenser
+
+0:53:52.090,0:54:00.940
+u ijk weighted by variables decades okay
+
+0:53:58.720,0:54:07.300
+so basically what you get is that W IJ
+
+0:54:00.940,0:54:11.050
+is kind of a weighted sum of matrices u
+
+0:54:07.300,0:54:12.280
+K weighted by a coefficient ZK and the
+
+0:54:11.050,0:54:15.160
+ZK is can change there are input
+
+0:54:12.280,0:54:19.150
+variables the same way so in effect it's
+
+0:54:15.160,0:54:21.370
+like having a neural net with weight
+
+0:54:19.150,0:54:24.600
+matrix W whose weight matrix is computed
+
+0:54:21.370,0:54:24.600
+itself by another neural net
+
+0:54:24.710,0:54:28.790
+a general form of this where you don't
+
+0:54:26.930,0:54:31.150
+just multiply matrices but you have a
+
+0:54:28.790,0:54:35.750
+neural net that is some complex function
+
+0:54:31.150,0:54:38.770
+turns X into e to s some generic
+
+0:54:35.750,0:54:42.619
+function ok give you ComNet whatever and
+
+0:54:38.770,0:54:43.880
+the rates of those neural nets are not
+
+0:54:42.619,0:54:45.800
+variables that you don't directly but
+
+0:54:43.880,0:54:47.690
+they are the output of another neuron
+
+0:54:45.800,0:54:50.330
+that that takes maybe another input into
+
+0:54:47.690,0:54:51.830
+account or maybe the same input some
+
+0:54:50.330,0:54:53.630
+people call those architectures hyper
+
+0:54:51.830,0:54:55.660
+networks ok there are networks whose
+
+0:54:53.630,0:54:57.859
+weights are computed by another network
+
+0:54:55.660,0:55:00.470
+but here's just a simple form of it
+
+0:54:57.859,0:55:05.060
+which is kind of a bilinear form or
+
+0:55:00.470,0:55:07.580
+quadratic form ok so overall when you
+
+0:55:05.060,0:55:12.830
+kind of write it all down SI is equal to
+
+0:55:07.580,0:55:16.760
+sum over J and K of U IJ k zk XJ this is
+
+0:55:12.830,0:55:20.170
+a double son people used to call this
+
+0:55:16.760,0:55:20.170
+Sigma Pi units yes
+
+0:55:22.390,0:55:33.200
+we'll come to this in just a second
+
+0:55:26.290,0:55:37.940
+basically if you want a neuron that they
+
+0:55:33.200,0:55:40.210
+can perform a transformation from a
+
+0:55:37.940,0:55:42.490
+vector into another and that
+
+0:55:40.210,0:55:45.349
+transformation is to be programmable
+
+0:55:42.490,0:55:47.060
+right you can have that transformation
+
+0:55:45.349,0:55:48.500
+be computed by a neural net but the
+
+0:55:47.060,0:55:52.160
+weight of that neural net would be it
+
+0:55:48.500,0:55:53.480
+themselves the outputs of another neuron
+
+0:55:52.160,0:55:56.180
+that that figures out what the
+
+0:55:53.480,0:55:59.750
+transformation is that's kind of the
+
+0:55:56.180,0:56:03.859
+more general form more specifically is
+
+0:55:59.750,0:56:05.540
+very useful if you want to route signals
+
+0:56:03.859,0:56:12.230
+through a neural net in different ways
+
+0:56:05.540,0:56:14.330
+to only data dependent way so you in
+
+0:56:12.230,0:56:15.890
+fact that's exactly what is mentioned
+
+0:56:14.330,0:56:18.200
+this video so the attention module is a
+
+0:56:15.890,0:56:19.730
+special case of this it's not a
+
+0:56:18.200,0:56:24.220
+quadratic layer it's kind of a different
+
+0:56:19.730,0:56:24.220
+type but it's a particular type of
+
+0:56:24.640,0:56:31.250
+architecture that basically computes a
+
+0:56:28.839,0:56:36.849
+convex linear combination of a bunch of
+
+0:56:31.250,0:56:36.849
+vectors so x1 and x2 here are vectors
+
+0:56:37.640,0:56:44.500
+w1 and w2 are scalars basically okay and
+
+0:56:45.040,0:56:51.890
+what the system computes here is a
+
+0:56:47.240,0:56:53.600
+weighted sum of x1 and x2 weighted by w1
+
+0:56:51.890,0:56:58.160
+w2 and again that we went over to our
+
+0:56:53.600,0:57:02.150
+scalars in this case here the sum at the
+
+0:56:58.160,0:57:05.210
+output so imagine that those two weights
+
+0:57:02.150,0:57:07.670
+w1 w2 are between 0 and 1 and sum to 1
+
+0:57:05.210,0:57:12.320
+that's what's called a convex linear
+
+0:57:07.670,0:57:16.940
+combination so you get by by changing w1
+
+0:57:12.320,0:57:18.410
+w2 so essentially if this sum to 1 there
+
+0:57:16.940,0:57:21.110
+the output of the softmax
+
+0:57:18.410,0:57:23.120
+which means w2 is equal to 1 minus w1
+
+0:57:21.110,0:57:30.290
+right that's kind of that you're a
+
+0:57:23.120,0:57:33.650
+consequence so basically by changing the
+
+0:57:30.290,0:57:37.430
+right size of w1 w2 you can switch the
+
+0:57:33.650,0:57:38.780
+output to being either x1 or x2 or some
+
+0:57:37.430,0:57:43.550
+linear combination of the two some
+
+0:57:38.780,0:57:45.080
+interpolation between the two okay you
+
+0:57:43.550,0:57:47.860
+can have more than just X 1 and X 2 you
+
+0:57:45.080,0:57:53.000
+can have a whole bunch of X's X vectors
+
+0:57:47.860,0:57:54.800
+and that system will basically choose an
+
+0:57:53.000,0:57:57.050
+appropriate linear combination or focus
+
+0:57:54.800,0:57:58.940
+is called an attention mechanism because
+
+0:57:57.050,0:58:00.290
+it allows a neural net to basically
+
+0:57:58.940,0:58:02.380
+focus its attention on a particular
+
+0:58:00.290,0:58:04.610
+input and ignoring ignoring the others
+
+0:58:02.380,0:58:06.980
+the choice of this is made by another
+
+0:58:04.610,0:58:08.210
+variable Z which itself could be the
+
+0:58:06.980,0:58:12.770
+output to some other neural net that
+
+0:58:08.210,0:58:15.350
+looks at exes for example okay and this
+
+0:58:12.770,0:58:17.540
+has become a hugely important type of
+
+0:58:15.350,0:58:20.690
+function is used in a lot of different
+
+0:58:17.540,0:58:24.700
+situations now in particular it's used
+
+0:58:20.690,0:58:24.700
+in the STM and jru but it's also used in
+
+0:58:26.230,0:58:31.330
+pretty much every natural language
+
+0:58:28.250,0:58:34.070
+processing system nowadays that use
+
+0:58:31.330,0:58:36.320
+either transformer architectures or all
+
+0:58:34.070,0:58:39.940
+the types of attention they all use this
+
+0:58:36.320,0:58:39.940
+kind of this kind of trick
+
+0:58:43.240,0:58:48.040
+okay so you have a vector Z pass it to a
+
+0:58:46.210,0:58:50.920
+softmax you get a bunch of numbers
+
+0:58:48.040,0:58:53.200
+between 0 & 1 that sum to 1 use those as
+
+0:58:50.920,0:58:56.020
+coefficient to compute a weighted sum of
+
+0:58:53.200,0:58:58.030
+a bunch of vectors X excise and you get
+
+0:58:56.020,0:58:59.920
+the weighted sum weighted by those
+
+0:58:58.030,0:59:04.050
+coefficients those coefficients are data
+
+0:58:59.920,0:59:04.050
+dependent because Z is data dependent
+
+0:59:04.890,0:59:12.910
+all right so here's an example of how
+
+0:59:10.900,0:59:17.200
+you use this whenever you have this
+
+0:59:12.910,0:59:21.099
+symbol here this circle with the dots in
+
+0:59:17.200,0:59:24.690
+the middle that's a component by
+
+0:59:21.099,0:59:27.600
+component multiplication of two vectors
+
+0:59:24.690,0:59:29.160
+some people call this Hadamard product
+
+0:59:27.600,0:59:31.450
+[Music]
+
+0:59:29.160,0:59:39.670
+anyway it's turn-by-turn multiplication
+
+0:59:31.450,0:59:44.320
+so this is a a type of a kind of
+
+0:59:39.670,0:59:46.390
+functional module gru gated recurrent
+
+0:59:44.320,0:59:52.210
+Nets I was proposed by Kuchar who is
+
+0:59:46.390,0:59:53.710
+professor here and it attempts it's an
+
+0:59:52.210,0:59:55.390
+attempt at fixing the problem that
+
+0:59:53.710,0:59:56.440
+naturally occur in recurrent Nets that I
+
+0:59:55.390,0:59:59.550
+mentioned the fact that you have
+
+0:59:56.440,1:00:01.810
+exploding gradient the fact that the
+
+0:59:59.550,1:00:03.730
+recognizer don't really remember their
+
+1:00:01.810,1:00:06.430
+States for very long they tend to kind
+
+1:00:03.730,1:00:09.130
+of forget really quickly and so it's
+
+1:00:06.430,1:00:12.970
+basically a memory cell okay and I have
+
+1:00:09.130,1:00:17.619
+to say this is the kind of second big
+
+1:00:12.970,1:00:19.300
+family of sort of recurrent net with
+
+1:00:17.619,1:00:21.150
+memory the first one is at STM but I'm
+
+1:00:19.300,1:00:22.810
+going to talk about it just afterwards
+
+1:00:21.150,1:00:26.830
+just because this one is a little
+
+1:00:22.810,1:00:32.339
+simpler the equations are written at the
+
+1:00:26.830,1:00:38.080
+bottom here so basically there is a a
+
+1:00:32.339,1:00:41.109
+gating vector Z which is simply the
+
+1:00:38.080,1:00:45.490
+application of a nonlinear function the
+
+1:00:41.109,1:00:47.410
+sigmoid function to to linear layers and
+
+1:00:45.490,1:00:49.900
+bias and those two linear layers take
+
+1:00:47.410,1:00:51.599
+into account the input X of T and the
+
+1:00:49.900,1:00:55.430
+previous state which they did
+
+1:00:51.599,1:00:56.729
+[ __ ] in their case not Z like I did
+
+1:00:55.430,1:01:00.690
+okay
+
+1:00:56.729,1:01:03.720
+so you take X you take edge you compute
+
+1:01:00.690,1:01:05.609
+you pass and two matrices you pass a
+
+1:01:03.720,1:01:07.079
+result you add the results you pass them
+
+1:01:05.609,1:01:09.150
+through sigmoid functions and you get a
+
+1:01:07.079,1:01:11.309
+bunch of values between 0 & 1 because
+
+1:01:09.150,1:01:15.119
+the sigmoid is between 0 & 1 gives you a
+
+1:01:11.309,1:01:18.029
+coefficient and you lose those
+
+1:01:15.119,1:01:19.799
+coefficients you see the formula at the
+
+1:01:18.029,1:01:22.410
+bottom the Z is used to basically
+
+1:01:19.799,1:01:26.220
+compute a linear combination of two
+
+1:01:22.410,1:01:31.499
+inputs if Z is equal to 1 you basically
+
+1:01:26.220,1:01:34.529
+only look at HTML s 1 is equal to 0 then
+
+1:01:31.499,1:01:38.609
+1 minus Z is equal to 1 then you you
+
+1:01:34.529,1:01:40.109
+look at this expression here and that
+
+1:01:38.609,1:01:42.089
+expression is you know some weight
+
+1:01:40.109,1:01:43.890
+matrix multiplied by the input pass
+
+1:01:42.089,1:01:45.569
+through a hyperbolic tangent function it
+
+1:01:43.890,1:01:47.849
+could be a value but it's a hyperbola
+
+1:01:45.569,1:01:49.289
+tangent in this case and it's combined
+
+1:01:47.849,1:01:52.739
+with other stuff here that we can ignore
+
+1:01:49.289,1:01:55.619
+for now okay so basically what what the
+
+1:01:52.739,1:01:58.289
+Z value does is that it tells the system
+
+1:01:55.619,1:02:00.289
+just copy if Z equal 1 it just copies
+
+1:01:58.289,1:02:02.969
+its previous state and ignores the input
+
+1:02:00.289,1:02:04.680
+ok so it acts like a memory essentially
+
+1:02:02.969,1:02:11.849
+it just copies its previous state on its
+
+1:02:04.680,1:02:13.829
+head put any Z equal equals 0 then the
+
+1:02:11.849,1:02:16.920
+current state is forgotten essentially
+
+1:02:13.829,1:02:21.299
+and is basically you would you just read
+
+1:02:16.920,1:02:23.940
+the input ok multiplied by some matrix
+
+1:02:21.299,1:02:26.630
+so a change to changes the state of the
+
+1:02:23.940,1:02:26.630
+system
+
+1:02:28.460,1:02:37.460
+yeah so this component by component
+
+1:02:30.650,1:02:37.460
+essentially okay vector 1 yeah exactly
+
+1:02:37.530,1:02:46.989
+[Music]
+
+1:02:47.000,1:02:52.440
+well it's just like the number of
+
+1:02:49.650,1:02:55.559
+independent multiplications right what
+
+1:02:52.440,1:02:57.750
+is the derivative of subjective honor
+
+1:02:55.559,1:03:02.430
+with respect to the input of a product
+
+1:02:57.750,1:03:04.079
+it's equal to the derivative of that
+
+1:03:02.430,1:03:06.359
+objective function respect to the add to
+
+1:03:04.079,1:03:19.380
+the product multiplied by the other term
+
+1:03:06.359,1:03:24.119
+that's the simple sense so it's because
+
+1:03:19.380,1:03:27.420
+by default essentially unless Z is your
+
+1:03:24.119,1:03:30.089
+Z is more less by default equal to one
+
+1:03:27.420,1:03:34.410
+and so by default the system just copies
+
+1:03:30.089,1:03:38.190
+its previous state and if it's just you
+
+1:03:34.410,1:03:39.569
+know slightly less than one it it puts a
+
+1:03:38.190,1:03:41.160
+little bit of the input into the state
+
+1:03:39.569,1:03:43.130
+but doesn't significantly change the
+
+1:03:41.160,1:03:45.960
+state and what that means is that it
+
+1:03:43.130,1:03:50.039
+preserves norm and it preserves
+
+1:03:45.960,1:03:55.099
+information right since basically memory
+
+1:03:50.039,1:03:55.099
+cell that you can change continuously
+
+1:03:59.980,1:04:04.160
+well because you need something between
+
+1:04:02.210,1:04:06.620
+zero and one it's a coefficient right
+
+1:04:04.160,1:04:09.790
+and so it needs to be between zero and
+
+1:04:06.620,1:04:09.790
+one that's what we do sigmoids
+
+1:04:11.350,1:04:18.470
+I mean you need one that is monotonic
+
+1:04:15.560,1:04:20.230
+that goes between 0 and 1 and is
+
+1:04:18.470,1:04:22.550
+monotonic and differentiable I mean
+
+1:04:20.230,1:04:27.020
+there's lots of sigmoid functions but
+
+1:04:22.550,1:04:28.610
+you know why not yeah I mean there is
+
+1:04:27.020,1:04:31.160
+some argument for using others but you
+
+1:04:28.610,1:04:34.700
+know doesn't make a huge amount of
+
+1:04:31.160,1:04:36.620
+difference okay in the full form of gru
+
+1:04:34.700,1:04:40.580
+it is also a reset gate so the reset
+
+1:04:36.620,1:04:42.350
+gate is is this guy here so R is another
+
+1:04:40.580,1:04:44.720
+vector that's computed also as a linear
+
+1:04:42.350,1:04:47.780
+combination of inputs and previous state
+
+1:04:44.720,1:04:50.930
+and it serves to multiply the previous
+
+1:04:47.780,1:04:56.930
+state so if R is 0 then the previous
+
+1:04:50.930,1:04:59.810
+state is if R 0 and Z is 1 the system is
+
+1:04:56.930,1:05:02.830
+basically completely reset to 0 because
+
+1:04:59.810,1:05:05.420
+that is 0 so it only looks at the input
+
+1:05:02.830,1:05:08.300
+but that's basically a simplified
+
+1:05:05.420,1:05:10.940
+version of something that came out way
+
+1:05:08.300,1:05:13.880
+earlier in 1997 called lsdm long
+
+1:05:10.940,1:05:15.980
+short-term memory which you know
+
+1:05:13.880,1:05:17.390
+attempted which was an attempt at
+
+1:05:15.980,1:05:19.280
+solving the same issue that you know
+
+1:05:17.390,1:05:23.360
+recurrent Nets basically lose memory for
+
+1:05:19.280,1:05:25.040
+too long and so you build them as as
+
+1:05:23.360,1:05:27.260
+memory cells by default and by default
+
+1:05:25.040,1:05:28.850
+they will preserve the information it's
+
+1:05:27.260,1:05:29.990
+essentially the same idea here it's a
+
+1:05:28.850,1:05:31.850
+you know the details that's very
+
+1:05:29.990,1:05:33.680
+different here don't have dots in the
+
+1:05:31.850,1:05:36.110
+middle of the round shape here for the
+
+1:05:33.680,1:05:37.520
+product but it's the same thing and
+
+1:05:36.110,1:05:40.160
+there's a little more kind of moving
+
+1:05:37.520,1:05:42.710
+parts it's basically it looks more like
+
+1:05:40.160,1:05:44.060
+an actual run sale so it's like a
+
+1:05:42.710,1:05:45.830
+flip-flop they can you know preserve
+
+1:05:44.060,1:05:47.810
+information and there is some leakage
+
+1:05:45.830,1:05:52.550
+that you can have you can reset it to 0
+
+1:05:47.810,1:05:55.640
+to 1 it's fairly complicated thankfully
+
+1:05:52.550,1:05:57.800
+people at via Facebook Google and
+
+1:05:55.640,1:05:59.060
+various other places have very efficient
+
+1:05:57.800,1:06:02.120
+implementations of those so you don't
+
+1:05:59.060,1:06:04.930
+need to figure out how to write the CUDA
+
+1:06:02.120,1:06:07.500
+code for this or write the back pop
+
+1:06:04.930,1:06:10.710
+works really well
+
+1:06:07.500,1:06:14.339
+it's it's quite what you use but it's
+
+1:06:10.710,1:06:16.980
+used less and less because people use
+
+1:06:14.339,1:06:18.180
+recurrent Nets people used to use
+
+1:06:16.980,1:06:22.079
+recurrent Nets for natural language
+
+1:06:18.180,1:06:24.329
+processing mostly and things like speech
+
+1:06:22.079,1:06:26.990
+recognition and speech recognition is
+
+1:06:24.329,1:06:30.930
+moving towards using conditional Nets
+
+1:06:26.990,1:06:32.700
+temple conditional Nets why while the
+
+1:06:30.930,1:06:34.130
+natural language processing is moving
+
+1:06:32.700,1:06:36.509
+towards using what's called transformers
+
+1:06:34.130,1:06:47.099
+which we'll hear a lot about tomorrow
+
+1:06:36.509,1:06:49.950
+right know when chewing so now okay so
+
+1:06:47.099,1:06:52.309
+what transformers are okay I'm not gonna
+
+1:06:49.950,1:06:54.660
+talk about transformers just now but
+
+1:06:52.309,1:06:57.690
+these key transformers are kind of a
+
+1:06:54.660,1:07:00.089
+generalization so general use of
+
+1:06:57.690,1:07:02.039
+attention if you want so the big neural
+
+1:07:00.089,1:07:04.019
+Nets that use attention that you know
+
+1:07:02.039,1:07:06.329
+every block of neuron uses attention and
+
+1:07:04.019,1:07:07.619
+that tends to work pretty well it works
+
+1:07:06.329,1:07:09.180
+so well that people are kind of
+
+1:07:07.619,1:07:14.009
+basically dropping everything else for
+
+1:07:09.180,1:07:16.099
+an LP so the problem is systems like an
+
+1:07:14.009,1:07:18.329
+STM are not very good at this so
+
+1:07:16.099,1:07:20.930
+transformers are much better the biggest
+
+1:07:18.329,1:07:23.160
+transformers have billions of parameters
+
+1:07:20.930,1:07:25.019
+like the biggest one is by 15 billion
+
+1:07:23.160,1:07:28.410
+something like that that order of
+
+1:07:25.019,1:07:31.769
+magnitude the t5 where it's called for
+
+1:07:28.410,1:07:34.710
+Google so that's an enormous amount of
+
+1:07:31.769,1:07:36.000
+memory and it's because of the
+
+1:07:34.710,1:07:37.470
+particular type of architecture that's
+
+1:07:36.000,1:07:40.140
+used in transformers they they can
+
+1:07:37.470,1:07:42.960
+actually store a lot of knowledge if you
+
+1:07:40.140,1:07:46.019
+want so that's the stuff people we use
+
+1:07:42.960,1:07:48.269
+for what you're talking about that
+
+1:07:46.019,1:07:52.099
+question answering systems translation
+
+1:07:48.269,1:07:52.099
+systems etc they will use transformers
+
+1:07:52.369,1:07:55.369
+okay
+
+1:07:57.549,1:08:03.219
+so because the SDM kind of was sort of
+
+1:08:00.699,1:08:04.749
+you know one of the first architectures
+
+1:08:03.219,1:08:07.449
+recurrent architecture that kind of
+
+1:08:04.749,1:08:10.119
+worked people tried to use them for
+
+1:08:07.449,1:08:12.789
+things that at first you would think are
+
+1:08:10.119,1:08:15.369
+crazy but turned out to work and one
+
+1:08:12.789,1:08:18.009
+example of this is translation it's
+
+1:08:15.369,1:08:19.150
+called neural machine translation so
+
+1:08:18.009,1:08:23.469
+there was a paper
+
+1:08:19.150,1:08:26.679
+yes it's cavernous 2014 where he trained
+
+1:08:23.469,1:08:29.259
+this giant multi-layer at STM so what's
+
+1:08:26.679,1:08:32.139
+a multi-layered STM it's an STM where
+
+1:08:29.259,1:08:34.569
+you have solicited and folded version
+
+1:08:32.139,1:08:36.130
+right so at the bottom here you have an
+
+1:08:34.569,1:08:37.630
+an STM which is here and folded for
+
+1:08:36.130,1:08:40.179
+three time steps but it will have to be
+
+1:08:37.630,1:08:42.880
+unfolded for the length of a sentence
+
+1:08:40.179,1:08:48.039
+you want to translate its a sentence in
+
+1:08:42.880,1:08:51.009
+French and and then you take the hidden
+
+1:08:48.039,1:08:52.900
+state at every time step of this at STM
+
+1:08:51.009,1:08:55.449
+and you feed that as input to a second
+
+1:08:52.900,1:08:57.279
+STM and I think in his network he
+
+1:08:55.449,1:08:59.650
+actually had four layers of that so you
+
+1:08:57.279,1:09:01.420
+can think of this as a stack the STM
+
+1:08:59.650,1:09:02.920
+that you know are each of them are
+
+1:09:01.420,1:09:07.170
+recurrent in time but they are kind of
+
+1:09:02.920,1:09:09.670
+stacked as the layers of a neural net so
+
+1:09:07.170,1:09:11.889
+at the last time step in the last layer
+
+1:09:09.670,1:09:14.380
+you have a vector here which is meant to
+
+1:09:11.889,1:09:18.369
+represent the entire meaning of that
+
+1:09:14.380,1:09:21.250
+sentence okay so it could be a fairly
+
+1:09:18.369,1:09:26.819
+large factor and then you feed that to
+
+1:09:21.250,1:09:29.409
+another multi-layer realistic SVM which
+
+1:09:26.819,1:09:32.619
+you know you run for a sort of
+
+1:09:29.409,1:09:34.779
+undetermined number of steps and the
+
+1:09:32.619,1:09:36.489
+word of this STM is to produce words in
+
+1:09:34.779,1:09:40.839
+a target language if you do translation
+
+1:09:36.489,1:09:43.239
+say German okay so this is time you know
+
+1:09:40.839,1:09:45.219
+it takes the state you run through the
+
+1:09:43.239,1:09:47.440
+first two layers of the STM produce a
+
+1:09:45.219,1:09:50.469
+word and then take that word and feed it
+
+1:09:47.440,1:09:52.409
+as input to the next time step so that
+
+1:09:50.469,1:09:54.789
+you can generate take sequentially right
+
+1:09:52.409,1:09:56.619
+run through this produce another word
+
+1:09:54.789,1:10:01.360
+take that word feed it back to the input
+
+1:09:56.619,1:10:03.190
+and keep going so this is a she do this
+
+1:10:01.360,1:10:06.070
+for translation you get this gigantic
+
+1:10:03.190,1:10:08.050
+neural net you try it and this is the
+
+1:10:06.070,1:10:09.670
+it's a system of this type the one that
+
+1:10:08.050,1:10:13.630
+is SK represented at needs
+
+1:10:09.670,1:10:16.030
+14 was the first neural translation
+
+1:10:13.630,1:10:17.980
+system that had performance that could
+
+1:10:16.030,1:10:22.540
+rival sort of more classical approaches
+
+1:10:17.980,1:10:23.920
+not based on neural nets and people
+
+1:10:22.540,1:10:28.150
+really surprised that you could get such
+
+1:10:23.920,1:10:34.840
+results that success was very
+
+1:10:28.150,1:10:35.950
+short-lived yeah so the problem is the
+
+1:10:34.840,1:10:37.680
+word you're gonna say at a particular
+
+1:10:35.950,1:10:40.750
+time depends on the word you just said
+
+1:10:37.680,1:10:44.230
+right and if you ask the system to just
+
+1:10:40.750,1:10:46.120
+produce a word and then you don't need
+
+1:10:44.230,1:10:47.200
+that word back to the input the system
+
+1:10:46.120,1:10:48.940
+could be used in other word that has
+
+1:10:47.200,1:10:59.260
+that is inconsistent with the previous
+
+1:10:48.940,1:11:02.620
+one you it should but it doesn't I mean
+
+1:10:59.260,1:11:03.850
+not well enough that that it works so so
+
+1:11:02.620,1:11:08.290
+this is so this is kind of sequential
+
+1:11:03.850,1:11:11.710
+production is pretty much required in
+
+1:11:08.290,1:11:14.710
+principle you're right it's not very
+
+1:11:11.710,1:11:17.170
+satisfying so there's a problem with
+
+1:11:14.710,1:11:18.850
+this which is that the entire meaning of
+
+1:11:17.170,1:11:21.490
+the sentence has to be kind of squeezed
+
+1:11:18.850,1:11:25.150
+into that hidden state that is between
+
+1:11:21.490,1:11:26.890
+the encoder of the decoder that's one
+
+1:11:25.150,1:11:28.810
+problem the second problem is that
+
+1:11:26.890,1:11:31.600
+despite the fact that that STM are built
+
+1:11:28.810,1:11:33.490
+to preserve information they are
+
+1:11:31.600,1:11:34.930
+basically memory cells they don't
+
+1:11:33.490,1:11:37.990
+actually preserve information for more
+
+1:11:34.930,1:11:39.310
+than about 20 words so if your sentence
+
+1:11:37.990,1:11:41.500
+is more than 20 words by the time you
+
+1:11:39.310,1:11:42.760
+get to the end of the sentence your your
+
+1:11:41.500,1:11:44.860
+hidden state will have forgotten the
+
+1:11:42.760,1:11:47.860
+beginning of it so what people use for
+
+1:11:44.860,1:11:50.980
+this the fix for this is a huge hack is
+
+1:11:47.860,1:11:53.110
+called by ASTM and it's a completely
+
+1:11:50.980,1:11:56.920
+trivial idea that consists in running to
+
+1:11:53.110,1:11:59.220
+LSD ends in opposite directions okay and
+
+1:11:56.920,1:12:01.570
+then you get two codes one that is
+
+1:11:59.220,1:12:03.280
+running the SDM from beginning to end of
+
+1:12:01.570,1:12:05.770
+the sentence that's one vector and then
+
+1:12:03.280,1:12:06.940
+the second factor is from running an NST
+
+1:12:05.770,1:12:09.550
+m in the other direction you get a
+
+1:12:06.940,1:12:11.590
+second vector that's the meaning of your
+
+1:12:09.550,1:12:13.030
+sentence you can basically double the
+
+1:12:11.590,1:12:15.700
+length length of your sentence without
+
+1:12:13.030,1:12:17.620
+losing too much information this way but
+
+1:12:15.700,1:12:19.150
+it's not a very satisfying solution so
+
+1:12:17.620,1:12:21.450
+if you see by ASTM that's what that's
+
+1:12:19.150,1:12:21.450
+what it is
+
+1:12:22.330,1:12:28.400
+so as I said the success was short-lived
+
+1:12:24.770,1:12:33.550
+because in fact before the paper was
+
+1:12:28.400,1:12:33.550
+published at nibs there was a paper by
+
+1:12:34.420,1:12:39.650
+Dmitry better now king yeongjo and
+
+1:12:37.699,1:12:44.060
+yoshua bengio which was produced on
+
+1:12:39.650,1:12:45.860
+archives in September 14 that said we
+
+1:12:44.060,1:12:49.880
+can use a tension so the attention
+
+1:12:45.860,1:12:52.160
+mechanism I mentioned earlier instead of
+
+1:12:49.880,1:12:53.600
+having those gigantic networks and
+
+1:12:52.160,1:12:56.449
+squeezing the entire meaning of a
+
+1:12:53.600,1:12:58.210
+sentence into this small vector it would
+
+1:12:56.449,1:13:00.710
+make more sense to the translation if
+
+1:12:58.210,1:13:02.480
+every time said you know we want to
+
+1:13:00.710,1:13:05.780
+produce a word in French corresponding
+
+1:13:02.480,1:13:07.580
+to a sentence in English if we looked at
+
+1:13:05.780,1:13:12.920
+the location in the English sentence
+
+1:13:07.580,1:13:14.989
+that had that word okay so our decoder
+
+1:13:12.920,1:13:17.330
+is going to produce french words one at
+
+1:13:14.989,1:13:20.690
+a time and when it comes to produce a
+
+1:13:17.330,1:13:23.300
+word that has an equivalent in the input
+
+1:13:20.690,1:13:25.699
+english sentence is going to focus its
+
+1:13:23.300,1:13:28.219
+attention on that word and then the
+
+1:13:25.699,1:13:30.860
+translation from French strangers so
+
+1:13:28.219,1:13:32.300
+that word would be simple or the you
+
+1:13:30.860,1:13:33.500
+know it could omit or be a single word
+
+1:13:32.300,1:13:35.690
+it could be a group of words right
+
+1:13:33.500,1:13:37.760
+because very often you have to turn a
+
+1:13:35.690,1:13:39.590
+group of word in English into a group of
+
+1:13:37.760,1:13:43.449
+words in French to kind of say the same
+
+1:13:39.590,1:13:45.440
+thing if it's German you have to put the
+
+1:13:43.449,1:13:47.210
+you know the verb at the end of the
+
+1:13:45.440,1:13:49.760
+sentence whereas in English it might be
+
+1:13:47.210,1:13:51.770
+at the beginning so basically you use
+
+1:13:49.760,1:13:53.810
+this attention mechanism so this
+
+1:13:51.770,1:13:56.510
+attention module here is the one that I
+
+1:13:53.810,1:14:00.230
+showed a couple slides earlier which
+
+1:13:56.510,1:14:01.190
+basically decides which of the time
+
+1:14:00.230,1:14:02.750
+steps which have the hidden
+
+1:14:01.190,1:14:06.070
+representation for which other word in
+
+1:14:02.750,1:14:09.140
+the input sentence is going to focus on
+
+1:14:06.070,1:14:11.570
+to kind of produce a representation that
+
+1:14:09.140,1:14:13.130
+is going to produce the current word at
+
+1:14:11.570,1:14:14.660
+a particular time step so here we're at
+
+1:14:13.130,1:14:17.330
+time step number three would it produce
+
+1:14:14.660,1:14:18.560
+a third word and we're gonna have to
+
+1:14:17.330,1:14:20.300
+decide which of the input word
+
+1:14:18.560,1:14:22.820
+corresponds to this and we're gonna have
+
+1:14:20.300,1:14:26.179
+this attention mechanism so essentially
+
+1:14:22.820,1:14:27.440
+we're gonna have a small piece of neuron
+
+1:14:26.179,1:14:30.760
+that that's going to look at the
+
+1:14:27.440,1:14:30.760
+the inputs on this side
+
+1:14:31.409,1:14:35.010
+it's going to have an output which is
+
+1:14:33.300,1:14:36.479
+going to go through a soft max that is
+
+1:14:35.010,1:14:38.519
+going to produce a bunch of coefficients
+
+1:14:36.479,1:14:39.749
+that sum to 1 between 0 and 1 and
+
+1:14:38.519,1:14:41.699
+they're willing to compute a linear
+
+1:14:39.749,1:14:45.179
+combination of the states at different
+
+1:14:41.699,1:14:46.530
+time steps ok by setting one of those
+
+1:14:45.179,1:14:48.449
+coefficients to 1 and the other ones to
+
+1:14:46.530,1:14:51.570
+0 is going to focus the attention of the
+
+1:14:48.449,1:14:53.249
+system on one particular work so the
+
+1:14:51.570,1:14:54.809
+magic of this is that this neural net
+
+1:14:53.249,1:14:56.340
+that decides that runs to the softmax
+
+1:14:54.809,1:14:58.709
+and decides on those coefficients
+
+1:14:56.340,1:15:01.050
+actually can be trained with back pop is
+
+1:14:58.709,1:15:02.489
+just another set of weights in a neural
+
+1:15:01.050,1:15:07.050
+net and you don't have to built it by
+
+1:15:02.489,1:15:08.729
+hand it just figures it out this
+
+1:15:07.050,1:15:10.889
+completely revolutionized the field of
+
+1:15:08.729,1:15:15.780
+neural machine translation in the sense
+
+1:15:10.889,1:15:18.719
+that within a few months team from
+
+1:15:15.780,1:15:23.099
+Stanford won a big competition with this
+
+1:15:18.719,1:15:24.630
+meeting all the other methods and then
+
+1:15:23.099,1:15:26.610
+within three months every big company
+
+1:15:24.630,1:15:30.689
+that works on translation had basically
+
+1:15:26.610,1:15:34.019
+deployed systems based on this so this
+
+1:15:30.689,1:15:35.780
+just changed everything and then people
+
+1:15:34.019,1:15:39.900
+started paying attention to attention
+
+1:15:35.780,1:15:43.229
+okay pay more attention to attention in
+
+1:15:39.900,1:15:46.619
+a sense that and then there was a paper
+
+1:15:43.229,1:15:48.360
+by which people at Google what the title
+
+1:15:46.619,1:15:50.670
+was attention is all you need and I was
+
+1:15:48.360,1:15:53.550
+basically a paper that solved a bunch of
+
+1:15:50.670,1:15:55.320
+natural language processing tasks by
+
+1:15:53.550,1:15:56.309
+using a neural net where every day
+
+1:15:55.320,1:15:58.650
+you're on every group of neuron
+
+1:15:56.309,1:16:01.170
+basically was informing implementing
+
+1:15:58.650,1:16:02.280
+attention and that's what a or something
+
+1:16:01.170,1:16:11.820
+called self attention that's what a
+
+1:16:02.280,1:16:13.709
+transformer is yes you can have a
+
+1:16:11.820,1:16:19.380
+valuable number of outputs of inputs
+
+1:16:13.709,1:16:22.849
+that you focus attention on okay I'm
+
+1:16:19.380,1:16:22.849
+gonna talk now about memory networks
+
+1:16:27.220,1:16:30.430
+[Music]
+
+1:16:35.450,1:16:42.620
+so this stems from work at Facebook that
+
+1:16:38.270,1:16:57.350
+was started by auto and board I think in
+
+1:16:42.620,1:17:00.230
+2014 and by sinus sukhbaatar I think in
+
+1:16:57.350,1:17:01.520
+2015 or 16 called end-to-end memory
+
+1:17:00.230,1:17:03.980
+networks
+
+1:17:01.520,1:17:06.290
+saina sukhbaatar is was a PhD student
+
+1:17:03.980,1:17:08.510
+here and it was an internet at Facebook
+
+1:17:06.290,1:17:10.360
+when I worked on this together with a
+
+1:17:08.510,1:17:13.670
+bunch of other people Facebook and
+
+1:17:10.360,1:17:15.350
+remember network is that you'd like to
+
+1:17:13.670,1:17:16.340
+have a short-term memory you'd like your
+
+1:17:15.350,1:17:20.180
+neural net to have a short-term memory
+
+1:17:16.340,1:17:23.030
+or working memory okay you'd like it to
+
+1:17:20.180,1:17:26.630
+you know you you tell okay if I tell you
+
+1:17:23.030,1:17:35.180
+a story I tell you John goes to the
+
+1:17:26.630,1:17:38.990
+kitchen John picks up the milk Jane goes
+
+1:17:35.180,1:17:41.930
+to the kitchen and then John goes to the
+
+1:17:38.990,1:17:43.520
+bedroom and drops the milk there and
+
+1:17:41.930,1:17:45.440
+then goes back to the kitchen and ask
+
+1:17:43.520,1:17:47.830
+you where's the milk okay so every time
+
+1:17:45.440,1:17:51.200
+I had told you a sentence you kind of
+
+1:17:47.830,1:17:53.720
+updated in your mind a kind of current
+
+1:17:51.200,1:17:54.920
+state of the world if you want and so by
+
+1:17:53.720,1:17:56.150
+telling you the story you now you have a
+
+1:17:54.920,1:17:57.860
+representation of the state to the world
+
+1:17:56.150,1:17:59.000
+and if I ask you a question about the
+
+1:17:57.860,1:18:01.700
+state of the world you can answer it
+
+1:17:59.000,1:18:05.990
+okay you store this in a short-term
+
+1:18:01.700,1:18:07.670
+memory you didn't store it ok so there's
+
+1:18:05.990,1:18:08.870
+kind of this there's a number of
+
+1:18:07.670,1:18:10.400
+different parts in your brain but it's
+
+1:18:08.870,1:18:12.680
+two important parts when it's the cortex
+
+1:18:10.400,1:18:18.230
+the cortex is where you have long term
+
+1:18:12.680,1:18:20.420
+memory where you you know you where all
+
+1:18:18.230,1:18:25.960
+your your thinking is done and all that
+
+1:18:20.420,1:18:28.100
+stuff and there is a separate you know
+
+1:18:25.960,1:18:30.050
+chunk of neurons called the hippocampus
+
+1:18:28.100,1:18:31.310
+which is sort of its kind of two
+
+1:18:30.050,1:18:35.510
+formations in the middle of the brain
+
+1:18:31.310,1:18:37.610
+and they kind of send wires to pretty
+
+1:18:35.510,1:18:40.340
+much everywhere in the cortex and the
+
+1:18:37.610,1:18:42.140
+hippocampus is thought that to be used
+
+1:18:40.340,1:18:44.000
+as a short-term memory so it can't just
+
+1:18:42.140,1:18:45.640
+you know remember things for relatively
+
+1:18:44.000,1:18:48.730
+short time
+
+1:18:45.640,1:18:51.220
+the prevalent theory is that when you
+
+1:18:48.730,1:18:52.690
+when you sleep and you dream there's a
+
+1:18:51.220,1:18:54.640
+lot of information that is being
+
+1:18:52.690,1:18:56.470
+transferred from your hippocampus to
+
+1:18:54.640,1:19:00.280
+your cortex to be solidified in
+
+1:18:56.470,1:19:05.530
+long-term memory because the hippocampus
+
+1:19:00.280,1:19:07.900
+has limited capacity when you get senile
+
+1:19:05.530,1:19:10.360
+like you get really old very often your
+
+1:19:07.900,1:19:12.070
+hippocampus shrinks and you don't have
+
+1:19:10.360,1:19:13.420
+short-term memory anymore so you keep
+
+1:19:12.070,1:19:21.160
+repeating the same stories to the same
+
+1:19:13.420,1:19:23.980
+people okay it's very common or you go
+
+1:19:21.160,1:19:25.240
+to a room to do something and by the
+
+1:19:23.980,1:19:30.610
+time you get to the room you forgot what
+
+1:19:25.240,1:19:36.820
+you were there for this starts happening
+
+1:19:30.610,1:19:39.010
+by the time you're 50 by the way so I
+
+1:19:36.820,1:19:42.040
+don't remember what I said last next
+
+1:19:39.010,1:19:44.470
+week of two weeks ago um okay but anyway
+
+1:19:42.040,1:19:47.740
+so man my network here's the idea memory
+
+1:19:44.470,1:19:50.170
+network you you have an input to the
+
+1:19:47.740,1:19:53.430
+memory network let's call it X and think
+
+1:19:50.170,1:19:55.120
+of it as an address of the memory okay
+
+1:19:53.430,1:20:01.240
+what you're going to do is you're going
+
+1:19:55.120,1:20:12.180
+to compare this X with a bunch of
+
+1:20:01.240,1:20:12.180
+vectors we're gonna call K so k1 k2 k3
+
+1:20:12.390,1:20:17.410
+okay so you compare those two vectors
+
+1:20:14.980,1:20:20.910
+and the way you compare them is for dot
+
+1:20:17.410,1:20:20.910
+product very simple
+
+1:20:27.960,1:20:34.230
+okay so now you have the three dot
+
+1:20:30.370,1:20:37.300
+products of all the three KS with the X
+
+1:20:34.230,1:20:48.670
+The Rathskeller values you know plug
+
+1:20:37.300,1:20:50.320
+them from softmax so what you get are
+
+1:20:48.670,1:20:56.890
+three numbers between 0 & 1 that sum to
+
+1:20:50.320,1:21:00.180
+1 what you do with those you have 3
+
+1:20:56.890,1:21:08.490
+other vectors that I'm gonna call v v1
+
+1:21:00.180,1:21:11.290
+v2 v3 and what you do is you multiply
+
+1:21:08.490,1:21:12.430
+these vectors by those scalars so this
+
+1:21:11.290,1:21:19.380
+is very much like the attention
+
+1:21:12.430,1:21:29.790
+mechanism that we just talked about okay
+
+1:21:19.380,1:21:33.610
+and you sum them up okay so take an X
+
+1:21:29.790,1:21:36.870
+compare X with each of the K each of the
+
+1:21:33.610,1:21:36.870
+case those are called Keens
+
+1:21:38.670,1:21:42.580
+you get a bunch of coefficients between
+
+1:21:40.780,1:21:44.350
+the one one that sum to one and then
+
+1:21:42.580,1:21:52.150
+compute a linear combination of the
+
+1:21:44.350,1:21:55.450
+values those are value of actors and sum
+
+1:21:52.150,1:21:58.420
+them up okay so imagine that one of the
+
+1:21:55.450,1:21:59.710
+key exactly matches X you're gonna have
+
+1:21:58.420,1:22:01.450
+a large coefficient here and small
+
+1:21:59.710,1:22:04.180
+coefficients there so the output of the
+
+1:22:01.450,1:22:06.190
+system will essentially be any tune if K
+
+1:22:04.180,1:22:07.560
+2 matches X the output was essentially
+
+1:22:06.190,1:22:10.990
+VV 2
+
+1:22:07.560,1:22:14.230
+okay so this is an addressable
+
+1:22:10.990,1:22:15.790
+associative memory ok soceity memory is
+
+1:22:14.230,1:22:17.980
+exactly that way you have keys with
+
+1:22:15.790,1:22:19.840
+values and if your input matches a key
+
+1:22:17.980,1:22:23.310
+you get the value here it's a kind of
+
+1:22:19.840,1:22:23.310
+soft differentiable version of that
+
+1:22:26.210,1:22:31.860
+so you can you can back propagate to
+
+1:22:30.269,1:22:35.429
+this you can you can write it to this
+
+1:22:31.860,1:22:37.260
+memory by changing the V vectors or even
+
+1:22:35.429,1:22:39.989
+changing the K vectors you can change
+
+1:22:37.260,1:22:42.420
+the V vectors by gradient descent okay
+
+1:22:39.989,1:22:44.460
+so if you wanted the opportunity memory
+
+1:22:42.420,1:22:47.519
+to be something in particular by by
+
+1:22:44.460,1:22:49.530
+propagating gradient to this you're
+
+1:22:47.519,1:22:54.119
+going to change the currently active V
+
+1:22:49.530,1:23:01.260
+to whatever it needs for the for the
+
+1:22:54.119,1:23:04.980
+output so in those papers what what they
+
+1:23:01.260,1:23:08.999
+did was I mean there's a series of
+
+1:23:04.980,1:23:10.800
+papers on every network but what they
+
+1:23:08.999,1:23:14.039
+did was exactly scenario I just explain
+
+1:23:10.800,1:23:16.170
+where you you kind of tell a story to a
+
+1:23:14.039,1:23:18.989
+system so give it a sequence of
+
+1:23:16.170,1:23:20.369
+sentences those sentences are encoded
+
+1:23:18.989,1:23:24.769
+into vectors by running through a neural
+
+1:23:20.369,1:23:27.840
+net which is not pre-trained it you know
+
+1:23:24.769,1:23:29.539
+you just put the training of the entire
+
+1:23:27.840,1:23:33.389
+system it figures out how to encode this
+
+1:23:29.539,1:23:36.539
+and then those sentences are written to
+
+1:23:33.389,1:23:38.159
+the memory of this type and then when
+
+1:23:36.539,1:23:39.599
+you ask a question to the system you
+
+1:23:38.159,1:23:41.429
+include the question at the input of a
+
+1:23:39.599,1:23:44.610
+neural net the new one that produces an
+
+1:23:41.429,1:23:49.980
+X to the memory the memory returns a
+
+1:23:44.610,1:23:51.480
+value and then you use this value and
+
+1:23:49.980,1:23:53.249
+the previous state of the network to
+
+1:23:51.480,1:23:55.440
+kind of reacts s the memory you can do
+
+1:23:53.249,1:23:56.940
+this multiple times and you train this
+
+1:23:55.440,1:23:59.999
+entire network to produce or an answer
+
+1:23:56.940,1:24:02.130
+to your to your question and if you have
+
+1:23:59.999,1:24:03.749
+lots and lots of scenarios lots and lots
+
+1:24:02.130,1:24:06.960
+of questions or also lots of answers
+
+1:24:03.749,1:24:09.090
+which they did in this case with by
+
+1:24:06.960,1:24:12.150
+artificially generating stories
+
+1:24:09.090,1:24:16.280
+questions and answers this thing
+
+1:24:12.150,1:24:19.909
+actually learns to store stories and
+
+1:24:16.280,1:24:24.349
+answer questions which is pretty amazing
+
+1:24:19.909,1:24:24.349
+so that's the memory Network
+
+1:24:24.490,1:24:30.010
+[Music]
+
+1:24:26.610,1:24:31.710
+okay so the first step is you compute
+
+1:24:30.010,1:24:39.340
+[Music]
+
+1:24:31.710,1:24:43.570
+alpha I equals k AI transpose X okay
+
+1:24:39.340,1:24:53.520
+just a dot product okay and then you
+
+1:24:43.570,1:24:53.520
+compute CI or the vector C I should say
+
+1:24:54.030,1:25:03.760
+is the softmax function applied to the
+
+1:25:01.240,1:25:06.130
+vector of alphas okay so the C's are
+
+1:25:03.760,1:25:11.890
+between 0 and 1 and sum to 1 and then
+
+1:25:06.130,1:25:19.330
+the output of the system is some of our
+
+1:25:11.890,1:25:23.610
+I of CI VI where VI as are the value
+
+1:25:19.330,1:25:23.610
+vectors okay that's the memory
+
+1:25:29.920,1:25:41.030
+yes yes yes absolutely not really no I
+
+1:25:39.170,1:25:44.450
+mean all you need is everything to be
+
+1:25:41.030,1:25:46.070
+encoded as vectors right and so run for
+
+1:25:44.450,1:25:47.630
+your favorite cornet you get a vector
+
+1:25:46.070,1:25:54.140
+that represents the image and then you
+
+1:25:47.630,1:25:56.030
+can do the QA yeah I mean so you can
+
+1:25:54.140,1:26:01.190
+imagine lots of applications of this so
+
+1:25:56.030,1:26:07.460
+in particular when application is I mean
+
+1:26:01.190,1:26:12.500
+you can you can think of you know think
+
+1:26:07.460,1:26:15.520
+of this as a kind of a memory and then
+
+1:26:12.500,1:26:18.320
+you can have some sort of neural net
+
+1:26:15.520,1:26:21.050
+that you know it takes takes an input
+
+1:26:18.320,1:26:26.000
+and then produces an address for the
+
+1:26:21.050,1:26:27.590
+memory gets a value back and then keeps
+
+1:26:26.000,1:26:30.080
+growing and eventually produces an
+
+1:26:27.590,1:26:33.260
+output this was very much like a
+
+1:26:30.080,1:26:38.420
+computer ok well the new one right here
+
+1:26:33.260,1:26:40.340
+is the the CPU the ALU the CPU ok and
+
+1:26:38.420,1:26:42.140
+the memory is just an external memory
+
+1:26:40.340,1:26:44.480
+you can access whenever you need it but
+
+1:26:42.140,1:26:46.070
+you can write to it if you want it's a
+
+1:26:44.480,1:26:48.590
+recurrent net in this case you can
+
+1:26:46.070,1:26:53.810
+unfold it in time which is what these
+
+1:26:48.590,1:26:55.670
+guys did and and then so then there are
+
+1:26:53.810,1:26:56.690
+people who kind of imagined that you
+
+1:26:55.670,1:26:58.010
+could actually build kind of
+
+1:26:56.690,1:26:59.960
+differentiable computers out of this
+
+1:26:58.010,1:27:01.910
+there's something called neural Turing
+
+1:26:59.960,1:27:03.320
+machine which is essentially a form of
+
+1:27:01.910,1:27:06.080
+this where the memory is not of this
+
+1:27:03.320,1:27:09.140
+type it's kind of a soft tape like in a
+
+1:27:06.080,1:27:11.270
+regular Turing machine this is somewhere
+
+1:27:09.140,1:27:12.710
+from deep mind that the interesting
+
+1:27:11.270,1:27:16.190
+story about this which is that the
+
+1:27:12.710,1:27:19.880
+physical people put out the paper on the
+
+1:27:16.190,1:27:24.790
+memory network on archive and three days
+
+1:27:19.880,1:27:27.080
+later the define people put out a paper
+
+1:27:24.790,1:27:28.520
+about neural Turing machine and the
+
+1:27:27.080,1:27:30.170
+reason they put three days later is that
+
+1:27:28.520,1:27:33.470
+they've been working on the all Turing
+
+1:27:30.170,1:27:35.360
+machine and in their tradition they kind
+
+1:27:33.470,1:27:38.270
+of keep project secret unless you know
+
+1:27:35.360,1:27:39.890
+until they can make a big splash but
+
+1:27:38.270,1:27:42.700
+there they got scoped so they put the
+
+1:27:39.890,1:27:42.700
+paper out on occasion
+
+1:27:44.560,1:27:50.000
+eventually I made a big splash with
+
+1:27:46.580,1:27:55.520
+another with a paper but that was a year
+
+1:27:50.000,1:27:57.530
+later or so so what's happened since
+
+1:27:55.520,1:28:00.320
+then is that people have kind of taken
+
+1:27:57.530,1:28:03.350
+this module this idea that you compare
+
+1:28:00.320,1:28:07.220
+inputs to keys and that gives you
+
+1:28:03.350,1:28:11.360
+coefficients and you know you you
+
+1:28:07.220,1:28:13.130
+produce values as kind of a essential
+
+1:28:11.360,1:28:14.330
+module in a you know neural net and
+
+1:28:13.130,1:28:17.090
+that's basically where the transforming
+
+1:28:14.330,1:28:20.210
+is so a transformer is basically a
+
+1:28:17.090,1:28:23.060
+neural net in which every group of your
+
+1:28:20.210,1:28:24.830
+own is one of those it's a it's a whole
+
+1:28:23.060,1:28:27.380
+bunch of memories essentially there's
+
+1:28:24.830,1:28:32.960
+some more twist to it okay but that's
+
+1:28:27.380,1:28:35.960
+kind of the basic the basic idea but
+
+1:28:32.960,1:28:40.640
+you'll hear about this in a week
+
+1:28:35.960,1:28:43.330
+Oh in two weeks when we when week okay
+
+1:28:40.640,1:28:43.330
+any more questions
+
+1:28:43.510,1:28:48.640
+cool all right
+
+1:28:45.350,1:28:48.640
+thank you very much
+
