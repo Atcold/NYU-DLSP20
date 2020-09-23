@@ -30,7 +30,7 @@ The following instruction would work as is for Mac or Ubuntu Linux users, Window
 Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
 -->
 إذهب إلى [موقع Anaconda](https://conda.io/miniconda.html).
-قم بتنزيل وتثبيت * أحدث * إصدار من Miniconda لـ * Python * 3.7 لنظام التشغيل الخاص بك.
+قم بتنزيل وتثبيت *أحدث* إصدار من Miniconda لـ *Python* 3.7 لنظام التشغيل الخاص بك.
 
 <!-- Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
 -->
@@ -80,14 +80,14 @@ jupyter notebook
 
 <!-- *Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 -->
-يتم استخدام * Jupyter Notebooks * في جميع هذه الدروس لاستكشاف البيانات التفاعلية والتصور.
+يتم استخدام *Jupyter Notebooks* في جميع هذه الدروس لاستكشاف البيانات التفاعلية والتصور.
 
 <!-- We use dark styles for both *GitHub* and *Jupyter Notebook*.
 You should try to do the same, or they will look ugly.
 JupyterLab has a built-in selectable dark theme, so you only need to install something if you want to use the classic notebook interface.
 To see the content appropriately in the classic interface install the following:
 -->
-نستخدم أنماطًا داكنة لـ * GitHub * و * Jupyter Notebook *.
+نستخدم أنماطًا داكنة لـ *GitHub* و *Jupyter Notebook*.
 يجب أن تحاول أن تفعل الشيء نفسه ، أو سيبدو قبيحًا.
 يحتوي JupyterLab على سمة داكنة قابلة للتحديد مضمنة ، لذلك ستحتاج فقط إلى تثبيت بعض الأشياء الإضافية إذا كنت تريد استخدام واجهة الكمبيوتر المحمول الكلاسيكية.
 لعرض المحتوى بشكل صحيح في الواجهة الكلاسيكية ، قم بتثبيت ما يلي:
