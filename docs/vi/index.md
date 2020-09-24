@@ -1,8 +1,11 @@
 ---
-Bố cục: Mặc định
-Tiêu đề: Học sâu
-Tác giả: Alfredo Canziani
-Tham khảo: Trang chủ
+layout: defaut
+Title: Học sâu
+author: Alfredo Canziani
+lang-ref: Home
+lang: vi
+translation-date: Sept 16, 2020
+translator: Huynh Nguyen
 ---
 
 **DS-GA 1008 · Học kỳ mùa xuân 2020 · [Trung tâm khoa học dữ liệu, NYU](http://cds.nyu.edu/)**
