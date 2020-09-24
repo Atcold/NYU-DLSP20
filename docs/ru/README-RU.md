@@ -54,7 +54,7 @@
 The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal. -->
 
 Чтобы иметь возможность выполнять упражнения, необходимо иметь ноутбук с предустановленной Miniconda (минимальная версия Anaconda) и несколько установленных Python пакетов.
-Следующие инструкции будут работать, как для пользователей Mac, так и для Ubuntu Linux, Windows-пользователям желательно установить и работать в [Git BASH](https://gitforwindows.org/) terminal.
+Следующие инструкции будут работать, как для пользователей Mac, так и для Ubuntu Linux, Windows-пользователям желательно установить и работать в терминале [Git BASH](https://gitforwindows.org/).
 
 <!-- ## Download and install Miniconda -->
 
