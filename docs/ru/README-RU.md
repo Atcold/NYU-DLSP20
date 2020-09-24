@@ -153,4 +153,4 @@ To see the content appropriately in the classic interface install the following:
 Чтобы видеть контент соответсвующим образом в классическом интерфейсе, установите следующее:
 
  - [тёмная тема *Jupyter Notebook*](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [тёмная тема *GitHub*](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
+ - [тёмная тема *GitHub*](https://userstyles.org/styles/37035/github-dark) и закомментируйте блок кода `invert #fff to #181818`.
