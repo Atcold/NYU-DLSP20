@@ -8,7 +8,7 @@
 <!-- This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 -->
 
-Ce répertoire a maintenant un [site web associé](https://atcold.github.io/pytorch-Deep-Learning/), où tout le matériel de cours peut être trouvé au format vidéo et textuel.
+Ce répertoire a maintenant un [site web associé](https://atcold.github.io/pytorch-Deep-Learning/fr/), où tout le matériel de cours peut être trouvé au format vidéo et textuel.
 
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - French - Farsi -->

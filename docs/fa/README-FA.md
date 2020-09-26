@@ -1,7 +1,7 @@
 <span dir="rtl" align="right">
 
 # یادگیری عمیق(با پایتورچ) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
-این مخزن یک [وبسایت](https://atcold.github.io/pytorch-Deep-Learning/) به همراه خود دارد که تمام محتویات دوره در قالب متن و ویدیو در دسترس است.
+این مخزن یک [وبسایت](https://atcold.github.io/pytorch-Deep-Learning/fa/) به همراه خود دارد که تمام محتویات دوره در قالب متن و ویدیو در دسترس است.
 
 
 
@@ -31,7 +31,7 @@ git clone https://github.com/Atcold/pytorch-Deep-Learning
 ```
 
 
-## ساخت محیط ایزوله Miniconda 
+## ساخت محیط ایزوله Miniconda
 مسیر جاری را به پوشه این دوره تغییر دهید و سپس تایپ کنید:
 
 ```bash
