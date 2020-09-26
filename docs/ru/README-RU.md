@@ -37,9 +37,9 @@
 🇸🇦 النسخة العربية من ملف `README.md`  [ar](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) والموقع الالكتروني.
 -->
 
-<!-- Arabic -->
+<!-- Russian -->
 <!--
-🇸🇦 النسخة العربية من ملف `README.md`  [ar](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-RU.md) والموقع الالكتروني.
+🇷🇺 النسخة العربية من ملف `README.md`  [ru](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-RU.md) والموقع الالكتروني.
 -->
 
 
