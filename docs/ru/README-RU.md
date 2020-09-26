@@ -4,47 +4,11 @@
 
 <!-- This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format. -->
 
-У данного репозитория с рабочими тетрадями сейчас есть [сопровождающий сайт](https://atcold.github.io/pytorch-Deep-Learning/), где Вы можете все материалы в текстовом и видео-формате.
-
-<!-- Mandarin -->
-<!--
-🇨🇳 这份`README.md`的中文版本及网站可以在[这里](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md)找到.-->
-
-<!-- Korean -->
-<!--
-🇰🇷 한국어 `README.md`는 [여기](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md)에서 확인하실 수 있습니다.
--->
-
-<!-- Spanish -->
-<!--
-🇪🇸 La versión en Español de este `README.md` y el sitio web [se encuentran aquí](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md).-->
-
-<!-- Italian -->
-<!--
-🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [a questo indirizzo](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md).
--->
-<!-- Turkish -->
-<!--
-🇹🇷 `README.md`'nin Türkçe çevirisi [bu](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) adreste bulunabilir.
--->
-<!-- Japanese -->
-<!--
-🇯🇵 日本語版の `README.md` は  [ここ](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) にあります.
--->
-
-<!-- Arabic -->
-<!--
-🇸🇦 النسخة العربية من ملف `README.md`  [ar](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) والموقع الالكتروني.
--->
-
-<!-- Russian -->
-<!--
-🇷🇺 النسخة العربية من ملف `README.md`  [ru](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-RU.md) والموقع الالكتروني.
--->
+У данного репозитория с рабочими тетрадями сейчас есть [сопровождающий сайт](https://atcold.github.io/pytorch-Deep-Learning/ru), где Вы можете все материалы в текстовом и видео-формате.
 
 
-<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - Russian -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md)
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - French - Farsi - Russian -->
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) &nbsp; [🇫🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fr/README-FR.md) &nbsp; [🇮🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fa/README-FA.md) &nbsp; [🇷🇺](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ru/README-RU.md)
 
 <!-- # Getting started -->
 
