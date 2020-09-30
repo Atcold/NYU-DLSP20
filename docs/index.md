@@ -196,7 +196,7 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week09/09-2">Word model, GANs</a></td></tr>
+    <tr><td><a href="en/week09/09-2">World model, GANs</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
       <td><a href="en/week09/09-3">Training GANs</a></td>
