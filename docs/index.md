@@ -288,7 +288,7 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
       </td>
     </tr>
-<!-- =============================== WEEK 13 =============================== -->
+<!-- =============================== WEEK 14 =============================== -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
       <td rowspan="2">Lecture</td>
