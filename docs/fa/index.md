@@ -146,6 +146,7 @@ translator: Ali Abedi
       <td rowspan="1">عملی</td>
       <td><a href="en/week06/06-3">آموزش شبکه‌های عصبی بازگشتی</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>

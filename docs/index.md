@@ -288,7 +288,7 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
       </td>
     </tr>
-<!-- =============================== WEEK 13 =============================== -->
+<!-- =============================== WEEK 14 =============================== -->
     <tr>
       <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
       <td rowspan="2">Lecture</td>
@@ -337,9 +337,7 @@ This course concerns the latest techniques in deep learning and representation l
 # Disclaimer
 
 All other texts found on this site are lecture notes taken by students of the New York University during lectures given by Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
-
 Thus the texts in English were written by about 130 people, which has an impact on the homogeneity of the texts (some write in the past tense, others in the present tense; the abbreviations used are not always the same; some write short sentences, while others write sentences of up to 5 or 6 lines, etc.).
-
 It is possible that there may be some omissions: typing errors, spelling mistakes, etc. If you notice any, we invite you to submit a PR on the [GitHub directory of the site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifying with an `[EN]` that it concerns the English translation.
 
 Wishing you a deep reading !
