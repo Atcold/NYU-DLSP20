@@ -142,6 +142,7 @@ This course concerns the latest techniques in deep learning and representation l
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>
       </td>
     </tr>
@@ -285,6 +286,28 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
         <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 14 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="en/week14/14-1">Structured Prediction</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
+        <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week14/14-2">Graphical methods</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="en/week14/14-3">Regularisation and Bayesian</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/08%20-%20Bayesian%20NN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/13-bayesian_nn.ipynb">📓</a>
+        <a href="https://youtu.be/DL7iew823c0">🎥</a>
       </td>
     </tr>
   </tbody>
