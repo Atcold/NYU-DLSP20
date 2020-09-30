@@ -3,7 +3,7 @@ layout: default
 title: APPRENTISSAGE PROFOND
 author: Alfredo Canziani
 lang-ref: home
-lang: it
+lang: fr
 translation-date: 16 Aug 2020
 translator: Loïck Bourdois
 ---
