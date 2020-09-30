@@ -349,6 +349,7 @@ Wishing you a deep reading :]
 ## Traduction
 Tous les textes présents sur ce site sont des notes de cours prises par les étudiants de la New York University lors des conférences données par Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis et Xavier Bresson.
 Ainsi les textes en anglais ont été rédigés par plus de 130 personnes, ce qui a un impact sur l’homogénéité des textes (certains écrivent au passé, d’autres au présent ; les abréviations utilisées ne sont pas forcément toujours les mêmes ; certains écrivent des phrases courtes, quand d’autres écrivent des phrases pouvant aller jusqu’à 5 ou 6 lignes, etc.).
+
 La traduction en français qui vous est proposée a été effectuée par une seule et unique personne puis relu par différentes, le but étant d’atténuer les problèmes cités à l’instant, et de proposer une traduction homogène. L’ensemble des choix qui ont été retenus pour la rédaction et la traduction sont détaillés [ici](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
 Cette traduction a nécessité soixante-dix d’heures et a été plusieurs fois vérifiée. Néanmoins, il se peut qu’il y ait des oublis : fautes de frappe, d’orthographe, etc. Si vous en remarquez, nous vous invitons à soumettre une PR sur le [répertoire GitHub du site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) en précisant avec un `[FR]` qu’elle concerne la traduction française.
 
