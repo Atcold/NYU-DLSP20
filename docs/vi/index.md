@@ -39,7 +39,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     <tr>
       <td rowspan="3" align="center"><a href="en/week01/01">①</a></td>
       <td rowspan="2">Bài giảng</td>
-      <td><a href="en/week01/01-1">History and motivation</a></td>
+      <td><a href="week01/01-1">History and motivation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
         <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
