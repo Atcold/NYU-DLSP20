@@ -328,7 +328,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 
 | Rôle | Photo | Contact | A propos |
 |:-----|:-----:|:--------|:------|
-|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à l'Université de New York (NYU) <br> et lauréat du prix Turing 2019|
+|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en Computer Science à la NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en Computer Science à NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu| Doctorant en Computer Science à NYU|
@@ -358,5 +358,4 @@ De ce fait, tous les liens renvoyant vers les notebooks vous conduiront vers leu
 Si vous le souhaitez, vous pouvez tout de même consulter une traduction française des 16 notebooks se basant sur une version des notebooks datant de septembre 2020. Toute modification ultérieure des notebooks anglais ne sera pas prise en compte. La version française est disponible [ici](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French). 
 
 En vous souhaitant une deep lecture :]
-
 
