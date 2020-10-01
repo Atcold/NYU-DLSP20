@@ -4,7 +4,7 @@ title: Học sâu
 author: Alfredo Canziani
 lang-ref: Home
 lang: vi
-translation-date: Sept 16, 2020
+translation-date: 16 Sept 2020
 translator: Huynh Nguyen
 ---
 
