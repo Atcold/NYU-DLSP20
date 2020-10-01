@@ -1,6 +1,6 @@
 ---
 layout: defaut
-Title: Học sâu
+title: Học sâu
 author: Alfredo Canziani
 lang-ref: Home
 lang: vi
