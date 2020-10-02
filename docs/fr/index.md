@@ -328,11 +328,11 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 
 | Rôle | Photo | Contact | A propos |
 |:-----|:-----:|:--------|:------|
-|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à l'Université de New York<br>et lauréat du prix Turing 2019
+|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en Computer Science à la NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en Computer Science à NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu| Doctorant en Computer Science à NYU|
-|Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://lbourdois.github.io/blog/">Loïck Bourdois <br>| N'appartient pas au corps enseignant |
+|Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://lbourdois.github.io/blog/">Loïck Bourdois <br>| N'appartient pas au corps enseignant de la NYU |
 
 
 <!-- 
@@ -349,6 +349,7 @@ Wishing you a deep reading :]
 ## Traduction
 Tous les textes présents sur ce site sont des notes de cours prises par les étudiants de la New York University lors des conférences données par Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis et Xavier Bresson.
 Ainsi les textes en anglais ont été rédigés par plus de 130 personnes, ce qui a un impact sur l’homogénéité des textes (certains écrivent au passé, d’autres au présent ; les abréviations utilisées ne sont pas forcément toujours les mêmes ; certains écrivent des phrases courtes, quand d’autres écrivent des phrases pouvant aller jusqu’à 5 ou 6 lignes, etc.).
+
 La traduction en français qui vous est proposée a été effectuée par une seule et unique personne puis relu par différentes, le but étant d’atténuer les problèmes cités à l’instant, et de proposer une traduction homogène. L’ensemble des choix qui ont été retenus pour la rédaction et la traduction sont détaillés [ici](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
 Cette traduction a nécessité soixante-dix d’heures et a été plusieurs fois vérifiée. Néanmoins, il se peut qu’il y ait des oublis : fautes de frappe, d’orthographe, etc. Si vous en remarquez, nous vous invitons à soumettre une PR sur le [répertoire GitHub du site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) en précisant avec un `[FR]` qu’elle concerne la traduction française.
 
@@ -357,5 +358,4 @@ De ce fait, tous les liens renvoyant vers les notebooks vous conduiront vers leu
 Si vous le souhaitez, vous pouvez tout de même consulter une traduction française des 16 notebooks se basant sur une version des notebooks datant de septembre 2020. Toute modification ultérieure des notebooks anglais ne sera pas prise en compte. La version française est disponible [ici](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French). 
 
 En vous souhaitant une deep lecture :]
-
 
