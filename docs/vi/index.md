@@ -1,8 +1,8 @@
 ---
-layout: defaut
+layout: Defaut
 title: Học sâu
 author: Alfredo Canziani
-lang-ref: home
+lang-ref: Home
 lang: vi
 translation-date: 16 Sept 2020
 translator: Huynh Nguyen
