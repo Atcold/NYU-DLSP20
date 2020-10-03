@@ -37,7 +37,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
   <tbody>
 <!-- =============================== WEEK 1 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week01/01">①</a></td>
+      <td rowspan="3" align="center"><a href="week01/01">①</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week01/01-1">History and motivation</a></td>
       <td rowspan="2">
@@ -57,7 +57,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 2 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week02/02">②</a></td>
+      <td rowspan="3" align="center"><a href="week02/02">②</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week02/02-1">SGD and backprop</a></td>
       <td rowspan="2">
@@ -78,7 +78,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 3 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week03/03">③</a></td>
+      <td rowspan="3" align="center"><a href="week03/03">③</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week03/03-1">Parameter transformation</a></td>
       <td rowspan="2">
@@ -98,7 +98,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 4 ================================ -->
     <tr>
-      <td rowspan="1" align="center"><a href="en/week04/04">④</a></td>
+      <td rowspan="1" align="center"><a href="week04/04">④</a></td>
       <td rowspan="1">Thực hành</td>
       <td><a href="week04/04-1">1D convolutions</a></td>
       <td>
@@ -108,7 +108,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="week05/05">⑤</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week05/05-1">Optimisation I</a></td>
       <td rowspan="2">
@@ -128,7 +128,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
+      <td rowspan="3" align="center"><a href="week06/06">⑥</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week06/06-1">CNN applications</a></td>
       <td rowspan="2">
@@ -150,7 +150,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week07/07">⑦</a></td>
+      <td rowspan="3" align="center"><a href="week07/07">⑦</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week07/07-1">Energy-Based Models</a></td>
       <td rowspan="2">
@@ -170,7 +170,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 8 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week08/08">⑧</a></td>
+      <td rowspan="3" align="center"><a href="week08/08">⑧</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week08/08-1">Contrastive methods</a></td>
       <td rowspan="2">
@@ -190,7 +190,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 9 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week09/09">⑨</a></td>
+      <td rowspan="3" align="center"><a href="week09/09">⑨</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week09/09-1">Sparsity</a></td>
       <td rowspan="2">
@@ -210,7 +210,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 10 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week10/10">⑩</a></td>
+      <td rowspan="3" align="center"><a href="week10/10">⑩</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week10/10-1">CV SSL I</a></td>
       <td rowspan="2">
@@ -230,7 +230,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 11 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week11/11">⑪</a></td>
+      <td rowspan="3" align="center"><a href="week11/11">⑪</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week11/11-1">Activations</a></td>
       <td rowspan="2">
@@ -252,7 +252,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 12 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week12/12">⑫</a></td>
+      <td rowspan="3" align="center"><a href="week12/12">⑫</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week12/12-1">DL for NLP I</a></td>
       <td rowspan="2">
@@ -272,7 +272,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 13 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="3" align="center"><a href="week13/13">⑬</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week13/13-1">GCNs I</a></td>
       <td rowspan="2">
@@ -292,7 +292,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 14 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
+      <td rowspan="3" align="center"><a href="week14/14">⑭</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week14/14-1">Structured Prediction</a></td>
       <td rowspan="2">
