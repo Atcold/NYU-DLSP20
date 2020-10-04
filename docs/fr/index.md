@@ -14,7 +14,7 @@ translator: Loïck Bourdois
 | INSTRUCTEURS | Yann Le Cun & Alfredo Canziani |
 | CONFÉRENCES | Lundi 16h55 - 18h35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRATIQUE | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home) | Code d'accès : DLSP20`` |
+| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home) | Code d'accès : `DLSP20` |
 | MATERIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
@@ -57,7 +57,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr><td><a href="fr/week01/01-2">Evolution et Apprentissage profond</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week01/01-3">Réseaux de neurones(Neural Network : NN)</a></td>
+      <td><a href="fr/week01/01-3">Réseaux de neurones (Neural Network : NN)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
@@ -269,7 +269,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
         <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel (NLP)II</a></td></tr>
+    <tr><td><a href="fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel (NLP) II</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
       <td><a href="fr/week12/12-3">Attention & Transformer</a></td>
@@ -328,7 +328,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 
 | Rôle | Photo | Contact | A propos |
 |:-----|:-----:|:--------|:------|
-|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
+|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer <br> Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en Computer Science à la NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en Computer Science à NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu| Doctorant en Computer Science à NYU|
