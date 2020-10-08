@@ -37,7 +37,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
   <tbody>
 <!-- =============================== WEEK 1 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="week01/01">①</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/vi/Tuần 01/01-1">①</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="week01/01-1">Lịch sử và cảm hứng</a></td>
       <td rowspan="2">
