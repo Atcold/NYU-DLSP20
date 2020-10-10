@@ -146,7 +146,8 @@ Bu kurs, gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev 
       <td rowspan="1">Uygulama</td>
       <td><a href="{{site.baseurl}}/tr/week06/06-3">RNN eğitimi </a></td>
       <td>
-	<a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>
       </td>
