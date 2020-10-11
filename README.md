@@ -2,27 +2,9 @@
 
 This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 
-<!-- Mandarin -->
-<!--
-🇨🇳 这份`README.md`的中文版本及网站可以在[这里](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md)找到.-->
+<!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - French - Farsi - Russian -->
+[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) &nbsp; [🇫🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fr/README-FR.md) &nbsp; [🇮🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fa/README-FA.md) &nbsp; [🇷🇺](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ru/README-RU.md)
 
-<!-- Korean -->
-<!--
-🇰🇷 한국어 `README.md`는 [여기](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md)에서 확인하실 수 있습니다.
--->
-
-<!-- Spanish -->
-<!--
-🇪🇸 La versión en Español de este `README.md` y el sitio web [se encuentran aquí](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md).-->
-
-<!-- Italian -->
-<!--
-🇮🇹 La versione in italiano di questo `README.md` può essere trovata  [a questo indirizzo](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md).
--->
-
-
-<!-- English - Mandarin - Korean - Spanish - Italian -->
-[🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md)
 
 # Getting started
 
@@ -87,4 +69,3 @@ To see the content appropriately in the classic interface install the following:
 
  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
  - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
-
