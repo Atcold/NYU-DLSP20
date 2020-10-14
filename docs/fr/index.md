@@ -201,7 +201,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week09/09">⑨</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="{{site.baseurl}}/fr/week09/09-1">Sparsity</a></td>
+      <td><a href="{{site.baseurl}}/fr/week09/09-1">Eparsité</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
