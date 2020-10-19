@@ -16,7 +16,7 @@ lang-ref: home
 
 ## Opis
 
-Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju atributa. Fokusira se na nadgledano i nenadgledano učenje, embedding metode, učenje metrika, konvolucione i rekurentne neuronske mreže, sa primenama u kompjuterskoj viziji, razumevanju prirodnog jezika i prepoznavanju govora. Potrebno predznanje: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) ili kurs mašinskog učenja na nivou master ili doktorskih studija.
+Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. Fokusira se na nadgledano i nenadgledano učenje, embedding metode, učenje metrika, konvolucione i rekurentne neuronske mreže, sa primenama u kompjuterskoj viziji, razumevanju prirodnog jezika i prepoznavanju govora. Potrebno predznanje: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) ili kurs mašinskog učenja na nivou master ili doktorskih studija.
 
 ## Lekcije
 
