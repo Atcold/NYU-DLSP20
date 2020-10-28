@@ -321,7 +321,7 @@ translator: Taniya Seth
 | ভূমিকা | ছবি | যোগাযোগ | এই মানুষদের সম্পর্কে তথ্য |
 |:-----|:-----:|:--------|:------|
 |
-প্রশিক্ষক|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|নিউ ইয়র্ক ইউনিভার্সিটি-তে কম্পিউটার সায়েন্সের সিলভের প্রফেসর<br>ও Turing পুরস্কার বিজয়ী|
+প্রশিক্ষক|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|নিউ ইয়র্ক ইউনিভার্সিটি-তে কম্পিউটার সায়েন্সের সিলভের প্রফেসর<br>ও Turing পুরস্কার বিজয়ী|
 |
 প্রশিক্ষক|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|নিউ ইয়র্ক ইউনিভার্সিটি-তে কম্পিউটার সায়েন্সের অ্যাসিস্ট্যান্ট প্রফেসর|
 |সহকারী|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|নিউ ইয়র্ক ইউনিভার্সিটি-তে কম্পিউটার সায়েন্সের পি-এচ-ডি স্টুডেন্ট|
