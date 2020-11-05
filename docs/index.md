@@ -310,6 +310,16 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://youtu.be/DL7iew823c0">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2">Practicum</td>
+      <td><a href="en/week15/15-1">Inference for Latent-Variable EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://drive.google.com/file/d/1TRHoQCHgVIDl_xZurF5j4IBoijAj5YtW/">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
