@@ -321,7 +321,7 @@ This course concerns the latest techniques in deep learning and representation l
       </td>
     </tr>
     <tr>
-      <td><a href="en/week15/15-2">Training for Latent-Variable EBMs</a></td>
+      <td><a href="en/week15/15-2">Training Latent-Variable EBMs</a></td>
       <td rowspan="1">
         <a href="https://drive.google.com/file/d/1IeLehCXCDTBXzqXnO03hVyxD257JiRgo/">🖥️</a>
       </td>
