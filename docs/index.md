@@ -316,14 +316,15 @@ This course concerns the latest techniques in deep learning and representation l
       <td rowspan="2">Practicum</td>
       <td><a href="en/week15/15-1">Inference for Latent-Variable EBMs</a></td>
       <td rowspan="1">
-        <a href="https://drive.google.com/file/d/1TRHoQCHgVIDl_xZurF5j4IBoijAj5YtW/">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
         <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
       </td>
     </tr>
     <tr>
       <td><a href="en/week15/15-2">Training Latent-Variable EBMs</a></td>
       <td rowspan="1">
-        <a href="https://drive.google.com/file/d/1IeLehCXCDTBXzqXnO03hVyxD257JiRgo/">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
       </td>
     </tr>
   </tbody>
