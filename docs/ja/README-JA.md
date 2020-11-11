@@ -31,7 +31,7 @@ sh <miniconda*.sh>
 ## 演習用の Git リポジトリをチェックアウトする
 
 <!-- Once Miniconda is ready, checkout the course repository and proceed with setting up the environment: -->
-Minionca を準備したあとは、この講義のリポジトリをチェックアウトし、環境構築を行います。
+Miniconda を準備したあとは、この講義のリポジトリをチェックアウトし、環境構築を行います。
 
 ```bash
 git clone https://github.com/Atcold/pytorch-Deep-Learning
