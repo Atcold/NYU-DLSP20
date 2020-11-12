@@ -254,7 +254,7 @@ You know, basically, this is a two-way Softmax. You can think of it this way.
 and this is just a function that goes kind of smoothly between 0 & 1.
 
 0:07:04.167,0:07:11.445
-It's sometimes called a Fermi-Dirac function as well because it derives from some work in physics, in ??? physics.
+It's sometimes called a Fermi-Dirac function as well because it derives from some work in physics, in statistical physics.
 
 0:07:13.148,0:07:16.651
 And then there is the hyperbolic tangent that we also talked about.
@@ -389,7 +389,7 @@ and if it goes below zero, it climbs at zero, if it's brought too long.
 And this is basically just the identity function to which you subtract hyperbolic tangent to make it look like a shrink.
 
 0:11:23.070,0:11:29.582
-Basically, these ??? if we try to get the whatever value close to zero, they actually are forced to zero basically, right?
+Basically, if we try to get the whatever value close to zero, they actually are forced to zero basically, right?
 
 0:11:30.159,0:11:33.971
 Right. So, small values are forced to zero, others are shrunk toward zero,
@@ -605,7 +605,7 @@ So, the question is, you know, how complex do you want your non-linearity to be?
 So, you could imagine of course parameterizing an entire non-linear function,
 
 0:17:58.041,0:18:01.631
-you know with spring???? parameters or bayesian curves or something like this right.
+you know with spline parameters or Bayesian curves or something like this right.
 
 0:18:01.977,0:18:05.519
 Or, I don't know, Chebyshev polynomials,
@@ -701,7 +701,7 @@ whereas if you have a function with only one kink, if you multiply the input by 
 in a module of bias, but the signal of the bias is fine.
 
 0:20:46.836,0:20:55.947
-????? taken of a situation with a choice of activation function made a big difference in the performance of the model?
+What I meant to ask is taken of a situation with a choice of activation function made a big difference in the performance of the model?
 
 0:20:56.230,0:21:00.177
 except for the deep networks using ReLU instead of Sigmoid?
@@ -1034,7 +1034,7 @@ because now the input variances are fixed.
 So now, the temperature matters.
 
 0:29:49.159,0:29:57.800
-Temperature basically knew/??? controls how hard, you know, the distribution on the output will be.
+Temperature basically controls how hard, you know, the distribution on the output will be.
 
 0:29:58.223,0:30:03.194
 So, with a very very large β, you basically will have one of the outputs equal to 1,
@@ -1076,7 +1076,7 @@ And then as learning proceeds, if you want kind of harder decisions in your atte
 And so that makes the system kind of make harder decisions.
 
 0:31:05.523,0:31:10.405
-It doesn't learn as well anymore, but it's you know, presumably after a few iterations, it's kind of in the ????.
+It doesn't learn as well anymore, but it's you know, presumably after a few iterations, it's kind of in the right ballpark.
 
 0:31:10.405,0:31:16.275
 So, you can sort of sharpen the decisions there by can be increasing β.
@@ -1103,7 +1103,7 @@ So, if you want kind of a soft mixture, you have a low β,
 and as you increase β to infinity, basically, you're going to select one of the experts and ignore all the other ones.
 
 0:31:53.880,0:31:58.753
-That might be useful, for example, if you want to train a mixture of experts ??? attention mechanism,
+That might be useful, for example, if you want to train a mixture of experts or an attention mechanism,
 
 0:31:58.753,0:32:05.852
 but in the end, you want to safe computation by just determining which expert do I need to compute and just not computing the other ones.
@@ -1115,7 +1115,7 @@ So, in that case you want those coefficients to be basically either 1 or 0,
 and you can train the system progressively to do this by increasing β.
 
 0:32:17.370,0:32:20.018
-This is called the ????? have a name for this,
+The physicists have a name for this,
 
 0:32:20.018,0:32:23.539
 because it uses kind of tricks or various other things, that's called annealing.
@@ -1352,7 +1352,7 @@ but basically here imagine that you have an X vector coming out.
 Okay, and your loss function is there is one correct X.
 
 0:39:14.555,0:39:20.963
-Okay, so imagine each X correspond to a score for ??? multi-class classification, right?
+So imagine each X correspond to a score for multi-class classification.
 
 0:39:21.309,0:39:25.610
 So, you have a desired class, which is one particular index in that vector.
@@ -1826,10 +1826,10 @@ and it's a version of it that is applicable for very very large categorization,
 so if you have many many many categories, what you might want to do is kind of cut some corners;
 
 0:52:55.893,0:53:01.595
-you don't want to compute the giant Softmax over ??? million categories or maybe even more.
+you don't want to compute the giant Softmax over million categories or maybe even more.
 
 0:53:02.633,0:53:05.311
-So there you can sort of basically ignore the ones ??? that are small,
+So there you can sort of basically ignore the ones that are small,
 
 0:53:05.311,0:53:14.947
 and you know, kind of use tricks to kind of, you know, improve the speed of the computation,
@@ -1901,7 +1901,7 @@ so it may reach, it may have kind of numerical issues.
 Again it assumes X and Y are you know distributions.
 
 0:55:48.749,0:55:52.398
-This is ??? Poisson loss.
+This is barely used Poisson loss.
 
 0:55:53.206,0:56:01.396
 Okay, so this version of binary cross entropy here, takes scores that haven't gone through Sigmoid.
@@ -2045,7 +2045,7 @@ and you feed those two scores to the loss function like this,
 so basically it's going to push up the score in the correct category, push down the score the incorrect category
 
 0:59:45.824,0:59:48.440
-until the difference is that ??? to margin, equal to the margin.
+until the difference is at least equal to the margin.
 
 0:59:49.293,0:59:50.065
 Okay?
@@ -2192,7 +2192,7 @@ So "a" is the sample you considered, p is kind of a positive sample, and n is a 
 You want to push n away and bring p closer,
 
 1:03:25.754,1:03:31.072
-and as soon as p is closer than n by some/sum ??? margin, you stop pushing and pulling.
+and as soon as p is closer than n by some margin, you stop pushing and pulling.
 
 1:03:37.680,1:03:43.410
 Yeah, soft versions of this, and in fact, you can think of NCE, the kind of loss function that Ishan was talking about,
@@ -2213,7 +2213,7 @@ and you say I want this the, you know, e to the minus distance for the correct o
 so it kind of you pushes the positive closer to you and pushes the other ones further to you,
 
 1:04:14.672,1:04:20.293
-but now with some sort of Softmax ??? sort of exponential decay as opposed to sort of a hard margin
+but now with some sort of Softmax-ie sort of exponential decay as opposed to sort of a hard margin
 
 1:04:24.876,1:04:27.786
 So in Pytorch you have things that allow you to have multi labels,
@@ -2222,7 +2222,7 @@ So in Pytorch you have things that allow you to have multi labels,
 so this allows you to basically give multiple correct outputs.
 
 1:04:32.793,1:04:39.886
-So instead of, you know, this is a ranking loss but it's ??? ??? that there is only one correct category,
+This is a ranking loss but instead of insisting that there is only one correct category,
 
 1:04:39.911,1:04:44.888
 and you know, you want a high score for the correct category, and bad score for everything else.
@@ -2270,7 +2270,7 @@ So, the Y variable indicates whether the pair you are or whether the score you a
 and it chooses the hinge loss that makes the score positive if Y is +1,
 
 1:06:11.610,1:06:17.470
-and it makes a score negative by some/sum ??? margin Δ if Y is -1.
+and it makes a score negative by some margin Δ if Y is -1.
 
 1:06:25.880,1:06:28.804
 Very often when you are doing Siamese nets,
@@ -2342,7 +2342,7 @@ You don't want them to be opposed,
 because there is only one point in the south pole,
 
 1:08:04.582,1:08:11.654
-whereas ??? on the equator is a very very high large space, the entire sphere minus one dimension basically.
+whereas on the equator is a very very high large space, the entire sphere minus one dimension basically.
 
 1:08:12.099,1:08:12.618
 Okay?
@@ -2555,10 +2555,10 @@ Okay, so it's basically differentiable time-warping, you could think of it this 
 Or sort of a module that does dynamic time-warping or dynamic programming, and it's still differentiable.
 
 1:14:47.220,1:14:54.050
-The idea for this goes back in the early 90s in Leon Betowski ??? Actually. That's very old.
+The idea for this goes back in the early 90s in Léon Bottu PhD thesis, actually. That's very old.
 
 1:14:53.330,1:15:00.965
-??? a good paper or resource to learn more about that dynamic programming algorithm there?
+Is there a good paper or resource to learn more about that dynamic programming algorithm there?
 
 1:15:01.434,1:15:03.944
 Actually, that's kind of what I'm gonna talk about next.
@@ -3014,7 +3014,7 @@ Yeah, so the soft hinge loss has an infinite margin.
 it wants the difference between those two energies to be infinite,
 
 1:27:40.595,1:27:43.689
-but the slope that ??? decreases exponentially,
+but the slope decreases exponentially,
 
 1:27:43.689,1:27:51.141
 so it's never going to get there because, you know, the gradients get very small as the difference increases.
@@ -3233,7 +3233,7 @@ I'm outta time, so I might talk about the structure prediction issue that I said
 Any more question?
 
 1:34:25.578,1:34:31.657
-The contrastive method you'll what ??? ??? self-supervised learning papers,
+The contrastive method for the self-supervised learning papers,
 
 1:34:31.847,1:34:40.152
 they are usually ??? take the random images as the negative examples.
@@ -3299,7 +3299,7 @@ I mean basically if you want to do this properly, you have to pick those samples
  but it doesn't matter. I mean that's why hard-negative mining is hard.
 
 1:36:12.338,1:36:19.018
-Okay, that's why what makes the difference between ??? ??? ??? ???, etc is how you pick those negative samples.
+Okay, that's why what makes the difference between MoCo, PIRL, SimCLR, etc is how you pick those negative samples.
 
 1:36:19.709,1:36:31.097
 That's why I said there is no kind of in cases where Y space is high-dimensional, there is no, you know, predefined way of picking negative samples essentially.
@@ -3314,7 +3314,7 @@ Have other people experiment about other losses?
 Yeah, I mean there are a lot of people are using the square-square or the sort of hinge, you know, with the difference of energies,
 
 1:36:50.702,1:36:54.562
-so some of the systems are ??? used by at least at some point,
+so some of the systems are being used by at least at some point,
 
 1:36:55.385,1:37:01.149
 the system that deep face which is the face recognition system that used by Facebook to tag people.
