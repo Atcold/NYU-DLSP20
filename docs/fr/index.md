@@ -14,7 +14,7 @@ translator: Loïck Bourdois
 | INSTRUCTEURS | Yann Le Cun & Alfredo Canziani |
 | CONFÉRENCES | Lundi 16h55 - 18h35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRATIQUE | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home) | Code d'accès : DLSP20`` |
+| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home) | Code d'accès : `DLSP20` |
 | MATERIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
@@ -46,18 +46,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
   <tbody>
 <!-- =============================== SEMAINE 1 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week01/01">①</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week01/01">①</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week01/01-1">Histoire et motivations</a></td>
+      <td><a href="{{site.baseurl}}/fr/week01/01-1">Histoire et motivations</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Q7LtZyIS1f3TfeTGll3aDtWygh3GAfCb">🖥️</a>
         <a href="https://www.youtube.com/watch?v=0bMe_vCZo30">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week01/01-2">Evolution et Apprentissage profond</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week01/01-2">Evolution et Apprentissage profond</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week01/01-3">Réseaux de neurones(Neural Network : NN)</a></td>
+      <td><a href="{{site.baseurl}}/fr/week01/01-3">Réseaux de neurones (Neural Network : NN)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
@@ -66,18 +66,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 2 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week02/02">②</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week02/02">②</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week02/02-1"> Descente de gradient stochastique et rétropropagation </a></td>
+      <td><a href="{{site.baseurl}}/fr/week02/02-1"> Descente de gradient stochastique et rétropropagation </a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
         <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week02/02-2">La rétropropagation en pratique</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week02/02-2">La rétropropagation en pratique</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week02/02-3">Entraînement d’un NN </a></td>
+      <td><a href="{{site.baseurl}}/fr/week02/02-3">Entraînement d’un NN </a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/01%20-%20Spiral%20classification.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/04-spiral_classification.ipynb">📓</a>
@@ -87,18 +87,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 3 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week03/03">③</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week03/03">③</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week03/03-1">Transformation de paramètres</a></td>
+      <td><a href="{{site.baseurl}}/fr/week03/03-1">Transformation de paramètres</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
         <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week03/03-2">Réseaux de neurones convolutifs (ConvNets)</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week03/03-2">Réseaux de neurones convolutifs (ConvNets)</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week03/03-3">Propriétés des signaux naturels</a></td>
+      <td><a href="{{site.baseurl}}/fr/week03/03-3">Propriétés des signaux naturels</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/02%20-%20CNN.pdf">🖥</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/06-convnet.ipynb">📓</a>
@@ -107,9 +107,9 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 4 ================================ -->
     <tr>
-      <td rowspan="1" align="center"><a href="fr/week04/04">④</a></td>
+      <td rowspan="1" align="center"><a href="{{site.baseurl}}/fr/week04/04">④</a></td>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week04/04-1">Convolution à 1 dimension</a></td>
+      <td><a href="{{site.baseurl}}/fr/week04/04-1">Convolution à 1 dimension</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/07-listening_to_kernels.ipynb">📓</a>
         <a href="https://youtu.be/OrBEon3VlQg">🎥</a>
@@ -117,18 +117,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week05/05">⑤</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week05/05-1">Optimisation I</a></td>
+      <td><a href="{{site.baseurl}}/fr/week05/05-1">Optimisation I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
         <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week05/05-2">Optimisation II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week05/05-2">Optimisation II</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week05/05-3">ConvNets, autograd</a></td>
+      <td><a href="{{site.baseurl}}/fr/week05/05-3">ConvNets, autograd</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
@@ -137,19 +137,19 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week06/06">⑥</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week06/06">⑥</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week06/06-1">Applications des ConvNets</a></td>
+      <td><a href="{{site.baseurl}}/fr/week06/06-1">Applications des ConvNets</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1opT7lV0IRYJegtZjuHsKhlsM5L7GpGL1">🖥️</a>
         <a href="https://drive.google.com/open?id=1sdeVBC3nuh5Zkm2sqzdScEicRvLc_v-F">🖥️</a>
         <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week06/06-2">Réseaux de neurones récurrents (RNNs) et Attention</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week06/06-2">Réseaux de neurones récurrents (RNNs) et Attention</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week06/06-3">Entraîner des RNNs</a></td>
+      <td><a href="{{site.baseurl}}/fr/week06/06-3">Entraîner des RNNs</a></td>
       <td>
 	<a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
@@ -159,18 +159,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week07/07">⑦</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week07/07">⑦</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week07/07-1">Modèles à base d’énergie (EBM)</a></td>
+      <td><a href="{{site.baseurl}}/fr/week07/07-1">Modèles à base d’énergie (EBM)</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
         <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week07/07-2">Apprentissage auto-supervisé et EBM</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week07/07-2">Apprentissage auto-supervisé et EBM</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week07/07-3">Auto-encodeurs</a></td>
+      <td><a href="{{site.baseurl}}/fr/week07/07-3">Auto-encodeurs</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
@@ -179,18 +179,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 8 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week08/08">⑧</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week08/08">⑧</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week08/08-1">Méthodes contrastives</a></td>
+      <td><a href="{{site.baseurl}}/fr/week08/08-1">Méthodes contrastives</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Zo_PyBEO6aNt0GV74kj8MQL7kfHdIHYO">🖥️</a>
         <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week08/08-2">Variable latente régularisée </a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week08/08-2">Variable latente régularisée </a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week08/08-3">Entraîner des Auto-Encodeurs Variationnels (VAEs)</a></td>
+      <td><a href="{{site.baseurl}}/fr/week08/08-3">Entraîner des Auto-Encodeurs Variationnels (VAEs)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/11-VAE.ipynb">📓</a>
@@ -199,18 +199,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 9 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week09/09">⑨</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week09/09">⑨</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week09/09-1">Sparsity</a></td>
+      <td><a href="{{site.baseurl}}/fr/week09/09-1">Eparsité</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week09/09-2">Modèles du monde, Réseaux génératifs antagonistes (GANs)</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week09/09-2">Modèles du monde, Réseaux génératifs antagonistes (GANs)</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week09/09-3">Entraîner des GANs</a></td>
+      <td><a href="{{site.baseurl}}/fr/week09/09-3">Entraîner des GANs</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
@@ -219,18 +219,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 10 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week10/10">⑩</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week10/10">⑩</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week10/10-1">Apprentissage auto-supervisé appliqué à la vision par ordinateur I</a></td>
+      <td><a href="{{site.baseurl}}/fr/week10/10-1">Apprentissage auto-supervisé appliqué à la vision par ordinateur I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
         <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week10/10-2"> Apprentissage auto-supervisé appliqué à la vision par ordinateur II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week10/10-2"> Apprentissage auto-supervisé appliqué à la vision par ordinateur II</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week10/10-3">Contrôle prédictif</a></td>
+      <td><a href="{{site.baseurl}}/fr/week10/10-3">Contrôle prédictif</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/14-truck_backer-upper.ipynb">📓</a>
@@ -239,9 +239,9 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 11 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week11/11">⑪</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week11/11">⑪</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week11/11-1">Fonctions d’activation</a></td>
+      <td><a href="{{site.baseurl}}/fr/week11/11-1">Fonctions d’activation</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
         <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
@@ -249,10 +249,10 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
         <a href="https://youtu.be/bj1fh3BvqSU">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week11/11-2">Fonctions de perte</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week11/11-2">Fonctions de perte</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week11/11-3">PPUU</a></td>
+      <td><a href="{{site.baseurl}}/fr/week11/11-3">PPUU</a></td>
       <td>
         <a href="http://bit.ly/PPUU-slides">🖥️</a>
         <a href="http://bit.ly/PPUU-code">📓</a>
@@ -261,18 +261,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 12 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week12/12">⑫</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week12/12">⑫</a></td>
       <td rowspan="2">Conférence</td>
-      <td><a href="fr/week12/12-1">Apprentissage profond pour le traitement du langage naturel (NLP) I</a></td>
+      <td><a href="{{site.baseurl}}/fr/week12/12-1">Apprentissage profond pour le traitement du langage naturel (NLP) I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
         <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel (NLP)II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel (NLP) II</a></td></tr>
     <tr>
       <td rowspan="1">Pratique</td>
-      <td><a href="fr/week12/12-3">Attention & Transformer</a></td>
+      <td><a href="{{site.baseurl}}/fr/week12/12-3">Attention & Transformer</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
@@ -281,18 +281,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr>
 <!-- =============================== SEMAINE 13 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week13/13">⑬</a></td>
       <td rowspan="2"> Conférence </td>
-      <td><a href="en/week13/13-1"> Réseau convolutif sur graphe I</a></td>
+      <td><a href="{{site.baseurl}}/fr/week13/13-1"> Réseau convolutif sur graphe I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
         <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week13/13-2"> Réseau convolutif sur graphe II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week13/13-2"> Réseau convolutif sur graphe II</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week13/13-3"> Réseau convolutif sur graphe III</a></td>
+      <td><a href="{{site.baseurl}}/fr/week13/13-3"> Réseau convolutif sur graphe III</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
@@ -301,18 +301,18 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     </tr> 
 <!-- =============================== SEMAINE 14 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="fr/week14/14">⑭</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week14/14">⑭</a></td>
       <td rowspan="2"> Conférence </td>
-      <td><a href="fr/week14/14-1"> Prévision structurée </a></td>
+      <td><a href="{{site.baseurl}}/fr/week14/14-1"> Prévision structurée </a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
         <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week14/14-2">Méthodes graphiques</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week14/14-2">Méthodes graphiques</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week14/14-3">Régularisation et réseaux bayésiens</a></td>
+      <td><a href="{{site.baseurl}}/fr/week14/14-3">Régularisation et réseaux bayésiens</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
@@ -328,7 +328,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 
 | Rôle | Photo | Contact | A propos |
 |:-----|:-----:|:--------|:------|
-|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
+|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer <br> Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en Computer Science à la NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en Computer Science à NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu| Doctorant en Computer Science à NYU|

@@ -1,3 +1,2849 @@
+0:00:00.030,0:00:04.080
+all right so we're going to talk about two or three topics today and the first
+
+0:00:04.080,0:00:08.790
+one is going to be kind of a review of some of the functions that exist inside
+
+0:00:08.790,0:00:16.139
+torch and kind of when and how to use them so the first the first set of
+
+0:00:16.139,0:00:22.410
+topics is about activation functions and there is a whole bunch of them defined
+
+0:00:22.410,0:00:27.000
+in in tight torch and they basically come from you know various papers that
+
+0:00:27.000,0:00:30.300
+people have written where they claim that this or that particular objective
+
+0:00:30.300,0:00:35.790
+function or activation function works better for their problem so of course
+
+0:00:35.790,0:00:40.140
+everybody knows the value that's very standard one but there's lots of
+
+0:00:40.140,0:00:46.500
+variations of values these values where the the the bottom part is not constant
+
+0:00:46.500,0:00:50.340
+and set to zero they can be allowed to change either only with the positive
+
+0:00:50.340,0:00:55.379
+slope or force to be to have a negative slope or sometimes being random in the
+
+0:00:55.379,0:01:00.870
+case of the randomized VQ value so they have you know a nice named likely key
+
+0:01:00.870,0:01:08.369
+value pair you revalue random value etc so the key value is one where you allow
+
+0:01:08.369,0:01:16.350
+the bottom part to have negative so and that kind of prevents the issue that
+
+0:01:16.350,0:01:20.250
+sometimes pops up that you know when radio is off it doesn't get any gradient
+
+0:01:20.250,0:01:26.939
+so here here you get a chance for that system that function to actually
+
+0:01:26.939,0:01:30.119
+propagate gradient and perhaps do something useful can go all the way to
+
+0:01:30.119,0:01:35.570
+kind of compete full ratification of the signal kind of like an absolute value
+
+0:01:35.570,0:01:41.280
+value it's well yeah the previous the previous activation was
+
+0:01:41.280,0:01:46.530
+is user using the discriminatory in again such that we always have gradients
+
+0:01:46.530,0:01:51.329
+going backwards for the generator and also these activation was necessary in
+
+0:01:51.329,0:01:55.409
+order to train the very skinny network I show at the beginning of the class
+
+0:01:55.409,0:01:59.700
+because again having like a very very skinny network it was basically
+
+0:01:59.700,0:02:04.829
+impossible to get gradients flowing back because we were like ending up in one of
+
+0:02:04.829,0:02:09.179
+the quadrants without you know where everything was zero out and then nothing
+
+0:02:09.179,0:02:12.800
+would have been actually trained if you wouldn't have
+
+0:02:12.800,0:02:17.390
+use you know this activation function that allows me to get some kind of
+
+0:02:17.390,0:02:21.350
+gradients even if we are in the regions where we are trying to suppress the
+
+0:02:21.350,0:02:32.180
+output so yeah right so a prelude is it's similar except now the the slope
+
+0:02:32.180,0:02:38.930
+and they get your side can be just about anything and okay what's what's
+
+0:02:38.930,0:02:42.620
+interesting about those all those functions that we just saw is that they
+
+0:02:42.620,0:02:47.090
+are scale invariant in the sense that they you know you can multiply the
+
+0:02:47.090,0:02:52.700
+signal by two and the output will not be changed
+
+0:02:52.700,0:02:55.280
+yeah I mean it would be multiplied by two but otherwise unchanged so they are
+
+0:02:55.280,0:02:59.840
+equivalent to scale there's no sort of intrinsic scale in those in those
+
+0:02:59.840,0:03:05.260
+functions right because there's only one non-linearity and it's a sharp one so
+
+0:03:05.260,0:03:09.530
+now we're getting into functions where the scale matters so the amplitude of
+
+0:03:09.530,0:03:14.840
+the incoming signal will affect the type of non the type of non-linearity that
+
+0:03:14.840,0:03:19.280
+you're going to get and one of those is the the soft press so soft rice it's
+
+0:03:19.280,0:03:24.110
+sort of a differentiable version of radio if you want it's it's kind of the
+
+0:03:24.110,0:03:26.480
+soft version of positive part and it's usually
+
+0:03:26.480,0:03:29.780
+permit rised as you can see at the top here
+
+0:03:29.780,0:03:34.670
+whatever Bay dialog 1 plus X financial beta X so it's it's kind of like the log
+
+0:03:34.670,0:03:41.420
+some exponential that we've been using a lot for service purpose except here one
+
+0:03:41.420,0:03:45.440
+of the terms in the sum is equal to 1 which is kind of like exponential zero
+
+0:03:45.440,0:03:52.760
+if you want so that looks like kind of a function that so synthetic ly is the
+
+0:03:52.760,0:03:56.390
+identity function for large policy values and asymptotically zero for
+
+0:03:56.390,0:04:00.560
+negative values so the approximate sir value it has a scale parameter though
+
+0:04:00.560,0:04:05.690
+this this beta parameter the larger beta the more the function will look like a
+
+0:04:05.690,0:04:10.400
+value so the cake will be kind of the corner will be kind of sharper if petah
+
+0:04:10.400,0:04:17.380
+goes to infinity but that that function has a scale
+
+0:04:18.260,0:04:23.710
+now you can prioritize those functions in in various ways and this is sort of a
+
+0:04:23.710,0:04:29.360
+another example of kind of a soft version of value if you
+
+0:04:29.360,0:04:35.150
+want where we're here you use value as a basis and then you add a small constant
+
+0:04:35.150,0:04:40.880
+to it that kind of makes it smooth you know I can't tell you that
+
+0:04:40.880,0:04:44.840
+any of those has any particular advantage over the others it really
+
+0:04:44.840,0:04:48.500
+depends on the only problem but they they all have kind of similar properties
+
+0:04:48.500,0:04:56.660
+if you want this also you can make sort of continuously closer to value that's
+
+0:04:56.660,0:05:04.820
+yet ok so when when difference here in this case is that this guy actually goes
+
+0:05:04.820,0:05:10.070
+negative right so unlike the value that has its minimum at zero this it's
+
+0:05:10.070,0:05:17.900
+horizontal asymptote at zero this guy goes below zero and that may or may or
+
+0:05:17.900,0:05:21.650
+may not be advantageous depending on the application you have sometimes it's
+
+0:05:21.650,0:05:26.450
+advantageous because it allows the system to basically make the average of
+
+0:05:26.450,0:05:32.510
+the output zero which is advantageous for certain types of for grading design
+
+0:05:32.510,0:05:36.200
+convergence the weights that are connected to units like this will see
+
+0:05:36.200,0:05:40.010
+both both positive and negative values which will then converge faster than if
+
+0:05:40.010,0:05:46.310
+you only see positive values so it's been the same here and it's just kind of
+
+0:05:46.310,0:05:50.360
+a differently you know a different permutation of kind of the same thing if
+
+0:05:50.360,0:05:56.960
+you want with different properties so of course there's tons of variations of
+
+0:05:56.960,0:06:03.050
+this you know with various parameters with different properties and you know
+
+0:06:03.050,0:06:09.820
+some of them that have particular properties that can relate them to
+
+0:06:09.820,0:06:14.990
+Gaussian distributions for example this is not the cumulative distribution of a
+
+0:06:14.990,0:06:20.510
+Gaussian but okay so those those were things that have one kinks in them and
+
+0:06:20.510,0:06:25.310
+if the kink is sharp there's no scale if the King has some scale in it there is
+
+0:06:25.310,0:06:29.240
+some scale but it's still sort of a single kick non-linearity now we're
+
+0:06:29.240,0:06:33.080
+getting into nonlinearities I have two kings okay so this one is basically a
+
+0:06:33.080,0:06:37.400
+saturating value I know sure white saturates at six you
+
+0:06:37.400,0:06:41.670
+know why not but why not parameterize this a little
+
+0:06:41.670,0:06:46.230
+better so here's a smooth function that you're familiar with because it's used
+
+0:06:46.230,0:06:51.720
+in in recurrent Nets in gated recurrent Nets and then STM
+
+0:06:51.720,0:06:56.730
+in soft max you know basically this is a a two-way soft max you can think of it
+
+0:06:56.730,0:07:03.800
+this way and this is just a function that goes kind of smoothly between 0 & 1
+
+0:07:03.800,0:07:08.780
+it's sometimes called a Fermi Dirac function as well because it derives from
+
+0:07:08.780,0:07:15.240
+some work in physics it's equal physics and then there is the hyperbola tangent
+
+0:07:15.240,0:07:19.830
+that we also talked about it's basically identical to the sigmoid except it's
+
+0:07:19.830,0:07:24.360
+centered so it goes between minus 1 and plus 1 and it's a little you know it's
+
+0:07:24.360,0:07:28.710
+twice the amplitude and the gain is a little different but it plays the same
+
+0:07:28.710,0:07:31.080
+role the advantage of hyperbolic tangent is
+
+0:07:31.080,0:07:36.990
+that the output is you can expect the output to not have zero mean but get
+
+0:07:36.990,0:07:43.500
+close to having zero mean and again that's advantageous for the weights that
+
+0:07:43.500,0:07:46.890
+follow because they see positive and negative values and they tend to
+
+0:07:46.890,0:07:52.310
+converge faster that's the case so I used to be a big fan of those
+
+0:07:52.310,0:07:57.390
+unfortunately if you stack a lot of sigmoids in many layers you know in a
+
+0:07:57.390,0:08:05.160
+neural net you you you can tend to not learn very efficiently you have to be
+
+0:08:05.160,0:08:09.030
+very careful about normalization if you want the system to to converge if you
+
+0:08:09.030,0:08:13.800
+have many layers so in that sense the the single kick functions are better for
+
+0:08:13.800,0:08:21.660
+deeper networks so it's signed this is basically a bit like the sigmoid except
+
+0:08:21.660,0:08:25.560
+that it's it doesn't get to the asymptotes as fast so it doesn't get
+
+0:08:25.560,0:08:31.169
+stuck towards the asymptotes as quickly so one problem with hyperbolic tangent
+
+0:08:31.169,0:08:37.440
+and and the sigmoid is that we get close to the asymptotes the the gradient goes
+
+0:08:37.440,0:08:43.979
+to zero fairly quickly and so if the weights of a unit become too large they
+
+0:08:43.979,0:08:48.690
+kind of saturate this unit and the gradients get very small and then the
+
+0:08:48.690,0:08:54.029
+the unit doesn't run very very quickly anymore it's a problem that
+
+0:08:54.029,0:09:00.779
+exists both sorry both in sigmoids and hyperbole tension and so such sign is a
+
+0:09:00.779,0:09:05.790
+function of that was proposed by your venue and so these collaborators and it
+
+0:09:05.790,0:09:12.230
+kind of saturates slower and so it doesn't have the that same problem I
+
+0:09:12.230,0:09:17.819
+mean it has the problem also but not to the same extent okay and this is kind of
+
+0:09:17.819,0:09:23.819
+the opposite heart tangent hard 10h I don't know if it deserves that name but
+
+0:09:23.819,0:09:29.720
+it's basically just a ramp okay and that works surprisingly well
+
+0:09:29.720,0:09:35.310
+particularly if your weights are somehow kept within a kind of small value so the
+
+0:09:35.310,0:09:42.569
+the units don't saturate too much it's surprising how well it works and you
+
+0:09:42.569,0:09:46.579
+know people use this and service context but that's sort of you know non-standard
+
+0:09:49.170,0:09:53.850
+so hard threshold is very rarely used because you can't really propagate
+
+0:09:53.850,0:09:58.680
+gradient to it okay and this is really what kept people from inventing back
+
+0:09:58.680,0:10:03.120
+prop in the 60s and 70s which is that they were using binary neurons and so
+
+0:10:03.120,0:10:09.930
+they didn't think of the whole idea of gradients because of that okay those
+
+0:10:09.930,0:10:16.439
+other functions are rarely used in the context of neural nets or at least for
+
+0:10:16.439,0:10:20.730
+kind of activation function in a traditional neuron that they used mostly
+
+0:10:20.730,0:10:26.220
+for sometimes for things like sparse coding so one step in sparse coding
+
+0:10:26.220,0:10:32.279
+consists in to compute the value of the latent variable consistent shrinking all
+
+0:10:32.279,0:10:35.879
+the values in the latent variable is the agent vector by some value and you do
+
+0:10:35.879,0:10:40.019
+this with a shrink function a shrinkage function this is kind of a soft version
+
+0:10:40.019,0:10:44.160
+of shrinkage function the hard version is here I mean it's called soft shrink
+
+0:10:44.160,0:10:50.699
+soft shrink but it actually has corners in it the reason it's called soft shrink
+
+0:10:50.699,0:10:54.029
+is because there is a hard shrink that looks different did that show you in a
+
+0:10:54.029,0:10:59.819
+minute so this basically just changes variable
+
+0:10:59.819,0:11:05.120
+by a constant toward zero right and if he goes below zero it connect its
+
+0:11:05.120,0:11:16.910
+client at zero if it if it's brought too long and so if the this is basically
+
+0:11:16.910,0:11:20.600
+just the identity function to which you subtract hyperbola tangent to make it
+
+0:11:20.600,0:11:25.430
+look like a shrink shrink basically design if we if we try to get the
+
+0:11:25.430,0:11:29.060
+whatever value close to zero and they actually are forced to zero basically
+
+0:11:29.060,0:11:33.860
+right right so small values are forced to zero others are shrunk toward zero
+
+0:11:33.860,0:11:37.850
+but you know it's a large enough they're not going to get to zero so again that's
+
+0:11:37.850,0:11:44.390
+used mostly as you know you can think of it as a step of gradient for an l1
+
+0:11:44.390,0:11:48.290
+criterion okay so if you have a variable you have
+
+0:11:48.290,0:11:52.940
+an l1 cost function on it and you take a step in the negative gradient of the one
+
+0:11:52.940,0:11:58.580
+so every one cost is an absolute value this will cause the variable to kind of
+
+0:11:58.580,0:12:02.570
+go towards zero by a constant which is the slope of that at one criterion and
+
+0:12:02.570,0:12:07.730
+to kind of stay at zero you know coming from either side it doesn't kind of
+
+0:12:07.730,0:12:12.290
+overshoot if you want and so that that's an on-ear function you use and that's
+
+0:12:12.290,0:12:17.300
+one of the steps in the East algorithm that is used for inference in in sparse
+
+0:12:17.300,0:12:23.990
+coding but again it's it's really used in sort of regular neural nets unless
+
+0:12:23.990,0:12:34.490
+your encoder is kind of used as kind of a estimation of sparse coding this is
+
+0:12:34.490,0:12:40.010
+the hard shrink so hard shrink basically clients every value smaller than lambda
+
+0:12:40.010,0:12:48.500
+to zero okay so if a value is smaller than lambda or larger than - from there
+
+0:12:48.500,0:12:51.560
+sort of between minus lambda lambda when lambda is some constant is just set it
+
+0:12:51.560,0:12:57.590
+to zero again it's used for things like you know certain types of sparse coding
+
+0:12:57.590,0:13:04.250
+but rarely as an activation function in the night so log sigmoid is mostly used
+
+0:13:04.250,0:13:08.930
+in cost functions not really as an activation function either but it's a
+
+0:13:08.930,0:13:15.320
+useful function to have if you want to plug this into into a loss function and
+
+0:13:15.320,0:13:19.300
+we'll see we'll see that ten minute so something we've seen this is the same
+
+0:13:21.470,0:13:27.589
+as softmax except you have minus signs so this is sort of more so that so those
+
+0:13:27.589,0:13:31.490
+are multi-dimensional nonlinearities all right you you have a vector in and you
+
+0:13:31.490,0:13:35.930
+get a vector out which is at same size as the input vector and we know about
+
+0:13:35.930,0:13:40.790
+softmax is you know exponential X I divided by sum over J exponential X J
+
+0:13:40.790,0:13:45.800
+this is such min where you put a minus sign in front of the X so you view the
+
+0:13:45.800,0:13:51.790
+X's if you want as energies instead of scores as penalties instead of scores
+
+0:13:51.790,0:13:58.160
+it's a good way of turning a bunch of numbers to something that looks a bit
+
+0:13:58.160,0:14:02.569
+like a probability distribution which means numbers between 0 and 1 that's 1
+
+0:14:02.569,0:14:10.190
+to 1 and that's the softmax which we all know so locks off max again it's not
+
+0:14:10.190,0:14:14.959
+very much used as a non-linearity within the neural net but it's used a lot at
+
+0:14:14.959,0:14:18.920
+the output as kind of one piece of a loss function it will see this in a
+
+0:14:18.920,0:14:26.839
+minute ok so those questions yes we have a question so for pre low I'm not sure I
+
+0:14:26.839,0:14:32.000
+understand number one why we want the same value for all channels and number
+
+0:14:32.000,0:14:37.250
+two how learning a it would actually be advantages you could have a different a
+
+0:14:37.250,0:14:41.480
+for different channels so different units can have a different a it could be
+
+0:14:41.480,0:14:48.019
+you could use it this as a as a parameter very every unit or not you
+
+0:14:48.019,0:14:51.860
+could be shared that's gonna up to you it could be shared at the level or a
+
+0:14:51.860,0:14:55.069
+feature map it accomplished on that or it could be share all future maps or it
+
+0:14:55.069,0:14:59.240
+could be individual to every unit if you really want to preserve the coalitional
+
+0:14:59.240,0:15:02.899
+nature of a commercial net you probably want to have the same a for every unit
+
+0:15:02.899,0:15:05.420
+in the future that but you think you can have different aids for different
+
+0:15:05.420,0:15:11.480
+feature Maps okay well it's the second question why learning actually a
+
+0:15:11.480,0:15:16.459
+specific value would be advantages like why are we learning a you can learn it
+
+0:15:16.459,0:15:21.949
+or not you can fix it the the reason for fixing it would be you know not
+
+0:15:21.949,0:15:27.750
+necessarily to kind of have sort of more powerful non-linearity but to kind of
+
+0:15:27.750,0:15:32.190
+ensure that the non-linearity gives you a non 0 gradient even if it's even if
+
+0:15:32.190,0:15:41.430
+it's in the negative region so you know runnable not nor lib not renewable so to
+
+0:15:41.430,0:15:46.200
+make it learnable allows the system to basically turn a non-linearity into
+
+0:15:46.200,0:15:50.970
+either the linear mapping which of course is not particularly interesting
+
+0:15:50.970,0:15:57.330
+but why not value or something like a full rectification okay where a would be
+
+0:15:57.330,0:16:03.720
+minus 1 in the in the negative part which you know can be it can be
+
+0:16:03.720,0:16:06.150
+interesting for certain types of application so for example if you have
+
+0:16:06.150,0:16:10.440
+accomplish on that that has an edge detector an edge detector as a priority
+
+0:16:10.440,0:16:14.550
+right it's it's got press coefficients on one side minus coefficients on the
+
+0:16:14.550,0:16:19.800
+other side and so it's gonna react so if you have an edge in an image that goes
+
+0:16:19.800,0:16:25.140
+from say dr. bright the you know the composition will react positively to
+
+0:16:25.140,0:16:31.110
+this one but if you have another edge from from you know in the opposite
+
+0:16:31.110,0:16:36.510
+direction then the the react the the filter will react negatively now if you
+
+0:16:36.510,0:16:41.370
+want your filter to react to an edge regardless of its priority you rectify
+
+0:16:41.370,0:16:46.320
+it okay so that would be kind of just absolute value now you could of course
+
+0:16:46.320,0:16:50.610
+bake this in you know how to use a prelude you can just use the absolute
+
+0:16:50.610,0:16:55.170
+value probably a better idea is to use a square actually so you take the square
+
+0:16:55.170,0:16:59.730
+of square non-linearity it's not implemented as kind of a neural net
+
+0:16:59.730,0:17:02.430
+non-linearity but you know in the functional form of by torture just right
+
+0:17:02.430,0:17:06.420
+square and that's it hope answered the question
+
+0:17:06.420,0:17:14.180
+any other question on this topic I have a question it seems to me like these
+
+0:17:14.180,0:17:21.230
+nonlinearities are trying to basically make a linear function nonlinear and the
+
+0:17:21.230,0:17:27.360
+tweak in the in the lines denote like the change in that function so they can
+
+0:17:27.360,0:17:37.440
+we think of this as if we want to model of curve in the line should we have
+
+0:17:37.440,0:17:42.990
+learnable on both like before before the 0 and
+
+0:17:42.990,0:17:48.330
+after the 0 on the x-axis like well so yeah I mean there is diminishing return
+
+0:17:48.330,0:17:52.560
+so the question is you know how complex do you want your non-linearity to be so
+
+0:17:52.560,0:17:58.200
+you could imagine of course primate rising an entire nonlinear function you
+
+0:17:58.200,0:18:02.520
+know with sprite parameters or busy curves or something like this right or I
+
+0:18:02.520,0:18:07.890
+don't know chebyshev polynomials you know I mean you can probably try any any
+
+0:18:07.890,0:18:12.180
+mapping you want right you can imagine those those parameters could be part of
+
+0:18:12.180,0:18:17.730
+the learning process however you know what is the advantage of doing this
+
+0:18:17.730,0:18:23.220
+versus just you know having more units in your in your system and relying on
+
+0:18:23.220,0:18:28.080
+the fact that multiple units will be added in the end to approximate the
+
+0:18:28.080,0:18:33.600
+function you want generally it really depends on what like if you want to to
+
+0:18:33.600,0:18:37.260
+do regression in a fairly low dimensional space so perhaps you want
+
+0:18:37.260,0:18:43.080
+some parameterize nonlinearities that might help you might have like you might
+
+0:18:43.080,0:18:48.390
+want to have a collection of different nonlinearities with maybe things like
+
+0:18:48.390,0:18:53.250
+like gbj polynomials if you want to do good approximation approximations but
+
+0:18:53.250,0:18:56.370
+for like you know high dimensional tasks like image recognition or things like
+
+0:18:56.370,0:19:01.620
+this you just want a non-linearity and it works better if the non-linearity is
+
+0:19:01.620,0:19:05.700
+monotonic otherwise it creates all kinds of issues because you could have two
+
+0:19:05.700,0:19:09.510
+points that will produce the same output and so it's you land videos for the
+
+0:19:09.510,0:19:14.910
+system to learn the right function there so you want it it's it's much better if
+
+0:19:14.910,0:19:18.810
+the function is monotonic and almost all the functions here are monotonic except
+
+0:19:18.810,0:19:23.940
+if you have a negative a here in the in the prelude case there's big advantage
+
+0:19:23.940,0:19:30.480
+to having monotonic functions but in principle you could probably try as you
+
+0:19:30.480,0:19:34.140
+know any function you want people are played with this you know they're not
+
+0:19:34.140,0:19:39.140
+very popular because mostly they don't seem to be bringing a huge advantage in
+
+0:19:39.140,0:19:47.580
+in the kind of applications that people use a large neural nets for other
+
+0:19:47.580,0:19:52.560
+questions another question is going to be keen commercial smooth yeah
+
+0:19:52.560,0:19:57.690
+I should never have any application with the choice so funny
+
+0:19:57.690,0:20:04.710
+yeah teas made of bacon packed the only thing I'm aware of is using a single
+
+0:20:04.710,0:20:12.000
+function silica double King for DPL networks healthily in better well so
+
+0:20:12.000,0:20:16.020
+here's a party with double kick double kick has a built-in scale in it which
+
+0:20:16.020,0:20:21.300
+means if you're it's a waste of the incoming layer are multiplied by two or
+
+0:20:21.300,0:20:25.590
+the signal amplitude is multiplied by 2 the result on the output would be
+
+0:20:25.590,0:20:29.940
+completely different right yeah because you will be you know the signal would be
+
+0:20:29.940,0:20:35.250
+more in the non-linearity so so you'll get completely different behavior of
+
+0:20:35.250,0:20:39.390
+your layer whereas if you have a function with only one King if you
+
+0:20:39.390,0:20:43.110
+multiply the input by two with the output it's also multiplied by two in a
+
+0:20:43.110,0:20:49.380
+modulo bias but the signal device is fine so what I mean to ask you something
+
+0:20:49.380,0:20:53.670
+of a situation with a choice of activation function made a big
+
+0:20:53.670,0:20:58.410
+difference in the performance of the model except for the in networks using
+
+0:20:58.410,0:21:07.890
+today move instead of sigmoid there is no sort of general answer to this like
+
+0:21:07.890,0:21:13.620
+if you're going to use attention you have to use softmax I mean you have no
+
+0:21:13.620,0:21:17.460
+choice right I mean it's not like you have to use shaft softmax but you want
+
+0:21:17.460,0:21:21.300
+to have something where you get coefficients right to to kind of focus
+
+0:21:21.300,0:21:26.460
+the attention of the system on or to kind of spread the attention of the
+
+0:21:26.460,0:21:31.470
+system and not allow it to cheat which is to pay attention to multiple things
+
+0:21:31.470,0:21:36.180
+at one time you have to have some sort of normalization of the of the
+
+0:21:36.180,0:21:40.980
+coefficients that come out of the attention system right so so normally in
+
+0:21:40.980,0:21:44.480
+most attention systems like in transformers and stuff the the
+
+0:21:44.480,0:21:48.750
+coefficients are passed through softmax so you get a bunch of coefficients that
+
+0:21:48.750,0:21:54.630
+are between 0 & 1 & 7 to 1 and so that causes the system to have to pay
+
+0:21:54.630,0:21:59.370
+attention to you know a small number of things right you can only concentrate
+
+0:21:59.370,0:22:06.009
+the coefficients on a small number of items and it has to spread it right
+
+0:22:06.009,0:22:11.779
+there are other ways to do normalization you you can do and in fact is something
+
+0:22:11.779,0:22:18.049
+that's wrong with softmax normalization for for for transformers or for
+
+0:22:18.049,0:22:22.159
+attention which is that if you want a coefficient coming out with softmax to
+
+0:22:22.159,0:22:26.840
+be close to zero you need the input to be close to minus
+
+0:22:26.840,0:22:32.419
+infinity okay or to be considerably smaller than the largest one right when
+
+0:22:32.419,0:22:38.389
+you go into the softmax when I put the largest input is going to cause the
+
+0:22:38.389,0:22:42.200
+corresponding output to be the to be large if you want that I'd put to be
+
+0:22:42.200,0:22:46.129
+close to one and all the other ones to be close to zero you basically want this
+
+0:22:46.129,0:22:53.379
+input to be extremely large and all the other ones to be large and negative okay
+
+0:22:53.379,0:23:02.149
+now that you know that that can be a problem when the what you are computing
+
+0:23:02.149,0:23:08.090
+the input are our dot products because the result is that you know the easiest
+
+0:23:08.090,0:23:14.690
+way for a system to to produce a small dot product is to have two vectors that
+
+0:23:14.690,0:23:18.590
+are orthogonal to each other which gives the dot product is zero if you insist
+
+0:23:18.590,0:23:20.480
+that the dot product should be very very small
+
+0:23:20.480,0:23:26.090
+then either you have to make the so you have to make the two vectors basically
+
+0:23:26.090,0:23:31.580
+point in opposite directions and you have to make them very long and that's
+
+0:23:31.580,0:23:39.769
+not so great and so using softmax for attention basically limits the the the
+
+0:23:39.769,0:23:43.639
+contrast that you're gonna have between two coefficients which is not
+
+0:23:43.639,0:23:50.600
+necessarily a good thing so you know same thing for ASTM gates
+
+0:23:50.600,0:23:57.499
+gated recurrent Nets etc you you need Sigma it's there because you need
+
+0:23:57.499,0:24:01.039
+coefficients there are between 0 and 1 you know that either
+
+0:24:01.039,0:24:06.590
+we set the memory cell or make it a fast-food so that it keeps it so it's
+
+0:24:06.590,0:24:12.200
+previous memory or kind of right the the new input in it so there it's nice to
+
+0:24:12.200,0:24:14.770
+have an output that varies continuously
+
+0:24:14.770,0:24:21.010
+between zero and one there you have no choice so I mean I don't think you can
+
+0:24:21.010,0:24:26.350
+say just you know in generic term you know this this non-linearity is better
+
+0:24:26.350,0:24:29.110
+than this other one there are certain cases where it learns better though
+
+0:24:29.110,0:24:33.970
+certain cases where it relieves you from having to initialize properly the
+
+0:24:33.970,0:24:37.690
+certain cases where it works better if you have lots of layers like you know
+
+0:24:37.690,0:24:40.900
+single click functions work better if you have lots of layers better than
+
+0:24:40.900,0:24:48.130
+Sigma large functions there's no kind of logical answer I had a question just
+
+0:24:48.130,0:24:54.190
+regarding the general differences between a nonlinear activation that has
+
+0:24:54.190,0:25:00.130
+kinks versus a smooth nonlinear activation yeah is there sort of any
+
+0:25:00.130,0:25:06.340
+general reason or rule to why we would prefer to have kinks in the function or
+
+0:25:06.340,0:25:11.620
+not it's a matter of scale invariant of scale equivariance so if the kick is
+
+0:25:11.620,0:25:15.610
+hard again you multiply the input by 2 the output is multiplied by 2 but
+
+0:25:15.610,0:25:22.660
+otherwise unchanged okay if you have a smooth transition if you multiply the
+
+0:25:22.660,0:25:31.390
+input by let's say 100 the output now will look like you had a hard kick okay
+
+0:25:31.390,0:25:35.860
+because the the smooth part now it's become shrunk by a factor of 100 if you
+
+0:25:35.860,0:25:42.370
+divide the input by 100 now the the cake becomes a very very smooth sort of
+
+0:25:42.370,0:25:47.710
+convex functions okay so it changes the behavior but by changing the scale the
+
+0:25:47.710,0:25:52.810
+input you change the behavior of the of the unit and that might be a problem
+
+0:25:52.810,0:25:58.360
+sometimes because when you when you train a multi-layer neural net and you
+
+0:25:58.360,0:26:04.680
+have two layers that are one after the other you don't have a good control for
+
+0:26:04.680,0:26:09.370
+like how big the weights of this layer are relative to that other way so
+
+0:26:09.370,0:26:13.030
+imagine you have a two layer Network where you don't have a non-linearity in
+
+0:26:13.030,0:26:19.510
+the middle so the system is completely linear right if the network has arrived
+
+0:26:19.510,0:26:24.100
+at the solution you can multiply the incoming the the first layer weight
+
+0:26:24.100,0:26:27.520
+matrix by two divide the second weight matrix by two
+
+0:26:27.520,0:26:31.300
+and overall the network will have exactly the same output okay you won't
+
+0:26:31.300,0:26:36.370
+have changed anything and what that means is that when you do training there
+
+0:26:36.370,0:26:41.350
+is nothing that forces the system to have a particular scale for the weight
+
+0:26:41.350,0:26:45.190
+matrices all right so now if you put a non-linearity in the
+
+0:26:45.190,0:26:49.050
+middle and you still don't have it because train for the system to kind of
+
+0:26:49.050,0:26:53.820
+you know have scales for the first leg of weight versus the second leg away
+
+0:26:53.820,0:26:58.990
+that you know you'd better have a non-linearity that doesn't care about
+
+0:26:58.990,0:27:04.950
+scale okay so if you have non-linearity that does care about scales about scale
+
+0:27:04.950,0:27:10.030
+then your network doesn't have a choice of what size weight matrix it can use in
+
+0:27:10.030,0:27:14.170
+the first layer because that will completely change the behavior and you
+
+0:27:14.170,0:27:17.740
+may want to have large weights for some other reason which will saturate the
+
+0:27:17.740,0:27:23.560
+non-linearity and then kind of create you know vanishing gradient issues so I
+
+0:27:23.560,0:27:29.350
+it's not entirely clear you know what why is it that you know did networks
+
+0:27:29.350,0:27:34.000
+work better with single King functions but it's probably due to that scale
+
+0:27:34.000,0:27:38.140
+invariance property let's get a quick variance property now there would be
+
+0:27:38.140,0:27:42.190
+other ways of fixing this fixing this problem which would be to basically set
+
+0:27:42.190,0:27:45.340
+a heart scale on the weights of every layer so you couldn't like normalize the
+
+0:27:45.340,0:27:50.860
+weights of the layers so that the the the variance that of things that go into
+
+0:27:50.860,0:27:53.560
+unit you know it's always constant in fact that's a little bit with batch
+
+0:27:53.560,0:27:56.830
+normalization does so the various normalization schemes they do that to
+
+0:27:56.830,0:28:02.530
+some extent you know they could mean at zero and and the variance is constant so
+
+0:28:02.530,0:28:07.570
+so now the variance of the amplitude of the output doesn't depend on the size of
+
+0:28:07.570,0:28:16.020
+the weights because it's not wise so you know that is partially why things like
+
+0:28:16.020,0:28:21.670
+like like that norm and good norm and things like this help is because they
+
+0:28:21.670,0:28:32.200
+can fix the scale a little bit but then if you fix the scale then with something
+
+0:28:32.200,0:28:37.420
+like that norm you don't the system now doesn't have any way of choosing which
+
+0:28:37.420,0:28:41.320
+part of the non-linearity it's going to use in the to cake function system
+
+0:28:41.320,0:28:45.820
+okay so things like group normalization or batch normalization are incompatible
+
+0:28:45.820,0:28:51.159
+with kin sigmoids if you want share a sigmoid you don't want normalization
+
+0:28:51.159,0:28:57.899
+just before it see that provides some really good intuition thank you okay I
+
+0:28:57.899,0:29:03.549
+have one more question I noticed in a soft malfunction some people use the
+
+0:29:03.549,0:29:07.840
+temperature coefficient so in what cases would we want to use their temperature
+
+0:29:07.840,0:29:12.580
+and why would we use it well to so to some extent the temperature is redundant
+
+0:29:12.580,0:29:18.059
+with incoming weights so if you have weighted sounds coming into your softmax
+
+0:29:18.059,0:29:22.750
+you know having a data parameter in your softmax equal to two instead of one it's
+
+0:29:22.750,0:29:26.730
+the same as just making your waste twice as big it has exactly the same effect
+
+0:29:26.730,0:29:32.320
+okay so that beta parameter is redundant with the size of the weights but again
+
+0:29:32.320,0:29:36.009
+if you were or the size of the weighted sum the variance of the weighted stones
+
+0:29:36.009,0:29:39.700
+if you want but again if you have a batch normalization in there then the
+
+0:29:39.700,0:29:45.190
+temperature parameter matters because now the input variances are fixed so so
+
+0:29:45.190,0:29:51.460
+now the the temperature matters temperature basically new controls how
+
+0:29:51.460,0:29:58.389
+hard the the you know the the distribution on the output will be so
+
+0:29:58.389,0:30:02.470
+with a very very large beta you basically will have one of the outputs
+
+0:30:02.470,0:30:05.379
+equal to one and all the other ones really close to zero I mean very close
+
+0:30:05.379,0:30:09.850
+to one and very close to zero where beta is small then this software in the limit
+
+0:30:09.850,0:30:13.029
+of beta equal to zero it's more like an average actually that you get like soft
+
+0:30:13.029,0:30:19.779
+max behaves a little bit like an average so you know beta goes infinity at it so
+
+0:30:19.779,0:30:24.159
+behaves a bit like AG Max and there goes to zero it behaves of it like reckon
+
+0:30:24.159,0:30:32.440
+average so so if you have some sort of normalization before the softmax then
+
+0:30:32.440,0:30:36.419
+tuning is parameter allows you to control this could have hardness and
+
+0:30:36.419,0:30:42.850
+what people do sometimes in certain scenarios is that they start with a
+
+0:30:42.850,0:30:49.000
+relatively low beta so that the the numbers that are produced are kind of
+
+0:30:49.000,0:30:53.740
+soft so you get gradients everywhere you know it's kind of well-behaved in terms
+
+0:30:53.740,0:30:57.179
+of gradient and then as running proceeds if you want
+
+0:30:57.179,0:31:01.139
+kind of harder decisions in your attention mechanism or whatever you
+
+0:31:01.139,0:31:05.580
+increase data and so that makes the system kind of make harder decisions it
+
+0:31:05.580,0:31:08.789
+doesn't run as well anymore but it's you know presumably after a few iterations
+
+0:31:08.789,0:31:13.379
+it's kind of in the right ballpark so you can sort of sharpen the the
+
+0:31:13.379,0:31:18.509
+decisions there but can be increasing data it's useful for example in a
+
+0:31:18.509,0:31:24.509
+mixture of mixture of experts and you know self attention systems are kind of
+
+0:31:24.509,0:31:31.169
+you can think of as sort of a form of a weird form of mixture of experts so a
+
+0:31:31.169,0:31:35.070
+mixture of experts you know you have multiple sub networks and their outputs
+
+0:31:35.070,0:31:38.549
+are can linearly combine with coefficients that are the output of the
+
+0:31:38.549,0:31:45.450
+softmax itself could you know controlled by another neural net so if you want
+
+0:31:45.450,0:31:48.539
+kind of a soft mixture you have a low beta and as you increase their to
+
+0:31:48.539,0:31:52.739
+infinity basically you're going to select one of the experts and ignore all
+
+0:31:52.739,0:31:57.090
+the other ones there might be useful for example if you want to train a mixture
+
+0:31:57.090,0:32:00.960
+of experts or an attention mechanism but in the end you want to save computation
+
+0:32:00.960,0:32:05.159
+by just determining which expert do I need to compute and just not computing
+
+0:32:05.159,0:32:08.460
+the other ones so in that case you want those coefficients to be basically
+
+0:32:08.460,0:32:13.350
+either one or zero and and you can train the system progressively to do this by
+
+0:32:13.350,0:32:19.649
+increasing increasing data this is called the physicists have a name for
+
+0:32:19.649,0:32:22.859
+this because it uses kind of tricks or various other things that's called
+
+0:32:22.859,0:32:30.480
+annealing it has the same meaning as so annealing comes from metalwork right you
+
+0:32:30.480,0:32:37.289
+you're making a steel or something and you make a sword or something right and
+
+0:32:37.289,0:32:43.919
+you heat it up and then you you you you you cool it and depending on whether you
+
+0:32:43.919,0:32:49.649
+cool it quickly or slowly you'll you change the crystal no crystalline
+
+0:32:49.649,0:32:54.389
+structure of the of the metal so this idea of annealing of progressively
+
+0:32:54.389,0:32:58.320
+lowering the temperature correspond to this increasing this beta beta is like
+
+0:32:58.320,0:33:04.570
+an inverse temperature it's akin to an inverse temperature any other question
+
+0:33:04.570,0:33:18.850
+I think we are good all right okay so next topic is lost functions so PI torch
+
+0:33:18.850,0:33:25.420
+has a whole bunch of loss functions as you might have seen and of course there
+
+0:33:25.420,0:33:32.110
+are things are simple ones like like mean square error so I don't need to
+
+0:33:32.110,0:33:35.020
+explain to you what it is you know compute the square of the error between
+
+0:33:35.020,0:33:41.830
+the desired output Y and actually I put X and if it's already bet with n samples
+
+0:33:41.830,0:33:49.240
+then you have you know n losses one for each of the samples in the batch and you
+
+0:33:49.240,0:33:52.660
+can you can tell this last function to either keep that vector or to kind of
+
+0:33:52.660,0:34:02.590
+reduce it by academia or some okay pretty simple mmm here's a different
+
+0:34:02.590,0:34:06.010
+loss that's the everyone knows so this is basically the absolute value of the
+
+0:34:06.010,0:34:10.780
+difference between between the desired output and the actual output and you
+
+0:34:10.780,0:34:15.970
+want to use this to do what's called robust regression so if you want small
+
+0:34:15.970,0:34:20.350
+errors to count a lot and large errors to count but you know not as much as if
+
+0:34:20.350,0:34:23.620
+you use the square perhaps because you have noise in your
+
+0:34:23.620,0:34:27.820
+data so you know that you have a bunch of data points you're trying to kind of
+
+0:34:27.820,0:34:33.370
+train and know on that to something to kind of you know fit a curve or you know
+
+0:34:33.370,0:34:36.850
+do regression but you know that you have a few outliers so you have a few points
+
+0:34:36.850,0:34:40.000
+there are you know very far away from what they should be just because you
+
+0:34:40.000,0:34:44.500
+know the system as noise or something or the data was collected with with some
+
+0:34:44.500,0:34:47.740
+noise so you want the system to be robust to that noise you don't want the
+
+0:34:47.740,0:34:53.800
+cost function to increase too quickly as the points are far away from you know
+
+0:34:53.800,0:35:01.180
+the kind of the general curve so at one loss will be more robust now the problem
+
+0:35:01.180,0:35:05.890
+with that one loss is that it's not differentiable at the bottom and so you
+
+0:35:05.890,0:35:11.110
+know you have to kind of be careful when you get to the bottom of how you how you
+
+0:35:11.110,0:35:16.390
+do the the gradient that's basically done with this soft shrink essentially
+
+0:35:16.390,0:35:26.710
+that's that's the everyone knows now to correct for that
+
+0:35:26.710,0:35:33.759
+people have come up with various ways of kind of making the l1 notes for bus for
+
+0:35:33.759,0:35:38.529
+large losses but then still smooth at the bottom kind of behaving like squad
+
+0:35:38.529,0:35:43.259
+error at the bottom so an example of this is is this particular function
+
+0:35:43.259,0:35:48.309
+smooth say one loss it's basically a one far away and it's sort of l2 nearby and
+
+0:35:48.309,0:35:53.619
+that presents sometimes that's called a Google loss some people call this also
+
+0:35:53.619,0:36:02.470
+elastic Network because it's an old paper from the 1980s or 1990s that kind
+
+0:36:02.470,0:36:08.589
+of proposed this this kind of objective function for different purpose so that's
+
+0:36:08.589,0:36:16.390
+useful that was advertised by was gaerste confess our CNN paper for and
+
+0:36:16.390,0:36:20.140
+it's used quite a bit in Cuba division for survivors purposes again it's for
+
+0:36:20.140,0:36:29.680
+protecting against outliers sharper jesus also sharper results now when we
+
+0:36:29.680,0:36:42.880
+do like image prediction sharper than using the MSE not particularly I mean
+
+0:36:42.880,0:36:49.119
+it's it's just like the MSE for small errors okay so that doesn't make any
+
+0:36:49.119,0:36:54.609
+difference but it it doesn't or maybe I misunderstood what your point
+
+0:36:54.609,0:36:59.769
+was sorry I was trying to compare the l1 versus the in the l2 that the l2 gives
+
+0:36:59.769,0:37:04.359
+us like usually blurry blurry predictions whenever we try to do
+
+0:37:04.359,0:37:09.400
+prediction by using like the l2 minimizing the l2 weather whereas like
+
+0:37:09.400,0:37:14.259
+people are minimizing the l1 in order to have like sharper overall predictions
+
+0:37:14.259,0:37:19.869
+okay so if you take if you take a bunch of points okay if you take a bunch of
+
+0:37:19.869,0:37:26.200
+y-values okay and you ask the question what value so you take a bunch of points
+
+0:37:26.200,0:37:30.710
+on on why okay yeah you ask the question what value of y minimizes
+
+0:37:30.710,0:37:35.710
+the squirrel Ellis the answer is that it's the average of all the whites okay
+
+0:37:35.710,0:37:40.460
+okay so if you so if for a single X you have a whole bunch of wise which means
+
+0:37:40.460,0:37:47.090
+you have noise in your data your system will want to produce the average of all
+
+0:37:47.090,0:37:52.340
+the ways that you're observing okay and if the Y you're observing is not a
+
+0:37:52.340,0:37:57.200
+single value but is I don't know an image the average of a bunch of images
+
+0:37:57.200,0:38:00.730
+is a blurry image okay that's why you get those very effects
+
+0:38:00.730,0:38:09.860
+now with air one the value of y that minimizes the l1 norm the l1 distance so
+
+0:38:09.860,0:38:13.610
+basically the sum of the absolute values of the differences between the value
+
+0:38:13.610,0:38:17.830
+you're considering and all the points all the white points that's the median
+
+0:38:17.830,0:38:26.330
+okay so it's it's a given point all right uh-huh and I see media and of
+
+0:38:26.330,0:38:34.280
+course it's not blurry it's just an image although it's kind of difficult to
+
+0:38:34.280,0:38:42.650
+define in multiple dimensions but so one problem with this loss is that it has a
+
+0:38:42.650,0:38:48.440
+scale right so here the transition here is at point five but why should it be at
+
+0:38:48.440,0:38:52.430
+point five you know it could be it depends what the scale of your of your
+
+0:38:52.430,0:39:01.700
+errors are okay negative exactly who lost this is really not the negative of
+
+0:39:01.700,0:39:06.190
+likelihood loss I'm not sure why it's called this way by torch but basically
+
+0:39:06.190,0:39:11.810
+here imagine that you have an X vector coming out okay and you your loss
+
+0:39:11.810,0:39:17.740
+function is there is one correct X okay so imagine each X correspond to a score
+
+0:39:17.740,0:39:22.550
+for lies a multi-class classification right so you have a desired class which
+
+0:39:22.550,0:39:27.680
+is one particular index in that vector okay now what you want is you want to
+
+0:39:27.680,0:39:32.390
+make that score as large as possible okay if those scores are likelihoods
+
+0:39:32.390,0:39:38.600
+then this is minimum negative log likelihood if those scores are log
+
+0:39:38.600,0:39:42.380
+likelihoods and this is maximum likelihood or minimum negative log
+
+0:39:42.380,0:39:45.690
+likelihood okay but there is nothing in this module
+
+0:39:45.690,0:39:49.380
+that actually specifies that the elds have to be log likelihoods so this is
+
+0:39:49.380,0:39:55.020
+just you know make my desired component as large as possible that's it
+
+0:39:55.020,0:40:02.070
+if you put negative signs in front so now you you can interpret the axis as
+
+0:40:02.070,0:40:06.630
+energies as opposed to scores okay they're not called six-course they're
+
+0:40:06.630,0:40:13.440
+like they're like penalties if you want but it's the same so the formula here
+
+0:40:13.440,0:40:20.160
+says you know just pick the X that happens to be the correct one for one
+
+0:40:20.160,0:40:25.920
+sample in the batch and make that score as large as possible now this particular
+
+0:40:25.920,0:40:32.630
+one allows you to give a different way to different to different categories
+
+0:40:32.630,0:40:38.280
+which is W those w's it's a it's a weight vector that gives a way to each
+
+0:40:38.280,0:40:43.140
+of the each of the categories it's useful in a lot of cases particularly if
+
+0:40:43.140,0:40:51.390
+you have widely different frequencies for the for the categories you might
+
+0:40:51.390,0:40:56.990
+want to increase the weight of samples for which you have a small number of
+
+0:40:56.990,0:41:02.510
+examples I mean for categories for which you have a small number of samples
+
+0:41:02.510,0:41:08.580
+however I'm actually not a big fan of this of this I think it's a much better
+
+0:41:08.580,0:41:16.590
+idea to just increase the frequency of the of the samples from the classes for
+
+0:41:16.590,0:41:20.280
+the class I have you know that appears rarely so that you equalize the
+
+0:41:20.280,0:41:26.840
+frequency the frequencies of the classes when you train it's much better because
+
+0:41:26.840,0:41:33.180
+it exploits stochastic gradient in a better way okay so so the bottom line of
+
+0:41:33.180,0:41:40.260
+that is if you have let me actually draw a picture of this so let's say you have
+
+0:41:40.260,0:41:45.000
+a problem where you have tons of samples for category one and then the small
+
+0:41:45.000,0:41:48.810
+number of samples for category two in a tiny number of samples for category
+
+0:41:48.810,0:41:55.500
+three you could so let's say you know here you have I don't know a thousand
+
+0:41:55.500,0:41:59.670
+samples and here you have 500 samples and you have I don't know
+
+0:41:59.670,0:42:06.119
+200 samples right so you could do is using this this kind of weight function
+
+0:42:06.119,0:42:12.869
+you could give this a weight of of 1 and this guy weight of 2 and this guy weight
+
+0:42:12.869,0:42:17.099
+of 5 and then you can equalize the weights if you want it's really better
+
+0:42:17.099,0:42:19.650
+to make sure that the way it's normalized to 1 that would be probably a
+
+0:42:19.650,0:42:26.549
+better idea but what I recommend is not that what I recommend is when you pick
+
+0:42:26.549,0:42:36.660
+your samples you basically pick one sample from class 1 and then one sample
+
+0:42:36.660,0:42:40.529
+from class 2 and super from class 3 and then you know you keep doing this during
+
+0:42:40.529,0:42:46.950
+your training session and when you get to the end of class 3 you go back to the
+
+0:42:46.950,0:42:52.200
+beginning ok so you keep going here but here you go back to the first sample
+
+0:42:52.200,0:42:58.380
+keep going here go back and now you have the second sample ok and now you get to
+
+0:42:58.380,0:43:05.490
+the end of class to go back to the start ok so the next sample is going to be
+
+0:43:05.490,0:43:13.380
+here here and here and then the next one here here and here here here and then
+
+0:43:13.380,0:43:19.380
+this guy wraps around again etc right so you basically have equal probability
+
+0:43:19.380,0:43:23.519
+equal frequencies for all the categories but just going through those kind of
+
+0:43:23.519,0:43:29.789
+circular buffers more often for categories for which you have fewer
+
+0:43:29.789,0:43:37.470
+samples ok once you should absolutely never do is equalize the frequencies by
+
+0:43:37.470,0:43:42.869
+by just not using all the samples in categories that are frequent I mean
+
+0:43:42.869,0:43:46.680
+that's horrible you should never let any data on the floor it's never any reason
+
+0:43:46.680,0:43:52.680
+to leave that on the floor ok now here's a problem with this the problem with
+
+0:43:52.680,0:43:56.609
+this is that after you've trained your your neuron that to do this you know one
+
+0:43:56.609,0:44:02.430
+that does not know about the relative likelihood the relative frequencies of
+
+0:44:02.430,0:44:07.230
+the samples and so let's say this is a system that those medical diagnoses it
+
+0:44:07.230,0:44:14.260
+doesn't know that the common cold is a way more frequent than you know lung
+
+0:44:14.260,0:44:22.869
+cancer or something right so what you need to do in the end is do a pass a few
+
+0:44:22.869,0:44:28.150
+passes perhaps where you can fine tune your system so that with the actual
+
+0:44:28.150,0:44:31.750
+frequencies of the categories and the effect of this is going to be for the
+
+0:44:31.750,0:44:38.490
+system to adapt the biases at the output layer so that the likelihood of you know
+
+0:44:38.490,0:44:43.390
+diagnosis corresponds to the the frequency of it right it's gonna favor
+
+0:44:43.390,0:44:47.200
+things that are more frequent the reason why I don't want to do this during the
+
+0:44:47.200,0:44:53.560
+entire training is because if you train a multi-layer net the the the system
+
+0:44:53.560,0:44:57.940
+basically never develops the right features for rare cases and they have
+
+0:44:57.940,0:45:05.560
+spoken about this already in the class in in past weeks to kind of recycle the
+
+0:45:05.560,0:45:10.660
+example of medical school you you don't spend when you go to medical school you
+
+0:45:10.660,0:45:16.089
+don't spend time studying the food that is proportional to the frequency of the
+
+0:45:16.089,0:45:21.099
+food with respect to very rare diseases for example right you spend basically
+
+0:45:21.099,0:45:24.820
+the same time studying all the diseases in fact you spend more time studying
+
+0:45:24.820,0:45:30.070
+complicated one which usually tend to be rarer and that's because you need to
+
+0:45:30.070,0:45:33.640
+develop the features for it okay and then you need to kind of correct for the
+
+0:45:33.640,0:45:39.160
+fact that you know those rare diseases are rare so you don't do that that you
+
+0:45:39.160,0:45:46.900
+know you don't suspect the diagnosis for rare diseases very often because you
+
+0:45:46.900,0:45:58.300
+know it's rare okay so that's all for for weights question tributo so you'll
+
+0:45:58.300,0:46:05.260
+be using this a lot of course and cross country pillows is a kind of merging of
+
+0:46:05.260,0:46:10.900
+two things merging of lot softmax function and negative low likelihood
+
+0:46:10.900,0:46:16.150
+loss okay and so and the reason why you want to have this is for numerical
+
+0:46:16.150,0:46:18.510
+reasons so the locks off max is you know
+
+0:46:23.150,0:46:26.660
+basically the softmax followed by log right so you first compute the softmax
+
+0:46:26.660,0:46:31.369
+then you do the log if you do softmax and then log and you back propagate
+
+0:46:31.369,0:46:36.680
+through this you might have gradients in the middle between the log and the
+
+0:46:36.680,0:46:44.780
+softmax that end up being infinite so for example if if the the maximum value
+
+0:46:44.780,0:46:48.160
+of one of the stars max is close to one and some of the other ones are close to
+
+0:46:50.990,0:46:55.430
+zero you take the log you get something that's close to minus infinity you back
+
+0:46:55.430,0:46:59.090
+propagate through the log you get something that's close to infinity okay
+
+0:46:59.090,0:47:07.040
+because the the slope of vlog goes to zero is very very close to infinity but
+
+0:47:07.040,0:47:10.849
+now you multiply this by a soft max that is saturated so it's multiplied by
+
+0:47:10.849,0:47:13.730
+something that's very close to zero so in the end you get a reasonable number
+
+0:47:13.730,0:47:19.280
+but because the intermediate numbers are close to infinity or 0 you multiply plus
+
+0:47:19.280,0:47:22.940
+something that's close to plus infinity by something that's close to 0 you get
+
+0:47:22.940,0:47:26.750
+numerical issues so you don't want to separate log and soft max you want to do
+
+0:47:26.750,0:47:30.680
+lots of Max in one in one go it simplifies the formula it makes the
+
+0:47:30.680,0:47:37.660
+whole thing much more stable numerically and for similar reasons you also want to
+
+0:47:37.660,0:47:42.740
+merge lots of Max and get you really good loss so basically if you have locks
+
+0:47:42.740,0:47:45.589
+off Max and you get you've log-likelihood loss it says I got a
+
+0:47:45.589,0:47:48.890
+bunch of weighted sums and a percent through soft max I'm going to take the
+
+0:47:48.890,0:47:54.950
+log of those and then I want to make the the output of the log short max for the
+
+0:47:54.950,0:47:59.420
+correct class as large as possible okay that's what the negative load actually
+
+0:47:59.420,0:48:02.869
+lost does it wants to make the score of the correct class as large as possible
+
+0:48:02.869,0:48:08.750
+we saw that just a minute ago right when you back propagate through the blocks
+
+0:48:08.750,0:48:12.230
+off max as a consequence it's going to make the score of all the other classes
+
+0:48:12.230,0:48:19.580
+as small as possible right because of the normalization and
+
+0:48:19.580,0:48:26.109
+so that you know that's why sometimes the the whole idea of sort of building a
+
+0:48:26.109,0:48:30.440
+network by you know modules sometimes there is an advantage instead
+
+0:48:30.440,0:48:44.219
+of merging in modules into single wine by end right so so the cross
+
+0:48:44.219,0:48:50.269
+entropy does in fact this explains a little bit you know those numerical
+
+0:48:50.269,0:48:58.410
+simplifications so the loss you know takes an X Factor and a category a
+
+0:48:58.410,0:49:04.049
+desired category a class okay and computes the negative log of the softmax
+
+0:49:04.049,0:49:11.279
+applied to the vector of scores but the one that's on the numerator numerator
+
+0:49:11.279,0:49:18.029
+here is the the X of the index of the correct class okay so that's that's your
+
+0:49:18.029,0:49:22.440
+loss the negative log of exponential the score of the correct class divided by
+
+0:49:22.440,0:49:27.930
+the sum of the Exponential's all the scores okay you can think of the X's as
+
+0:49:27.930,0:49:38.759
+negative energies okay it's completely equivalent now when you do the math and
+
+0:49:38.759,0:49:42.329
+you simplify your the log and the Exponential's gonna simplify and so you
+
+0:49:42.329,0:49:45.450
+just get the score of the correct class the negative score of the correct class
+
+0:49:45.450,0:49:51.059
+okay so to make that small you make the score large and then press the log of
+
+0:49:51.059,0:49:54.509
+the sum of the Exponential's of the scores of all the other class to make
+
+0:49:54.509,0:50:01.529
+that small you make all the edges small negative as far as fat you know as
+
+0:50:01.529,0:50:06.029
+negative as possible okay so this will make the score of the correct class
+
+0:50:06.029,0:50:13.769
+large like this core of everything else small again like in the aisle you can
+
+0:50:13.769,0:50:18.989
+you can have a weight per category also there is a physical interpretation right
+
+0:50:18.989,0:50:25.499
+of the cross entropy right okay so why is it called course entropy because it
+
+0:50:25.499,0:50:27.660
+is the cross entropy between two distributions
+
+0:50:27.660,0:50:31.049
+it's the KL divergence really between two distributions
+
+0:50:31.049,0:50:37.079
+it doesn't appear clearly here in this formula but think of the softmax applied
+
+0:50:37.079,0:50:41.339
+to the X vector as a distribution okay so take the X Factor's this course
+
+0:50:41.339,0:50:46.890
+rather than to a softmax you get a bunch of numbers between 0 & 1 that's 1 2
+
+0:50:46.890,0:50:52.020
+and now you have a desired distribution and the desired distribution the target
+
+0:50:52.020,0:50:56.700
+distribution if you want is one in which all the wrong categories had zero and
+
+0:50:56.700,0:51:01.410
+the correct category has one okay now compute the KL divergence between those
+
+0:51:01.410,0:51:11.040
+two distributions okay so it's the sum over indices of the correct probability
+
+0:51:11.040,0:51:19.280
+okay which is zero for except for one term times the ratio between the log of
+
+0:51:19.280,0:51:24.750
+the the probability that the system produces and the correct probability
+
+0:51:24.750,0:51:31.440
+which is one okay so all of those terms you know reduce to kind of a single term
+
+0:51:31.440,0:51:36.630
+which is just the one for which the correct probability term is one okay so
+
+0:51:36.630,0:51:41.010
+we end up with this with this term it's just a negative log of the softmax
+
+0:51:41.010,0:51:46.230
+output for the correct class okay we can use this as a cross entropy between the
+
+0:51:46.230,0:51:51.180
+distribution produced by the system and the one hot vector corresponding to the
+
+0:51:51.180,0:51:55.970
+desired distribution if you want okay so now there is a there would be another
+
+0:51:55.970,0:52:01.140
+can a more sophisticated version of this which would be the actual KL divergence
+
+0:52:01.140,0:52:04.620
+between the distribution produced by the system and a distribution that you
+
+0:52:04.620,0:52:07.950
+propose whatever it is a target distribution which now is not binary
+
+0:52:07.950,0:52:11.820
+it's not the one hard vector anymore but it's just a vector of numbers and that's
+
+0:52:11.820,0:52:21.960
+called the KL divergence in fact it's we'll see it in a minute so Kerala
+
+0:52:21.960,0:52:25.620
+vergence is a kind of you know it's not a distance because it's not symmetric
+
+0:52:25.620,0:52:31.980
+but it's a sort of a divergence between between distributions discrete
+
+0:52:31.980,0:52:40.400
+distributions okay so this one is a bit of a kind of a extension if you want of
+
+0:52:40.400,0:52:48.110
+lakhs of Max and it's a version of it that is applicable for very very large
+
+0:52:48.110,0:52:53.580
+categorization so if you have many many many categories what you might want to
+
+0:52:53.580,0:52:58.690
+do is kind of cut some corners you don't want to compute the giant softmax over
+
+0:52:58.690,0:53:04.390
+million categories or maybe even more so there you can sort of basically ignore
+
+0:53:04.390,0:53:10.390
+the ones that are small and you know kind of use tricks to kind of you know
+
+0:53:10.390,0:53:16.270
+improve the speed of the of the computation and this is what this does
+
+0:53:16.270,0:53:19.300
+I'm not going to go into the details exactly what it does because actually I
+
+0:53:19.300,0:53:22.839
+don't know the details but but it's basically an efficient approximation
+
+0:53:22.839,0:53:34.089
+softmax for a very very large number of categories so this is a special case of
+
+0:53:34.089,0:53:40.000
+course entropy when you only have two categories and in that case it kind of
+
+0:53:40.000,0:53:45.310
+reduces to something simple so this does not include stuff max this is just a
+
+0:53:45.310,0:53:50.589
+quest entropy when you have two categories and as I as I said before the
+
+0:53:50.589,0:54:02.859
+the the cross entropy loss is the sum of our categories of the probability I mean
+
+0:54:02.859,0:54:06.849
+some of our indices or some of our categories of the probability for the
+
+0:54:06.849,0:54:12.750
+target the target probability for that category times the ratio between the log
+
+0:54:12.750,0:54:21.550
+of the probability for of produced by the system divided by the probability of
+
+0:54:21.550,0:54:27.220
+the target category and if you work it out for two categories necessarily one
+
+0:54:27.220,0:54:33.130
+score is one minus the other one if you have two exclusive categories and and it
+
+0:54:33.130,0:54:39.609
+comes down to this okay now this presupposes that x and y
+
+0:54:39.609,0:54:44.829
+is x and y are kind of probabilities they have to be between strictly between
+
+0:54:44.829,0:54:47.589
+0 & 1 I mean not strictly but well kind of
+
+0:54:47.589,0:54:55.540
+strictly because otherwise the logs gonna blow up here is the KL divergence
+
+0:54:55.540,0:55:01.650
+process I was to tell you about earlier so here it's the
+
+0:55:01.650,0:55:10.019
+I mean it it's it's real turn here in a funny form but it's basically the here
+
+0:55:10.019,0:55:13.980
+again it's it sort of assumes this is another one I was telling you about
+
+0:55:13.980,0:55:19.410
+earlier actually this one is also a simplified one when you have a a one hot
+
+0:55:19.410,0:55:28.799
+distribution for the target so why is it's a category but it has the
+
+0:55:28.799,0:55:32.069
+disadvantage of not being merged with something like softmax or log softmax so
+
+0:55:32.069,0:55:42.420
+it may reach I mean it may have kind of numerical issues again it assumes x and
+
+0:55:42.420,0:55:46.970
+y are you know distributions this is values personal loss okay so
+
+0:55:54.089,0:56:00.509
+this version of binary choice entropy here takes scores that haven't gone
+
+0:56:00.509,0:56:06.980
+through sigmoid so this one does not assume that X the x's are between 0 & 1
+
+0:56:06.980,0:56:12.210
+it just takes you know values whatever they are and it it passes them to a
+
+0:56:12.210,0:56:17.430
+sigmoid to make sure there are between 0 & 1 strictly ok and so that is more
+
+0:56:17.430,0:56:23.369
+likely to be a numerically stable it's a bit the same ideas kind of emerging
+
+0:56:23.369,0:56:33.480
+locks off max and you get your lucky hood very yeah same thing here that's
+
+0:56:33.480,0:56:37.950
+what I was talking okay margin losses so this is sort of a important category of
+
+0:56:37.950,0:56:50.579
+losses those losses basically say if I have in this case two inputs the last
+
+0:56:50.579,0:56:56.579
+function here says I want one input to be larger than the other one by at least
+
+0:56:56.579,0:57:02.160
+two margin okay so imagine the two inputs or scores for two categories you
+
+0:57:02.160,0:57:04.680
+want the score for the correct category to be larger than the score for the
+
+0:57:04.680,0:57:08.579
+incorrect category but it hits some margin that you passed through the
+
+0:57:08.579,0:57:14.730
+system and that's the the formula you see down there so it's basically a him
+
+0:57:14.730,0:57:19.260
+okay and it takes the difference between the two scores and so why is a binary
+
+0:57:19.260,0:57:22.760
+variable this plus one or minus one and it controls whether you want X to be
+
+0:57:22.760,0:57:28.430
+larger than x1 to be larger than x2 or whether you want x2 to be larger than x1
+
+0:57:28.430,0:57:32.910
+okay we basically give you two scores and you tell it which one you want to be
+
+0:57:32.910,0:57:39.150
+the larger score and then the cost function says you know if this one is
+
+0:57:39.150,0:57:43.380
+larger than that one by at least a margin then the cost is zero if it's if
+
+0:57:43.380,0:57:47.609
+if it's smaller than the margin or if it's in the other direction and the cost
+
+0:57:47.609,0:58:00.150
+increases linearly okay so that's called a hingeless okay so that's very useful
+
+0:58:00.150,0:58:14.160
+for a number of different things we've we've seen an example of this in so yeah
+
+0:58:14.160,0:58:19.940
+for example so this is sort of a margin ranking class so you have two values but
+
+0:58:19.940,0:58:24.390
+there are sort of is a simplified version of it I mean there's a simpler
+
+0:58:24.390,0:58:29.430
+version of it which I don't have here for some reason we only have an X okay
+
+0:58:29.430,0:58:35.660
+so basically the loss is max of 0 and minus X times the margin and it just
+
+0:58:39.630,0:58:46.020
+wants to make to make X smaller than the margin right and so this is sort of a
+
+0:58:46.020,0:58:51.000
+special case where you have a ranking between two scores of two categories so
+
+0:58:51.000,0:58:56.280
+here is how you would use this for classification you would basically run
+
+0:58:56.280,0:59:01.770
+your classifier you would get scores ok idea so before you do any non-linearity
+
+0:59:01.770,0:59:07.020
+weighted sums and then you know the correct category so you say I want this
+
+0:59:07.020,0:59:13.050
+correct category to have a high score and then what you do is you take another
+
+0:59:13.050,0:59:18.480
+category that has the most offending score so either another category so a
+
+0:59:18.480,0:59:23.070
+category that is incorrect that has a higher score than the correct one or
+
+0:59:23.070,0:59:27.850
+that has a lower score but the lowest score is too close ok so you take the
+
+0:59:27.850,0:59:34.240
+the category that whose core is the closest to the to the correct one or who
+
+0:59:34.240,0:59:40.030
+score is higher than the correct one and you feed those two scores to the last
+
+0:59:40.030,0:59:43.510
+function like this so basically it's going to push up the score in the
+
+0:59:43.510,0:59:46.690
+correct category push down the score the incorrect category until the difference
+
+0:59:46.690,0:59:52.630
+is that eastern margin equal to the margin okay that's you know a perfectly
+
+0:59:52.630,0:59:57.160
+good way of training something in the context of an energy-based model for
+
+0:59:57.160,1:00:02.310
+example that's the sort of things you might want to do you might want to say X
+
+1:00:02.310,1:00:08.230
+1/4 minus x1 is the energy I mean X you know minus X 1 will be the energy of the
+
+1:00:08.230,1:00:13.540
+correct answer and minus X 2 would be the energy of the incorrect answer like
+
+1:00:13.540,1:00:19.240
+an a contrastive term an incorrect answer and you want to push down the
+
+1:00:19.240,1:00:22.060
+energy of the correct answer which are the energy of incorrect answer so that
+
+1:00:22.060,1:00:27.870
+the difference is at least some margin okay can use this kind of laws for that
+
+1:00:27.870,1:00:31.630
+the to play Clause is gonna be refinement on this so this is used a lot
+
+1:00:31.630,1:00:37.420
+for metric learning for the kind of Sammys nets that each n was each and
+
+1:00:37.420,1:00:46.290
+mister I was talking about last week and and there the idea is let's say I have a
+
+1:00:47.010,1:00:53.620
+distance so let's say I have three samples I have one sample and another
+
+1:00:53.620,1:00:57.040
+sample is very similar to it I've run them through to commercial Nets I get
+
+1:00:57.040,1:01:01.210
+two vectors I compute the distance between those two vectors D of a IP I
+
+1:01:01.210,1:01:05.620
+for example okay I want to make this distance as small as possible because
+
+1:01:05.620,1:01:10.540
+that's the core example and then I take two samples that I know are semantically
+
+1:01:10.540,1:01:15.430
+different ok the image of a cat and whatever table and I want to make the
+
+1:01:15.430,1:01:18.670
+vector as far away from each other so I compute the distance I want to make this
+
+1:01:18.670,1:01:27.100
+distance large alright now I can insist that the first is done B zero and it can
+
+1:01:27.100,1:01:29.590
+insist that the second distance be larger than the margin that would be
+
+1:01:29.590,1:01:35.260
+kind of a margin loss type type thing but what I can do is one of those
+
+1:01:35.260,1:01:39.700
+triplet margin notes where I say the only thing I care about is that the
+
+1:01:39.700,1:01:43.500
+distance that I get for the good is smaller than the distance that I get
+
+1:01:43.500,1:01:47.580
+for the bad pit I don't care if the distance is small I just wanted to be
+
+1:01:47.580,1:01:54.450
+smaller than the distance for the bad pair okay and that's what those ranking
+
+1:01:54.450,1:02:02.670
+goes to a bunch of those were I mean one of the first I think that was proposed
+
+1:02:02.670,1:02:08.820
+was by Chisholm Weston and Sammy bengio back when Jaden Weston was today Google
+
+1:02:08.820,1:02:15.869
+and they used this to train kind of an image search system for Google so back
+
+1:02:15.869,1:02:19.350
+then I'm not sure is true anymore but back then you would type a query on
+
+1:02:19.350,1:02:24.780
+Google Google would encode that query into a vector then we compare this to a
+
+1:02:24.780,1:02:30.440
+whole bunch of vectors describing images that I've been previously indexed and
+
+1:02:30.440,1:02:35.040
+and then would kind of retrieve the images whose vector were close to the
+
+1:02:35.040,1:02:40.260
+one that that you had and the way you train those those the networks that
+
+1:02:40.260,1:02:45.180
+compute those vectors in that case back then it was in your networks actually as
+
+1:02:45.180,1:02:50.900
+you train them with those trip pillows okay so you said good hits for my search
+
+1:02:50.900,1:02:55.020
+should should have a distance between the vectors that is smaller than any bad
+
+1:02:55.020,1:02:58.500
+hit and I don't care if the distance is small I just wanted to be smaller than
+
+1:02:58.500,1:03:10.140
+for that it's any question that's kind of a graphical explanation of this where
+
+1:03:10.140,1:03:17.310
+P is a positive sample so it's you know similar to a so a is the sample you
+
+1:03:17.310,1:03:21.240
+considered P is kind of a positive sample and N is a negative sample
+
+1:03:21.240,1:03:27.869
+contrast example you want to push anyway and bring P closer and as soon as P is
+
+1:03:27.869,1:03:38.220
+closer than n by some margin you you stop pushing and pulling your soft
+
+1:03:38.220,1:03:41.790
+versions of this and in fact you can think of nce the the kind of loss
+
+1:03:41.790,1:03:46.920
+function that hn was talking about as kind of a soft version of that where you
+
+1:03:46.920,1:03:51.450
+basically you have a bunch of positives and bunch of negatives or you have one
+
+1:03:51.450,1:03:57.140
+positive and bunch of negatives and you run them through softmax and you say
+
+1:03:57.140,1:04:03.820
+I want this the you know e to the minus distance for the correct one to be
+
+1:04:03.820,1:04:11.360
+smaller than you know e to the minus the other one so it kind of you pushes the
+
+1:04:11.360,1:04:15.170
+positive closer to you and pushes the other ones further to you but now with
+
+1:04:15.170,1:04:19.730
+some sort of stuff maxi that sort of exponential decay as opposed to sort of
+
+1:04:19.730,1:04:27.440
+a hard margin so in PI torch you have things that allow you to have multi
+
+1:04:27.440,1:04:33.290
+labels so this allows you to basically give multiple correct outputs so instead
+
+1:04:33.290,1:04:38.750
+of you know this is a ranking Mouse but it's serving sitting that there is only
+
+1:04:38.750,1:04:42.680
+one correct category and you know you you you want a high score for the
+
+1:04:42.680,1:04:46.430
+correct category and that's core for everything else here you can have a
+
+1:04:46.430,1:04:50.360
+number of categories for which you want high scores and then all the other ones
+
+1:04:50.360,1:04:54.200
+will get pushed away all right we'll get the scores will be
+
+1:04:54.200,1:04:59.810
+pushed down so here it's a it's a hinge loss but you do a sum of those this
+
+1:04:59.810,1:05:07.520
+hinge loss overall categories and and for each category if the category is a
+
+1:05:07.520,1:05:12.170
+desired one you push it up if it's a non desire one you push it down which is
+
+1:05:12.170,1:05:19.340
+what this video formula says and of course you have the soft version of this
+
+1:05:19.340,1:05:26.000
+which I'm not going to go into the details of and the multi margin version
+
+1:05:26.000,1:05:35.060
+of it so this pushing and pulling for metric learning for embedding for Sammis
+
+1:05:35.060,1:05:40.400
+nets that I would say telling you about it's actually kind of all implemented if
+
+1:05:40.400,1:05:46.700
+you want in one of those engine vending laws so engine 30 loss is a loss for
+
+1:05:46.700,1:05:51.920
+Siamese nets that kind of pushes things are semantically similar to you and push
+
+1:05:51.920,1:05:56.810
+away things that are not okay so the Y variable indicates whether the pair you
+
+1:05:56.810,1:06:00.590
+are or whether the score you are giving to the system is one that should be
+
+1:06:00.590,1:06:05.780
+pushed up a window should be pushed down and it it chooses the hinge loss that
+
+1:06:05.780,1:06:12.230
+makes the score positive if Y is plus one and it makes a
+
+1:06:12.230,1:06:19.240
+score negative by some margin Delta if if Y is minus one
+
+1:06:25.480,1:06:29.890
+very often when you are doing Siamese Nets the way you compute the
+
+1:06:29.890,1:06:32.950
+similarity between two vectors is not through Euclidean distance between
+
+1:06:32.950,1:06:39.160
+cosine distance so the one minus the cosine between the of the angle between
+
+1:06:39.160,1:06:42.790
+the two vectors this is basically a normalized Euclidean distance if you
+
+1:06:42.790,1:06:47.950
+want you can think of it this way the advantage of this is that whenever you
+
+1:06:47.950,1:06:52.210
+can push the distance whenever your two vectors and you want to make the
+
+1:06:52.210,1:06:55.690
+distance as large as possible there's a very easy way for the system to get away
+
+1:06:55.690,1:07:00.310
+with it by making the the two vectors very large very long you know not
+
+1:07:00.310,1:07:04.390
+pointing in the same direction and make them very very long so now the distance
+
+1:07:04.390,1:07:08.109
+would be large but of course that's not what you want you don't want the system
+
+1:07:08.109,1:07:11.950
+to just make the the vectors bigger you wanted to actually rotate the vector in
+
+1:07:11.950,1:07:15.820
+the right direction so you you normalize the vectors and then computer normalize
+
+1:07:15.820,1:07:19.390
+Euclidean distance and that's basically what this does and what this does is
+
+1:07:19.390,1:07:24.369
+that it for positive cases it tries to make the vectors as aligned with each
+
+1:07:24.369,1:07:31.720
+other as possible and for negative pairs it tries to make the cosine smaller than
+
+1:07:31.720,1:07:35.890
+the particular margin the margin in that case which should probably be something
+
+1:07:35.890,1:07:42.910
+that kind of is close to zero so you want the the cosine you know in a high
+
+1:07:42.910,1:07:47.500
+dimensional space there's a lot of space near the equator of the sphere of the
+
+1:07:47.500,1:07:50.950
+high dimensions here okay so all your points now are normalized so this here
+
+1:07:50.950,1:07:55.540
+what you want is samples that are symmetrically similar to you should be
+
+1:07:55.540,1:07:59.589
+close to you the samples that are dissimilar should be orthogonal you
+
+1:07:59.589,1:08:03.640
+don't want them to be Oppo opposed because there is only one point in the
+
+1:08:03.640,1:08:09.330
+South Pole whereas on the equator is a very very high large space the entire
+
+1:08:09.330,1:08:15.250
+sphere minus one dimension basically okay so you can make the margin just you
+
+1:08:15.250,1:08:18.969
+know some small so small positive value and and then you get the entire equator
+
+1:08:18.969,1:08:22.480
+essentially of this here which contains you almost the entire volume of the
+
+1:08:22.480,1:08:25.350
+sphere and I dimension since you see loss this is a little more
+
+1:08:30.969,1:08:37.269
+complicated because that's a task that is basically uses structure prediction
+
+1:08:37.269,1:08:42.940
+what's called structure prediction so this is I sort of briefly talked about
+
+1:08:42.940,1:08:48.909
+it very quickly a few weeks ago was something very similar to this so this
+
+1:08:48.909,1:08:56.949
+is it also is applicable when you your output is a sequence of vectors and
+
+1:08:56.949,1:09:05.230
+scores where the vectors correspond to scores of categories okay and so you
+
+1:09:05.230,1:09:09.639
+have so your system computes a vector of such score so imagine for example speech
+
+1:09:09.639,1:09:15.069
+recognition system speech recognition system every 10 milliseconds gives you a
+
+1:09:15.069,1:09:20.099
+vector of probabilities for what the sound being pronounced right now is and
+
+1:09:20.099,1:09:23.589
+the number of categories usually is quite large on the order of a few
+
+1:09:23.589,1:09:28.119
+thousand okay so give you basically a softmax vector of a size you know
+
+1:09:28.119,1:09:34.619
+typically three thousand let's say one of those every 10 milliseconds all right
+
+1:09:34.619,1:09:38.409
+and what you like you know you have a desired output and the desired output is
+
+1:09:38.409,1:09:42.609
+what word was being pronounced and a word that's being pronounced that
+
+1:09:42.609,1:09:48.519
+corresponds to kind of a particular sequence of sounds if you want that you
+
+1:09:48.519,1:09:53.380
+might you might know so what you need now is a course that basically is row if
+
+1:09:53.380,1:10:00.820
+that sequence looks like like that sequence but what you might allow is for
+
+1:10:00.820,1:10:10.090
+the input sequence to repeat some of the sounds if you want right so so for
+
+1:10:10.090,1:10:16.630
+example you know my my cost to make the target might be the word seven they say
+
+1:10:16.630,1:10:20.440
+and it's pronounced really quickly 7 so you basically have you know a very small
+
+1:10:20.440,1:10:25.059
+number of samples of each sound in the sequence but then perhaps the the person
+
+1:10:25.059,1:10:28.750
+who is pronouncing the the word now that user as a training sample pronounced it
+
+1:10:28.750,1:10:35.559
+very slowly like seven right so now the the first the first takes you know
+
+1:10:35.559,1:10:40.030
+several several frames of 10 milliseconds that should all be mapped
+
+1:10:40.030,1:10:43.050
+to the the same instance of the earth in the indian foot
+
+1:10:47.560,1:10:55.960
+and i do that picture before but i gonna do it again right so the you have let's
+
+1:10:55.960,1:11:06.730
+see you have a sequence of scores coming out of soft max's let's say it's
+
+1:11:06.730,1:11:12.640
+actually better if there are energies but firstly TC they need to be and then
+
+1:11:12.640,1:11:25.530
+you have the target sequence and i think of this as some sort of matrix and each
+
+1:11:25.530,1:11:30.850
+entry in that matrix basically measures the distance between the two vectors
+
+1:11:30.850,1:11:37.570
+that are here okay so when i'm treating the matrix indicates how this vector
+
+1:11:37.570,1:11:41.290
+looks like that vector for example with the course entropy or something like
+
+1:11:41.290,1:11:49.770
+that okay or is quite error it doesn't matter what the last function is so now
+
+1:11:49.800,1:12:05.290
+if this is the word seven pronounced slowly okay and this has perhaps only
+
+1:12:05.290,1:12:15.190
+one instance of each sound you want all of those you know you would want all of
+
+1:12:15.190,1:12:27.250
+those vectors corresponding to the e to be mapped to that vector here okay so
+
+1:12:27.250,1:12:33.010
+you want to compute that cost of you know confusing that those all of those I
+
+1:12:33.010,1:12:35.470
+mean map matching those ease to that to that
+
+1:12:35.470,1:12:39.100
+e now of course here the system could use the correct answer so you don't have
+
+1:12:39.100,1:12:43.420
+much of a problem but if the target is seven but the word that was pronounced
+
+1:12:43.420,1:12:51.780
+here or the output that was produced by the system does not correspond to seven
+
+1:12:51.780,1:12:55.210
+that's that's that's when you run into into trouble so
+
+1:12:55.210,1:13:01.420
+here what you do is you find the best mapping from the input sequence to the
+
+1:13:01.420,1:13:06.190
+output sequence okay so the s gets mapped to the s the e to the e the V to
+
+1:13:06.190,1:13:12.460
+the V the east to the e and the end to the N so you get this kind of path if
+
+1:13:12.460,1:13:15.880
+you want that think of this as a path in the graph
+
+1:13:15.880,1:13:20.350
+and the way you determine this is basically by using a dynamic programming
+
+1:13:20.350,1:13:23.890
+algorithm the short path algorithm that figures out how do I get from here to
+
+1:13:23.890,1:13:30.480
+here you know path that minimizes the sum of the distance distances between
+
+1:13:30.480,1:13:35.890
+the the all the vectors of the distances between the vectors of you know all the
+
+1:13:35.890,1:13:41.890
+points are going through ok so there's a optimization respect to a latent
+
+1:13:41.890,1:13:45.670
+variable if you want okay and CGC basically decide for you right so you
+
+1:13:45.670,1:13:50.230
+give it two sequences and it computes the distance between them and you know
+
+1:13:50.230,1:13:58.960
+kind of the best kind of mapping between the two by allowing basically to to map
+
+1:13:58.960,1:14:03.550
+multiple input vectors to kind of a single one on the output it cannot
+
+1:14:03.550,1:14:09.489
+expand it it can only kind of reduce if you want and then that's done in a way
+
+1:14:09.489,1:14:13.989
+that you can back propagate gradient to it we'll come back to this two more
+
+1:14:13.989,1:14:21.820
+things like this at the end if you can oops so this is what this the target is
+
+1:14:21.820,1:14:26.260
+assumed to be many-to-one the alignment of the input to the target is assumed to
+
+1:14:26.260,1:14:29.020
+be miniature when which leave is the length of the target sequence such that
+
+1:14:29.020,1:14:33.010
+it must be smaller than the length of the input that's for the reason I just
+
+1:14:33.010,1:14:37.930
+explained okay so it's basically differentiable time-warping you could
+
+1:14:37.930,1:14:43.420
+think of it this way or sort of a module that does that any time marking or
+
+1:14:43.420,1:14:48.400
+dynamic programming and it's still differentiable the idea for this goes
+
+1:14:48.400,1:14:54.340
+back in the early 90s in the Lobo two species actually that's very old very a
+
+1:14:54.340,1:15:00.550
+good paper or resource to learn more about that dynamic programming algorithm
+
+1:15:00.550,1:15:05.980
+there actually that's kind of what I'm gonna talk about next I may not have
+
+1:15:05.980,1:15:12.329
+time to go through it but I'll try to okay but basically the last
+
+1:15:12.329,1:15:17.909
+part of the energy based model tutorial okay
+
+1:15:17.909,1:15:24.239
+so the initial base model tutorial the 2006 paper that we give you a reference
+
+1:15:24.239,1:15:31.110
+a link to a tutorial on energy based models the this the second part is all
+
+1:15:31.110,1:15:38.219
+about this kind of stuff essentially okay so it's more energy based models
+
+1:15:38.219,1:15:42.510
+but now in getting more of a supervised context if you want
+
+1:15:42.510,1:15:52.050
+so preliminary so before I get to this I want to come back to the sort of more
+
+1:15:52.050,1:16:01.949
+general formulation of energy based models and the idea that so if you want
+
+1:16:01.949,1:16:06.300
+to kind of define energy based models in the proper way these are the conditional
+
+1:16:06.300,1:16:13.079
+versions you have a a training set a bunch of pairs x y y I for I equals 1 to
+
+1:16:13.079,1:16:18.869
+P you have a loss function also the last functional L of ENS so it takes the
+
+1:16:18.869,1:16:23.820
+energy function computed by the system okay and the training set and it gives
+
+1:16:23.820,1:16:28.139
+you a scalar value now you can you can think of this as a functional functional
+
+1:16:28.139,1:16:32.219
+is a function of a function ok but in fact because the energy function itself
+
+1:16:32.219,1:16:36.510
+is parametrized by parameter W you can turn this functional into a loss
+
+1:16:36.510,1:16:40.469
+function which is not just a function of W another function of the energy
+
+1:16:40.469,1:16:46.739
+function okay and of course the the set of energy functions is called epsilon
+
+1:16:46.739,1:16:53.909
+here it's family tries by the parameter W which is taken within the set so
+
+1:16:53.909,1:16:57.630
+training consistent of course minimizing the the loss function or with respect to
+
+1:16:57.630,1:17:02.400
+W and finding the W that minimizes it and and so one question you might ask
+
+1:17:02.400,1:17:05.429
+yourself you know I went to a whole bunch of objective function loss
+
+1:17:05.429,1:17:08.880
+functions here and the question is if you are in an energy based framework
+
+1:17:08.880,1:17:14.670
+what loss functions are good ones and what all functions are bad ones how do
+
+1:17:14.670,1:17:18.929
+you characterize a loss function that actually will do something useful for
+
+1:17:18.929,1:17:23.480
+you ok so here is a general formulation of the
+
+1:17:23.480,1:17:29.300
+last function it's it's an average over training samples so here I'm kind of
+
+1:17:29.300,1:17:34.070
+assuming that it's invariant under permutation of the samples so an average
+
+1:17:34.070,1:17:38.510
+is as good as any other aggregation go-getting function so it's the average
+
+1:17:38.510,1:17:44.150
+of our training samples of a person for loss function capital L and it takes the
+
+1:17:44.150,1:17:50.000
+desired answer Y which could be just a category or it could be a whole image or
+
+1:17:50.000,1:17:56.180
+whatever and it takes the energy function where X the X variable X I is
+
+1:17:56.180,1:18:03.200
+is equal to X I the ice training sample the Y variable is undetermined okay so e
+
+1:18:03.200,1:18:10.370
+of W Y and X I is basically the entire shape of the energy function for values
+
+1:18:10.370,1:18:15.200
+of Y over values of Y for a given X okay X equal to X I and you can have a
+
+1:18:15.200,1:18:22.790
+regularizer if you want okay so here this is a loss functional again again of
+
+1:18:22.790,1:18:26.090
+course we have to design this loss function all so that it makes the energy
+
+1:18:26.090,1:18:31.520
+of correct answers small and the energy of incorrect answers large in some ways
+
+1:18:31.520,1:18:38.060
+right ok now we're going to go through a bunch of different types of loss
+
+1:18:38.060,1:18:45.050
+functions so one thing we could do is say my loss function is just going to be
+
+1:18:45.050,1:18:50.180
+the energy of the correct answer so I'm gonna place myself in the context of
+
+1:18:50.180,1:18:53.960
+energy based model my system produces scores I interpret those scores as
+
+1:18:53.960,1:19:01.540
+energies so high is bad good is good that means low is good as opposed to
+
+1:19:01.540,1:19:13.460
+positive scores and what I'm just going to do is define my energy functional as
+
+1:19:13.460,1:19:16.820
+unfortunately the energy function of the function of Y as simply the energy that
+
+1:19:16.820,1:19:24.950
+my model gives to the correct answer okay so basically I give it an X and I
+
+1:19:24.950,1:19:27.890
+give it the correct answer Y and as a system what energy do you give to that
+
+1:19:27.890,1:19:33.110
+pair and then I try to make that energy as small as possible okay so you have
+
+1:19:33.110,1:19:36.700
+this landscape of energy is here now we honor I showed you this
+
+1:19:36.700,1:19:40.900
+slide in the context of unsupervised super Ronnie here I'm showing to you in
+
+1:19:40.900,1:19:44.710
+the context of supervised Ronnie so imagine that one of the variables is X
+
+1:19:44.710,1:19:49.180
+and the other variable is y okay and the blue beads are training samples and you
+
+1:19:49.180,1:19:54.940
+want to make the energy of the blue beads as far as possible so you're
+
+1:19:54.940,1:19:58.330
+pulling down on the blue beads but you're not doing anything else and so as
+
+1:19:58.330,1:20:01.510
+a result depending on the architecture or your network if your network is not
+
+1:20:01.510,1:20:07.300
+designed properly or if it's designing a bit in no particular way it could very
+
+1:20:07.300,1:20:10.570
+well be that the energy function is going to become flat everywhere okay
+
+1:20:10.570,1:20:13.630
+you're just trying to make the energy of the correct answer small are you not
+
+1:20:13.630,1:20:16.930
+telling the system the energy of everything else should be higher and so
+
+1:20:16.930,1:20:24.670
+the system might just collapse all right so energy loss is not good in
+
+1:20:24.670,1:20:29.100
+that sense but there are certain situations where it's applicable because
+
+1:20:29.100,1:20:35.500
+if the shape of the energy function is such that it cannot make the you can
+
+1:20:35.500,1:20:40.450
+only make the energy of a single answer small all the other ones being larger
+
+1:20:40.450,1:20:45.370
+then you need to have a quadratic term okay and we've seen this in the context
+
+1:20:45.370,1:20:49.720
+of supervised learning people are completely lost about the loss
+
+1:20:49.720,1:20:57.760
+functional right okay so this is a function Al and it's a function of
+
+1:20:57.760,1:21:03.400
+another function e okay so it's called a functional because it's
+
+1:21:03.400,1:21:07.360
+a function of a function right it's not a function of a point it's a function of
+
+1:21:07.360,1:21:15.730
+a function now if that second function is permit rised by a parameter W then
+
+1:21:15.730,1:21:18.430
+you can say that the last function is actually a function of that parameter W
+
+1:21:18.430,1:21:23.110
+now it becomes a regular function okay that's what I had can you can you write
+
+1:21:23.110,1:21:27.100
+it down it's basically written here okay you can
+
+1:21:27.100,1:21:33.520
+either write the functional as if I can find it as L of e and s so that's a
+
+1:21:33.520,1:21:39.700
+functional because it's a function of e which itself is a function okay but e
+
+1:21:39.700,1:21:45.610
+itself is a function of W and so if I write the last function directly as a
+
+1:21:45.610,1:21:49.290
+function of W now it's just a regular function
+
+1:21:50.190,1:21:59.920
+okay yeah I mean I asked the question that was asked in the chat I yeah I was
+
+1:21:59.920,1:22:17.530
+kind of you I know before that you know for okay we've seen the negative log
+
+1:22:17.530,1:22:25.380
+likelihood loss before I talked about this so this is a loss function that
+
+1:22:25.380,1:22:31.210
+tries to make the energy of the correct answer so look at the rectangle in red
+
+1:22:31.210,1:22:35.740
+tries to make the energy of the correct answer as low as possible and then you
+
+1:22:35.740,1:22:40.090
+have the second term whatever beta log sum over all why's of e to the minus
+
+1:22:40.090,1:22:49.330
+beta e of WI X and this one is trying to make the energy of all Y's for this
+
+1:22:49.330,1:22:53.320
+given X as large as possible okay because the best way to make this term
+
+1:22:53.320,1:22:58.150
+small is to make those energies large because they enter in there as a
+
+1:22:58.150,1:23:06.340
+negative of negative its financial okay so this has this kind of pushing down on
+
+1:23:06.340,1:23:13.360
+the correct answer pushing up on incorrect answer behavior and we've seen
+
+1:23:13.360,1:23:20.110
+before we just talked about margin loss and and other types of losses here is
+
+1:23:20.110,1:23:22.900
+something that's called a perceptron loss because it's basically very similar
+
+1:23:22.900,1:23:28.900
+to I mean it's exactly the same as the loss that was used for the perceptron 60
+
+1:23:28.900,1:23:34.480
+years ago over 60 years ago so this one says I want to make the energy of the
+
+1:23:34.480,1:23:43.410
+correct answer small and the same time I want to make the energy of the smallest
+
+1:23:43.410,1:23:49.660
+the smallest energy for all answers as large as possible okay so pick the Y
+
+1:23:49.660,1:23:54.280
+that has the smallest energy in your system make that as large as you can the
+
+1:23:54.280,1:23:57.760
+same time picks the correct energy make that as small as you can now there is a
+
+1:23:57.760,1:24:00.690
+point at which the answer with the correct energy is going
+
+1:24:02.360,1:24:07.370
+to equal to the correct answer and so that difference can never be negative
+
+1:24:07.370,1:24:13.970
+okay because the first term is necessarily one term in that minimum and
+
+1:24:13.970,1:24:22.010
+so the difference is at best zero and for every other cases is in spot this
+
+1:24:22.010,1:24:27.250
+trick is positive it's only zero when the system gives you the correct answer
+
+1:24:27.250,1:24:33.740
+okay but this objective function does not prevent the system from giving the
+
+1:24:33.740,1:24:38.510
+very same energy to every answer okay so in that sense it's a bad energy it's a
+
+1:24:38.510,1:24:43.670
+bad loss function so bad a loss function because it it says I want the energy of
+
+1:24:43.670,1:24:47.720
+the correct answer to be small I want the energy of all the other answers to
+
+1:24:47.720,1:24:51.170
+be large but I don't insist that there is any difference between them so the
+
+1:24:51.170,1:24:59.000
+system can choose to make every answer the same energy and that's a class okay
+
+1:24:59.000,1:25:02.510
+so the spectrum loss is not good it's actually only good for linear systems
+
+1:25:02.510,1:25:11.150
+but it's not good for as a objective function for nonlinear systems so here
+
+1:25:11.150,1:25:16.670
+is a way to design an objective function that will always be good and you you
+
+1:25:16.670,1:25:19.790
+take the energy of the correct answer and you take the energy of the most
+
+1:25:19.790,1:25:24.260
+offending incorrect answer which means the value of y that is incorrect but at
+
+1:25:24.260,1:25:30.920
+the same time is the lowest energy of all the incorrect answers okay and your
+
+1:25:30.920,1:25:35.600
+system will work if that difference is negative in other words if the energy of
+
+1:25:35.600,1:25:39.410
+the correct answer is smaller than the energy of the most of any correct answer
+
+1:25:39.410,1:25:45.710
+but at least some quantity some margin okay so as long as your objective
+
+1:25:45.710,1:25:49.550
+function will you design it ensures that the energy of the correct answer is
+
+1:25:49.550,1:25:52.580
+smaller than the energy of the most of any correct answer by at least a margin
+
+1:25:52.580,1:26:02.510
+nonzero margin then you'll find your loss function is good okay so things
+
+1:26:02.510,1:26:07.580
+like kyndra's are good the heat loss basically says and we talked about this
+
+1:26:07.580,1:26:11.210
+just just before I want the energy of the correct answer to be smaller than
+
+1:26:11.210,1:26:12.889
+the energy of the most offending incorrect
+
+1:26:12.889,1:26:18.679
+which is denoted why I bar here but at least M okay this is what this house
+
+1:26:18.679,1:26:22.610
+function does it's a hinge loss and it wants to push down the energy of this
+
+1:26:22.610,1:26:31.340
+guy below the energy of that guy by at least this margin so this has a margin M
+
+1:26:31.340,1:26:36.230
+and this will you know if you train a system with this loss a well and he can
+
+1:26:36.230,1:26:42.260
+run the task he will run the task and probably produce the good answers the
+
+1:26:42.260,1:26:47.210
+heat loss the soft hinge loss which is in the context of Nigeria's models is
+
+1:26:47.210,1:26:51.830
+expressed this way basically instead of feeling the difference between the
+
+1:26:51.830,1:26:55.670
+
 0:00:00.020,0:00:03.451
 All right, so we're going to talk about two or three topics today,
 
