@@ -1,4689 +1,2345 @@
 0:00:00.030,0:00:05.609
-today we're going to be talking about
-
-0:00:01.079,0:00:10.099
-genitive address our networks or how to
+today we're going to be talking about genitive address our networks or how to
 
 0:00:05.609,0:00:12.750
-actually have them properly made
-
-0:00:10.099,0:00:15.000
-alright so generated other cyanate works
+actually have them properly made alright so generated other cyanate works
 
 0:00:12.750,0:00:17.850
-unsupervised learning generative models
-
-0:00:15.000,0:00:20.430
-so generating models again our models
+unsupervised learning generative models so generating models again our models
 
 0:00:17.850,0:00:23.330
-that allow you to get something that is
-
-0:00:20.430,0:00:26.160
-in the input space most of the time
+that allow you to get something that is in the input space most of the time
 
 0:00:23.330,0:00:28.439
-that's you know what is happening in
-
-0:00:26.160,0:00:31.260
-this field is that we assume there is
+that's you know what is happening in this field is that we assume there is
 
 0:00:28.439,0:00:35.880
-like a probability distribution over
-
-0:00:31.260,0:00:38.450
-these samples it doesn't have to for
+like a probability distribution over these samples it doesn't have to for
 
 0:00:35.880,0:00:42.329
-example a decoder in a classical encoder
-
-0:00:38.450,0:00:45.059
-can be thought as a generative model in
+example a decoder in a classical encoder can be thought as a generative model in
 
 0:00:42.329,0:00:47.190
-my opinion and also for yan many will
-
-0:00:45.059,0:00:50.039
-disagree and they say generative model
+my opinion and also for yan many will disagree and they say generative model
 
 0:00:47.190,0:00:53.640
-has to have like an input which you know
-
-0:00:50.039,0:00:56.219
-follow a specific distribution we are in
+has to have like an input which you know follow a specific distribution we are in
 
 0:00:53.640,0:00:59.129
-the realm of unsupervised learning where
-
-0:00:56.219,0:01:00.750
-we don't have labels and so let's get
+the realm of unsupervised learning where we don't have labels and so let's get
 
 0:00:59.129,0:01:03.230
-started with generative others are
-
-0:01:00.750,0:01:03.230
-networks
+started with generative others are networks
 
 0:01:05.310,0:01:10.120
-so what is this stuff
-
-0:01:07.990,0:01:11.560
-aha you should know all right so this is
+so what is this stuff aha you should know all right so this is
 
 0:01:10.120,0:01:14.110
-the variation of the encoder the
-
-0:01:11.560,0:01:16.900
-variation of encoder is basically like a
+the variation of the encoder the variation of encoder is basically like a
 
 0:01:14.110,0:01:19.930
-normal thing coder where the encoder in
-
-0:01:16.900,0:01:21.790
-this case provides us the parameters for
+normal thing coder where the encoder in this case provides us the parameters for
 
 0:01:19.930,0:01:25.660
-a distribution from where we sample our
-
-0:01:21.790,0:01:27.400
-latent input to Zed okay so the only
+a distribution from where we sample our latent input to Zed okay so the only
 
 0:01:25.660,0:01:31.240
-difference between the normal one is the
-
-0:01:27.400,0:01:34.540
-again the sampler which is gonna kick a
+difference between the normal one is the again the sampler which is gonna kick a
 
 0:01:31.240,0:01:36.700
-random sample so instead of having one
-
-0:01:34.540,0:01:38.860
-simple code which is like one point you
+random sample so instead of having one simple code which is like one point you
 
 0:01:36.700,0:01:40.840
-have one input here you have one code
-
-0:01:38.860,0:01:44.530
-here instead now you're gonna have like
+have one input here you have one code here instead now you're gonna have like
 
 0:01:40.840,0:01:46.840
-got some volume and therefore each like
-
-0:01:44.530,0:01:50.500
-point within this volume will be mapped
+got some volume and therefore each like point within this volume will be mapped
 
 0:01:46.840,0:01:53.350
-back to the original point yeah that's
-
-0:01:50.500,0:01:55.510
-you know a very important part about the
+back to the original point yeah that's you know a very important part about the
 
 0:01:53.350,0:01:57.970
-variation of the encoder so let's see
-
-0:01:55.510,0:02:02.350
-how these generally generative address
+variation of the encoder so let's see how these generally generative address
 
 0:01:57.970,0:02:06.040
-Arnette look like so we have this stuff
-
-0:02:02.350,0:02:09.130
-which is huh it's actually the same
+Arnette look like so we have this stuff which is huh it's actually the same
 
 0:02:06.040,0:02:12.690
-right so what's going on here we have
-
-0:02:09.130,0:02:16.959
-the same generator in the same sampler
+right so what's going on here we have the same generator in the same sampler
 
 0:02:12.690,0:02:19.959
-okay and then what is we have okay we
-
-0:02:16.959,0:02:21.550
-have another input there so the input
+okay and then what is we have okay we have another input there so the input
 
 0:02:19.959,0:02:23.590
-before it was on the left-hand side on
-
-0:02:21.550,0:02:27.070
-the bottom now the input is halfway
+before it was on the left-hand side on the bottom now the input is halfway
 
 0:02:23.590,0:02:30.340
-through and the output is actually also
-
-0:02:27.070,0:02:32.170
-halfway through finally we get that kind
+through and the output is actually also halfway through finally we get that kind
 
 0:02:30.340,0:02:35.170
-of switch and then on top of that switch
-
-0:02:32.170,0:02:37.390
-we're gonna have a cost network usually
+of switch and then on top of that switch we're gonna have a cost network usually
 
 0:02:35.170,0:02:41.590
-in the classical definition in the
-
-0:02:37.390,0:02:44.590
-classical formulation of a gun there we
+in the classical definition in the classical formulation of a gun there we
 
 0:02:41.590,0:02:46.720
-have like a discriminator this commentar
-
-0:02:44.590,0:02:49.660
-needs discriminators are just plain
+have like a discriminator this commentar needs discriminators are just plain
 
 0:02:46.720,0:02:53.590
-wrong option at least following young
-
-0:02:49.660,0:02:58.660
-suggestions which I agree with because
+wrong option at least following young suggestions which I agree with because
 
 0:02:53.590,0:03:00.450
-we see soon why we see that in a bit all
-
-0:02:58.660,0:03:04.239
-right now let's focus on the fact that
+we see soon why we see that in a bit all right now let's focus on the fact that
 
 0:03:00.450,0:03:06.730
-we have this cost Network okay so let's
-
-0:03:04.239,0:03:08.470
-we have basically similar models right
+we have this cost Network okay so let's we have basically similar models right
 
 0:03:06.730,0:03:10.690
-sampler on the right right hand side
-
-0:03:08.470,0:03:12.280
-this sampler on the left hand side we
+sampler on the right right hand side this sampler on the left hand side we
 
 0:03:10.690,0:03:15.639
-have a decoder on the left hand side
-
-0:03:12.280,0:03:18.069
-which is basically generating something
+have a decoder on the left hand side which is basically generating something
 
 0:03:15.639,0:03:20.950
-but since the Zed is consider a code
-
-0:03:18.069,0:03:22.900
-we have a decoding step whereas on the
+but since the Zed is consider a code we have a decoding step whereas on the
 
 0:03:20.950,0:03:25.120
-right hand side since Zed was not a code
-
-0:03:22.900,0:03:27.579
-but was simply an input then we have a
+right hand side since Zed was not a code but was simply an input then we have a
 
 0:03:25.120,0:03:30.310
-generator and that the said is simply
-
-0:03:27.579,0:03:30.939
-for example sample sample from Gaussian
+generator and that the said is simply for example sample sample from Gaussian
 
 0:03:30.310,0:03:34.060
-distribution
-
-0:03:30.939,0:03:36.400
-wait you know normal distribution and
+distribution wait you know normal distribution and
 
 0:03:34.060,0:03:40.329
-then that X hat will be generated by
-
-0:03:36.400,0:03:42.870
-this initially untrained Network the
+then that X hat will be generated by this initially untrained Network the
 
 0:03:40.329,0:03:46.989
-cost network instead has to figure out
-
-0:03:42.870,0:03:51.370
-it has to be a high cost if we feed that
+cost network instead has to figure out it has to be a high cost if we feed that
 
 0:03:46.989,0:03:54.819
-X hat the blue one because we want to
-
-0:03:51.370,0:03:57.819
-give like we want to say it is a bad
+X hat the blue one because we want to give like we want to say it is a bad
 
 0:03:54.819,0:04:00.159
-sample or instead if we sample the pink
-
-0:03:57.819,0:04:02.650
-one we if you get the the switch to
+sample or instead if we sample the pink one we if you get the the switch to
 
 0:04:00.159,0:04:05.260
-select the pink one we should have a low
-
-0:04:02.650,0:04:07.719
-cost because that would allow us to
+select the pink one we should have a low cost because that would allow us to
 
 0:04:05.260,0:04:09.489
-figure out that we are actually doing
-
-0:04:07.719,0:04:13.060
-you know we are have actually a true
+figure out that we are actually doing you know we are have actually a true
 
 0:04:09.489,0:04:14.980
-sample a good sample so summarizing the
-
-0:04:13.060,0:04:17.530
-sequence of operations we had at the
+sample a good sample so summarizing the sequence of operations we had at the
 
 0:04:14.980,0:04:21.039
-generator Maps my leighton input set
-
-0:04:17.530,0:04:22.860
-into this RN which is the space of the
+generator Maps my leighton input set into this RN which is the space of the
 
 0:04:21.039,0:04:25.630
-input space so we have delayed and input
-
-0:04:22.860,0:04:28.479
-the orange one that is mapped into the
+input space so we have delayed and input the orange one that is mapped into the
 
 0:04:25.630,0:04:31.870
-original input so we had that orange z
-
-0:04:28.479,0:04:34.740
-mapped or x hat in blue the top one
+original input so we had that orange z mapped or x hat in blue the top one
 
 0:04:31.870,0:04:38.620
-instead is a cost network in this case
-
-0:04:34.740,0:04:42.699
-which Maps the input which can be the
+instead is a cost network in this case which Maps the input which can be the
 
 0:04:38.620,0:04:45.849
-pink X or the blue hat the blue X hat
-
-0:04:42.699,0:04:49.030
-which is mapped to my cost so in this
+pink X or the blue hat the blue X hat which is mapped to my cost so in this
 
 0:04:45.849,0:04:51.550
-case this cost it is a this cost module
-
-0:04:49.030,0:04:53.860
-is actually a it's a cost like in
+case this cost it is a this cost module is actually a it's a cost like in
 
 0:04:51.550,0:04:57.340
-Young's diagram is gonna be a square
-
-0:04:53.860,0:05:00.580
-okay which outputs a scalar this scalar
+Young's diagram is gonna be a square okay which outputs a scalar this scalar
 
 0:04:57.340,0:05:03.159
-will be a high high value a large number
-
-0:05:00.580,0:05:06.780
-positive large number if the input is a
+will be a high high value a large number positive large number if the input is a
 
 0:05:03.159,0:05:10.389
-fake input and it should be a low number
-
-0:05:06.780,0:05:13.300
-probably up v-0 if we actually have the
+fake input and it should be a low number probably up v-0 if we actually have the
 
 0:05:10.389,0:05:17.740
-input coming from the pink side the real
-
-0:05:13.300,0:05:19.840
-side okay and then how do we train the
+input coming from the pink side the real side okay and then how do we train the
 
 0:05:17.740,0:05:23.259
-system so the system will be trained
-
-0:05:19.840,0:05:24.789
-with different with different gradients
+system so the system will be trained with different with different gradients
 
 0:05:23.259,0:05:28.000
-so the cost
-
-0:05:24.789,0:05:31.570
-network will be trained in order to have
+so the cost network will be trained in order to have
 
 0:05:28.000,0:05:33.970
-low cost for inputs that are pink
-
-0:05:31.570,0:05:34.630
-in a high cost for input to dark blue
+low cost for inputs that are pink in a high cost for input to dark blue
 
 0:05:33.970,0:05:37.270
-okay
-
-0:05:34.630,0:05:40.510
-so for example you can think about this
+okay so for example you can think about this
 
 0:05:37.270,0:05:42.280
-if you would have like you know a
-
-0:05:40.510,0:05:44.860
-discriminator in this case you may have
+if you would have like you know a discriminator in this case you may have
 
 0:05:42.280,0:05:47.320
-you may think about these as a
-
-0:05:44.860,0:05:51.370
-you know two classes classification
+you may think about these as a you know two classes classification
 
 0:05:47.320,0:05:55.900
-problem you try to get 0 for X pink pink
-
-0:05:51.370,0:05:59.440
-eggs and a 1 for the blue X we'll talk a
+problem you try to get 0 for X pink pink eggs and a 1 for the blue X we'll talk a
 
 0:05:55.900,0:06:03.520
-bit about why that's bad to use this 0 1
-
-0:05:59.440,0:06:05.590
-output in a second in a second but
+bit about why that's bad to use this 0 1 output in a second in a second but
 
 0:06:03.520,0:06:09.250
-otherwise we just want this network to
-
-0:06:05.590,0:06:11.890
-learn this cost okay so let's figure out
+otherwise we just want this network to learn this cost okay so let's figure out
 
 0:06:09.250,0:06:13.660
-how this works in a diagram do you
-
-0:06:11.890,0:06:15.700
-remember how we were starting with a
+how this works in a diagram do you remember how we were starting with a
 
 0:06:13.660,0:06:17.620
-variational encoder with a variational
-
-0:06:15.700,0:06:19.660
-encoder we were starting from the left
+variational encoder with a variational encoder we were starting from the left
 
 0:06:17.620,0:06:21.970
-hand side right we were picking a input
-
-0:06:19.660,0:06:23.980
-and then we were so we were taking the
+hand side right we were picking a input and then we were so we were taking the
 
 0:06:21.970,0:06:27.250
-input we were moving to the latent space
-
-0:06:23.980,0:06:28.990
-we were moving this point because we are
+input we were moving to the latent space we were moving this point because we are
 
 0:06:27.250,0:06:31.300
-adding some noise and then we were
-
-0:06:28.990,0:06:32.830
-getting back to the original point then
+adding some noise and then we were getting back to the original point then
 
 0:06:31.300,0:06:34.950
-we were trying to get those points calls
-
-0:06:32.830,0:06:37.750
-together by using the reconstruction
+we were trying to get those points calls together by using the reconstruction
 
 0:06:34.950,0:06:41.020
-laws and then we were trying to set some
-
-0:06:37.750,0:06:44.260
-structure in the latent space by using
+laws and then we were trying to set some structure in the latent space by using
 
 0:06:41.020,0:06:46.990
-that relative entropy term okay instead
-
-0:06:44.260,0:06:48.610
-for the gun the generative adversarial
+that relative entropy term okay instead for the gun the generative adversarial
 
 0:06:46.990,0:06:49.710
-Network we're going to be starting from
-
-0:06:48.610,0:06:52.630
-the right-hand side
+Network we're going to be starting from the right-hand side
 
 0:06:49.710,0:06:56.290
-so we pick a sample a random number
-
-0:06:52.630,0:06:59.440
-let's say 42 we feed that through a
+so we pick a sample a random number let's say 42 we feed that through a
 
 0:06:56.290,0:07:03.120
-generator and we get that blue X hat
-
-0:06:59.440,0:07:06.850
-over there then we're going to be
+generator and we get that blue X hat over there then we're going to be
 
 0:07:03.120,0:07:10.240
-training in another network in order to
-
-0:07:06.850,0:07:12.970
-be coming up with a higher value for
+training in another network in order to be coming up with a higher value for
 
 0:07:10.240,0:07:15.370
-that blue sample then we're gonna pick
-
-0:07:12.970,0:07:18.040
-another X let's say pink X in this case
+that blue sample then we're gonna pick another X let's say pink X in this case
 
 0:07:15.370,0:07:20.530
-on the bottom right of the spiral which
-
-0:07:18.040,0:07:25.210
-is gonna be enforced now to have a low
+on the bottom right of the spiral which is gonna be enforced now to have a low
 
 0:07:20.530,0:07:28.230
-cost so this is pretty much like a first
-
-0:07:25.210,0:07:32.280
-initial big picture about how these
+cost so this is pretty much like a first initial big picture about how these
 
 0:07:28.230,0:07:35.650
-system works so let me try to give you
-
-0:07:32.280,0:07:38.560
-two more interpretation so this is like
+system works so let me try to give you two more interpretation so this is like
 
 0:07:35.650,0:07:42.430
-the kind of definitions and this will
-
-0:07:38.560,0:07:45.070
-interpret like mathematical definition
+the kind of definitions and this will interpret like mathematical definition
 
 0:07:42.430,0:07:46.720
-and then the visual definition now
-
-0:07:45.070,0:07:50.320
-gonna be trying to give you a few
+and then the visual definition now gonna be trying to give you a few
 
 0:07:46.720,0:07:52.810
-interpretations which I pretty like and
-
-0:07:50.320,0:07:55.260
-I can't make me sound like a fool but I
+interpretations which I pretty like and I can't make me sound like a fool but I
 
 0:07:52.810,0:07:59.020
-am a four so you know I just go for it
-
-0:07:55.260,0:08:01.810
-so you can think about the generator has
+am a four so you know I just go for it so you can think about the generator has
 
 0:07:59.020,0:08:05.800
-been a Italian and therefore I will be
-
-0:08:01.810,0:08:08.440
-using some proper Italian accent okay so
+been a Italian and therefore I will be using some proper Italian accent okay so
 
 0:08:05.800,0:08:10.240
-I'm a proper Italian now and I am in the
-
-0:08:08.440,0:08:14.500
-south of Italy and I'm gonna be trying
+I'm a proper Italian now and I am in the south of Italy and I'm gonna be trying
 
 0:08:10.240,0:08:17.290
-to make some fake man okay because we
-
-0:08:14.500,0:08:19.530
-are very good at using so we make a
+to make some fake man okay because we are very good at using so we make a
 
 0:08:17.290,0:08:22.870
-second money and then we go to Germany
-
-0:08:19.530,0:08:24.940
-to get some to purchase something game
+second money and then we go to Germany to get some to purchase something game
 
 0:08:22.870,0:08:27.250
-we go to Germany with this fake money
-
-0:08:24.940,0:08:30.010
-and then there is this different people
+we go to Germany with this fake money and then there is this different people
 
 0:08:27.250,0:08:34.360
-look at the US is like oh [ __ ]
-
-0:08:30.010,0:08:38.349
-Italian this is fake money and so we
+look at the US is like oh [ __ ] Italian this is fake money and so we
 
 0:08:34.360,0:08:41.320
-can't really manage to we can really
-
-0:08:38.349,0:08:42.760
-manage to buy anything but since we are
+can't really manage to we can really manage to buy anything but since we are
 
 0:08:41.320,0:08:45.220
-Italian we have spice
-
-0:08:42.760,0:08:47.710
-we have spies in the okay there are
+Italian we have spice we have spies in the okay there are
 
 0:08:45.220,0:08:52.720
-questions hold on maybe I'm offending
-
-0:08:47.710,0:08:55.630
-people now chart what's going on oh okay
+questions hold on maybe I'm offending people now chart what's going on oh okay
 
 0:08:52.720,0:08:59.050
-you're enjoying the thing cool okay so I
-
-0:08:55.630,0:09:03.010
-was not offending anyone fantastic okay
+you're enjoying the thing cool okay so I was not offending anyone fantastic okay
 
 0:08:59.050,0:09:05.860
-so we have a spy back in Germany when
-
-0:09:03.010,0:09:08.950
-the spy is like calling back home hey
+so we have a spy back in Germany when the spy is like calling back home hey
 
 0:09:05.860,0:09:12.520
-mom here you give us the wrong good
-
-0:09:08.950,0:09:15.310
-money like it was a so [ __ ] it up it was
+mom here you give us the wrong good money like it was a so [ __ ] it up it was
 
 0:09:12.520,0:09:18.250
-just a you know not to prop better okay
-
-0:09:15.310,0:09:21.040
-okay so yeah chill chill down right we
+just a you know not to prop better okay okay so yeah chill chill down right we
 
 0:09:18.250,0:09:24.580
-are we are like back again home what
-
-0:09:21.040,0:09:27.640
-move is this that's just my own movie so
+are we are like back again home what move is this that's just my own movie so
 
 0:09:24.580,0:09:30.580
-we are back in Italy you know we are we
-
-0:09:27.640,0:09:33.850
-are making you are able to make such
+we are back in Italy you know we are we are making you are able to make such
 
 0:09:30.580,0:09:36.340
-nice art and everything so we must be
-
-0:09:33.850,0:09:38.410
-able to make better money right so we
+nice art and everything so we must be able to make better money right so we
 
 0:09:36.340,0:09:41.290
-try now to fix the things that our spy
-
-0:09:38.410,0:09:42.730
-told us so we make a better money we go
+try now to fix the things that our spy told us so we make a better money we go
 
 0:09:41.290,0:09:44.760
-back to Germany and try to buy other
-
-0:09:42.730,0:09:48.350
-things
+back to Germany and try to buy other things
 
 0:09:44.760,0:09:49.860
-and Germans are like uh-huh it's better
-
-0:09:48.350,0:09:52.350
-it's fake
+and Germans are like uh-huh it's better it's fake
 
 0:09:49.860,0:09:55.080
-okay then again you had a spy call him
-
-0:09:52.350,0:09:58.230
-back down to Italy and say Oh what are
+okay then again you had a spy call him back down to Italy and say Oh what are
 
 0:09:55.080,0:10:00.660
-you doing and they will understand
-
-0:09:58.230,0:10:02.700
-capisce you know and we are fixing it
+you doing and they will understand capisce you know and we are fixing it
 
 0:10:00.660,0:10:04.440
-the money no we are making several
-
-0:10:02.700,0:10:06.690
-iterations of that Thanks so we try to
+the money no we are making several iterations of that Thanks so we try to
 
 0:10:04.440,0:10:10.620
-make better and better versions of the
-
-0:10:06.690,0:10:12.090
-money finally we go back to Germany in
+make better and better versions of the money finally we go back to Germany in
 
 0:10:10.620,0:10:13.710
-this case Germany because they have
-
-0:10:12.090,0:10:16.200
-money right that we had they have things
+this case Germany because they have money right that we had they have things
 
 0:10:13.710,0:10:18.320
-we can buy so we go back there and they
-
-0:10:16.200,0:10:21.150
-are like huh
+we can buy so we go back there and they are like huh
 
 0:10:18.320,0:10:22.980
-it looks very good now I don't know how
-
-0:10:21.150,0:10:26.580
-to make in German accent I'm sorry
+it looks very good now I don't know how to make in German accent I'm sorry
 
 0:10:22.980,0:10:29.150
-and so they accept the money right okay
-
-0:10:26.580,0:10:31.380
-and this is how pretty much these
+and so they accept the money right okay and this is how pretty much these
 
 0:10:29.150,0:10:33.900
-generative other cyanide work works
-
-0:10:31.380,0:10:36.120
-we had like a generator which are the
+generative other cyanide work works we had like a generator which are the
 
 0:10:33.900,0:10:37.770
-Italian dudes in the south which are
-
-0:10:36.120,0:10:39.210
-making fake money and we are trying to
+Italian dudes in the south which are making fake money and we are trying to
 
 0:10:37.770,0:10:41.190
-purchase something in Germany and
-
-0:10:39.210,0:10:46.490
-Germany is the discriminator and they
+purchase something in Germany and Germany is the discriminator and they
 
 0:10:41.190,0:10:50.700
-are very strict and very you know German
-
-0:10:46.490,0:10:53.070
-okay politically correct I'm not so
+are very strict and very you know German okay politically correct I'm not so
 
 0:10:50.700,0:10:54.300
-whatever but then we do have a spy right
-
-0:10:53.070,0:10:56.760
-and what is this spy
+whatever but then we do have a spy right and what is this spy
 
 0:10:54.300,0:10:59.100
-can anyone figure out what the spy
-
-0:10:56.760,0:11:03.870
-analogy here we haven't mentioned that
+can anyone figure out what the spy analogy here we haven't mentioned that
 
 0:10:59.100,0:11:07.380
-so far so the loss function back prop
-
-0:11:03.870,0:11:09.450
-discriminator okay some feedback okay
+so far so the loss function back prop discriminator okay some feedback okay
 
 0:11:07.380,0:11:14.570
-it's feedback and how is the feedback
-
-0:11:09.450,0:11:16.920
-coming from so whenever we train the
+it's feedback and how is the feedback coming from so whenever we train the
 
 0:11:14.570,0:11:19.380
-whenever we train the discriminator or
-
-0:11:16.920,0:11:23.070
-the coffee network right we have some
+whenever we train the discriminator or the coffee network right we have some
 
 0:11:19.380,0:11:27.900
-gradient that gradient allow me to do
-
-0:11:23.070,0:11:32.130
-two things right I can either in lower D
+gradient that gradient allow me to do two things right I can either in lower D
 
 0:11:27.900,0:11:35.460
-I can either lower the final value and
-
-0:11:32.130,0:11:37.050
-so I can tune my parameters of the cost
+I can either lower the final value and so I can tune my parameters of the cost
 
 0:11:35.460,0:11:39.420
-function let me go back to the cost
-
-0:11:37.050,0:11:43.500
-function so we have some gradients of
+function let me go back to the cost function so we have some gradients of
 
 0:11:39.420,0:11:45.300
-the final cost right so we had a final
-
-0:11:43.500,0:11:47.100
-some gradients of the final cost with
+the final cost right so we had a final some gradients of the final cost with
 
 0:11:45.300,0:11:50.220
-respect to the parameters of the network
-
-0:11:47.100,0:11:52.380
-and and so usually when usually when I
+respect to the parameters of the network and and so usually when usually when I
 
 0:11:50.220,0:11:55.320
-train the network the cost Network I
-
-0:11:52.380,0:11:58.680
-will try to tune the parameters such
+train the network the cost Network I will try to tune the parameters such
 
 0:11:55.320,0:12:00.870
-that I will have a final lower loss
-
-0:11:58.680,0:12:03.120
-right this is a cost Network and there
+that I will have a final lower loss right this is a cost Network and there
 
 0:12:00.870,0:12:07.890
-is a loss on top of the cost Network
-
-0:12:03.120,0:12:09.720
-right it's a bit confusing so we're
+is a loss on top of the cost Network right it's a bit confusing so we're
 
 0:12:07.890,0:12:12.149
-going to be trying to optimize the
-
-0:12:09.720,0:12:14.790
-parameters of the cost network in order
+going to be trying to optimize the parameters of the cost network in order
 
 0:12:12.149,0:12:18.450
-to perform well and therefore having a
-
-0:12:14.790,0:12:22.350
-very low loss on the same way we can use
+to perform well and therefore having a very low loss on the same way we can use
 
 0:12:18.450,0:12:23.970
-those ingredients that are computed with
-
-0:12:22.350,0:12:27.630
-respect to this network and you see my
+those ingredients that are computed with respect to this network and you see my
 
 0:12:23.970,0:12:30.330
-mouse so I have you know my final loss
-
-0:12:27.630,0:12:32.100
-on top of here will come down with the
+mouse so I have you know my final loss on top of here will come down with the
 
 0:12:30.330,0:12:35.160
-gradients and then you have here some
-
-0:12:32.100,0:12:39.630
-gradients in all these gradients you
+gradients and then you have here some gradients in all these gradients you
 
 0:12:35.160,0:12:41.880
-know how if you change this X hat you're
-
-0:12:39.630,0:12:44.940
-gonna know how these final loss will
+know how if you change this X hat you're gonna know how these final loss will
 
 0:12:41.880,0:12:48.360
-change right therefore you can train now
-
-0:12:44.940,0:12:51.690
-this generator with this gradient in
+change right therefore you can train now this generator with this gradient in
 
 0:12:48.360,0:12:53.940
-order to increase this final loss so
-
-0:12:51.690,0:12:57.180
-when we train this cost network we'd
+order to increase this final loss so when we train this cost network we'd
 
 0:12:53.940,0:12:59.070
-like to minimize the final loss given
-
-0:12:57.180,0:13:02.430
-that we input these two different inputs
+like to minimize the final loss given that we input these two different inputs
 
 0:12:59.070,0:13:04.830
-right but also we'd like to increase
-
-0:13:02.430,0:13:09.240
-this final loss so we'd like to make
+right but also we'd like to increase this final loss so we'd like to make
 
 0:13:04.830,0:13:11.640
-this final Network perform worse by you
-
-0:13:09.240,0:13:13.800
-know improving the generator okay and so
+this final Network perform worse by you know improving the generator okay and so
 
 0:13:11.640,0:13:17.279
-these information that comes down here
-
-0:13:13.800,0:13:20.220
-and down this way which is the backward
+these information that comes down here and down this way which is the backward
 
 0:13:17.279,0:13:22.560
-pass right the input gradient will be
-
-0:13:20.220,0:13:24.959
-used for tuning the parameter of the
+pass right the input gradient will be used for tuning the parameter of the
 
 0:13:22.560,0:13:29.279
-generator such that it managed to fool
-
-0:13:24.959,0:13:33.779
-the cost Network and so this is the
+generator such that it managed to fool the cost Network and so this is the
 
 0:13:29.279,0:13:37.370
-analogy with the spy in the German in
-
-0:13:33.779,0:13:41.370
-Germany is the distribution of Z fixed
+analogy with the spy in the German in Germany is the distribution of Z fixed
 
 0:13:37.370,0:13:43.260
-so yeah so Z has it actually comes from
-
-0:13:41.370,0:13:46.380
-let's say a normal distribution I
+so yeah so Z has it actually comes from let's say a normal distribution I
 
 0:13:43.260,0:13:48.870
-actually don't really have anything
-
-0:13:46.380,0:13:52.670
-about anything to say about this
+actually don't really have anything about anything to say about this
 
 0:13:48.870,0:13:54.050
-distribution as long as you pick your
-
-0:13:52.670,0:13:56.760
-distribution
+distribution as long as you pick your distribution
 
 0:13:54.050,0:13:59.630
-you know the generator will map that
-
-0:13:56.760,0:14:03.990
-distribution into some X hat
+you know the generator will map that distribution into some X hat
 
 0:13:59.630,0:14:07.620
-distribution which will hopefully match
-
-0:14:03.990,0:14:10.050
-what is the pink distribution of the X's
+distribution which will hopefully match what is the pink distribution of the X's
 
 0:14:07.620,0:14:12.480
-okay so even even though Z the
-
-0:14:10.050,0:14:15.000
-distribution of Z is fixed we reach
+okay so even even though Z the distribution of Z is fixed we reach
 
 0:14:12.480,0:14:17.459
-be sure that we can change the generator
-
-0:14:15.000,0:14:20.579
-in such a way that we can minimize the
+be sure that we can change the generator in such a way that we can minimize the
 
 0:14:17.459,0:14:24.889
-cost function right so although that
-
-0:14:20.579,0:14:28.529
-distribution is fixed the generator will
+cost function right so although that distribution is fixed the generator will
 
 0:14:24.889,0:14:30.600
-how do you say apply PL a why I think
-
-0:14:28.529,0:14:32.459
-you will apply this kind of distribution
+how do you say apply PL a why I think you will apply this kind of distribution
 
 0:14:30.600,0:14:35.130
-such that you're going to be music
-
-0:14:32.459,0:14:39.810
-likely flowing into something that looks
+such that you're going to be music likely flowing into something that looks
 
 0:14:35.130,0:14:41.790
-alike the X in the pink X hopefully
-
-0:14:39.810,0:14:44.579
-okay I haven't told you about the
+alike the X in the pink X hopefully okay I haven't told you about the
 
 0:14:41.790,0:14:48.060
-pitfalls of this system okay but
-
-0:14:44.579,0:14:51.149
-hopefully we'd like to manage to get a
+pitfalls of this system okay but hopefully we'd like to manage to get a
 
 0:14:48.060,0:14:54.510
-distribution out of those blue X's X hat
-
-0:14:51.149,0:14:56.070
-such that they resemble the original and
+distribution out of those blue X's X hat such that they resemble the original and
 
 0:14:54.510,0:14:58.769
-distribution on the left hand side in
-
-0:14:56.070,0:15:02.490
-the pink one okay did I answer your
+distribution on the left hand side in the pink one okay did I answer your
 
 0:14:58.769,0:15:05.850
-question yeah that makes it okay put on
-
-0:15:02.490,0:15:11.010
-the X produced by the generator be the
+question yeah that makes it okay put on the X produced by the generator be the
 
 0:15:05.850,0:15:13.050
-new improved money the blue one okay
-
-0:15:11.010,0:15:16.380
-yeah thank you I actually didn't finish
+new improved money the blue one okay yeah thank you I actually didn't finish
 
 0:15:13.050,0:15:18.510
-that one so the pink one are the true
-
-0:15:16.380,0:15:22.019
-euros we are using in Europe and the
+that one so the pink one are the true euros we are using in Europe and the
 
 0:15:18.510,0:15:24.410
-blue the blue x hat are the money that
-
-0:15:22.019,0:15:29.250
-we make in Italy okay
+blue the blue x hat are the money that we make in Italy okay
 
 0:15:24.410,0:15:30.930
-Amamiya okay other questions I have a
-
-0:15:29.250,0:15:37.860
-generator was supposed to give negative
+Amamiya okay other questions I have a generator was supposed to give negative
 
 0:15:30.930,0:15:38.970
-samples so negative samples okay so
-
-0:15:37.860,0:15:41.370
-there are two steps here
+samples so negative samples okay so there are two steps here
 
 0:15:38.970,0:15:44.610
-we provide negative samples that are
-
-0:15:41.370,0:15:47.100
-these X Hut's to the cost Network so the
+we provide negative samples that are these X Hut's to the cost Network so the
 
 0:15:44.610,0:15:50.490
-cost network is trained in order to have
-
-0:15:47.100,0:15:53.760
-low values on the pink inputs and higher
+cost network is trained in order to have low values on the pink inputs and higher
 
 0:15:50.490,0:15:55.949
-values on the blue input okay and so if
-
-0:15:53.760,0:15:59.490
-the network the cost Network performs
+values on the blue input okay and so if the network the cost Network performs
 
 0:15:55.949,0:16:02.430
-well then the final loss here on top
-
-0:15:59.490,0:16:05.040
-will be very easier very low okay so if
+well then the final loss here on top will be very easier very low okay so if
 
 0:16:02.430,0:16:06.810
-the cost network is very is performing
-
-0:16:05.040,0:16:11.160
-very well then you're gonna have a final
+the cost network is very is performing very well then you're gonna have a final
 
 0:16:06.810,0:16:13.769
-low loss here nevertheless the generator
-
-0:16:11.160,0:16:15.920
-will be trained in order to increase
+low loss here nevertheless the generator will be trained in order to increase
 
 0:16:13.769,0:16:20.790
-that loss because we'd like to fool
-
-0:16:15.920,0:16:23.280
-these Germans the Dozen
+that loss because we'd like to fool these Germans the Dozen
 
 0:16:20.790,0:16:25.230
-make sense could you just clarify what
-
-0:16:23.280,0:16:27.960
-the spy is in this analogy
+make sense could you just clarify what the spy is in this analogy
 
 0:16:25.230,0:16:30.330
-yeah the Spy is the input gradient so
-
-0:16:27.960,0:16:32.220
-whenever here I have my cost network and
+yeah the Spy is the input gradient so whenever here I have my cost network and
 
 0:16:30.330,0:16:34.350
-to train this cost Network I'm gonna
-
-0:16:32.220,0:16:38.880
-have a final layer here on top right
+to train this cost Network I'm gonna have a final layer here on top right
 
 0:16:34.350,0:16:41.910
-let's say this is an MSC for example let
-
-0:16:38.880,0:16:46.020
-me see with you know zero for whenever I
+let's say this is an MSC for example let me see with you know zero for whenever I
 
 0:16:41.910,0:16:50.190
-have an input eggs pink or some you know
-
-0:16:46.020,0:16:53.280
-value or let's say +10 in this case are
+have an input eggs pink or some you know value or let's say +10 in this case are
 
 0:16:50.190,0:16:55.560
-we try number for the moment value plus
-
-0:16:53.280,0:16:57.210
-10 for the blue guys right so my cost
+we try number for the moment value plus 10 for the blue guys right so my cost
 
 0:16:55.560,0:16:59.940
-network is a regression regression
-
-0:16:57.210,0:17:03.510
-network you can think about this as just
+network is a regression regression network you can think about this as just
 
 0:16:59.940,0:17:05.460
-one single linear layer so it's like an
-
-0:17:03.510,0:17:08.730
-affine transformation of the input and
+one single linear layer so it's like an affine transformation of the input and
 
 0:17:05.460,0:17:12.120
-then these basically a final volume I
-
-0:17:08.730,0:17:14.070
-set it to be zero for the pink input I
+then these basically a final volume I set it to be zero for the pink input I
 
 0:17:12.120,0:17:15.960
-have an MSc between the output of the
-
-0:17:14.070,0:17:19.050
-network and zero
+have an MSc between the output of the network and zero
 
 0:17:15.960,0:17:21.750
-for whenever I input the pink input and
-
-0:17:19.050,0:17:25.050
-instead let's say I choose an arbitrary
+for whenever I input the pink input and instead let's say I choose an arbitrary
 
 0:17:21.750,0:17:27.960
-value of 10 to be a reflecting that the
-
-0:17:25.050,0:17:30.780
-input is the blue one right so we have
+value of 10 to be a reflecting that the input is the blue one right so we have
 
 0:17:27.960,0:17:33.030
-cost Network which is a network that is
-
-0:17:30.780,0:17:36.270
-outputting a single skat scalar value
+cost Network which is a network that is outputting a single skat scalar value
 
 0:17:33.030,0:17:40.020
-and this scalar value will go inside the
-
-0:17:36.270,0:17:44.130
-MSC module here on top let me write
+and this scalar value will go inside the MSC module here on top let me write
 
 0:17:40.020,0:17:49.380
-maybe so we can all see what's going on
-
-0:17:44.130,0:17:51.630
-so I have here my M and C this is my
+maybe so we can all see what's going on so I have here my M and C this is my
 
 0:17:49.380,0:17:53.640
-loss function right so don't get
-
-0:17:51.630,0:17:56.190
-confused between loss and costs there
+loss function right so don't get confused between loss and costs there
 
 0:17:53.640,0:18:02.340
-are two different things so I have my
-
-0:17:56.190,0:18:04.590
-MSC here and if I have this guy here my
+are two different things so I have my MSC here and if I have this guy here my
 
 0:18:02.340,0:18:11.190
-target is going to be zero there's gonna
-
-0:18:04.590,0:18:13.560
-be my Y Y okay for this one and instead
+target is going to be zero there's gonna be my Y Y okay for this one and instead
 
 0:18:11.190,0:18:16.860
-if I input this guy here to the cost
-
-0:18:13.560,0:18:19.800
-Network I expect to have let's say in
+if I input this guy here to the cost Network I expect to have let's say in
 
 0:18:16.860,0:18:22.980
-this case an arbitrary plus ten so my
-
-0:18:19.800,0:18:25.140
-MSC in this case is gonna be you know
+this case an arbitrary plus ten so my MSC in this case is gonna be you know
 
 0:18:22.980,0:18:27.450
-mean square error between the output of
-
-0:18:25.140,0:18:29.490
-the cost Network and zero in the other
+mean square error between the output of the cost Network and zero in the other
 
 0:18:27.450,0:18:33.779
-case I'm gonna have the MSE between jobs
-
-0:18:29.490,0:18:36.059
-of the network and ten so the network if
+case I'm gonna have the MSE between jobs of the network and ten so the network if
 
 0:18:33.779,0:18:38.279
-I just train let's say we forget about
-
-0:18:36.059,0:18:41.219
-all this stuff right we have just a few
+I just train let's say we forget about all this stuff right we have just a few
 
 0:18:38.279,0:18:42.359
-samples with weed with we think for the
-
-0:18:41.219,0:18:45.330
-moment that the generator is not
+samples with weed with we think for the moment that the generator is not
 
 0:18:42.359,0:18:47.940
-improving so we have several pink
-
-0:18:45.330,0:18:50.669
-samples and several blue samples and now
+improving so we have several pink samples and several blue samples and now
 
 0:18:47.940,0:18:52.739
-you train a network such that if I put
-
-0:18:50.669,0:18:55.200
-the input the pink one you're gonna get
+you train a network such that if I put the input the pink one you're gonna get
 
 0:18:52.739,0:18:57.059
-a zero in the output and then if you put
-
-0:18:55.200,0:18:58.979
-the blue one instead you're gonna be
+a zero in the output and then if you put the blue one instead you're gonna be
 
 0:18:57.059,0:19:01.649
-forcing the network to learn number ten
-
-0:18:58.979,0:19:03.929
-okay so you do some steps in gradient
+forcing the network to learn number ten okay so you do some steps in gradient
 
 0:19:01.649,0:19:06.299
-descent in the parameter space such that
-
-0:19:03.929,0:19:08.219
-in one case you get zero the other case
+descent in the parameter space such that in one case you get zero the other case
 
 0:19:06.299,0:19:12.119
-you get then whenever you provide
-
-0:19:08.219,0:19:14.599
-several several samples right now that
+you get then whenever you provide several several samples right now that
 
 0:19:12.119,0:19:17.969
-we have this network this cost Network
-
-0:19:14.599,0:19:22.919
-you can think about having the cost
+we have this network this cost Network you can think about having the cost
 
 0:19:17.969,0:19:26.099
-network to be actually the loss for the
-
-0:19:22.919,0:19:28.259
-generator okay and so if I have my
+network to be actually the loss for the generator okay and so if I have my
 
 0:19:26.099,0:19:30.479
-generator input-output in something and
-
-0:19:28.259,0:19:33.629
-this cost network will say oh it's a
+generator input-output in something and this cost network will say oh it's a
 
 0:19:30.479,0:19:36.149
-very high cost then by trying to
-
-0:19:33.629,0:19:39.509
-minimize this cost you will try to
+very high cost then by trying to minimize this cost you will try to
 
 0:19:36.149,0:19:41.549
-basically generate something that was
-
-0:19:39.509,0:19:44.789
-initially making that cost Network
+basically generate something that was initially making that cost Network
 
 0:19:41.549,0:19:48.779
-providing you a low value okay is it
-
-0:19:44.789,0:19:50.339
-making sense you just quickly clarify
+providing you a low value okay is it making sense you just quickly clarify
 
 0:19:48.779,0:19:51.690
-the difference between costs and loss
-
-0:19:50.339,0:19:54.599
-haha
+the difference between costs and loss haha
 
 0:19:51.690,0:19:59.039
-the loss is what we use in order to
-
-0:19:54.599,0:20:07.950
-train something okay so my loss in this
+the loss is what we use in order to train something okay so my loss in this
 
 0:19:59.039,0:20:11.279
-case is the MSE loss this is my loss so
-
-0:20:07.950,0:20:14.489
-in order to train my cost network I will
+case is the MSE loss this is my loss so in order to train my cost network I will
 
 0:20:11.279,0:20:17.399
-have a loss function which is the MSE
-
-0:20:14.489,0:20:19.499
-loss function by minimizing the MSE loss
+have a loss function which is the MSE loss function by minimizing the MSE loss
 
 0:20:17.399,0:20:20.389
-function I will be training the cost
-
-0:20:19.499,0:20:25.469
-Network
+function I will be training the cost Network
 
 0:20:20.389,0:20:28.440
-now the [ __ ] up part comes and I'm
-
-0:20:25.469,0:20:31.200
-gonna say that for my generator the loss
+now the [ __ ] up part comes and I'm gonna say that for my generator the loss
 
 0:20:28.440,0:20:35.820
-function that I want to minimize is the
-
-0:20:31.200,0:20:38.879
-cost Network so for this generator the
+function that I want to minimize is the cost Network so for this generator the
 
 0:20:35.820,0:20:43.519
-loss is the cost and I try to minimize
-
-0:20:38.879,0:20:45.749
-this guy output okay so this is also
+loss is the cost and I try to minimize this guy output okay so this is also
 
 0:20:43.519,0:20:47.650
-relative to what Yun is teaching with
-
-0:20:45.749,0:20:51.220
-the energy based models you have energy
+relative to what Yun is teaching with the energy based models you have energy
 
 0:20:47.650,0:20:54.049
-and we try to have low energies through
-
-0:20:51.220,0:20:56.539
-minimization of a loss function so the
+and we try to have low energies through minimization of a loss function so the
 
 0:20:54.049,0:20:59.419
-loss function is what you use in order
-
-0:20:56.539,0:21:04.460
-to train the parameters of a network
+loss function is what you use in order to train the parameters of a network
 
 0:20:59.419,0:21:08.120
-okay so that's the difference so it's
-
-0:21:04.460,0:21:12.400
-the network okay so another additional
+okay so that's the difference so it's the network okay so another additional
 
 0:21:08.120,0:21:15.130
-point is that a cost is like a
-
-0:21:12.400,0:21:20.720
-evaluation of some network performance
+point is that a cost is like a evaluation of some network performance
 
 0:21:15.130,0:21:23.090
-so if my generator outputs a bad X like
-
-0:21:20.720,0:21:26.900
-which is not pretty good-looking then
+so if my generator outputs a bad X like which is not pretty good-looking then
 
 0:21:23.090,0:21:30.140
-you're gonna have a high cost okay like
-
-0:21:26.900,0:21:32.080
-a high energy but in order to minimize
+you're gonna have a high cost okay like a high energy but in order to minimize
 
 0:21:30.140,0:21:34.610
-this energy usually you have to minimize
-
-0:21:32.080,0:21:37.460
-this losses okay so but again the
+this energy usually you have to minimize this losses okay so but again the
 
 0:21:34.610,0:21:39.380
-definition what we like to use is that
-
-0:21:37.460,0:21:45.919
-the loss is what you minimize in order
+definition what we like to use is that the loss is what you minimize in order
 
 0:21:39.380,0:21:48.110
-to train the parameters of a network so
-
-0:21:45.919,0:21:51.320
-instead like a cost can be thought as
+to train the parameters of a network so instead like a cost can be thought as
 
 0:21:48.110,0:21:54.350
-you know I take an action and then I
-
-0:21:51.320,0:21:57.470
-have an action I have a cost for taking
+you know I take an action and then I have an action I have a cost for taking
 
 0:21:54.350,0:22:00.159
-that specific action okay so you take an
-
-0:21:57.470,0:22:03.380
-action which is like writing an email
+that specific action okay so you take an action which is like writing an email
 
 0:22:00.159,0:22:05.360
-about changing things and then the cost
-
-0:22:03.380,0:22:08.409
-is gonna be having every one piece at
+about changing things and then the cost is gonna be having every one piece at
 
 0:22:05.360,0:22:12.200
-you know makes sense right
-
-0:22:08.409,0:22:15.210
-you always learn something new okay
+you know makes sense right you always learn something new okay
 
 0:22:12.200,0:22:18.030
-other questions so far
-
-0:22:15.210,0:22:20.490
-I'm sorry Alvin but I'm still be
+other questions so far I'm sorry Alvin but I'm still be
 
 0:22:18.030,0:22:23.190
-confused about a constant generator so
-
-0:22:20.490,0:22:26.520
-for generator that generates the blue X
+confused about a constant generator so for generator that generates the blue X
 
 0:22:23.190,0:22:27.750
-we want to increase the cost but you
-
-0:22:26.520,0:22:31.110
-just mentioned that we want to minimize
+we want to increase the cost but you just mentioned that we want to minimize
 
 0:22:27.750,0:22:32.730
-the cost is like the loss function for
-
-0:22:31.110,0:22:35.970
-the generator and we want to minimize
+the cost is like the loss function for the generator and we want to minimize
 
 0:22:32.730,0:22:38.310
-the loss so we want to increase the cost
-
-0:22:35.970,0:22:41.940
-or we want to decrease the cost for the
+the loss so we want to increase the cost or we want to decrease the cost for the
 
 0:22:38.310,0:22:44.700
-generator for the generator you want to
-
-0:22:41.940,0:22:48.330
-minimize the cost so we train the
+generator for the generator you want to minimize the cost so we train the
 
 0:22:44.700,0:22:53.760
-generator through a minimization of the
-
-0:22:48.330,0:22:56.070
-cost Network value okay so there is two
+generator through a minimization of the cost Network value okay so there is two
 
 0:22:53.760,0:22:58.200
-parts of this thing let me change color
-
-0:22:56.070,0:23:00.840
-so first part is going to be the
+parts of this thing let me change color so first part is going to be the
 
 0:22:58.200,0:23:03.000
-training of this guy here and the
-
-0:23:00.840,0:23:06.120
-training of the cost network is made
+training of this guy here and the training of the cost network is made
 
 0:23:03.000,0:23:09.240
-through the minimization of the MSE on
-
-0:23:06.120,0:23:14.040
-top of here so this is the loss for the
+through the minimization of the MSE on top of here so this is the loss for the
 
 0:23:09.240,0:23:17.580
-cost Network so the cost the MSE here is
-
-0:23:14.040,0:23:21.300
-bit made between zero whenever I input a
+cost Network so the cost the MSE here is bit made between zero whenever I input a
 
 0:23:17.580,0:23:23.810
-pink input and then it's let's say for
-
-0:23:21.300,0:23:27.300
-this example like for sake of example I
+pink input and then it's let's say for this example like for sake of example I
 
 0:23:23.810,0:23:30.720
-like to have an MSc against 10 whenever
-
-0:23:27.300,0:23:32.640
-I input a blue sample okay so now we
+like to have an MSc against 10 whenever I input a blue sample okay so now we
 
 0:23:30.720,0:23:35.280
-perform several steps of gradient
-
-0:23:32.640,0:23:38.640
-descent in the parameter space of the
+perform several steps of gradient descent in the parameter space of the
 
 0:23:35.280,0:23:42.240
-cost Network such that we minimize these
-
-0:23:38.640,0:23:44.730
-loss okay so now we have a network here
+cost Network such that we minimize these loss okay so now we have a network here
 
 0:23:42.240,0:23:48.360
-which is gonna be outputting 0 if I put
-
-0:23:44.730,0:23:51.780
-a pink input and input and output a 10
+which is gonna be outputting 0 if I put a pink input and input and output a 10
 
 0:23:48.360,0:23:56.100
-if I input a blue input so far are you
-
-0:23:51.780,0:23:58.500
-with me yes it was like cost will the
+if I input a blue input so far are you with me yes it was like cost will the
 
 0:23:56.100,0:24:00.810
-network cost will generate a high value
-
-0:23:58.500,0:24:03.360
-for blue X right yeah that's what we
+network cost will generate a high value for blue X right yeah that's what we
 
 0:24:00.810,0:24:06.780
-train this cost to do okay so this cost
-
-0:24:03.360,0:24:09.810
-network will have to generate some large
+train this cost to do okay so this cost network will have to generate some large
 
 0:24:06.780,0:24:13.530
-value in this case 10 if I input a blue
-
-0:24:09.810,0:24:17.340
-guy and we'll have to generate a small 0
+value in this case 10 if I input a blue guy and we'll have to generate a small 0
 
 0:24:13.530,0:24:20.490
-output if I put a 0 if I put a pink
-
-0:24:17.340,0:24:24.540
-input and in order to do that we do this
+output if I put a 0 if I put a pink input and in order to do that we do this
 
 0:24:20.490,0:24:26.640
-by minimization of MSE loss okay this is
-
-0:24:24.540,0:24:29.020
-first part sorry
+by minimization of MSE loss okay this is first part sorry
 
 0:24:26.640,0:24:31.870
-you with me right yeah
-
-0:24:29.020,0:24:35.260
-okay fantastic now we have the second
+you with me right yeah okay fantastic now we have the second
 
 0:24:31.870,0:24:37.240
-part which is the cute version the
-
-0:24:35.260,0:24:39.520
-version that Yun likes that a different
+part which is the cute version the version that Yun likes that a different
 
 0:24:37.240,0:24:42.220
-version that you don't find online which
-
-0:24:39.520,0:24:45.730
-is the following so this cost network
+version that you don't find online which is the following so this cost network
 
 0:24:42.220,0:24:48.550
-now will give you values that are close
-
-0:24:45.730,0:24:53.620
-to zero whenever you input something
+now will give you values that are close to zero whenever you input something
 
 0:24:48.550,0:24:56.440
-that looks like proper okay otherwise it
-
-0:24:53.620,0:24:59.170
-will put a high output let's say number
+that looks like proper okay otherwise it will put a high output let's say number
 
 0:24:56.440,0:25:04.540
-a value around 10 if you put inside
-
-0:24:59.170,0:25:05.770
-crappy input so now finally how do we
+a value around 10 if you put inside crappy input so now finally how do we
 
 0:25:04.540,0:25:08.429
-train this generator
-
-0:25:05.770,0:25:12.540
-well the generator now will be trained
+train this generator well the generator now will be trained
 
 0:25:08.429,0:25:15.550
-through the minimization of the cost
-
-0:25:12.540,0:25:19.240
-Network right so the cost network will
+through the minimization of the cost Network right so the cost network will
 
 0:25:15.550,0:25:22.630
-say 10 here so this output blue guy here
-
-0:25:19.240,0:25:26.380
-it's bad guy right so if the generator
+say 10 here so this output blue guy here it's bad guy right so if the generator
 
 0:25:22.630,0:25:28.929
-now switches slightly these acts to make
-
-0:25:26.380,0:25:32.020
-something that looks like this guy over
+now switches slightly these acts to make something that looks like this guy over
 
 0:25:28.929,0:25:36.070
-here then you get that from 10 we went
-
-0:25:32.020,0:25:40.450
-down to 0 right and therefore you got to
+here then you get that from 10 we went down to 0 right and therefore you got to
 
 0:25:36.070,0:25:42.460
-minimize this cost Network output value
-
-0:25:40.450,0:25:48.670
-and so we're using the cost network as
+minimize this cost Network output value and so we're using the cost network as
 
 0:25:42.460,0:25:51.309
-the loss for training the generator ok
-
-0:25:48.670,0:25:55.780
-what do you mean by like getting blue
+the loss for training the generator ok what do you mean by like getting blue
 
 0:25:51.309,0:25:59.800
-axe closer to pink X right so right now
-
-0:25:55.780,0:26:02.080
-my generator outputs these blue blue X
+axe closer to pink X right so right now my generator outputs these blue blue X
 
 0:25:59.800,0:26:05.140
-okay and this is like some image that
-
-0:26:02.080,0:26:08.620
-looks bad or is a you know money that
+okay and this is like some image that looks bad or is a you know money that
 
 0:26:05.140,0:26:13.210
-really looks fake now how do you make
-
-0:26:08.620,0:26:16.450
-better money well the cost network is
+really looks fake now how do you make better money well the cost network is
 
 0:26:13.210,0:26:20.800
-gonna give you a scalar value for each
-
-0:26:16.450,0:26:23.080
-output your generator makes therefore
+gonna give you a scalar value for each output your generator makes therefore
 
 0:26:20.800,0:26:25.300
-you can compute the partial derivative
-
-0:26:23.080,0:26:28.120
-you can look at the gradient you know of
+you can compute the partial derivative you can look at the gradient you know of
 
 0:26:25.300,0:26:33.070
-that cost value I like to compute
-
-0:26:28.120,0:26:38.970
-partial derivative of these ok lower
+that cost value I like to compute partial derivative of these ok lower
 
 0:26:33.070,0:26:44.309
-case C so DC / d
-
-0:26:38.970,0:26:46.340
-eggs hot right so here I have the parcel
+case C so DC / d eggs hot right so here I have the parcel
 
 0:26:44.309,0:26:50.280
-and this is our phone writing sorry
-
-0:26:46.340,0:26:55.140
-alright I can't drive okay ye no see
+and this is our phone writing sorry alright I can't drive okay ye no see
 
 0:26:50.280,0:26:58.950
-oh my god okay this was a lowercase C oh
-
-0:26:55.140,0:27:01.230
-it's like that alright cool so I come to
+oh my god okay this was a lowercase C oh it's like that alright cool so I come to
 
 0:26:58.950,0:27:04.679
-the partial derivative of my lowercase C
-
-0:27:01.230,0:27:07.700
-with respect to the X hat right so now I
+the partial derivative of my lowercase C with respect to the X hat right so now I
 
 0:27:04.679,0:27:13.110
-have a gradient this gradient allows me
-
-0:27:07.700,0:27:15.330
-to move right around and I figure out
+have a gradient this gradient allows me to move right around and I figure out
 
 0:27:13.110,0:27:19.820
-whether the cost is going increase or
-
-0:27:15.330,0:27:24.090
-decrease right so this is some kind of
+whether the cost is going increase or decrease right so this is some kind of
 
 0:27:19.820,0:27:26.940
-maybe you know a little bit not standard
-
-0:27:24.090,0:27:29.130
-is in also yesterday Yan was talking
+maybe you know a little bit not standard is in also yesterday Yan was talking
 
 0:27:26.940,0:27:32.100
-about this you know you have some inputs
-
-0:27:29.130,0:27:34.770
-in to your network you can decide to do
+about this you know you have some inputs in to your network you can decide to do
 
 0:27:32.100,0:27:37.169
-grid in the send in the input space I
-
-0:27:34.770,0:27:39.570
-can decide for example there is a
+grid in the send in the input space I can decide for example there is a
 
 0:27:37.169,0:27:42.090
-architecture which doesn't have a
-
-0:27:39.570,0:27:43.799
-generator at all you start with a sample
+architecture which doesn't have a generator at all you start with a sample
 
 0:27:42.090,0:27:46.860
-here and now you perform gradient
-
-0:27:43.799,0:27:48.809
-descent in this sample space and then
+here and now you perform gradient descent in this sample space and then
 
 0:27:46.860,0:27:52.100
-you move these samples such that you get
-
-0:27:48.809,0:27:55.919
-a lower lower value for the cost network
+you move these samples such that you get a lower lower value for the cost network
 
 0:27:52.100,0:27:59.730
-in this way you can you know get an
-
-0:27:55.919,0:28:02.309
-input that looks like resembling a good
+in this way you can you know get an input that looks like resembling a good
 
 0:27:59.730,0:28:05.429
-input right the pink one does it make
-
-0:28:02.309,0:28:07.100
-that did I kind of explain myself or is
+input right the pink one does it make that did I kind of explain myself or is
 
 0:28:05.429,0:28:10.289
-it still weird
-
-0:28:07.100,0:28:13.620
-there is much clearer thank you you sure
+it still weird there is much clearer thank you you sure
 
 0:28:10.289,0:28:16.740
-yeah yeah it's like taking gradients in
-
-0:28:13.620,0:28:19.049
-the interface and make it move towards
+yeah yeah it's like taking gradients in the interface and make it move towards
 
 0:28:16.740,0:28:22.110
-like and then decrease the cost so that
-
-0:28:19.049,0:28:24.890
-means the input actually gets better
+like and then decrease the cost so that means the input actually gets better
 
 0:28:22.110,0:28:27.480
-like ass better money
-
-0:28:24.890,0:28:30.840
-right right right and then you can also
+like ass better money right right right and then you can also
 
 0:28:27.480,0:28:33.030
-use this one is your gradient here
-
-0:28:30.840,0:28:35.190
-coming down here right and so now you
+use this one is your gradient here coming down here right and so now you
 
 0:28:33.030,0:28:37.890
-can compute with the chain rule also on
-
-0:28:35.190,0:28:43.860
-the partial derivative of this lowercase
+can compute with the chain rule also on the partial derivative of this lowercase
 
 0:28:37.890,0:28:46.870
-C with respect to the parameters W or
-
-0:28:43.860,0:28:49.780
-the generator
+C with respect to the parameters W or the generator
 
 0:28:46.870,0:28:51.940
-okay so in this case then I can train
-
-0:28:49.780,0:28:56.290
-the generator I had the parcel of the
+okay so in this case then I can train the generator I had the parcel of the
 
 0:28:51.940,0:28:59.290
-cost over the parameters and therefore I
-
-0:28:56.290,0:29:01.060
-can change now the values of the of the
+cost over the parameters and therefore I can change now the values of the of the
 
 0:28:59.290,0:29:05.710
-parameters on the generator in order to
-
-0:29:01.060,0:29:06.750
-you know improve the network oh it
+parameters on the generator in order to you know improve the network oh it
 
 0:29:05.710,0:29:10.210
-totally makes sense
-
-0:29:06.750,0:29:15.190
-of course yeah other train
+totally makes sense of course yeah other train
 
 0:29:10.210,0:29:18.120
-simultaneously or train first the cost
-
-0:29:15.190,0:29:22.690
-Network order generator network right
+simultaneously or train first the cost Network order generator network right
 
 0:29:18.120,0:29:26.110
-people try both they say it's better
-
-0:29:22.690,0:29:27.700
-sometimes to keep one fixed while you
+people try both they say it's better sometimes to keep one fixed while you
 
 0:29:26.110,0:29:29.920
-change in the other because otherwise
-
-0:29:27.700,0:29:33.820
-you have always a moving target then
+change in the other because otherwise you have always a moving target then
 
 0:29:29.920,0:29:35.500
-there are contradictory evidence we are
-
-0:29:33.820,0:29:38.070
-actually gonna be really now some source
+there are contradictory evidence we are actually gonna be really now some source
 
 0:29:35.500,0:29:40.330
-code after we cover the major pitfalls
-
-0:29:38.070,0:29:43.630
-but I'm gonna get back to your question
+code after we cover the major pitfalls but I'm gonna get back to your question
 
 0:29:40.330,0:29:48.340
-in a few minutes we don't need a
-
-0:29:43.630,0:29:51.220
-regularization like kld for saving gun
+in a few minutes we don't need a regularization like kld for saving gun
 
 0:29:48.340,0:29:55.630
-because we simple from normal yeah the
-
-0:29:51.220,0:30:01.120
-right directory direct yeah directly you
+because we simple from normal yeah the right directory direct yeah directly you
 
 0:29:55.630,0:30:03.730
-simple the orange guy here from normal
-
-0:30:01.120,0:30:06.550
-distribution so that's it right you have
+simple the orange guy here from normal distribution so that's it right you have
 
 0:30:03.730,0:30:08.260
-a simple like a random number and then
-
-0:30:06.550,0:30:10.570
-you send this random number through the
+a simple like a random number and then you send this random number through the
 
 0:30:08.260,0:30:13.140
-generator that's it and my Google home
-
-0:30:10.570,0:30:15.310
-just came back to life
+generator that's it and my Google home just came back to life
 
 0:30:13.140,0:30:18.070
-okay again sir your question I think
-
-0:30:15.310,0:30:19.360
-more questions then we have pitfalls and
+okay again sir your question I think more questions then we have pitfalls and
 
 0:30:18.070,0:30:22.870
-then we actually gonna be looking at
-
-0:30:19.360,0:30:25.390
-source code yeah so it seems like we are
+then we actually gonna be looking at source code yeah so it seems like we are
 
 0:30:22.870,0:30:31.630
-replacing that the reconstruction loss
-
-0:30:25.390,0:30:33.940
-with the differentiator Network oh how
+replacing that the reconstruction loss with the differentiator Network oh how
 
 0:30:31.630,0:30:35.830
-does that help exactly why can't like
-
-0:30:33.940,0:30:39.730
-how is it bad to just use the
+does that help exactly why can't like how is it bad to just use the
 
 0:30:35.830,0:30:41.830
-reconstruction loss Oh what is this is
-
-0:30:39.730,0:30:43.570
-this is this a very very good question I
+reconstruction loss Oh what is this is this is this a very very good question I
 
 0:30:41.830,0:30:46.350
-mean I it's something I forgot
-
-0:30:43.570,0:30:46.350
-completely to say
+mean I it's something I forgot completely to say
 
 0:30:51.740,0:30:56.000
-so on the original encoder we were
-
-0:30:53.899,0:30:57.679
-always starting from some point then we
+so on the original encoder we were always starting from some point then we
 
 0:30:56.000,0:30:59.419
-were getting back to this space we were
-
-0:30:57.679,0:31:01.460
-moving a little bit that point such that
+were getting back to this space we were moving a little bit that point such that
 
 0:30:59.419,0:31:03.020
-we could cover some area and then go
-
-0:31:01.460,0:31:04.539
-back to the other side now you try to
+we could cover some area and then go back to the other side now you try to
 
 0:31:03.020,0:31:07.610
-make those two close right
-
-0:31:04.539,0:31:09.200
-but in our case right now in this janati
+make those two close right but in our case right now in this janati
 
 0:31:07.610,0:31:11.750
-bothers our net we're actually starting
-
-0:31:09.200,0:31:13.159
-from the right-hand side so in the
+bothers our net we're actually starting from the right-hand side so in the
 
 0:31:11.750,0:31:15.399
-general tea butter cyanide you start
-
-0:31:13.159,0:31:17.779
-from the right there is no whatsoever
+general tea butter cyanide you start from the right there is no whatsoever
 
 0:31:15.399,0:31:21.919
-connection between this guy here and
-
-0:31:17.779,0:31:24.409
-this guy here all you have is a cost
+connection between this guy here and this guy here all you have is a cost
 
 0:31:21.919,0:31:28.159
-network which is telling you whether you
-
-0:31:24.409,0:31:33.200
-are on this kind of thing here right I
+network which is telling you whether you are on this kind of thing here right I
 
 0:31:28.159,0:31:35.450
-can't okay there's a cost networking is
-
-0:31:33.200,0:31:38.140
-gonna tell you in this case plus 10 here
+can't okay there's a cost networking is gonna tell you in this case plus 10 here
 
 0:31:35.450,0:31:41.899
-and then it's gonna tell you let's say
-
-0:31:38.140,0:31:44.570
-zero here okay in the other case you
+and then it's gonna tell you let's say zero here okay in the other case you
 
 0:31:41.899,0:31:47.000
-have a generative network here which is
-
-0:31:44.570,0:31:50.149
-mapping these input here down to here
+have a generative network here which is mapping these input here down to here
 
 0:31:47.000,0:31:52.730
-right so one is trained in order to have
-
-0:31:50.149,0:31:55.340
-below values around the manifold and
+right so one is trained in order to have below values around the manifold and
 
 0:31:52.730,0:31:57.230
-then larger values outside and then use
-
-0:31:55.340,0:32:00.110
-some you would like something that is
+then larger values outside and then use some you would like something that is
 
 0:31:57.230,0:32:02.960
-like you know you may want some curve
-
-0:32:00.110,0:32:04.610
-levels right like that such that is you
+like you know you may want some curve levels right like that such that is you
 
 0:32:02.960,0:32:07.899
-move further away in the stuff keeps
-
-0:32:04.610,0:32:10.820
-increasing if you have a discriminator
+move further away in the stuff keeps increasing if you have a discriminator
 
 0:32:07.899,0:32:12.860
-they will force to have zero here and
-
-0:32:10.820,0:32:15.830
-one outside
+they will force to have zero here and one outside
 
 0:32:12.860,0:32:20.539
-exactly this manifold like very very
-
-0:32:15.830,0:32:23.120
-close by right and so that creates many
+exactly this manifold like very very close by right and so that creates many
 
 0:32:20.539,0:32:26.919
-problems so okay let me try another
-
-0:32:23.120,0:32:28.820
-analogy and there is another analogy so
+problems so okay let me try another analogy and there is another analogy so
 
 0:32:26.919,0:32:30.500
-hold on there are questions more
-
-0:32:28.820,0:32:33.549
-question let me go with the analogy then
+hold on there are questions more question let me go with the analogy then
 
 0:32:30.500,0:32:36.710
-let's see whether this makes more sense
-
-0:32:33.549,0:32:40.880
-let me actually see myself such that I
+let's see whether this makes more sense let me actually see myself such that I
 
 0:32:36.710,0:32:44.480
-can okay I can see now myself all right
-
-0:32:40.880,0:32:46.779
-so you have like some true data points
+can okay I can see now myself all right so you have like some true data points
 
 0:32:44.480,0:32:49.640
-here okay and now you have some
-
-0:32:46.779,0:32:51.830
-generated data points over here that
+here okay and now you have some generated data points over here that
 
 0:32:49.640,0:32:55.149
-have been generated by the generator
-
-0:32:51.830,0:32:57.169
-right so points here points down there
+have been generated by the generator right so points here points down there
 
 0:32:55.149,0:33:00.200
-let's assume now we are talking about
-
-0:32:57.169,0:33:01.820
-this discriminator okay so that I can
+let's assume now we are talking about this discriminator okay so that I can
 
 0:33:00.200,0:33:04.960
-illustrate what are the problems there
-
-0:33:01.820,0:33:08.649
-so you have a discriminator which
+illustrate what are the problems there so you have a discriminator which
 
 0:33:04.960,0:33:11.260
-has these two kind of data you have true
-
-0:33:08.649,0:33:13.419
-data down here fake data over here and
+has these two kind of data you have true data down here fake data over here and
 
 0:33:11.260,0:33:15.279
-so what does the discriminator do the
-
-0:33:13.419,0:33:18.909
-discriminator decision boundary is gonna
+so what does the discriminator do the discriminator decision boundary is gonna
 
 0:33:15.279,0:33:22.539
-be just a line here right that is
-
-0:33:18.909,0:33:25.899
-cutting this stuff in half so far yeah
+be just a line here right that is cutting this stuff in half so far yeah
 
 0:33:22.539,0:33:27.789
-right yes okay good so now you turn the
-
-0:33:25.899,0:33:30.399
-on the second step second step is gonna
+right yes okay good so now you turn the on the second step second step is gonna
 
 0:33:27.789,0:33:32.529
-be you turn on gravity on this decision
-
-0:33:30.399,0:33:36.610
-boundary so this point that are here
+be you turn on gravity on this decision boundary so this point that are here
 
 0:33:32.529,0:33:38.260
-will be both falling down okay the point
-
-0:33:36.610,0:33:40.600
-here get attracted by the decision
+will be both falling down okay the point here get attracted by the decision
 
 0:33:38.260,0:33:43.169
-boundary so we train first the
-
-0:33:40.600,0:33:45.549
-discriminator we had this kind of
+boundary so we train first the discriminator we had this kind of
 
 0:33:43.169,0:33:47.710
-decision boundary then we train the gist
-
-0:33:45.549,0:33:51.130
-the generator you have these guys
+decision boundary then we train the gist the generator you have these guys
 
 0:33:47.710,0:33:54.190
-collapsing down here so then you're
-
-0:33:51.130,0:33:56.919
-gonna be new situation you have through
+collapsing down here so then you're gonna be new situation you have through
 
 0:33:54.190,0:33:58.360
-data here fake data here you train again
-
-0:33:56.919,0:34:00.100
-the discriminator in this case you're
+data here fake data here you train again the discriminator in this case you're
 
 0:33:58.360,0:34:03.010
-gonna have a decision boundary which is
-
-0:34:00.100,0:34:04.870
-gonna be half with here right then you
+gonna have a decision boundary which is gonna be half with here right then you
 
 0:34:03.010,0:34:07.029
-want you turn on gravity such that this
-
-0:34:04.870,0:34:09.520
-point here we've collapsed here right
+want you turn on gravity such that this point here we've collapsed here right
 
 0:34:07.029,0:34:11.440
-and now you keep iterating this fry this
-
-0:34:09.520,0:34:15.399
-stuff will be getting closer and closer
+and now you keep iterating this fry this stuff will be getting closer and closer
 
 0:34:11.440,0:34:17.230
-and closer and closer to the true data
-
-0:34:15.399,0:34:22.089
-right so you had these points that are
+and closer and closer to the true data right so you had these points that are
 
 0:34:17.230,0:34:27.970
-like approaching and arriving to the
-
-0:34:22.089,0:34:30.849
-real data location so let's say now
+like approaching and arriving to the real data location so let's say now
 
 0:34:27.970,0:34:32.800
-you're using your discriminator you have
-
-0:34:30.849,0:34:37.300
-those binary cross-entropy
+you're using your discriminator you have those binary cross-entropy
 
 0:34:32.800,0:34:41.050
-laws for training the discriminator what
-
-0:34:37.300,0:34:44.200
-is now the main issue let's say I do a
+laws for training the discriminator what is now the main issue let's say I do a
 
 0:34:41.050,0:34:46.810
-shifting I bring my true data here such
-
-0:34:44.200,0:34:48.849
-that we can see the data would think
+shifting I bring my true data here such that we can see the data would think
 
 0:34:46.810,0:34:51.609
-happens so you have true data here
-
-0:34:48.849,0:34:54.339
-yeah generated data here right they are
+happens so you have true data here yeah generated data here right they are
 
 0:34:51.609,0:34:57.880
-overlapping and now you have a
-
-0:34:54.339,0:35:00.940
-discriminator cutting here so you're
+overlapping and now you have a discriminator cutting here so you're
 
 0:34:57.880,0:35:02.589
-gonna have overlap of these samples and
-
-0:35:00.940,0:35:05.770
-this discriminate or has no idea what to
+gonna have overlap of these samples and this discriminate or has no idea what to
 
 0:35:02.589,0:35:07.960
-do right so first of all you're gonna
-
-0:35:05.770,0:35:11.410
-get you know misclassifications just
+do right so first of all you're gonna get you know misclassifications just
 
 0:35:07.960,0:35:12.490
-because you thought you converge like we
-
-0:35:11.410,0:35:15.310
-actually converge right
+because you thought you converge like we actually converge right
 
 0:35:12.490,0:35:17.290
-if you if you think about that my true
-
-0:35:15.310,0:35:17.990
-data is here my generated data is here
+if you if you think about that my true data is here my generated data is here
 
 0:35:17.290,0:35:19.760
-they are over
-
-0:35:17.990,0:35:22.190
-shopping
+they are over shopping
 
 0:35:19.760,0:35:27.230
-so I actually managed to reach
-
-0:35:22.190,0:35:30.740
-convergence and now my discriminator has
+so I actually managed to reach convergence and now my discriminator has
 
 0:35:27.230,0:35:35.530
-no whatsoever clue how to split these
-
-0:35:30.740,0:35:38.720
-things apart so huh
+no whatsoever clue how to split these things apart so huh
 
 0:35:35.530,0:35:45.320
-so we don't converge or when we converge
-
-0:35:38.720,0:35:47.630
-we don't we we we get issues right huh
+so we don't converge or when we converge we don't we we we get issues right huh
 
 0:35:45.320,0:35:49.790
-the discriminator I think this mater
-
-0:35:47.630,0:35:51.710
-just tells apart two classes
+the discriminator I think this mater just tells apart two classes
 
 0:35:49.790,0:35:53.869
-well this community cannot tell apart
-
-0:35:51.710,0:35:58.250
-the two classes because this input are
+well this community cannot tell apart the two classes because this input are
 
 0:35:53.869,0:36:00.290
-you know no more separated right they
-
-0:35:58.250,0:36:02.960
-are gonna be like if you actually manage
+you know no more separated right they are gonna be like if you actually manage
 
 0:36:00.290,0:36:05.660
-to get the generator to perform very
-
-0:36:02.960,0:36:07.609
-very good samples then these good
+to get the generator to perform very very good samples then these good
 
 0:36:05.660,0:36:10.340
-samples are you cannot tell them apart
-
-0:36:07.609,0:36:13.460
-from the actual real samples right you
+samples are you cannot tell them apart from the actual real samples right you
 
 0:36:10.340,0:36:17.450
-know the discriminator has no whatsoever
-
-0:36:13.460,0:36:17.930
-clue about how to how to basically tell
+know the discriminator has no whatsoever clue about how to how to basically tell
 
 0:36:17.450,0:36:20.840
-them apart
-
-0:36:17.930,0:36:24.710
-so whenever the generator works the
+them apart so whenever the generator works the
 
 0:36:20.840,0:36:26.570
-discriminatory not work hmm how nice is
-
-0:36:24.710,0:36:29.300
-that okay
+discriminatory not work hmm how nice is that okay
 
 0:36:26.570,0:36:32.119
-one other problem let's say again you
-
-0:36:29.300,0:36:34.490
-have the fake data here through data
+one other problem let's say again you have the fake data here through data
 
 0:36:32.119,0:36:39.020
-over here and now you have a perfect
-
-0:36:34.490,0:36:41.510
-amazing awesome discriminator such that
+over here and now you have a perfect amazing awesome discriminator such that
 
 0:36:39.020,0:36:43.810
-here is absolutely zero and then here is
-
-0:36:41.510,0:36:46.250
-absolutely one okay so you have like a
+here is absolutely zero and then here is absolutely one okay so you have like a
 
 0:36:43.810,0:36:50.480
-basically like a step function you don't
-
-0:36:46.250,0:36:54.200
-have a sigmoid what's gonna be not the
+basically like a step function you don't have a sigmoid what's gonna be not the
 
 0:36:50.480,0:36:55.910
-gradient it's saturated right or it's
-
-0:36:54.200,0:36:59.180
-zero or it's one there is no more
+gradient it's saturated right or it's zero or it's one there is no more
 
 0:36:55.910,0:37:01.430
-gradient these points will never move
-
-0:36:59.180,0:37:03.170
-right so the the gravity that I was
+gradient these points will never move right so the the gravity that I was
 
 0:37:01.430,0:37:06.680
-showing you before that was attracting
-
-0:37:03.170,0:37:08.900
-these generated data through onto the
+showing you before that was attracting these generated data through onto the
 
 0:37:06.680,0:37:12.070
-decision boundary was basically the
-
-0:37:08.900,0:37:15.560
-gradients that I saw the gradient of the
+decision boundary was basically the gradients that I saw the gradient of the
 
 0:37:12.070,0:37:17.420
-final of the output of the discriminator
-
-0:37:15.560,0:37:20.900
-or the cost network with respect to the
+final of the output of the discriminator or the cost network with respect to the
 
 0:37:17.420,0:37:24.770
-you know samples generated by the
-
-0:37:20.900,0:37:26.510
-generator but now if these discriminator
+you know samples generated by the generator but now if these discriminator
 
 0:37:24.770,0:37:28.970
-has a perfect is a perfect
-
-0:37:26.510,0:37:30.650
-discriminators zero here one here well
+has a perfect is a perfect discriminators zero here one here well
 
 0:37:28.970,0:37:33.329
-it's completely flat right if it's like
-
-0:37:30.650,0:37:36.900
-that there is no whatsoever
+it's completely flat right if it's like that there is no whatsoever
 
 0:37:33.329,0:37:39.539
-a gradient here right and therefore if
-
-0:37:36.900,0:37:42.390
-you're over here so let's say we have
+a gradient here right and therefore if you're over here so let's say we have
 
 0:37:39.539,0:37:45.259
-data in 1 1 X right in 1 one dimension
-
-0:37:42.390,0:37:48.390
-you have 0 0 0 then you have 1 1 1 1 1
+data in 1 1 X right in 1 one dimension you have 0 0 0 then you have 1 1 1 1 1
 
 0:37:45.259,0:37:49.890
-but then if there is just you know there
-
-0:37:48.390,0:37:51.779
-is no gradient this point will never
+but then if there is just you know there is no gradient this point will never
 
 0:37:49.890,0:37:56.069
-know they had to go in that direction do
-
-0:37:51.779,0:37:58.349
-we see oh we are bad guys we have a bad
+know they had to go in that direction do we see oh we are bad guys we have a bad
 
 0:37:56.069,0:37:59.999
-value but then we don't know in which
-
-0:37:58.349,0:38:02.099
-direction to move because there is no
+value but then we don't know in which direction to move because there is no
 
 0:37:59.999,0:38:04.709
-whatsoever direction the gradient is 0
-
-0:38:02.099,0:38:07.229
-it's a flat region right so this is a
+whatsoever direction the gradient is 0 it's a flat region right so this is a
 
 0:38:04.709,0:38:09.269
-very big issue right so whenever we
-
-0:38:07.229,0:38:13.109
-train this generator with the cellular
+very big issue right so whenever we train this generator with the cellular
 
 0:38:09.269,0:38:16.019
-network you want to make sure that this
-
-0:38:13.109,0:38:19.769
-cost gradually increases as you move
+network you want to make sure that this cost gradually increases as you move
 
 0:38:16.019,0:38:22.739
-away from your region of the true data
-
-0:38:19.769,0:38:24.299
-ok such that if there is a smooth or
+away from your region of the true data ok such that if there is a smooth or
 
 0:38:22.739,0:38:26.430
-it's like a you know a convex thing
-
-0:38:24.299,0:38:28.559
-right so if you keeps going up up up up
+it's like a you know a convex thing right so if you keeps going up up up up
 
 0:38:26.430,0:38:32.579
-you always know which direction to fall
-
-0:38:28.559,0:38:38.729
-down in order to arrive at the location
+you always know which direction to fall down in order to arrive at the location
 
 0:38:32.579,0:38:41.009
-where your true data is ok and my Google
-
-0:38:38.729,0:38:46.499
-home keeps rebooting I'm like tiny
+where your true data is ok and my Google home keeps rebooting I'm like tiny
 
 0:38:41.009,0:38:47.989
-little shipped off there you go is it
-
-0:38:46.499,0:38:54.239
-clear so far
+little shipped off there you go is it clear so far
 
 0:38:47.989,0:39:00.509
-yeah rip yeah one final issue was that
-
-0:38:54.239,0:39:06.209
-if we get a generator which gets every
+yeah rip yeah one final issue was that if we get a generator which gets every
 
 0:39:00.509,0:39:11.849
-point here mapped into this point over
-
-0:39:06.209,0:39:14.130
-here you know all the weights are 0 you
+point here mapped into this point over here you know all the weights are 0 you
 
 0:39:11.849,0:39:17.249
-have the final bias be exactly this
-
-0:39:14.130,0:39:20.039
-value over here then that's finished
+have the final bias be exactly this value over here then that's finished
 
 0:39:17.249,0:39:21.779
-because the discriminator over the cost
-
-0:39:20.039,0:39:26.119
-function will say if done a very good
+because the discriminator over the cost function will say if done a very good
 
 0:39:21.779,0:39:28.859
-job and generators say yay
-
-0:39:26.119,0:39:31.619
-and then the generator just outputs one
+job and generators say yay and then the generator just outputs one
 
 0:39:28.859,0:39:33.749
-image right this is called mode collapse
-
-0:39:31.619,0:39:36.839
-meaning that all points are mapped into
+image right this is called mode collapse meaning that all points are mapped into
 
 0:39:33.749,0:39:40.529
-just one point and you can't do anything
-
-0:39:36.839,0:39:44.519
-about it so the actual full story is
+just one point and you can't do anything about it so the actual full story is
 
 0:39:40.529,0:39:46.430
-that if every point here gets mapped to
-
-0:39:44.519,0:39:48.530
-this point here
+that if every point here gets mapped to this point here
 
 0:39:46.430,0:39:50.540
-then the discriminator will tell that oh
-
-0:39:48.530,0:39:53.780
-this is a fake point right and therefore
+then the discriminator will tell that oh this is a fake point right and therefore
 
 0:39:50.540,0:39:55.940
-the generator will switch and will say
-
-0:39:53.780,0:39:56.809
-this is the real loud put right and now
+the generator will switch and will say this is the real loud put right and now
 
 0:39:55.940,0:39:58.579
-you train the discriminator
-
-0:39:56.809,0:40:01.130
-discriminator say oh this is fake okay
+you train the discriminator discriminator say oh this is fake okay
 
 0:39:58.579,0:40:03.470
-so the generator we say this is the real
-
-0:40:01.130,0:40:06.670
-one right okay so you basically have a
+so the generator we say this is the real one right okay so you basically have a
 
 0:40:03.470,0:40:11.119
-network that is just jumping through the
-
-0:40:06.670,0:40:13.460
-samples and you can't fix that unless
+network that is just jumping through the samples and you can't fix that unless
 
 0:40:11.119,0:40:15.800
-you introduce some you know penalty for
-
-0:40:13.460,0:40:18.589
-not having some kind of diversity in the
+you introduce some you know penalty for not having some kind of diversity in the
 
 0:40:15.800,0:40:20.480
-output of the generator vanishing
-
-0:40:18.589,0:40:23.390
-gradients whenever you have like
+output of the generator vanishing gradients whenever you have like
 
 0:40:20.480,0:40:25.160
-saturated discriminators and we don't
-
-0:40:23.390,0:40:28.809
-like discriminators we prefer to learn
+saturated discriminators and we don't like discriminators we prefer to learn
 
 0:40:25.160,0:40:32.569
-this kind of smooth laws the cost right
-
-0:40:28.809,0:40:33.920
-cost Network mod collapse that's things
+this kind of smooth laws the cost right cost Network mod collapse that's things
 
 0:40:32.569,0:40:37.160
-like just describe right now we just
-
-0:40:33.920,0:40:39.410
-fold on one specific point unstable
+like just describe right now we just fold on one specific point unstable
 
 0:40:37.160,0:40:42.280
-convergence yeah and the point is that
-
-0:40:39.410,0:40:46.190
-whenever you get a very cute generator
+convergence yeah and the point is that whenever you get a very cute generator
 
 0:40:42.280,0:40:47.630
-the you know the discriminator will have
-
-0:40:46.190,0:40:51.470
-no idea what's going on you may have
+the you know the discriminator will have no idea what's going on you may have
 
 0:40:47.630,0:40:53.240
-like very big very big loss because you
-
-0:40:51.470,0:40:55.849
-may get you know these points would be
+like very big very big loss because you may get you know these points would be
 
 0:40:53.240,0:40:57.319
-classified as this one instead is
-
-0:40:55.849,0:40:59.540
-completely classified as something else
+classified as this one instead is completely classified as something else
 
 0:40:57.319,0:41:01.790
-you get some very very large gradient
-
-0:40:59.540,0:41:04.280
-the disk emitter will jump away and then
+you get some very very large gradient the disk emitter will jump away and then
 
 0:41:01.790,0:41:06.589
-they generate this committee will jump
-
-0:41:04.280,0:41:08.839
-you know away and the decision boundary
+they generate this committee will jump you know away and the decision boundary
 
 0:41:06.589,0:41:10.190
-will go in all bunkers bunkers and then
-
-0:41:08.839,0:41:14.690
-you're gonna have the generator trying
+will go in all bunkers bunkers and then you're gonna have the generator trying
 
 0:41:10.190,0:41:18.290
-to run after the these you know running
-
-0:41:14.690,0:41:20.780
-away decision boundary okay and so there
+to run after the these you know running away decision boundary okay and so there
 
 0:41:18.290,0:41:22.910
-is no convergence there is a equilibrium
-
-0:41:20.780,0:41:28.210
-so it's an unstable equilibrium point
+is no convergence there is a equilibrium so it's an unstable equilibrium point
 
 0:41:22.910,0:41:30.829
-which is very very tricky to catch yeah
-
-0:41:28.210,0:41:33.530
-so I understand we have some sort of
+which is very very tricky to catch yeah so I understand we have some sort of
 
 0:41:30.829,0:41:36.020
-minimax problem here with a regenerator
-
-0:41:33.530,0:41:38.750
-and a cost but in general when you
+minimax problem here with a regenerator and a cost but in general when you
 
 0:41:36.020,0:41:40.490
-optimize this I don't know if really any
-
-0:41:38.750,0:41:42.950
-straightforward ways to make sure you
+optimize this I don't know if really any straightforward ways to make sure you
 
 0:41:40.490,0:41:45.530
-convert you into the right point right I
-
-0:41:42.950,0:41:48.230
-am not sure how you figure out whether
+convert you into the right point right I am not sure how you figure out whether
 
 0:41:45.530,0:41:50.180
-you converge to a good point but through
-
-0:41:48.230,0:41:54.680
-visual inspection of your outputs of the
+you converge to a good point but through visual inspection of your outputs of the
 
 0:41:50.180,0:41:57.109
-generator or you can train several you
-
-0:41:54.680,0:42:00.470
-can train several guns and then you
+generator or you can train several you can train several guns and then you
 
 0:41:57.109,0:42:04.670
-train a discriminator on
-
-0:42:00.470,0:42:10.040
-some image dataset and now you classify
+train a discriminator on some image dataset and now you classify
 
 0:42:04.670,0:42:12.020
-you evaluate the quality of the of the
-
-0:42:10.040,0:42:16.010
-image right so this is like some kind of
+you evaluate the quality of the of the image right so this is like some kind of
 
 0:42:12.020,0:42:18.619
-not good metric we don't like but that's
-
-0:42:16.010,0:42:21.680
-what has been done is called inception
+not good metric we don't like but that's what has been done is called inception
 
 0:42:18.619,0:42:23.000
-score so you train a network let's say
-
-0:42:21.680,0:42:26.599
-the inception Network that's why it's
+score so you train a network let's say the inception Network that's why it's
 
 0:42:23.000,0:42:29.090
-called inception score on you know image
-
-0:42:26.599,0:42:32.030
-data set and then you can tray you can
+called inception score on you know image data set and then you can tray you can
 
 0:42:29.090,0:42:35.420
-try to see whether these generators are
-
-0:42:32.030,0:42:40.220
-giving you images that look like
+try to see whether these generators are giving you images that look like
 
 0:42:35.420,0:42:43.190
-something from you know from from this
-
-0:42:40.220,0:42:45.970
-training dataset again it's not really a
+something from you know from from this training dataset again it's not really a
 
 0:42:43.190,0:42:49.040
-good metric but someone try to use this
-
-0:42:45.970,0:42:53.030
-for a way to evaluate generative to
+good metric but someone try to use this for a way to evaluate generative to
 
 0:42:49.040,0:42:55.359
-evaluate and generative model before
-
-0:42:53.030,0:42:57.670
-starting before going to the notebooks
+evaluate and generative model before starting before going to the notebooks
 
 0:42:55.359,0:43:01.190
-let's have a look to actually a
-
-0:42:57.670,0:43:03.109
-practical example of training laws for
+let's have a look to actually a practical example of training laws for
 
 0:43:01.190,0:43:08.210
-these two networks we have just seen now
-
-0:43:03.109,0:43:12.950
-okay so the loss function for my cost
+these two networks we have just seen now okay so the loss function for my cost
 
 0:43:08.210,0:43:17.390
-Network given the input X and the latent
-
-0:43:12.950,0:43:22.820
-input Zed in orange can be the following
+Network given the input X and the latent input Zed in orange can be the following
 
 0:43:17.390,0:43:27.980
-so it can be equal my cost C given my
-
-0:43:22.820,0:43:31.000
-pink input X and then plus this part
+so it can be equal my cost C given my pink input X and then plus this part
 
 0:43:27.980,0:43:35.270
-here now which is the positive part of
-
-0:43:31.000,0:43:39.740
-enlarging M minus the cost I'm going to
+here now which is the positive part of enlarging M minus the cost I'm going to
 
 0:43:35.270,0:43:41.990
-give to a generated input which is is
-
-0:43:39.740,0:43:44.900
-outputted by my generator which is fed
+give to a generated input which is is outputted by my generator which is fed
 
 0:43:41.990,0:43:45.740
-with the input latent input a random
-
-0:43:44.900,0:43:50.990
-number okay
+with the input latent input a random number okay
 
 0:43:45.740,0:43:54.410
-so G of Z gives me a fake input then C
-
-0:43:50.990,0:43:59.060
-will have to give me a cost and as long
+so G of Z gives me a fake input then C will have to give me a cost and as long
 
 0:43:54.410,0:44:01.970
-as this cost will be lower than M this
-
-0:43:59.060,0:44:06.290
-part here will be positive part as soon
+as this cost will be lower than M this part here will be positive part as soon
 
 0:44:01.970,0:44:07.220
-as C the cost Network gives me a cost
-
-0:44:06.290,0:44:11.330
-for this
+as C the cost Network gives me a cost for this
 
 0:44:07.220,0:44:13.550
-generated input which is larger than M
-
-0:44:11.330,0:44:15.680
-then this part here and mine
+generated input which is larger than M then this part here and mine
 
 0:44:13.550,0:44:17.690
-some number larger than M is gonna be a
-
-0:44:15.680,0:44:20.180
-negative number then since I take the
+some number larger than M is gonna be a negative number then since I take the
 
 0:44:17.690,0:44:23.270
-positive part this goes to 0 so this
-
-0:44:20.180,0:44:25.760
-part of the loss goes to 0 whenever the
+positive part this goes to 0 so this part of the loss goes to 0 whenever the
 
 0:44:23.270,0:44:29.300
-cost Network gives me a output that is
-
-0:44:25.760,0:44:32.270
-larger than M for a input that is being
+cost Network gives me a output that is larger than M for a input that is being
 
 0:44:29.300,0:44:34.670
-provided by my generator on the other
-
-0:44:32.270,0:44:37.280
-side here we have simply the cost
+provided by my generator on the other side here we have simply the cost
 
 0:44:34.670,0:44:39.920
-associated to the correct ink input
-
-0:44:37.280,0:44:43.010
-right and so in order to squish this
+associated to the correct ink input right and so in order to squish this
 
 0:44:39.920,0:44:46.100
-down to zero you just have to have your
-
-0:44:43.010,0:44:50.360
-cost network outputting a zero whenever
+down to zero you just have to have your cost network outputting a zero whenever
 
 0:44:46.100,0:44:53.060
-the input is the good one ok so in the
-
-0:44:50.360,0:44:57.020
-example in the example was making before
+the input is the good one ok so in the example in the example was making before
 
 0:44:53.060,0:45:00.710
-I was saying that M is 10 and therefore
-
-0:44:57.020,0:45:03.830
-the network is encouraged to output a
+I was saying that M is 10 and therefore the network is encouraged to output a
 
 0:45:00.710,0:45:06.590
-scalar of 10 at least 10 at least and
-
-0:45:03.830,0:45:09.020
-right for inputs are coming from the
+scalar of 10 at least 10 at least and right for inputs are coming from the
 
 0:45:06.590,0:45:11.270
-generator and said cause that is equal
-
-0:45:09.020,0:45:15.620
-to 0 is promoted by this term over here
+generator and said cause that is equal to 0 is promoted by this term over here
 
 0:45:11.270,0:45:17.900
-so this is a example of possible loss we
-
-0:45:15.620,0:45:20.720
-can use for training the cost Network
+so this is a example of possible loss we can use for training the cost Network
 
 0:45:17.900,0:45:25.580
-known this is done in this paper here by
-
-0:45:20.720,0:45:26.750
-Jake icon and yon from 2016 then how do
+known this is done in this paper here by Jake icon and yon from 2016 then how do
 
 0:45:25.580,0:45:30.980
-we train the generator
-
-0:45:26.750,0:45:34.900
-well this white 3/4 because you simply
+we train the generator well this white 3/4 because you simply
 
 0:45:30.980,0:45:39.290
-have the loss for training the generator
-
-0:45:34.900,0:45:42.550
-being equal the cost that the network
+have the loss for training the generator being equal the cost that the network
 
 0:45:39.290,0:45:45.140
-the cost network gives me for a given
-
-0:45:42.550,0:45:48.530
-generated sample right
+the cost network gives me for a given generated sample right
 
 0:45:45.140,0:45:53.620
-and so my generator will simply try to
-
-0:45:48.530,0:45:58.520
-get a low cost and that's so pretty
+and so my generator will simply try to get a low cost and that's so pretty
 
 0:45:53.620,0:46:01.100
-all right ok again can we both can we be
-
-0:45:58.520,0:46:02.930
-more specific know what is this cost
+all right ok again can we both can we be more specific know what is this cost
 
 0:46:01.100,0:46:06.350
-network I have it's I haven't told you
-
-0:46:02.930,0:46:08.720
-yet a specific choice you can make for
+network I have it's I haven't told you yet a specific choice you can make for
 
 0:46:06.350,0:46:11.330
-creating a network that is giving you
-
-0:46:08.720,0:46:15.290
-this scalar based on the input but I
+creating a network that is giving you this scalar based on the input but I
 
 0:46:11.330,0:46:19.100
-think you may already have some ideas
-
-0:46:15.290,0:46:24.050
-how this network can be made and so a
+think you may already have some ideas how this network can be made and so a
 
 0:46:19.100,0:46:27.260
-possible choice for for this network is
-
-0:46:24.050,0:46:27.950
-going to be in the following it's going
+possible choice for for this network is going to be in the following it's going
 
 0:46:27.260,0:46:33.290
-to be the
-
-0:46:27.950,0:46:37.380
-MSE the quadratic difference between the
+to be the MSE the quadratic difference between the
 
 0:46:33.290,0:46:40.500
-decoding of the encoding of the specific
-
-0:46:37.380,0:46:46.620
-input so this is the reconstruction of a
+decoding of the encoding of the specific input so this is the reconstruction of a
 
 0:46:40.500,0:46:49.140
-out encoder - the input itself squared
-
-0:46:46.620,0:46:53.690
-right the norm squared so how does this
+out encoder - the input itself squared right the norm squared so how does this
 
 0:46:49.140,0:46:57.210
-work well like if the out encoder is
-
-0:46:53.690,0:47:00.060
-being trained only on pink samples it
+work well like if the out encoder is being trained only on pink samples it
 
 0:46:57.210,0:47:03.480
-will be able to reconstruct pink samples
-
-0:47:00.060,0:47:05.940
-only right and therefore the distance
+will be able to reconstruct pink samples only right and therefore the distance
 
 0:47:03.480,0:47:09.330
-between my input the pink input and the
-
-0:47:05.940,0:47:11.670
-reconstruction of the out encoder when I
+between my input the pink input and the reconstruction of the out encoder when I
 
 0:47:09.330,0:47:13.950
-provide the pink input will be very
-
-0:47:11.670,0:47:17.430
-small hopefully right if we train this
+provide the pink input will be very small hopefully right if we train this
 
 0:47:13.950,0:47:20.340
-nicely instead what happens now if I put
-
-0:47:17.430,0:47:22.800
-an input here that is far from anything
+nicely instead what happens now if I put an input here that is far from anything
 
 0:47:20.340,0:47:24.990
-that is on the data manifold well my out
-
-0:47:22.800,0:47:27.840
-encoder has been trained to output
+that is on the data manifold well my out encoder has been trained to output
 
 0:47:24.990,0:47:30.810
-things that stays on the on the on the
-
-0:47:27.840,0:47:32.640
-on the data manifold and therefore there
+things that stays on the on the on the on the data manifold and therefore there
 
 0:47:30.810,0:47:36.300
-will be a substantial difference between
-
-0:47:32.640,0:47:40.200
-my actual input and what my out encoder
+will be a substantial difference between my actual input and what my out encoder
 
 0:47:36.300,0:47:43.110
-can give you right the nice part of this
-
-0:47:40.200,0:47:45.390
-specific choice of course network is
+can give you right the nice part of this specific choice of course network is
 
 0:47:43.110,0:47:48.450
-that you can train these out encoder
-
-0:47:45.390,0:47:51.600
-without the generator right you can
+that you can train these out encoder without the generator right you can
 
 0:47:48.450,0:47:53.130
-simply train an autoencoder whatever you
-
-0:47:51.600,0:47:55.650
-can have like an under complete hidden
+simply train an autoencoder whatever you can have like an under complete hidden
 
 0:47:53.130,0:47:58.850
-layer over complete and you use some
-
-0:47:55.650,0:48:01.290
-kind of regularization and information
+layer over complete and you use some kind of regularization and information
 
 0:47:58.850,0:48:03.630
-restriction bottleneck but nevertheless
-
-0:48:01.290,0:48:06.960
-you can actually train this guy without
+restriction bottleneck but nevertheless you can actually train this guy without
 
 0:48:03.630,0:48:09.150
-having a generator right and this one
-
-0:48:06.960,0:48:11.970
-you will simply learn what is the Train
+having a generator right and this one you will simply learn what is the Train
 
 0:48:09.150,0:48:14.820
-the data manifold and now you can use
-
-0:48:11.970,0:48:17.040
-this as a proxy to establish the
+the data manifold and now you can use this as a proxy to establish the
 
 0:48:14.820,0:48:19.350
-difference the distance between your
-
-0:48:17.040,0:48:23.220
-current input and what the network
+difference the distance between your current input and what the network
 
 0:48:19.350,0:48:26.550
-thinks the closest input on the training
-
-0:48:23.220,0:48:30.090
-manifold could be okay all right let's
+thinks the closest input on the training manifold could be okay all right let's
 
 0:48:26.550,0:48:31.890
-move on in the last five minutes if
-
-0:48:30.090,0:48:34.920
-there are no questions we are going to
+move on in the last five minutes if there are no questions we are going to
 
 0:48:31.890,0:48:38.640
-be reading the source code from Piper's
-
-0:48:34.920,0:48:39.990
-examples together and this I think it's
+be reading the source code from Piper's examples together and this I think it's
 
 0:48:38.640,0:48:41.560
-going to be the first case we are we
-
-0:48:39.990,0:48:45.280
-actually reading
+going to be the first case we are we actually reading
 
 0:48:41.560,0:48:47.260
-programmer developer code I'm not a
-
-0:48:45.280,0:48:48.970
-programmer so whatever you'll be in
+programmer developer code I'm not a programmer so whatever you'll be in
 
 0:48:47.260,0:48:51.870
-consuming so far where my notebooks
-
-0:48:48.970,0:48:55.180
-which were some kind of you know
+consuming so far where my notebooks which were some kind of you know
 
 0:48:51.870,0:48:57.760
-pedagogical educational content which is
-
-0:48:55.180,0:49:00.820
-kind of massaged such that it looks nice
+pedagogical educational content which is kind of massaged such that it looks nice
 
 0:48:57.760,0:49:02.230
-and pretty and has nice-looking output
-
-0:49:00.820,0:49:04.900
-right now you're gonna be reading
+and pretty and has nice-looking output right now you're gonna be reading
 
 0:49:02.230,0:49:08.230
-actually nice code written die by people
-
-0:49:04.900,0:49:11.160
-like that do this is their job right so
+actually nice code written die by people like that do this is their job right so
 
 0:49:08.230,0:49:13.570
-we go get up we don't go on PI towards
-
-0:49:11.160,0:49:21.730
-deep learning we are going to apply
+we go get up we don't go on PI towards deep learning we are going to apply
 
 0:49:13.570,0:49:30.850
-torch my torch by torch examples some
-
-0:49:21.730,0:49:37.600
-pose ok so let's zoom a little bit ok so
+torch my torch by torch examples some pose ok so let's zoom a little bit ok so
 
 0:49:30.850,0:49:40.540
-here we have the DC gun and it's smooth
-
-0:49:37.600,0:49:43.420
-here okay so we can just go through this
+here we have the DC gun and it's smooth here okay so we can just go through this
 
 0:49:40.540,0:49:45.220
-code main things right so we start with
-
-0:49:43.420,0:49:47.380
-you know importing a bunch of crappy
+code main things right so we start with you know importing a bunch of crappy
 
 0:49:45.220,0:49:49.360
-things as usual you have an argument
-
-0:49:47.380,0:49:53.860
-parser such that you can send some
+things as usual you have an argument parser such that you can send some
 
 0:49:49.360,0:49:55.900
-specific commands specific parameters in
-
-0:49:53.860,0:49:59.530
-the command line this printouts all the
+specific commands specific parameters in the command line this printouts all the
 
 0:49:55.900,0:50:02.470
-options for the current setup this one
-
-0:49:59.530,0:50:04.780
-tries to make a directory otherwise you
+options for the current setup this one tries to make a directory otherwise you
 
 0:50:02.470,0:50:06.070
-know whatever this is if you choose a
-
-0:50:04.780,0:50:08.590
-manual seed then you're going to be
+know whatever this is if you choose a manual seed then you're going to be
 
 0:50:06.070,0:50:10.600
-actually setting a manual seed in such a
-
-0:50:08.590,0:50:15.580
-way you're gonna have reproducible
+actually setting a manual seed in such a way you're gonna have reproducible
 
 0:50:10.600,0:50:19.210
-results could a benchmark equal true
-
-0:50:15.580,0:50:23.290
-I think speed up the yes this one allows
+results could a benchmark equal true I think speed up the yes this one allows
 
 0:50:19.210,0:50:27.280
-you to have faster GPU routines
-
-0:50:23.290,0:50:28.750
-Karnas if you don't have CUDA you're
+you to have faster GPU routines Karnas if you don't have CUDA you're
 
 0:50:27.280,0:50:33.370
-gonna be taking forever to train this
-
-0:50:28.750,0:50:34.930
-stuff data route whatever data set so
+gonna be taking forever to train this stuff data route whatever data set so
 
 0:50:33.370,0:50:38.950
-you're gonna be loading here imagenet
-
-0:50:34.930,0:50:42.360
-folders or l fw own data set so with
+you're gonna be loading here imagenet folders or l fw own data set so with
 
 0:50:38.950,0:50:47.290
-this is all things that we already know
-
-0:50:42.360,0:50:50.800
-ok so n GPU is gonna be the number of
+this is all things that we already know ok so n GPU is gonna be the number of
 
 0:50:47.290,0:50:55.210
-GPU and there's gonna be the size of the
-
-0:50:50.800,0:51:01.960
-latent variable ngf and NDF
+GPU and there's gonna be the size of the latent variable ngf and NDF
 
 0:50:55.210,0:51:03.849
-it's gonna be at T and G F and DF um the
-
-0:51:01.960,0:51:05.200
-number I think on the generative futures
+it's gonna be at T and G F and DF um the number I think on the generative futures
 
 0:51:03.849,0:51:09.520
-and the number of discriminative
-
-0:51:05.200,0:51:11.970
-features and okay we have some specific
+and the number of discriminative features and okay we have some specific
 
 0:51:09.520,0:51:15.970
-weight initialization which really helps
-
-0:51:11.970,0:51:18.280
-getting some proper training starting
+weight initialization which really helps getting some proper training starting
 
 0:51:15.970,0:51:20.950
-and then let's actually have a look to
-
-0:51:18.280,0:51:24.040
-this generator right okay so this is
+and then let's actually have a look to this generator right okay so this is
 
 0:51:20.950,0:51:27.250
-classical a classical and then subclass
-
-0:51:24.040,0:51:32.050
-generator you don't need these stuff if
+classical a classical and then subclass generator you don't need these stuff if
 
 0:51:27.250,0:51:34.270
-you're using Python 3 so let's see so we
-
-0:51:32.050,0:51:36.579
-have a sequential right we have the
+you're using Python 3 so let's see so we have a sequential right we have the
 
 0:51:34.270,0:51:38.740
-generator will be up sampling so such
-
-0:51:36.579,0:51:40.990
-that as you have seen from the last
+generator will be up sampling so such that as you have seen from the last
 
 0:51:38.740,0:51:43.030
-homework you want to go from a small
-
-0:51:40.990,0:51:45.130
-dimension to a larger dimension you're
+homework you want to go from a small dimension to a larger dimension you're
 
 0:51:43.030,0:51:48.190
-gonna use this model they have bench
-
-0:51:45.130,0:51:51.250
-norm reloj and so on right and transpose
+gonna use this model they have bench norm reloj and so on right and transpose
 
 0:51:48.190,0:51:54.369
-convolution batch norm real low and keep
-
-0:51:51.250,0:51:57.430
-going and finally we have a tonnage we
+convolution batch norm real low and keep going and finally we have a tonnage we
 
 0:51:54.369,0:52:00.220
-have a tonnage because the output in
-
-0:51:57.430,0:52:04.000
-this case is going to be lying within
+have a tonnage because the output in this case is going to be lying within
 
 0:52:00.220,0:52:07.240
-minus 1 to +1 forward is simply send
-
-0:52:04.000,0:52:09.609
-through forward through D you send the
+minus 1 to +1 forward is simply send through forward through D you send the
 
 0:52:07.240,0:52:14.049
-input through the main and the main was
-
-0:52:09.609,0:52:15.819
-this one main main model right this is
+input through the main and the main was this one main main model right this is
 
 0:52:14.049,0:52:19.869
-for using data parallel if you want to
-
-0:52:15.819,0:52:21.849
-use several GPUs and then here is how
+for using data parallel if you want to use several GPUs and then here is how
 
 0:52:19.869,0:52:25.930
-how do you initialize with the specific
-
-0:52:21.849,0:52:28.780
-initialization you define above so
+how do you initialize with the specific initialization you define above so
 
 0:52:25.930,0:52:30.940
-simply just putting in short right what
-
-0:52:28.780,0:52:34.960
-does this thing do you input something
+simply just putting in short right what does this thing do you input something
 
 0:52:30.940,0:52:38.280
-here that has NZ size right and NZ is
-
-0:52:34.960,0:52:42.040
-the size of the latent which is n Z&Z
+here that has NZ size right and NZ is the size of the latent which is n Z&Z
 
 0:52:38.280,0:52:45.549
-100 so you input a vector of size of
-
-0:52:42.040,0:52:48.400
-size 100 so it's a tensor a one
+100 so you input a vector of size of size 100 so it's a tensor a one
 
 0:52:45.549,0:52:51.880
-dimensional tensor with 100 size the
-
-0:52:48.400,0:52:55.119
-size is 100 and so whenever you input
+dimensional tensor with 100 size the size is 100 and so whenever you input
 
 0:52:51.880,0:52:59.380
-this 100 vector the output is going to
-
-0:52:55.119,0:53:01.210
-be something like a 64 by 64 times the
+this 100 vector the output is going to be something like a 64 by 64 times the
 
 0:52:59.380,0:53:04.950
-number of channels in case you have
-
-0:53:01.210,0:53:04.950
-color image or not right
+number of channels in case you have color image or not right
 
 0:53:05.560,0:53:13.180
-nc and Symbian the number of channels of
-
-0:53:07.900,0:53:14.950
-the output the input imagery okay it
+nc and Symbian the number of channels of the output the input imagery okay it
 
 0:53:13.180,0:53:17.980
-should be clear so far I know no crazy
-
-0:53:14.950,0:53:21.130
-things going on let's see the last part
+should be clear so far I know no crazy things going on let's see the last part
 
 0:53:17.980,0:53:23.230
-and then like to see how the Train so
-
-0:53:21.130,0:53:25.930
-the discriminator is the same stuff you
+and then like to see how the Train so the discriminator is the same stuff you
 
 0:53:23.230,0:53:28.120
-have a sequential in this case we feed
-
-0:53:25.930,0:53:31.510
-these whatever number of channels times
+have a sequential in this case we feed these whatever number of channels times
 
 0:53:28.120,0:53:33.760
-64 times 64 and then you go down with
-
-0:53:31.510,0:53:36.070
-leaky read oh oh this is important so
+64 times 64 and then you go down with leaky read oh oh this is important so
 
 0:53:33.760,0:53:37.750
-leaky riilu in the discriminator make
-
-0:53:36.070,0:53:40.270
-sure you're not gonna be killing the
+leaky riilu in the discriminator make sure you're not gonna be killing the
 
 0:53:37.750,0:53:41.680
-gradient if you are in the region in a
-
-0:53:40.270,0:53:43.570
-negative region right this is very
+gradient if you are in the region in a negative region right this is very
 
 0:53:41.680,0:53:45.660
-really important if you don't have
-
-0:53:43.570,0:53:48.790
-gradients here then you know you can't
+really important if you don't have gradients here then you know you can't
 
 0:53:45.660,0:53:50.500
-train the diction the generator so you
-
-0:53:48.790,0:53:52.300
-keep the going down like that and then
+train the diction the generator so you keep the going down like that and then
 
 0:53:50.500,0:53:55.150
-finally they use a sigmoid because they
-
-0:53:52.300,0:53:58.060
-train this stuff is like a discriminator
+finally they use a sigmoid because they train this stuff is like a discriminator
 
 0:53:55.150,0:54:01.210
-like a classifier between two classes
-
-0:53:58.060,0:54:04.600
-and the forward is simply you send stuff
+like a classifier between two classes and the forward is simply you send stuff
 
 0:54:01.210,0:54:08.200
-through the the main branch and they
-
-0:54:04.600,0:54:11.080
-initialize these network so we have a
+through the the main branch and they initialize these network so we have a
 
 0:54:08.200,0:54:13.300
-net D and Natalie so the this
-
-0:54:11.080,0:54:16.210
-implementations slightly different from
+net D and Natalie so the this implementations slightly different from
 
 0:54:13.300,0:54:19.030
-the from what you were going over before
-
-0:54:16.210,0:54:24.400
-right because the discriminator is just
+the from what you were going over before right because the discriminator is just
 
 0:54:19.030,0:54:29.950
-one it outputs like the sigmoid the only
-
-0:54:24.400,0:54:33.520
-difference is this line here right so
+one it outputs like the sigmoid the only difference is this line here right so
 
 0:54:29.950,0:54:35.800
-far so in the things we were talking in
-
-0:54:33.520,0:54:38.050
-the lecture just before we don't have
+far so in the things we were talking in the lecture just before we don't have
 
 0:54:35.800,0:54:40.920
-the sigmoid we just have this final
-
-0:54:38.050,0:54:44.590
-convolution later okay okay gotcha
+the sigmoid we just have this final convolution later okay okay gotcha
 
 0:54:40.920,0:54:46.870
-of course second difference is that we
-
-0:54:44.590,0:54:50.170
-would not be using a binary cross
+of course second difference is that we would not be using a binary cross
 
 0:54:46.870,0:54:55.360
-entropy loss this is the source of all
-
-0:54:50.170,0:54:59.950
-evils right BCE plus these sigmoid it's
+entropy loss this is the source of all evils right BCE plus these sigmoid it's
 
 0:54:55.360,0:55:02.580
-wrong way of training a generative
-
-0:54:59.950,0:55:04.680
-address our network our generator okay
+wrong way of training a generative address our network our generator okay
 
 0:55:02.580,0:55:06.810
-so nevertheless we go with the main
-
-0:55:04.680,0:55:07.740
-formulation here so let's see how it
+so nevertheless we go with the main formulation here so let's see how it
 
 0:55:06.810,0:55:10.680
-works
-
-0:55:07.740,0:55:13.230
-fixed noise you just create a you know
+works fixed noise you just create a you know
 
 0:55:10.680,0:55:16.200
-some random stuff with a bad batch size
-
-0:55:13.230,0:55:18.480
-and the correct size here we have two
+some random stuff with a bad batch size and the correct size here we have two
 
 0:55:16.200,0:55:20.910
-optimizers one optimizer for the
-
-0:55:18.480,0:55:24.510
-discriminator one optimizer for the
+optimizers one optimizer for the discriminator one optimizer for the
 
 0:55:20.910,0:55:27.060
-generator and let's see what are the
-
-0:55:24.510,0:55:31.560
-five steps that you should all know
+generator and let's see what are the five steps that you should all know
 
 0:55:27.060,0:55:33.390
-right so let's figure out first of all
-
-0:55:31.560,0:55:37.920
-we zero the gradients of the
+right so let's figure out first of all we zero the gradients of the
 
 0:55:33.390,0:55:41.880
-discriminator okay so now we have the
-
-0:55:37.920,0:55:45.840
-real data is going to be the data zero
+discriminator okay so now we have the real data is going to be the data zero
 
 0:55:41.880,0:55:52.500
-that comes from the data loader right so
-
-0:55:45.840,0:55:55.970
-we have real data here and then we're
+that comes from the data loader right so we have real data here and then we're
 
 0:55:52.500,0:55:58.340
-going to be having is
-
-0:55:55.970,0:56:02.690
-of labels which are going to be the real
+going to be having is of labels which are going to be the real
 
 0:55:58.340,0:56:04.490
-labels okay so then we have the network
-
-0:56:02.690,0:56:07.010
-the discriminator is going to be fed
+labels okay so then we have the network the discriminator is going to be fed
 
 0:56:04.490,0:56:08.930
-with the real input and then we have
-
-0:56:07.010,0:56:10.369
-some real output right and then you're
+with the real input and then we have some real output right and then you're
 
 0:56:08.930,0:56:12.500
-going to be computing the first part
-
-0:56:10.369,0:56:13.970
-which is going to be the criterion which
+going to be computing the first part which is going to be the criterion which
 
 0:56:12.500,0:56:17.660
-is the binary cross-entropy
-
-0:56:13.970,0:56:21.140
-between the output for whenever we put
+is the binary cross-entropy between the output for whenever we put
 
 0:56:17.660,0:56:24.530
-the real input and the real label yeah
-
-0:56:21.140,0:56:28.580
-and then we perform the first step so
+the real input and the real label yeah and then we perform the first step so
 
 0:56:24.530,0:56:30.770
-here we perform backward in this
-
-0:56:28.580,0:56:32.599
-criterion which is computing the partial
+here we perform backward in this criterion which is computing the partial
 
 0:56:30.770,0:56:34.849
-derivative of this binary cross-entropy
-
-0:56:32.599,0:56:38.090
-with respect to the weights of the
+derivative of this binary cross-entropy with respect to the weights of the
 
 0:56:34.849,0:56:40.970
-discriminator when we fed the real data
-
-0:56:38.090,0:56:43.280
-to the discriminator and we output we
+discriminator when we fed the real data to the discriminator and we output we
 
 0:56:40.970,0:56:45.740
-try to match the labels which are the
-
-0:56:43.280,0:56:50.180
-real labels okay this first point number
+try to match the labels which are the real labels okay this first point number
 
 0:56:45.740,0:56:51.790
-one okay keep in mind second part second
-
-0:56:50.180,0:56:56.300
-part is gonna be you get noise and
+one okay keep in mind second part second part is gonna be you get noise and
 
 0:56:51.790,0:56:59.510
-therefore you get your network your
-
-0:56:56.300,0:57:02.089
-generator you feed some noise inside the
+therefore you get your network your generator you feed some noise inside the
 
 0:56:59.510,0:57:05.089
-generator therefore you get some fake
-
-0:57:02.089,0:57:07.040
-output here I'm gonna be having my
+generator therefore you get some fake output here I'm gonna be having my
 
 0:57:05.089,0:57:10.310
-labels now are filled with the fake
-
-0:57:07.040,0:57:14.180
-label okay therefore you feed this stuff
+labels now are filled with the fake label okay therefore you feed this stuff
 
 0:57:10.310,0:57:18.680
-inside the discriminator we feed the
-
-0:57:14.180,0:57:21.020
-fake data but we detach right is the
+inside the discriminator we feed the fake data but we detach right is the
 
 0:57:18.680,0:57:24.080
-important part so right now we fade
-
-0:57:21.020,0:57:26.900
-we've fed the fake data but we detach it
+important part so right now we fade we've fed the fake data but we detach it
 
 0:57:24.080,0:57:29.119
-from the generator and then we train
-
-0:57:26.900,0:57:30.950
-again so we have the criterion we
+from the generator and then we train again so we have the criterion we
 
 0:57:29.119,0:57:33.740
-compute the loss between the output of
-
-0:57:30.950,0:57:36.230
-the discriminator with the labels for
+compute the loss between the output of the discriminator with the labels for
 
 0:57:33.740,0:57:39.260
-the fake class okay and then we perform
-
-0:57:36.230,0:57:41.060
-another step of backward so now we have
+the fake class okay and then we perform another step of backward so now we have
 
 0:57:39.260,0:57:42.920
-two backward right so we have backward
-
-0:57:41.060,0:57:46.480
-here and backward here and we have
+two backward right so we have backward here and backward here and we have
 
 0:57:42.920,0:57:49.369
-computed the partial derivative of these
-
-0:57:46.480,0:57:52.580
-criterion in the case where we were
+computed the partial derivative of these criterion in the case where we were
 
 0:57:49.369,0:57:56.300
-inputting real data and in the case
-
-0:57:52.580,0:57:58.190
-where we were inputting fake data so you
+inputting real data and in the case where we were inputting fake data so you
 
 0:57:56.300,0:58:00.710
-compute backward here backward here
-
-0:57:58.190,0:58:02.720
-there is no clear gradient right this is
+compute backward here backward here there is no clear gradient right this is
 
 0:58:00.710,0:58:04.400
-the important part so we only called
-
-0:58:02.720,0:58:07.970
-clear the gradient at the beginning and
+the important part so we only called clear the gradient at the beginning and
 
 0:58:04.400,0:58:09.349
-we compute first the gradient with the
-
-0:58:07.970,0:58:12.410
-real data and then
+we compute first the gradient with the real data and then
 
 0:58:09.349,0:58:15.680
-gradients for defected now you have that
-
-0:58:12.410,0:58:18.319
-we can compute this one right so we step
+gradients for defected now you have that we can compute this one right so we step
 
 0:58:15.680,0:58:20.660
-in the optimizer so we computed the back
-
-0:58:18.319,0:58:22.309
-part they did the partial derivatives we
+in the optimizer so we computed the back part they did the partial derivatives we
 
 0:58:20.660,0:58:26.150
-computed the other parts of derivatives
-
-0:58:22.309,0:58:28.549
-now we stir finally we train the
+computed the other parts of derivatives now we stir finally we train the
 
 0:58:26.150,0:58:31.999
-generator and then we are done so how do
-
-0:58:28.549,0:58:36.710
-we train the generator now you fill the
+generator and then we are done so how do we train the generator now you fill the
 
 0:58:31.999,0:58:39.349
-labels with the real labels okay but you
-
-0:58:36.710,0:58:41.299
-still feed the discriminator and the
+labels with the real labels okay but you still feed the discriminator and the
 
 0:58:39.349,0:58:44.630
-fake data the one that is generated by
-
-0:58:41.299,0:58:46.759
-my generator this discriminator should
+fake data the one that is generated by my generator this discriminator should
 
 0:58:44.630,0:58:50.210
-say oh this is fake data but we say no
-
-0:58:46.759,0:58:52.009
-no this is real data and therefore you
+say oh this is fake data but we say no no this is real data and therefore you
 
 0:58:50.210,0:58:55.749
-basically swap the the thing right so
-
-0:58:52.009,0:58:58.009
-now you have the when we compute these
+basically swap the the thing right so now you have the when we compute these
 
 0:58:55.749,0:58:59.210
-backpropagation we have this gradients
-
-0:58:58.009,0:59:02.210
-which are going in the opposite
+backpropagation we have this gradients which are going in the opposite
 
 0:58:59.210,0:59:05.359
-direction these are trying to make your
-
-0:59:02.210,0:59:07.609
-network perform worse okay but then we
+direction these are trying to make your network perform worse okay but then we
 
 0:59:05.359,0:59:10.160
-are going to be just stepping with the
-
-0:59:07.609,0:59:12.410
-generator right so this one computes the
+are going to be just stepping with the generator right so this one computes the
 
 0:59:10.160,0:59:14.029
-partial derivative for everyone right
-
-0:59:12.410,0:59:16.339
-the first partial derivative of the
+partial derivative for everyone right the first partial derivative of the
 
 0:59:14.029,0:59:18.499
-criterion with respect to the weights of
-
-0:59:16.339,0:59:21.469
-the discriminator and the weights of the
+criterion with respect to the weights of the discriminator and the weights of the
 
 0:59:18.499,0:59:24.229
-generator but then we are going to be
-
-0:59:21.469,0:59:27.019
-stepping only with the generator so the
+generator but then we are going to be stepping only with the generator so the
 
 0:59:24.229,0:59:30.410
-generator will try to make lower
-
-0:59:27.019,0:59:33.170
-criterion and the criterion has the
+generator will try to make lower criterion and the criterion has the
 
 0:59:30.410,0:59:35.719
-label swapped right these are real label
-
-0:59:33.170,0:59:38.479
-for whenever we feed the discriminator
+label swapped right these are real label for whenever we feed the discriminator
 
 0:59:35.719,0:59:41.660
-fake data and so this one is actually
-
-0:59:38.479,0:59:45.849
-working against the discriminator and
+fake data and so this one is actually working against the discriminator and
 
 0:59:41.660,0:59:48.920
-that was it so you had one backward here
-
-0:59:45.849,0:59:52.369
-you have another backward here and you
+that was it so you had one backward here you have another backward here and you
 
 0:59:48.920,0:59:55.309
-have another backward here and other
-
-0:59:52.369,0:59:57.229
-questions right now um wait what I was
+have another backward here and other questions right now um wait what I was
 
 0:59:55.309,0:59:59.599
-looking to do the first two backwards
-
-0:59:57.229,1:00:02.059
-because they're both on the same oh yeah
+looking to do the first two backwards because they're both on the same oh yeah
 
 0:59:59.599,1:00:06.190
-right right okay so the first backward
-
-1:00:02.059,1:00:09.109
-here it's computed when the network the
+right right okay so the first backward here it's computed when the network the
 
 1:00:06.190,1:00:12.499
-discriminator the cost network has been
-
-1:00:09.109,1:00:15.829
-fed with the real data and the label
+discriminator the cost network has been fed with the real data and the label
 
 1:00:12.499,1:00:18.410
-here our will feel our field with the
-
-1:00:15.829,1:00:20.259
-real label okay so this is the first
+here our will feel our field with the real label okay so this is the first
 
 1:00:18.410,1:00:23.150
-part of the backward so you have class
-
-1:00:20.259,1:00:25.700
-true class and then you have class
+part of the backward so you have class true class and then you have class
 
 1:00:23.150,1:00:27.860
-of the fake class right in this case a
-
-1:00:25.700,1:00:31.250
-week I generate my fake data through the
+of the fake class right in this case a week I generate my fake data through the
 
 1:00:27.860,1:00:33.910
-generator which was fed noise and then I
-
-1:00:31.250,1:00:36.530
-feed my discriminator with the fake data
+generator which was fed noise and then I feed my discriminator with the fake data
 
 1:00:33.910,1:00:40.190
-but I stopped the gradient to go
-
-1:00:36.530,1:00:42.650
-backwards in the generator and this
+but I stopped the gradient to go backwards in the generator and this
 
 1:00:40.190,1:00:47.210
-criterion still tries to make the output
-
-1:00:42.650,1:00:49.550
-of the discriminator has been close to
+criterion still tries to make the output of the discriminator has been close to
 
 1:00:47.210,1:00:52.040
-the label and the label in this case are
-
-1:00:49.550,1:00:53.930
-the one the fake label the one that are
+the label and the label in this case are the one the fake label the one that are
 
 1:00:52.040,1:00:56.600
-associated to the noise so more than
-
-1:00:53.930,1:00:58.880
-know it may emit maybe we can call this
+associated to the noise so more than know it may emit maybe we can call this
 
 1:00:56.600,1:01:01.340
-noise level or maybe okay it's fake
-
-1:00:58.880,1:01:04.640
-labels finding fake is the data and then
+noise level or maybe okay it's fake labels finding fake is the data and then
 
 1:01:01.340,1:01:07.490
-the blue X Hut that is generated by my
-
-1:01:04.640,1:01:11.800
-generator network and then when I put
+the blue X Hut that is generated by my generator network and then when I put
 
 1:01:07.490,1:01:12.920
-these X Hut here inside the sorry the
-
-1:01:11.800,1:01:15.380
-discriminator
+these X Hut here inside the sorry the discriminator
 
 1:01:12.920,1:01:17.990
-I will tell the discriminator hey this
-
-1:01:15.380,1:01:20.120
-one should be labeled as fake labels
+I will tell the discriminator hey this one should be labeled as fake labels
 
 1:01:17.990,1:01:20.540
-right and so you have this criterion
-
-1:01:20.120,1:01:24.140
-yeah
+right and so you have this criterion yeah
 
 1:01:20.540,1:01:26.660
-so in this backward you're going to be
-
-1:01:24.140,1:01:28.940
-getting those partial derivative of the
+so in this backward you're going to be getting those partial derivative of the
 
 1:01:26.660,1:01:33.680
-loss function with respect to the
-
-1:01:28.940,1:01:36.920
-parameters in the case when in the case
+loss function with respect to the parameters in the case when in the case
 
 1:01:33.680,1:01:39.710
-when we have fed the fake data and we
-
-1:01:36.920,1:01:41.300
-are trying to label them as fake you
+when we have fed the fake data and we are trying to label them as fake you
 
 1:01:39.710,1:01:45.470
-know fake labels right we have faked
-
-1:01:41.300,1:01:48.470
-targets fake labels in the other part
+know fake labels right we have faked targets fake labels in the other part
 
 1:01:45.470,1:01:51.110
-here we actually were inputting inside
-
-1:01:48.470,1:01:53.510
-the discriminator real data and then we
+here we actually were inputting inside the discriminator real data and then we
 
 1:01:51.110,1:01:56.030
-tell the you know the network you have a
-
-1:01:53.510,1:01:57.800
-loss with print your output in the
+tell the you know the network you have a loss with print your output in the
 
 1:01:56.030,1:02:00.580
-labels which are supposed to be real
-
-1:01:57.800,1:02:03.010
-label so the first part you try to get
+labels which are supposed to be real label so the first part you try to get
 
 1:02:00.580,1:02:05.780
-you get the partial derivatives
-
-1:02:03.010,1:02:08.300
-corresponding to the loss that has been
+you get the partial derivatives corresponding to the loss that has been
 
 1:02:05.780,1:02:11.120
-computed when real data was fed to the
-
-1:02:08.300,1:02:14.630
-discriminator in the second part is that
+computed when real data was fed to the discriminator in the second part is that
 
 1:02:11.120,1:02:16.670
-you have the loss of with respect you
-
-1:02:14.630,1:02:20.510
-know the loss of your output of the
+you have the loss of with respect you know the loss of your output of the
 
 1:02:16.670,1:02:22.370
-network when we fed fake data right and
-
-1:02:20.510,1:02:24.650
-so here we simply do again another
+network when we fed fake data right and so here we simply do again another
 
 1:02:22.370,1:02:26.570
-backward so in this case this backward
-
-1:02:24.650,1:02:28.610
-this line here in this line here will
+backward so in this case this backward this line here in this line here will
 
 1:02:26.570,1:02:30.440
-give you them they will accumulate right
-
-1:02:28.610,1:02:32.480
-because pythons by default will
+give you them they will accumulate right because pythons by default will
 
 1:02:30.440,1:02:34.730
-accumulate every time you perform
-
-1:02:32.480,1:02:36.710
-backward so first part you accumulate
+accumulate every time you perform backward so first part you accumulate
 
 1:02:34.730,1:02:38.119
-for the first half of the batch
-
-1:02:36.710,1:02:40.609
-and then second time you accumulated
+for the first half of the batch and then second time you accumulated
 
 1:02:38.119,1:02:41.750
-basically you have the partial
-
-1:02:40.609,1:02:43.369
-derivative for the second part of the
+basically you have the partial derivative for the second part of the
 
 1:02:41.750,1:02:46.160
-bed the first part of the bed is the
-
-1:02:43.369,1:02:48.260
-real data second part of the batch is
+bed the first part of the bed is the real data second part of the batch is
 
 1:02:46.160,1:02:51.140
-the fake data overall you're gonna have
-
-1:02:48.260,1:02:52.849
-you know the partial derivatives of the
+the fake data overall you're gonna have you know the partial derivatives of the
 
 1:02:51.140,1:02:54.950
-fake that the real data and the fake
-
-1:02:52.849,1:02:58.369
-data and then we use this gradient in
+fake that the real data and the fake data and then we use this gradient in
 
 1:02:54.950,1:03:01.579
-order to to tune to change the
-
-1:02:58.369,1:03:04.190
-parameters of the network the
+order to to tune to change the parameters of the network the
 
 1:03:01.579,1:03:07.010
-discriminative ray does it make sense so
-
-1:03:04.190,1:03:09.650
-far yeah that makes sense but one of
+discriminative ray does it make sense so far yeah that makes sense but one of
 
 1:03:07.010,1:03:12.349
-them is increasing it another one so
-
-1:03:09.650,1:03:14.690
-this one so far are both trying to
+them is increasing it another one so this one so far are both trying to
 
 1:03:12.349,1:03:16.790
-decrease the criterion okay so this is
-
-1:03:14.690,1:03:20.660
-this is you can see here and this
+decrease the criterion okay so this is this is you can see here and this
 
 1:03:16.790,1:03:23.420
-criterion here has the output which is
-
-1:03:20.660,1:03:26.059
-fed of the discriminator when it was fed
+criterion here has the output which is fed of the discriminator when it was fed
 
 1:03:23.420,1:03:28.190
-with the real CPU data so you have real
-
-1:03:26.059,1:03:31.690
-data and real labels okay
+with the real CPU data so you have real data and real labels okay
 
 1:03:28.190,1:03:36.130
-so the criterion here is trying to match
-
-1:03:31.690,1:03:40.300
-to pay a real data and real labels
+so the criterion here is trying to match to pay a real data and real labels
 
 1:03:36.130,1:03:43.570
-okay so far yes okay second part you try
-
-1:03:40.300,1:03:46.960
-to have the network here try to match
+okay so far yes okay second part you try to have the network here try to match
 
 1:03:43.570,1:03:49.480
-fake data with fake labor okay because
-
-1:03:46.960,1:03:53.140
-the output comes from this discriminator
+fake data with fake labor okay because the output comes from this discriminator
 
 1:03:49.480,1:03:55.660
-which was input with fake data and then
-
-1:03:53.140,1:03:57.520
-this you know it should force the
+which was input with fake data and then this you know it should force the
 
 1:03:55.660,1:04:00.670
-network to say oh these are fake labels
-
-1:03:57.520,1:04:04.810
-right and so first one you had X
+network to say oh these are fake labels right and so first one you had X
 
 1:04:00.670,1:04:07.510
-criterion here acting on true data with
-
-1:04:04.810,1:04:10.180
-true with labels that are sailing
+criterion here acting on true data with true with labels that are sailing
 
 1:04:07.510,1:04:13.930
-telling you these are true data and then
-
-1:04:10.180,1:04:15.600
-you train you you have the the loss for
+telling you these are true data and then you train you you have the the loss for
 
 1:04:13.930,1:04:18.670
-the network which is going to be sainted
-
-1:04:15.600,1:04:21.730
-this help instead should be labeled as
+the network which is going to be sainted this help instead should be labeled as
 
 1:04:18.670,1:04:24.370
-fake data right so this is still trying
-
-1:04:21.730,1:04:26.520
-to minimize these criteria therefore
+fake data right so this is still trying to minimize these criteria therefore
 
 1:04:24.370,1:04:29.110
-whenever you perform the optimizer step
-
-1:04:26.520,1:04:33.010
-the optimizer step will try to lower
+whenever you perform the optimizer step the optimizer step will try to lower
 
 1:04:29.110,1:04:35.440
-both this one and this one okay another
-
-1:04:33.010,1:04:37.690
-way to do this one would be to have the
+both this one and this one okay another way to do this one would be to have the
 
 1:04:35.440,1:04:41.080
-summation between this one plus this one
-
-1:04:37.690,1:04:43.450
-you perform only one go in the same step
+summation between this one plus this one you perform only one go in the same step
 
 1:04:41.080,1:04:45.700
-okay the alternative if you understand
-
-1:04:43.450,1:04:50.700
-what I said would be let me try to open
+okay the alternative if you understand what I said would be let me try to open
 
 1:04:45.700,1:04:51.930
-item eight this line here right so at
-
-1:04:50.700,1:04:58.270
-2:26
+item eight this line here right so at 2:26
 
 1:04:51.930,1:05:01.900
-and then the other one was down to 235
-
-1:04:58.270,1:05:05.080
-right to 35 so we performed this one dot
+and then the other one was down to 235 right to 35 so we performed this one dot
 
 1:05:01.900,1:05:07.570
-backward and we did this on dock back
-
-1:05:05.080,1:05:13.540
-right but otherwise we could have done
+backward and we did this on dock back right but otherwise we could have done
 
 1:05:07.570,1:05:17.100
-226 plus the other one 235 and then we
-
-1:05:13.540,1:05:19.360
-just perform back backward here okay so
+226 plus the other one 235 and then we just perform back backward here okay so
 
 1:05:17.100,1:05:21.640
-and this was an alternative which is
-
-1:05:19.360,1:05:24.190
-actually exactly the same as right now
+and this was an alternative which is actually exactly the same as right now
 
 1:05:21.640,1:05:26.830
-if you perform twice backward on the two
-
-1:05:24.190,1:05:27.850
-different Criterion's is exactly as some
+if you perform twice backward on the two different Criterion's is exactly as some
 
 1:05:26.830,1:05:29.950
-in the two Criterion's
-
-1:05:27.850,1:05:33.580
-and then performing backward only once
+in the two Criterion's and then performing backward only once
 
 1:05:29.950,1:05:36.550
-okay and then below whenever we train
-
-1:05:33.580,1:05:39.190
-the generator here we swap the the
+okay and then below whenever we train the generator here we swap the the
 
 1:05:36.550,1:05:42.220
-labels right in this case we try to
-
-1:05:39.190,1:05:44.830
-train the we're going to be training d
+labels right in this case we try to train the we're going to be training d
 
 1:05:42.220,1:05:48.640
-so we step in with the generator
-
-1:05:44.830,1:05:49.539
-optimizer such that the we try to induce
+so we step in with the generator optimizer such that the we try to induce
 
 1:05:48.640,1:05:52.569
-the network
-
-1:05:49.539,1:05:55.359
-to output labels that are real labels
+the network to output labels that are real labels
 
 1:05:52.569,1:05:56.019
-when we provide data that is fake data
-
-1:05:55.359,1:05:58.749
-right
+when we provide data that is fake data right
 
 1:05:56.019,1:06:01.269
-so this stepping here it will not try to
-
-1:05:58.749,1:06:03.789
-untrain the discriminator but we will it
+so this stepping here it will not try to untrain the discriminator but we will it
 
 1:06:01.269,1:06:06.159
-will train the generator such that it
-
-1:06:03.789,1:06:10.569
-tries to make up the discriminator
+will train the generator such that it tries to make up the discriminator
 
 1:06:06.159,1:06:13.899
-performing poorly so our generator is
-
-1:06:10.569,1:06:15.579
-generating our fake data don't we want
+performing poorly so our generator is generating our fake data don't we want
 
 1:06:13.899,1:06:17.229
-used a lot of parts don't we want to
-
-1:06:15.579,1:06:19.599
-take a step in the other direction for
+used a lot of parts don't we want to take a step in the other direction for
 
 1:06:17.229,1:06:20.769
-that yeah so you want to take a step in
-
-1:06:19.599,1:06:23.919
-the other direction for the generator
+that yeah so you want to take a step in the other direction for the generator
 
 1:06:20.769,1:06:26.079
-right you said no for the fake data we
-
-1:06:23.919,1:06:27.759
-want to be able to tell it's fake yeah
+right you said no for the fake data we want to be able to tell it's fake yeah
 
 1:06:26.079,1:06:31.929
-and and that's that's that's where you
-
-1:06:27.759,1:06:33.459
-do that here if you have fake data when
+and and that's that's that's where you do that here if you have fake data when
 
 1:06:31.929,1:06:35.469
-you when you put fake data inside the
-
-1:06:33.459,1:06:38.709
-discriminator you also say in these
+you when you put fake data inside the discriminator you also say in these
 
 1:06:35.469,1:06:40.179
-labels our fake levels right okay fake
-
-1:06:38.709,1:06:42.369
-label doesn't mean they are fake
+labels our fake levels right okay fake label doesn't mean they are fake
 
 1:06:40.179,1:06:48.279
-the these are the label for the fake
-
-1:06:42.369,1:06:50.079
-data maybe this is weird so these are
+the these are the label for the fake data maybe this is weird so these are
 
 1:06:48.279,1:06:53.669
-the true label they are not fake label
-
-1:06:50.079,1:06:57.039
-their true label for the fake data okay
+the true label they are not fake label their true label for the fake data okay
 
 1:06:53.669,1:07:00.749
-this I guess is seed that's what I does
-
-1:06:57.039,1:07:03.579
-dislike from other people writing code
+this I guess is seed that's what I does dislike from other people writing code
 
 1:07:00.749,1:07:06.130
-that doesn't make sense in this case
-
-1:07:03.579,1:07:08.559
-before these for the generate for the
+that doesn't make sense in this case before these for the generate for the
 
 1:07:06.130,1:07:11.769
-discriminator we try to lower this
-
-1:07:08.559,1:07:14.739
-criterion and we put this criterion so
+discriminator we try to lower this criterion and we put this criterion so
 
 1:07:11.769,1:07:18.219
-these two lines are trying to match real
-
-1:07:14.739,1:07:21.479
-data the true datum with a true label I
+these two lines are trying to match real data the true datum with a true label I
 
 1:07:18.219,1:07:25.419
-in this case you have trying to match
-
-1:07:21.479,1:07:27.999
-the you know generated data with the
+in this case you have trying to match the you know generated data with the
 
 1:07:25.419,1:07:31.089
-generated labels okay so both of these
-
-1:07:27.999,1:07:33.399
-two parts are trying to train the
+generated labels okay so both of these two parts are trying to train the
 
 1:07:31.089,1:07:35.619
-discriminator such that it can tell
-
-1:07:33.399,1:07:37.389
-apart the two things so just to clarify
+discriminator such that it can tell apart the two things so just to clarify
 
 1:07:35.619,1:07:39.849
-so for example like if returns produce
-
-1:07:37.389,1:07:41.829
-cat images then like the generator would
+so for example like if returns produce cat images then like the generator would
 
 1:07:39.849,1:07:43.989
-produce like oh I tried to make a cat
-
-1:07:41.829,1:07:45.939
-image here and here's label that saying
+produce like oh I tried to make a cat image here and here's label that saying
 
 1:07:43.989,1:07:48.339
-that it should be cat for since this
-
-1:07:45.939,1:07:50.169
-image I didn't try to make a cat so the
+that it should be cat for since this image I didn't try to make a cat so the
 
 1:07:48.339,1:07:52.539
-label is 0 for I didn't try to make it
-
-1:07:50.169,1:07:57.039
-yeah okay so let me go with cats I guess
+label is 0 for I didn't try to make it yeah okay so let me go with cats I guess
 
 1:07:52.539,1:07:59.289
-it's gonna be easier or is it so here
-
-1:07:57.039,1:08:01.179
-we're gonna have real data
+it's gonna be easier or is it so here we're gonna have real data
 
 1:07:59.289,1:08:03.550
-these are very nice cute pictures of
-
-1:08:01.179,1:08:06.370
-cats right and so we're gonna say
+these are very nice cute pictures of cats right and so we're gonna say
 
 1:08:03.550,1:08:08.320
-oh this output should be name is cut
-
-1:08:06.370,1:08:10.900
-right because it's very nice and looking
+oh this output should be name is cut right because it's very nice and looking
 
 1:08:08.320,1:08:14.080
-cute then I'm gonna be feeding some
-
-1:08:10.900,1:08:18.280
-garbage some noise to the generator this
+cute then I'm gonna be feeding some garbage some noise to the generator this
 
 1:08:14.080,1:08:21.280
-looks like a monster okay ugly cut so
-
-1:08:18.280,1:08:23.260
-then we provide these monster looking
+looks like a monster okay ugly cut so then we provide these monster looking
 
 1:08:21.280,1:08:24.910
-like images to the discriminator and
-
-1:08:23.260,1:08:28.390
-then we are going to be feeding these
+like images to the discriminator and then we are going to be feeding these
 
 1:08:24.910,1:08:30.549
-laws with the you know verdict then
-
-1:08:28.390,1:08:32.350
-whatever the discriminator says and
+laws with the you know verdict then whatever the discriminator says and
 
 1:08:30.549,1:08:35.980
-wheedle able to say these are monsters
-
-1:08:32.350,1:08:37.930
-and so here you perform backward again
+wheedle able to say these are monsters and so here you perform backward again
 
 1:08:35.980,1:08:40.390
-and then step such that you're going to
-
-1:08:37.930,1:08:43.080
-be training the discriminator such that
+and then step such that you're going to be training the discriminator such that
 
 1:08:40.390,1:08:47.109
-they can tell apart cuts from monsters
-
-1:08:43.080,1:08:49.030
-first part second part below we feed the
+they can tell apart cuts from monsters first part second part below we feed the
 
 1:08:47.109,1:08:50.710
-monsters in this case we still have we
-
-1:08:49.030,1:08:52.900
-have the gradients right in this case we
+monsters in this case we still have we have the gradients right in this case we
 
 1:08:50.710,1:08:55.299
-cut off the gradient pay attention to
-
-1:08:52.900,1:08:57.150
-this part here we cut off the gradient
+cut off the gradient pay attention to this part here we cut off the gradient
 
 1:08:55.299,1:09:00.280
-so gradients don't go down the generator
-
-1:08:57.150,1:09:00.700
-in this case we actually input the fake
+so gradients don't go down the generator in this case we actually input the fake
 
 1:09:00.280,1:09:03.370
-data
-
-1:09:00.700,1:09:05.620
-the monster looking images inside the
+data the monster looking images inside the
 
 1:09:03.370,1:09:08.020
-discriminator the discriminator say all
-
-1:09:05.620,1:09:09.580
-monsters monsters but in this case we
+discriminator the discriminator say all monsters monsters but in this case we
 
 1:09:08.020,1:09:14.710
-say no these are cute
-
-1:09:09.580,1:09:16.390
-cuts pictures and so now we train the we
+say no these are cute cuts pictures and so now we train the we
 
 1:09:14.710,1:09:17.680
-perform backward which is computing the
-
-1:09:16.390,1:09:20.650
-partial derivatives with respect to
+perform backward which is computing the partial derivatives with respect to
 
 1:09:17.680,1:09:23.140
-everything and then we step for the
-
-1:09:20.650,1:09:25.330
-generator such that the monsters that
+everything and then we step for the generator such that the monsters that
 
 1:09:23.140,1:09:28.080
-the generator were was making now they
-
-1:09:25.330,1:09:28.080
-look more cute
+the generator were was making now they look more cute
 
 1:09:29.350,1:09:37.180
-I can be more cute than this sorry why
-
-1:09:35.500,1:09:41.410
-don't we send a gradient of the fake
+I can be more cute than this sorry why don't we send a gradient of the fake
 
 1:09:37.180,1:09:45.340
-data to the discriminator we do in the
-
-1:09:41.410,1:09:50.830
-second case right so let me answer the
+data to the discriminator we do in the second case right so let me answer the
 
 1:09:45.340,1:09:52.900
-thing so in this case here we when we
-
-1:09:50.830,1:09:55.390
-send when we send the gradients
+thing so in this case here we when we send when we send the gradients
 
 1:09:52.900,1:09:57.610
-backwards but back to the you know to
-
-1:09:55.390,1:09:59.980
-the generator we actually swap the
+backwards but back to the you know to the generator we actually swap the
 
 1:09:57.610,1:10:03.150
-correct labels with the you know
-
-1:09:59.980,1:10:06.910
-incorrect labels in this case we input
+correct labels with the you know incorrect labels in this case we input
 
 1:10:03.150,1:10:08.680
-monsters the decimator says these are
-
-1:10:06.910,1:10:12.240
-monsters and we say oh these are
+monsters the decimator says these are monsters and we say oh these are
 
 1:10:08.680,1:10:15.190
-good-looking cuts and then we train the
-
-1:10:12.240,1:10:18.640
-generator such that these monsters will
+good-looking cuts and then we train the generator such that these monsters will
 
 1:10:15.190,1:10:20.470
-look like more nice-looking cut in this
-
-1:10:18.640,1:10:22.330
-case you don't want to send the
+look like more nice-looking cut in this case you don't want to send the
 
 1:10:20.470,1:10:24.850
-gradients through because in this case
-
-1:10:22.330,1:10:27.130
-you try to minimize the correct
+gradients through because in this case you try to minimize the correct
 
 1:10:24.850,1:10:29.170
-classification part right so if you
-
-1:10:27.130,1:10:32.470
-would send gradients backward you would
+classification part right so if you would send gradients backward you would
 
 1:10:29.170,1:10:34.510
-basically get a worse performing
-
-1:10:32.470,1:10:37.740
-generator right because you don't want
+basically get a worse performing generator right because you don't want
 
 1:10:34.510,1:10:41.320
-to minimize this criterion you want to
-
-1:10:37.740,1:10:43.000
-maximize this criterion right so that's
+to minimize this criterion you want to maximize this criterion right so that's
 
 1:10:41.320,1:10:44.710
-why we don't have gradients in this
-
-1:10:43.000,1:10:46.780
-first case but we do have gradients in
+why we don't have gradients in this first case but we do have gradients in
 
 1:10:44.710,1:10:49.390
-this case because we absolutely want to
-
-1:10:46.780,1:10:53.980
-compute the gradients with respect to
+this case because we absolutely want to compute the gradients with respect to
 
 1:10:49.390,1:10:58.480
-the generator of this criterion it's the
-
-1:10:53.980,1:11:00.700
-combination VC lost and sigmoid because
+the generator of this criterion it's the combination VC lost and sigmoid because
 
 1:10:58.480,1:11:06.820
-I mean it's a problem because the
-
-1:11:00.700,1:11:08.940
-underflow so the problem with the dbca
+I mean it's a problem because the underflow so the problem with the dbca
 
 1:11:06.820,1:11:10.840
-thing here is the probability
-
-1:11:08.940,1:11:13.180
-probabilistic approach right so this
+thing here is the probability probabilistic approach right so this
 
 1:11:10.840,1:11:15.790
-sigmoid if you train this network very
-
-1:11:13.180,1:11:20.260
-well this sigmoid will be giving you
+sigmoid if you train this network very well this sigmoid will be giving you
 
 1:11:15.790,1:11:21.850
-zero gradients and because if you
-
-1:11:20.260,1:11:23.680
-saturate you know you're gonna have
+zero gradients and because if you saturate you know you're gonna have
 
 1:11:21.850,1:11:26.590
-you're in the two if you're not exactly
-
-1:11:23.680,1:11:28.720
-on the middle way if you are just away
+you're in the two if you're not exactly on the middle way if you are just away
 
 1:11:26.590,1:11:31.960
-from the decision boundary you're gonna
-
-1:11:28.720,1:11:33.880
-have basically or one it's so it's still
+from the decision boundary you're gonna have basically or one it's so it's still
 
 1:11:31.960,1:11:36.040
-gonna have 0 gradient always going to be
-
-1:11:33.880,1:11:38.230
-the other side here still all 0 but
+gonna have 0 gradient always going to be the other side here still all 0 but
 
 1:11:36.040,1:11:40.690
-there is no gradient so if you're over
-
-1:11:38.230,1:11:41.890
-here you don't know where to go how to
+there is no gradient so if you're over here you don't know where to go how to
 
 1:11:40.690,1:11:43.390
-go down the hill
-
-1:11:41.890,1:11:45.670
-right because there is no here is like a
+go down the hill right because there is no here is like a
 
 1:11:43.390,1:11:48.070
-clap oh so this is a first problem
-
-1:11:45.670,1:11:52.090
-second problem is that if you want to
+clap oh so this is a first problem second problem is that if you want to
 
 1:11:48.070,1:11:55.810
-really have a very vertical like a very
-
-1:11:52.090,1:11:58.510
-vertical edge here you will need very
+really have a very vertical like a very vertical edge here you will need very
 
 1:11:55.810,1:12:00.100
-very very very large weight okay
-
-1:11:58.510,1:12:02.200
-such that if you you know they have
+very very very large weight okay such that if you you know they have
 
 1:12:00.100,1:12:04.090
-larger the weight the larger is going to
-
-1:12:02.200,1:12:05.770
-be the final value inside the sigmoid
+larger the weight the larger is going to be the final value inside the sigmoid
 
 1:12:04.090,1:12:08.380
-and if you want to get like a saturated
-
-1:12:05.770,1:12:13.090
-Sigma you're gonna have like pretty
+and if you want to get like a saturated Sigma you're gonna have like pretty
 
 1:12:08.380,1:12:15.340
-large weight leading to that module and
-
-1:12:13.090,1:12:17.050
-this one creates um you know it's gonna
+large weight leading to that module and this one creates um you know it's gonna
 
 1:12:15.340,1:12:19.990
-make your weights and everything kind of
-
-1:12:17.050,1:12:22.510
-explode and so that's why people want to
+make your weights and everything kind of explode and so that's why people want to
 
 1:12:19.990,1:12:24.190
-do several things like they want to
-
-1:12:22.510,1:12:27.160
-limit the norm of the weights then you
+do several things like they want to limit the norm of the weights then you
 
 1:12:24.190,1:12:29.740
-want to limit the norm of the gradients
-
-1:12:27.160,1:12:34.780
-and there are many many ways to patch
+want to limit the norm of the gradients and there are many many ways to patch
 
 1:12:29.740,1:12:36.730
-this architecture but that's dispatching
-
-1:12:34.780,1:12:38.950
-right we don't want patching we'd like
+this architecture but that's dispatching right we don't want patching we'd like
 
 1:12:36.730,1:12:41.980
-to know what is proper and what is
-
-1:12:38.950,1:12:45.630
-proper is gonna be basically and using a
+to know what is proper and what is proper is gonna be basically and using a
 
 1:12:41.980,1:12:49.030
-out encoder for example for your final
-
-1:12:45.630,1:12:50.680
-cost network so if you consider the
+out encoder for example for your final cost network so if you consider the
 
 1:12:49.030,1:12:52.660
-reconstruction error of a note encoder
-
-1:12:50.680,1:12:54.760
-the reconstruction era of an auto
+reconstruction error of a note encoder the reconstruction era of an auto
 
 1:12:52.660,1:12:57.070
-encoder will be zero of small if you
-
-1:12:54.760,1:12:59.170
-provide a data and it is coming from the
+encoder will be zero of small if you provide a data and it is coming from the
 
 1:12:57.070,1:13:00.790
-training distribution if you provide a
-
-1:12:59.170,1:13:02.320
-symbol it is away from the training
+training distribution if you provide a symbol it is away from the training
 
 1:13:00.790,1:13:04.210
-distribution to remember the manifold
-
-1:13:02.320,1:13:06.970
-from the last time then the auto encoder
+distribution to remember the manifold from the last time then the auto encoder
 
 1:13:04.210,1:13:08.890
-will do a poor job at the reconstruction
-
-1:13:06.970,1:13:11.140
-and therefore the reconstruction error
+will do a poor job at the reconstruction and therefore the reconstruction error
 
 1:13:08.890,1:13:14.710
-will be larger right so instead of using
-
-1:13:11.140,1:13:17.620
-a discriminator you can use a out
+will be larger right so instead of using a discriminator you can use a out
 
 1:13:14.710,1:13:19.570
-encoder reconstruction error how can you
-
-1:13:17.620,1:13:21.460
-get more out of this course right
+encoder reconstruction error how can you get more out of this course right
 
 1:13:19.570,1:13:23.530
-overall so let me give you a few
-
-1:13:21.460,1:13:25.720
-suggestions first comprehension if
+overall so let me give you a few suggestions first comprehension if
 
 1:13:23.530,1:13:27.400
-something was still not clear just as
-
-1:13:25.720,1:13:28.990
-moving the question a section below the
+something was still not clear just as moving the question a section below the
 
 1:13:27.400,1:13:30.820
-video I will answer every question so
-
-1:13:28.990,1:13:33.430
-you will get it eventually
+video I will answer every question so you will get it eventually
 
 1:13:30.820,1:13:36.430
-if you'd like to i get more news about
-
-1:13:33.430,1:13:38.650
-the field things i draw on in terms of
+if you'd like to i get more news about the field things i draw on in terms of
 
 1:13:36.430,1:13:40.210
-educational content and things I find
-
-1:13:38.650,1:13:42.970
-interesting you can follow up on Twitter
+educational content and things I find interesting you can follow up on Twitter
 
 1:13:40.210,1:13:44.740
-and there you have my handle I've seen
-
-1:13:42.970,1:13:46.720
-that you should like to have updates
+and there you have my handle I've seen that you should like to have updates
 
 1:13:44.740,1:13:48.400
-about newer videos don't forget to
-
-1:13:46.720,1:13:50.350
-subscribe to the channel and activate
+about newer videos don't forget to subscribe to the channel and activate
 
 1:13:48.400,1:13:52.960
-the notification bell if you actually
-
-1:13:50.350,1:13:53.710
-like this video don't forget to put a
+the notification bell if you actually like this video don't forget to put a
 
 1:13:52.960,1:13:56.050
-thumbs up
-
-1:13:53.710,1:13:58.090
-it helps as well recommending this video
+thumbs up it helps as well recommending this video
 
 1:13:56.050,1:14:00.250
-to other people if you'd like to search
-
-1:13:58.090,1:14:02.590
-the content of this lesson we have our
+to other people if you'd like to search the content of this lesson we have our
 
 1:14:00.250,1:14:04.989
-English transcription which is connected
-
-1:14:02.590,1:14:06.910
-directly to this video so every title in
+English transcription which is connected directly to this video so every title in
 
 1:14:04.989,1:14:08.530
-the transcription is clickable if you
-
-1:14:06.910,1:14:10.239
-click on the title you get the right
+the transcription is clickable if you click on the title you get the right
 
 1:14:08.530,1:14:12.040
-director to the correct location on the
-
-1:14:10.239,1:14:13.570
-video in the same way each section of
+director to the correct location on the video in the same way each section of
 
 1:14:12.040,1:14:15.100
-the video is the same in title is in
-
-1:14:13.570,1:14:18.280
-transcription so you can go back and
+the video is the same in title is in transcription so you can go back and
 
 1:14:15.100,1:14:21.550
-forth maybe English is not your first
-
-1:14:18.280,1:14:23.980
-language but italiano habla espanol nous
+forth maybe English is not your first language but italiano habla espanol nous
 
 1:14:21.550,1:14:26.230
-oppidum comma speak Korean have no idea
-
-1:14:23.980,1:14:29.380
-how to speak Korean well we have several
+oppidum comma speak Korean have no idea how to speak Korean well we have several
 
 1:14:26.230,1:14:31.239
-translations of this material avaible
-
-1:14:29.380,1:14:33.310
-odd at the web site so and we are also
+translations of this material avaible odd at the web site so and we are also
 
 1:14:31.239,1:14:35.770
-looking for more translations if you can
-
-1:14:33.310,1:14:38.200
-help as well it's really important that
+looking for more translations if you can help as well it's really important that
 
 1:14:35.770,1:14:40.750
-you actually try to do some of the
-
-1:14:38.200,1:14:42.190
-exercises and you play around with the
+you actually try to do some of the exercises and you play around with the
 
 1:14:40.750,1:14:44.530
-notebooks and the source code we
-
-1:14:42.190,1:14:46.420
-provided in order to internalize and
+notebooks and the source code we provided in order to internalize and
 
 1:14:44.530,1:14:49.780
-understand better the concepts we
-
-1:14:46.420,1:14:52.030
-explained during the lessons contribute
+understand better the concepts we explained during the lessons contribute
 
 1:14:49.780,1:14:54.460
-this is really giving you the
-
-1:14:52.030,1:14:56.350
-opportunity to show your contribution
+this is really giving you the opportunity to show your contribution
 
 1:14:54.460,1:14:58.150
-for example you find some typos in the
-
-1:14:56.350,1:15:01.000
-write-up so you find some bugs in the
+for example you find some typos in the write-up so you find some bugs in the
 
 1:14:58.150,1:15:03.790
-notebooks you can fix those and you know
-
-1:15:01.000,1:15:06.219
-be part of this whole project by sending
+notebooks you can fix those and you know be part of this whole project by sending
 
 1:15:03.790,1:15:09.400
-me a request on github or letting me
-
-1:15:06.219,1:15:12.180
-know otherwise and that was it so see
+me a request on github or letting me know otherwise and that was it so see
 
 1:15:09.400,1:15:12.180
-you next time bye bye
-
+you next time bye bye 
