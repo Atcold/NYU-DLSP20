@@ -1,0 +1,3441 @@
+0:00:04.819,0:00:08.319
+Dans ce cas, nous avons un réseau qui a une entrée sur le côté gauche.
+
+0:00:08.959,0:00:14.259
+Habituellement, vous avez l’entrée sur le côté inférieur ou sur la gauche. Ils sont roses dans mes diapositives.
+
+0:00:14.260,0:00:17.409
+Donc, si vous prenez des notes, les mettre en roses. Non, je plaisante !
+
+0:00:18.400,0:00:23.020
+Et puis nous avons ... Combien d’activations ? Combien de couches cachées comptez-vous là-bas ?
+
+0:00:23.539,0:00:27.789
+Quatre couches cachées. Donc, dans l’ensemble, combien de couches le réseau a-t-il ici?
+
+0:00:28.820,0:00:32.980
+Six, c’est ça ? Parce que nous avons quatre cachés, plus une entrée, plus une couche de sortie.
+
+0:00:33.649,0:00:37.568
+Donc dans ce cas, j’ai deux neurones par couche, n’est-ce pas ?
+
+0:00:37.569,0:00:41.739
+Qu’est-ce que ça veut dire ? Quelles sont les dimensions des matrices que nous utilisons ici?
+
+0:00:43.339,0:00:46.119
+Deux par deux. Qu’est-ce que cette matrice deux par deux fait ?
+
+0:00:48.739,0:00:51.998
+Allez! Vous avez... Vous connaissez la réponse à cette question.
+
+0:00:53.359,0:00:57.579
+Rotation, oui. Puis mise à l’échelle, puis transvection et...
+
+0:00:59.059,0:01:05.469
+Réflexion. Fantastique, c’est ça ? Donc, nous limitons notre réseau à effectuer toutes les opérations sur le plan. 
+
+0:01:05.540,0:01:12.380
+Nous avons vu la première fois que si je permets à la couche cachée d’être longue d’une centaine de neurones, nous pouvons ...
+
+0:01:12.380,0:01:13.680
+Wow ok! [problème technique]
+
+0:01:13.680,0:01:15.680
+Nous pouvons facilement... [grosse voix qui fait peur]
+
+0:01:18.079,0:01:20.079
+Ah fantastique. Qu'est-ce que c'est ? [rires des étudiants]
+
+0:01:21.170,0:01:23.170
+Nous regardons des films maintenant. Je vois...
+
+0:01:24.409,0:01:29.889
+Fantastique. Qu'est-ce que c'est ? Mandalorian. C’est cool, non? D'accord...
+
+0:01:32.479,0:01:39.428
+Ok, comme cette leçon est belle. Elle est même enregistrée.
+
+0:01:40.789,0:01:43.719
+Ok, donnez-moi une seconde. Ok, alors on y va...
+
+0:01:47.810,0:01:49.810
+Fait
+
+0:01:50.390,0:01:52.070
+Ecoute
+
+0:01:52.070,0:01:53.600
+D'accord
+
+0:01:53.600,0:01:59.679
+On est partis de ce réseau. Qui avait cette couche intermédiaire et nous les avons forcés à être
+
+0:02:00.289,0:02:05.229
+en 2 dimensions. De telle sorte que toutes les transformations sont appliquées pour être sur un plan.
+
+0:02:05.270,0:02:08.319
+Donc, c’est ce que le réseau fait à notre plan.
+
+0:02:08.319,0:02:14.269
+Il le plie sur des régions spécifiques. Et ces pliages sont très brusques.
+
+0:02:14.370,0:02:18.499
+C’est parce que toutes les transformations sont effectuées sur la couche 2D.
+
+0:02:18.500,0:02:22.550
+Donc, cet entraînement m’a pris vraiment beaucoup d’efforts parce que
+
+0:02:23.310,0:02:25.310
+l’optimisation est en fait assez difficile.
+
+0:02:25.740,0:02:30.769
+Chaque fois que j’avais une couche cachée de cent neurones, c’était très facile à entraîner
+
+0:02:30.770,0:02:35.299
+Cela a vraiment pris beaucoup d’efforts et vous devez me dire pourquoi, ok ?
+
+0:02:35.400,0:02:39.469
+Si vous ne connaissez pas la réponse maintenant, vous feriez mieux de connaître la réponse pour l’examen
+
+0:02:40.470,0:02:43.370
+Ainsi, vous pouvez prendre note de ce qui sont les questions pour l’examen...
+
+0:02:43.980,0:02:49.600
+Bien, donc c’est la sortie finale du réseau, qui est aussi cette couche 2D…
+
+0:02:50.010,0:02:55.489
+enchâssement 2D donc je n’ai pas de non-linéarité sur ma dernière couche. Ici ce sont les derniers
+
+0:02:56.370,0:03:01.850
+régions de classification. Voyons donc ce que chaque couche fait. C’est la première couche, la transformation affine.
+
+0:03:01.850,0:03:06.710
+On dirait que c’est une rotation 3D, mais ce n’est pas juste. C’est juste une rotation 2D.
+
+0:03:07.740,0:03:15.600
+Réflexion, mise à l’échelle et transvection. Et puis quelle est cette partie ? Qu’est-ce qui s’est passé à l’instant ? Vous voyez ?
+
+0:03:17.820,0:03:21.439
+Nous avons comme une ReLU (Unité linéaire rectifiée), qui tue tous les négatifs
+
+0:03:22.800,0:03:27.079
+côtés du réseau, non? Désolé, tous les côtés négatifs de cet
+
+0:03:28.080,0:03:33.499
+Espace. C’est la deuxième transformation affine et puis ici vous appliquez à nouveau
+
+0:03:34.770,0:03:37.460
+une ReLU, vous pouvez voir tous les négatifs
+
+0:03:38.220,0:03:41.149
+sous-espaces ont été effacés et ils ont été réglés à zéro.
+
+0:03:41.730,0:03:44.509
+Ensuite, nous continuons avec une troisième transformation affine
+
+0:03:45.120,0:03:46.790
+Nous zoomons... zoomons beaucoup...
+
+0:03:46.790,0:03:54.469
+Et puis vous allez avoir la couche ReLU qui va tuer un de ces ... trois quadrants, n’est-ce pas ?
+
+0:03:54.470,0:03:59.240
+Un seul quadrant survit à chaque fois. Et puis nous allons avec la quatrième transformation affine
+
+0:03:59.790,0:04:06.200
+où cela s’allonge beaucoup parce qu’étant donné que nous confinons toute la transformation vivant dans cet espace
+
+0:04:06.210,0:04:12.439
+il a vraiment besoin d’étirer et d’utiliser toute la puissance qu’il peut, ok ? Encore une fois, il s’agit de
+
+0:04:13.170,0:04:18.589
+l’avant-dernière. Ensuite, nous avons la dernière transformation affine. Et puis nous atteignons enfin
+
+0:04:19.320,0:04:20.910
+des régions linéairement séparables.
+
+0:04:20.910,0:04:26.359
+Enfin, nous allons voir comment chaque transformation affine peut être
+
+0:04:27.240,0:04:31.759
+divisées dans chaque composant. Donc, nous avons la rotation, nous écrasons comme le zoom.
+
+0:04:32.340,0:04:38.539
+Ensuite, nous avons la rotation, la réflexion parce que le déterminant est -1, et puis nous avons le biais final.
+
+0:04:38.539,0:04:42.769
+Vous avez la partie positive de la ReLU, à nouveau la rotation,
+
+0:04:43.650,0:04:47.209
+L’inversement parce que nous avions un négatif, un déterminant -1.
+
+0:04:47.849,0:04:49.849
+Zoom, rotation
+
+0:04:49.889,0:04:54.258
+Une réflexion de plus, puis biais final. Il s’agissait de la deuxième transformation affine.
+
+0:04:54.259,0:04:58.609
+Ensuite, nous avons ici la partie positive à nouveau. Nous avons la troisième couche donc la rotation, la réflexion
+
+0:05:00.000,0:05:05.629
+zoom et puis nous avons ... c’est la décomposition SVD, ok ? Vous devriez le reconnaître,
+
+0:05:05.629,0:05:09.799
+le savoir [avoir eu des cours dessus]. Et puis la finale est la translation et la troisième
+
+0:05:10.229,0:05:15.589
+ReLU. Alors nous avons la quatrième couche, donc la rotation, la réflexion parce que le déterminant était négatif
+
+0:05:16.169,0:05:18.169
+zoom, encore une fois l’autre rotation
+
+0:05:18.599,0:05:21.769
+Encore une fois... réflexion et le biais
+
+0:05:22.379,0:05:24.559
+Enfin une ReLU et puis nous avons la dernière ...
+
+0:05:25.259,0:05:27.259
+la cinquième couche. Donc la rotation
+
+0:05:28.139,0:05:32.059
+zoom, nous n’avons pas eu de réflexion parce que le déterminant était +1
+
+0:05:32.490,0:05:37.069
+Encore une fois, la réflexion dans ce cas parce que le déterminant était négatif et enfin le biais final. Ok ?
+
+0:05:37.139,0:05:41.478
+Et donc c’est à peu près la façon dont ce réseau, qui a été
+
+0:05:42.599,0:05:44.599
+Fait juste de
+
+0:05:44.759,0:05:46.759
+séquence de couches de
+
+0:05:47.159,0:05:52.218
+neurones qui ne sont que deux neurones par couche, effectue la tâche de classification.
+
+0:05:54.990,0:05:58.159
+Et toutes ces transformations ont été contraintes d’être
+
+0:05:58.680,0:06:03.199
+Vivantes dans le plan. Ok, donc c’était vraiment difficile à entraîner.
+
+0:06:03.419,0:06:05.959
+Pouvez-vous comprendre pourquoi il était vraiment difficile d’entraîner ?
+
+0:06:06.539,0:06:08.539
+Qu’est-ce que cela se passe si mon ...
+
+0:06:09.270,0:06:16.219
+si mon biais de l’une des quatre couches met mes points loin du quadrant supérieur droit?
+
+0:06:21.060,0:06:25.519
+[Un étudiant répond, inaudible pour en faire une traduction]. Exactement, donc si vous avez l’un des quatre biais 
+
+0:06:26.189,0:06:28.549
+mettre mon point initial loin du quadrant supérieur droit
+
+0:06:29.189,0:06:34.039
+puis les ReLU vont tout tuer complètement, et tout s’effondre à zéro
+
+0:06:34.560,0:06:38.399
+d'accord? Et donc là, vous ne pouvez pas faire plus. Donc
+
+0:06:38.980,0:06:44.129
+ce réseau était vraiment difficile à entraîner. Si vous le rendez un peu plus gros que ...
+
+0:06:44.320,0:06:48.659
+au lieu de le contraindre à être de seulement deux neurones pour chacune des couches cachées
+
+0:06:48.660,0:06:52.230
+alors il est beaucoup plus facile à entraîner. Ou vous pouvez faire une combinaison des deux : 
+
+0:06:52.230,0:06:54.300
+Au lieu d’avoir juste un gros réseau 
+
+0:06:54.300,0:07:01.589
+vous pouvez avoir un réseau qui est moins gros mais avec que quelques couches cachées, ok ?
+
+0:07:02.770,0:07:06.659
+[Question d’un étudiant et interactions d’Alfredo avec lui pour être sûr de la comprendre]
+
+0:07:07.810,0:07:11.429
+Ok. Donc, la question est :  comment pouvons-nous déterminer la structure ou le
+
+0:07:12.730,0:07:15.150
+configuration de notre réseau, non? Comment concevons-nous le réseau ?
+
+0:07:15.580,0:07:20.550
+Et la réponse va être ce que Yann va enseigner tout au long du semestre ;)
+
+0:07:20.550,0:07:27.300
+Donc, gardez votre attention élevée parce que c’est ce que nous allons vous enseigner.
+
+0:07:28.090,0:07:30.840
+C’est une bonne question !  Il n’y a pas de
+
+0:07:32.410,0:07:34.679
+règle mathématique, il y a beaucoup d’expérimentation,
+
+0:07:35.710,0:07:39.569
+De preuves empiriques et beaucoup de gens essaient différentes configurations.
+
+0:07:39.570,0:07:42.000
+Nous avons trouvé quelque chose qui fonctionne vraiment assez bien maintenant.
+
+0:07:42.100,0:07:46.200
+Nous allons couvrir ces architectures dans les leçons suivantes. D’autres questions ?
+
+0:07:48.790,0:07:50.790
+Ne soyez pas timide
+
+0:07:51.880,0:07:56.130
+non? Ok, donc je suppose que nous pouvons passer à la deuxième partie du cours.
+
+0:07:57.880,0:08:00.630
+Ok, donc on va parler des réseaux convolutifs (abrégés en ConvNets dans la suite) aujourd’hui.
+
+0:08:02.710,0:08:05.879
+Allons y. Donc, je vais commencer par
+
+0:08:06.820,0:08:09.500
+quelque chose qui est pertinent pour les ConvNets, mais pas seulement pour eux.
+
+0:08:10.000,0:08:12.500
+C’est l’idée de transformer les paramètres d’un réseau neuronal.
+
+0:08:12.570,0:08:17.010
+Donc, ici, nous avons un diagramme que nous avons vu avant, sauf pour une petite torsion.
+
+0:08:17.920,0:08:22.300
+Le diagramme que nous voyons ici est un réseau neuronal G de X et W  [(G(x,w) sur la diapositive]
+
+0:08:22.360,0:08:27.960
+W étant les paramètres, X étant l’entrée qui fait une prédiction sur une sortie, et qui va dans une fonction de coût
+
+0:08:27.960,0:08:29.500
+Nous l’avons déjà vu.
+
+0:08:29.500,0:08:34.500
+Mais la torsion ici est que le vecteur de poids au lieu d’être un
+
+0:08:35.830,0:08:39.660
+paramètre qui est optimisé, est en fait lui-même la sortie d’une autre fonction
+
+0:08:40.599,0:08:43.589
+pouvant être paramétrée [H(u) sur la diapositive]. Dans ce cas, cette fonction est
+
+0:08:44.320,0:08:50.369
+pas une fonction paramétée, ou c’est une fonction paramétrée où la seule entrée est un autre paramètre U. Ok ?
+
+0:08:50.750,0:08:56.929
+Nous avons donc fait en sorte que les poids de ce réseau neuronal soient la fonction d'un réseau plus élémentaire...
+
+0:08:57.480,0:08:59.480
+quelques paramètres plus élémentaires U
+
+0:09:00.420,0:09:02.420
+à travers une fonction et
+
+0:09:02.940,0:09:07.880
+vous vous rendez compte très rapidement que la rétropropagation fonctionne là, non? Si vous rétropropagez les gradients
+
+0:09:09.210,0:09:15.049
+à travers la fonction G pour obtenir le gradient de n’importe quelle fonction objectif minimisant les
+
+0:09:15.600,0:09:21.290
+paramètres de poids, vous pouvez continuer à rétropopager à travers la fonction H ici pour obtenir les gradients par rapport à U.
+
+0:09:22.620,0:09:27.229
+Donc, à la fin, rétropropagation des choses comme ça…
+
+0:09:30.600,0:09:42.220
+Donc, lorsque vous mettez à jour U, vous multipliez le Jacobien de la fonction objectif par rapport aux paramètres, puis par le ...
+
+0:09:42.750,0:09:46.760
+Jacobien de la fonction H par rapport à ses propres paramètres, d’accord ?
+
+0:09:46.760,0:09:50.960
+Donc, vous obtenez le produit de deux Jacobiens ici, qui est juste ce que vous obtenez de la rétropropagation.
+
+0:09:50.960,0:09:54.919
+Vous n’avez rien à faire en Pytorch. Cela se fait automatiquement lorsque vous définissez le réseau.
+
+0:09:59.130,0:10:03.080
+Et c’est un peu la mise à jour qui se produit.
+
+0:10:03.840,0:10:10.820
+Maintenant, bien sûr, W étant une fonction de U à travers la fonction H, le changement dans W
+
+0:10:12.390,0:10:16.460
+sera le changement en U multiplié par le Jacobien de H transposé.
+
+0:10:18.090,0:10:24.739
+Et donc c’est le genre de chose que vous obtenez ici. Le changement dans W que vous obtenez sans mettre à jour W
+
+0:10:24.740,0:10:30.260
+est la mise à jour en U multiplié par le Jacobien de H.
+
+0:10:30.690,0:10:37.280
+Et nous avons eu une transposé ici. Nous avons le contraire là. Il s’agit d’une matrice carrée
+
+0:10:37.860,0:10:41.720
+qui est N_w par N_w, qui est le nombre de ... la dimension de W au carré, d’accord ?
+
+0:10:42.360,0:10:44.690
+Donc cette matrice ici
+
+0:10:45.780,0:10:47.780
+a autant de lignes que
+
+0:10:48.780,0:10:52.369
+W a de composants, puis le nombre de colonnes est le nombre de
+
+0:10:52.560,0:10:57.470
+composants de U. Et puis cette chose, bien sûr, est l’inverse, donc c’est un N_u par N_w
+
+0:10:57.540,0:11:02.669
+Donc, quand vous faites le produit, faire le produit de ces deux matrices vous obtenez un N_w par N_w matrice
+
+0:11:03.670,0:11:05.670
+Et puis vous multipliez cela par ce
+
+0:11:06.190,0:11:10.380
+vecteur N_w et vous obtenez un vecteur N_w qui est ce dont vous avez besoin pour la mise à jour
+
+0:11:11.440,0:11:13.089
+des poids.
+
+0:11:13.089,0:11:16.828
+Ok, donc c’est une sorte de forme générale de transformation de l’espace des paramètres et il ya
+
+0:11:18.430,0:11:22.979
+de nombreuses façons que vous pouvez utiliser cela et une façon particulière de l’utiliser est quand
+
+0:11:23.769,0:11:25.389
+H est ce qu’on appelle un ...
+
+0:11:26.709,0:11:30.089
+ce dont nous avons parlé la semaine dernière :  un « connecteur Y »
+
+0:11:30.089,0:11:35.578
+Alors imaginez la seule chose que H fait, c’est qu’il prend un composant de U et il le copie plusieurs fois.
+
+0:11:36.029,0:11:40.000
+De sorte que vous avez la même valeur, le même poids répliqué à travers la fonction G.
+
+0:11:40.000,0:11:43.379
+La fonction G qu’utilisera la même valeur plusieurs fois.
+
+0:11:45.639,0:11:47.639
+Donc, cela ressemblerait à ceci.
+
+0:11:48.339,0:11:50.339
+Alors imaginons que U soit en deux dimensions
+
+0:11:51.279,0:11:54.448
+u1, u2 et que W est en quatre dimensions, avec
+
+0:11:55.000,0:11:59.969
+w1 et w2 sont égaux à u1 et w3, w4 sont égaux à u2.
+
+0:12:01.060,0:12:04.400
+Donc, fondamentalement, vous n’avez que deux paramètres libres
+
+0:12:04.700
+et quand vous changez un composant de U ce change deux composants de W
+
+0:12:08.560,0:12:14.579
+d’une manière très simple. Et ça s’appelle le partage de poids, d’accord ? Lorsque deux poids sont forcés d’être égaux,
+
+0:12:14.579,0:12:19.200
+ils sont en fait égaux à un paramètre plus élémentaire qui contrôle les deux.
+
+0:12:19.300,0:12:21.419
+C’est le partage de poids et c’est un peu la base de
+
+0:12:21.940,0:12:23.940
+beaucoup d’idées
+
+0:12:24.670,0:12:26.880
+Vous savez, les réseaux convolutionnels entre autres.
+
+0:12:27.730,0:12:31.890
+Mais vous pouvez penser à cela comme une forme très simple de H de U.
+
+0:12:33.399,0:12:38.489
+Donc, vous n’avez pas besoin de faire quoi que ce soit pour cela dans le sens que lorsque vous avez le partage de poids
+
+0:12:39.100,0:12:45.810
+si vous le faites explicitement avec un module qui fait une sorte de connexion Y sur le chemin du retour, lorsque les gradients sont rétropropagés
+
+0:12:45.810,0:12:47.800
+les gradients sont résumés.
+
+0:12:47.800,0:12:53.099
+Ainsi, le gradient d’une fonction de coût par rapport à u1, par exemple, sera la somme du gradient de la
+
+0:12:53.199,0:12:55.559
+fonction de coût en ce qui concerne w1 et w2.
+
+0:12:56.860,0:13:02.219
+Et de même pour le gradient par rapport à u2 serait la somme des gradients par rapport à w3 et w4, ok ?
+
+0:13:02.709,0:13:06.328
+C’est juste l’effet de la rétropropagation à travers les deux connecteurs Y.
+
+0:13:13.310,0:13:19.119
+Bon, voici une vue un peu plus générale de cette transformation de paramètre que certaines personnes ont appelé hypernetworks.
+
+0:13:19.970,0:13:23.350
+Ainsi, un hypernetwork est un réseau où
+
+0:13:23.839,0:13:28.299
+les poids d’un réseau sont calculés comme la sortie d’un autre réseau.
+
+0:13:28.459,0:13:33.969
+Ok, donc vous avez un réseau H qui regarde l’entrée, il a ses propres paramètres U,
+
+0:13:35.569,0:13:37.929
+et il calcule les poids d’un deuxième réseau
+
+0:13:38.959,0:13:44.199
+d'accord ? Donc l’avantage de faire ça ... il y a différents noms pour cette idée
+
+0:13:44.199,0:13:46.508
+Elle est très ancienne. Elle remonte aux années 80.
+
+0:13:46.880,0:13:52.539
+Les gens utilisaient ce qu’on appelle des interactions multiplicatives, ou réseau à trois voies, ou unités sigma-pi et essentiellement
+
+0:13:53.600,0:13:59.050
+cette idée - et c’est peut-être une formulation un peu plus générale de celle-ci -
+
+0:14:00.949,0:14:02.949
+est que vous avez une sorte de dynamique.
+
+0:14:04.069,0:14:06.519
+Votre fonction est définie dynamiquement
+
+0:14:07.310,0:14:09.669
+en G de X et W
+
+0:14:10.459,0:14:14.318
+parce que W est vraiment une fonction complexe de l’entrée et un autre paramètre.
+
+0:14:16.189,0:14:17.959
+Il s’agit d’une
+
+0:14:17.959,0:14:22.419
+architecture intéressante car ce que vous faites, c’est de transformer X d’une certaine façon.
+
+0:14:23.000,0:14:29.889
+Ok ? Donc, vous pouvez penser à W comme étant les paramètres de cette transformation, donc Y serait une version transformée de X.
+
+0:14:32.569,0:14:37.809
+Et X…  je veux dire la fonction H calcule fondamentalement cette transformation.
+
+0:14:38.899,0:14:41.739
+Ok ? Mais nous reviendrons là dessus dans quelques semaines.
+
+0:14:42.829,0:14:46.209
+Je voulais juste mentionner cela parce que c’est fondamentalement une petite modification de
+
+0:14:46.579,0:14:52.869
+de cela. Vous avez juste une flèche de plus qui va de X à H, et c’est comme ça que vous obtenez ces hypernetworks.
+
+0:14:56.569,0:15:03.129
+Ok, donc nous montrons l’idée que vous pouvez avoir un paramètre de contrôlant
+
+0:15:06.500,0:15:12.549
+plusieurs paramètres efficaces dans un autre réseau. Et une des raisons pour laquelle c’est utile est
+
+0:15:13.759,0:15:16.779
+lorsque vous souhaitez détecter un motif sur une entrée.
+
+0:15:17.300,0:15:20.139
+Détecter ce motif quel que soit l’endroit où il apparaît.
+
+0:15:20.689,0:15:27.099
+Donc, disons que vous avez une entrée, une séquence (cela pourrait être une image), dans ce cas c’est une séquence.
+
+0:15:27.100,0:15:28.000
+Une séquence de vecteurs, disons.
+
+0:15:28.300,0:15:33.279
+Vous avez un réseau qui prend une collection de trois de ces vecteurs, trois vecteurs successifs.
+
+0:15:34.010,0:15:36.339
+C’est ce réseau G de X et W et
+
+0:15:37.010,0:15:42.249
+il est entraîné pour détecter un motif particulier de ces trois vecteurs. Peut-être que c’est ... je ne sais pas
+
+0:15:42.889,0:15:44.750
+la consommation d’énergie électrique par exemple
+
+0:15:44.750,0:15:51.880
+Et parfois vous pourriez vouloir être en mesure de détecter comme un « blip » ou une tendance ou quelque chose comme ça.
+
+0:15:52.519,0:15:54.519
+Ou peut-être que c’est, vous savez ...
+
+0:15:56.120,0:15:58.120
+des instruments financiers.
+
+0:15:59.149,0:16:05.289
+Une sorte de série temporelle. Peut-être que c’est un signal vocal et que vous voulez détecter un son particulier qui se compose de trois
+
+0:16:06.050,0:16:10.899
+vecteurs qui définissent le type de contenu audio de ce signal vocal.
+
+0:16:12.440,0:16:15.709
+Et donc vous aimeriez être en mesure de détecter
+
+0:16:15.709,0:16:20.469
+si c’est un signal vocal et un son particulier que vous devez détecter pour faire de la reconnaissance vocale.
+
+0:16:20.470,0:16:22.630
+Vous voudrez peut-être détecter le son
+
+0:16:23.180,0:16:28.690
+de la voyelle P, le son P partout où il se produit dans une séquence.
+
+0:16:28.690,0:16:31.299
+Vous voulez un détecteur qui tire lorsque le son P est prononcé.
+
+0:16:33.589,0:16:41.439
+Et donc ce que nous aimerions avoir, c’est un détecteur pouvant être glissé et lorsqu’un motif se produit n’importe où
+
+0:16:42.470,0:16:47.500
+le détecter. Donc, ce que vous devez avoir est un réseau, une fonction paramétrisée qui ...
+
+0:16:48.920,0:16:55.029
+Vous savez, vous avez plusieurs copies de cette fonction que vous pouvez appliquer à différentes régions sur l’entrée et ils partagent tous le même poids
+
+0:16:55.029,0:16:58.600
+mais vous souhaitez entraîner tout ce système de bout en bout
+
+0:16:58.700,0:17:01.459
+Par exemple, disons...
+
+0:17:01.459,0:17:03.459
+De quelque chose d’un peu plus sophistiquée
+
+0:17:05.569,0:17:07.688
+Une chose...
+
+0:17:11.059,0:17:13.059
+Voyons...
+
+0:17:14.839,0:17:17.349
+Un mot clé qui est prononcé.
+
+0:17:18.169,0:17:22.959
+Le système écoute le son et veut détecter quand un mot clé particulier, un « mot réveil »
+
+0:17:24.079,0:17:28.329
+a été prononcé. Donc c’est Alexa, n’est-ce pas ?
+
+0:17:28.459,0:17:32.709
+Vous dites « Alexa! » et Alexa s’active : bong [c’est censé être le bruit que fait Alexa].
+
+0:17:35.260,0:17:40.619
+Donc, ce que vous aimeriez avoir c’est un réseau qui prend une fenêtre sur le son et fasse
+
+0:17:41.890,0:17:44.189
+de la détection en arrière-plan.
+
+0:17:44.860,0:17:47.219
+Mais vous aimeriez être en mesure de détecter
+
+0:17:47.220,0:17:52.020
+partout où le son se produit dans le cadre qui est regardé, ou il a été écouté.
+
+0:17:52.300,0:17:56.639
+Donc, vous pouvez avoir un réseau comme celui-ci où vous avez répliqué détecteurs
+
+0:17:56.640,0:17:59.520
+partageant tous le même poids. La sortie qui est
+
+0:17:59.520,0:18:03.329
+le score quant à savoir si quelque chose a été détecté ou non, va dans une fonction max
+
+0:18:04.090,0:18:07.500
+Ok ? Et c’est la sortie. Et la façon dont vous entraînez un système comme celui-ci…
+
+0:18:08.290,0:18:10.290
+Vous savez, vous aurez un tas d’échantillons.
+
+0:18:10.780,0:18:14.140
+Des exemples audio où le mot clé
+
+0:18:14.140,0:18:18.000
+a été prononcé et un tas d’échantillons audio où le mot clé n’a pas été prononcé.
+
+0:18:18.100,0:18:20.249
+Et puis vous entraînez un classifieur à deux classes.
+
+0:18:20.470,0:18:24.689
+Allumez quand « Alexa » est quelque part dans ce cadre, éteignez quand il n’y est pas.
+
+0:18:25.059,0:18:30.899
+Mais personne ne vous dit où le mot « Alexa » se produit dans la fenêtre sur laquelle vous entraînez le système.
+
+0:18:30.900,0:18:35.729
+Parce qu’il est vraiment coûteux pour les étiqueteurs de regarder le signal audio et vous dire exactement
+
+0:18:35.730,0:18:37.570
+c’est ici que le mot « Alexa » est prononcé.
+
+0:18:37.570,0:18:42.720
+La seule chose qu’ils savent, c’est que dans ce segment de quelques secondes, le mot a été prononcé quelque part.
+
+0:18:43.450,0:18:48.390
+Ok, donc vous aimeriez appliquer un réseau comme celui-ci qui a ces détecteurs répliqués.
+
+0:18:48.390,0:18:53.429
+Vous ne savez pas exactement où il est, mais vous courez à travers ce max et vous voulez entraîner le système à ...
+
+0:18:53.950,0:18:59.370
+Vous savez, la rétropropagation du gradient afin qu’il apprenne à détecter « Alexa », ou quoi que ce soit ...
+
+0:19:00.040,0:19:01.900
+Le « mot de réveil » qui apparaît.
+
+0:19:01.900,0:19:09.540
+Et donc ce qui se passe, c’est que vous avez ces copies multiples - cinq exemplaires dans cet exemple -
+
+0:19:09.580,0:19:11.580
+de ce réseau et ils partagent tous le même poids.
+
+0:19:11.710,0:19:16.650
+Vous pouvez voir qu’il n’y a qu’un seul vecteur de poids qui envoie sa valeur à cinq
+
+0:19:17.410,0:19:22.559
+instances du même réseau et nous rétropropageons aux
+
+0:19:23.260,0:19:27.689
+cinq copies du réseau. Vous obtenez cinq gradients, donc ces gradients s’additionnent... 
+
+0:19:29.679,0:19:34.949
+pour le paramètre. Maintenant, il y a cette façon un peu étrange dont cela est mis en œuvre dans PyTorch et les autres
+
+0:19:35.740,0:19:41.760
+outils d’apprentissage profond. C’est-à-dire que cette accumulation de gradient dans un seul paramètre se fait implicitement.
+
+0:19:42.550,0:19:46.659
+Et c’est une des raisons pour lesquelles avant de faire une rétropropagation dans PyTorch, vous devez mettre le gradient à zéro 
+
+0:19:47.840,0:19:49.840
+[note : voir la vidéo Practinum associée à ce cours pour l’implémentation].
+Parce qu’il y a une sorte d’accumulation implicite
+
+0:19:50.510,0:19:52.510
+des gradients lorsque vous effectuez la rétropropagation.
+
+0:19:58.640,0:20:02.000
+Ok, donc voici une autre situation utile. 
+
+0:20:02.100,0:20:07.940
+Et c’est la vraie motivation derrière les ConvNets.
+
+0:20:07.940,0:20:09.940
+Il s’agit du problème 
+
+0:20:10.850,0:20:15.000
+d’entraîner un système pour reconnaître une forme indépendamment de la position,
+
+0:20:16.010,0:20:17.960
+de l’endroit où la forme se produit
+
+0:20:17.960,0:20:22.059
+et s’il y a des distorsions de cette forme dans l’entrée.
+
+0:20:22.850,0:20:28.929
+Il s’agit donc d’un type très simple de ConvNet qui est a été construit à la main. Il n’a pas été entraîné.
+
+0:20:28.929,0:20:30.929
+Il a été conçu à la main.
+
+0:20:31.760,0:20:36.200
+Et il est conçu explicitement pour distinguer C de D.
+
+0:20:36.400,0:20:38.830
+Ok, pour que vous puissiez dessiner un C sur l’image
+
+0:20:39.770,0:20:41.770
+d’entrée qui est de très basse résolution.
+
+0:20:43.880,0:20:48.459
+Ce qui distingue C de D, c’est que les C ont des points de fin, n’est-ce pas ?
+
+0:20:48.460,0:20:54.610
+Vous pouvez imaginer la conception d’un détecteur pour cela. Alors que les D ont des coins.
+
+0:20:55.220,0:20:59.679
+Donc, si vous avez un détecteur de point de terminaison ou quelque chose qui détecte la fin d’un segment et
+
+0:21:00.290,0:21:02.290
+un détecteur de coin,
+
+0:21:02.330,0:21:06.699
+partout où vous avez des coins détectés, c’est un D et quand vous ayez des
+
+0:21:07.700,0:21:09.700
+segments qui se terminent, c’est un C.
+
+0:21:11.870,0:21:16.989
+Voici donc un exemple de C. Vous prenez le premier détecteur, de sorte que le
+
+0:21:17.750,0:21:19.869
+motif noir et blanc ici en haut
+
+0:21:20.870,0:21:24.640
+est un détecteur de point de terminaison, d’accord? Il détecte la fin d’un
+
+0:21:25.610,0:21:28.059
+d’un segment et la façon dont c’est
+
+0:21:28.760,0:21:33.969
+représenté ici, c’est que les pixels noirs ici ...
+
+0:21:35.840,0:21:37.929
+Alors pensez à cela comme une sorte de pochoir
+
+0:21:38.990,0:21:43.089
+Ok, vous allez prendre ce pochoir et vous allez le glisser sur l’image d’entrée
+
+0:21:44.510,0:21:51.160
+Puis vous allez comparer ce pochoir à la petite image qui est placée en dessous, d’accord?
+
+0:21:51.980,0:21:56.490
+Et si ces deux correspondent… la façon dont vous allez déterminer si elles correspondent est d’effectuer un produit scalaire.
+
+0:21:56.490,0:22:03.930
+Donc, vous allez penser à ces pixels noirs et blancs comme la valeur de +1 ou -1, disons +1 pour le noir et -1 pour le blanc.
+
+0:22:05.020,0:22:09.420
+Et vous allez penser à ces pixels aussi comme étant +1 pour les noirs et -1 pour le blanc et
+
+0:22:10.210,0:22:16.800
+lorsque vous calculez le produit scalaire d’une petite fenêtre avec ce pochoir
+
+0:22:17.400,0:22:22.770
+s’ils sont semblables, vous obtiendrez une grande valeur positive. S’ils sont différents, vous allez obtenir une
+
+0:22:24.010,0:22:27.629
+valeur nulle ou négative. Ou une plus petite valeur, d’accord ?
+
+0:22:29.020,0:22:35.489
+Donc, vous prenez ce petit détecteur ici et vous calculez le produit scalaire avec la première fenêtre, deuxième fenêtre, troisième fenêtre, etc.
+
+0:22:35.650,0:22:42.660
+Vous déplacez d’un pixel à chaque fois pour chaque emplacement et vous vous souvenez du résultat. Et ce que vous, c’est ça.
+
+0:22:42.660,0:22:43.660
+Donc, c’est ...
+
+0:22:43.660,0:22:51.640
+Ici, l’échelle de gris est une indication de la correspondance
+
+0:22:51.640,0:22:57.959
+qui est en fait le produit scalaire entre le vecteur formé par ces valeurs
+
+0:22:58.100,0:23:05.070
+et le patch de l’emplacement correspondant sur l’entrée. Donc cette image ici est à peu près de la même taille que cette image
+
+0:23:06.250,0:23:08.250
+moins les effets de bordure.
+
+0:23:08.290,0:23:13.469
+Et vous voyez qu’il y a un ... chaque fois que la sortie est sombre, il y a une correspondance.
+
+0:23:14.380,0:23:16.380
+Donc, vous voyez une correspondance ici,
+
+0:23:16.810,0:23:20.249
+parce que ce détecteur de point de terminaison correspond à ce
+
+0:23:20.980,0:23:24.810
+point de terminaison. Vous voyez une sorte de correspondance ici en bas.
+
+0:23:25.630,0:23:27.930
+Et l’autre type de valeurs ne sont pas aussi
+
+0:23:28.750,0:23:32.459
+sombre, d’accord ? Pas aussi fort si vous voulez.
+
+0:23:33.250,0:23:38.820
+Maintenant, si vous fixez des seuils à ces valeurs et que vous définissez la sortie à +1 si elle est au-dessus du seuil
+
+0:23:39.520,0:23:41.520
+et 0 s’il est en dessous du seuil,
+
+0:23:42.070,0:23:46.499
+Vous obtenez ces cartes. Vous devez définir le seuil de manière appropriée, mais ce que vous obtenez, c’est que
+
+0:23:46.500,0:23:50.880
+ce petit gars a détecté une correspondance aux deux points de fin du C, d’accord ?
+
+0:23:52.150,0:23:54.749
+Donc maintenant, si vous prenez cette carte et vous résumez,
+
+0:23:56.050,0:23:58.050
+il suffit d’ajouter toutes les valeurs.
+
+0:23:58.600,0:24:00.430
+Vous obtenez un nombre positif
+
+0:24:00.430,0:24:03.989
+passez ce seuil, et c’est votre détecteur de C. Ce n’est pas un très bon détecteur de C.
+
+0:24:03.990,0:24:07.859
+Ce n’est pas un très bon détecteur de quoi que ce soit, mais pour ces exemples particuliers de C
+
+0:24:08.429,0:24:10.210
+et peut-être ces D
+
+0:24:10.210,0:24:16.980
+cela marchera, ça suffira. Maintenant, pour le D, c’est similaire, ces autres détecteurs ici sont destinés à détecter les coins des D.
+
+0:24:17.679,0:24:24.538
+Donc ce gars ici, ce détecteur, comme vous le glisser sur l’entrée et détectera le
+
+0:24:25.659,0:24:29.189
+coin supérieur gauche et ce gars détectera le coin inférieur droit.
+
+0:24:29.649,0:24:33.689
+Quand vous appliquer le seuil, vous obtiendrez ces deux cartes où les coins sont détectés
+
+0:24:34.509,0:24:37.019
+et puis vous pouvez résumer et le
+
+0:24:37.360,0:24:44.729
+le détecteur D s’allume. Maintenant, ce que vous voyez ici est un exemple de pourquoi c’est bon parce que cette détection est maintenant invariante par décalage.
+
+0:24:44.730,0:24:49.169
+Donc, si je prends la même entrée D ici, et je la décale de quelques pixels
+
+0:24:50.340,0:24:56.279
+et que je fais fonctionner ce détecteur à nouveau, il détectera les motifs où qu’ils apparaissent. La sortie sera décalée.
+
+0:24:56.379,0:25:01.559
+Ok, donc c’est ce qu’on appelle l’équivariance au décalage. Donc, la sortie de ce réseau
+
+0:25:02.590,0:25:10.499
+est équivariant au décalage, ce qui signifie que si je déplace l’entrée, la sortie sera déplacée, mais le reste est inchangé. Ok ? C’est l’équivariance
+
+0:25:11.289,0:25:12.909
+L’invariance serait
+
+0:25:12.909,0:25:17.398
+si je le déplace, la sortie sera complètement inchangée. 
+
+0:25:17.399,0:25:19.739
+Ici c’est modifié de la même manière que l’entrée.
+
+0:25:23.950,0:25:31.080
+Et donc si je résume les activités dans les cartes de caractéristiques, il n’a pas d’importance où cela se produit.
+
+0:25:31.809,0:25:34.199
+Mon détecteur D s’activera toujours
+
+0:25:34.929,0:25:38.998
+si je calcule la somme. Donc c’est une sorte de fait reconnaissance de motifs à la main
+
+0:25:39.700,0:25:47.100
+qui utilise des détecteurs de caractéristiques locales et puis résume leur activité. Et ce que vous obtenez est une détection invariante.
+
+0:25:47.710,0:25:52.529
+Ok, c’est une façon assez classique de construire certains types de systèmes de reconnaissance de motifs
+
+0:25:53.049,0:25:55.049
+remontant à de nombreuses années.
+
+0:25:57.730,0:26:03.929
+Mais l’astuce ici, ce qui est important bien sûr, ce qui est intéressant serait d’apprendre ces pochoirs.
+
+0:26:04.809,0:26:10.258
+Pouvons-nous voir cela comme un réseau neuronal où nous pouvons rétropropager et apprendre ces pochoirs ?
+
+0:26:11.980,0:26:18.779
+Comme poids d’un réseau neuronal ? Après tout, nous les utilisons pour faire ce produit scalaire qui est une somme pondérée. Donc fondamentalement
+
+0:26:21.710,0:26:29.059
+cette couche ici, passant  de l’entrée à ces soi-disant cartes de fonctionnalités qui sont des sommes pondérées
+
+0:26:29.520,0:26:33.080
+est une opération linéaire, d’accord ? Et nous savons comment rétropropager cela.
+
+0:26:35.850,0:26:41.750
+Nous aurions à utiliser une sorte de seuil doux, une ReLU ou quelque chose comme ça ici, parce que sinon nous ne pouvons pas rétropropager.
+
+0:26:43.470,0:26:48.409
+Ok, donc cette opération ici, consistant à prendre le produit scalaire d’un tas de coefficients
+
+0:26:49.380,0:26:53.450
+avec une fenêtre d’entrée, puis le glisser, c’est une convolution.
+
+0:26:57.810,0:27:03.409
+Ok, donc c’est la définition d’une convolution. La formule là-haut est dans le cas unidimensionnel
+
+0:27:05.400,0:27:07.170
+où imaginez que vous avez
+
+0:27:10.530,0:27:16.639
+une entrée X_j. Donc X indexée par le j
+
+0:27:20.070,0:27:22.070
+Vous prenez une fenêtre
+
+0:27:23.310,0:27:26.029
+de X à un endroit particulier i
+
+0:27:27.330,0:27:30.080
+Ok, et puis vous sommez.
+
+0:27:31.890,0:27:40.340
+Vous faites une somme pondérée de la fenêtre des valeurs X et vous multipliez celles par les poids W_j.
+
+0:27:41.070,0:27:50.359
+Ok, et la somme s’étend probablement sur une sorte de petite fenêtre donc j ici passerait de 1 à 5 par exemple,
+
+0:27:51.270,0:27:54.259
+quelque chose comme ça, ce qui est le cas dans le petit exemple que j’ai montré plus tôt.
+
+0:27:58.020,0:28:00.950
+Ce qui vous donne un Y_i.
+
+0:28:01.770,0:28:05.510
+Ok, alors prenez la première fenêtre de 5 valeurs de X.
+
+0:28:06.630,0:28:13.280
+Calculez la somme pondérée avec les poids, ce qui vous donne Y_1. Puis décaler cette fenêtre de 1, calculer la somme pondérée du
+
+0:28:13.620,0:28:18.320
+produit scalaire de cette fenêtre par les Y, ce qui vous donne Y_2. Puis décalage à nouveau, etc.
+
+0:28:23.040,0:28:26.839
+Maintenant, dans la pratique quand les gens mettent cela en œuvre dans des choses comme PyTorch
+
+0:28:26.840,0:28:31.069
+il y a une confusion entre deux choses que les mathématiciens pensent sont très différentes
+
+0:28:31.070,0:28:37.009
+mais en fait, elles sont à peu près les mêmes. C’est la convolution et la corrélation croisée. 
+Dans la convolution, la convention est que...
+
+0:28:37.979,0:28:44.359
+l’index se propage en arrière dans la fenêtre , alors qu’il se propage vers l’avant dans les poids.
+
+0:28:44.359,0:28:49.519
+En corrélation croisée, les deux se propagent vers l’avant. En fin de compte, c’est juste une convention, cela dépend de la façon dont vous posez ...
+
+0:28:51.659,0:28:59.598
+organiser les données et vos poids. Vous pouvez interpréter cela comme une convolution si vous lisez les poids à l’envers, donc cela ne fait aucune différence.
+
+0:29:01.259,0:29:06.949
+Mais pour certaines propriétés mathématiques de la convolution si vous voulez que tout soit cohérent, vous devez avoir le ...
+
+0:29:07.440,0:29:10.849
+le j dans le W ait un signe opposé au j dans le X.
+
+0:29:11.879,0:29:13.879
+Donc, la version en deux dimensions de cette...
+
+0:29:15.419,0:29:17.419
+Si vous avez une image X
+
+0:29:17.789,0:29:21.258
+qui a deux indices, dans ce cas i et j,
+
+0:29:23.339,0:29:25.909
+vous faites une somme pondérée sur deux indices k et l.
+
+0:29:25.909,0:29:31.368
+Et donc vous avez une fenêtre en deux dimensions indexée par k et l et vous calculez le produit scalaire
+
+0:29:31.769,0:29:34.008
+de cette fenêtre sur X avec le...
+
+0:29:35.099,0:29:39.679
+le poids, ce qui vous donne une valeur en Y_ij qui est la sortie.
+
+0:29:43.349,0:29:51.319
+Ainsi, le vecteur W ou la matrice W dans la version 2D… il y a des extensions évidentes de ça à 3D et 4D, etc.
+
+0:29:52.080,0:29:55.639
+Ça s’appelle un noyau, un noyau convolutionnel, ok ?
+
+0:30:00.380,0:30:03.309
+Tout est clair ? Je suis sûr que c’est connu pour beaucoup d’entre vous, mais ...
+
+0:30:10.909,0:30:13.449
+Donc, ce que nous allons faire avec cela, c’est que
+
+0:30:14.750,0:30:18.699
+nous allons organiser... construire un réseau comme une succession de
+
+0:30:20.120,0:30:23.769
+convolutions où dans un réseau neuronal régulier vous avez
+
+0:30:25.340,0:30:29.100
+alternance d’opérateurs linéaires et de « pointwise » [je n’ai pas trouvé de traduction à ce mot] non-linéaire.
+
+0:30:29.250,0:30:34.389
+Dans les ConvNets, nous allons avoir une alternance d’opérateurs linéaires qui arriveront pour être des convolutions, donc des convolutions multiples.
+
+0:30:34.940,0:30:40.179
+Ensuite, « pointwise » non-linéaire et il va y avoir un troisième type d’opération appelée pooling ...
+
+0:30:42.620,0:30:44.620
+qui est en fait facultatif.
+
+0:30:45.470,0:30:50.409
+Avant d’aller plus loin, je dois mentionner qu’il y a
+
+0:30:52.220,0:30:56.889
+des torsions que vous pouvez faire à cette convolution. Donc, une torsion est ce qu’on appelle une foulée 
+
+0:30:57.380,0:31:01.239
+Ainsi, une foulée dans une convolution consiste à déplacer la fenêtre
+
+0:31:01.760,0:31:07.509
+d’une position à l’autre au lieu de la déplacer d’une seule valeur.
+
+0:31:07.940,0:31:13.510
+Vous pouvez déplacer par deux, trois ou quatre, d’accord ? C’est ce qu’on appelle une foulée d’une convolution
+
+0:31:14.149,0:31:17.138
+Et donc si vous avez une entrée d’une certaine longueur et ...
+
+0:31:19.700,0:31:26.590
+disons que vous avez une entrée unidimensionnelle de taille 100
+
+0:31:27.019,0:31:31.059
+et vous avez un noyau de convolution de taille 5.
+
+0:31:32.330,0:31:34.330
+Vous « convoluez » 
+
+0:31:34.909,0:31:38.409
+ce noyau avec l’entrée
+
+0:31:39.350,0:31:46.120
+et vous vous assurez que la fenêtre reste dans l’entrée de taille 100.
+
+0:31:46.730,0:31:51.639
+La sortie que vous obtenez a 96 sorties, ok ? Il a le nombre d’entrées
+
+0:31:52.519,0:31:56.019
+moins la taille du noyau, qui est de 5 moins 1.
+
+0:31:57.110,0:32:00.610
+Donc ça fait 4. Donc vous obtenez 100 moins 4, soit 96.
+
+0:32:02.299,0:32:08.709
+C’est le nombre de fenêtres de taille 5 qui s’inscrivent dans cette grande entrée de taille 100.
+
+0:32:11.760,0:32:13.760
+Maintenant, si j’utilise cette foulée ...
+
+0:32:13.760,0:32:21.960
+Donc, ce que je fais maintenant, c’est que je prends ma fenêtre de 5 où j’ai appliqué le noyau et je la déplace non d’un pixel, mais de deux pixels.
+
+0:32:21.960,0:32:24.710
+Ou deux valeurs, disons. Ce ne sont pas nécessairement des pixels.
+
+0:32:26.310,0:32:31.880
+Ok, le nombre de sorties que je vais obtenir va être divisé par deux à peu près.
+
+0:32:33.570,0:32:36.500
+Au lieu de 96 je vais avoir
+
+0:32:37.080,0:32:42.949
+un peu moins de 50, 48 ou quelque chose comme ça. Le nombre n’est pas exact, vous pouvez...
+
+0:32:44.400,0:32:46.400
+le concevoir dans votre tête.
+
+0:32:47.430,0:32:51.470
+Très souvent, lorsque les gens exécutent des convolutions dans des ConvNets, ils ont rembourré [« padding » en anglais] la convolution.
+
+0:32:51.470,0:32:59.089
+Ils aiment avoir la sortie de la même taille que l’entrée, et donc ils déplacent la fenêtre d’entrée
+
+0:32:59.490,0:33:02.479
+après la fin du vecteur en supposant qu’il est rembourré de zéros.
+
+0:33:04.230,0:33:06.230
+Habituellement des deux côtés.
+
+0:33:16.110,0:33:19.849
+[Question inaudible d’un étudiant que Yann répète à l’oral] Cela a-t-il un effet sur la performance ou est-ce juste par commodité ?
+
+0:33:21.480,0:33:25.849
+Si cela a un effet sur la performance c’est mauvais. Mais c’est pratique.
+
+0:33:28.350,0:33:30.350
+C’est à peu près la réponse.
+
+0:33:32.700,0:33:37.800
+L’hypothèse qui est mauvaise est en supposant que lorsque vous n’avez pas de données, cela est égal à zéro.
+
+0:33:38.000,0:33:41.720
+Lorsque vos couches de non linéaires sont des ReLU, ce n’est pas complètement déraisonnable.
+
+0:33:43.650,0:33:48.079
+Mais il crée parfois des effets de bordure drôles
+
+0:33:51.120,0:33:53.539
+Ok, tout est clair jusqu’ici ?
+
+0:33:54.960,0:33:59.059
+Bien. Donc, ce que nous allons construire est un
+
+0:34:01.050,0:34:03.050
+réseau neuronal composé de ceux
+
+0:34:03.690,0:34:08.120
+convolutions qui vont être utilisées comme détecteurs de caractéristiques, détecteurs de caractéristiques locales,
+
+0:34:09.090,0:34:13.069
+Suivies de couches non linéaires et puis nous allons en empiler plusieurs couches.
+
+0:34:14.190,0:34:18.169
+La raison d’empiler plusieurs couches est que
+
+0:34:19.170,0:34:21.090
+nous voulons construire une
+
+0:34:21.090,0:34:25.809
+représentation hiérarchique du monde visuel, des données.
+
+0:34:26.089,0:34:32.258
+Les ConvNets ne sont pas nécessairement appliqués aux images. Ils peuvent être appliqués à la parole et à d’autres signaux.
+
+0:34:32.299,0:34:35.619
+Ils peuvent essentiellement être appliqués à n’importe quel signal qui vient à vous sous la forme d’un tableau.
+
+0:34:36.889,0:34:41.738
+Je reviendrai sur les propriétés que ce tableau doit vérifier.
+
+0:34:43.789,0:34:45.789
+Donc, ce que vous voulez, c’est ...
+
+0:34:46.459,0:34:48.698
+pourquoi souhaitez-vous créer des représentations hiérarchiques ?
+
+0:34:48.699,0:34:54.369
+Parce que le monde est compositionnel et j’ai fait allusion à cela lors de la première conférence si vous vous rappelez.
+
+0:34:55.069,0:35:03.519
+C’est le fait que les pixels s’assemblent pour former des motifs simples comme les bords orientés.
+
+0:35:04.430,0:35:10.839
+Ces bords orientés assemblés forment des caractéristiques locales comme les coins et les jonctions en T et ...
+
+0:35:11.539,0:35:14.018
+des choses comme ça... des grilles, et ...
+
+0:35:14.719,0:35:19.600
+puis ceux-ci s’assemblent pour former des motifs légèrement plus abstraits.
+
+0:35:19.700,0:35:23.559
+Ensuite, ceux-ci s’assemblent pour former des parties d’objets, et puis finalement forment des objets.
+
+0:35:23.559,0:35:28.000
+Il y a donc une sorte de hiérarchie compositionnelle naturelle dans le monde naturel.
+
+0:35:28.100,0:35:33.129
+Cette hiérarchie compositionnelle naturelle dans le monde naturel n’est pas seulement due à
+
+0:35:34.369,0:35:38.438
+la perception visuelle. Ceci est aussi vrai au niveau physique, n’est-ce pas ?
+
+0:35:41.390,0:35:46.808
+Vous commencez au niveau le plus bas de la description.
+
+0:35:47.719,0:35:50.079
+Vous avez des particules élémentaires et elles forment...
+
+0:35:50.079,0:35:56.438
+elles s’agglutinent pour former des particules moins élémentaires, et elles s’agglutinent pour former des atomes, et ils s’agglutinent pour former des molécules, et les molécules s’agglutinent pour former des
+
+0:35:57.229,0:36:00.399
+matériaux, et les matériaux des parties d’objets et
+
+0:36:01.130,0:36:03.609
+les parties d’objets des objets, et des choses comme ça, ok ?
+
+0:36:04.670,0:36:07.599
+Ou des macromolécules ou des polymères, bla bla bla.
+
+0:36:08.239,0:36:13.239
+Et puis vous avez cette hiérarchie compositionnelle naturelle. Le monde est construit de cette façon.
+
+0:36:14.719,0:36:19.000
+Et c’est peut-être pourquoi le monde est compréhensible, n’est-ce pas ?
+
+0:36:19.100,0:36:22.419
+Il y a cette citation célèbre d’Einstein qui dit :
+
+0:36:23.329,0:36:26.750
+« la chose la plus incompréhensible dans le monde, c’est que le monde est compréhensible ».
+
+0:36:26.800,0:36:30.069
+Et il semble que nous vivons dans un monde que nous sommes en mesure de comprendre.
+
+0:36:31.130,0:36:35.019
+Mais nous pouvons le comprendre que parce qu’il est compositionnel et
+
+0:36:36.970,0:36:38.970
+il se trouve être plus facile de construire
+
+0:36:39.760,0:36:44.370
+des cerveaux dans un monde compositionnel, qui peut interpréter le monde compositionnel.
+
+0:36:45.580,0:36:47.580
+Cela m’apparait encore comme une conspiration.
+
+0:36:49.660,0:36:51.660
+Il y a une citation célèbre de...
+
+0:36:53.650,0:36:54.970
+d’un...
+
+0:36:54.970,0:37:00.780
+pas si célèbre, mais un peu célèbre, d’un statisticien à Brown appelé Stuart Geman.
+
+0:37:01.360,0:37:04.799
+Il dit que ça ressemble à une conspiration, comme de la magie
+
+0:37:06.070,0:37:08.070
+Mais vous savez...
+
+0:37:08.440,0:37:15.570
+Si le monde n’était pas compositionnel, nous aurions besoin d’un peu plus de magie pour être en mesure de le comprendre.
+
+0:37:17.260,0:37:21.540
+La façon dont il dit ceci est : « le monde est compositionnel ou il y a un Dieu ».
+
+0:37:25.390,0:37:32.339
+Vous auriez besoin de faire appel à des puissances supérieures si le monde n’était pas compositionnel pour expliquer comment nous pouvons le comprendre.
+
+0:37:35.830,0:37:37.830
+Ok, donc cette idée de hiérarchie
+
+0:37:38.440,0:37:44.520
+et la détection des caractéristiques locales provient de la biologie. Ainsi, toute l’idée des ConvNets vient de la biologie. Cela a été
+
+0:37:45.850,0:37:47.850
+inspiré par la biologie.
+
+0:37:48.850,0:37:53.399
+Ce que vous voyez ici sur la droite est un diagramme de Simon Thorpe qui est un
+
+0:37:54.160,0:37:56.160
+psychophysicien et
+
+0:37:56.500,0:38:02.939
+fait quelques expériences relativement célèbres où il a montré que la façon dont nous reconnaissons les objets du quotidien
+
+0:38:03.580,0:38:05.969
+semble être extrêmement rapide. Donc, si vous montrez ...
+
+0:38:06.640,0:38:10.409
+si vous flashez l’image d’un objet de tous les jours à une personne et
+
+0:38:11.110,0:38:12.730
+Vous le flashez
+
+0:38:12.730,0:38:16.649
+toutes les 100 millisecondes ou plus, vous vous rendez compte que le
+
+0:38:18.070,0:38:23.549
+le temps qu’il faut pour une personne pour identifier dans une longue séquence s’il y a un objet particulier, disons un tigre
+
+0:38:25.780,0:38:27.640
+est d’environ 100 millisecondes.
+
+0:38:27.640,0:38:34.769
+Donc, le temps qu’il faut pour le cerveau afin d’interpréter une image et d’y reconnaître les objets de base qui y sont présents est d’environ 100 millisecondes.
+
+0:38:35.650,0:38:37.740
+Un dixième de seconde, n’est-ce pas ?
+
+0:38:39.490,0:38:42.120
+C’est à peu près le temps qu’il faut pour les
+
+0:38:43.000,0:38:45.000
+signaux nerveux de se déplacer de
+
+0:38:45.700,0:38:47.550
+la rétine
+
+0:38:47.550,0:38:54.090
+où les images se forment dans l’œil jusqu’à ce qu’on appelle le corps géniculé latéral.
+
+0:38:54.340,0:38:56.340
+C’est un petit
+
+0:38:56.350,0:39:02.640
+partie du cerveau qui fait essentiellement une sorte de renforcement du contraste et de contrôle, des choses comme ça.
+
+0:39:03.580,0:39:08.789
+Et puis ce signal va à l’arrière de votre cerveau dans la zone V1. C’est la zone du cortex visuel primaire
+
+0:39:09.490,0:39:15.600
+chez l’homme, puis dans V2, qui est très proche de V1. V1 est
+
+0:39:17.380,0:39:20.549
+juste en face de V2 et il y a beaucoup de connexions entre elles.
+
+0:39:21.580,0:39:28.890
+Et puis V4, et puis le gyrus temporal inférieur, qui est sur le côté ici et c’est là que les catégories d’objets sont représentées.
+
+0:39:28.890,0:39:35.369
+Il y a donc des neurones dans votre gyrus temporal inférieur qui représentent des catégories d’objets génériques.
+
+0:39:38.350,0:39:41.370
+Et des gens ont fait des expériences où ...
+
+0:39:44.320,0:39:51.150
+ils ont ouvert le crâne de patients épileptiques à l’hôpital parce qu’ils avaient besoin de localiser la...
+
+0:39:52.570,0:40:00.200
+position exacte de la source des crises d’épilepsie.
+
+0:40:02.080,0:40:04.650
+Et parce qu’ils avaient fixés des électrodes à la surface du cerveau,
+
+0:40:05.770,0:40:11.000
+en montrant des films aux patients, ils ont pu observer si un neurone particulier s’allume pour un film particulier.
+
+0:40:11.100,0:40:14.110
+Ainsi si vous montrez un film avec Jennifer Aniston et il y a un
+
+0:40:14.110,0:40:17.900
+neurone qui ne s’allume que lorsque Jennifer Aniston est là, ok ?
+
+0:40:18.000,0:40:21.000
+Ça ne s’allume pas pour autre chose autant qu’on puisse le dire, ok ?
+
+0:40:21.700,0:40:27.810
+Donc, vous semblez avoir des neurones très sélectifs dans le gyrus temporal inférieur qui réagissent à un petit nombre de catégories.
+
+0:40:30.760,0:40:35.669
+Il y a une blague, une sorte de blague, en neurosciences d’un concept appelé la cellule grand-mère.
+
+0:40:35.670,0:40:40.350
+C’est le seul neurone dans votre gyrus temporal inférieur qui s’allume quand vous voyez votre grand-mère.
+
+0:40:41.050,0:40:45.120
+Quelle que soit la position, ce qu’elle porte, la distance à laquelle elle est de vous, qu’il s’agisse d’une photo ou non.
+
+0:40:46.510,0:40:50.910
+Personne ne croit vraiment en ce concept. Ce en quoi les gens croient vraiment, ce sont les représentations distribuées.
+
+0:40:50.910,0:40:54.449
+Il n’y a pas une cellule qui s’allume juste pour vous grand-mère.
+
+0:40:54.970,0:41:00.820
+Il y a une collection de cellules qui s’allument pour diverses choses et ils servent à représenter des catégories générales.
+
+0:41:01.100,0:41:04.060
+Mais l’important, c’est que cela est invariant à
+
+0:41:04.700,0:41:06.700
+la position, la taille...
+
+0:41:06.920,0:41:11.080
+l’illumination, toutes sortes de choses différentes. Et la vraie motivation derrière
+
+0:41:11.930,0:41:14.349
+les ConvNets est de construire
+
+0:41:15.140,0:41:18.670
+des réseaux neuronaux qui sont invariants aux transformations non pertinentes des entrées.
+
+0:41:19.510,0:41:27.070
+Vous pouvez toujours reconnaître un C ou D ou votre grand-mère indépendamment de la position et dans une certaine mesure l’orientation, le style, etc.
+
+0:41:29.150,0:41:36.790
+Donc cette idée que le signal ne prend que 100 millisecondes pour passer de la rétine au gyrus temporal inférieur
+
+0:41:37.160,0:41:40.330
+semble suggérer que si vous comptez le délai
+
+0:41:40.850,0:41:42.850
+pour passer par tous les neurones, toutes les
+
+0:41:43.340,0:41:45.489
+étapes de cette voie,
+
+0:41:46.370,0:41:48.880
+il y a à peine assez de temps pour passer quelques pointes.
+
+0:41:48.880,0:41:55.720
+Donc, il n’y a pas de temps pour des calculs récurrents complexes. Il s’agit essentiellement d’un processus de propagation de flux en avant. C’est très rapide.
+
+0:41:56.930,0:41:59.980
+Ok, et nous avons besoin que ce soit rapide parce que c’est une question de survie pour nous.
+
+0:41:59.980,0:42:06.159
+Il y a beaucoup de... pour la plupart des animaux, vous devez être en mesure de reconnaître très rapidement ce qui se passe, en particulier ...
+
+0:42:07.850,0:42:12.820
+les prédateurs qui se déplacent rapidement, ou bien les proies.
+
+0:42:17.570,0:42:20.830
+Donc, ce genre d’idée suggère que nous pouvons faire…
+
+0:42:21.920,0:42:26.230
+peut-être que nous pourrions trouver une sorte d’architecture de réseau neuronal qui est complètement feed-forward (propagation en avant)
+
+0:42:27.110,0:42:29.110
+et peut encore faire de la reconnaissance.
+
+0:42:30.230,0:42:32.230
+Le diagramme à droite
+
+0:42:34.430,0:42:39.280
+est de Gallent & Van Essen. C’est un type de diagramme
+
+0:42:39.920,0:42:43.450
+conceptuel abstrait des deux voies dans le cortex visuel.
+
+0:42:43.490,0:42:50.530
+Il y a la voie ventrale et la voie dorsale. La voie ventrale est essentiellement les zones V1, V2, V4, les hiérarchies IT
+0:42:50.530,0:42:54.999
+qui sont à l’arrière du cerveau et vont dans le bas et sur les côtés.
+
+0:42:55.280,0:42:58.179
+Et puis la voie dorsale va
+
+0:42:59.060,0:43:02.469
+du haut vers le gyrus temporal inférieur et
+
+0:43:04.040,0:43:09.619
+il y a cette idée que la voie ventrale est là pour vous dire ce que vous regardez, ok ?
+
+0:43:10.290,0:43:12.499
+La voie dorsale identifie fondamentalement
+
+0:43:13.200,0:43:15.200
+les lieux,
+
+0:43:15.390,0:43:17.390
+la géométrie et le mouvement
+
+0:43:17.460,0:43:25.040
+Ok ? Donc, il y a une voie pour « quoi », et une autre voie pour « où », semblent assez séparées dans le
+
+0:43:25.040,0:43:29.030
+cortex visuel humain et plus généralement des primates.
+
+0:43:32.610,0:43:34.610
+Et bien sûr, il y a des interactions entre les deux.
+
+0:43:39.390,0:43:45.499
+Donc diverses personnes ont eu l’idée d’utiliser...   Alors d’où vient cette idée? Il y a
+
+0:43:46.080,0:43:48.799
+en neurosciences un travail de la fin des années 50 au début des années 60
+
+0:43:49.650,0:43:52.129
+de Hubel & Wiesel. Ils sont sur la photo ici.
+
+0:43:53.190,0:43:57.440
+Ils ont gagné un prix Nobel pour celui-ci. C’est vraiment un travail classique. Ils ont montré
+
+0:43:58.290,0:44:01.519
+avec des chats - essentiellement en posant des électrodes dans le cerveau des chats -
+
+0:44:02.310,0:44:08.480
+que les neurones dans le cerveau du chat – dans la zone V1 - détectent ...
+
+0:44:09.150,0:44:13.789
+ne sont sensibles qu’à une petite zone du champ visuel et ils détectent les bords orientés,
+
+0:44:14.970,0:44:17.030
+les contours si vous préférez, dans cette zone particulière, ok ?
+
+0:44:17.880,0:44:22.160
+Ainsi, la zone pour laquelle un neurone particulier est sensible est appelé un champ réceptif.
+
+0:44:23.700,0:44:27.859
+Et vous prenez un neurone particulier et vous montrez
+
+0:44:29.070,0:44:35.719
+au chat une barre que vous tournez. À un moment le neurone va s’allumer
+
+0:44:36.270,0:44:40.640
+pour un angle particulier et lorsque vous vous éloignez de cet angle, l’activation du neurone 
+
+0:44:42.690,0:44:50.149
+diminue, ok ? C’est ce qu’on appelle les neurones sélectifs d’orientation. Hubel & Wiesel les ont appelés cellules simples.
+
+0:44:51.420,0:44:56.930
+Si vous déplacez la barre un peu, vous sortez du champ réceptif, le neurone s’allume plus.
+
+0:44:57.150,0:45:03.049
+Il ne réagit plus à la barre. Cela pourrait être un autre neurone presque exactement identique au précédent, juste un peu plus
+
+0:45:04.830,0:45:09.620
+loin du premier, qui réalise exactement la même fonction. Il réagira à une
+
+0:45:10.380,0:45:12.440
+champ réceptif différent mais avec la même orientation.
+
+0:45:14.700,0:45:18.889
+Donc, vous commencez à avoir cette idée que vous avez des détecteurs de caractéristiques locales qui sont positionnés,
+
+0:45:20.220,0:45:23.689
+répliqués, partout dans le champ visuel. C’est essentiellement cette idée qu’est
+
+0:45:24.960,0:45:26.960
+la convolution, d’accord ?
+
+0:45:27.870,0:45:33.470
+On appelle donc ça des cellules simples. Et puis une autre idée ou découverte que
+
+0:45:35.100,0:45:40.279
+Hubel & Wiesel ont fait est l’idée de cellules complexes. Une cellule complexe est un autre type de neurone
+
+0:45:41.100,0:45:45.200
+qui intègre la sortie de plusieurs cellules simples dans une certaine zone.
+
+0:45:46.170,0:45:50.120
+Ok ? Donc, ils prennent différentes cellules simples détectant
+
+0:45:51.180,0:45:54.079
+les contours / bords pour une orientation particulière
+
+0:45:55.350,0:46:02.240
+et calculent un agrégat de toutes ces activations. Cela fera soit un max, ou une somme, ou
+
+0:46:02.760,0:46:08.239
+une somme de carrés, ou une racine carrée de somme de carrés. Une sorte de fonction qui ne dépend pas de l’ordre des arguments.
+
+0:46:08.820,0:46:11.630
+Ok ? Disons max pour des raisons de simplicité.
+
+0:46:12.900,0:46:17.839
+Donc, fondamentalement, une cellule complexe s’allumera si l’une des cellules simples dans son
+
+0:46:19.740,0:46:22.399
+groupe d’entrée s’active.
+
+0:46:22.680,0:46:29.480
+Ainsi, cette cellule complexe détectera un bord à une orientation particulière quelle que soit sa position dans cette petite région.
+
+0:46:30.210,0:46:32.210
+Cela construit un peu de
+
+0:46:32.460,0:46:34.609
+d’invariance au changement de la
+
+0:46:35.250,0:46:40.159
+représentation provenant des cellules complexes en ce qui concerne la petite variation des positions des
+
+0:46:40.890,0:46:42.890
+caractéristiques de l’entrée.
+
+0:46:46.680,0:46:52.010
+Donc, un gentleman du nom de Kunihiko Fukushima
+
+0:46:54.420,0:46:56.569
+- pas de relation réelle avec la centrale nucléaire -
+
+0:46:58.230,0:47:00.230
+à la fin des années 70 au début des années 80
+
+0:47:00.330,0:47:07.190
+a expérimenté de mettre en œuvre cette idée de cellule simple / cellule complexe avec des modèles informatiques. Il a eu l’idée de reproduire cela
+
+0:47:07.500,0:47:09.500
+avec plusieurs couches, donc fondamentalement ...
+
+0:47:11.310,0:47:17.810
+Le [inintelligible] qu’il a fait est très similaire à celui que j’ai montré plus tôt avec les détecteurs 
+
+0:47:18.570,0:47:20.490
+de caractéristiques crée manuellement.
+
+0:47:20.490,0:47:24.559
+Certains des détecteurs de caractéristiques de son modèle ont été fabriqués à la main, mais certains d’entre eux ont été appris.
+
+0:47:25.230,0:47:30.709
+Ils ont été appris par une méthode non supervisée. Il n’avait pas de rétropropagation. La rétropropagation n’existait pas.
+
+0:47:30.710,0:47:36.770
+Elle existait, mais elle n’était pas vraiment populaire et les gens ne l’ont pas utilisé.
+
+0:47:38.609,0:47:43.338
+Donc, il a entraîné ces filtres essentiellement avec quelque chose qui équivaut à un
+
+0:47:44.190,0:47:46.760
+sorte d’algorithme de clustering...
+
+0:47:49.830,0:47:53.569
+Et cela séparément pour chaque couche. Et donc il 
+
+0:47:56.609,0:48:02.389
+a entraîné les filtres pour la première couche,  avec des chiffres manuscrits - il avait aussi un jeu de données de chiffres manuscrits -
+
+0:48:03.390,0:48:06.470
+et puis fournit cela aux cellules complexes qui
+
+0:48:06.470,0:48:10.820
+agrège l’activité de cellules simples. Il a entraîné ensuite
+
+0:48:11.880,0:48:18.440
+l’entrée de la couche suivante et il répéterait le même algorithme en cours d’exécution. Son modèle de neurone était très compliqué.
+
+0:48:18.440,0:48:19.589
+C’était un peu inspiré par la biologie.
+
+0:48:19.589,0:48:27.229
+Ainsi, il avait des neurones inhibiteurs séparés, les autres neurones ont seulement des poids positifs et des poids sortants, etc.
+
+0:48:27.839,0:48:29.839
+Il a réussi à faire fonctionner cette chose.
+
+0:48:30.510,0:48:33.800
+Pas très bien, mais cela a fonctionné en quelque sorte.
+
+0:48:36.420,0:48:39.170
+Puis, quelques années plus tard,
+
+0:48:40.770,0:48:44.509
+Inspiré par des architectures similaires, j’ai
+
+0:48:45.780,0:48:51.169
+effectué de l’entraînement supervisé avec de la rétropropagation. Donc, c’est la genèse des ConvNets, si vous voulez.
+
+0:48:51.750,0:48:53.869
+Et puis indépendamment
+
+0:48:57.869,0:49:04.969
+Max Riesenhuber et le laboratoire de Tony Poggio au MIT ont redécouvert cette architecture mais n’ont pas utilisé la rétropropagation pour une raison quelconque.
+
+0:49:06.060,0:49:08.060
+Il a appelé cela H-max.
+
+0:49:12.150,0:49:20.039
+C’est donc une sorte d’expérience précoce que j’ai réalisée avec des ConvNets lorsque j’ai terminé mon postdoc à l’Université de Toronto en 1988.
+
+0:49:20.040,0:49:22.040
+Donc ça remonte à longtemps.
+
+0:49:22.840,0:49:26.730
+J’essayais  ensuite de comprendre si les ConvNets fonctionnaient mieux sur un petit ensemble de données.
+
+0:49:26.730,0:49:27.870
+Si vous avez une petite quantité de données
+
+0:49:27.870,0:49:31.109
+vous essayez un réseau entièrement connecté ou un réseau linéaire avec une seule couche ou encore
+
+0:49:31.480,0:49:34.529
+un réseau avec des connexions locales sans que les poids soient partagés. Et vous comparez cela avec
+
+0:49:35.170,0:49:39.299
+ce qui n’était pas encore appelé un réseau convolutionnel, où vous avez des poids partagés et des connexions locales.
+
+0:49:39.400,0:49:42.749
+Lequel fonctionne le mieux ? Il s’est avéré qu’en termes de
+
+0:49:43.450,0:49:46.439
+capacité de généralisation, qui sont les courbes en bas à gauche
+
+0:49:49.270,0:49:52.499
+que vous voyez ici, la courbe supérieure est ...
+
+0:49:53.500,0:50:00.330
+fondamentalement, l’architecture « bébé » du ConvNet entraînés avec un ensemble de données très simple de chiffres manuscrits qui ont été dessinés avec une souris.
+
+0:50:00.330,0:50:02.490
+Nous n’avions aucun moyen de collecter des images
+
+0:50:03.640,0:50:05.640
+à cette époque-là.
+
+0:50:05.860,0:50:09.240
+Et puis si vous avez des connexions locales sans poids partagés
+
+0:50:09.240,0:50:12.119
+ça marche un peu moins bien. Ensuite si vous avez un réseau entièrement connecté
+
+0:50:14.470,0:50:22.230
+c’est encore pire. Et enfin si vous avez un réseau linéaire c’est encore plus mauvais et en plus de cela il surentraîne (overfit en anglais).
+
+0:50:23.110,0:50:28.410
+L’erreur de test descend après un certain temps. Les réseaux ont été entraînés avec
+
+0:50:29.410,0:50:35.519
+320 échantillons d’entraînement ce qui est vraiment petit. Ces réseaux avaient environ
+
+0:50:36.760,0:50:43.170
+5000 connexions et 1000 paramètres. Donc c’est un milliard de fois plus petit que ce que nous faisons aujourd’hui.
+
+0:50:43.990,0:50:45.990
+Un million de fois je dirais.
+
+0:50:47.890,0:50:53.730
+Et puis j’ai fini mon postdoc, je suis allé à Bell Labs. Bell Labs avait des ordinateurs un peu plus grands
+
+0:50:53.730,0:50:57.389
+et jeu de données qui venait du service postal.
+
+0:50:57.390,0:51:00.629
+Donc, ils avaient des codes postaux pour les enveloppes et nous avons construit un jeu de
+
+0:51:00.730,0:51:05.159
+données définies sur ces codes postaux. Nous avons entraîné un plus grand un réseau neuronal pendant trois semaines
+
+0:51:06.430,0:51:12.749
+et avons obtenu de très bons résultats. Ce réseau convolutionnel n’avait pas de convolution
+
+0:51:13.960,0:51:15.960
+et de pooling séparé.
+
+0:51:16.240,0:51:22.769
+Il s’agissait de convolution foulée, donc des convolutions où la fenêtre est décalée par plus d’un pixel. Donc, c’est ...
+
+0:51:23.860,0:51:29.739
+Quel est le résultat de cela ? Le résultat est que la carte de sortie lorsque vous faites une convolution où la foulée est
+
+0:51:30.710,0:51:36.369
+plus d’un… vous obtenez une sortie dont la résolution est plus petite que l’entrée et vous en voyez un exemple ici.
+
+0:51:36.370,0:51:40.390
+Ici, l’entrée est de 16 par 16 pixels. C’est ce que nous pouvions nous permettre.
+
+0:51:41.900,0:51:49.029
+Les noyaux sont de taille 5 par 5 et sont décalés de 2 pixels à chaque fois. 
+
+0:51:51.950,0:51:56.919
+Ainsi la sortie ici est plus petite à cause de cela. Ok ?
+
+0:52:11.130,0:52:13.980
+Et puis un an plus tard, ce fut la nouvelle génération
+
+0:52:14.830,0:52:16.830
+de ConvNet. Ce réseau séparait
+
+0:52:17.680,0:52:19.680
+la convolution et le pooling donc...
+
+0:52:20.740,0:52:24.389
+Où est l’opération de pooling ? À l’époque, le pooling était seulement un autre
+
+0:52:25.690,0:52:31.829
+neurone sauf que tous les poids de ce neurone étaient égaux, ok ? Donc, une unité de pooling était essentiellement
+
+0:52:32.680,0:52:36.839
+une unité qui calculait une moyenne de ses entrées,
+
+0:52:37.180,0:52:41.730
+ajoutait un biais, puis passait cela à une couche non linéaire, qui dans ce cas était une fonction tangente hyperbolique.
+
+0:52:42.820,0:52:48.450
+Toutes les couches non-linéaires de ce réseau étaient des tangentes hyperboliques à l’époque. C’est ce que les gens faisaient.
+
+0:52:53.200,0:52:55.200
+L’opération de pooling a été
+
+0:52:56.380,0:52:58.440
+effectuée en déplaçant
+
+0:52:59.680,0:53:01.710
+la fenêtre sur laquelle vous calculez
+
+0:53:02.770,0:53:09.240
+l’agrégat de la sortie de la couche précédente par 2 pixels, ok ? Donc, ici
+
+0:53:10.090,0:53:13.470
+vous obtenez une fenêtre d’entrée  de taille 32 par 32.
+
+0:53:14.470,0:53:20.730
+Vous « convoluez » cela avec des filtres de taille 5 par 5. Je dois mentionner qu’un noyau de convolution est parfois aussi appelé un filtre.
+
+0:53:22.540,0:53:25.230
+Et donc ce que vous obtenez ici sont
+
+0:53:27.520,0:53:29.520
+des sorties qui sont
+
+0:53:30.520,0:53:33.749
+plus petites de 4 donc de taille 28 par 28. Ok ?
+
+0:53:34.540,0:53:40.380
+Puis il y a le pooling  qui calcule une moyenne de
+
+0:53:41.530,0:53:44.400
+pixels ici sur une fenêtre 2 par 2 et
+
+0:53:45.310,0:53:47.310
+puis déplace cette fenêtre par 2.
+
+0:53:48.160,0:53:50.160
+Combien de fenêtres avez-vous ?
+
+0:53:51.220,0:53:56.279
+Puisque l’image est de taille 28 par 28, vous divisez par 2. Donc 14 par 14, ok ? Les images
+
+0:53:57.460,0:54:00.359
+ici sont de taille 14 par 14 pixels.
+
+0:54:02.050,0:54:05.759
+Elles sont essentiellement la moitié de la résolution comme la fenêtre précédente.
+
+0:54:07.420,0:54:09.420
+A cause de cette foulée.
+
+0:54:10.360,0:54:16.470
+Ok ? Maintenant, cela devient intéressant parce que ce que vous voulez, c’est que la prochaine couche détecte les combinaisons de caractéristiques de la couche précédente.
+
+0:54:17.200,0:54:19.200
+Et donc...
+
+0:54:20.200,0:54:22.619
+la façon de le faire est ... vous avez
+
+0:54:23.440,0:54:26.579
+différents filtres de convolution s’appliquant à chacune de ces cartes de caractéristiques
+
+0:54:27.730,0:54:29.730
+Ok ?
+
+0:54:29.950,0:54:35.939
+Et vous les résumez. Vous résumez les résultats de ces quatre convolutions et vous passez le résultat à une couche non linéaire qui vous donne
+
+0:54:36.910,0:54:42.239
+une carte de caractéristiques de la couche suivante. Donc, parce que ces filtres sont de taille 5 par 5 et les
+
+0:54:43.330,0:54:46.380
+images sont 14 par 14, ici la taille est de 10 par 10.
+
+0:54:47.290,0:54:49.739
+Ok ? Pour ne pas avoir d’effets de bordure.
+
+0:54:52.270,0:54:56.999
+Donc, chacune de ces cartes de caractéristiques - il y en a seize si je me souviens correctement -
+
+0:54:59.290,0:55:01.290
+utilisent un ensemble différent de
+
+0:55:02.860,0:55:04.860
+noyaux pour
+
+0:55:06.340,0:55:09.509
+« convoluer » les couches précédentes. En fait
+
+0:55:10.630,0:55:13.799
+les connexions des motifs entre les cartes de caractéristiques…
+
+0:55:14.650,0:55:18.720
+la carte de caractéristiques de cette couche et la carte de caractéristiques de cette couche suivante ne sont pas complètes.
+
+0:55:18.720,0:55:22.349
+De sorte que toutes les cartes de caractéristiques ne sont pas connectées à chaque carte de caractéristiques. Il y a un schéma particulier de
+
+0:55:23.680,0:55:25.950
+différentes combinaisons de carte de caractéristiques de la couche précédente
+
+0:55:28.030,0:55:33.600
+combinant quatre cartes de caractéristiques à la couche suivante. Et la raison de faire cela est juste de gagner du temps sur ordinateur.
+
+0:55:34.000,0:55:40.170
+Nous ne pouvions tout simplement pas se permettre de tout connecter à tout. Il aurait fallu deux fois plus de temps d’exécution, voire plus.
+
+0:55:41.890,0:55:48.359
+Aujourd’hui, nous sommes plus ou moins forcés d’avoir réellement une connexion complète entre les cartes de caractéristiques dans un ConvNet.
+
+0:55:49.210,0:55:52.289
+En raison de la façon dont plusieurs convolutions sont implémentées dans les GPU.
+
+0:55:53.440,0:55:55.440
+Ce qui est triste.
+
+0:55:56.560,0:55:59.789
+Et ensuite la couche suivante vers le haut. Donc, encore une fois, ces cartes sont de taille 10 par 10.
+
+0:55:59.790,0:56:02.729
+Ces cartes de caractéristiques sont de taille 10 par 10 et la couche suivante vers le haut
+
+0:56:03.970,0:56:06.389
+est produite par le pooling et le sous-échantillonnage
+
+0:56:07.330,0:56:09.330
+par un facteur 2.
+
+0:56:09.370,0:56:11.370
+Donc celles ici sont de taille 5 par 5.
+
+0:56:12.070,0:56:14.880
+Ok ? Et là encore, il y a une convolution 5 par 5 ici.
+
+0:56:14.880,0:56:18.089
+Bien sûr, vous ne pouvez pas déplacer la fenêtre de taille 5 par 5 sur une image 5 par 5.
+
+0:56:18.090,0:56:21.120
+Cela ressemble donc à une connexion complète, mais c’est en fait une convolution.
+
+0:56:22.000,0:56:24.000
+Ok ? Gardez cela à l’esprit.
+
+0:56:24.460,0:56:26.460
+Mais vous additionnez essentiellement juste sur un seul endroit.
+
+0:56:27.250,0:56:33.960
+Et ces cartes de caractéristiques en haut ici sont les sorties. Et donc vous avez un emplacement spécial
+
+0:56:33.960,0:56:39.399
+ok ? Parce que vous ne pouvez placer qu’une fenêtre 5 par 5 dans une image 5 par 5.
+
+0:56:40.460,0:56:45.340
+Et vous avez 10 de ces cartes de caractéristiques qui correspondent chacune à une catégorie. Puisque vous entraînez le système à classer
+
+0:56:45.560,0:56:47.619
+les chiffres de 0 à 9. Vous avez dix catégories.
+
+0:56:59.750,0:57:03.850
+C’est une petite animation que j’ai empruntée à Andrej Karpathy.
+
+0:57:05.570,0:57:08.439
+Il a passé du temps pour construire cette animation vraiment sympa 
+
+0:57:09.470,0:57:16.780
+qui représente plusieurs convolutions. Donc, vous avez trois cartes de caractéristiques ici sur l’entrée et vous avez six
+
+0:57:18.650,0:57:21.100
+noyaux de convolution et deux cartes de caractéristiques sur la sortie.
+
+0:57:21.100,0:57:26.709
+Donc, ici, le premier groupe de trois cartes de caractéristiques sont « convolués » avec les trois entrées ...
+
+0:57:28.520,0:57:31.899
+Les trois noyaux sont « convolués » avec les trois cartes de caractéristiques d’entrée pour produire
+
+0:57:32.450,0:57:37.330
+le premier groupe… le premier des deux cartes… le vert en haut
+
+0:57:38.390,0:57:40.370
+ok ?
+
+0:57:40.370,0:57:42.820
+Et puis...
+
+0:57:44.180,0:57:49.000
+Ok, donc c’est le premier groupe de trois noyaux « convolués » avec les trois cartes de caractéristiques.
+
+0:57:49.000,0:57:53.349
+Et ils produisent la carte verte en haut, et puis vous passez au deuxième groupe de
+
+0:57:54.740,0:57:58.479
+de noyaux de convolution. Vous « convoluez » avec le
+
+0:57:59.180,0:58:04.149
+trois cartes de fonctionnalités d’entrée pour produire la carte en bas. Ok ? Donc, c’est
+
+0:58:05.810,0:58:07.810
+un exemple de
+
+0:58:10.070,0:58:17.709
+carte à n caractéristiques sur l’entrée, de carte à n caractéristiques sur la sortie et les N x M noyaux de convolution pour obtenir toutes les combinaisons.
+
+0:58:25.000,0:58:27.000
+Voici une autre animation que j’ai faite il y a longtemps.
+
+0:58:28.100,0:58:34.419
+Cela montre un Convnet en action après qu’il ait été entraîné à reconnaître les chiffres.
+
+0:58:35.330,0:58:38.529
+Et donc ce qui est intéressant à regarder ici, c’est que vous avez
+
+0:58:39.440,0:58:41.440
+une entrée ici, qui est je crois de
+
+0:58:42.080,0:58:44.590
+32 lignes par 64 colonnes.
+
+0:58:45.770,0:58:52.570
+Et après avoir fait six convolutions avec six noyaux de convolution, les avoir fait passer par une tangente hyperbolique et ajouté un biais,
+
+0:58:52.570,0:58:59.229
+vous obtenez ces cartes de caractéristiques ici. Chacune réagit à un type différent de caractéristique. Ainsi, par exemple
+
+0:58:59.990,0:59:01.990
+la carte des caractéristiques en haut ici
+
+0:59:02.390,0:59:04.690
+s’allume quand il y a une sorte de bord horizontal.
+
+0:59:07.400,0:59:10.090
+Celle-ci s’allume chaque fois qu’il y a un bord vertical.
+
+0:59:10.940,0:59:15.340
+Ok ? Et ces noyaux de convolutions ont été appris par rétropropagation. Cela a été entraîné
+
+0:59:15.980,0:59:20.980
+par rétropropagation. Pas réglé à la main. Ils sont réglés au hasard habituellement.
+
+0:59:21.620,0:59:26.769
+Vous voyez ici la notion d’équivariance. Si je déplace l’image d’entrée,
+
+0:59:27.500,0:59:31.600
+les activations sur les cartes de caractéristiques se déplacent mais reste sinon inchangées.
+
+0:59:32.540,0:59:34.540
+Ok ?
+
+0:59:34.940,0:59:36.940
+C’est l’équivariance de décalage.
+
+0:59:36.950,0:59:38.860
+Et puis nous allons à l’opération de pooling.
+
+0:59:38.860,0:59:42.519
+Cette première carte de caractéristiques ici correspond à une version « poolée » de
+
+0:59:42.800,0:59:46.149
+cette première, la deuxième à la deuxième, la troisième à la troisième, etc.
+
+0:59:46.250,0:59:51.370
+Ici l’opération de pooling est à nouveau une moyenne, puis un biais, puis une non-linéarité.
+
+0:59:52.070,0:59:55.029
+Et donc si cette carte se déplace 
+
+0:59:56.570,0:59:59.499
+d’un pixel cette carte se déplacera d’un demi-pixel
+
+1:00:01.370,1:00:02.780
+Ok ?
+
+1:00:02.780,1:00:05.259
+Donc, vous avez encore equavariance, mais
+
+1:00:06.260,1:00:11.830
+les changements sont réduits d’un facteur de deux.
+
+1:00:11.830,1:00:15.850
+Puis vous avez la deuxième étape où chacune de ces cartes ici est le résultat de
+
+1:00:16.160,1:00:23.440
+faire une convolution sur chacune, ou un sous-ensemble des cartes précédentes avec différents noyaux, résumant le résultat, en passant le résultat à travers
+
+1:00:24.170,1:00:27.070
+un sigmoïde. Et donc vous obtenez ce genre de caractéristiques abstraites
+
+1:00:28.730,1:00:32.889
+ici qui sont un peu difficiles à interpréter visuellement, mais cela est encore équivariant au déplécement.
+
+1:00:33.860,1:00:40.439
+Ici encore, vous faites un pooling et le sous-échantillonnage. Donc, le pooling a aussi la foulée par un facteur 2. 
+
+1:00:40.630,1:00:42.580
+Ce que vous obtenez ici sont
+
+1:00:42.580,1:00:47.609
+les cartes, de sorte que ces cartes se déplacent d’un quart de pixel si l’entrée se déplace d’un pixel.
+
+1:00:48.730,1:00:55.290
+Ok ? Donc, nous réduisons le décalage et il devient...  Il pourrait devenir de plus en plus facile pour les couches suivantes d’interpréter ce que la forme est,
+
+1:00:55.290,1:00:57.290
+parce que vous échangez
+
+1:00:58.540,1:01:00.540
+une résolution spatiale pour
+
+1:01:01.030,1:01:05.009
+une résolution de caractéristiques. Vous augmentez le nombre de types de caractéristiques lorsque vous augmentez les couches.
+
+1:01:06.040,1:01:08.879
+La résolution spatiale diminue à cause du pooling et du sous-échantillonnage.
+
+1:01:09.730,1:01:14.459
+Mais le nombre de cartes de caractéristiques augmente et donc vous faites une représentation un peu plus abstraite
+
+1:01:14.460,1:01:19.290
+mais moins sensibles aux décalages et aux distorsions. Et la couche suivante
+
+1:01:20.740,1:01:25.080
+effectue à nouveau des convolutions, mais maintenant la taille du noyau de convolution est égale à la hauteur de l’image.
+
+1:01:25.080,1:01:27.449
+Et donc ce que vous obtenez, c’est une seule bande
+
+1:01:28.359,1:01:32.219
+pour cette carte de caractéristiques. Cela devient essentiellement unidimensionnel et
+
+1:01:32.920,1:01:39.750
+donc maintenant tout changement vertical est fondamentalement éliminé. Ok ? C’est transformé en une certaine variation de l’activation, mais ce n’est pas,
+
+1:01:40.840,1:01:42.929
+ce n’est plus un déplacement. C’est une sorte de
+
+1:01:44.020,1:01:45.910
+transformation plus simple
+
+1:01:45.910,1:01:49.020
+de l’entrée. En fait, vous pouvez montrer que c’est plus simple.
+
+1:01:51.160,1:01:53.580
+C’est plus plat à certains égards.
+
+1:01:56.650,1:02:00.330
+Donc, ceci était le genre d’architecture générique des ConvNets que nous avions.
+
+1:02:01.570,1:02:05.699
+Ici, il s’agit d’une version un peu plus moderne, où vous avez une certaine forme de normalisation :
+
+1:02:07.450,1:02:09.450
+Batch-norm. 
+
+1:02:10.600,1:02:15.179
+Group-norm., peu importe. Une banque de filtres [Filter Bank sur la diapositive] est constituée de multiples convolutions.
+
+1:02:16.660,1:02:18.690
+Dans le traitement du signal, on appelle ça des banques de filtres.
+
+1:02:19.840,1:02:27.149
+« Pointwise » non-linéaire, généralement une ReLU, puis du pooling, généralement du max-pooling dans les implémentations
+
+1:02:28.330,1:02:30.629
+les plus communes des ConvNets. Vous pouvez, bien sûr
+
+1:02:30.630,1:02:35.880
+utiliser d’autres types de pooling. J’ai parlé de la moyenne, mais la version plus générique est la norme Lp
+
+1:02:36.640,1:02:38.640
+qui consiste...
+
+1:02:38.770,1:02:45.530
+à prendre tous les entrées à travers une cellule complexe, les élever à une certaine puissance, puis prendre le ...
+
+1:02:45.530,1:02:47.530
+Sommez-les, puis prenez le ...
+
+1:02:49.860,1:02:51.860
+Élever cela à 1 sur la puissance.
+
+1:02:53.340,1:02:58.489
+Oui, ça devrait être une somme à l’intérieur de la p-racine ici [formule en bas de la diapositive].
+
+1:03:00.870,1:03:02.870
+Une autre façon de faire du pooling est…
+
+1:03:03.840,1:03:07.759
+Une bonne opération de mise en commun est une opération qui est
+
+1:03:07.920,1:03:11.719
+invariante à une permutation de l’entrée, qui vous donne le même résultat
+
+1:03:12.750,1:03:14.750
+quel que soit l’ordre dans lequel vous mettez l’entrée.
+
+1:03:15.780,1:03:22.670
+Voici un autre exemple. Nous avons déjà parlé de cette fonction : 1 sur b, log,  somme des entrées [les i dans la formules], exponentielle de bX i.
+
+1:03:25.920,1:03:30.649
+Encore une fois, c’est une sorte d’opération d’agrégation symétrique que vous pouvez utiliser.
+
+1:03:32.400,1:03:35.539
+Donc, c’est une sorte de cycle d’un ConvNet que vous pouvez répéter. 
+
+1:03:36.270,1:03:43.729
+Il y a différentes façons de positionner la normalisation. Certaines personnes le mettent après la non-linéarité, avant le pooling.
+
+1:03:43.730,1:03:45.730
+Cela dépend.
+
+1:03:46.590,1:03:48.590
+Mais c’est typique.
+
+1:03:53.640,1:03:56.569
+Alors, comment faites-vous cela en  PyTorch?  Il y a un certain nombre de façons différentes de le faire.
+
+1:03:56.570,1:04:02.479
+Vous pouvez le faire en l’écrivant explicitement, en écrivant une classe. C’est donc un exemple d’une classe d’un ConvNet.
+
+1:04:04.020,1:04:10.520
+En particulier ici, c’est une impélmentation où vous faites des convolutions, des ReLU et du max-pooling. 
+
+1:04:12.600,1:04:17.900
+Ok, donc le constructeur crée ici des couches convolutionnelles qui ont des paramètres en elles.
+
+1:04:18.810,1:04:24.499
+Celui-ci a ce qu’on appelle des couches entièrement connectées. Je déteste ça. Ok ?
+
+1:04:25.980,1:04:30.919
+Donc, il y a cette idée que la dernière couche d’un réseau convolutionnel
+
+1:04:32.760,1:04:34.790
+comme celui-ci est entièrement connecté parce que
+
+1:04:37.320,1:04:42.860
+chaque unité de cette couche est connectée à chaque unité de cette couche. Donc, cela ressemble à une connexion complète.
+
+1:04:44.010,1:04:47.060
+Il est en fait utile de penser que c’est une convolution.
+
+1:04:49.200,1:04:51.060
+Ok ?
+
+1:04:51.060,1:04:56.070
+Maintenant, pour des raisons d’efficacité, ou peut-être quelques autres, mauvaises raisons, cette couche est appeléé
+
+1:04:57.370,1:05:00.959
+couche entièrement connectée. Et nous utilisons la classe linéaire ici [nn.Linear dans le code de la diapositive]
+
+1:05:01.120,1:05:05.459
+mais cela rompt l’idée que votre réseau est un réseau convolutif.
+
+1:05:06.070,1:05:09.209
+C’est beaucoup mieux de voir ces couches comme des convolutions.
+
+1:05:09.760,1:05:14.370
+Dans ce cas, une convolution 1 x 1, qui est une sorte de concept bizarre. Ok. Donc, ici, nous avons
+
+1:05:15.190,1:05:20.46
+quatre couches, deux couches de convolutions et deux couches dites entièrement connectées.
+
+1:05:21.790,1:05:23.440
+Et puis la façon dont nous ...
+
+1:05:23.440,1:05:29.129
+Nous devons les créer dans le constructeur, et la façon dont nous les utilisons dans la propagation avant [forward sur la diapositive] est que
+
+1:05:30.630,1:05:35.310
+nous faisons une convolution de l’entrée, puis nous appliquons la ReLU, et puis nous faisons le max-pooling. Puis nous
+
+1:05:35.710,1:05:38.699
+exécutons la deuxième couche, appliquons la ReLU, faisons à nouveau le max-pooling, 
+
+1:05:38.700,1:05:44.280
+et puis nous remodelons la sortie parce que c’est une couche entièrement connectée. Donc, nous voulons en un vecteur.
+
+1:05:45.190,1:05:47.879
+C’est ce que fait le x.view(-1). 
+
+1:05:48.820,1:05:50.820
+Ensuite nous appliquons une
+
+1:05:51.160,1:05:53.160
+ReLU
+
+1:05:53.260,1:05:55.260
+Et...
+
+1:05:55.510,1:06:00.330
+la deuxième couche entièrement connectée, puis appliquons un softmax si nous voulons faire de la classification.
+
+1:06:00.460,1:06:04.409
+Et donc c’est un peu similaire à l’architecture que vous voyez en bas.
+
+1:06:04.900,1:06:08.370
+Les chiffres peuvent être différents en termes de cartes de caractéristiques et d’autres choses, mais ...
+
+1:06:09.160,1:06:11.160
+c’est l’architecture générale
+
+1:06:12.250,1:06:14.250
+de ce que nous parlons.
+
+1:06:15.640,1:06:17.640
+Oui ? [Question inaudible d’un étudiant].
+
+1:06:20.530,1:06:22.530
+Répétez [L’étudiant répète, c’est toujours inaudible].
+
+1:06:24.040,1:06:26.100
+Vous savez, quelle que soit la descente de gradient décidée
+
+1:06:28.630,1:06:30.630
+nous pouvons les regarder, mais
+
+1:06:31.180,1:06:33.180
+si vous entraînez avec beaucoup 
+
+1:06:33.280,1:06:37.590
+d’exemples d’images naturelles, le genre de filtres que vous verrez à la première couche
+
+1:06:37.840,1:06:44.999
+finira par être la plupart du temps des détecteurs de bords orientés, très semblable à ce que les gens, à ce que les neuroscientifiques,
+
+1:06:45.340,1:06:49.110
+observent dans le cortex des
+
+1:06:49.210,1:06:50.440
+animaux.
+
+1:06:50.440,1:06:52.440
+Dans le cortex visuel des animaux.
+
+1:06:55.780,1:06:58.469
+[Commentaire inaudible de l’étudiant].
+Ils vont changer quand vous entraînez le modèle, c’est tout le point.
+
+1:07:05.410,1:07:11.160
+Ok, donc c’est assez simple. Voici une autre façon de les définir. C'est... Je suppose que c’est une sorte de
+
+1:07:12.550,1:07:15.629
+façon dépassée de le faire. Peu beaucoup de gens font encore ça.
+
+1:07:17.170,1:07:23.340
+Mais c’est un plus simple. Il y a une classe dans PyTorch appelée nn.Sequential.
+
+1:07:24.550,1:07:28.469
+C’est essentiellement un conteneur dans lequel vous pouvez mettre des modules, et
+
+1:07:29.080,1:07:36.269
+et les utiliser automatiquement dans l’ordre sous forme de séquence.  Et alors vous avez juste à appeler…
+
+1:07:40.780,1:07:45.269
+forward et il saura calculer les bonnes choses.
+
+1:07:46.360,1:07:50.370
+Dans cette forme particulière ici, vous lui passez un tas de paires.
+
+1:07:50.370,1:07:55.229
+C’est comme un dictionnaire afin que vous puissiez donner un nom à chacune des couches, et vous pouvez plus tard y accéder.
+
+1:08:08.079,1:08:10.079
+C’est la même architecture dont nous parlions tout à l’heure.
+
+1:08:18.489,1:08:24.029
+[Question inaudible d’un étudiant].
+Oui, je veux dire que la rétropropagation est automatique. Vous l’obtenez
+
+1:08:25.630,1:08:27.630
+par défaut, vous appelez simplement
+
+1:08:28.690,1:08:32.040
+backward et il sait comment rétropropager.
+
+1:08:44.000,1:08:49.180
+[Autre question inaudible d’un étudiant].
+
+Eh bien, la classe encapsule tout dans un objet où les paramètres sont…
+
+1:08:49.250,1:08:51.250
+Il y a une façon particulière de ...
+
+1:08:52.220,1:08:54.220
+sortir les paramètres et 
+
+1:08:55.130,1:08:58.420
+de les donner à un optimiseur.
+
+1:08:58.420,1:09:01.330
+Et donc l’optimiseur n’a pas besoin de savoir à quoi ressemble votre réseau.
+
+1:09:01.330,1:09:06.910
+Il sait juste qu’il y a une fonction avec un tas de paramètres et il obtient un gradient.
+
+1:09:06.910,1:09:08.910
+Il n’a pas besoin de savoir à quoi ressemble votre réseau.
+
+1:09:10.790,1:09:12.879
+Vous en entendrez plus à ce sujet
+
+1:09:14.840,1:09:16.840
+Demain.
+
+1:09:25.610,1:09:33.159
+Voici un aspect très intéressant des réseaux convolutifs et c’est l’une des raisons pour lesquelles ils sont devenus si
+
+1:09:33.830,1:09:37.390
+populaires dans de nombreuses applications. C’est le fait que
+
+1:09:39.440,1:09:45.280
+si vous voyez chaque couche dans un ConvNet comme une convolution, il n’y a pas de connexions complètes. Pour ainsi dire
+
+1:09:47.660,1:09:53.320
+vous n’avez pas besoin d’avoir une entrée de taille fixe. Vous pouvez varier la taille de l’entrée et le réseau
+
+1:09:54.380,1:09:56.380
+variera en conséquence.
+
+1:09:56.780,1:09:58.780
+Car...
+
+1:09:59.510,1:10:01.510
+lorsque vous appliquez une convolution à une image,
+
+
+1:10:02.150,1:10:05.800
+vous fournissez une image d’une certaine taille, vous faites une convolution avec un noyau
+
+1:10:06.620,1:10:11.979
+vous obtenez une image dont la taille est liée à la taille de l’entrée.
+
+1:10:12.140,1:10:15.789
+Mais vous pouvez changer la taille de l’entrée et cela changera juste la taille de la sortie.
+
+1:10:16.760,1:10:20.320
+Et c’est vrai pour chaque opération de convolution, ok ?
+
+1:10:20.320,1:10:25.509
+Donc, si votre réseau est composé uniquement de convolutions, alors il n’a pas d’importance concernant la taille de l’entrée.
+
+1:10:26.180,1:10:31.450
+Cela va passer par le réseau et la taille de chaque couche va changer en fonction de la taille de l’entrée
+
+1:10:31.580,1:10:34.120
+et la taille de la sortie changera également en conséquence.
+
+1:10:34.640,1:10:37.329
+Voici donc un petit exemple où
+
+1:10:38.720,1:10:40.720
+je souhaite faire
+
+1:10:41.300,1:10:45.729
+de la reconnaissance d’écriture cursive. C’est très difficile parce que je ne sais pas où sont les lettres.
+
+1:10:45.730,1:10:48.700
+Donc, je ne peux pas juste avoir un reconnaisseur de caractères que ...
+
+1:10:49.260,1:10:51.980
+Je veux dire un système qui va d’abord couper le
+
+1:10:52.890,1:10:56.100
+mot en lettres
+
+1:10:56.100,1:10:57.72
+parce que je ne sais pas où sont les lettres
+
+1:10:57.720,1:10:59.900
+puis appliquer le réseau convolutif à chacune des lettres.
+
+1:11:00.210,1:11:05.200
+Donc, le mieux que je puisse faire est de prendre le réseau convolutif et le glisser sur l’entrée, puis enregistrer la sortie.
+
+1:11:05.850,1:11:11.810
+Pour ce faire, vous devrez prendre un ConvNet comme celui-ci qui a une fenêtre
+
+1:11:12.060,1:11:14.389
+assez grande pour voir un seul caractère.
+
+1:11:15.120,1:11:21.050
+Puis vous prenez votre image d’entrée et calculez votre réseau à chaque endroit,
+
+1:11:21.660,1:11:27.110
+le déplaçant par un pixel ou deux pixels ou quatre pixels ou quelque chose comme ça, un nombre assez petit de pixels.
+
+1:11:27.630,1:11:30.619
+Quelque que soit l’endroit où le caractère se produit dans l’entrée
+
+1:11:30.620,1:11:35.000
+vous obtiendrez toujours un score sur la sortie chaque fois qu’il a besoin d’en reconnaître un.
+
+1:11:36.150,1:11:38.989
+Mais il s’avère que c’est extrêmement inutile
+
+1:11:40.770,1:11:42.770
+car...
+
+1:11:43.290,1:11:50.179
+vous faites le même calcul plusieurs fois. Et donc la bonne façon de faire - et c’est très important de comprendre -
+
+1:11:50.880,1:11:56.659
+c’est que vous ne faites pas ce que je viens de décrire où vous avez un petit ConvNet que vous appliquez à chaque fenêtre.
+
+1:11:58.050,1:12:00.050
+Ce que vous faites, c’est que vous
+
+1:12:01.230,1:12:07.939
+prenez une entrée importante et vous appliquez les convolutions à l’image d’entrée car elle est plus grande. Vous allez obtenir une plus grande sortie.
+
+1:12:07.940,1:12:11.270
+Vous appliquez la deuxième couche de convolution, ou le pooling, quel que soit ce que c’est.
+
+1:12:11.610,1:12:15.170
+Vous allez obtenir une plus grande entrée à nouveau, etc.
+
+1:12:15.170,1:12:16.650
+tout cela jusqu’au sommet et
+
+1:12:16.650,1:12:20.929
+alors que dans la conception originale, vous obteniez une seule sortie maintenant vous allez obtenir plusieurs sorties parce que
+
+1:12:21.570,1:12:23.570
+c’est une couche de convolution.
+
+1:12:27.990,1:12:29.990
+C’est super important parce que
+
+1:12:30.600,1:12:35.780
+cette façon d’appliquer un réseau convolutif avec une fenêtre coulissante est
+
+1:12:36.870,1:12:40.610
+beaucoup, beaucoup moins cher que d’exécuter le réseau à chaque endroit.
+
+1:12:42.510,1:12:44.510
+Ok ?
+
+1:12:45.150,1:12:51.619
+Vous ne croiriez pas combien de décennies il a fallu pour convaincre les gens que c’était la bonne chose à faire.
+
+1:12:58.960,1:13:03.390
+Voici donc un exemple de la façon dont vous pouvez utiliser cela.
+
+1:13:04.090,1:13:09.180
+Il s’agit d’un réseau convolutif qui a été entraîné sur des images de chiffres de taille 32 par 32. Il a été entraîné sur un MNIST.
+
+1:13:09.760,1:13:11.760
+Fenêtres d’entrée 32 par 32.
+
+1:13:12.400,1:13:15.690
+C’est LeNet 5, donc c’est très similaire à l’architecture
+
+1:13:15.690,1:13:20.940
+dont je viens de montrer le code. Il est entraîné sur des caractères individuels pour simplement classer
+
+1:13:21.970,1:13:26.369
+le caractère au centre de l’image. Et la façon dont il a été entraîné repose sur un peu d’augmentation 
+
+1:13:26.770,1:13:30.359
+de données où le caractère dans le centre a été un peu décalé dans divers endroits ou bien
+
+1:13:31.420,1:13:36.629
+des changements de taille. Et puis il y avait deux autres personnages
+
+1:13:37.420,1:13:39.600
+qui ont été en quelque sorte ajouté sur le côté pour confondre
+
+1:13:40.480,1:13:45.660
+dans de nombreux échantillons. Et puis il a également été entraîné avec une 11ème catégorie
+
+1:13:45.660,1:13:50.249
+qui était " aucun de ce qui précède ". L’entraînement est alors soit vous lui montrer une image vierge
+
+1:13:50.410,1:13:54.149
+ou soit vous lui montrez une image où il n’y a pas de caractère dans le centre, mais il y a des caractères sur le côté.
+
+1:13:54.940,1:13:59.399
+De sorte qu’il détecte chaque fois qu’il est entre deux caractères.
+
+1:14:00.520,1:14:02.520
+Puis vous calculez
+
+1:14:02.650,1:14:10.970
+le ConvNet à chaque emplacement de l’entrée sans réellement le déplacer, mais juste appliquer les convolutions sur l’image entière.
+
+1:14:11.740,1:14:13.740
+Et c’est ce que vous obtenez.
+
+1:14:13.780,1:14:23.220
+Donc, ici, l’image d’entrée est 64 par 32, même si le réseau a été entraîné sur du 32 par 32 avec ce genre d’exemples générés.
+
+1:14:24.280,1:14:28.049
+Ce que vous voyez, c’est l’activité de certaines couches. Elles ne sont pas toutes représentées.
+
+1:14:29.410,1:14:32.309
+Et ce que vous voyez en haut ici, ces drôles de forme, 
+
+1:14:33.520,1:14:37.560
+vous voyez 3 et 5 surgissent et indiquent
+
+1:14:38.830,1:14:41.850
+la catégorie gagnante pour chaque emplacement, non?
+
+1:14:42.670,1:14:47.339
+Donc, les huit sorties que vous voyez en haut sont
+
+1:14:48.520,1:14:50.520
+fondamentalement la sortie correspondant à huit positions
+
+1:14:51.250,1:14:56.790
+différentes de la fenêtre 32 x32  sur l’entrée, décalées de 4 pixels à chaque fois.
+
+1:14:59.530,1:15:05.859
+Et ce qui est représenté est la catégorie gagnante dans cette fenêtre et l’échelle de gris indique le score, ok ?
+
+1:15:07.220,1:15:10.419
+Donc ce que vous voyez, c’est qu’il y a deux détecteurs qui détectent les 5
+
+1:15:11.030,1:15:15.850
+jusqu’à ce que les 3 commencent à le chevaucher. Et puis deux détecteurs détectent les 3 qui se déplacent.
+
+1:15:18.230,1:15:22.779
+Parce que dans une fenêtre 32 par 32
+
+1:15:23.390,1:15:29.919
+les 3 apparaissent à gauche de cette fenêtre, puis à droite des autres fenêtres 32 par 32 décalées de quatre.
+
+1:15:29.920,1:15:31.920
+Et donc ces deux détecteurs détectent
+
+1:15:32.690,1:15:34.690
+que 3 ou que 5.
+
+1:15:36.140,1:15:39.890
+Donc, alors ce que vous faites, c’est que vous prenez tous ces scores ici en haut et vous
+
+1:15:39.890,1:15:43.809
+faites un peu de post-traitement très simple et vous comprenez si c’est un 3 ou un 5.
+
+1:15:44.630,1:15:46.630
+Ce qui est intéressant à ce sujet, c’est que
+
+1:15:47.660,1:15:49.899
+vous n’avez pas besoin de faire une segmentation préalable.
+
+1:15:49.900,1:15:51.860
+Ce les gens devaient faire
+
+1:15:51.860,1:15:58.180
+avant en vision par ordinateur lorsqu’ils voulaient détecter un objet, estt de séparer l’objet de son arrière-plan parce que le système de reconnaissance
+
+1:15:58.490,1:16:00.490
+était confus par
+
+1:16:00.800,1:16:07.900
+l’arrière-plan. Ici, ce réseau convolutif, a été entraîné avec des caractères qui se chevauchent et il sait comment les distinguer.
+
+1:16:08.600,1:16:10.809
+Donc il n’est pas confus par les personnages qui se chevauchent.
+
+1:16:10.810,1:16:15.729
+J’ai tout un tas d’animation sur mon site web, soit dit en passant, elles datent du début des années 90’.
+
+1:16:38.450,1:16:41.679
+[Question inaudible d’un étudiant].
+Non, c’était le principal problème. C’est l’une des raisons pour lesquelles
+
+1:16:44.210,1:16:48.040
+la vision par ordinateur ne fonctionnait pas très bien. C’est parce que le problème même de
+
+1:16:49.850,1:16:52.539
+séparation de la figure/arrière-plan, détection d’un objet
+
+1:16:53.780,1:16:59.530
+et le reconnaître est la même chose. Vous ne pouvez pas reconnaître l’objet tant que vous ne l’avez pas segmenter, mais vous ne pouvez pas le segmenter tant que vous ne l’avez pas reconnu.
+
+1:16:59.840,1:17:05.290
+C’est la même chose pour la reconnaissance de l’écriture cursive. Vous ne pouvez pas... prenons un exemple
+
+1:17:07.460,1:17:09.460
+On a des marqueurs ?
+
+1:17:10.650,1:17:12.650
+Il ne semble pas qu’on ait des marqueurs.
+
+1:17:14.969,1:17:21.859
+Ah oui, c’est vrai. Désolé... peut-être que je devrais utiliser le ...
+
+1:17:24.780,1:17:26.780
+Si cela fonctionne...
+
+1:17:34.500,1:17:36.510
+Oh, bien sûr...
+
+1:17:43.409,1:17:45.409
+Ok...
+
+1:17:52.310,1:17:54.310
+Vous pouvez lire ça ?
+
+1:17:55.670,1:18:01.990
+Ok, c’est une horrible écriture, mais c’est aussi parce que j’écris à l’écran. Ok. Maintenant arrivez-vous à lire ça ?
+
+1:18:08.240,1:18:10.240
+[Un étudiant répond]
+Minimum, oui.
+
+1:18:11.870,1:18:15.010
+Ok, il n’y a en fait aucun moyen que vous puissiez segmenter les lettres de ce truc.
+
+1:18:15.010,1:18:17.439
+Je veux dire que c’est une sorte de nombre aléatoire de vagues.
+
+1:18:17.900,1:18:23.260
+Mais juste le fait que les deux « i » sont identifiés, alors cela n’est plus ambigu, du moins en anglais.
+
+1:18:24.620,1:18:26.620
+C’est donc un bon exemple de
+
+1:18:28.100,1:18:30.340
+l’interprétation des individus,
+
+1:18:31.580,1:18:38.169
+des objets en fonction de leur contexte. Et ce dont vous avez besoin, c’est d’une sorte de modèle linguistique de haut niveau pour savoir quels mots sont possibles.
+
+1:18:38.170,1:18:40.170
+Si vous ne connaissez pas l’anglais ou les
+
+1:18:40.670,1:18:44.320
+langues qui utilisant le même mot, il n’y a aucun moyen que vous puissiez lire ça.
+
+1:18:45.500,1:18:48.490
+La langue parlée est très similaire à ça.
+
+1:18:49.700,1:18:53.679
+Vous tous qui avez eu l’expérience de l’apprentissage d’une langue étrangère,
+
+1:18:54.470,1:18:56.470
+vous avez probablement eu l’expérience
+
+1:18:57.110,1:19:04.150
+d’avoir eu du mal à segmenter les mots d’une nouvelle langue. Puis à reconnaître les mots parce que vous n’aviez pas le vocabulaire.
+
+1:19:04.850,1:19:09.550
+Si je commence à parler français, vous n’avez aucune idée d’où sont les limites des mots,
+
+1:19:09.740,1:19:13.749
+sauf si vous parlez français. J’ai donc prononcé une phrase, ce sont des mots,
+
+1:19:13.750,1:19:17.140
+mais vous ne pouvez pas dire la frontière entre les mots à parce qu’elle n’est fondamentalement pas
+
+1:19:17.990,1:19:23.800
+à moins que vous ne sachiez où les mots sont à l’avance, non? Donc, c’est le problème de la segmentation.
+
+1:19:23.900,1:19:28.540
+Vous ne pouvez pas reconnaître jusqu’à ce que vous segmentez, vous ne pouvez pas segmenter jusqu’à ce que vous reconnaissez. Vous devez faire les deux en même temps.
+
+1:19:29.150,1:19:32.379
+Les premiers systèmes de vision par ordinateur ont eu beaucoup de mal à faire cela.
+
+1:19:40.870,1:19:46.739
+C’est pourquoi ce genre de choses est un grand progrès. Parce que vous n’avez pas à faire la segmentation à l’avance, il suffit ...
+
+1:19:47.679,1:19:52.559
+il suffit d’entraîner votre système à être robuste aux objets qui se chevauchent et des choses comme ça. Oui, au fond !
+
+1:19:55.510,1:19:59.489
+[Question d’un étudiant : y a-t-il une classe de fond dans votre modèle ?]
+Oui, il y a une classe de fond. Donc, quand vous voyez une réponse vide
+
+1:20:00.340,1:20:04.410
+cela signifie que le système dit « aucun de ce qui précède » essentiellement. Donc, il a été entraîné
+
+1:20:05.590,1:20:07.590
+à produire « aucun de ce qui précède »
+
+1:20:07.690,1:20:11.699
+soit lorsque l’entrée est vide, soit quand il y a un caractère qui est trop
+
+1:20:13.420,1:20:17.190
+en dehors du centre ou soit lorsque vous avez deux caractères
+
+1:20:17.620,1:20:24.029
+mais il n’y a rien au centre. Ou quand vous avez deux caractères qui se chevauchent, mais il n’y a pas de caractère central, ok ? Donc, c’est ...
+
+1:20:24.760,1:20:27.239
+essayer de détecter les frontières entre les caractères essentiellement.
+
+1:20:28.420,1:20:30.420
+Voici un autre exemple.
+
+1:20:31.390,1:20:38.640
+C’est un exemple qui montre que même un réseau convolutif très simple avec seulement deux couches : convolution, pooling, convolution
+
+1:20:38.640,1:20:40.640
+pooling, puis deux couches de...
+
+1:20:42.010,1:20:44.010
+deux couches de plus par la suite,
+
+1:20:44.770,1:20:47.429
+peut résoudre ce qu’on appelle le problème de liaison des caractéristiques.
+
+1:20:48.130,1:20:50.130
+Les neuroscientifiques en vision et
+
+1:20:50.320,1:20:56.190
+les gens faisant de la vision par ordinateur avaient le problème - c’était une sorte de puzzle - : comment ce fait il que
+
+1:20:57.489,1:21:01.289
+nous percevons les objets comme des objets ? Les objets sont des collections de caractéristiques
+
+1:21:01.290,1:21:04.229
+mais comment lier toutes les caractéristiques d’un objet pour former cet objet ?
+
+1:21:06.460,1:21:09.870
+Y a-t-il une façon magique de faire ça ?
+
+1:21:12.520,1:21:16.589
+Et ils l’ont fait. Les psychologues ont fait des expériences comme...
+
+1:21:24.210,1:21:26.210
+dessiner ça et puis ça.
+
+1:21:28.239,1:21:31.349
+Vous percevez la barre comme
+
+1:21:32.469,1:21:39.419
+une seule barre parce que vous êtes habitué à des barres obstruées par d’autres objets
+
+1:21:39.550,1:21:41.550
+et donc vous supposez juste que c’est une occlusion.
+
+1:21:44.410,1:21:47.579
+Et puis il y a des expériences qui déterminent de combien dois-je
+
+1:21:48.430,1:21:52.109
+déplacer les deux barres pour me les faire percevoir comme deux barres séparées.
+
+1:21:53.980,1:21:56.580
+Mais en fait, à la minute où ils s’alignent parfaitement et si vous...
+
+1:21:57.250,1:21:59.080
+si vous faites cela.
+
+1:21:59.080,1:22:03.809
+Peut-être exactement identique à ce que vous voyez ici, maintenant vous les percevez comme deux objets différents.
+
+1:22:06.489,1:22:12.929
+Alors, comment se fait-il que nous semblions résoudre le problème de liaison des caractéristiques ?
+
+1:22:15.880,1:22:21.450
+Et ce que cela montre, c’est que vous n’avez pas besoin d’un mécanisme spécifique pour cela. Il arrive juste.
+
+1:22:22.210,1:22:25.919
+Si vous avez suffisamment de non linéarité et que vous vous entraînez avec suffisamment de données
+
+1:22:26.440,1:22:33.359
+puis tel un effet secondaire, vous obtenez un système qui résout le problème de liaison des caractéristiques sans aucun mécanisme particulier pour cela.
+
+1:22:37.510,1:22:40.260
+Donc ici vous avez deux formes et vous en déplacez une
+
+1:22:43.060,1:22:50.519
+et cela passe d’un 6 et 1, à 3 et 1, à 5 et 1, à 7 et 3,
+
+1:22:53.140,1:22:55.140
+Etcetera.
+[Question inaudible d’un étudiant]
+
+1:23:00.020,1:23:07.480
+C’est vrai, bonne question. La question est donc : comment faites-vous la distinction entre les deux situations ? Nous avons deux 5 à côté de l’autre et
+
+1:23:08.270,1:23:14.890
+le fait que vous avez un seul 5 étant détecté par deux cadres différents. Deux cadrages différents de ces 5.
+
+1:23:15.470,1:23:17.470
+Eh bien, il y a cet entraînement
+
+1:23:17.660,1:23:20.050
+explicite de sorte que lorsque vous avez deux caractères qui
+
+1:23:20.690,1:23:25.029
+se touchants et aucun d’entre eux est vraiment centré vous entraîner le système à dire « aucun de ce qui précède », ok ?
+
+1:23:25.030,1:23:29.079
+Donc, il va toujours avoir 5, blanc, 5.
+
+1:23:30.020,1:23:35.800
+Il comme avoir un, blanc, un.  Qui peuvent être très proches. Il vous fera la différence.
+
+1:23:39.170,1:23:41.289
+Ok, alors pour quelles tâches les ConvNets sont performants ?
+[Question inaudible d’un étudiant]
+
+1:24:04.970,1:24:07.599
+Donc, ce que vous devez regarder est ça.
+
+1:24:11.510,1:24:13.510
+Chaque couche ici est une convolution.
+
+1:24:13.610,1:24:15.020
+Ok ?
+
+1:24:15.020,1:24:21.070
+Y compris la dernière couche. Cela ressemble donc à une connexion complète parce que chaque unité de la deuxième couche va dans la sortie.
+
+1:24:21.070,1:24:24.460
+Mais en fait, c’est une convolution, elle se trouve juste être appliqué à un seul endroit.
+
+1:24:24.950,1:24:31.300
+Alors maintenant imaginez que cette couche au sommet ici est maintenant plus grande. Ok ? Celle qui est représenté ici.
+
+1:24:32.840,1:24:34.130
+Ok ?
+
+1:24:34.130,1:24:37.779
+Maintenant, la taille du noyau est la taille de l’image que vous aviez ici précédemment,
+
+1:24:37.820,1:24:43.360
+mais maintenant, c’est une convolution qui a plusieurs emplacements. Ok ? Et donc vous obtenez plusieurs sorties.
+
+1:24:46.430,1:24:55.100
+[Commentaire de l’étudiant].
+C’est ça, c’est ça. Chacune d’entre elles correspond à une classification par-dessus une fenêtre d’entrée de taille 32 par 32 dans l’exemple que j’ai montré.
+
+1:24:55.100,1:25:02.710
+Et ces fenêtres sont décalées de 4 pixels. La raison provient de l’architecture du réseau que j’ai montré,
+
+1:25:04.280,1:25:11.739
+Ici. Elle a une convolution avec une foulée de 1, puis un pooling avec une foulée de 2, puis convolution avec foulée 1, pooling avec une foulée de 2.
+
+1:25:13.949,1:25:17.178
+Et donc la foulée globale est de quatre, ok ?
+
+1:25:18.719,1:25:22.788
+Et donc pour obtenir une nouvelle sortie, vous devez déplacer la fenêtre d’entrée par quatre
+
+1:25:24.210,1:25:29.509
+afin d’obtenir une. Car les deux couches de pooling avec...
+
+1:25:31.170,1:25:35.480
+Peut-être que je devrais être un peu plus explicite sur ce sujet. Permettez-moi de dessiner une image, ce serait plus clair.
+
+1:25:39.929,1:25:43.848
+Donc, vous avez une entrée
+
+1:25:49.110,1:25:53.749
+comme ça... une convolution, disons une convolution de la taille trois.
+
+1:25:57.420,1:25:59.420
+Ok ? Avec une foulée de 1.
+
+1:26:01.289,1:26:04.518
+Ok, je ne vais pas tout dessiner. Alors vous avez
+
+1:26:05.460,1:26:11.389
+le pooling avec sous-échantillonnage de taille 2. Alors vous « poolez » et sous-échantillonnez avec une foulée de 2. De sorte que cela se décale de 2.
+
+1:26:12.389,1:26:14.389
+Pas de chevauchement.
+
+1:26:18.550,1:26:25.060
+Ok, donc ici l’entrée est de cette taille : un deux, trois, quatre, cinq, six, sept, huit.
+
+1:26:26.150,1:26:29.049
+Parce que la convolution est de taille trois que vous obtenez
+
+1:26:29.840,1:26:31.840
+une sortie ici de taille six.
+
+1:26:32.030,1:26:39.010
+Et quand vous faites le pooling et le sous-échantillonnage avec foulée de 2, vous obtenez trois sorties parce que cela divise la sortie par deux. Ok ?
+
+1:26:39.880,1:26:41.880
+Permettez-moi d’en ajouter un autre.
+
+1:26:43.130,1:26:45.130
+En fait, deux.
+
+1:26:46.790,1:26:48.790
+Ok, donc maintenant la sortie est de dix.
+
+1:26:50.030,1:26:51.680
+Cette couche est de huit.
+
+1:26:51.680,1:26:53.680
+Celle-là est de quatre.
+
+1:26:54.260,1:26:56.409
+Je peux faire des convolutions maintenant aussi.
+
+1:26:57.650,1:26:59.650
+Disons trois.
+
+1:27:01.400,1:27:03.400
+Je n’ai que deux sorties.
+
+1:27:04.490,1:27:06.490
+Ok ? Oups !
+
+1:27:07.040,1:27:10.820
+Hmm ne sais pas pourquoi il ne veut plus... dessiner.
+
+1:27:10.820,1:27:13.270
+Il ne veut plus dessiner, c’est intéressant.
+
+1:27:17.060,1:27:19.060
+Aha!
+
+1:27:24.110,1:27:26.380
+Il ne réagit pas aux clics, c’est intéressant.
+
+1:27:34.460,1:27:39.609
+Ok, je ne sais pas ce qui se passe ! Oh « xournal » ne répond pas.
+
+1:27:41.750,1:27:44.320
+D’accord, je suppose qu’il a crashé.
+
+1:27:46.550,1:27:48.550
+Eh bien, c’est ennuyeux.
+
+1:27:53.150,1:27:55.150
+Ouais, vraiment crash.
+
+1:28:02.150,1:28:04.150
+Et, bien sûr, il l’a oublié, alors...
+
+1:28:09.860,1:28:12.760
+Ok, donc nous avons dix, puis huit
+
+1:28:15.230,1:28:20.470
+en raison de la convolution de taille 3,  puis nous avons le pooling
+
+1:28:22.520,1:28:24.520
+de taille 2 avec
+
+1:28:26.120,1:28:28.120
+foulée de 2, donc nous obtenons quatre.
+
+1:28:30.350,1:28:36.970
+Ensuite, nous avons la convolution de taille 3 donc nous obtenons deux, ok ? Et puis peut-être pooling à nouveau
+
+1:28:38.450,1:28:42.700
+de taille 2 et sous-échantillonnage de 2, nous obtenons un. Ok, donc...
+
+1:28:44.450,1:28:46.869
+dix entrées, huit
+
+1:28:49.370,1:28:53.079
+quatre, deux, et...
+
+1:28:58.010,1:29:03.339
+puis un pour le pooling.  [Remarque d’un étudiant]. C’est la convolution trois, vous avez raison.
+
+1:29:06.500,1:29:08.500
+Il c’est deux
+
+1:29:09.140,1:29:11.140
+Et là trois
+
+1:29:12.080,1:29:14.080
+Etcetera. Bien. Maintenant, supposons
+
+1:29:14.540,1:29:17.860
+que j’ajoute quelques unités ici.
+
+1:29:18.110,1:29:21.010
+Ok ? Donc, cela va ajouter, disons
+
+1:29:21.890,1:29:24.160
+quatre unités ici, deux unités ici
+
+1:29:27.620,1:29:29.620
+Puis... 
+
+1:29:41.190,1:29:42.840
+Ouais, celui-ci est
+
+1:29:42.840,1:29:46.279
+comme ça et comme ça, donc j’en ai quatre et
+
+1:29:47.010,1:29:48.960
+j’en ai un autre ici.
+
+1:29:48.960,1:29:52.460
+Ok ? Donc maintenant, je n’ai qu’une sortie mais en ajoutant 
+
+1:29:53.640,1:29:55.640
+quatre entrées ici
+
+1:29:55.830,1:29:58.249
+ce qui donne 14. J’ai deux sorties.
+
+1:29:59.790,1:30:02.090
+Pourquoi quatre ? Parce que j’ai 2
+
+1:30:02.970,1:30:04.830
+foulées de 2.
+
+1:30:04.830,1:30:10.939
+Ok ? Donc, le ratio global de sous-échantillonnage de l’entrée à la sortie est de 4, c’est 2 fois 2.
+
+1:30:13.140,1:30:17.540
+Maintenant, ici c’est 12, là c’est 6, et là 4.
+
+1:30:20.010,1:30:22.010
+Donc, c’est...
+
+1:30:22.620,1:30:24.620
+une démonstration du fait que
+
+1:30:24.900,1:30:26.900
+vous pouvez augmenter la taille de l’entrée,
+
+1:30:26.900,1:30:32.330
+cela augmentera la taille de chaque couche, et si vous avez une couche de taille 1 et  que c’est une couche de convolution,
+
+1:30:32.330,1:30:34.330
+sa taille va être augmentée.
+
+1:30:42.870,1:30:44.870
+Oui. [Question d’une étudiante].
+
+1:30:47.250,1:30:52.760
+Changer la taille d’une couche, comme, verticalement, horizontalement ? Ouais, donc il va y avoir...
+
+1:30:54.390,1:30:57.950
+Donc, d’abord, vous devez vous entraîner. Si vous voulez que le système ait une invariance à la taille
+
+1:30:58.230,1:31:03.860
+vous devez l’entraîner avec des caractères de différentes tailles. Vous pouvez le faire avec l’augmentation de données si vos caractères sont normalisés.
+
+1:31:04.740,1:31:06.740
+C’est la première chose. La deuxième chose est ...
+
+1:31:08.850,1:31:16.579
+qu’empiriquement, les ConvNets simples ne sont invariants à la taille que pour un facteur assez petit. Vous pouvez augmenter la taille par
+
+1:31:17.610,1:31:23.599
+peut-être 40% ou quelque chose comme ça. Je veux dire changer la taille d’environ 40% plus ou moins 20 % quelque chose comme ça.
+
+1:31:26.250,1:31:28.250
+Au-delà de cela...
+
+1:31:28.770,1:31:33.830
+vous pourriez avoir plus de mal à obtenir une invariance. Mais les gens ont entrée avec des entrées ...
+
+1:31:33.980,1:31:38.390
+Je veux dire des objets de tailles qui varient beaucoup. Donc, la façon de gérer cela est :
+
+1:31:39.750,1:31:46.430
+si vous voulez gérer la variabilité de la taille, c’est que si vous avez une image et que vous ne savez pas de quelle taille sont les objets
+
+1:31:46.950,1:31:50.539
+dans cette image, vous appliquez votre ConvNet à cette image et
+
+1:31:51.180,1:31:53.979
+alors vous prenez la même image, la réduisez d’un facteur deux.
+
+1:31:54.440,1:31:58.179
+Exécuter le même réseau sur cette nouvelle image et
+
+1:31:59.119,1:32:02.949
+puis la réduire par un facteur de deux à nouveau. Ensuite exécuter le même réseau à nouveau sur cette image.
+
+1:32:03.800,1:32:08.110
+Ok ? Ainsi, le premier ConvNet sera en mesure de détecter les petits objets dans l’image.
+
+1:32:08.630,1:32:11.859
+Supposons donc que votre réseau ait été entraîné pour détecter des objets de taille...
+
+1:32:11.860,1:32:16.179
+je ne sais pas, 20 pixels, comme des visages par exemple. Ok ? Ils sont de 20 pixels.
+
+1:32:16.789,1:32:20.739
+Le réseau détectera les visages qui sont d’environ 20 pixels dans cette image et
+
+1:32:21.320,1:32:24.309
+puis lorsque vous sous-échantillonnez par un facteur 2 et vous appliquez le même réseau.
+
+1:32:24.309,1:32:31.209
+Il détectera les visages qui sont de 20 pixels dans la nouvelle image, ce qui signifie qu’il y avait 40 pixels dans l’image d’origine.
+
+1:32:32.179,1:32:37.899
+Le premier réseau ne le verrait pas parce que le visage serait plus grand que sa fenêtre d’entrée.
+
+1:32:39.170,1:32:41.529
+Et puis le prochain réseau détectera
+
+1:32:42.139,1:32:44.409
+des visages qui sont de 80 pixels, etc, Ok ?
+
+1:32:44.659,1:32:49.089
+Donc, en combinant les scores de tout ça, et en faisant quelque chose appelée suppression non-maximum
+
+1:32:49.090,1:32:51.090
+nous pouvons faire de la détection et
+
+1:32:51.230,1:32:57.939
+de la localisation d’objets. Les gens utilisent maintenant des techniques beaucoup plus sophistiquées pour la détection et la localisation. Nous parlerons de cela la semaine prochaine.
+
+1:32:58.429,1:33:00.429
+Mais c’est l’idée de base.
+
+1:33:00.920,1:33:02.920
+Permettez-moi donc de conclure.
+
+1:33:03.019,1:33:09.429
+Pour quelles tâches les ConvNets sont-ils efficaces ? Ils sont performants pour les signaux qui viennent à vous sous la forme d’un tableau multidimensionnel.
+
+1:33:10.190,1:33:12.190
+Mais ce tableau multidimensionnel doit
+
+1:33:13.190,1:33:17.500
+avoir au moins deux caractéristiques. La première est
+
+1:33:18.469,1:33:23.828
+qu’il doit exister de fortes corrélations locales entre les valeurs. Donc, si vous prenez dans une image
+
+1:33:24.949,1:33:32.949
+aléatoire, deux pixels de cette image, deux pixels qui sont à proximité. Ces deux pixels sont très susceptibles d’avoir des couleurs très similaires.
+
+1:33:33.530,1:33:38.199
+Prenez une photo de cette classe, par exemple, deux pixels sur le mur ont essentiellement la même couleur.
+
+1:33:39.469,1:33:42.069
+Ok ? On dirait qu’il y a une tonne d’objets ici, mais
+
+1:33:43.280,1:33:49.509
+- d’objets animés - mais en fait surtout, statistiquement, les pixels voisins sont essentiellement de la même couleur.
+
+1:33:52.699,1:34:00.129
+Lorsque vous augmentez physiquement la distance entre deux pixels et que vous calculez statistiquement la similarité entre les pixels en fonction de la distance,
+
+1:34:00.650,1:34:02.650
+ils sont alors de moins en moins semblables.
+
+1:34:03.079,1:34:05.079
+Qu’est-ce que ça veut dire ? 
+
+1:34:06.350,1:34:09.430
+Que les pixels à proximité sont susceptibles d’avoir des couleurs similaires.
+
+1:34:09.560,1:34:14.499
+Cela signifie que lorsque vous prenez un patch de pixels, disons cinq par cinq, ou huit par huit ou n’importe.
+
+1:34:16.040,1:34:18.040
+Le type de patch que vous allez observer
+
+1:34:18.920,1:34:21.159
+est très susceptible d’être une sorte de variation en douceur
+
+1:34:21.830,1:34:23.830
+de la couleur. Ou peut-être avec un bord.
+
+1:34:24.770,1:34:32.080
+Mais parmi toutes les combinaisons possibles de 25 pixels, ceux que vous observez réellement dans les images naturelles est un sous-ensemble minuscule.
+
+1:34:34.130,1:34:38.380
+Ce que cela signifie, c’est qu’il est avantageux de représenter le contenu de ce patch
+
+1:34:39.440,1:34:46.509
+par un vecteur avec peut-être moins de 25 valeurs qui représentent le contenu de ce patch. Est-il un bord ? Est-il uniforme ?
+
+1:34:46.690,1:34:48.520
+Quelle couleur est-ce ? Des choses comme ça.
+
+1:34:48.520,1:34:52.660
+C’est essentiellement ce que les convolutions dans la première couche d’un ConvNet font.
+
+1:34:53.900,1:34:58.809
+Donc, si vous avez des corrélations locales, il y a un avantage à détecter les caractéristiques locales.
+
+1:34:59.090,1:35:01.659
+C’est ce que nous observons dans le cerveau. C’est ce que font les réseaux convolutifs.
+
+1:35:03.140,1:35:08.140
+C’est l’idée de localité. Si vous alimentez un ConvNet avec des pixels permutés
+
+1:35:09.020,1:35:15.070
+il ne va pas être en mesure de faire un bon travail pour reconnaître vos images, même si la permutation est fixe.
+
+1:35:17.030,1:35:19.960
+Un réseau entièrement connecté ne s’en soucie pas.
+
+1:35:21.410,1:35:23.410
+Il ne se soucie pas des permutations.
+
+1:35:25.700,1:35:28.240
+Ensuite, la deuxième caractéristique est que
+
+1:35:30.050,1:35:34.869
+les caractéristiques importantes peuvent apparaître n’importe où sur l’image. C’est donc ce qui justifie les poids partagés.
+
+1:35:35.630,1:35:38.499
+La corrélation locale justifie les connexions locales.
+
+1:35:39.560,1:35:46.570
+Le fait que les caractéristiques peuvent apparaître n’importe où, que les statistiques sur les images ou sur les signaux sont uniformes,
+
+1:35:47.810,1:35:52.030
+signifie que vous devez avoir des détecteurs de caractéristiques répétés pour chaque emplacement.
+
+1:35:52.850,1:35:54.850
+Et c’est là que les poids partagés
+
+1:35:55.880,1:35:57.880
+entrent en jeu.
+[Question d’un étudiant : est-ce que cela justifie le pooling ?]
+
+1:36:01.990,1:36:06.059
+Cela justifie le pooling parce que le pooling est si vous voulez une invariance à
+
+1:36:06.760,1:36:11.400
+des variations dans l’emplacement de ces caractéristiques. Et donc si les objets que vous essayez de reconnaître
+
+1:36:12.340,1:36:16.619
+ne changent pas leur nature par une sorte de distorsion alors vous voulez du pooling.
+
+1:36:21.160,1:36:24.360
+Donc, les gens ont utilisé des Convnets pour les images, les vidéos, 
+
+1:36:25.660,1:36:31.019
+le texte, la parole. La parole... les Convnets en reconnaissance vocale sont beaucoup utilisés.
+
+1:36:32.260,1:36:34.380
+Pour la prédiction des séries temporelles, des choses comme ça.
+
+1:36:36.220,1:36:42.030
+Et vous connaissez l’analyse d’image biomédicale. Donc si vous voulez analyser une IRM, par exemple
+
+1:36:42.030,1:36:44.030
+ou un scan. Il s’agit d’images en 3D.
+
+1:36:44.950,1:36:49.170
+En tant qu’êtres humains, nous ne pouvons pas parce que nous n’avons pas une bonne technologie de visualisation. Nous ne pouvons pas vraiment
+
+1:36:49.960,1:36:54.960
+appréhender ou comprendre un volume 3D, une image tridimensionnelle.
+
+1:36:55.090,1:36:58.709
+Mais un ConvNet y arrive très bien. Donnez lui une image 3D et il s’en occupera.
+
+1:36:59.530,1:37:02.729
+C’est un grand avantage parce que vous n’avez pas à passer par des tranches pour comprendre
+
+1:37:04.000,1:37:06.030
+l’objet de l’image.
+
+1:37:10.390,1:37:15.300
+Et puis la dernière chose ici en bas. Je ne sais pas si vous savez que que sont que les images hyperspectrales.
+
+1:37:15.300,1:37:19.139
+Uneimage hyperspectrale est une image où... les images les plus naturelles en couleur.
+
+1:37:19.140,1:37:22.619
+Je veux dire les images que vous collectez avec un appareil photo normal, vous obtenez trois composants de couleur
+
+1:37:23.470,1:37:25.390
+Rouge, ver, bleu.
+
+1:37:25.390,1:37:28.019
+Mais nous pouvons construire des caméras avec beaucoup plus de
+
+1:37:28.660,1:37:30.660
+bandes spectrales que celle-ci.
+
+1:37:31.510,1:37:34.709
+C’est particulièrement le cas pour l’imagerie par satellite où certaines
+
+1:37:36.160,1:37:40.920
+caméras ont de nombreuses bandes spectrales allant de l’infrarouge à l’ultraviolet.
+
+1:37:41.890,1:37:44.610
+Ce qui vous donne beaucoup d’informations sur ce que vous voyez dans chaque pixel.
+
+1:37:45.760,1:37:47.040
+Quelques petits animaux
+
+1:37:47.040,1:37:54.930
+qui ont de petits cerveaux trouvent plus facile de traiter des images hyperspectrales de basse résolution que des images haute résolution avec seulement trois couleurs.
+
+1:37:55.750,1:38:00.450
+Par exemple, il y a un type particulier de crevettes, qui ont de beaux
+
+1:38:01.630,1:38:07.499
+yeux et elles ont comme 17 bandes spectrales ou quelque chose comme ça, en super basse résolution et elles ont un cerveau minuscule pour traiter tout ça. [Cherchez Stomatopoda sur Wikipédia 😉]. 
+
+1:38:09.770,1:38:12.850
+Ok, c’est tout pour aujourd’hui. À  la prochaine.

@@ -10,11 +10,11 @@ translator: Gio
 
 **DS-GA 1008 · 2020 봄 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
 
-| 강사 | 얀 르쿤 & 알프래도 캔지아니 |
+| 강사    | 얀 르쿤 & 알프래도 캔지아니 |
 | 이론    | 월요일 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | 실습    | 화요일 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
-| 강의자료    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
+| 포럼    | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| 강의자료| [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## 소개

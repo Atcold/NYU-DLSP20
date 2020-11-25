@@ -1,0 +1,5030 @@
+0:00:00.000,0:00:03.600
+All right, so I guess we can get started, uh, this is the third part of uh
+
+0:00:04.400,0:00:06.400
+the lecture on energy based models
+
+0:00:07.200,0:00:13.280
+uh, which we are we're going to continue a little bit what we talked about last time on sparse coding and
+
+0:00:14.639,0:00:16.000
+talk about
+
+0:00:16.000,0:00:19.119
+GANs, very briefly. You'll hear more about it tomorrow from
+
+0:00:20.140,0:00:24.560
+Alfredo and then talk about learning world models and similar things
+
+0:00:26.080,0:00:28.399
+Also about a bit of a little bit about exotic
+
+0:00:29.179,0:00:31.179
+self-supervised and unsupervised learning algorithms
+
+0:00:32.000,0:00:35.040
+That are kind of, you know active research topics at the moment
+
+0:00:35.680,0:00:39.279
+so one thing I talked about last time was sparse coding and
+
+0:00:40.079,0:00:42.079
+i'm going to mention just a
+
+0:00:42.719,0:00:45.279
+very simple idea which consists in sort of
+
+0:00:47.660,0:00:48.800
+Combining
+
+0:00:48.800,0:00:49.680
+uh
+
+0:00:49.680,0:00:54.079
+sparse coding or the audio sparsely encoder with uh discriminative training
+
+0:00:54.960,0:00:57.840
+So imagine that the architecture i'm showing you here
+
+0:00:58.480,0:01:01.599
+uh, the the encoder if you will the the first, uh,
+
+0:01:02.559,0:01:04.559
+part on the left
+
+0:01:04.720,0:01:06.720
+Is uh mostly
+
+0:01:07.040,0:01:11.040
+Uh similar to the encoder I talked about for the the lista method
+
+0:01:11.680,0:01:14.819
+So you start with the x variable you run it through a matrix
+
+0:01:16.080,0:01:20.479
+Then you run that through a non-linearity. It could be a ReLU for example, this is the case here
+
+0:01:21.759,0:01:23.759
+And then you take the result
+
+0:01:24.220,0:01:25.600
+multiplied by
+
+0:01:25.600,0:01:28.239
+some matrix, which we're going to learn at this with the
+
+0:01:29.439,0:01:36.319
+Product of the input by the encoding matrix "We" and then pass this to a non-linearity and you can repeat this little block
+
+0:01:37.439,0:01:42.719
+This green block here multiple times. Each of those is a layer basically that consists in
+
+0:01:43.360,0:01:49.860
+A matrix or a bunch of convolutions, uh, in addition with uh, some, you know, pre-existing variable and a non-linearity
+
+0:01:50.720,0:01:54.799
+so this is you know, a funny kind of neural network where you have kind of uh,
+
+0:01:55.439,0:01:57.439
+skipping connections
+
+0:01:58.000,0:02:00.319
+And then we're going to train this neural network to do
+
+0:02:01.200,0:02:04.960
+uh, three different things or with three different criteria one criterion is going to be
+
+0:02:05.600,0:02:11.199
+Uh just reconstruct x, okay. So there's going to be a decoding matrix. That is uh,
+
+0:02:11.920,0:02:15.039
+Going to reproduce the input on the output
+
+0:02:15.760,0:02:17.920
+And we're going to do this by just minimizing squared error
+
+0:02:19.440,0:02:21.839
+So this is what's indicated by the decoding filters here
+
+0:02:22.480,0:02:25.679
+And again, this could be convolutional or not depending on which version you
+
+0:02:26.400,0:02:27.760
+you like
+
+0:02:27.760,0:02:30.000
+there's going to be an l1 criterion on the
+
+0:02:30.800,0:02:32.560
+on the feature
+
+0:02:32.560,0:02:39.039
+Vector that makes it sparse. So this is very much like a sparse auto encoder of the type that we talked about last week
+
+0:02:40.239,0:02:45.279
+but then we're also going to add a third term and this third term is going to be basically a
+
+0:02:46.000,0:02:48.000
+a simple linear
+
+0:02:48.300,0:02:49.519
+classifier
+
+0:02:49.519,0:02:50.640
+which
+
+0:02:50.640,0:02:57.759
+Is going to try to predict a category. Okay, and we're going to train the system to minimize all three criteria at the same time
+
+0:02:58.319,0:03:02.658
+So this is a sparse autoencoder that also tries to find codes that do a good job at prediction
+
+0:03:04.879,0:03:07.599
+And this is sort of a good way you can you can see this in two different ways
+
+0:03:07.599,0:03:13.939
+You can you can see this as an auto encoder that is biased towards producing good labels, or you can see this as a classifier
+
+0:03:14.620,0:03:21.920
+Multi-layer classifier that is regularized by an auto encoder. What's the advantage of this? Well the advantage is that by
+
+0:03:22.720,0:03:26.319
+Forcing the system to find representations here at the second last layer
+
+0:03:27.040,0:03:30.480
+that uh can reconstruct the input then you're basically
+
+0:03:31.360,0:03:36.080
+Biasing the system towards extracting features that contain as much information about the input as possible
+
+0:03:38.159,0:03:40.159
+So that sort of
+
+0:03:41.280,0:03:44.879
+Makes the features richer if you want it forces the system to
+
+0:03:45.519,0:03:51.439
+Not generate degenerate features, but to generate features that contain as much information as possible about about the input
+
+0:03:54.159,0:03:57.438
+That works pretty well. I think it's an underexplored method for
+
+0:03:58.640,0:04:00.560
+training neural nets
+
+0:04:00.560,0:04:01.840
+um
+
+0:04:01.840,0:04:05.200
+Because very often we don't have enough, uh label training data
+
+0:04:05.920,0:04:07.920
+or when the
+
+0:04:08.000,0:04:10.259
+The training data is such that you don't have a lot of categories
+
+0:04:10.879,0:04:15.119
+Um to work with maybe it's a two or three or ten classic problem, which we know
+
+0:04:15.680,0:04:20.799
+Tend to produce very generic degenerate features, uh in a neural net as we discussed last time
+
+0:04:21.759,0:04:24.499
+Then forcing the system to reconstruct basically
+
+0:04:25.040,0:04:27.839
+Tells it, you know, you can't generate features that are too
+
+0:04:28.460,0:04:32.720
+Degenerate or so degenerate that uh, you can't reconstruct the input from it
+
+0:04:32.880,0:04:35.859
+So that's sort of a good you could think of it as a good regularizer
+
+0:04:37.440,0:04:42.959
+Okay, group sparsity and structured sparsity so there's some work going back about 10 years, maybe a little more
+
+0:04:43.600,0:04:46.320
+Uh, in fact the first work on this are about 20 years old
+
+0:04:47.040,0:04:49.199
+On the idea of group sparsity. What does that mean?
+
+0:04:50.479,0:04:55.539
+um, here is here is the idea the idea is to train a system to generate sparse features, but not just
+
+0:04:57.440,0:05:01.999
+Normal features that are extracted say by a bunch of convolutions and ReLUs
+
+0:05:02.720,0:05:06.959
+But to basically produce sparse features that are sparse after the pooling
+
+0:05:07.199,0:05:15.199
+Okay, so you essentially have a system that consists of convolutions non-linearity and pooling you try to make those features sparse
+
+0:05:17.840,0:05:19.360
+And there's a number of different work
+
+0:05:19.360,0:05:26.580
+The idea goes back to Hyvarinen and Hoyer in 2001, uh in the context of ICA independent component analysis
+
+0:05:27.440,0:05:31.519
+And then there were you know a few other papers one by Osindero in Geoffrey Hinton's group
+
+0:05:32.240,0:05:33.360
+um
+
+0:05:33.360,0:05:38.080
+And then Kavukcuoglu who was a student of mine back in the late 2000s
+
+0:05:38.639,0:05:43.918
+Uh Karol Gregor who was post doc with me, Julien Mairal who is in France and a bunch of other people
+
+0:05:44.560,0:05:46.799
+on on this idea of structured sparse coding
+
+0:05:47.440,0:05:50.239
+so the idea basically is you take um
+
+0:05:51.440,0:05:54.239
+Uh, so some of those uh models only have an encoder
+
+0:05:54.240,0:05:57.199
+Some of them only have a decoder and some of them are auto encoders, right?
+
+0:05:57.360,0:06:00.639
+So the one on the left, Osindero's model is an encoder only model
+
+0:06:02.560,0:06:05.839
+Mairal's model is a decoder only model and
+
+0:06:06.460,0:06:12.239
+Kavukcuoglu's model is uh, basically an autoencoder a sparse autoencoder of the type that we talked about last time
+
+0:06:13.520,0:06:15.520
+um, so
+
+0:06:15.600,0:06:17.600
+How does that work? Uh, let's take
+
+0:06:18.319,0:06:20.319
+Say an encoder only model
+
+0:06:20.560,0:06:25.199
+you have a feature extractor which consists of convolutions or maybe just uh
+
+0:06:25.919,0:06:27.919
+fully connected, uh
+
+0:06:28.940,0:06:31.919
+matrices over a patch an image patch for example
+
+0:06:32.800,0:06:38.560
+And then instead of forcing the output of this to be after a non-linearity instead of forcing that to be sparse
+
+0:06:39.360,0:06:43.120
+You you put a pooling layer and you you force the pooling to be sparse
+
+0:06:44.639,0:06:47.379
+Uh and this applies to uh, all three of those
+
+0:06:48.240,0:06:49.440
+um
+
+0:06:49.440,0:06:54.559
+So here is a more specific example. This is the the version that uh, Kavukcuoglu
+
+0:06:55.199,0:06:57.199
+uh did for his phd thesis where
+
+0:06:57.440,0:06:58.800
+he had a
+
+0:06:58.800,0:07:03.039
+sparse auto encoder so you have an encoding function Ge of We Yi
+
+0:07:03.440,0:07:06.799
+it could be multiple layers in this case. It was basically just two layers
+
+0:07:07.599,0:07:13.919
+Uh with one non-linearity you have a decoder which in this case was linear. Wd times z you have a latent variable z
+
+0:07:14.720,0:07:17.119
+And that latent variable instead of going to an l1
+
+0:07:17.919,0:07:19.280
+It goes through
+
+0:07:19.280,0:07:23.519
+Uh, basically an l2, but it's l2 over groups, right? So you take
+
+0:07:24.319,0:07:26.319
+a group of components of z
+
+0:07:26.479,0:07:32.559
+You compute the l2 norm not the square to norm, but the l2 norm which means the square root of the sum of the values
+
+0:07:33.520,0:07:35.360
+of those components
+
+0:07:35.360,0:07:37.360
+Uh of the square of those components, right?
+
+0:07:37.520,0:07:41.440
+So take each component compute the square and then compute the sum of a group
+
+0:07:41.919,0:07:46.799
+Of those squares and then compute the square root of that. So that's the l2 norm of that within that group
+
+0:07:47.759,0:07:51.299
+And then you do this for multiple groups. The groups can be overlapping or non-overlapping
+
+0:07:52.479,0:07:58.878
+And you compute the sum and that's your regularizer. That's your sparsity regularizer. So what does that tend to do?
+
+0:07:59.599,0:08:01.039
+it tends to
+
+0:08:01.039,0:08:06.959
+Basically turn off the maximum number of groups. Okay, the system basically is sparsity
+
+0:08:07.520,0:08:08.400
+on groups
+
+0:08:08.400,0:08:11.840
+So it wants the smallest number of groups to be on at any one time
+
+0:08:12.240,0:08:14.799
+But within a group because it's an l2 norm within a group
+
+0:08:15.520,0:08:17.759
+It doesn't care how many units are on within the group
+
+0:08:19.199,0:08:20.319
+so
+
+0:08:20.319,0:08:22.719
+Many units can be on within a group. So what does that do?
+
+0:08:23.520,0:08:25.840
+It it forces the system basically
+
+0:08:26.960,0:08:28.000
+to
+
+0:08:28.000,0:08:30.799
+group within a pool features that turn on
+
+0:08:31.740,0:08:32.800
+simultaneously, right
+
+0:08:32.800,0:08:38.959
+So if you have features that are very similar feature extractors that are very similar filters that are very similar in a convolutional net
+
+0:08:39.339,0:08:42.159
+then those features will tend to kind of uh
+
+0:08:42.800,0:08:46.159
+When you do the training, they'll try to group themselves within a group
+
+0:08:46.800,0:08:53.539
+Because they will tend to be activated together. That's the best way to minimize the number of groups that are activated at any one time
+
+0:08:56.399,0:09:04.399
+So to get those those interesting kind of pictures here the way this was obtained is by
+
+0:09:06.640,0:09:10.479
+Here the groups, so what you're looking at here are the
+
+0:09:11.360,0:09:14.320
+Either the uh, I think it's the decoding matrix. So these are the
+
+0:09:15.120,0:09:21.839
+the the columns of the wd matrix, um that we can reconstruct an image patch from
+
+0:09:22.800,0:09:23.600
+the
+
+0:09:23.600,0:09:25.600
+sparse code by
+
+0:09:25.899,0:09:27.899
+multiplying by that matrix
+
+0:09:30.560,0:09:35.119
+But what we do here is that we group those features into blocks of 36
+
+0:09:35.519,0:09:39.599
+So we arrange all the features in a 2d map that has nothing to do with the topology of the image
+
+0:09:39.680,0:09:45.539
+We could choose any topology we want. In fact, this is not actually a 2d topology. It's a it's a toridol topology
+
+0:09:46.000,0:09:49.380
+So the left side touches the right side on the top touches the bottom
+
+0:09:50.720,0:09:53.120
+So it's topologically identical to taurus
+
+0:09:55.440,0:09:57.440
+And what we do is we
+
+0:09:58.240,0:10:00.240
+we group
+
+0:10:00.720,0:10:05.760
+Sets of 36 features within a group. Okay and those uh
+
+0:10:06.560,0:10:13.679
+Groups of 36 features overlap by by three columns and three rows. Okay, so we have multiple groups of 36 features six by six
+
+0:10:14.480,0:10:16.480
+shifted by three
+
+0:10:17.360,0:10:19.519
+You could think of this as kind of pooling over
+
+0:10:20.079,0:10:23.919
+Feature, but not pooling over space because there's no space here. It's a fully connected network
+
+0:10:25.519,0:10:31.359
+But it has a bit of the flavor the same flavor as pooling except here you pool over 36 features
+
+0:10:31.440,0:10:33.440
+You don't pool over space. All right
+
+0:10:34.000,0:10:36.000
+so
+
+0:10:37.760,0:10:44.399
+So then you you compute the sum of the l2 norm of the the features that are within each group
+
+0:10:44.800,0:10:48.419
+And that's the regularizer you use when you train your your sparse autoencoder
+
+0:10:49.279,0:10:53.919
+So the system uh wants to do is minimize the number of groups that are on at any one time
+
+0:10:54.480,0:10:56.399
+And so as I said before it
+
+0:10:56.399,0:10:58.000
+basically
+
+0:10:58.000,0:11:03.440
+It regroups all the features that are similar and likely to fire simultaneously into into groups
+
+0:11:04.399,0:11:10.879
+and because the groups overlap then it creates those kind of slowly evolving sets of features that sort of
+
+0:11:11.440,0:11:13.339
+Uh seem to kind of swirl
+
+0:11:13.339,0:11:14.380
+around
+
+0:11:14.380,0:11:16.380
+a point
+
+0:11:17.120,0:11:21.839
+So the features you get as a result of this have some sort of invariance and they have some invariance not to
+
+0:11:22.399,0:11:27.839
+Shift but to things like rotation and scale and things like that, whatever the system decides
+
+0:11:29.120,0:11:35.359
+So here the reason for choosing a 2d topology is basically just for you know to make it look beautiful
+
+0:11:35.920,0:11:36.720
+but uh
+
+0:11:36.720,0:11:42.720
+You could you could choose any kind of topology you want what is on the x-axis and the y-axis here in this diagram?
+
+0:11:42.800,0:11:44.800
+So those are arbitrary axes
+
+0:11:45.360,0:11:47.360
+I have
+
+0:11:47.519,0:11:54.159
+I don't even remember how many features there are here. This this might be 256 features. I think it's 16 by 16. So there's
+
+0:11:55.339,0:12:00.958
+256 uh hidden units, right? So imagine a network that has a 12 by 12 input patch, okay
+
+0:12:01.519,0:12:03.519
+An input image. It's a patch from an image
+
+0:12:03.920,0:12:04.620
+and
+
+0:12:04.620,0:12:06.639
+256 uh hidden units
+
+0:12:08.320,0:12:14.559
+With a fully connected full connection, uh non-linearity and there is uh another layer on top
+
+0:12:16.000,0:12:22.399
+Um, then that's the encoder and then you have uh, this group sparsity and then the the decoder is linear
+
+0:12:23.339,0:12:27.119
+Okay, and what you're seeing here are the columns of the decoder
+
+0:12:28.320,0:12:30.320
+And they are organized in a 2d topology
+
+0:12:31.120,0:12:34.719
+Okay, but it's arbitrary. Each of these squares is a column of the decoder
+
+0:12:34.959,0:12:40.479
+Each of these square is a column of decoder that also corresponds to a component of z. Okay a component of the
+
+0:12:41.200,0:12:43.120
+for the feature
+
+0:12:43.120,0:12:44.720
+the future vector
+
+0:12:44.720,0:12:48.399
+And so they are organized in a 16 by 16 matrix, but it's kind of arbitrary
+
+0:12:48.480,0:12:51.839
+We just you know, put them in a in a matrix and then we train
+
+0:12:52.639,0:12:54.719
+and because uh the groups
+
+0:12:55.600,0:12:59.920
+Take kind of six by six neighborhoods in this topology the system
+
+0:13:00.459,0:13:01.920
+naturally kind of
+
+0:13:01.920,0:13:05.060
+Learns features that are similar when they're nearby within this topology
+
+0:13:06.079,0:13:07.519
+All right
+
+0:13:07.519,0:13:09.599
+But again, I could have chosen any kind of topology
+
+0:13:11.100,0:13:13.100
+1d2d 3d or even some graph
+
+0:13:16.000,0:13:22.799
+Neighborhood of some kind as long as the pooling is, you know between neighbors on the graph that's that will work
+
+0:13:28.079,0:13:31.599
+So what i've done here is going to repeat this this little
+
+0:13:33.339,0:13:39.518
+Pattern um to kind of show uh, because it's you know, it's toroidal, uh to show the
+
+0:13:41.040,0:13:44.899
+You know how those those those patterns kind of repeat and are sort of periodical
+
+0:13:46.160,0:13:47.040
+and
+
+0:13:47.040,0:13:53.120
+the reason for visualizing it this way is that this is the kind of stuff that neuroscientists observe when they poke electrodes in the
+
+0:13:53.519,0:13:55.519
+usual primary visual cortex of
+
+0:13:56.560,0:13:59.359
+Mammals but most most animals that have good vision
+
+0:14:00.240,0:14:03.519
+They see kind of those kind of swirling patterns where neighboring
+
+0:14:04.699,0:14:12.399
+Neurons detect similar features which means similar oriented edges they are sensitive to oriented edges and and neighboring
+
+0:14:13.279,0:14:16.239
+Neurons are similar are sensitive to similar angles
+
+0:14:16.959,0:14:20.879
+Or the same angles that similar scale or or things like that
+
+0:14:21.839,0:14:23.360
+and so
+
+0:14:23.360,0:14:28.719
+Perhaps this is how you know, the brain organizes its uh, its neurons. It's by kind of
+
+0:14:29.519,0:14:34.159
+Basically having some sort of criterion on the complex cells which are the equivalent of the pooling
+
+0:14:34.800,0:14:36.800
+units that we're seeing here
+
+0:14:38.320,0:14:41.839
+Um, here is the another example here so this one is
+
+0:14:43.339,0:14:44.880
+uh not
+
+0:14:44.880,0:14:51.039
+At the patch level but it uses local connections, but it's not convolutional in the sense that it doesn't use, uh shared weights
+
+0:14:51.600,0:14:54.260
+The reason for doing this is to have some you know, a semi-realistic
+
+0:14:55.600,0:14:57.279
+uh
+
+0:14:57.279,0:14:59.199
+sort of correspondence to
+
+0:14:59.199,0:15:01.199
+a uh, uh, sort of biological
+
+0:15:02.000,0:15:06.000
+Learning where of course, you know neurons in the brain cant share weights, right? They
+
+0:15:06.720,0:15:10.639
+um, they end up being similar because you know, they train using some sort of
+
+0:15:11.820,0:15:13.820
+unsupervised learning but
+
+0:15:14.240,0:15:16.320
+There is no such thing as as weight sharing in the brain
+
+0:15:16.880,0:15:19.919
+as far as we know. so it was asked if the uh
+
+0:15:20.240,0:15:23.919
+if whether a similar strategy of the training of the autoencoder with the
+
+0:15:24.779,0:15:30.958
+Classifier and the regularizer can be applied for a variational autoencoder and whether this has been explored
+
+0:15:31.360,0:15:34.159
+if it works as well for the first slide you show
+
+0:15:34.720,0:15:36.720
+yeah, so, um, you're basically
+
+0:15:37.920,0:15:42.000
+Adding noise in a variational auto encoder and forcing sparsity
+
+0:15:42.720,0:15:47.120
+are basically two ways to achieve the same purpose which is reduce the capacity of the
+
+0:15:47.920,0:15:52.639
+Of the latent variable reduce the capacity of the of the code that is extracted by the autoencoder
+
+0:15:53.279,0:15:57.758
+And this is what prevents the system from running a trivial identity function, which would not be useful
+
+0:15:58.000,0:16:04.339
+Right and what we talked about the last couple times is the fact that if you reduce the information capacity
+
+0:16:05.040,0:16:07.040
+of the latent variable of the code
+
+0:16:07.339,0:16:13.999
+You uh as a consequence, you also minimize the volume of space that can take low energy
+
+0:16:14.800,0:16:16.800
+Okay, because you limit the number of configurations
+
+0:16:17.360,0:16:18.639
+of the code
+
+0:16:18.639,0:16:21.839
+And so as a consequence, you kinda limit the volume of space that can take low energy
+
+0:16:22.560,0:16:24.560
+so essentially this idea of
+
+0:16:26.060,0:16:32.799
+Regularizing with l1 or sparsity or something like this or adding noise to a code where limiting the norm of the code
+
+0:16:33.839,0:16:39.599
+Achieves the same purpose which is limiting the capacity of the of the code for the purpose of limiting the volume
+
+0:16:40.480,0:16:43.360
+Of space that can take low energy and as a consequence
+
+0:16:43.920,0:16:49.360
+If you train part of the space to have low energy by minimizing the reconstruction error on your training samples
+
+0:16:49.820,0:16:55.519
+Automatically the rest of the space will have higher energy because the capacity the volume that can take low energy is limited
+
+0:16:56.320,0:16:58.079
+um, so this is
+
+0:16:58.079,0:17:04.159
+Uh, just to recap uh, we talked about last time and and a couple weeks ago. This is to
+
+0:17:04.799,0:17:06.799
+This is sort of the alternative
+
+0:17:06.959,0:17:09.999
+so those kind of architectural methods are alternatives to the
+
+0:17:10.620,0:17:12.959
+contrastive methods where you explicitly push up
+
+0:17:13.679,0:17:15.999
+on the energy of bad samples
+
+0:17:16.720,0:17:21.919
+Which means you have to come up with a good idea, you know a good way of generating bad samples in that case, okay?
+
+0:17:22.559,0:17:23.039
+so again
+
+0:17:23.039,0:17:30.079
+Remember those two types of methods contrasting methods you push down the energy of the training samples you push up the energy of stuff outside
+
+0:17:30.400,0:17:34.639
+either by corrupting the original samples or by doing, uh
+
+0:17:35.280,0:17:41.439
+Uh gradient noisy gradient descent, you know contrasting divergence things like this or by generating contrasting points in some way
+
+0:17:42.240,0:17:46.719
+um, we've seen a bunch of different contrasting methods and then the alternative is
+
+0:17:49.520,0:17:52.959
+Limiting the capacity of a code, uh, or or
+
+0:17:53.520,0:17:58.079
+Kind of limiting the volume of stuff that can take low energy in the context of autoencoder or predictor
+
+0:17:58.320,0:18:00.480
+This means limiting the capacity of the code
+
+0:18:01.919,0:18:08.319
+And there are many ways to do this. one way is through sparsity one way is through adding noise while limiting the norm
+
+0:18:08.480,0:18:09.760
+That's ---
+
+0:18:09.760,0:18:15.140
+And there are other ways that we'll we'll talk about in a minute. whenever you were talking before about the group sparsity
+
+0:18:15.600,0:18:17.120
+Uh, you are summing
+
+0:18:17.120,0:18:24.239
+Just a few samples like a few indexes within a small range. What is that pj maybe I didn't pj is a group
+
+0:18:24.400,0:18:25.679
+It's a pool
+
+0:18:25.679,0:18:29.359
+so imagine this is a pool like in a convolutional net but the pool instead of
+
+0:18:30.160,0:18:33.759
+pooling just over space it pools over features as well. Okay
+
+0:18:34.480,0:18:39.039
+For a fully connected network. It just pools over components of the just features
+
+0:18:39.679,0:18:47.679
+Okay. So pj is like a set of indexes. pj is a subset of uh indices of z of components of
+
+0:18:47.679,0:18:49.679
+Z yeah. okay, Thanks
+
+0:18:51.280,0:18:53.039
+Right so here pj
+
+0:18:53.039,0:18:54.960
+Is a group of six?
+
+0:18:54.960,0:18:57.120
+components of z that happen to be
+
+0:18:58.080,0:19:00.080
+neighbors in this topology
+
+0:19:00.960,0:19:02.000
+Okay
+
+0:19:02.000,0:19:04.880
+And that's that's one p and the next p is
+
+0:19:05.440,0:19:10.720
+a similar square six by six square shifted by three pixels to the left to the top or
+
+0:19:11.600,0:19:13.600
+Uh or bottom, okay, okay
+
+0:19:14.240,0:19:16.240
+Bottom, okay. Thanks
+
+0:19:17.200,0:19:20.319
+So the overlapping between the groups is what kind of uh
+
+0:19:21.580,0:19:24.400
+Represents this topology if you want, okay
+
+0:19:30.320,0:19:32.320
+Okay
+
+0:19:34.160,0:19:41.279
+So in this this experiment, you know is is very similar to the one we just uh talked about except here, um,
+
+0:19:42.240,0:19:47.280
+We have local connections. So we have an input. It's a two-dimensional input here. We kind of only represent a 1d version of it
+
+0:19:49.520,0:19:51.340
+And and we have
+
+0:19:51.340,0:19:54.959
+Units, uh, possibly multiple units at one location. Uh,
+
+0:19:55.760,0:19:58.479
+Looking at a piece of the input kind of a local patch on the input
+
+0:19:59.360,0:20:01.760
+and then those sets of units are
+
+0:20:03.200,0:20:07.439
+Kind of, you know replicated, uh multiple times but there's no shared weights
+
+0:20:08.720,0:20:15.839
+Um, so the the units these kind of units everywhere on the input, but they the weights are not shared. Okay, they're just locally connected
+
+0:20:18.640,0:20:21.759
+So I guess i'm not quite understanding the
+
+0:20:23.360,0:20:26.559
+Overall concept of the of feature
+
+0:20:27.360,0:20:29.200
+Pooling. Um
+
+0:20:29.200,0:20:36.080
+I mean if I think about it in terms of like pooling that we used in in convolutional networks than it is
+
+0:20:37.100,0:20:40.159
+straightforward, but I don't really understand how we
+
+0:20:40.960,0:20:41.840
+how
+
+0:20:41.840,0:20:43.840
+feature pooling works
+
+0:20:44.799,0:20:46.799
+Okay
+
+0:20:46.960,0:20:51.679
+Let me let me draw a picture, maybe that'll be clear. Okay, so you start with an input vector
+
+0:20:52.400,0:20:54.400
+Okay multiply by
+
+0:20:54.400,0:20:57.439
+a matrix or pass it through uh, some sort of uh,
+
+0:20:59.260,0:21:05.599
+Encoder right which may have ReLUs and whatever or multiple matrices inside
+
+0:21:06.880,0:21:10.159
+Okay, maybe multiple layers and you get a feature vector
+
+0:21:13.120,0:21:14.880
+Okay, so let's call that
+
+0:21:14.880,0:21:16.559
+z
+
+0:21:16.559,0:21:17.679
+and now
+
+0:21:17.679,0:21:23.859
+And now you do you do pooling essentially so you divide this into groups in this case are non-overlapping
+
+0:21:24.720,0:21:26.720
+and you compute the
+
+0:21:27.280,0:21:29.280
+Within one of those groups
+
+0:21:29.440,0:21:31.440
+You compute the square root
+
+0:21:31.520,0:21:33.520
+of the sum of the squares
+
+0:21:34.080,0:21:37.439
+Of those zi's where i belong to the group
+
+0:21:38.480,0:21:41.299
+,the pool okay. It's called p because it's a pool
+
+0:21:44.080,0:21:46.080
+Okay, and you do this for all the groups
+
+0:21:46.799,0:21:48.799
+Right. So what you get here?
+
+0:21:49.440,0:21:55.440
+This output here looks very much like the output of a pooling layer in the convolutional from that. This is not a convolutional net
+
+0:21:55.600,0:21:57.839
+Okay, it's a fully connected network here
+
+0:21:59.679,0:22:01.679
+But the result is the same
+
+0:22:03.360,0:22:06.959
+And that's your that's your regularizer now in the example I just showed
+
+0:22:07.679,0:22:09.120
+You take the z?
+
+0:22:09.120,0:22:11.120
+And this is what you send to
+
+0:22:11.280,0:22:13.280
+a decoder matrix
+
+0:22:13.520,0:22:15.520
+from which you reconstruct
+
+0:22:15.840,0:22:22.559
+The input. Okay. So this is y this is y bar that's a prediction for the reconstruction and this
+
+0:22:23.760,0:22:27.439
+this pooled layer here is is only used
+
+0:22:28.480,0:22:30.159
+to
+
+0:22:30.159,0:22:35.519
+Compute the regularizer. It's not actually used as uh for reconstruction you reconstruct from the sparse code directly
+
+0:22:36.480,0:22:39.839
+but it is it looks very much like a pulling layer now if this were
+
+0:22:41.120,0:22:44.719
+uh if this were a a convolutional net
+
+0:22:46.240,0:22:48.240
+Then that that dimension
+
+0:22:49.200,0:22:51.200
+over feature here would be
+
+0:22:54.320,0:22:56.960
+Features, but you would have multiple feature maps
+
+0:22:58.640,0:23:01.459
+Okay, so i'm representing the feature dimension vertically
+
+0:23:02.480,0:23:08.159
+Then the encoder would do multiple convolutions and would also generate multiple feature maps. Perhaps a larger number
+
+0:23:15.200,0:23:17.200
+And then the kind of pooling we would do here
+
+0:23:20.400,0:23:23.359
+Is a pooling where so each
+
+0:23:25.679,0:23:27.839
+After pooling we would take
+
+0:23:29.200,0:23:33.380
+A window over space as well as over features
+
+0:23:36.799,0:23:41.918
+And compute the square root of sum of the square there and that gives us one output in our pooling
+
+0:23:42.720,0:23:44.320
+output
+
+0:23:44.320,0:23:47.520
+And then we have multiple groups of features like this that go into different
+
+0:23:49.039,0:23:55.039
+pooling so it doesn't matter whether this is convolutional or not in convolutions, you would pool over space as well as
+
+0:23:55.840,0:23:57.840
+feature type but um
+
+0:23:59.440,0:24:04.960
+If you don't have convolution you just pool over features and that, you know builds invariants to whatever it is that
+
+0:24:05.760,0:24:08.559
+Uh, the system thinks make sense
+
+0:24:11.360,0:24:17.779
+Is that clear does that answer your question? yeah, I think it's it's more clear. Thank you
+
+0:24:19.520,0:24:27.219
+Um, I have a question for when you do when you split the z into groups and do the pooling would those groups overlap
+
+0:24:28.559,0:24:33.199
+Right. So, uh in the example I showed here they do not overlap
+
+0:24:34.240,0:24:36.880
+But you can make them overlap. Okay, so
+
+0:24:37.840,0:24:40.559
+so let's say we have a feature vector z
+
+0:24:43.039,0:24:44.159
+I can
+
+0:24:44.159,0:24:49.359
+Take a pool here and a pool here and a pool here and here those groups overlap
+
+0:24:49.600,0:24:52.559
+And if I do this and I do group sparsity
+
+0:24:53.120,0:24:55.599
+where these other groups what's going to happen is that
+
+0:24:56.880,0:25:02.079
+I'm going to have sort of a continuously varying set of features here that sort of vary from one end to the other
+
+0:25:02.559,0:25:07.038
+Because the system is going to want to group within a pool features that are similar
+
+0:25:07.440,0:25:12.080
+And so because of the overlap it's going to sort of continuously vary them so that they change slowly
+
+0:25:13.039,0:25:15.199
+over the vector now
+
+0:25:15.919,0:25:18.639
+Uh in the pictures that I showed in the slides
+
+0:25:19.279,0:25:25.279
+Uh instead of organizing the the z features here in a 1d topology,I organized them in a 2d topology
+
+0:25:25.679,0:25:29.999
+And I made the groups 2-dimensional right? So I take a six by six block
+
+0:25:30.880,0:25:37.599
+uh, that's one group and then the next group will be another six by six block with some overlap and then the next group will
+
+0:25:37.600,0:25:39.039
+be
+
+0:25:39.039,0:25:41.039
+Yet another six by six block
+
+0:25:41.440,0:25:44.240
+Okay, and maybe I have an another one because I have a troidal
+
+0:25:44.940,0:25:47.679
+topology that takes these guys and these guys
+
+0:25:48.320,0:25:50.960
+Okay, and then there is you know the similar thing kind of
+
+0:25:51.679,0:25:53.120
+um
+
+0:25:53.120,0:25:56.479
+You know sliding up et cetera. So the groups basically
+
+0:25:57.360,0:26:01.219
+Are those six by six windows that are shifted by three and and overlapping
+
+0:26:02.080,0:26:04.400
+And so that's how you get those sort of continuously varying
+
+0:26:05.039,0:26:12.719
+uh features, uh along the along the dimension the two dimensions I could have equally well, uh chosen to
+
+0:26:13.679,0:26:15.699
+Organize this into in a 3d topology
+
+0:26:17.120,0:26:21.039
+Or into some sort of tree right? So I I take all the components of z
+
+0:26:21.679,0:26:26.239
+And I organize them in some sort of graph. Perhaps a tree
+
+0:26:28.559,0:26:34.259
+So this is called structured sparsity not group sparsity anymore well depends how you do it I guess
+
+0:26:39.520,0:26:44.319
+And then the groups would be things like, uh, this would this would be a group
+
+0:26:45.600,0:26:47.600
+And then perhaps this would be a group as well
+
+0:26:49.200,0:26:52.400
+Uh, and I can organize a group in sort of uh
+
+0:26:53.679,0:26:55.679
+russian dolls like this
+
+0:26:56.080,0:26:58.080
+uh, and uh
+
+0:26:58.240,0:27:00.559
+What's gonna happen there Is that the the groups
+
+0:27:01.440,0:27:04.960
+That um, the units that are in many groups will tend to be very sparse
+
+0:27:05.039,0:27:09.119
+Whereas the groups the units that are in a few groups will tend to be less sparse
+
+0:27:09.760,0:27:12.159
+and so if you do something like this with a tree
+
+0:27:12.720,0:27:17.520
+What happens here Is that the the feature in the center tends to be not sparse at all?
+
+0:27:17.600,0:27:21.839
+It's going to be something that really sort of detects just you know, very sort of generic features
+
+0:27:22.720,0:27:25.919
+And then at the first level in the tree, they're going to be a little sparse
+
+0:27:25.919,0:27:28.319
+So they're going to be sort of very sort of smooth
+
+0:27:28.880,0:27:34.479
+edge extractors or something like that and then the more you go inside of the tree the more
+
+0:27:35.039,0:27:37.039
+each feature enters
+
+0:27:37.279,0:27:41.759
+In a large number of pools and therefore they get more uh pressure to be sparse
+
+0:27:41.840,0:27:46.640
+And so they end up being much sparser, which means they end up being more selective for particular
+
+0:27:47.340,0:27:48.640
+features
+
+0:27:48.640,0:27:52.799
+And what happens there? Is that when you show an image it tends to favor
+
+0:27:53.740,0:27:55.740
+activating features that are along
+
+0:27:56.000,0:27:58.239
+Uh one particular branch in that tree
+
+0:27:59.360,0:28:03.279
+Because that's the best way to sort of minimize the number of pools that are on at any one time
+
+0:28:04.640,0:28:06.640
+So that's called structural sparsity
+
+0:28:14.880,0:28:16.959
+And there's a number of papers, uh on this by
+
+0:28:17.760,0:28:22.799
+Julien Mairal, so this this goes back about about ten years ago
+
+0:28:23.520,0:28:25.520
+and Rodolphe Jenatton
+
+0:28:27.200,0:28:30.559
+I mean they co-authored this senior author was Francis Bach
+
+0:28:33.120,0:28:35.520
+I really I put the reference in one of the slides
+
+0:28:36.799,0:28:40.239
+And there's a paper by my group also by Arthur Szlam
+
+0:28:41.279,0:28:42.480
+Which
+
+0:28:42.480,0:28:44.480
+I'll go to in a minute
+
+0:28:44.480,0:28:49.839
+Can you explain why grouping regularization actually helps in grouping similar features?
+
+0:28:51.279,0:28:55.279
+Well, so that's a good question. Uh, where first of all does it help?
+
+0:28:56.320,0:28:57.200
+and
+
+0:28:57.200,0:28:59.200
+Uh, and the answer is not clear
+
+0:28:59.600,0:29:00.960
+so
+
+0:29:00.960,0:29:07.279
+Those experiments were done, uh quite a while ago before the computation was really available and the data was available
+
+0:29:07.840,0:29:11.840
+Uh for for this to really kind of work at a big scale. This was mostly
+
+0:29:12.480,0:29:16.079
+Uh viewed as uh, the people interested in this were interested in two things
+
+0:29:16.080,0:29:22.000
+They were either interested in unsupervised learning for things like image restoration and stuff like that. This was what Mairal was doing
+
+0:29:22.640,0:29:23.919
+um
+
+0:29:23.919,0:29:25.919
+or they were interested in uh
+
+0:29:26.080,0:29:32.319
+Uh unsupervised self supervised pre-training because at the time the data sets were very small for for training. Uh,
+
+0:29:33.039,0:29:36.799
+Uh convolutional nets they were too small so they had to be some sort of pre-training procedure
+
+0:29:37.360,0:29:45.039
+Which is what I was interested in and so it's the same motivation that we now have again for self-supervised learning
+
+0:29:46.559,0:29:51.278
+But a lot of those methods haven't been brought back to the fore
+
+0:29:52.720,0:29:55.120
+They tended to work very well when the data set was small
+
+0:29:56.000,0:29:58.079
+Um, so they tended to kind of improve performance
+
+0:29:58.799,0:30:01.999
+of uh, let's say a convolutional net if you pre-trained this, uh, using a method
+
+0:30:02.799,0:30:04.799
+so using a method very similar to the one I
+
+0:30:05.360,0:30:09.219
+I uh, I showed earlier so something a bit like this but convolutional
+
+0:30:11.039,0:30:15.278
+So make the the encoder and the decoder convolutional and
+
+0:30:16.000,0:30:19.679
+Uh and and train with good sparsity on complex cells
+
+0:30:20.399,0:30:22.879
+and then after you're you're done pre-training this
+
+0:30:23.039,0:30:28.239
+uh the system you get rid of the decoder you only use the encoder as a feature extractor for uh,
+
+0:30:28.320,0:30:30.320
+Say the first layer of a conventional net
+
+0:30:31.039,0:30:35.839
+And you stick a second layer on top of it. Okay, so let me go through this a little bit
+
+0:30:37.039,0:30:39.359
+So you start you start with a with an image?
+
+0:30:40.880,0:30:42.880
+You
+
+0:30:45.200,0:30:52.319
+You have an encoder which is basically a convolution, uh Relu
+
+0:30:55.520,0:30:58.719
+Not much more than that, okay just combination value, uh
+
+0:30:59.679,0:31:03.619
+There needs to be some sort of scaling layer afterwards for for this particular case
+
+0:31:05.440,0:31:07.440
+And
+
+0:31:07.440,0:31:10.799
+You you train with group groups sparsity so you have a linear decoder
+
+0:31:13.120,0:31:17.620
+And you kind of reconstruct the input and you have a
+
+0:31:23.120,0:31:25.919
+You have a criterion here which is this group l1
+
+0:31:27.600,0:31:31.839
+Okay, so it's sum of a group sorry I call the good p right
+
+0:31:33.120,0:31:40.799
+Sum of a group a square root of sum for I in the group of z I squared
+
+0:31:42.320,0:31:48.820
+Okay, so that's good sparsity so you train this little uh sparse, uh auto encoder with group sparsity
+
+0:31:50.399,0:31:52.639
+And then what you do is you take the
+
+0:31:54.000,0:31:56.000
+
+
+0:31:56.240,0:31:59.839
+Sparsity layer that you just used as a regularizer
+
+0:32:01.840,0:32:04.399
+And so you basically eliminate, um
+
+0:32:06.240,0:32:13.839
+You cut this part out of the network you take the group sparsity which is really a pooling layer an l2 pooling layer
+
+0:32:15.600,0:32:17.600
+And you stick it here
+
+0:32:18.080,0:32:20.159
+Okay, so this is basically l2 pooling
+
+0:32:23.440,0:32:25.760
+But it has the same architecture as the one you use for the
+
+0:32:26.960,0:32:29.279
+Um, you know for the groups the group sparsity
+
+0:32:30.159,0:32:32.159
+And then you use that as a feature extractor
+
+0:32:33.279,0:32:40.398
+Okay, which is like it's like the first pair of layers of a convolutional net convolutional value pooling okay with this l2 pooling not max pooling
+
+0:32:41.340,0:32:44.319
+and then you can repeat the process you can train another
+
+0:32:45.360,0:32:48.399
+Instance of this network have a couple layers here
+
+0:32:50.320,0:32:51.919
+I'm going to
+
+0:32:51.919,0:32:52.720
+and
+
+0:32:52.720,0:32:53.820
+have a
+
+0:32:53.820,0:32:55.120
+decoder
+
+0:32:55.120,0:32:57.120
+Have this l2
+
+0:32:57.840,0:32:59.039
+uh
+
+0:32:59.039,0:33:02.879
+pooling and sparsity criterion train this to reconstruct its input
+
+0:33:04.320,0:33:06.320
+And then stick the pooling on top
+
+0:33:07.100,0:33:10.740
+Eliminate this and now we have you have a pre-trained two-layer convolutional net
+
+0:33:11.840,0:33:16.720
+Okay, this is a procedure that some people call stacked auto encoder
+
+0:33:17.039,0:33:20.158
+okay, so you train an auto encoder to extract features and then you
+
+0:33:21.120,0:33:24.799
+And then you generate features with the encoder of that part of that
+
+0:33:24.960,0:33:29.679
+Of the auto encoder and you stick another layer on top train that as an auto encoder and then keep going
+
+0:33:30.559,0:33:34.398
+and the only characteristic here is that this autoencoder is trained with uh,
+
+0:33:35.600,0:33:37.600
+you know to produce invariant features through
+
+0:33:38.640,0:33:44.399
+Group sparsity essentially. we use all possible sub-trees as groups in the previous example
+
+0:33:45.120,0:33:47.199
+Uh, no, that's kind of up to you, really
+
+0:33:48.880,0:33:50.080
+What structure you use here
+
+0:33:50.080,0:33:54.960
+You can use multiple trees you can use if you want multiple features to kind of uh to represent
+
+0:33:55.279,0:33:58.398
+An input even at the low frequency, so that's really up to you
+
+0:33:59.120,0:34:00.640
+um
+
+0:34:00.640,0:34:02.640
+You know, it could be like what you can afford
+
+0:34:02.880,0:34:05.839
+uh, what you can do also is train the system with you know,
+
+0:34:05.760,0:34:11.919
+A bigger tree than necessary and then sort of prune the tree whenever there are branches that are not used or used very rarely
+
+0:34:13.359,0:34:21.199
+Okay. So this is a the experiment I showed here is uh similar, but there's only local connections and no no weight sharing
+
+0:34:24.240,0:34:27.599
+And what you see here is this again this organization of the features
+
+0:34:28.960,0:34:34.399
+In terms of what neuroscientists call pinwheel patterns. So pinwheel patterns. Are those patterns where the
+
+0:34:35.119,0:34:40.479
+uh, orientation selectivity varies continuously as you go around one of those red dots
+
+0:34:41.919,0:34:46.878
+So you take one of those red dots and if you kind of do a little circle around the the red dots
+
+0:34:47.280,0:34:49.280
+What you notice, is that the orientation
+
+0:34:49.679,0:34:53.759
+Of the feature of the edge extractor kind of varies continuously as you move around
+
+0:34:54.800,0:34:59.060
+And those are called pinwheel patterns and they are observed in the in the brain
+
+0:35:02.800,0:35:06.399
+In fact those pictures here on the right come from neuroscience papers
+
+0:35:07.119,0:35:11.679
+That describe this where the the the color here encodes the orientation set activity
+
+0:35:13.200,0:35:15.200
+And the little stars indicate those
+
+0:35:18.960,0:35:25.919
+Kind of the singularities here the the center of the pinwheel. Is the group sparsity term trained, uh to have a small value
+
+0:35:26.960,0:35:28.960
+Well, it's a regularizer, right?
+
+0:35:29.440,0:35:30.560
+let me
+
+0:35:30.560,0:35:32.560
+go back to the
+
+0:35:33.920,0:35:41.119
+Um, it's a it's it's a cost function during training or during inference depending on whether you use the
+
+0:35:43.760,0:35:49.359
+The sort of predictive version of it where you have latent variable or not, but um, but it's basically just a
+
+0:35:50.240,0:35:52.160
+it's basically just a
+
+0:35:52.160,0:35:54.160
+Term in the energy, right?
+
+0:35:55.119,0:35:57.119
+So
+
+0:35:57.200,0:36:02.020
+The term itself is not trained it's fixed right? It's just the l2 norm over groups and the groups are predetermined
+
+0:36:03.680,0:36:07.200
+Uh, but because it's a criterion it sort of determines what the
+
+0:36:07.760,0:36:10.979
+What the encoder and the decoders will do what type of features will be extracted
+
+0:36:12.400,0:36:14.160
+Here is um
+
+0:36:14.160,0:36:18.160
+another example of a sort of you know exotic way of doing
+
+0:36:19.119,0:36:23.519
+Sparse coding through lateral inhibition and there's a bunch of different ways to do this that people are proposed
+
+0:36:25.119,0:36:27.119
+This one came came from uh
+
+0:36:27.599,0:36:30.639
+uh, carol Gregor and Szlam in my lab about 10 years ago and
+
+0:36:31.440,0:36:34.960
+So here there is again a linear decoder with a square reconstruction error
+
+0:36:35.040,0:36:38.239
+This is wz minus x where x is the input here in this case
+
+0:36:39.280,0:36:43.759
+and then there is a criterion in the energy which is uh
+
+0:36:44.800,0:36:46.959
+the vector formed by the absolute values of z
+
+0:36:48.300,0:36:52.479
+Transpose times some matrix times the vector itself. So it's an um, a kind of a
+
+0:36:53.339,0:36:55.040
+quadratic form
+
+0:36:55.040,0:36:58.320
+Uh that involves z and this matrix s and the matrix s is
+
+0:36:59.040,0:37:00.960
+Either determined by hand
+
+0:37:00.960,0:37:02.960
+or
+
+0:37:03.280,0:37:07.839
+Learned so as to kind of maximize this term, okay
+
+0:37:10.320,0:37:11.440
+And
+
+0:37:11.440,0:37:13.760
+if the terms in uh in s
+
+0:37:14.560,0:37:18.399
+Are positive and large if one particular term s i j is large
+
+0:37:18.640,0:37:22.960
+What that means is that the system does not want zi and zj to be on at the same time
+
+0:37:23.839,0:37:26.479
+Okay, it wants the if zi is on
+
+0:37:27.599,0:37:32.639
+And s i j is large then it wants zj to be off and vice versa. Okay
+
+0:37:34.079,0:37:40.239
+And so it's sort of a mutual inhibition people use people call this lateral inhibition, uh in uh in neuroscience
+
+0:37:41.040,0:37:42.240
+Uh, it's basically, you know
+
+0:37:42.240,0:37:49.280
+All your feature vectors basically inhibit other feature vectors through this matrix s you can decide that the matrix s a priori is structured
+
+0:37:49.680,0:37:55.520
+So you can decide that only some terms are nonzero. You can decide that some terms those terms are fixed
+
+0:37:56.320,0:37:59.999
+Or can be trained and the way you train them is by actually maximizing
+
+0:38:00.480,0:38:04.159
+uh, so it's kind of adversarial training a little bit you you try to find the
+
+0:38:04.880,0:38:10.480
+The value of s that sort of you know, uh is as large as possible if you want within limits
+
+0:38:13.280,0:38:15.919
+Above a certain value of sij one of the z
+
+0:38:17.200,0:38:23.040
+One of zi or zj is going to go to zero and that term is gonna disappear. So the system is gonna you know,
+
+0:38:24.540,0:38:26.560
+maximize the sijs until
+
+0:38:27.359,0:38:32.078
+Uh, it's large enough to kind of do the mutual inhibition between zi and zj
+
+0:38:32.800,0:38:35.119
+And it's not going to go any further because it doesn't need to
+
+0:38:37.920,0:38:39.920
+And again if you organize s
+
+0:38:41.520,0:38:43.599
+In terms of a tree so so here
+
+0:38:45.339,0:38:48.879
+The the lines represent the the zero terms
+
+0:38:49.760,0:38:53.679
+Uh in the s matrix and whenever you don't have a line between two features
+
+0:38:54.160,0:38:56.639
+There's a there's a non-zero term in the s matrix, right?
+
+0:38:56.880,0:39:02.800
+So every feature inhibits all other features, except the ones that are up the tree or down the tree, uh from it
+
+0:39:04.320,0:39:07.439
+Uh, and this is very much like group's sparsity a little bit it's kind of the
+
+0:39:08.240,0:39:09.599
+uh
+
+0:39:09.599,0:39:12.078
+kind of the converse if you want of group sparsity instead of
+
+0:39:12.720,0:39:13.920
+saying
+
+0:39:13.920,0:39:20.000
+Features within a branch of the tree need to be activated together by minimizing, you know
+
+0:39:20.640,0:39:24.960
+l2 minimizing the number of such groups that are on here you explicitly
+
+0:39:25.760,0:39:28.639
+have a sort of inhibition term that
+
+0:39:29.920,0:39:31.520
+for every every
+
+0:39:31.520,0:39:34.719
+feature inhibits all other features in all the other branches
+
+0:39:35.440,0:39:36.880
+of the tree
+
+0:39:36.880,0:39:38.880
+And what you see again, is that you see this
+
+0:39:40.240,0:39:43.839
+Systems are organizing the features in a more or less in a continuous fashion
+
+0:39:44.640,0:39:46.079
+um
+
+0:39:46.079,0:39:46.800
+and
+
+0:39:46.800,0:39:52.879
+in such a way that features along a branch of the tree correspond to basically the same feature but with uh,
+
+0:39:52.960,0:39:54.960
+sort of different levels of selectivity
+
+0:39:55.359,0:40:00.799
+And then features along the periphery sort of vary more or less continuously because there is you know inhibition
+
+0:40:01.760,0:40:04.339
+Not just at the bottom level but also at the middle level
+
+0:40:10.560,0:40:16.959
+Okay, so to uh to go back to this the way you train the system is uh at each iteration you give an x you
+
+0:40:17.040,0:40:21.999
+Find the z that minimizes this energy function. So you find a z that reconstructs but also
+
+0:40:22.619,0:40:27.379
+Minimizes the second term which means that if you have an sij term, that is nonzero
+
+0:40:27.839,0:40:31.679
+It wants either zi or zj to be zero or at least very small
+
+0:40:33.119,0:40:35.119
+you do one step of gradient descent now to
+
+0:40:37.280,0:40:39.280
+Uh turn to kind of update w
+
+0:40:39.359,0:40:39.680
+
+
+0:40:39.680,0:40:44.639
+so as to minimize the reconstruction error and you do also if you want you can do one step of
+
+0:40:44.960,0:40:47.359
+gradient ascent to make the terms in s
+
+0:40:48.079,0:40:50.079
+larger
+
+0:40:50.079,0:40:54.559
+By kind of computing the gradient of this energy with respect to s but then going up the energy not down
+
+0:40:59.200,0:41:02.960
+Uh again, if you use a not a tree but sort of some sort of 2d topology
+
+0:41:03.040,0:41:05.060
+You also get those kind of those kind of patterns
+
+0:41:12.000,0:41:16.159
+And more complex ones if there are kind of multiple scales for the features
+
+0:41:16.880,0:41:19.839
+Okay so so much for sparse coding and structured space coding
+
+0:41:20.720,0:41:22.959
+and the reason i'm i'm telling you about this is because
+
+0:41:23.920,0:41:29.139
+Uh, although those don't have a huge amount of practical applications the sparse coding
+
+0:41:31.280,0:41:33.619
+They in my opinion, uh
+
+0:41:34.480,0:41:36.480
+will be the basis for kind of
+
+0:41:36.700,0:41:38.480
+self-supervised running methods
+
+0:41:38.480,0:41:43.599
+Of the next few years as I told you I think self supervised learning right now is the hottest topic in nlp
+
+0:41:44.079,0:41:48.318
+Uh, and it's becoming kind of a bit of a hot topic in computer vision as well
+
+0:41:48.960,0:41:51.280
+And it's mostly now dominated by contrasting methods
+
+0:41:51.920,0:41:56.800
+But I think uh, the architectural methods are going to take over because contrasting methods don't scale very well
+
+0:41:58.400,0:42:02.639
+So this is sort of you know giving you weapons for the future if you want
+
+0:42:04.000,0:42:06.000
+Understanding what this is all about
+
+0:42:06.640,0:42:12.079
+Um, okay now for something completely different this is something that Alfredo will like because he works on this project
+
+0:42:13.839,0:42:21.519
+And it's one of the uses probably one of the most important uses of self supervised learning is the idea of
+
+0:42:22.800,0:42:27.439
+learning world models for control systems or for other purpose
+
+0:42:29.339,0:42:31.119
+So
+
+0:42:31.119,0:42:32.319
+um
+
+0:42:32.319,0:42:33.599
+when we
+
+0:42:33.599,0:42:35.919
+when humans or animals learn a task
+
+0:42:36.960,0:42:41.599
+We quite obviously have a kind of good internal model of how the world works
+
+0:42:42.160,0:42:47.359
+Of intuitive physics of the fact that when an object is not supported it falls
+
+0:42:47.760,0:42:52.959
+We've learned gravity when we were babies probably around the age of nine months or so eight or nine months
+
+0:42:53.200,0:42:55.200
+That's when it pops up in babies
+
+0:42:55.760,0:42:58.319
+Um, and we learned this mostly about observation
+
+0:42:58.319,0:43:02.639
+So how is it that we can learn how the world works and all the concepts about the world?
+
+0:43:03.359,0:43:04.800
+by observation
+
+0:43:04.800,0:43:06.160
+and there are
+
+0:43:06.160,0:43:07.920
+There are two reasons for this right?
+
+0:43:07.920,0:43:13.119
+So one I already explained is the idea of self supervised learning if you can train yourself to predict. Maybe you will
+
+0:43:14.619,0:43:17.439
+spontaneously kind of learn abstract concepts about the world
+
+0:43:18.480,0:43:20.400
+That might be useful
+
+0:43:20.400,0:43:22.400
+in preparation for running a particular task
+
+0:43:23.359,0:43:25.359
+or a set of tasks
+
+0:43:25.599,0:43:27.599
+But there's another reason which is that
+
+0:43:27.599,0:43:30.879
+You actually want to build models of the world if you want to be able to act on the world
+
+0:43:31.760,0:43:32.960
+right
+
+0:43:32.960,0:43:34.160
+so
+
+0:43:34.160,0:43:37.760
+I'm holding this pen and I know that if I move my hand up
+
+0:43:38.400,0:43:40.720
+the the pen will move with it because you know
+
+0:43:41.520,0:43:47.759
+It's between my fingers. I know that if I open my fingers the pen will fall. I know by gravity I know by grasping
+
+0:43:48.240,0:43:51.040
+Uh, i've learned all that stuff and i've learned mostly about observation
+
+0:43:51.119,0:43:54.799
+I've learned also by experimentation, but a lot of what I learned I learned just by observation
+
+0:43:55.280,0:43:57.280
+So the big question is can we learn can we
+
+0:43:58.079,0:43:59.200
+use
+
+0:43:59.200,0:44:02.639
+What we've learned about self-supervised learning to train a system
+
+0:44:03.920,0:44:05.920
+to learn world models
+
+0:44:07.280,0:44:08.960
+Um, and what is a world model, okay
+
+0:44:08.960,0:44:15.679
+So if you if you want to sort of give the an idea of the architecture of an autonomous intelligence system
+
+0:44:18.079,0:44:23.199
+It would be a system that is composed of essentially four major blocks here that are represented on the left
+
+0:44:23.599,0:44:27.519
+So it's an intelligent agent or maybe not so intelligent. We'll see
+
+0:44:28.480,0:44:32.480
+it has a perception module and the perception module basically observes the world and then
+
+0:44:33.280,0:44:35.839
+computes a representation of the state of the world
+
+0:44:36.640,0:44:38.400
+Okay
+
+0:44:38.400,0:44:41.599
+Called s(t) At time t s of t is the
+
+0:44:42.560,0:44:43.680
+the
+
+0:44:43.680,0:44:45.680
+Idea that the system has of the state of the world
+
+0:44:45.760,0:44:51.280
+This is necessarily an incomplete representation of the world because we can't observe the entire universe at once
+
+0:44:51.520,0:44:54.879
+We only observe what's immediately around us and even that we can't see
+
+0:44:55.839,0:44:57.839
+through occlusions and there is a lot of
+
+0:44:58.000,0:45:01.280
+You know internal states about the world that we can't observe well enough
+
+0:45:01.680,0:45:05.359
+Even if you can observe your accuracy or observation may not be good enough
+
+0:45:05.680,0:45:07.680
+So if I put this pen in my in my hand
+
+0:45:07.839,0:45:09.839
+And it appears to be vertical and let it go
+
+0:45:10.160,0:45:13.599
+It's going to fall but you can't really predict in what direction i've used that example before
+
+0:45:14.480,0:45:16.480
+to describe the problem of
+
+0:45:18.460,0:45:19.900
+Alliatoric, uh
+
+0:45:19.900,0:45:26.480
+uncertainty, which is the world is non-deterministic and you can't predict exactly what's going to happen because 
+
+0:45:26.480,0:45:28.400
+you don't have a perfect reading of thestate of the world
+
+0:45:28.400,0:45:30.500
+And maybe the world is intrinsically stochastic
+
+0:45:32.240,0:45:34.160
+We don't know that actually
+
+0:45:34.160,0:45:36.160
+Okay, so a forward model
+
+0:45:36.319,0:45:37.839
+is a model that
+
+0:45:37.839,0:45:42.159
+Given the current state of the world s of t or your idea of your current state of the world
+
+0:45:43.200,0:45:46.240
+And an action that you're taking or that someone else is taking
+
+0:45:46.960,0:45:48.480
+something that you can
+
+0:45:48.480,0:45:50.480
+Choose or at least observe
+
+0:45:51.680,0:45:55.060
+And perhaps an auxiliary latent variable z of t which represents
+
+0:45:55.680,0:46:01.280
+What you don't know about the world. Okay, so the part of the world the state of the world that you don't know or the
+
+0:46:01.839,0:46:05.039
+Thing that's unpredictable about what's going to go on in the world
+
+0:46:06.160,0:46:11.040
+The forward model predicts the next state of the world s(t+1). Okay, you discretized
+
+0:46:11.920,0:46:15.040
+Time in in some way. So if you have
+
+0:46:15.920,0:46:17.520
+a model of the world
+
+0:46:17.520,0:46:19.520
+of that type
+
+0:46:20.160,0:46:25.200
+You can simulate in your head what's going to happen as a consequence of your actions, okay
+
+0:46:26.560,0:46:28.719
+So you have this uh this model in your head
+
+0:46:29.760,0:46:32.319
+uh, you know, the current state of the world or
+
+0:46:32.880,0:46:36.480
+Some idea of the current state of the world you run your internal model of the world forward
+
+0:46:37.599,0:46:42.318
+With a sequence of a of t which is a sequence of action that you imagine taking
+
+0:46:43.839,0:46:48.639
+And your model of the world as you imagine it will predict what's going to happen in the world, okay
+
+0:46:52.079,0:46:57.439
+If you could do this then you could plan a sequence of actions that will arrive at a particular goal
+
+0:46:58.880,0:47:01.920
+Okay. So for example, what sequence of action should I
+
+0:47:02.640,0:47:04.800
+Uh should I do to grab this pen?
+
+0:47:05.760,0:47:12.719
+Um, you know, I should you know, follow a particular trajectory, you know actuate my muscles in a particular way, so I grab this pen
+
+0:47:15.040,0:47:16.240
+And
+
+0:47:16.240,0:47:22.639
+The criterion the the the cost function I can measure is is whether i've grabbed the pen. Okay, whether the pen is in my grasp
+
+0:47:23.359,0:47:25.759
+I could measure this with some some function perhaps
+
+0:47:27.760,0:47:29.440
+And the question is can I
+
+0:47:29.440,0:47:33.839
+Plan a sequence of action that given my model of the world which in this case is the model of my hand
+
+0:47:34.160,0:47:36.160
+And the model of where the pen is
+
+0:47:36.559,0:47:38.000
+Will allow me to grab it
+
+0:47:38.000,0:47:42.000
+Okay, it's a little more complicated if I throw the pen and I have to catch it in the air
+
+0:47:42.480,0:47:45.280
+okay, because I have to predict the trajectory of the pen so I have to have
+
+0:47:45.839,0:47:46.720
+uh
+
+0:47:46.720,0:47:52.800
+An intuitive model of physics to be able to uh, grab that pen which of course i've learned through experience as well
+
+0:47:53.119,0:47:59.679
+People are surprised you like so much reinforcement learning. This is not reinforcement. It has absolutely nothing to do with reinforcement learning, let me
+
+0:48:00.240,0:48:03.199
+Be very clear. This has nothing to do with reinforcement learning
+
+0:48:04.160,0:48:07.119
+Uh this may have to do in the future. Okay, but right now it doesn't
+
+0:48:08.000,0:48:09.020
+um
+
+0:48:09.020,0:48:13.999
+Model-based reinforcement learning. No, it doesn't has nothing to do with reinforcement learning. Let me okay
+
+0:48:14.079,0:48:17.359
+Let me let me go through this a little bit. Can you explain the difference then someone asking?
+
+0:48:18.240,0:48:20.719
+Um in a minute, okay. So now
+
+0:48:22.880,0:48:27.680
+Uh, so on the left here you have this little agent it has this model of the world that you can run forward
+
+0:48:28.400,0:48:29.280
+Okay
+
+0:48:29.280,0:48:35.119
+Uh, it can it has an actor or you can think of it as a policy that produces a sequence of actions
+
+0:48:35.440,0:48:37.440
+Which is going to feed to the model
+
+0:48:38.000,0:48:40.399
+and then a critic which is going to predict what the
+
+0:48:41.520,0:48:42.640
+cost
+
+0:48:42.640,0:48:44.559
+of the
+
+0:48:44.559,0:48:50.479
+Final state or the trajectory is going to be according to the criterion. So the critic here computes the
+
+0:48:51.839,0:48:53.520
+Basically the cost
+
+0:48:53.520,0:48:55.520
+Of not fulfilling the goal that I set myself
+
+0:48:56.720,0:48:58.640
+okay, so if I
+
+0:48:58.640,0:49:02.260
+If my task is to reach for this pen and I kind of miss the pen by a few centimeters
+
+0:49:03.280,0:49:07.359
+My cost is a few centimeters if I grab it the cost is zero
+
+0:49:07.839,0:49:10.799
+If I miss it by a lot, the cost is higher. Okay, that would be an example of a cost
+
+0:49:13.760,0:49:16.399
+Now, okay, so there there is
+
+0:49:17.839,0:49:22.959
+A number of different things you can do with uh, this sort of basic, uh model of uh intelligent agent
+
+0:49:23.760,0:49:25.280
+so the first one is
+
+0:49:25.280,0:49:31.040
+Uh, you start from an initial state that you observe in the world. You run your forward model you give a
+
+0:49:31.839,0:49:34.639
+A proposal for a sequence of actions you measure the cost
+
+0:49:35.200,0:49:40.079
+And what you can do here ignoring the the p here which represents a policy. Um
+
+0:49:40.640,0:49:42.640
+Let's let's imagine it doesn't exist
+
+0:49:43.119,0:49:49.199
+By gradient descent or by some sort of optimization algorithm. You could you could try to find the sequence of actions
+
+0:49:49.920,0:49:54.559
+That will minimize the overall cost over the trajectory. I start from the state
+
+0:49:55.280,0:49:57.280
+I run my forward model
+
+0:49:58.960,0:50:00.960
+And it it takes an action
+
+0:50:02.800,0:50:06.579
+Okay, let me just call this a1 this is s1 or s1
+
+0:50:09.599,0:50:16.639
+And this is going to give me s2 and i'm going to measure the cost of s2 through some cost function
+
+0:50:18.720,0:50:20.720
+See
+
+0:50:22.800,0:50:26.719
+Okay, the next time step running my forward model again
+
+0:50:30.400,0:50:33.920
+Make an action action proposal a2 this is all simulated. This is all in my head
+
+0:50:34.000,0:50:37.040
+Right because this model this forward model is in my head
+
+0:50:37.599,0:50:39.599
+See my frontal cortex
+
+0:50:40.160,0:50:42.160
+So i'm not actually doing this in the world
+
+0:50:45.900,0:50:50.079
+Etc right so I can unroll this for a few time steps
+
+0:50:51.839,0:50:55.919
+Those time steps can be milliseconds if I control muscles they can be
+
+0:50:57.280,0:51:01.759
+Seconds if I control high level actions, they can be hours. Okay, so if I want to plan how to
+
+0:51:02.400,0:51:05.780
+I don't know go to san francisco. You know, I need to
+
+0:51:08.000,0:51:15.839
+get to the airports and then catch a plane and then when I arrive there catch a taxi or something, etc
+
+0:51:17.200,0:51:22.559
+Okay, so this is independent at the the level of which level description of the of the thing
+
+0:51:24.319,0:51:27.219
+Okay, so what I can do with this is I can do a very classical
+
+0:51:28.480,0:51:30.899
+method called model predictive control
+
+0:51:36.240,0:51:39.199
+So it's a classical method of
+
+0:51:41.680,0:51:47.859
+Optimal control which is a whole discipline that has been around since the the 50s. If not if not earlier
+
+0:51:50.160,0:51:56.319
+And some of the methods are method predictive controls goes go back to the the 1960s there's something called the kelley bryson algorithm
+
+0:51:58.400,0:52:00.400
+I think it's kelley with an e i'm not sure
+
+0:52:05.119,0:52:07.119
+Um, so this is the
+
+0:52:08.319,0:52:10.799
+Method very similar to the one i'm describing at the moment
+
+0:52:12.240,0:52:13.280
+and
+
+0:52:13.280,0:52:15.280
+This was used primarily by
+
+0:52:16.160,0:52:20.879
+Nasa, let's say to compute trajectories for rockets. Okay, so when they started having computers in the 60s
+
+0:52:21.920,0:52:23.920
+uh at nasa they
+
+0:52:24.240,0:52:28.079
+They started computing trajectories with computers and they were basically using things like this
+
+0:52:28.960,0:52:31.139
+Before that they had to do it by hand, okay
+
+0:52:32.960,0:52:39.439
+And if you haven't seen the movie, uh hidden figures I um, it describes how people were competing this by hand
+
+0:52:39.520,0:52:42.979
+This was mostly done by black women black mathematicians
+
+0:52:43.839,0:52:45.339
+uh women
+
+0:52:45.339,0:52:50.479
+Mathematicians who also ended up kind of programming those computers watch that movie is it's really great
+
+0:52:51.200,0:52:53.839
+Um, okay. So here is a basic idea here
+
+0:52:54.640,0:52:56.720
+Um, this looks very much like a recurrent net
+
+0:52:56.880,0:53:04.160
+Okay, because your forward model is basically the same network replicated over over time and this is like an unworld recurrent network
+
+0:53:05.119,0:53:06.079
+and so
+
+0:53:06.079,0:53:08.659
+Well, what you do here is you back propagate
+
+0:53:09.440,0:53:14.240
+The value of the cost through this entire network all the way to the actions
+
+0:53:15.839,0:53:19.279
+And you don't use this for training you use this for inference
+
+0:53:20.079,0:53:22.159
+You think of the actions as latent variables?
+
+0:53:23.280,0:53:26.559
+And you basically by gradient descent or some other optimization method
+
+0:53:27.119,0:53:31.939
+You find a sequence of actions that will minimize the sum of the cost over the trajectory
+
+0:53:32.480,0:53:34.480
+Okay
+
+0:53:36.800,0:53:38.800
+So basically you have
+
+0:53:39.920,0:53:41.339
+An overall
+
+0:53:41.339,0:53:42.559
+cost
+
+0:53:42.559,0:53:43.920
+um
+
+0:53:43.920,0:53:47.520
+I'm going to call it big c and that's going to be the sum over the time step
+
+0:53:48.240,0:53:50.319
+time steps of the little c of
+
+0:53:51.520,0:53:53.520
+St
+
+0:53:53.520,0:53:55.359
+Okay
+
+0:53:55.359,0:53:57.359
+Uh
+
+0:53:57.359,0:54:02.159
+And what you're going to do is big a which is the sequence of a is going to be replaced by
+
+0:54:02.800,0:54:04.800
+its own value minus
+
+0:54:05.440,0:54:06.480
+some
+
+0:54:06.480,0:54:10.959
+step size times the gradient of big c with respect to a
+
+0:54:12.480,0:54:17.359
+Okay, so as long as you can compute the gradient of the sum of those costs over the trajectory with respect to all of the
+
+0:54:17.359,0:54:20.479
+components of a which means the trajectories of a
+
+0:54:21.599,0:54:26.159
+You can do this optimization. You don't have to do it necessarily through gradient descent in some cases
+
+0:54:26.160,0:54:28.160
+There are more efficient ways to do this optimization
+
+0:54:28.720,0:54:29.760
+um
+
+0:54:29.760,0:54:31.599
+using dynamic programming for example
+
+0:54:31.599,0:54:33.838
+If a is discrete that might be more efficient
+
+0:54:34.079,0:54:38.639
+But but if a is continuous and high dimensional you basically have no choice but to use gradient based methods
+
+0:54:39.119,0:54:42.399
+Okay, so this is inference. It's not there's no learning yet. What is a
+
+0:54:42.960,0:54:44.960
+Big a is the sequence
+
+0:54:45.520,0:54:47.520
+a1 a2
+
+0:54:47.520,0:54:49.520
+A3 etc
+
+0:54:51.339,0:54:57.679
+Okay, so you have a differentiable objective function and you can minimize it with respect to the variables you're interested in
+
+0:54:57.680,0:54:59.440
+So what do you get out of this?
+
+0:54:59.440,0:55:03.280
+There are no weights in a a is a vector, right? So a is a vector. Yeah
+
+0:55:03.359,0:55:08.818
+Yeah, so that was actually because we never use uh, we never minimize vectors so far. We always been minimizing
+
+0:55:09.520,0:55:12.239
+We are always being optimizing weights. So people are oh we have
+
+0:55:12.799,0:55:18.399
+For latent variables like the z variables the latent variables of the energy-based models the latent variables
+
+0:55:18.400,0:55:22.240
+We do minimize the energy with respect to z. So this is the same problem here
+
+0:55:22.319,0:55:29.279
+We're solving. I think yeah, I think not everyone understood that the latent variables are actually inputs. So that was I think like
+
+0:55:29.920,0:55:31.920
+also misunderstanding with the
+
+0:55:31.920,0:55:33.920
+Question we had on piazza about training these
+
+0:55:34.559,0:55:40.959
+These uh latent variable models. Yeah, you don't want to use the word training for latent variables or for things like this
+
+0:55:42.160,0:55:43.680
+because
+
+0:55:43.680,0:55:45.200
+Uh, you want to use inference
+
+0:55:45.200,0:55:51.520
+Okay, you want to use the word "to infer" not "to train". I want to use the word inference not training
+
+0:55:52.480,0:55:54.480
+What's the difference between inference and training?
+
+0:55:55.680,0:55:57.680
+Training
+
+0:55:57.839,0:56:01.379
+With training you learn a a parameter
+
+0:56:02.720,0:56:05.599
+Uh, that is the same for a large number of samples
+
+0:56:06.559,0:56:07.599
+Okay
+
+0:56:07.599,0:56:09.040
+for inference
+
+0:56:09.040,0:56:15.839
+You find the value of some variable a latent variable a in this case z in the case of a latent variable energy-based model
+
+0:56:16.720,0:56:18.000
+uh
+
+0:56:18.000,0:56:20.000
+That is specific to one sample
+
+0:56:20.319,0:56:26.879
+Okay, you change the sample the written variable changes so you don't learn it because you don't remember it from one time
+
+0:56:26.880,0:56:28.799
+to the next
+
+0:56:28.799,0:56:32.079
+You know, there's no memory for it, right? Um
+
+0:56:34.240,0:56:38.799
+So that's the difference, you know conceptually you're doing the same kind of operation where you do learning and inference
+
+0:56:39.520,0:56:41.999
+And so at some level of abstraction, they're the same
+
+0:56:42.799,0:56:45.279
+But uh inference you do it per sample
+
+0:56:46.400,0:56:48.400
+learning you do it, uh
+
+0:56:49.200,0:56:53.599
+Over a bunch of samples and the parameter is shared across the samples
+
+0:56:54.079,0:56:56.879
+When we have an energy based model, and we'd like to do inference
+
+0:56:56.960,0:57:03.199
+We still have a minimization to do at every time we perform this. Uh, we use it, right
+
+0:57:03.920,0:57:08.639
+So that was a big difference between... After you after you've trained the model when you use it
+
+0:57:09.280,0:57:12.799
+You you still have to do minimization with respect to the latent variables. Okay
+
+0:57:13.440,0:57:15.520
+So that's the big difference same here
+
+0:57:16.480,0:57:21.679
+here, uh there may or may not be any training your forward model may be built by hand or maybe trained but by the time
+
+0:57:21.680,0:57:26.720
+we're here It's trained. We're not training anything here. We're just doing inference. We're figuring out
+
+0:57:26.720,0:57:30.079
+What is the optimal value of the sequence of a is that we'll minimize for
+
+0:57:30.640,0:57:31.440
+uh
+
+0:57:31.440,0:57:32.640
+for cost
+
+0:57:32.640,0:57:36.319
+Overall cost and this is an inference problem just like energy-based models
+
+0:57:36.640,0:57:43.280
+For example, the fm the forward model can be just a one line of equation of physics, right? It can be just a deterministic equation
+
+0:57:43.920,0:57:47.760
+so imagine the forward model is the few equations that describe the the uh,
+
+0:57:48.480,0:57:54.719
+The the physics of a rocket and a is basically the action on the the steering
+
+0:57:54.799,0:57:57.599
+you know how you orient the nozzles and then the the thrust
+
+0:58:00.000,0:58:03.679
+So that would be the the collection of a would be the collection of those variables and then there is you know
+
+0:58:03.680,0:58:05.680
+very simple physics newtonian physics, basically
+
+0:58:06.240,0:58:10.240
+Uh, you can write the equations it will give you the state of the rocket at the next
+
+0:58:10.799,0:58:12.240
+uh time step
+
+0:58:12.240,0:58:16.559
+Uh, as a function of state of rocket at the previous time step and the actions you're taking that's how you do simulations
+
+0:58:16.640,0:58:18.319
+That's how every simulator
+
+0:58:18.319,0:58:20.319
+works
+
+0:58:20.720,0:58:26.399
+And then your cost function if you want to shoot a rocket would be maybe a combination of two things one, uh would be the
+
+0:58:27.359,0:58:28.640
+the uh
+
+0:58:28.640,0:58:33.520
+Energy spent during that time step. Okay, the amount of fuel you spent something like that
+
+0:58:34.160,0:58:40.399
+and the second term might be the distance to a target you want to reach maybe you want to rendezvous with a space station and
+
+0:58:40.960,0:58:42.000
+uh
+
+0:58:42.000,0:58:47.520
+The the second term in the cost would be the distance to the space station. Okay square distance to the space station
+
+0:58:48.160,0:58:50.160
+uh if you measure the um,
+
+0:58:50.799,0:58:55.679
+The sum over the entire trajectory of the distance to the space station the system will try to minimize the time
+
+0:58:56.160,0:58:58.879
+It will take to get to the space station because they will want to minimize
+
+0:58:59.200,0:59:02.339
+The sum of the square of the distances to the space station over the trajectory
+
+0:59:02.799,0:59:06.879
+But at the same time it wants to minimize fuel so you have to balance those two terms, right?
+
+0:59:06.960,0:59:11.359
+So that's a classical way of doing optimal control and that's called model predictive control
+
+0:59:12.079,0:59:15.839
+Is model is kalman filtering one type of model predictive control
+
+0:59:16.000,0:59:22.239
+No kalman filtering is a particular, uh forward model if you want. It's a way of estimating the state of the world
+
+0:59:23.680,0:59:24.880
+Okay
+
+0:59:24.880,0:59:26.880
+but um
+
+0:59:27.040,0:59:31.839
+It's you know, basically given your observation of the state of the world through a perception system
+
+0:59:32.000,0:59:34.159
+There's going to be some uncertainty about the state of the world
+
+0:59:34.960,0:59:38.659
+And the kalman filter basically assumes a gaussian distribution on this uncertainty
+
+0:59:39.920,0:59:41.920
+And now when you run through your forward model
+
+0:59:43.760,0:59:47.839
+You're going to have a resulting uncertainty about the state of the world at the next time step
+
+0:59:48.799,0:59:49.839
+because
+
+0:59:49.839,0:59:51.839
+It wasn't certain to start with
+
+0:59:52.000,0:59:53.440
+Okay
+
+0:59:53.440,0:59:59.839
+So given the uncertainty when you started from where you started from, what's the uncertainty after one step of physics if you want
+
+1:00:01.839,1:00:08.399
+And if you assume linearity of all those steps and gaussianity of the uncertainty that's what uh, that's what the
+
+1:00:09.280,1:00:11.280
+kalman filter
+
+1:00:12.540,1:00:18.019
+Is. um most of the uncertainty comes from okay, so now now your forward model produces
+
+1:00:18.720,1:00:24.399
+A prediction and then the next time step you might get another reading of the state of the world because your sensors are still working
+
+1:00:24.720,1:00:26.720
+so now you have two gaussians one is
+
+1:00:27.599,1:00:30.078
+your new perception of the world tells you here is where I think
+
+1:00:30.640,1:00:35.200
+The state of the world is and your forward model also predicted here is why I think it what where I think it is
+
+1:00:35.520,1:00:41.839
+and you have to combine those two that's where the complexity of common filtering comes in which is uh i've got
+
+1:00:42.400,1:00:44.319
+two gaussian predictions
+
+1:00:44.319,1:00:50.079
+so the resulting probability distribution is also a gaussian if you compute the covariance matrix and et cetera, and that's where the
+
+1:00:50.640,1:00:54.000
+the formulas for um kalman filters come from
+
+1:00:55.280,1:00:58.099
+Okay, so kalman filter is a way to deal with the uncertainty
+
+1:00:58.880,1:01:00.240
+in the
+
+1:01:00.240,1:01:03.199
+reading your perception of the world and in the uh,
+
+1:01:03.839,1:01:05.839
+uh
+
+1:01:06.640,1:01:09.540
+When you propagate this uncertainty in your forward model
+
+1:01:13.599,1:01:19.919
+Uh, I think there was still a main difference, I think you wanted to address the point that the this is different from RL(reinforcement learning)
+
+1:01:20.400,1:01:23.839
+Okay, so what is RL in that context? Okay, so
+
+1:01:24.559,1:01:28.239
+Okay, I need I need I need one more step before I talk about rl okay
+
+1:01:30.559,1:01:32.559
+And here is that step
+
+1:01:36.240,1:01:43.599
+Okay, so what we had uh, just a minute ago was a forward model that's enrolled in time
+
+1:01:48.160,1:01:50.899
+And the system has
+
+1:01:54.240,1:02:00.419
+Takes a sequence of actions a1 a2 a3
+
+1:02:05.339,1:02:10.558
+S1 s2 and then we have the cost function here coming up
+
+1:02:13.200,1:02:15.280
+Okay, and this this could go on right
+
+1:02:16.400,1:02:17.359
+now
+
+1:02:17.359,1:02:19.359
+What we'd like to be able to do
+
+1:02:19.680,1:02:23.280
+Is not have to do this optimization with respect to a1 a2 a3 a4
+
+1:02:24.160,1:02:27.680
+uh every time every time we need to do a planning we don't want to have to
+
+1:02:28.400,1:02:35.440
+go through this complex process of back propagating a gradient through this entire system to do model predictive. Uh,
+
+1:02:37.839,1:02:39.599
+Control
+
+1:02:39.599,1:02:42.959
+And so a simple way to get rid of that step
+
+1:02:43.680,1:02:49.280
+Is the same trick that we use in auto encoders versus sparse coding. So remember it's sparse coding we wanted to
+
+1:02:50.380,1:02:54.180
+Reconstruct, but then we had to do inference with respect to the latent variable by optimization
+
+1:02:54.880,1:02:56.319
+and that turned out to be
+
+1:02:56.319,1:03:02.639
+To be expensive. So we talked about last week was the idea of using an encoder that we trained to predict the optimal value directly
+
+1:03:03.440,1:03:05.440
+Okay, and we're going to do the same here
+
+1:03:05.760,1:03:08.639
+That resulted in the idea as part of the sparse encoder. We're going to do the same here
+
+1:03:09.039,1:03:11.919
+I'm going to train a network to take the state
+
+1:03:13.119,1:03:15.119
+and directly
+
+1:03:15.339,1:03:21.459
+Predict what the optimal value of the action is and this network. Of course, we're going to apply every time step
+
+1:03:30.799,1:03:33.279
+And this is going to be called a policy network
+
+1:03:37.039,1:03:39.039
+Okay, so the policy network takes the state
+
+1:03:40.240,1:03:42.240
+and produces a guess
+
+1:03:42.559,1:03:44.559
+about the best action
+
+1:03:44.880,1:03:46.400
+to take at
+
+1:03:46.400,1:03:50.000
+At this time so as to minimize the overall cost, okay
+
+1:03:51.039,1:03:53.039
+And this is going to be a trainable neural net
+
+1:03:53.520,1:03:59.539
+Or whatever model parametrized model that we want. the way we're going to train this model is basically just back back propagation
+
+1:03:59.760,1:04:01.760
+okay, so we're going to
+
+1:04:02.160,1:04:06.000
+Uh using our perception module this is this is the this is the world here
+
+1:04:07.039,1:04:08.319
+and
+
+1:04:08.319,1:04:10.079
+We're looking at the world with a camera
+
+1:04:10.079,1:04:13.919
+And there's a perception module that gives us a guess as to what the state of the world is
+
+1:04:14.880,1:04:16.880
+Okay, this is perception
+
+1:04:19.599,1:04:22.578
+And this is a forward model applied multiple time steps
+
+1:04:27.200,1:04:29.200
+And this is our cost
+
+1:04:30.240,1:04:32.240
+Okay, so what we can do
+
+1:04:33.359,1:04:34.960
+is
+
+1:04:34.960,1:04:36.960
+run the system
+
+1:04:37.760,1:04:39.760
+And to run the system we first
+
+1:04:42.640,1:04:44.640
+Run through the perception
+
+1:04:44.799,1:04:46.400
+We compute
+
+1:04:46.400,1:04:47.200
+an
+
+1:04:47.200,1:04:51.439
+Action, we run this action through the forward model. This forward model gives us here is the next state
+
+1:04:51.440,1:04:53.440
+We're going to be in compute the cost
+
+1:04:53.760,1:04:55.359
+And then keep going
+
+1:04:55.359,1:04:57.359
+Okay, keep doing this
+
+1:04:57.359,1:05:02.719
+Just forward prop through this entire system, which is really kind of an unrolled recurrent net if you want
+
+1:05:04.000,1:05:10.479
+And once you're done you back propagate gradient gradients from the all the terms in the cost function
+
+1:05:11.839,1:05:16.159
+all the way through the network all the way through the parameters of
+
+1:05:17.599,1:05:19.599
+That policy network
+
+1:05:20.799,1:05:22.799
+Okay, so basically you compute
+
+1:05:23.359,1:05:24.240
+uh
+
+1:05:24.240,1:05:28.000
+D of big c so big c remember is the sum of all the c's
+
+1:05:28.880,1:05:30.640
+a long time
+
+1:05:30.640,1:05:32.640
+with respect to d w
+
+1:05:33.119,1:05:36.798
+okay, and that's just going to be the sum over time of
+
+1:05:38.640,1:05:41.619
+The big c over dw
+
+1:05:44.799,1:05:46.799
+Sorry, yeah big c over d
+
+1:05:48.000,1:05:49.339
+a
+
+1:05:49.339,1:05:50.640
+t
+
+1:05:50.640,1:05:52.640
+d a t over d w
+
+1:05:53.760,1:05:57.359
+Okay. I've just applied chain rule right, but I don't need to right if I just you know
+
+1:05:58.000,1:06:01.280
+Define this function in pytorch and just do backprop. It'll just do the right thing
+
+1:06:02.160,1:06:03.440
+um, so
+
+1:06:03.440,1:06:08.159
+I can compute the gradient of the overall cost with respect to the parameters of that policy network
+
+1:06:09.039,1:06:11.359
+And so if I train this over sufficiently many
+
+1:06:12.160,1:06:13.039
+uh
+
+1:06:13.039,1:06:14.799
+Samples if my forward model is correct
+
+1:06:14.799,1:06:19.839
+if my cost function does what I want then my policy network is going to learn a good policy that
+
+1:06:20.559,1:06:24.419
+Just looking at the state will minimize the expected cost over trajectory
+
+1:06:25.200,1:06:26.240
+Okay
+
+1:06:26.240,1:06:30.159
+The average cost over a trajectory. There's no reinforcement learning here. This is all
+
+1:06:31.200,1:06:33.200
+backprop, okay
+
+1:06:33.520,1:06:38.079
+Now we can talk about the difference with reinforcement learning the main difference with reinforcement learning here
+
+1:06:39.359,1:06:44.338
+Is uh is is twofold. The first one is in reinforcement learning
+
+1:06:46.880,1:06:50.960
+In most reinforcement training scenarios at least the
+
+1:06:53.520,1:06:57.780
+The c function is a black box. Well, it's a black box not a red box
+
+1:07:07.119,1:07:13.619
+Okay, that's the first difference the second difference is that this is not a forward model of the world this is the real world
+
+1:07:23.039,1:07:29.999
+And your measure of the state of the world is imperfect so inside of this policy network you might have a perception network here
+
+1:07:31.920,1:07:37.280
+That estimates the state of the world so you have no control over the real world
+
+1:07:38.640,1:07:40.640
+And your cost function is not
+
+1:07:41.339,1:07:45.359
+Known you can you can just get the output of the cost function by just trying something, right?
+
+1:07:45.520,1:07:47.759
+You take an action you see the effect on the world
+
+1:07:48.559,1:07:50.400
+and that gives you
+
+1:07:50.400,1:07:51.520
+uh
+
+1:07:51.520,1:07:54.639
+What reinforcement running people call a reward but it's just a negative cost
+
+1:07:55.280,1:07:57.839
+Okay is the value of negative value of your cost
+
+1:07:59.520,1:08:03.359
+But the cost is not differentiable you don't know the function of the cost you have to go through the world
+
+1:08:03.920,1:08:05.920
+To figure out the value of the cost
+
+1:08:06.799,1:08:08.799
+Okay
+
+1:08:09.200,1:08:14.500
+Um, and that's the that's that's the main issue with reinforcement running which is that the cost function is not differentiable
+
+1:08:16.799,1:08:18.080
+Uh, it's it's unknown
+
+1:08:18.080,1:08:25.039
+The only way to estimate it is by trying something and then observing the value which is what the reward is really it's a negative
+
+1:08:25.759,1:08:28.959
+The negative of the reward is basically your your cost. Okay?
+
+1:08:30.640,1:08:33.619
+So in that situation since you cannot evaluate gradients
+
+1:08:35.359,1:08:37.599
+To minimize your cost you have to try multiple things
+
+1:08:37.679,1:08:42.639
+You have to try an action see the result and then try another action see if the result is better
+
+1:08:43.199,1:08:45.359
+And then try another action see if the result is better
+
+1:08:46.080,1:08:48.080
+And if your cost function is very flat
+
+1:08:48.560,1:08:53.919
+You have to try many many things before you get a non-zero reward or you know, a non-high cost
+
+1:08:55.359,1:08:59.838
+And so that's that's where the the complexity goes. There is the additional problem of
+
+1:09:00.540,1:09:02.159
+exploration, so
+
+1:09:02.159,1:09:03.520
+um
+
+1:09:03.520,1:09:08.339
+You know you because you don't know the the form of the of the cost and because it's non-differentiable
+
+1:09:09.279,1:09:10.159
+uh
+
+1:09:10.159,1:09:13.599
+You might need to kind of try many actions in kind of a smart way to figure out
+
+1:09:13.679,1:09:18.819
+In which part of the space to go to be able to sort of figure out how can I improve my uh my performance?
+
+1:09:19.679,1:09:21.679
+Okay, so that's the the main issue
+
+1:09:22.000,1:09:23.920
+uh of uh
+
+1:09:23.920,1:09:30.879
+Uh exploration and then there is the issue of uh, exploration versus exploitation. So the fact that um,
+
+1:09:31.679,1:09:36.799
+When you're on a situation, you don't want to take completely random actions because they're likely to not result in anything interesting
+
+1:09:36.960,1:09:40.719
+So you want to take actions that are kind of close to what you think might work?
+
+1:09:41.440,1:09:43.440
+uh and sort of you know
+
+1:09:43.580,1:09:45.580
+occasionally kind of try something else
+
+1:09:46.000,1:09:48.399
+While you're learning and learn your policy as you go
+
+1:09:49.279,1:09:52.079
+What i'm describing what I was describing just before
+
+1:09:52.960,1:09:57.600
+Is a situation where you can do all of this in your head because you have a model of the world
+
+1:09:59.040,1:10:04.239
+And you can optimize your sequence of action very efficiently because you have a differentiable cost function
+
+1:10:05.040,1:10:09.679
+Your cost function is computed by your your own brain if you want inside of your agent
+
+1:10:10.640,1:10:15.839
+You can tell if you grab the pen you can tell the distance between your hand and the pen
+
+1:10:16.159,1:10:22.399
+So you can compute your own cost function and it is kind of in your internal world model is differentiable in the real world
+
+1:10:22.480,1:10:23.679
+It's not
+
+1:10:23.679,1:10:25.679
+In the real world, you don't know the derivative
+
+1:10:26.239,1:10:31.119
+of the distance of your hand to the pen unless you have some model of that in your head, but
+
+1:10:31.679,1:10:37.439
+By default you don't but because everything is in your head, everything is differentiable. Everything is implemented by neural net and everything
+
+1:10:37.600,1:10:39.600
+You can back properly gradient to everything
+
+1:10:40.080,1:10:45.919
+So that's the big advantage of this kind of approach versus reinforcement planning. Okay, make everything differentiable
+
+1:10:46.560,1:10:51.620
+So there's two problems with the world. So there's one big advantage in this kind of this kind of scenario
+
+1:10:52.320,1:10:53.280
+uh
+
+1:10:53.280,1:10:57.199
+which is you can run this faster than real time because your forward model inside of your
+
+1:10:57.840,1:11:00.640
+Agent can run as fast as you want. You don't need to
+
+1:11:01.280,1:11:06.719
+Run through the world. Okay, that's one advantage. Second advantage is the actions you're taking
+
+1:11:07.360,1:11:09.199
+Will not kill you
+
+1:11:09.199,1:11:10.159
+because
+
+1:11:10.159,1:11:11.440
+You can predict
+
+1:11:11.440,1:11:15.520
+Uh, using your forward model, you know, maybe you'll predict that the action will kill you
+
+1:11:15.600,1:11:17.600
+But you're not going to take it in the real world. So
+
+1:11:17.760,1:11:19.280
+It won't kill you
+
+1:11:19.280,1:11:21.280
+If you have an accurate forward model
+
+1:11:23.360,1:11:28.400
+Third advantage because everything takes place in your head. Everything is internet. Everything is differentiable
+
+1:11:28.640,1:11:31.679
+you can use all kinds of efficient, uh learning or
+
+1:11:33.760,1:11:37.120
+Inference algorithms to figure out a good course of actions
+
+1:11:38.239,1:11:39.360
+Okay
+
+1:11:39.360,1:11:40.880
+so
+
+1:11:40.880,1:11:43.520
+That's the difference with with reinforcement training in refreshment running
+
+1:11:44.800,1:11:46.640
+You're telling yourself
+
+1:11:46.640,1:11:48.640
+I have to go through the real world
+
+1:11:48.800,1:11:50.320
+uh
+
+1:11:50.320,1:11:54.640
+I don't have a model of the real world. I don't know how to compute the cost function in a differentiable way
+
+1:11:55.280,1:11:57.600
+That said a lot of reinforcement learning methods
+
+1:11:58.320,1:12:01.600
+Actually work by training a model of the cost function
+
+1:12:02.560,1:12:04.640
+Okay, so actor critic methods
+
+1:12:05.360,1:12:06.560
+basically
+
+1:12:06.560,1:12:08.480
+the role of the critic
+
+1:12:08.480,1:12:13.439
+uh is to learn to evaluate to kind of predict the value of the
+
+1:12:13.760,1:12:16.719
+Overall objective function the expected value of the objective function
+
+1:12:17.520,1:12:21.839
+And because it's a it's a neural net that you're going to train. You can back backpropagate gradient to it
+
+1:12:21.840,1:12:25.520
+So you're basically learning an approximation of the cost function of the real world
+
+1:12:26.480,1:12:30.159
+Of the real world using using a neural net. That's that's the role of a critic
+
+1:12:32.000,1:12:37.359
+Okay, why is it so good to have models when you're learning a
+
+1:12:39.840,1:12:42.319
+Skill like learning to drive for example
+
+1:12:44.320,1:12:45.920
+It's basically what
+
+1:12:45.920,1:12:48.719
+Allows you to learn quickly and to learn without killing yourself
+
+1:12:49.360,1:12:53.759
+So if you don't have a good model of the world, you don't know about gravity. You don't know about the dynamics of objects
+
+1:12:54.239,1:12:56.319
+uh, you don't know anything and
+
+1:12:57.040,1:13:02.159
+You put an agent at the at the wheel of a car. The agent has no idea what the physics of a car is
+
+1:13:02.880,1:13:04.880
+Okay, and you put the car next to a cliff?
+
+1:13:05.360,1:13:09.199
+The car is driving at you know, 30 miles an hour next to next to a cliff
+
+1:13:10.719,1:13:15.359
+The agent doesn't have a model of the world has no idea that by turning the wheel to the right
+
+1:13:15.840,1:13:19.520
+The car will run off the cliff and will fall into the into the ravine
+
+1:13:20.960,1:13:23.040
+It has to actually try it to figure it out
+
+1:13:23.679,1:13:26.639
+It has to fall into the ravine to figure out that this is a bad idea
+
+1:13:27.280,1:13:28.159
+Okay
+
+1:13:28.159,1:13:30.719
+And maybe just from one sample. It's not going to be able to learn it
+
+1:13:30.719,1:13:33.839
+So it's going to have to run into the ravine like thousands of times before it figures out
+
+1:13:34.640,1:13:39.919
+the model of the world that first turning the wheel to the right makes the car go to the right and second that when the
+
+1:13:40.320,1:13:43.199
+Car goes above a ravine it falls into a ravine and destroys itself
+
+1:13:44.400,1:13:48.319
+Okay, if you have a model of the world that understands about gravity and things like this
+
+1:13:48.719,1:13:52.158
+Then you know that turning the wheel to the right is going to make the car fall into the ravine
+
+1:13:52.320,1:13:54.320
+And you don't do it because you know, it's going to kill you
+
+1:13:54.480,1:14:00.159
+okay, so it allows humans and animals to learn quickly much much quicker than any uh
+
+1:14:00.880,1:14:08.400
+Model-free reinforcement learning methods that has ever been devised is is the fact that we have very very good world models in our head
+
+1:14:10.080,1:14:12.080
+Okay
+
+1:14:13.340,1:14:15.340
+Now what does that tell us? Um
+
+1:14:16.560,1:14:19.919
+Okay. So here is the problem with with the world. The world is not deterministic
+
+1:14:20.800,1:14:22.800
+Or if it is deterministic
+
+1:14:23.679,1:14:25.600
+It's so complex that
+
+1:14:25.600,1:14:29.519
+It equally well could be non-deterministic. It doesn't make any difference for us
+
+1:14:31.280,1:14:35.120
+There's two problems with predicting the next state of the world the first problem is
+
+1:14:35.840,1:14:37.840
+That the world is not entirely predictable
+
+1:14:38.640,1:14:41.699
+And it could be not entirely predictable for two reasons. Those are called
+
+1:14:42.380,1:14:46.980
+aleatoric uncertainty and epistemic uncertainty. aleatoric uncertainty
+
+1:14:47.679,1:14:49.679
+Is due to the fact that the world is intrinsically
+
+1:14:50.480,1:14:52.000
+unpredictable
+
+1:14:52.000,1:14:57.040
+Or the fact that we don't have full information about the state of the world, so we cannot predict exactly what's going to happen next
+
+1:14:57.679,1:14:58.560
+so
+
+1:14:58.560,1:15:02.640
+You're looking at me right now. You've a pretty good model of the immediate environment of of me
+
+1:15:03.199,1:15:08.799
+okay, but you cannot exactly predict in which way i'm going to move my head next because you don't have an accurate model of what's
+
+1:15:08.800,1:15:10.320
+inside my skull
+
+1:15:10.320,1:15:12.320
+Okay your perceptual system
+
+1:15:12.400,1:15:14.400
+does not give you a full model of
+
+1:15:14.880,1:15:17.219
+how my brain functions uh, unfortunately
+
+1:15:20.000,1:15:21.440
+So
+
+1:15:21.440,1:15:23.280
+So you cannot exactly predict what i'm, you know?
+
+1:15:23.280,1:15:26.640
+What i'm going to do next what i'm going to say i'm going to move my head et cetera
+
+1:15:28.880,1:15:30.880
+So, that's aleatoric
+
+1:15:32.300,1:15:36.960
+uncertainty, there is also epistemic uncertainty epistemic uncertainty is the fact that you can't
+
+1:15:37.679,1:15:39.679
+completely predict the next
+
+1:15:39.679,1:15:41.520
+uh state of the world
+
+1:15:41.520,1:15:44.399
+Because the amount of training data you've had is not was not enough
+
+1:15:44.560,1:15:47.120
+Your model hasn't been trained enough to really kind of figure it out
+
+1:15:47.679,1:15:49.679
+Okay, that's kind of a different
+
+1:15:49.920,1:15:51.340
+uh type of
+
+1:15:51.340,1:15:52.880
+uncertainty
+
+1:15:52.880,1:15:56.880
+So the big question now is though. How do we train models of the world under uncertainty. I give you
+
+1:15:57.679,1:15:59.280
+An s(t)
+
+1:15:59.280,1:16:01.280
+Can you predict s(t+1)?
+
+1:16:01.920,1:16:06.799
+And it's the same problem we encountered before we start supervising. I give you an x. Can you predict y?
+
+1:16:07.280,1:16:10.880
+But the problem is that there are now multiple y's that are compatible with x the multiple
+
+1:16:10.960,1:16:14.719
+S(t+1)s are compatible with s even for a given action
+
+1:16:19.340,1:16:24.640
+So, what does that mean that means that our model here our forward model
+
+1:16:28.880,1:16:35.839
+May take the state of the world and an action, but it will also have to take
+
+1:16:38.880,1:16:44.400
+A latent variable which we don't know the value of to predict the next state
+
+1:16:47.340,1:16:51.199
+Okay, and this looks very much like what we talked about earlier where we had
+
+1:16:51.840,1:16:54.960
+I'm going to draw this in a different topology, but it's the same idea
+
+1:16:56.800,1:16:58.800
+So we had x
+
+1:16:59.760,1:17:01.760
+And it was going through
+
+1:17:02.460,1:17:04.460
+a predictor
+
+1:17:05.199,1:17:08.239
+Computing h and then that was going through
+
+1:17:12.400,1:17:16.719
+A decoder that will take into account a latent variable to predict
+
+1:17:20.140,1:17:22.140
+Y-bar and then we observe y
+
+1:17:24.320,1:17:26.560
+Okay, this is a prediction for s and maybe
+
+1:17:27.760,1:17:29.040
+at some time
+
+1:17:29.040,1:17:30.800
+We might be able to
+
+1:17:30.800,1:17:34.560
+Actually take the action and observe the next state of the world while we are training our model
+
+1:17:34.719,1:17:36.959
+We'll actually be observing the next state of the world
+
+1:17:38.239,1:17:40.239
+T plus one
+
+1:17:42.640,1:17:46.559
+Okay, so to train a forward model here we we take the state st
+
+1:17:47.360,1:17:49.360
+We take an action if we have an action
+
+1:17:49.760,1:17:54.159
+Uh, we have a latent variable and our prediction goes into a cost function
+
+1:17:55.760,1:17:58.800
+That diagram is exactly identical to the one on the right
+
+1:18:03.840,1:18:08.799
+Right, it's the same it's exactly the same diagram except I split the
+
+1:18:10.320,1:18:12.320
+Fm into two modules
+
+1:18:12.880,1:18:15.040
+Okay, i've given it a particular
+
+1:18:15.820,1:18:17.920
+Architecture. In fact I could make this
+
+1:18:18.800,1:18:20.800
+uh more explicit
+
+1:18:22.480,1:18:27.839
+I think you have the super thick marker selected. I do. Yes, you don't like that, huh?
+
+1:18:29.920,1:18:31.920
+So this would be my forward model
+
+1:18:33.280,1:18:39.780
+Okay, so that's what's inside this box uh inside of the forward model box here is this
+
+1:18:42.560,1:18:44.560
+And you know I renamed uh,
+
+1:18:47.600,1:18:52.079
+S(t) Is now called x and s t plus one is not called y bar. But I mean it's not for y
+
+1:18:52.880,1:19:00.020
+But it's the same thing otherwise, right? So it's the same scenario that we talked about before in latent variable energy-based models, essentially
+
+1:19:00.560,1:19:05.120
+But now we're going to use this to train, uh a forward model to predict what's going to happen in the world
+
+1:19:07.360,1:19:09.360
+So
+
+1:19:10.719,1:19:12.719
+Um
+
+1:19:13.199,1:19:17.839
+We may have to play the same tricks that that we played uh that we talked about last week
+
+1:19:19.360,1:19:21.360
+Which is that, um
+
+1:19:23.280,1:19:27.759
+Last week what we explained was that we can take
+
+1:19:30.400,1:19:33.299
+Okay, the way I drew this last week was slightly different
+
+1:19:43.199,1:19:44.320
+Um
+
+1:19:44.320,1:19:46.320
+what explained last week is that we can
+
+1:19:47.199,1:19:51.279
+if we have while we are training our forward model, we have a pair x and y
+
+1:19:53.199,1:19:59.839
+And the way we find the value of z is by minimizing the energy with respect to z right so we basically find
+
+1:20:00.800,1:20:02.480
+z star
+
+1:20:02.480,1:20:04.480
+Which is the argmin
+
+1:20:05.679,1:20:13.199
+Of c of y and y-bar, y-bar being the output of our of our predictor of our system
+
+1:20:15.360,1:20:17.199
+Okay
+
+1:20:17.199,1:20:24.158
+And then we do one step of gradient descent, so we change the parameters of our entire system according to the gradient of
+
+1:20:24.880,1:20:25.840
+uh
+
+1:20:25.840,1:20:29.279
+that cost but for this to work we had to regularize z
+
+1:20:29.920,1:20:31.920
+limit, its information content
+
+1:20:34.320,1:20:36.320
+And we have to do the same here
+
+1:20:37.600,1:20:44.079
+Why is that? well here we're we're trying to solve a prediction problem but
+
+1:20:45.340,1:20:48.080
+Imagine and we talked about this a couple weeks ago
+
+1:20:49.280,1:20:54.259
+I give you an x and a y and you find the z that minimizes the overall energy and the z is not regularized
+
+1:20:54.880,1:20:58.400
+if z is the same dimension as y the there's probably going to be
+
+1:20:59.120,1:21:02.479
+A z for any y that makes the cost function zero
+
+1:21:03.679,1:21:05.679
+right if there's enough capacity in z
+
+1:21:06.400,1:21:10.799
+There's always going to be a value of z that makes the cost function zero
+
+1:21:12.719,1:21:15.839
+And that's bad because that means my energy function is going to be completely flat
+
+1:21:16.480,1:21:21.279
+It's going to be zero everywhere and I need it to be small on the training samples and high
+
+1:21:21.820,1:21:24.500
+outside of the region of high data density
+
+1:21:25.920,1:21:32.080
+and what we saw in the last couple weeks is that by regularizing z limiting its capacity either by
+
+1:21:33.199,1:21:36.079
+Making it sparse for example or making it discrete or by
+
+1:21:39.040,1:21:45.120
+Making it noisy then we can limit this capacity. Why do we need zt If you already have at
+
+1:21:46.960,1:21:49.040
+Well, so at is the action you take right
+
+1:21:50.400,1:21:52.320
+um
+
+1:21:52.320,1:21:54.000
+Okay
+
+1:21:54.000,1:21:56.000
+i'm going to tell you i'm going to
+
+1:21:56.800,1:21:58.800
+I'm going to let this pen go
+
+1:21:58.960,1:22:01.120
+Okay, but you don't know which direction it's going to
+
+1:22:02.159,1:22:04.719
+It's going to go right so let's say it goes this way
+
+1:22:05.440,1:22:11.520
+But I have to predict in advance which way it's going to go. It's like okay, here's a better situation you are uh,
+
+1:22:13.840,1:22:15.920
+Uh, you're a goalie playing soccer
+
+1:22:17.040,1:22:18.080
+Okay
+
+1:22:18.080,1:22:20.879
+And it's a penalty kick. So you're in front of the
+
+1:22:22.000,1:22:23.340
+you know the kicker in front of
+
+1:22:23.340,1:22:27.199
+You and the guy is going to kick the ball and you're going to have to jump one way or the other
+
+1:22:27.760,1:22:29.840
+And you have to make a choice. Am I jumping left or right?
+
+1:22:30.880,1:22:35.600
+And you have to make that decision based on what you observe from the person but you don't know exactly
+
+1:22:36.000,1:22:41.040
+What the ball is going to do a is which direction you do you jump in? I mean, it's basically how you jump
+
+1:22:42.400,1:22:44.000
+z is
+
+1:22:44.000,1:22:48.319
+What you don't know about the player in front of you doing. Okay, you don't know the state of the world
+
+1:22:48.320,1:22:50.000
+You don't know the state of the brain of this guy
+
+1:22:50.000,1:22:52.959
+And so you don't know if he's going to shoot left or right or up or down?
+
+1:22:54.800,1:22:56.639
+Okay
+
+1:22:56.639,1:22:59.679
+That's the difference right, z is what you cannot
+
+1:23:00.960,1:23:06.960
+Know about the world that is necessary to make the prediction of the next state a is the action you take
+
+1:23:08.880,1:23:13.920
+Which in this case has very little influence on the immediate state of the world. Yeah, it seems it seems to be clear now
+
+1:23:15.120,1:23:16.400
+right, so
+
+1:23:16.400,1:23:21.040
+You need to regularize z and then one of the tricks we uh, we described
+
+1:23:22.080,1:23:23.920
+um
+
+1:23:23.920,1:23:29.199
+So so the one of the things we described to regularize z was was passivity another one was adding noise
+
+1:23:30.960,1:23:32.960
+Um
+
+1:23:35.440,1:23:38.399
+But the other trick we described is this idea of having an encoder right so
+
+1:23:39.840,1:23:41.840
+You have x or st
+
+1:23:42.880,1:23:44.880
+Run through
+
+1:23:44.880,1:23:46.880
+The predictor the predictor goes into
+
+1:23:48.000,1:23:49.920
+the decoder
+
+1:23:49.920,1:23:51.840
+which makes a prediction about
+
+1:23:51.840,1:23:53.840
+Y. Let's call it y bar
+
+1:23:55.040,1:23:57.040
+And you compare oops, sorry
+
+1:24:00.960,1:24:04.159
+You compare y bar to y
+
+1:24:07.360,1:24:12.239
+And here you have z and what we talked about is the idea of using an encoder here
+
+1:24:15.040,1:24:17.040
+To predict the optimal value of z
+
+1:24:18.320,1:24:20.400
+And then basically having a cost function that
+
+1:24:22.080,1:24:28.559
+Is determining the energy that measures the discrepancy between the value of z you actually use and the value of z predicted by the encoder
+
+1:24:29.440,1:24:31.440
+And perhaps this is regularized
+
+1:24:32.400,1:24:34.400
+in some way
+
+1:24:37.040,1:24:39.600
+And the predictor also has to influence the encoder
+
+1:24:41.920,1:24:45.600
+So it's pretty clear that you need, uh an information bottleneck
+
+1:24:46.480,1:24:47.679
+uh
+
+1:24:47.679,1:24:49.040
+between the encoder the decoder
+
+1:24:49.040,1:24:51.519
+Otherwise the system will cheat it will completely ignore x
+
+1:24:52.000,1:24:56.239
+You will be able to predict y exactly by just cheating by looking at the value of y
+
+1:24:56.480,1:25:02.399
+Running it through the encoder and then running it through the decoder and then predicting y right? That's just a very simple encoder
+
+1:25:02.400,1:25:08.719
+So unless you restrict the capacity of z the system will just cheat and not actually train itself to predict
+
+1:25:09.199,1:25:11.299
+You have to push down on the information content
+
+1:25:12.560,1:25:19.600
+Of z so as to force the system to use uh the information from x
+
+1:25:20.880,1:25:23.460
+Okay to make the the best prediction
+
+1:25:27.040,1:25:32.959
+Okay, now we can use that trick to to uh, uh to train our forward model
+
+1:25:34.800,1:25:37.759
+Because again a forward model is basically just an instance of this
+
+1:25:39.340,1:25:43.440
+And and this is uh the project that uh,
+
+1:25:44.800,1:25:46.800
+uh for autonomous driving that uh,
+
+1:25:47.440,1:25:53.540
+my former student Mikael Henaff, uh worked on and uh Alfredo has worked on this and is still working on this project
+
+1:25:54.880,1:25:59.120
+And so here you're trying to train a car to drive itself
+
+1:26:01.600,1:26:03.360
+And
+
+1:26:03.360,1:26:06.480
+What's difficult to predict what is what the car around you are going to do?
+
+1:26:07.520,1:26:12.719
+So you place a camera above a highway and you watch the the cars kind of go by
+
+1:26:14.239,1:26:16.239
+And you can track every car
+
+1:26:16.960,1:26:20.239
+And then extract the immediate neighborhood of the car, basically
+
+1:26:20.480,1:26:24.560
+a little rectangle around every car that indicates where the other cars are relative to the
+
+1:26:25.120,1:26:26.639
+to your car
+
+1:26:26.639,1:26:30.879
+And this is what's represented at the bottom. Um, so at the bottom you
+
+1:26:31.600,1:26:34.079
+You have a little rectangle that's centered around a given car
+
+1:26:34.719,1:26:36.719
+and then all the cars around are
+
+1:26:37.040,1:26:38.239
+the uh
+
+1:26:38.239,1:26:41.119
+You know a little rectangular centered on that car where the car is
+
+1:26:41.920,1:26:43.020
+in a
+
+1:26:43.020,1:26:47.040
+Standardized location in the middle of that rectangle you do this for every car
+
+1:26:47.440,1:26:51.440
+What it gives you is for every car a sequence of what the cars around it are going to do
+
+1:26:52.480,1:26:55.279
+And we can use this to train a forward model
+
+1:26:56.000,1:26:58.000
+That will predict what the cars around us are going to do
+
+1:26:59.600,1:27:06.799
+The question is if this forward model is predicting all possible futures, uh, irrespective of the action taken, yeah
+
+1:27:08.480,1:27:12.879
+Where we predict a set of futures so given one action and
+
+1:27:15.520,1:27:21.199
+So given one initial state one action and one particular value of the latent variable will make a single prediction
+
+1:27:21.760,1:27:26.239
+And then you can vary the latent variable and you will make multiple predictions. You can change the action, of course
+
+1:27:27.199,1:27:28.080
+right
+
+1:27:28.080,1:27:29.600
+so
+
+1:27:29.600,1:27:36.399
+I've redrawn the little diagram I drew previously here here. The the state basically is a sequence of three frames from this video
+
+1:27:37.280,1:27:38.320
+um
+
+1:27:38.320,1:27:40.320
+There's no abstract state here. It's just the
+
+1:27:40.880,1:27:41.920
+the
+
+1:27:41.920,1:27:46.000
+Picture itself. The blue car is is our car and the green cars are the other cards
+
+1:27:46.320,1:27:49.920
+so you take kind of three frames from the past run this through this, uh,
+
+1:27:50.880,1:27:54.960
+Neural net which attempts to predict the next uh the next frame
+
+1:27:55.600,1:27:57.600
+okay using a
+
+1:27:58.400,1:28:03.440
+Basically a big convolutional net as a predictor and a big convolutional net as a decoder
+
+1:28:04.159,1:28:07.119
+But there's a latent variable here. There's also an action here, which is not drawn
+
+1:28:08.159,1:28:10.159
+That gets into this
+
+1:28:11.840,1:28:13.840
+And the system also has an encoder
+
+1:28:15.360,1:28:17.360
+So it looks more like this
+
+1:28:18.400,1:28:20.799
+There's a and again the action here is not represented but
+
+1:28:21.679,1:28:23.520
+Imagine there is one
+
+1:28:23.520,1:28:28.639
+So x is the the past frames it goes through a predictor that predicts a representation of the input
+
+1:28:29.360,1:28:31.199
+And then that representation
+
+1:28:31.199,1:28:32.480
+goes into
+
+1:28:32.480,1:28:34.480
+a convolutional net that
+
+1:28:34.960,1:28:37.040
+the decoder that predicts it basically
+
+1:28:37.760,1:28:39.760
+Is combined additively
+
+1:28:39.760,1:28:42.719
+With a latent variable so it's added to a latent variable
+
+1:28:44.320,1:28:47.520
+Before going into a decoder that makes a prediction for the next state
+
+1:28:49.760,1:28:52.719
+And the latent variable itself is a latent variable, but
+
+1:28:53.920,1:28:56.159
+Is being predicted by by an encoder
+
+1:28:57.360,1:29:00.400
+which itself is also a convolutional net it takes the past and the
+
+1:29:01.440,1:29:05.040
+And the future and tries to predict the ideal value of the latent variable
+
+1:29:05.600,1:29:06.000
+now, of course
+
+1:29:06.000,1:29:12.319
+You have to restrict the information content here. And this is done in this particular project using sort of a VAE like approach
+
+1:29:13.120,1:29:14.480
+where the
+
+1:29:14.480,1:29:16.639
+Um, I mean, it's basically a VAE
+
+1:29:17.280,1:29:19.280
+with a few a few tricks
+
+1:29:20.159,1:29:22.799
+So z is sampled from a distribution that is obtained
+
+1:29:23.920,1:29:30.159
+From the output of the encoder the output of the encoder outputs a prediction for z bar as well as prediction for variances
+
+1:29:30.560,1:29:34.080
+And z is sampled from the from that distribution so it's not optimized. It's sampled
+
+1:29:36.400,1:29:42.560
+But there's also a term that tries to kind of minimize the sum of the square of the zs over time, uh, which is the
+
+1:29:43.280,1:29:44.320
+standard
+
+1:29:44.320,1:29:46.320
+uh technique for vae
+
+1:29:46.320,1:29:48.320
+And that goes into the decoder
+
+1:29:48.639,1:29:54.879
+And so this is trained as a conditional autoencoder. Basically, there's another trick that's added to this, which is that
+
+1:29:55.520,1:30:01.279
+Half the time z is simply set to zero so half the time the system is told you're not allowed to use z
+
+1:30:01.840,1:30:05.299
+Just make your best guess as the prediction without a z
+
+1:30:06.560,1:30:11.759
+and that drives the system to sort of really kind of use the past in sort of a bigger way than if you just uh
+
+1:30:13.120,1:30:15.359
+Have a noisy z if you just use the standard
+
+1:30:16.000,1:30:21.120
+The vae type training the system basically ignores the the past it just cheats. It looks at the
+
+1:30:22.080,1:30:23.679
+The answer y
+
+1:30:23.679,1:30:27.359
+I will cover the rest in a greater detail in a lab in a future lab, uh
+
+1:30:27.440,1:30:30.399
+Perhaps you want to say something about the GANs?
+
+1:30:32.960,1:30:37.279
+Because I will be actually going over this the whole presentation as well you are
+
+1:30:37.840,1:30:39.840
+so GANs are a
+
+1:30:39.900,1:30:41.900
+particular form of contrastive learning
+
+1:30:42.639,1:30:46.079
+okay, so remember that uh when we talked about energy-based learning
+
+1:30:47.840,1:30:49.520
+we Have
+
+1:30:49.520,1:30:51.520
+data points
+
+1:30:55.600,1:31:01.299
+And our model which i'm going to
+
+1:31:04.000,1:31:06.000
+Draw like this
+
+1:31:10.239,1:31:17.599
+With a cost function it could have any kind of structure but i'm just going to draw it like this
+
+1:31:27.440,1:31:29.839
+So this would be sort of a reconstruction type
+
+1:31:31.600,1:31:38.719
+Model right. So imagine that the model here is an auto encoder or something like this, but you can imagine just about just about anything
+
+1:31:40.560,1:31:43.839
+A simplified version. I mean a more general version of this would be just
+
+1:31:44.639,1:31:46.560
+y goes into
+
+1:31:46.560,1:31:48.560
+A cost function and i'm not specifying
+
+1:31:48.960,1:31:50.960
+what the cost function looks like
+
+1:31:51.920,1:31:53.920
+Okay
+
+1:31:54.960,1:32:01.699
+So what the cost function computes is a in the space of y so, let's say y is two dimensional
+
+1:32:07.840,1:32:13.920
+Is an energy that we want to be low on the data and high outside the data
+
+1:32:16.400,1:32:22.000
+And here I deliberately drew a bad energy function, right so this energy function is bad because
+
+1:32:24.560,1:32:31.919
+It should be low around this region where we have data and it should be higher outside and right now it's it's pretty low
+
+1:32:32.719,1:32:34.719
+In in this region right here
+
+1:32:39.340,1:32:45.040
+So we talked about contrastive methods and contrastive methods consist in taking a sample
+
+1:32:46.239,1:32:48.239
+And pushing down on its energy
+
+1:32:48.800,1:32:50.800
+And then taking a contrastive sample
+
+1:32:52.960,1:32:54.960
+Which i'm going to draw in purple
+
+1:32:55.840,1:32:57.840
+so contrastive sample should be
+
+1:32:58.239,1:33:04.559
+A sample that our model already gives low energy to but should not give low energy to we're going to push that up. Okay
+
+1:33:05.760,1:33:07.840
+So push up on the energy of this guy
+
+1:33:09.679,1:33:15.839
+Push down on the energy of that guy and if you keep picking those samples and those contrastive samples well,
+
+1:33:18.639,1:33:23.439
+By minimizing some objective function that wants to make the energy of the blue point small and the energy of the
+
+1:33:24.239,1:33:26.239
+pink points high
+
+1:33:26.480,1:33:28.239
+then the system will
+
+1:33:28.239,1:33:29.840
+will learn
+
+1:33:29.840,1:33:31.120
+properly
+
+1:33:31.120,1:33:35.699
+So we've seen several ways of generating contrasting samples the idea of denoising autoencoder
+
+1:33:36.159,1:33:39.599
+Which is to take a sample and basically corrupt it in some way
+
+1:33:40.320,1:33:42.320
+we've seen the idea of
+
+1:33:43.679,1:33:47.359
+Contrasting divergence which takes a sample and then you go down the energy
+
+1:33:48.880,1:33:51.759
+With some noise and that gives you a contracting sample to push up
+
+1:33:53.199,1:33:54.639
+um
+
+1:33:54.639,1:33:56.480
+And you know we've seen
+
+1:33:56.480,1:34:00.959
+A number of other methods that are based on prior knowledge about similarity between between samples
+
+1:34:01.679,1:34:03.199
+But here is here is another idea
+
+1:34:03.199,1:34:10.158
+The other idea is to use is to train a neural net to produce those contrastive samples intelligently, and that's the basic idea of GANs
+
+1:34:10.719,1:34:12.719
+at least in a form of GANs that
+
+1:34:13.120,1:34:19.599
+Would be called energy-based gans. You can do several formulations against in fact, there's an entire laundry list of various types of gans
+
+1:34:21.040,1:34:23.279
+but the basic idea of gans is is that you
+
+1:34:23.840,1:34:29.440
+You train your energy model. So the energy model in the context of gann is called a discriminator or sometimes a critic
+
+1:34:30.000,1:34:32.799
+But it's basically just very similar to an energy model
+
+1:34:33.840,1:34:36.480
+And you train it to take low energy on the data points
+
+1:34:37.120,1:34:39.120
+and then you
+
+1:34:39.120,1:34:44.479
+Train another net neural net to generate contrastive data points and you move their energy up
+
+1:34:45.600,1:34:46.719
+Okay
+
+1:34:46.719,1:34:48.639
+so the overall
+
+1:34:48.639,1:34:50.639
+Diagram is something like this
+
+1:34:53.199,1:34:54.239
+You have
+
+1:34:54.239,1:34:56.959
+a discriminator and the discriminator really should be
+
+1:34:57.920,1:35:00.399
+Not drawn this way. It could be a large neural net
+
+1:35:01.199,1:35:03.199
+But in the end oops, sorry
+
+1:35:07.280,1:35:09.280
+In the end it's just a cost function
+
+1:35:16.239,1:35:19.279
+Okay, so it takes it takes a variable y
+
+1:35:21.600,1:35:25.119
+And it tells you it's good or bad low energy if it's good high energy if it's bad
+
+1:35:27.679,1:35:29.679
+So in one phase
+
+1:35:29.920,1:35:34.560
+you collect a piece of data from the from your data set and just give it to
+
+1:35:35.600,1:35:37.600
+your discriminator
+
+1:35:37.760,1:35:40.420
+Okay, so this is a real y coming from data
+
+1:35:45.360,1:35:47.040
+That's a training sample
+
+1:35:47.040,1:35:49.040
+and you say the output of
+
+1:35:49.840,1:35:51.119
+of that
+
+1:35:51.119,1:35:53.859
+Should go down. Okay, I should really write this as f
+
+1:35:56.880,1:36:00.000
+Because after all, it's just it's an energy function
+
+1:36:05.679,1:36:09.839
+Okay, so make f of y go down
+
+1:36:12.159,1:36:18.799
+Of course by changing the parameters right so you do w replace by w minus eta
+
+1:36:20.960,1:36:22.159
+Df
+
+1:36:22.159,1:36:24.959
+So f is a neural net? f is a neural net
+
+1:36:25.600,1:36:29.679
+Okay, some parametrized function, but probably a neural net probably a pretty complicated neural net
+
+1:36:32.159,1:36:34.159
+Okay, that's the first, uh
+
+1:36:34.159,1:36:35.280
+first thing
+
+1:36:35.280,1:36:37.840
+And that will make the energy of data points small, okay
+
+1:36:38.960,1:36:44.560
+Now there's a form of this that's conditional. So the form of this that's conditional you have an extra input here
+
+1:36:45.520,1:36:50.639
+Which is an observation, okay, but you can have this or not that's called conditional again. It doesn't
+
+1:36:51.340,1:36:53.340
+Matter. Okay second phase
+
+1:36:54.719,1:36:56.719
+Or for contrastive samples
+
+1:36:57.520,1:36:59.679
+uh, you have a latent variable z
+
+1:37:00.639,1:37:05.599
+That you sample from some distribution a distribution that's easy to sample from let's say a gaussian
+
+1:37:06.300,1:37:08.300
+multi-multivariate gaussian
+
+1:37:08.960,1:37:13.299
+Or uniform or something you run this through what's called a generator
+
+1:37:16.000,1:37:18.739
+So this is a neural net and that neural net produces
+
+1:37:22.000,1:37:26.080
+Something similar to y okay, it just produces an image. Let's say y bar images
+
+1:37:29.360,1:37:32.900
+And again, you run this through your discriminator
+
+1:37:36.960,1:37:38.960
+But now you want to make that
+
+1:37:40.080,1:37:42.080
+Large
+
+1:37:42.080,1:37:45.999
+Okay, so in fact what I told you before is a lie
+
+1:37:47.360,1:37:50.000
+Uh, you don't do this update like that
+
+1:37:54.560,1:37:57.679
+Okay, but here what you want is you want to make
+
+1:37:59.179,1:38:01.839
+Fw of this y bar high
+
+1:38:04.159,1:38:06.159
+Okay
+
+1:38:08.960,1:38:14.980
+And what you're going to do now is train the discriminator and the generator simultaneously
+
+1:38:16.480,1:38:20.399
+So you're going to first have to come up with a cost function a loss function
+
+1:38:22.159,1:38:28.579
+And this loss function is going to be you know sum um, you know a sum over samples
+
+1:38:30.800,1:38:33.920
+Of a per sample loss function that
+
+1:38:37.659,1:38:39.659
+Basically is a function of
+
+1:38:40.960,1:38:42.960
+f of y
+
+1:38:43.679,1:38:45.679
+And f of y bar
+
+1:38:46.560,1:38:50.159
+Where y bar of course is generated from the randomly sampled latent variable z
+
+1:38:52.320,1:39:00.080
+Now this cost function needs to be a decreasing function of f of y and an increasing function of f of y bar
+
+1:39:01.360,1:39:03.920
+Okay, you can use just about any cost function you want
+
+1:39:04.480,1:39:08.399
+As long as it makes for y decrease and it makes f of y bar increase
+
+1:39:09.040,1:39:11.040
+Or as long as it makes a difference
+
+1:39:12.480,1:39:16.159
+Decrease f of y minus f of y bar, a good example of this
+
+1:39:17.600,1:39:19.600
+Would be kind of a hinge loss for example
+
+1:39:20.159,1:39:21.679
+Okay
+
+1:39:21.679,1:39:24.399
+So something that says my loss function
+
+1:39:25.040,1:39:27.040
+is going to be
+
+1:39:28.880,1:39:30.880
+f of y
+
+1:39:31.520,1:39:33.520
+Plus
+
+1:39:33.760,1:39:35.760
+Some margin minus
+
+1:39:36.560,1:39:38.560
+f of y bar
+
+1:39:40.159,1:39:43.519
+Positive part, okay. So this is a this is a hinge
+
+1:39:46.800,1:39:48.800
+And it says
+
+1:39:48.880,1:39:51.040
+I want to make f of y bar smaller than
+
+1:39:53.340,1:39:57.040
+M. Um, other than that, I don't care
+
+1:39:58.880,1:40:01.699
+Uh bigger than m. I'm sorry, I drew this backwards
+
+1:40:08.960,1:40:14.239
+So overall as a function of f of y bar this function looks like this
+
+1:40:15.679,1:40:18.479
+okay, so it wants to make f of y bar larger than M
+
+1:40:21.340,1:40:27.279
+Okay. So that's an example the the actual cost function that most uh, the original formulation of gans used
+
+1:40:27.920,1:40:32.879
+basically plugs, uh each of those terms into a sigmoid and tries to make
+
+1:40:33.600,1:40:34.880
+the
+
+1:40:34.880,1:40:39.359
+you know the the sigmoid applied to f of y as close to one as possible and sigma applied to f uh
+
+1:40:39.920,1:40:45.040
+Y bar as close to zero as possible. It's you know, it's basically that nothing more than that. So it's
+
+1:40:45.600,1:40:47.600
+sigmoid of f of y
+
+1:40:49.440,1:40:51.919
+Plus one minus sigmoid of
+
+1:40:53.440,1:40:54.480
+Uh
+
+1:40:54.480,1:40:56.480
+f of y bar and
+
+1:40:56.800,1:40:58.800
+you you you take logs because
+
+1:40:59.440,1:41:01.440
+Um, I mean, this is not the loss function
+
+1:41:01.520,1:41:06.719
+This is kind of what goes before the loss function, so this is kind of like a cross entropy
+
+1:41:06.719,1:41:10.239
+but you have cross entropy that's positive for the
+
+1:41:11.280,1:41:13.280
+the positive phase and sort of the
+
+1:41:14.000,1:41:17.060
+The target is negative for the negative phase. Um
+
+1:41:20.880,1:41:24.159
+Yeah, I shouldn't write it this way this is wrong actually sorry about that
+
+1:41:27.280,1:41:34.659
+But you put it the logistic loss for each of those so it's technically
+
+1:41:37.520,1:41:40.239
+You know log of 1 plus exponential f of y
+
+1:41:41.520,1:41:44.020
+for the correct one and
+
+1:41:46.000,1:41:48.799
+Minus for that log f1 plus
+
+1:41:50.320,1:41:52.159
+e to the
+
+1:41:52.159,1:41:54.159
+f of y
+
+1:41:54.719,1:41:56.719
+Plus log
+
+1:41:58.000,1:42:01.040
+One plus e to the minus f of y bar
+
+1:42:06.480,1:42:11.540
+But you could imagine a large number of objective functions of this type
+
+1:42:14.880,1:42:16.880
+Okay
+
+1:42:17.440,1:42:20.580
+So this is the loss function you're going to use to train the discriminator
+
+1:42:22.080,1:42:25.379
+But the generator this is for the discriminator
+
+1:42:26.800,1:42:30.560
+But it's going to be a loss function for the generator and that's a different loss function
+
+1:42:31.600,1:42:34.719
+And you're going to optimize those two loss functions the same way
+
+1:42:35.440,1:42:38.159
+the one for the generator is is one that
+
+1:42:38.940,1:42:40.940
+basically
+
+1:42:41.199,1:42:48.479
+Wants to make the generator produce outputs that the discriminator thinks are good, but they're not
+
+1:42:50.080,1:42:54.179
+Okay, so basically the generator, um
+
+1:42:57.679,1:42:59.679
+Uh
+
+1:43:00.400,1:43:02.400
+Wants to
+
+1:43:02.400,1:43:04.400
+Adapt its its weight
+
+1:43:05.199,1:43:07.439
+So that the output that it produces y bar
+
+1:43:09.119,1:43:11.919
+Produces a low energy for f y
+
+1:43:13.360,1:43:15.119
+Okay
+
+1:43:15.119,1:43:16.000
+so
+
+1:43:16.000,1:43:17.199
+You sample
+
+1:43:17.199,1:43:19.279
+A random variable z you run it through the generator
+
+1:43:19.280,1:43:25.199
+It produces a y bar you run through the discriminator, the f of y you get some value and then you back propagate the value
+
+1:43:26.400,1:43:28.080
+through the generator
+
+1:43:28.080,1:43:30.080
+and adapt the weights to the generator so that
+
+1:43:31.920,1:43:38.560
+This energy goes down. Okay. So basically the generator is trying to find a white bar that has low energy as low as possible
+
+1:43:39.920,1:43:46.000
+Okay, and it trains itself to kind of produce wise to have low energy again if if we're talking about
+
+1:43:48.000,1:43:50.179
+Conditional GANs there's going to be
+
+1:43:52.480,1:43:57.679
+An x variable that's going to enter those two modules, but that makes no difference in the end
+
+1:44:01.040,1:44:04.580
+So Lg is maybe simply an increasing function
+
+1:44:06.719,1:44:08.400
+Of
+
+1:44:08.400,1:44:10.400
+f of y bar
+
+1:44:11.280,1:44:14.000
+I think we are kind of running out of time. We are
+
+1:44:16.000,1:44:18.000
+We have run out of time
+
+1:44:22.880,1:44:26.480
+So this would be uh, some objective function of
+
+1:44:28.239,1:44:30.159
+f of
+
+1:44:30.159,1:44:33.618
+g if g is the generator of z where z is sampled randomly
+
+1:44:36.159,1:44:41.599
+Okay, so you just do back prop to this and you change the parameters of g, let's call them u
+
+1:44:43.280,1:44:46.000
+So that this goes down now, this is called
+
+1:44:46.239,1:44:50.638
+This is called a game in a sense that you have two objective functions that you need to minimize simultaneously and they are
+
+1:44:50.780,1:44:52.780
+incompatible with each other
+
+1:44:52.880,1:44:55.679
+And so it's not a gradient descent problem. You have to find
+
+1:44:56.639,1:44:58.879
+What's called a nash equilibrium between those two functions?
+
+1:45:00.560,1:45:02.560
+And gradient descent will not do it
+
+1:45:03.280,1:45:04.320
+uh
+
+1:45:04.320,1:45:06.320
+By default, so that leads to
+
+1:45:07.179,1:45:10.959
+Instabilities and there is tons of papers on how to make GANs actually work
+
+1:45:11.360,1:45:15.839
+That's kind of a complicated part, but alfredo will tell you all about this, uh tomorrow
+
+1:45:16.159,1:45:21.359
+Maybe you also you want to mention the uh, the one with the sigmoid that creates some issues. Uh,
+
+1:45:21.679,1:45:24.899
+If we have like samples that are close to the true manifold
+
+1:45:25.520,1:45:26.400
+Yes
+
+1:45:26.400,1:45:28.400
+and then I think we can close the
+
+1:45:28.860,1:45:30.480
+Conclusion. Okay, so
+
+1:45:30.480,1:45:33.439
+Let me mention that so let's imagine that your data
+
+1:45:37.440,1:45:39.440
+So again, uh energy-based framework
+
+1:45:42.159,1:45:49.699
+Your data is around some manifold but it's a thin manifold so it's an infinitely thin distribution
+
+1:45:52.960,1:45:54.960
+Okay
+
+1:45:55.760,1:46:01.920
+In the original formulation of gan the the gan the discriminator would need to produce
+
+1:46:03.679,1:46:06.319
+Zero probability outside of this
+
+1:46:08.159,1:46:10.239
+Okay, so it needs to produce zero probability here
+
+1:46:11.600,1:46:13.600
+And it needs to produce
+
+1:46:14.000,1:46:17.139
+On the manifold in this part to produce infinite probability
+
+1:46:19.360,1:46:20.800
+In such a way that
+
+1:46:20.800,1:46:27.679
+The integral if this is really a density estimation in such a way that the integral of this density over the entire space is one
+
+1:46:28.719,1:46:30.239
+And this is of course
+
+1:46:30.239,1:46:32.239
+very hard
+
+1:46:32.480,1:46:35.619
+So gans basically abandoned the idea of actually learning a distribution
+
+1:46:35.920,1:46:40.960
+What they want to do is produce zero the original formulation produce zero outside the manifold of data
+
+1:46:41.760,1:46:43.199
+and produce
+
+1:46:43.199,1:46:44.480
+one here
+
+1:46:44.480,1:46:48.639
+It's the output of the sigmoid that needs to be one which means the weighted sum going into that sigmoid
+
+1:46:48.719,1:46:51.039
+It needs to be infinite essentially. So it's not that different
+
+1:46:53.340,1:46:58.500
+Um, and the problem with this is that if you train the system successfully
+
+1:47:00.000,1:47:07.459
+And you get that energy function, which is zero outside the data manifold and one on the data manifold. Your energy function is completely useless
+
+1:47:08.480,1:47:12.239
+It's useless because it's a golf course right? It's flat
+
+1:47:12.960,1:47:18.239
+so the energy function basically that corresponds to this would be the negative log of that right so it would be
+
+1:47:20.480,1:47:22.480
+It would be infinity here
+
+1:47:22.719,1:47:23.679
+and
+
+1:47:23.679,1:47:27.839
+the minimum value of your cost function on the manifold which for example could be zero if it
+
+1:47:28.320,1:47:32.480
+If it's if it's an auto encoder the energy gonna be smaller than zero, right?
+
+1:47:34.320,1:47:41.040
+Um, and so it's a it's a it's a golf course of infinite altitude, which is really not that useful
+
+1:47:41.760,1:47:43.040
+What you want
+
+1:47:43.040,1:47:49.699
+As I said before for every energy-based model if you want an energy-based model to be useful you want the energy function to be smooth
+
+1:47:50.320,1:47:52.719
+You don't want it to go to infinity in sort of
+
+1:47:53.840,1:47:57.840
+a very small step you want it to be smooth so that you can do inference so that if
+
+1:47:58.159,1:48:00.399
+You start from a point here. It's easy to find
+
+1:48:01.280,1:48:04.639
+A point on the manifold that's nearby using and descent for example, right?
+
+1:48:05.440,1:48:07.759
+so the original formulation of gan leads to
+
+1:48:09.600,1:48:16.479
+First of all infinite weights in the discriminator instabilities something called mode collapse, which alfredo will tell you about
+
+1:48:18.239,1:48:20.239
+And in the end
+
+1:48:20.239,1:48:22.799
+A contrast function an energy function that's essentially useless
+
+1:48:23.920,1:48:25.440
+So it's not
+
+1:48:25.440,1:48:30.239
+ideally formulated so people have proposed ways to fix it by regularizing the
+
+1:48:31.520,1:48:37.060
+Energy function basically forcing it to be smooth. So one good example of this is something called wasserstein gans
+
+1:48:43.280,1:48:48.960
+Proposed by Martin Arjovsky who just graduated from NYU
+
+1:48:50.639,1:48:52.639
+And Léon Bottou  and Soumith Chintala.
+
+1:48:58.000,1:49:03.359
+And and the idea of of that is to basically limit the size of the weights of the discriminator so that the function
+
+1:49:03.760,1:49:06.639
+is smooth and there is, you know, various mathematical arguments, uh
+
+1:49:07.199,1:49:11.039
+In probabilistic framework, but that's the basic idea and there's lots of variations of this also
+
+1:49:11.840,1:49:18.000
+Questions about today class it was dense, but at least we were, you know answering every question
+
+1:49:18.159,1:49:20.799
+it was coming right through so I think we
+
+1:49:22.000,1:49:23.760
+We follow along today
+
+1:49:23.760,1:49:25.920
+um, I wasn't sure if maybe you like
+
+1:49:26.619,1:49:33.039
+explained it in a different form and I didn't realize it's the same thing, but I was a little um
+
+1:49:34.159,1:49:36.479
+Lost on what the policy network is?
+
+1:49:37.199,1:49:39.199
+Okay, what that does?
+
+1:49:40.400,1:49:45.359
+So the policy network takes the estimation of the state of the world and produces an action
+
+1:49:46.560,1:49:48.560
+and it's trained to
+
+1:49:48.719,1:49:50.719
+minimize the expected cost
+
+1:49:51.520,1:49:53.360
+of uh
+
+1:49:53.360,1:49:57.040
+The state over the over a trajectory, but it takes just one action, okay
+
+1:49:59.920,1:50:06.339
+So, right and there was a there was a part towards the end where I guess you drew a new connection
+
+1:50:07.360,1:50:08.320
+um
+
+1:50:08.320,1:50:11.279
+right that uh from like s to
+
+1:50:13.199,1:50:15.199
+Uh where it goes
+
+1:50:15.599,1:50:16.719
+down
+
+1:50:16.719,1:50:18.080
+to like
+
+1:50:18.080,1:50:20.639
+connected through some module to a
+
+1:50:21.280,1:50:27.599
+So what is happening there? So the policy network is the indicated by pi here on the screen
+
+1:50:28.719,1:50:30.719
+So it takes s the state
+
+1:50:31.840,1:50:33.840
+And it produces an action
+
+1:50:36.400,1:50:37.340
+Okay
+
+1:50:37.340,1:50:42.639
+Okay. Okay. That's what a policy is, right. You observe the state of the world and you take an action?
+
+1:50:43.679,1:50:44.880
+I see okay
+
+1:50:44.880,1:50:45.440
+in fact
+
+1:50:45.440,1:50:48.719
+a probabilistic policy is you don't take an action you give a
+
+1:50:48.960,1:50:53.679
+distribution over actions and then you pick the action in some way and perform that distribution but here
+
+1:50:54.400,1:50:56.400
+You know, you just have to take an action
+
+1:50:57.599,1:51:03.439
+If the number of actions is discrete then uh this this pi network is this policy network is basically a classifier
+
+1:51:04.080,1:51:09.519
+And it produces a bunch of scores for each possible action, and then you take one of the actions
+
+1:51:10.380,1:51:15.440
+Probabilistically or deterministically deterministically you just take the action with the highest score
+
+1:51:16.400,1:51:19.839
+Uh probabilistically you can sample according to to the score
+
+1:51:20.560,1:51:22.959
+And then you run through your forward model and you keep going
+
+1:51:23.840,1:51:26.560
+okay, so without the policy connection then
+
+1:51:27.440,1:51:29.440
+then the action is just kind of
+
+1:51:29.760,1:51:35.920
+It's a latent variable. So you have to optimize with respect to the latent variable to find the to find its optimal value
+
+1:51:36.000,1:51:38.959
+So you have this this kind of uh diagram now
+
+1:51:40.239,1:51:41.920
+where
+
+1:51:41.920,1:51:44.639
+the actions are not produced by a neural net they
+
+1:51:45.599,1:51:50.319
+There are latent variables that you have to figure out for every new every every time you run your model you
+
+1:51:50.800,1:51:55.679
+You have to figure out what's the best sequence of action to minimize my cost? And so you have to basically
+
+1:51:56.560,1:52:03.039
+uh, do do this for example by grading descent figuring out the sequence of a that will minimize the sum of the c's over the
+
+1:52:03.099,1:52:04.639
+trajectory
+
+1:52:04.639,1:52:07.759
+that's that's called model predictive control and then um
+
+1:52:08.719,1:52:10.719
+the one with the policy network
+
+1:52:10.880,1:52:12.719
+um
+
+1:52:12.719,1:52:16.899
+Is is called, uh, you know, direct uh control essentially
+
+1:52:18.480,1:52:20.480
+Um professor uh
+
+1:52:21.840,1:52:24.880
+You say that during inference we need to uh minimize
+
+1:52:26.560,1:52:27.679
+The energy
+
+1:52:27.679,1:52:29.839
+to get the final value but
+
+1:52:30.400,1:52:34.879
+Uh, okay. There are two questions one won't it take too much time during inference and
+
+1:52:35.520,1:52:38.319
+Would be useful for real-time systems
+
+1:52:39.199,1:52:41.199
+and the second one is
+
+1:52:41.520,1:52:45.679
+Since it's unrolled and you have to back propagate all the way through the beginning
+
+1:52:46.400,1:52:49.440
+Yeah have all the problems that we face in
+
+1:52:50.159,1:52:52.159
+uh recurrent neural networks
+
+1:52:52.960,1:52:54.460
+exactly, so
+
+1:52:54.460,1:52:58.719
+Presumably you're not going to get the same problems as you have with current nets because your forward model
+
+1:52:59.280,1:53:00.139
+You know
+
+1:53:00.139,1:53:03.199
+Presumably implements the dynamics of some real systems. So
+
+1:53:03.760,1:53:05.760
+It might not have the issues
+
+1:53:06.320,1:53:10.400
+Of sort of non-invertibility that you have if it's a physical system. It's probably going to be
+
+1:53:10.940,1:53:12.940
+reversible so you may not have the
+
+1:53:13.199,1:53:17.919
+Same issue as with regular recurrent nets but uh, but yeah, you're facing this in the same problems
+
+1:53:18.560,1:53:20.560
+now, uh
+
+1:53:20.560,1:53:23.919
+In real time situations you you use a form of this called
+
+1:53:25.820,1:53:28.000
+receding horizon planning
+
+1:53:35.199,1:53:37.199
+Planning
+
+1:53:38.480,1:53:43.919
+Okay, so receding horizon planning, uh is when you are in a it's a real time situation
+
+1:53:44.719,1:53:49.519
+Uh, your your system will run its forward model for a few steps in the future
+
+1:53:50.080,1:53:54.799
+I don't know. Let's say a few seconds. Okay, sufficiently many steps to predict for a few seconds
+
+1:53:55.360,1:53:57.360
+That's your horizon
+
+1:53:57.679,1:54:00.239
+Uh, then you do this, uh model predictive control
+
+1:54:00.480,1:54:07.119
+You know by optimizing finding the optimal a that minimizes your cost your estimated cost according to your model
+
+1:54:07.199,1:54:12.719
+Okay, you know you haven't taken an action yet. Okay, you've just run your internal model to make that prediction
+
+1:54:13.760,1:54:15.440
+um, so
+
+1:54:15.440,1:54:21.460
+Through optimization with respect to a you find the sequence of a that optimizes your cost and then you take the first action
+
+1:54:22.639,1:54:23.920
+in that a
+
+1:54:23.920,1:54:25.920
+And then you do it again, okay
+
+1:54:26.159,1:54:29.999
+So with the a you took, observe the state of the world now you have a new
+
+1:54:30.639,1:54:32.239
+state
+
+1:54:32.239,1:54:39.198
+Okay, which you observe from your your sensors and now repeat the process run your forward model a number of steps in the future
+
+1:54:40.300,1:54:43.920
+Optimize the sequence of actions to minimize your cost take the first action
+
+1:54:45.119,1:54:46.560
+And do it again
+
+1:54:46.560,1:54:51.299
+So it can be expensive if your horizon is long if your forward model is complicated
+
+1:54:52.239,1:54:54.559
+um, and so that's when you need
+
+1:54:55.199,1:54:59.519
+A policy network. So the policy network, basically
+
+1:55:00.060,1:55:03.699
+Compiles this whole process into a neural net that directly produces
+
+1:55:04.239,1:55:06.239
+the best action from the state
+
+1:55:06.639,1:55:08.639
+okay, which may or may not be possible but
+
+1:55:09.599,1:55:11.599
+It gives you a good guess, now
+
+1:55:11.760,1:55:13.760
+to give you a concrete example
+
+1:55:14.000,1:55:16.000
+This is an interesting series of books by
+
+1:55:16.540,1:55:20.639
+A nobel prize-winning economist that lives in new york called. Daniel Kahneman
+
+1:55:21.520,1:55:23.759
+And he talks about two systems in the human
+
+1:55:24.800,1:55:28.159
+Mind called system one and system two so system one
+
+1:55:28.800,1:55:30.159
+is the
+
+1:55:30.159,1:55:33.199
+Process by which you take an action without thinking okay
+
+1:55:34.239,1:55:35.360
+um
+
+1:55:35.360,1:55:40.960
+You're a very experienced driver and you can drive your car without even paying attention by you know, talking to someone next to you
+
+1:55:41.760,1:55:43.760
+You don't actually need to think about it. Okay?
+
+1:55:44.880,1:55:48.560
+System two is more sort of deliberate planning. So
+
+1:55:49.440,1:55:54.480
+System two is when you use your internal model of the world to kind of predict in advance. What's gonna happen?
+
+1:55:55.119,1:55:58.559
+Ahead sort of foresee what's gonna happen and then take a deliberate
+
+1:55:59.340,1:56:04.560
+Uh action that you think is gonna be the right one according to your model. So it's more like reasoning
+
+1:56:05.199,1:56:07.040
+Okay, you can think of this
+
+1:56:07.040,1:56:13.839
+You know optimization with respect to actions to minimize an objective as a form of reasoning and we talked about this before
+
+1:56:14.639,1:56:15.599
+so
+
+1:56:15.599,1:56:17.599
+uh, basically
+
+1:56:17.599,1:56:21.039
+Model predictive control is when you don't have a policy you haven't learned the skill
+
+1:56:21.360,1:56:26.880
+You know what your cost function is you have a pretty good model of the world, but you don't know how to react, okay
+
+1:56:27.520,1:56:30.399
+So a beginner chess player would be like that
+
+1:56:31.920,1:56:35.920
+You you look at the the chase game and you have to think about all possibilities before you play
+
+1:56:36.480,1:56:41.219
+Because you know, you don't know where to play. So you have to kind of imagine all the possibilities
+
+1:56:42.560,1:56:46.560
+If you are an expert player and you play against a a beginner
+
+1:56:48.000,1:56:52.719
+You know immediately what to play. You don't have to think about it. I don't know if you've played simultaneous games against
+
+1:56:53.520,1:57:00.959
+A master or grandmaster at chess grandmaster can play against 50 people and beat them in a few minutes
+
+1:57:02.880,1:57:05.920
+Because the player can go from just you know one
+
+1:57:06.960,1:57:10.399
+Opponent to another and just immediately play just it's completely reactive
+
+1:57:11.360,1:57:14.000
+um, he actually doesn't need to to think because
+
+1:57:15.199,1:57:18.399
+You know, they've kind of compiled that if you if you want in their
+
+1:57:18.960,1:57:21.919
+In their knowledge of chess that they don't need to think when you see this
+
+1:57:22.639,1:57:24.639
+kind of type of easy situation
+
+1:57:24.960,1:57:27.119
+So that's going from system two to system one
+
+1:57:27.360,1:57:32.159
+And uh when you learn the skill at first you're hesitant and you have to think about it, you know
+
+1:57:32.159,1:57:36.719
+You're heads-up. When you drive you drive slowly and you look at everything and you pay attention and then when you
+
+1:57:37.340,1:57:38.960
+are uh
+
+1:57:38.960,1:57:45.599
+Experimented you you can just react really quickly. Basically you've gone from model predictive control to
+
+1:57:46.480,1:57:49.759
+Basically training your own policy network if you will, okay?
+
+1:57:50.320,1:57:56.880
+And in the process of doing this your uh, your skill has gone from a sort of deliberate planned
+
+1:57:57.599,1:57:58.960
+conscious
+
+1:57:58.960,1:58:00.080
+uh
+
+1:58:00.080,1:58:02.499
+decision mechanism to a sort of subconscious
+
+1:58:03.260,1:58:07.840
+Automatic uh decision mechanism, that's what sort of acquiring expertise does
+
+1:58:11.679,1:58:14.079
+And that's that's how you go from this diagram
+
+1:58:14.560,1:58:18.899
+To that diagram where you have a policy that directly predicts the action without having to plan
+
+1:58:20.960,1:58:22.960
+Okay, got it, thanks
