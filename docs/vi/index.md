@@ -312,6 +312,23 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
         <a href="https://youtu.be/DL7iew823c0">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2">Practicum</td>
+      <td><a href="en/week15/15-1">Inference for Latent-Variable EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="en/week15/15-2">Training Latent-Variable EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
