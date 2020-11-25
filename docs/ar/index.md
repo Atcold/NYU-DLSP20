@@ -10,11 +10,11 @@ translator: Anass Elhoud
 
 **DS-GA 1008 · ربيع 2020 · [مركز جامعة نيويورك لعلم البيانات](http://cds.nyu.edu/)**
 
-| المدرسين | Yann LeCun & Alfredo Canziani |
+| المدرسين               | Yann LeCun & Alfredo Canziani |
 | المحاضرات    | كل إثنين 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | التدريب   | كل ثلثاء 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
-| المواد    | [جوجل درايف](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
+| منتدى                  | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| المواد    | [          جوجل درايف](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## وصف عام
