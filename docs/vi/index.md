@@ -5,7 +5,7 @@ author: Alfredo Canziani
 lang-ref: Home
 lang: vi
 translation-date: 16 Sept 2020
-translator:Huynh Nguyen
+translator: Huynh Nguyen
 ---
 
 **DS-GA 1008 · Học kỳ mùa xuân 2020 · [Trung tâm khoa học dữ liệu, NYU](http://cds.nyu.edu/)**
