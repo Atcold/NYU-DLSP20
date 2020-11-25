@@ -315,7 +315,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
 <!-- =============================== WEEK 15 =============================== -->
     <tr>
       <td rowspan="2" align="center"><a href="{{site.baseurl}}/vi/week15/15">⑮</a></td>
-      <td rowspan="2">Practicum</td>
+      <td rowspan="2">Thực hành</td>
       <td><a href="{{site.baseurl}}/vi/week15/15-1">Suy luận cho biến tìm ẩn EBMs</a></td>
       <td rowspan="1">
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
