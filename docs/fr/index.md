@@ -14,17 +14,17 @@ translator: Loïck Bourdois
 | INSTRUCTEURS | Yann Le Cun & Alfredo Canziani |
 | CONFÉRENCES | Lundi 16h55 - 18h35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRATIQUE | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home) | Code d'accès : `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## Description
 
-Ce cours porte sur les techniques d'apprentissage profond et de représentation les plus récentes. 
+Ce cours porte sur les techniques d'apprentissage profond et de représentation les plus récentes.
 Il se concentre sur l'apprentissage profond supervisé et non supervisé, les méthodes d’enchâssement, l'apprentissage métrique, les réseaux convolutifs et récurrents.
-Il est illustré d’applications à la vision par ordinateur, la compréhension du langage naturel et la reconnaissance vocale. 
+Il est illustré d’applications à la vision par ordinateur, la compréhension du langage naturel et la reconnaissance vocale.
 
-Pour suivre ce cours, il est fortement conseillé d’avoir des prérequis en algèbre et d’avoir déjà suivi un cours introductif d'apprentissage machine ou de data science. 
+Pour suivre ce cours, il est fortement conseillé d’avoir des prérequis en algèbre et d’avoir déjà suivi un cours introductif d'apprentissage machine ou de data science.
 D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+4 ou bac+5.
 
 
@@ -298,7 +298,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
         <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
       </td>
-    </tr> 
+    </tr>
 <!-- =============================== SEMAINE 14 =============================== -->
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week14/14">⑭</a></td>
@@ -335,14 +335,14 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 |Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://lbourdois.github.io/blog/">Loïck Bourdois <br>| N'appartient pas au corps enseignant de la NYU |
 
 
-<!-- 
+<!--
 All other texts found on this site are lecture notes taken by students of the New York University during lectures given by Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
 Thus the texts in English were written by about 130 people, which has an impact on the homogeneity of the texts (some write in the past tense, others in the present tense; the abbreviations used are not always the same; some write short sentences, while others write sentences of up to 5 or 6 lines, etc.).
 The French translation that is proposed to you has been done by one and only one person and then reviewed by different people. The goal was to alleviate the problems mentioned just now, and to propose a homogeneous translation. All the choices made for the writing and the translation are detailed [here](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
 This translation took about 70 hours and was checked several times. Nevertheless, it is possible that there may be some omissions: typing errors, spelling mistakes, etc. If you notice any, we invite you to submit a PR on the [GitHub directory of the site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifying with an `[FR]` that it concerns the French translation.
-Finally, it should be noted that this site is intended to accompany the Spring 2020 edition of NYU's Deep Learning Course. In future editions, the transcripts of the courses present on the site will not be modified, which will not be the case for the notebooks.  
+Finally, it should be noted that this site is intended to accompany the Spring 2020 edition of NYU's Deep Learning Course. In future editions, the transcripts of the courses present on the site will not be modified, which will not be the case for the notebooks.
 Therefore, all links to the notebooks will take you to the most recent English versions.
-If you wish, you can still consult a French translation of the 16 notebooks based on a version of the notebooks dating from September 2020. Any subsequent modification of the English notebooks will not be taken into account. The French version is available [here](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French). 
+If you wish, you can still consult a French translation of the 16 notebooks based on a version of the notebooks dating from September 2020. Any subsequent modification of the English notebooks will not be taken into account. The French version is available [here](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French).
 Wishing you a deep reading :]
 -->
 
@@ -353,9 +353,9 @@ Ainsi les textes en anglais ont été rédigés par plus de 130 personnes, ce qu
 La traduction en français qui vous est proposée a été effectuée par une seule et unique personne puis relu par différentes, le but étant d’atténuer les problèmes cités à l’instant, et de proposer une traduction homogène. L’ensemble des choix qui ont été retenus pour la rédaction et la traduction sont détaillés [ici](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
 Cette traduction a nécessité soixante-dix d’heures et a été plusieurs fois vérifiée. Néanmoins, il se peut qu’il y ait des oublis : fautes de frappe, d’orthographe, etc. Si vous en remarquez, nous vous invitons à soumettre une PR sur le [répertoire GitHub du site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) en précisant avec un `[FR]` qu’elle concerne la traduction française.
 
-Enfin, précisons que ce site est destiné à accompagner l’édition « Printemps 2020 » du cours sur l’apprentissage profond de la NYU. Dans les éditions futures, les retranscriptions des cours présents sur le site ne seront pas modifiées ce qui ne sera pas le cas des notebooks.  
+Enfin, précisons que ce site est destiné à accompagner l’édition « Printemps 2020 » du cours sur l’apprentissage profond de la NYU. Dans les éditions futures, les retranscriptions des cours présents sur le site ne seront pas modifiées ce qui ne sera pas le cas des notebooks.
 De ce fait, tous les liens renvoyant vers les notebooks vous conduiront vers leurs versions anglaises les plus récentes.
-Si vous le souhaitez, vous pouvez tout de même consulter une traduction française des 16 notebooks se basant sur une version des notebooks datant de septembre 2020. Toute modification ultérieure des notebooks anglais ne sera pas prise en compte. La version française est disponible [ici](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French). 
+Si vous le souhaitez, vous pouvez tout de même consulter une traduction française des 16 notebooks se basant sur une version des notebooks datant de septembre 2020. Toute modification ultérieure des notebooks anglais ne sera pas prise en compte. La version française est disponible [ici](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French).
 
 En vous souhaitant une deep lecture :]
 
