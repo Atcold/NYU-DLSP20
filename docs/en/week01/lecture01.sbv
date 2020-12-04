@@ -1,0 +1,3881 @@
+0:00:00.030,0:00:01.170
+OK, so first of all
+
+0:00:01.170,0:00:06.029
+I have a terrible confession to make. This class is actually being run not by me, but by these two guys:
+
+0:00:06.700,0:00:12.120
+Alfredo Canziani and Mark Goldstein, whose names are here [points to slide]. They are the TA'S and
+
+0:00:13.480,0:00:15.780
+you'll talk to them much more often than you'll talk to me.
+
+0:00:16.990,0:00:21.299
+That's the first thing. The other confession I have to make is that if you have questions about this class,
+
+0:00:21.609,0:00:26.249
+don't ask them at the end of this course because I have to run right after the class to catch an airplane.
+
+0:00:27.039,0:00:29.039
+But that can wait until next week.
+
+0:00:30.880,0:00:33.660
+OK, so let's start right in.
+
+0:00:35.200,0:00:38.790
+Some very basic course information. There is a website as you can see.
+
+0:00:39.340,0:00:43.799
+I will do what I can to post the PDF of the slides on the website.
+
+0:00:43.960,0:00:47.550
+Probably just before the lecture, probably just a few minutes before the lecture, usually.
+
+0:00:48.640,0:00:53.250
+But, but it should be there by the time you get to class, or at least by the time I get to class.
+
+0:00:55.930,0:01:00.959
+There's going to be nine lectures that I'm going to teach, on Monday evenings.
+
+0:01:01.359,0:01:04.618
+There is also a practical session every Tuesday night
+
+0:01:05.500,0:01:07.500
+that further on Mark
+
+0:01:07.869,0:01:11.159
+will be running. So, they'll go through some of the, you know, practical
+
+0:01:11.890,0:01:16.199
+questions. Some, you know, refreshers on sort of math, you know
+
+0:01:16.200,0:01:22.560
+mathematics that are necessary for this, and basic concepts. Some tutorials on how to use PyTorch and various other
+
+0:01:23.110,0:01:24.400
+software tools.
+
+0:01:24.400,0:01:29.219
+And there's going to be three guest lectures. The names of the guest lectures are not finalized.
+
+0:01:29.740,0:01:32.460
+But it's gonna be on topics like natural language processing,
+
+0:01:35.740,0:01:38.070
+computer vision, self-supervised learning, things like that.
+
+0:01:41.020,0:01:45.780
+There's going to be a midterm exam, or at least we think there is.
+
+0:01:48.070,0:01:52.379
+And it's going to take one of those sessions, you know, around March.
+
+0:01:53.860,0:01:57.719
+And the evaluation will be done on the midterm and on a final project.
+
+0:01:58.869,0:02:01.499
+And, you can sort of, you know, band in groups of two.
+
+0:02:02.350,0:02:04.350
+Did we say two or three, or just two?
+
+0:02:07.660,0:02:09.660
+We didn't decide yet, we'll see.
+
+0:02:10.869,0:02:16.919
+The project will probably have to do with a combination of self-supervised learning and autonomous driving. We are
+
+0:02:17.530,0:02:20.339
+discussing with various people for data and
+
+0:02:21.040,0:02:23.040
+things like that.
+
+0:02:23.350,0:02:29.729
+Okay, let me talk a little bit about, so this first lecture is really going to be sort of a broad introduction about
+
+0:02:29.730,0:02:32.610
+what deep running is really, and what it can do and what it cannot do.
+
+0:02:33.520,0:02:36.839
+So it will serve as an introduction to the entire thing.
+
+0:02:36.840,0:02:39.600
+So, we'll go through the entire arc, if you want, of the class
+
+0:02:39.600,0:02:41.560
+but in, sort of, very superficial terms
+
+0:02:41.560,0:02:42.730
+so that you get,
+
+0:02:42.730,0:02:48.719
+sort of, broad high-level idea of all the topics we're talking about. And whenever I'll talk about a particular topic
+
+0:02:48.720,0:02:51.059
+you'll see where it fits in this kind of whole
+
+0:02:51.640,0:02:53.020
+picture.
+
+0:02:53.020,0:02:55.020
+But before that...
+
+0:02:55.330,0:02:57.839
+So, there is a prerequisite for the class which is, you know:
+
+0:02:58.270,0:03:01.469
+You need to be kind of familiar with machine learning or at least basic
+
+0:03:02.080,0:03:04.080
+concepts in machine learning.
+
+0:03:04.420,0:03:06.420
+Who here has
+
+0:03:07.000,0:03:10.830
+played with PyTorch, TensorFlow, has trained a neural net?
+
+0:03:12.880,0:03:20.639
+OK. Who has not done that? Don't be shy, OK. OK? So the majority has.
+
+0:03:23.080,0:03:25.080
+Which is good.
+
+0:03:25.270,0:03:30.059
+But I'm not going to assume that you know everything about this. Particularly, I am not going to assume that you know a lot of the,
+
+0:03:31.810,0:03:38.699
+you know, sort of deep underlying techniques. OK, so here is the course plan and
+
+0:03:40.360,0:03:41.430
+depending on what you tell me
+
+0:03:41.430,0:03:43.080
+I can adjust this and sort of, you know,
+
+0:03:43.080,0:03:49.230
+go faster on certain sections that you think are too obvious because you've played with this before, or other things.
+
+0:03:52.930,0:03:54.930
+So intro to
+
+0:03:55.390,0:03:58.320
+Supervised Learning, Neural Nets, Deep Learning. That's what I'm going to talk about today.
+
+0:03:58.320,0:04:03.239
+What deep learning can do, what it cannot do, what are good features. Deep learning is about learning representations.
+
+0:04:03.400,0:04:05.019
+That's what I'm going to talk about.
+
+0:04:05.019,0:04:10.229
+Next week will be about back propagation and basic architectural components. So things like
+
+0:04:10.810,0:04:16.500
+the fact that you build neural nets out of modules that you connect with each other. Then you compute gradients you get automatic
+
+0:04:16.959,0:04:20.969
+differentiations. And then these various types of architectures, loss functions,
+
+0:04:21.609,0:04:26.489
+activation functions — you know different modules. Tricks like weight sharing and weight tying,
+
+0:04:27.370,0:04:29.370
+multiplicative interactions,
+
+0:04:31.389,0:04:33.389
+attention gating — things like this, right.
+
+0:04:33.939,0:04:35.740
+And then particular
+
+0:04:35.740,0:04:39.419
+macro architectures, like mixture of experts, Siamese net, hyper networks, etc.
+
+0:04:40.150,0:04:45.719
+So we'll dive pretty quickly in and that's appropriate if you've already played with some of those things.
+
+0:04:46.930,0:04:52.259
+Then there will be either one or two lectures – I haven't completely decided yet — about convolutional nets and their applications.
+
+0:04:53.949,0:04:56.938
+One of them might end up being a guest lecture.
+
+0:04:59.289,0:05:06.119
+Then, more specifically, about deep learning architectures that are useful in special cases.
+
+0:05:06.120,0:05:11.250
+So things like recurrent neural nets with back propagation through time, which is the way you train recurrent neural nets.
+
+0:05:12.819,0:05:14.529
+And ...
+
+0:05:14.529,0:05:16.529
+... and sort of ...
+
+0:05:16.599,0:05:18.159
+... applications of ...
+
+0:05:18.159,0:05:24.119
+recurrent neural nets to things like control and, you know, producing time series and stuff like that.
+
+0:05:26.229,0:05:28.229
+Then things like combine recurrence and
+
+0:05:29.080,0:05:30.219
+gating
+
+0:05:30.219,0:05:34.588
+and multiplicative interactions like gated recurrent units and LSTM.
+
+0:05:35.469,0:05:39.749
+And then things that really use multiplicative interactions as kind of
+
+0:05:41.229,0:05:46.889
+really a basis of their architecture like memory networks, transformers, adapters, etc., which are sort of very recent
+
+0:05:47.649,0:05:50.759
+architectures that have become extremely popular and in things like NLP and other
+
+0:05:51.490,0:05:58.529
+other areas. And then a little bit about graph neural nets, which I'm not going to talk about this a lot because there is another
+
+0:05:59.529,0:06:03.479
+course that you can take by Joan Bruna where he spends a lot of time on graph neural nets.
+
+0:06:06.759,0:06:08.529
+Then...
+
+0:06:08.529,0:06:14.549
+then we'll talk about how we get those deep learning systems to work. And, so, various tricks to get them to work.
+
+0:06:15.849,0:06:21.299
+Sort of understanding the type of optimization that takes place in neural nets. So...
+
+0:06:22.960,0:06:24.759
+...the type of...
+
+0:06:24.759,0:06:26.169
+you know, we...
+
+0:06:26.169,0:06:33.718
+we use, of course — learning is always about, almost always about, optimization. And deep learning is almost always about gradient-based optimization.
+
+0:06:34.689,0:06:40.389
+And there are certain rules about optimization in the convex case that are well understood.
+
+0:06:40.389,0:06:43.328
+But they're not well understood when the training is stochastic,
+
+0:06:43.329,0:06:47.109
+which is the case for most deep learning systems. And they're not very well understood
+
+0:06:47.179,0:06:50.018
+also in deep learning, because the the cost function is not ...
+
+0:06:50.689,0:06:52.689
+is not convex.
+
+0:06:52.689,0:06:59.109
+It has local minima, and saddle points, and things like this. So it's important to understand the geometry of the objective function.
+
+0:06:59.889,0:07:01.889
+I say it's important to understand but
+
+0:07:02.629,0:07:05.708
+the the big secret here is that nobody actually understands. So ...
+
+0:07:06.349,0:07:08.979
+it's important to understand that nobody understands. Okay?
+
+0:07:12.439,0:07:14.678
+But there are a few tricks that have
+
+0:07:15.409,0:07:20.528
+come up through a combination of intuition and a little bit of theoretical analysis and
+
+0:07:20.959,0:07:24.069
+empirical search. Things like initialization tricks,
+
+0:07:25.159,0:07:28.419
+normalization tricks, and regularization tricks like drop out.
+
+0:07:29.209,0:07:33.009
+(Grading clipping is more for optimization.) Things like momentum,
+
+0:07:34.279,0:07:37.958
+average HDD, the various methods for parallelizing HDD.
+
+0:07:40.920,0:07:47.498
+Many of which do not work. And then something a little exotic called target prop and the Lagrangian formulation of back prop.
+
+0:07:47.959,0:07:52.179
+Then I'll switch to my favorite topic, which is energy-based models. So this is sort of a
+
+0:07:52.789,0:07:59.049
+general formulation of a lot of different, sort of, approaches to learning — whether they are supervised, unsupervised, self-supervised.
+
+0:07:59.809,0:08:03.249
+And whether they involve things like inference.
+
+0:08:04.039,0:08:10.388
+Like, you know, searching for the value of variables that nobody tells you the value of, but that your process
+
+0:08:10.969,0:08:12.969
+your system is supposed to infer.
+
+0:08:13.399,0:08:19.149
+So that could be thought of as sort of a way of implementing reasoning with neural nets.
+
+0:08:20.029,0:08:23.289
+So you could think of reasoning in neural nets as a process by which you have
+
+0:08:23.449,0:08:28.959
+some energy function that's being optimized with respect to some variables. And the value you get as a result of this optimization
+
+0:08:30.019,0:08:34.448
+is the value of those variables you were trying to find. And so,
+
+0:08:34.969,0:08:40.208
+there is sort of the the common view that a neural net is just a function that computes its output as a function of its
+
+0:08:40.209,0:08:42.909
+input. So you just run through the neural net, you get an output.
+
+0:08:43.429,0:08:45.429
+But that's a fairly restrictive
+
+0:08:45.769,0:08:49.749
+form of inference in the sense that you can only produce one output for a given input.
+
+0:08:50.720,0:08:55.720
+But very often there are multiple possible answers to a given input. And so, how do you,
+
+0:08:56.480,0:09:03.579
+kind of, represent problems of this type where there are multiple answers, multiple possible answers, to a given input? And one answer to this is:
+
+0:09:04.220,0:09:11.529
+You make those answers the minima of some energy function, and your inference algorithm is going to find values of those
+
+0:09:12.290,0:09:17.740
+variables that minimize this objective function. And there might be multiple minima. So that means your model might produce multiple
+
+0:09:18.649,0:09:20.739
+outputs for a given input. Okay?
+
+0:09:21.589,0:09:25.898
+So, energy-based models, it's kind of a way of doing this. A special case of those energy-based models are
+
+0:09:26.720,0:09:29.800
+probabilistic models: like, you know Bayesian methods,
+
+0:09:31.610,0:09:38.380
+graphical model, Bayesian nets and things like this. Energy methods are a little more general. So a little less specific.
+
+0:09:39.860,0:09:44.019
+So special cases of this include things like what people used to call structure prediction.
+
+0:09:45.709,0:09:51.129
+And then there is a lot of applications of this in what's called self-supervised learning. And that will be the topic of the next couple lectures.
+
+0:09:52.490,0:09:57.370
+So self-supervised learning is a very very active topic of research today.
+
+0:09:57.740,0:10:01.269
+And probably something that's going to become really dominant in the future. It's already ...
+
+0:10:02.060,0:10:08.619
+... in the space of a year, it's become dominant in natural language processing. And, in the last few months, just three months
+
+0:10:09.320,0:10:12.849
+there's been a few papers that show that self-supervised learning methods actually
+
+0:10:13.430,0:10:17.079
+work really well in things like computer vision as well. And so my guess,
+
+0:10:17.899,0:10:19.880
+my guess is that ...
+
+0:10:19.880,0:10:21.880
+self-supervised learning is going to take over the world
+
+0:10:21.920,0:10:25.089
+in the next few years. So, I think it's useful to hear about it in this class.
+
+0:10:26.240,0:10:27.949
+The things like —
+
+0:10:27.949,0:10:31.299
+I'm not going to go through a laundry list of this — but there are
+
+0:10:31.730,0:10:35.289
+things that you may have heard of: like variational auto-encoders, de-noising auto-encoders,
+
+0:10:36.410,0:10:38.410
+BERT, which is, you know, those
+
+0:10:39.199,0:10:44.919
+transformer architectures that are trained for natural language processing. They are trained with self-supervised learning and they are a special case of a de-noising auto-encoder.
+
+0:10:45.170,0:10:47.060
+So a lot of those things
+
+0:10:47.060,0:10:49.810
+you may have heard of without realizing they were all, kind of —
+
+0:10:49.880,0:10:56.169
+it can be all understood in the context of this sort of energy-based approach. And that includes also generatative adversarial networks (GANs),
+
+0:10:56.170,0:10:58.170
+which I'm sure many of you have heard of.
+
+0:11:00.150,0:11:02.389
+And then there is self-supervised learning and beyond.
+
+0:11:04.200,0:11:08.689
+So, you know, how do we get machines to really kind of become really intelligent? They're not superintelligent.
+
+0:11:08.690,0:11:11.779
+They're not very intelligent right now. They can solve very narrow problems very well,
+
+0:11:12.150,0:11:18.679
+sometimes with superhuman performance. But no machine has any kind of common sense. And, the most intelligent machines that we have
+
+0:11:20.250,0:11:27.799
+probably have less common sense than a house cat. So, how do we get to cat-level intelligence first, and then maybe human-level intelligence?
+
+0:11:29.339,0:11:32.689
+And, I don't pretend to have the answer, but I have, you know —
+
+0:11:32.690,0:11:36.650
+a few ideas that are interesting to discuss in the context of self-supervised learning, there.
+
+0:11:38.279,0:11:43.999
+I've had some applications. Any questions? So that's the plan of the course. Okay. it might change, dynamically
+
+0:11:45.660,0:11:47.660
+But, at least, that's the intent. Any questions?
+
+0:11:52.260,0:11:54.260
+...Okay...
+
+0:11:57.220,0:12:00.540
+[Student Question: Will we also be having assignments in the course?] Yeah, yeah, there are assignments.
+
+0:12:00.540,0:12:17.100
+[...Inaudible...]
+
+0:12:17.320,0:12:20.700
+Okay, so for those of you who didn't hear Alfredo, because he didn't speak very loudly:
+
+0:12:21.860,0:12:25.899
+The final project is actually going to be a competition between the teams.
+
+0:12:26.860,0:12:29.480
+So there is going to be a leaderboard and everything.
+
+0:12:29.660,0:12:35.220
+And, in preparation for this, the assignments will be basically
+
+0:12:35.320,0:12:39.100
+practice to get familiar with all the techniques that you would need for
+
+0:12:39.340,0:12:43.740
+deep learning in general, but for the final project in particular.
+
+0:12:46.340,0:12:48.340
+[Also for the midterm.]
+
+0:12:48.880,0:12:52.860
+Right, also for midterm, obviously.
+
+0:12:53.000,0:12:57.100
+Okay, so most of you probably know that — and this is gonna
+
+0:12:57.740,0:13:03.280
+probably be boring for some of you who've already played with those things — but let's start from the basics.
+
+0:13:03.460,0:13:08.380
+Deep learning is inspired by what people have observed about the brain, but the inspiration is just an inspiration.
+
+0:13:08.380,0:13:10.870
+It's not, the attempt is not to copy the brain because
+
+0:13:11.180,0:13:15.849
+there's a lot of details about the brain that are irrelevant, and that we don't know if they are relevant actually to human intelligence.
+
+0:13:16.120,0:13:18.720
+So the inspiration is at kind of the conceptual level.
+
+0:13:18.820,0:13:24.520
+And, it's a little bit the same as, you know, airplanes being inspired by birds.
+
+0:13:24.520,0:13:30.430
+But the underlying principles of flight for birds and airplanes are essentially the same, but the details are extremely different.
+
+0:13:30.530,0:13:37.420
+They both have wings. They both generate lift by propelling themselves through air, but, you know, airplanes don't have feathers and don't flap their wings.
+
+0:13:37.780,0:13:43.920
+So it's a bit of the same idea. And the history of this goes back to a field
+
+0:13:44.120,0:13:48.480
+that has kind of almost disappeared, or, at least changed names now, called Cybernetics.
+
+0:13:48.860,0:13:52.120
+If you want a specialist about the history of cybernetics, he is sitting right there:
+
+0:13:52.120,0:13:55.660
+Joe Lemelin
+
+0:13:55.670,0:13:57.230
+Can you raise your hand?
+
+0:13:57.230,0:14:03.699
+So, Joe is actually philosopher. And he is interested in the — he actually has a seminar on, kind of, the history of AI.
+
+0:14:04.640,0:14:07.100
+In the what department is this?
+
+0:14:07.120,0:14:08.720
+[Joe: Media, Culture, and Communication.]
+
+0:14:08.720,0:14:12.260
+Media, Culture, and Communication. So, not CS.
+
+0:14:12.860,0:14:17.220
+He knows everything about, you know, the history of cybernetics. So it started in the 40's with
+
+0:14:17.220,0:14:22.740
+two gentlemen: McCulloch and Pitts. Their picture is on the top right here.
+
+0:14:23.500,0:14:25.500
+And they came up with the idea that,
+
+0:14:25.700,0:14:29.440
+you know, people at the time were interested in logic, but
+
+0:14:29.580,0:14:32.440
+neuroscience was a very sort of nascent field.
+
+0:14:32.580,0:14:39.440
+And, they got the idea that if neurons are basically threshold units that are on or off,
+
+0:14:39.890,0:14:45.429
+then by connecting neurons with each other, you can build Boolean circuits and you can basically do logical inference with neurons.
+
+0:14:45.430,0:14:47.050
+So they say, you know:
+
+0:14:47.050,0:14:53.520
+The brain is basically a logical inference machine because the neurons are binary. And this idea —
+
+0:14:53.780,0:14:56.340
+So the idea was that a neuron
+
+0:14:56.740,0:15:01.260
+computes a weighted sum of its inputs and then compares the weighted sum to a threshold. It turns on
+
+0:15:01.440,0:15:04.480
+if it's above the threshold, turns off if it's below.
+
+0:15:05.210,0:15:09.160
+Which is sort of simplified view of how real neurons work — a very, very simplified view.
+
+0:15:09.530,0:15:13.119
+That model kind of stuck with the field for decades.
+
+0:15:15.380,0:15:17.380
+Almost four decades.
+
+0:15:19.720,0:15:22.960
+Actually, a full four decades.
+
+0:15:22.970,0:15:27.120
+Then there was, you know, quasi-simultaneously Donald Hebb, who had the idea that
+
+0:15:28.160,0:15:31.190
+neurons in the brain — it's an old idea that
+
+0:15:31.190,0:15:37.900
+the brain learns by modifying the strength of the connections between the neurons that are called the synapses. And you had the idea
+
+0:15:37.900,0:15:43.540
+of what's now called Hebbian learning, which is that if two neurons fire together, then the connection that links them
+
+0:15:43.880,0:15:48.780
+increases. And if they don't fire together, maybe it decreases.
+
+0:15:50.020,0:15:54.500
+That's not an idea for learning algorithm, but it's sort of a first idea, perhaps.
+
+0:15:55.640,0:16:00.879
+And then cybernetics was proposed by this guy Norbert Wiener, who is here. [Bottom Right]
+
+0:16:01.760,0:16:06.280
+This is the whole idea that by having systems that, kind of, have sensors
+
+0:16:07.010,0:16:13.569
+and have actuators, you can have feedback loops and you can have, you know, self-regulating systems.
+
+0:16:13.569,0:16:19.460
+And, what's the theory behind this? You know, we sort of take that for granted now. But the idea that
+
+0:16:19.820,0:16:21.820
+you know, you have things, like kind of,
+
+0:16:22.280,0:16:23.720
+for example:
+
+0:16:23.720,0:16:27.369
+You know, you drive your car, right? You turn the wheel and
+
+0:16:28.340,0:16:34.809
+there's a so-called PID controller that actually turns the wheel in proportion to how you turn the steering wheel.
+
+0:16:36.140,0:16:37.650
+And it's a feedback mechanism
+
+0:16:37.650,0:16:41.509
+that basically measures the position of the steering wheel, measures the position of
+
+0:16:41.580,0:16:45.980
+the wheel of the car. And, then, if there is a difference between the two, kind of corrects the wheels of the car so that
+
+0:16:45.980,0:16:48.829
+they match the orientation steering wheel. That's a feedback mechanism.
+
+0:16:49.470,0:16:56.480
+That, the stability of this, and the rules about this basically all come initially from this work.
+
+0:16:57.660,0:17:03.469
+That led to a gentleman by the name of Frank Rosenblatt to basically imagine
+
+0:17:04.320,0:17:10.219
+learning algorithms that modified the weights of very simple neural nets. And what you see here at the bottom
+
+0:17:11.760,0:17:16.760
+the two pictures here [Bottom Left]: This is Frank Rosenblatt, and this is the Perceptron. This was a physical
+
+0:17:17.579,0:17:20.629
+analog computer. It was not a three-line Python program,
+
+0:17:21.600,0:17:23.600
+which is what it is now.
+
+0:17:24.000,0:17:28.190
+It was a gigantic machine with, you know, wires and
+
+0:17:28.890,0:17:31.579
+optical sensors so you could show it pictures. It was very low resolution.
+
+0:17:32.760,0:17:35.690
+And then it had —
+
+0:17:35.690,0:17:41.629
+it had neurons that could compute a weighted sum, and the weights could be adapted. And the weights were potentiometers.
+
+0:17:42.480,0:17:45.740
+The potentiometers had motors on them so they could rotate for the learning algorithm.
+
+0:17:45.740,0:17:50.839
+So it was electro-mechanical. And what he's holding here in his hand is a module of eight weights
+
+0:17:51.480,0:17:56.990
+with (you can count them), with those potentiometers, motorized potentiometers on them.
+
+0:18:02.610,0:18:04.080
+Okay, so
+
+0:18:04.080,0:18:06.710
+that was a little bit of history of where neural nets come from.
+
+0:18:07.440,0:18:14.929
+Another interesting piece of history is that this whole idea of, sort of, trying to build intelligent machines by basically simulating networks of neurons
+
+0:18:15.720,0:18:19.220
+was born in the 40's, kind of took off a little bit in the late-50's, and
+
+0:18:19.530,0:18:23.540
+completely died in the 1960's, in the late-1960s
+
+0:18:24.000,0:18:28.820
+when people realized that with the kind of learning algorithms and architectures that people were proposing at the time
+
+0:18:29.640,0:18:34.910
+you couldn't do much. You know, you could do some basic, very simple pattern recognition, but you couldn't do much.
+
+0:18:36.690,0:18:38.690
+So between
+
+0:18:38.820,0:18:40.820
+1969, roughly, and —
+
+0:18:41.040,0:18:43.040
+or 1968 — and
+
+0:18:43.470,0:18:45.589
+1984, I would say,
+
+0:18:46.410,0:18:48.410
+basically, nobody in the world was working on
+
+0:18:49.100,0:18:50.580
+neural nets
+
+0:18:50.580,0:18:56.449
+except a few kind of isolated researchers mostly in Japan. Japan is its own, kind of,
+
+0:18:57.299,0:19:03.019
+relatively isolated ecosystem for funding research. People don't listen to the same kind of ...
+
+0:19:04.289,0:19:11.269
+... fashions, if you want. And then the field took off again in 1985, roughly, with the
+
+0:19:12.660,0:19:15.229
+emergence of backpropagation [backprop]. So backpropagation is
+
+0:19:15.870,0:19:19.729
+an algorithm for training multi-layer neural nets, as many of you know.
+
+0:19:20.549,0:19:24.139
+People were looking for something like this in the 60's and basically didn't find it.
+
+0:19:24.140,0:19:27.379
+And the reason they didn't find it was because they had the wrong neurons.
+
+0:19:28.049,0:19:29.760
+They were using
+
+0:19:29.760,0:19:31.789
+McCulloch-Pitts neurons that are binary.
+
+0:19:32.820,0:19:38.240
+The way to get backpropagation to work is to use an activation function that is continuous,
+
+0:19:39.179,0:19:41.179
+differentiable, or at least, continuous.
+
+0:19:42.200,0:19:46.400
+And people just didn't have ...
+
+0:19:46.620,0:19:52.600
+you know, the idea of using continuous neurons. And so, they didn't think that you could train those systems with
+
+0:19:53.549,0:19:55.549
+gradient descent, because things were not differentiable.
+
+0:19:56.309,0:20:01.099
+Now there's another reason for this, which is that if you have a neural net with binary neurons,
+
+0:20:01.799,0:20:05.959
+you never need to compute multiplications. You never need to multiply two numbers.
+
+0:20:05.960,0:20:10.640
+You only need to add numbers, right. If your neuron is active, you just add the weight to the weighted sum.
+
+0:20:11.250,0:20:13.250
+If it is inactive, you don't do anything.
+
+0:20:13.260,0:20:14.900
+If you have continuous neurons,
+
+0:20:14.900,0:20:19.280
+you need to multiply the activation of a neuron by a weight to get a contribution to the weighted sum.
+
+0:20:19.380,0:20:24.349
+It turns out, before the 1980's, multiplying two numbers, particularly floating point numbers, on
+
+0:20:24.690,0:20:31.610
+any sort of non-ridiculously expensive computer was extremely slow. And so there was an incentive to not use
+
+0:20:32.429,0:20:34.429
+continuous neurons for that reason.
+
+0:20:34.770,0:20:40.219
+So the reason why backprop didn't emerge earlier than the mid 80's is because that's when, you know,
+
+0:20:40.860,0:20:44.299
+computers became fast enough to do floating point multiplications, pretty much.
+
+0:20:45.870,0:20:50.569
+People didn't think of it this way, but that's, you know, kind of retrospectively, that's pretty much what happened.
+
+0:20:52.530,0:20:53.669
+So,
+
+0:20:53.669,0:20:56.719
+there was a wave of interest in neural nets between 1985 and
+
+0:20:57.750,0:21:01.939
+1995 — lasted about 10 years. In 1995, it died again. People in machine learning
+
+0:21:02.840,0:21:04.850
+basically abandoned the idea of using neural nets.
+
+0:21:05.549,0:21:08.059
+(For reasons that I'm not gonna go into right now.)
+
+0:21:08.700,0:21:10.590
+And that lasted until
+
+0:21:10.590,0:21:17.360
+the late 2000's, early 2010. So, when around 2009/2010 people realized that you could use
+
+0:21:17.700,0:21:19.700
+multi-layer neural nets, training with backprop,
+
+0:21:20.520,0:21:27.109
+and get an improvement for speech recognition. It didn't start with ImageNet. It started with speech recognition, around 2010.
+
+0:21:28.590,0:21:31.610
+And within 18 months of the first papers being published on this,
+
+0:21:33.150,0:21:38.150
+every major player in speech recognition had deployed commercial speech recognition systems that use
+
+0:21:38.730,0:21:45.559
+neural nets. So, if you had an Android phone and you were using any other speech recognition features in an Android phone
+
+0:21:45.900,0:21:47.820
+around 2012
+
+0:21:47.820,0:21:50.480
+that used neural nets. That was probably the first really, really wide
+
+0:21:51.750,0:21:54.650
+deployment of, kind of, modern forms of deep learning, if you want.
+
+0:21:55.409,0:22:02.779
+Then at the end of 2012 / early-2013, the same thing happened in computer vision, where the computer vision community realized
+
+0:22:03.539,0:22:08.389
+deep learning, convolutional nets in particular, work much better than whatever it is that they were using before, and
+
+0:22:08.640,0:22:12.530
+started to switch to using commercial nets, and basically abandoned all previous techniques.
+
+0:22:12.780,0:22:18.319
+So that created a second revolution, now in computer vision. And then three years later, around 2016 or so,
+
+0:22:19.200,0:22:25.939
+the same thing happened in natural language processing — in language translation, and things like this: 2015/16.
+
+0:22:28.380,0:22:32.270
+And, now we're going to see — it's not happened yet — but we're going to see the same revolution occur
+
+0:22:33.299,0:22:38.479
+in things like robotics, and control, and, you know, a whole bunch of application areas.
+
+0:22:40.650,0:22:42.650
+But let me get to this:
+
+0:22:44.520,0:22:47.989
+Okay. So, you all know what supervised learning is, I'm sure.
+
+0:22:48.960,0:22:53.960
+And this is really what the vast majority — and not the vast majority —
+
+0:22:54.600,0:22:56.600
+90-some percent
+
+0:22:56.760,0:23:03.469
+applications of deep learning use supervised learning as kind of the main thing. So supervised learning is the process by which
+
+0:23:04.049,0:23:07.219
+you collect a bunch of pairs of inputs and outputs
+
+0:23:07.799,0:23:13.549
+of examples of, let's say, images together with a category (if you want to do image recognition). Or a bunch of
+
+0:23:14.070,0:23:16.070
+audio clips with their text
+
+0:23:16.720,0:23:21.030
+transcription: a bunch of text in one language with the transcription in another language, etc.
+
+0:23:22.360,0:23:24.360
+and you feed
+
+0:23:24.549,0:23:29.099
+one example to the machine. It produces an output. If the output is correct
+
+0:23:29.100,0:23:32.400
+you don't do anything, or you don't do much. If the output is incorrect
+
+0:23:32.400,0:23:35.910
+then you tweak the parameters of the machine. (Think of it as a parametrized
+
+0:23:36.580,0:23:38.580
+function of some kind.)
+
+0:23:39.100,0:23:43.980
+And you tweak the parameters of that function in such a way that the output gets closer to the when you want.
+
+0:23:44.290,0:23:47.249
+Okay. This is in non-technical terms what supervised learning is all about.
+
+0:23:49.750,0:23:53.280
+Show a picture of a car, if the system doesn't say car, tweak the
+
+0:23:54.100,0:23:57.630
+parameters. The parameters in the neural net are going to be the weights,
+
+0:23:58.390,0:24:02.640
+you know, that compute weighted sums in those simulated neurons.
+
+0:24:03.490,0:24:04.660
+tweak
+
+0:24:04.660,0:24:07.169
+the knobs so that the output gets closer to the one you want.
+
+0:24:07.840,0:24:12.840
+The trick in neural nets is: How do you figure out in which direction and by how much to tweak the knobs so that the output
+
+0:24:12.840,0:24:14.840
+gets closer to the one you want?
+
+0:24:15.640,0:24:20.939
+That's what gradient computation and backpropagation is about. But before we get to this,
+
+0:24:22.179,0:24:28.529
+a little bit of history again. So there was a flurry of models, basic models for
+
+0:24:29.500,0:24:33.689
+classification. You know, starting with the Perceptron, there was another competing model called the Adaline,
+
+0:24:33.690,0:24:39.210
+which is on the top right here. They are based on the same kind of basic architectures: compute the weighted sum of inputs
+
+0:24:39.730,0:24:41.730
+compared to a threshold. If it's above the threshold,
+
+0:24:42.429,0:24:44.489
+turn on. if it's below the threshold, turn off.
+
+0:24:45.490,0:24:50.910
+What you see, the Adaline here, the thing that Bernie Widrow is tweaking is actually a physical
+
+0:24:51.850,0:24:53.770
+analog computer again.
+
+0:24:53.770,0:24:59.249
+So it's like the Perceptron, it was much less, you know, much smaller, in many ways.
+
+0:24:59.860,0:25:05.819
+The reason I tell you about this is that the the Perception actually was a two layer neural net, a two layer neural net in
+
+0:25:05.820,0:25:07.820
+which the second layer was trainable
+
+0:25:08.860,0:25:14.729
+with adaptive weights. But the first layer was fixed. In fact, most of the time with most experiments it was,
+
+0:25:15.340,0:25:18.720
+It was determined randomly. You would, like, randomly connect
+
+0:25:19.360,0:25:21.360
+input pixels of an image to
+
+0:25:22.000,0:25:25.709
+neurons that would, you know, be threshold neurons with random weights, essentially.
+
+0:25:27.360,0:25:31.169
+This is what they called the associative layer. And that basically
+
+0:25:32.980,0:25:38.730
+became the basis for the sort of conceptual design of a pattern recognition system for the next four decades.
+
+0:25:41.110,0:25:43.110
+I want to say four decades.
+
+0:25:44.080,0:25:46.110
+Yeah, pretty much.
+
+0:25:49.269,0:25:51.868
+So, that model is one by which you take an input,
+
+0:25:52.299,0:25:56.008
+you run it through a feature extractor that is supposed to extract the relevant
+
+0:25:56.740,0:26:00.059
+characteristics of the input that will be useful for the task.
+
+0:26:01.210,0:26:05.189
+So, you want to recognize a face? Can you detect an eye? How do you detect an eye?
+
+0:26:05.190,0:26:07.190
+Well, there is probably a dark circle somewhere.
+
+0:26:07.539,0:26:09.539
+Things like that, right? You want to
+
+0:26:10.360,0:26:15.389
+recognize a car, you know. Well, they are kind of dark, round things, etc.
+
+0:26:17.230,0:26:21.869
+So, the problem here — and so, what this feature extractor produces is a vector of
+
+0:26:22.659,0:26:26.309
+features, which are things that may be numbers, or they may be on or off.
+
+0:26:26.320,0:26:32.879
+Okay, so it's just a list of numbers, a vector. And you're going to feed that vector to trainable classifier. In the case of
+
+0:26:33.610,0:26:38.429
+Perceptron or a simple neural net, it's gonna be just the system that computes a weighted sum, compares it to a threshold.
+
+0:26:41.499,0:26:48.269
+The problem is that you have to engineer the feature extractor. So the entire literature of pattern recognition
+
+0:26:48.789,0:26:50.789
+(statistical pattern recognition at least)
+
+0:26:51.100,0:26:56.069
+and a lot of computer vision (at least the part of computer vision that's interested in recognition) was focused on
+
+0:26:56.559,0:27:02.038
+this part: the feature extractor. How do you design a feature extractor for a particular problem? You want to do,
+
+0:27:02.039,0:27:05.849
+I don't know, Hangul character recognition. What are the relevant
+
+0:27:06.519,0:27:11.489
+features for recognizing Hangul? And how can you extract them using all kinds of algorithmic tricks?
+
+0:27:12.009,0:27:15.839
+How do you pre-process the images? You know, how do you normalize their size? You know, things like that.
+
+0:27:16.019,0:27:18.809
+How do you skeletonize them? How do you segment them from their background?
+
+0:27:18.879,0:27:24.179
+So the entire literature was devoted to this [Feature Extractor], very very little was devoted to that [Trainable Classifier].
+
+0:27:31.309,0:27:36.849
+And what deep learning brought to the table is this idea that instead of having this kind of two-stage process
+
+0:27:37.640,0:27:40.629
+for pattern recognition, where one stage is built by hand,
+
+0:27:41.510,0:27:44.739
+where the representation of the input is the result of,
+
+0:27:45.500,0:27:48.159
+you know, some hand-engineered program, essentially.
+
+0:27:48.830,0:27:51.549
+The idea of deep learning is that you learn the entire task end-to-end.
+
+0:27:52.400,0:27:54.400
+Okay, so basically you build your
+
+0:27:55.340,0:27:58.299
+pattern recognition system, or whatever it is that you want to do with it
+
+0:27:59.409,0:28:02.559
+as a cascade or a sequence of
+
+0:28:03.409,0:28:05.859
+modules. All of those modules have tunable parameters.
+
+0:28:07.250,0:28:09.880
+All of them have some sort of nonlinearity in them.
+
+0:28:11.390,0:28:15.249
+And then you stack them, you stack multiple layers of them, which is why it's called deep learning.
+
+0:28:15.280,0:28:20.349
+So the only reason for the "deep" word in deep learning is the fact that there are multiple layers. There is nothing more to that.
+
+0:28:20.720,0:28:26.530
+And then you train the entire thing end-to-end. So the complication here, of course, is the fact that
+
+0:28:27.919,0:28:32.319
+the parameters that are in the first box: How do you know how to tune them so that the output does—
+
+0:28:32.320,0:28:34.809
+you know, goes closer to the output you want?
+
+0:28:36.140,0:28:38.439
+That's what backpropagation does for you.
+
+0:28:39.409,0:28:42.579
+Okay, why do all those modules have to be
+
+0:28:43.340,0:28:49.390
+nonlinear? It's because, if you have two successive modules, and they're both linear, you can collapse them into a single linear.
+
+0:28:50.270,0:28:52.270
+Right, the product of two linear
+
+0:28:53.210,0:28:59.350
+functions, or the composition of two linear functions is a linear function. Take a vector multiply by a matrix and then multiply it by a second matrix.
+
+0:28:59.659,0:29:05.049
+It's as if you had pre-computed the product of those two matrices, and then multiplied the input vector by that
+
+0:29:06.919,0:29:10.839
+composite matrix. So there's no point having multiple layers if those layers are linear.
+
+0:29:11.960,0:29:15.819
+Okay, there's actually a point, but it's a minor point.
+
+0:29:19.250,0:29:23.049
+So, since they have to be nonlinear, what is the simplest
+
+0:29:24.620,0:29:27.939
+multi-layer architecture you can imagine that has
+
+0:29:29.270,0:29:34.989
+arameters that you can tune — things like weights in the neural nets — and is non-linear?
+
+0:29:38.140,0:29:40.140
+And you realize quickly that
+
+0:29:41.690,0:29:43.690
+it has to look something like this:
+
+0:29:44.960,0:29:46.670
+So ...
+
+0:29:46.670,0:29:52.209
+Take an input. An input can be represented as a vector, right. An image is just a list of numbers.
+
+0:29:52.580,0:29:55.060
+Think of it as a vector, ignore the fact that it's an image for now.
+
+0:29:55.940,0:30:02.379
+Piece of audio, whatever it is that your sensors or your data set gives you, is a vector.
+
+0:30:03.380,0:30:07.089
+Multiply this vector by a matrix. The coefficients in this matrix are the tunable parameters.
+
+0:30:08.990,0:30:13.150
+And then take the resulting vector, right — when you multiply a matrix by a vector, you get a vector.
+
+0:30:15.440,0:30:19.089
+Pass each component of this vector through a nonlinear function.
+
+0:30:20.480,0:30:22.100
+And,
+
+0:30:22.100,0:30:26.140
+if you want to have the simplest possible nonlinear function, use something like
+
+0:30:26.360,0:30:32.620
+what's shown at the top here [ReLU(x) = max(x, 0)], which people in neural nets call the ReLU; people in engineering call this half wave rectification;
+
+0:30:33.680,0:30:35.680
+people in math call this positive part.
+
+0:30:37.040,0:30:39.040
+Whatever you want to call it, okay.
+
+0:30:40.520,0:30:46.420
+So, apply this nonlinear function to every component of the vector that results from multiplying the input vector by the matrix.
+
+0:30:47.870,0:30:54.579
+Okay. Now you get a new vector, which has lots of zeros in it, because whenever the weighted sum was less than zero,
+
+0:30:55.340,0:31:01.900
+the output is zero, if you pass through the ReLU. And then repeat the process: Take that vector, multiply it by a weight matrix;
+
+0:31:03.560,0:31:10.449
+pass the result through point wise non-linearity; take the result, pass it — multiplied by a matrix — pass the result through
+
+0:31:11.180,0:31:12.560
+nonlinearities.
+
+0:31:12.560,0:31:14.739
+That's a basic neural net, essentially.
+
+0:31:15.680,0:31:17.680
+Okay now
+
+0:31:17.780,0:31:21.639
+Why is that called a neural net at all? It's because when you take a vector and you multiply
+
+0:31:22.340,0:31:24.340
+a vector by a matrix,
+
+0:31:25.610,0:31:27.230
+to compute each
+
+0:31:27.230,0:31:31.540
+component of the output, you actually compute a weighted sum of the components of the input
+
+0:31:32.030,0:31:37.810
+by a corresponding row in the matrix, right. So this little symbol here — there's a bunch of
+
+0:31:39.500,0:31:41.500
+components of the vector
+
+0:31:41.690,0:31:43.690
+coming into this layer. And,
+
+0:31:44.060,0:31:50.139
+you take a row of the matrix, compute a weighted sum of those values where the weights are the
+
+0:31:51.029,0:31:53.749
+values in the row of that matrix, and that gives you a
+
+0:31:54.419,0:31:57.589
+weighted sum. And you do this for every row that gives you the
+
+0:31:58.860,0:31:59.750
+result, right.
+
+0:31:59.750,0:32:05.839
+So, the number of units after the multiplication by a matrix is going to be equal to the number of rows of your matrix.
+
+0:32:06.929,0:32:10.939
+And the number of columns of the matrix, of course has to be equal to the size of the input.
+
+0:32:16.830,0:32:20.539
+Okay. So supervised learning — in slightly more formal terms than the one I showed earlier
+
+0:32:21.630,0:32:25.760
+— is the idea by which you're going to compare the output that the system produces...
+
+0:32:26.490,0:32:32.539
+So, right, you show an input, you run through the neural net, you get an output. You're going to compare this output with a target output.
+
+0:32:33.510,0:32:35.510
+And you are going to have an objective function,
+
+0:32:36.090,0:32:40.819
+a loss module, that computes a distance, a discrepancy,
+
+0:32:41.970,0:32:43.970
+penalty — whatever you want to call it.
+
+0:32:45.450,0:32:47.990
+Divergence — okay, there's various names for it.
+
+0:32:50.490,0:32:52.939
+And then you're going to compute the average of that.
+
+0:32:53.130,0:32:56.719
+So the output of this cost function is a scalar, right.
+
+0:32:56.720,0:33:01.669
+It computes the distance, for example, Euclidean distance between a target vector and the vector that
+
+0:33:02.429,0:33:06.168
+the neural net produces, the deep learning system system produces.
+
+0:33:07.950,0:33:12.289
+And then you can compute the average of this cost function, which is just a scalar
+
+0:33:12.929,0:33:15.288
+You're going to average it over a training set, right.
+
+0:33:15.289,0:33:19.879
+So, a training set is composed of a bunch of pairs of inputs and outputs; compute the average of this over the training set.
+
+0:33:20.279,0:33:25.639
+The function you want to minimize with respect to the parameters of the system (the tunable knobs) is that average.
+
+0:33:26.340,0:33:31.669
+Okay. So, you want to find the value of the parameters that minimizes the average error between the
+
+0:33:32.220,0:33:35.929
+output you want and the output you get, averaged over a training set of samples.
+
+0:33:47.200,0:33:49.180
+So...
+
+0:33:49.180,0:33:55.080
+I'm sure the vast majority of people here, sort of, have at least an intuitive understanding of what gradient descent is.
+
+0:33:55.270,0:33:58.889
+So, basically, the way to minimize this is to compute the gradient, right.
+
+0:33:58.890,0:34:03.629
+It's like you are in a mountain, you're lost in the mountain (and
+
+0:34:04.150,0:34:06.239
+it's a very smooth mountain), but
+
+0:34:07.900,0:34:12.269
+there is fog and it's night, and you want to go to the village in the valley.
+
+0:34:13.090,0:34:15.719
+And so, the best thing you can do is
+
+0:34:16.480,0:34:21.870
+you turn around and you see which way is down, and you take a step down in the direction of steepest descent.
+
+0:34:22.570,0:34:29.820
+Okay. So, this search for the direction that goes down: that's called "computing a gradient" or, technically, a negative gradient.
+
+0:34:30.760,0:34:34.920
+Okay, then you take a step down. That's taking a step down in the
+
+0:34:36.220,0:34:39.540
+direction of negative gradient. And if you keep doing this and your steps are small enough —
+
+0:34:40.600,0:34:45.179
+small enough so that when you take a step, you don't jump to the other side of the mountain — then
+
+0:34:46.540,0:34:49.019
+eventually you're going to converge to the valley, if
+
+0:34:49.660,0:34:56.699
+the valley is convex. Which means that if there is no, kind of, lake, no mountain lakes in the middle where, you know,
+
+0:34:56.700,0:34:58.700
+there's kind of a
+
+0:34:58.990,0:35:02.550
+minimum and you're going to get stuck in that minimum the valley might be lower, but you don't see it.
+
+0:35:03.580,0:35:06.569
+Okay. So that's why convexity
+
+0:35:07.390,0:35:09.809
+is important as a concept.
+
+0:35:12.880,0:35:18.419
+But here is another concept, which is the concept of stochastic gradient, which I'm sure again a lot of you have heard [of].
+
+0:35:18.420,0:35:20.260
+I'll come back to that
+
+0:35:20.260,0:35:25.890
+in more detail. The objective function you're computing is an average over many many samples.
+
+0:35:27.220,0:35:29.939
+You can compute the objective function in its gradient
+
+0:35:31.150,0:35:33.900
+over the entire training set by averaging the
+
+0:35:34.930,0:35:36.930
+the value of the entire training set.
+
+0:35:37.540,0:35:40.979
+But it turns out it is more efficient to just take one sample or a small group of samples,
+
+0:35:41.800,0:35:43.390
+computing the error that
+
+0:35:43.390,0:35:49.109
+this sample makes, then computing the gradient of that error with respect to the parameters and taking a step.
+
+0:35:49.840,0:35:51.340
+A small step.
+
+0:35:51.340,0:35:52.810
+Then a new
+
+0:35:52.810,0:35:54.959
+sample comes in — you're going to get another
+
+0:35:56.610,0:36:02.509
+value for the error and another value for the gradient, which may be in a different direction because it's a different sample.
+
+0:36:03.420,0:36:05.190
+And take a step in that direction.
+
+0:36:05.190,0:36:08.540
+And if you keep doing this, you're gonna go down the
+
+0:36:09.840,0:36:15.289
+the cost surface but in kind of a noisy way — there's going to be a lot of fluctuations.
+
+0:36:16.020,0:36:21.469
+So what is shown here is an example of this. This is stochastic gradient applied to a very simple problem with two dimensions
+
+0:36:21.470,0:36:23.470
+where you only have two weights.
+
+0:36:23.550,0:36:27.590
+And it looks kind of semi-periodic because the examples are always shown in the same order,
+
+0:36:27.590,0:36:32.419
+which is not what you're supposed to do with stochastic gradient. But as you can see the path is really erratic.
+
+0:36:32.670,0:36:35.000
+Why do people use this? There's various reasons.
+
+0:36:36.060,0:36:41.509
+One reason is that, empirically it converges much, much faster, particularly if you have a very large training set.
+
+0:36:42.660,0:36:45.680
+And the other reason is that you actually get better generalization in the end.
+
+0:36:45.680,0:36:49.280
+So if you measure the performance of the system on a separate set that you —
+
+0:36:49.280,0:36:53.449
+I assume you all know the concepts of "training set" and "test set" and "validation set" but —
+
+0:36:54.570,0:36:58.189
+So if you test the performance of the system on a different set, you get generally better
+
+0:36:58.380,0:37:03.439
+generalization if you use stochastic gradient than if you actually use the real, true gradient descent.
+
+0:37:05.300,0:37:07.300
+The problem is... yes
+
+0:37:07.300,0:37:15.420
+[inaudible student question]
+
+0:37:15.540,0:37:16.770
+No.
+
+0:37:16.770,0:37:19.880
+It's worse. So computing the entire gradient of the entire dataset —
+
+0:37:20.430,0:37:23.750
+It is computationally feasible. I mean you can do it. It's
+
+0:37:24.360,0:37:26.360
+not any more expensive than...
+
+0:37:28.740,0:37:31.000
+...you know... [inaudible student comment]
+
+0:37:31.020,0:37:32.850
+It'll be less noisy but it will be slower.
+
+0:37:32.850,0:37:36.949
+So let me tell you why: I mean, this is something we're gonna talk about again when we talk about optimization.
+
+0:37:37.320,0:37:41.630
+But let me tell you: I give you a training set with a million training samples. It's actually
+
+0:37:42.450,0:37:49.669
+100 repetitions of the same training sample with 10,000 samples. Okay. So my actual sample is 10,000 training samples.
+
+0:37:50.520,0:37:54.679
+I replicate it 100 times and I claim that, you know,
+
+0:37:55.470,0:38:00.500
+I scrambled it. I tell you here is my training set with a million training samples.
+
+0:38:01.260,0:38:03.290
+So if you do a full gradient, you're going to
+
+0:38:04.470,0:38:08.780
+compute the same values a hundred times. You're gonna spend a hundred times more work than necessary.
+
+0:38:09.930,0:38:11.759
+Without knowing it.
+
+0:38:11.759,0:38:18.409
+Okay. So this only works because of repetition. But it also works in, kind of, more normal situations in machine learning where you have
+
+0:38:18.410,0:38:20.410
+samples that are, have a lot of
+
+0:38:21.239,0:38:24.919
+redundancy in them, like very many samples are very similar to each other, etc.
+
+0:38:25.229,0:38:30.739
+So if there is any kind of coherence — if your system is capable of generalization,
+
+0:38:31.079,0:38:34.458
+then that means stochastic gradient is going to be more efficient because
+
+0:38:34.650,0:38:38.539
+if you don't stochastic gradient, you're not going to be able to take advantage of that redundancy.
+
+0:38:40.829,0:38:43.728
+So that's one case where noise is good for you.
+
+0:38:46.109,0:38:47.699
+Okay.
+
+0:38:47.699,0:38:52.159
+Don't pay attention to the formula. Don't get scared because we're going to come back to this in more detail.
+
+0:38:52.739,0:38:53.789
+But,
+
+0:38:53.789,0:38:56.059
+why is backpropagation called backpropagation?
+
+0:38:56.849,0:38:58.849
+Again, this is very informal.
+
+0:39:00.329,0:39:04.728
+It's basically a practical application of Chain Rule. So you can think of
+
+0:39:05.309,0:39:10.669
+a neural net of the type that I showed you earlier as a bunch of modules that are stacked on top of each other.
+
+0:39:11.339,0:39:13.968
+And you can think of this as compositions of functions.
+
+0:39:14.910,0:39:20.389
+And you all know the basic rule of calculus. You know, how do you compute the derivative of a function
+
+0:39:21.059,0:39:22.920
+composed with another function?
+
+0:39:22.920,0:39:27.709
+Well the derivative of, you know, F composed with G is the
+
+0:39:28.319,0:39:32.208
+derivative of F at the point of G of X,
+
+0:39:32.459,0:39:36.559
+multiplied by the derivative of G at the point X. Right. So you get the product of the two
+
+0:39:37.079,0:39:42.498
+derivatives. So this is the same thing except that the functions, instead of being scalar functions, are vector functions.
+
+0:39:42.499,0:39:46.429
+They get vectors as inputs and the previous vectors as outputs. More generally, actually,
+
+0:39:46.430,0:39:50.629
+they take multi-dimensional arrays as input and multi-dimensional arrays as output, but that doesn't matter.
+
+0:39:52.440,0:39:55.729
+Basically, what is the generalization of this chain rule
+
+0:39:56.670,0:39:58.670
+in the case of
+
+0:39:59.880,0:40:04.400
+functional modules that have multiple inputs, multiple outputs that you can view as functions? Right.
+
+0:40:06.420,0:40:11.599
+And, basically, it's the same rule if you, kind of, blindly apply them — it's the same rule as you applied for,
+
+0:40:12.449,0:40:14.449
+as you apply for regular derivatives.
+
+0:40:15.150,0:40:17.150
+(Except here you have to use partial derivatives.)
+
+0:40:18.719,0:40:20.630
+You know,
+
+0:40:20.630,0:40:24.520
+what you see in the end is that if you want to compute the derivative of
+
+0:40:25.369,0:40:27.909
+the difference between the output you want and the output you get,
+
+0:40:27.910,0:40:32.530
+which is the value of your objective function, with respect to any variable inside of the network,
+
+0:40:32.960,0:40:37.689
+then you have to kind of back, you know, propagate derivatives backwards and kind of multiply things on the way.
+
+0:40:37.970,0:40:41.560
+All right. We'll be much more formal about this next week. For now,
+
+0:40:42.320,0:40:46.449
+you just know why it's called backpropagation: because it applies to multiple layers.
+
+0:40:53.960,0:40:59.230
+OK, so the the picture I showed earlier of this neural net
+
+0:41:00.440,0:41:04.179
+is nice, but what if the input is actually an image? Right.
+
+0:41:04.180,0:41:11.139
+So, an image, even sort of a relatively low resolution image, is typically like, you know, a few hundred pixels on the side.
+
+0:41:12.290,0:41:14.290
+OK. So let's say
+
+0:41:15.470,0:41:21.909
+256 x 256, to take a random example. OK, a car image: 256 x 256. So it's got
+
+0:41:23.390,0:41:30.369
+65,536 pixels, times three, because you have R, G, and B components to it for, you know, you have three value for each pixels. And so
+
+0:41:30.890,0:41:33.369
+that's, you know, roughly two hundred thousand values.
+
+0:41:33.980,0:41:37.659
+OK, so your vector here is a vector with two hundred thousand components.
+
+0:41:40.580,0:41:47.379
+If you have a matrix that is going to multiply this vector, this matrix is going to have to have two hundred thousand rows —
+
+0:41:48.920,0:41:50.600
+Columns, I'm sorry.
+
+0:41:50.600,0:41:51.619
+And
+
+0:41:51.619,0:41:53.829
+depending on how many units you have here in the first layer,
+
+0:41:54.260,0:41:59.080
+there's going to be a 200,000 x, you know, maybe a large number. That's a huge matrix.
+
+0:41:59.080,0:42:02.649
+Right. Even if it's 200,000 x 100,000. So you have a
+
+0:42:03.260,0:42:05.260
+compression in the first layer
+
+0:42:06.350,0:42:12.759
+you know, that's already a lot of—very, very large matrix: billions.
+
+0:42:16.250,0:42:19.090
+So it's not really practical to think of this as a
+
+0:42:19.160,0:42:23.200
+full matrix. What you're going to have to do if you want to deal with things like images is
+
+0:42:23.840,0:42:30.009
+make some hypothesis about the structure of this matrix so that it's not a completely full matrix that, you know,
+
+0:42:31.760,0:42:33.580
+connects everything to everything.
+
+0:42:33.580,0:42:35.450
+That would be impractical.
+
+0:42:35.450,0:42:41.020
+At least for a lot of practical applications. So this is where inspiration from the brain comes back.
+
+0:42:41.960,0:42:43.910
+There was some work,
+
+0:42:43.910,0:42:48.670
+classic work, in neuroscience in the 1960s by the gentlemen at the top here:
+
+0:42:49.280,0:42:53.709
+Hubel and Wiesel. They actually won a Nobel Prize for this in the in the 70s
+
+0:42:53.710,0:42:58.900
+but their workforce from the late 50s—early 60s. And what they did was that they poked electrode in the
+
+0:42:59.210,0:43:01.270
+visual cortex of various animals: you know, cats,
+
+0:43:01.940,0:43:03.320
+monkeys,
+
+0:43:03.320,0:43:05.240
+mice, you know, whatever.
+
+0:43:05.240,0:43:07.300
+(I think they like cats a lot.)
+
+0:43:08.180,0:43:09.530
+And
+
+0:43:09.530,0:43:11.510
+they tried to figure out
+
+0:43:11.510,0:43:14.770
+what the neurons in the visual cortex were doing.
+
+0:43:15.830,0:43:17.830
+And what they discovered was that—
+
+0:43:18.500,0:43:25.120
+so, first of all, well, this is a human brain. But, I mean, this chart is from much later. But all mammalian
+
+0:43:27.470,0:43:31.929
+visual systems is organized in similar way. You have signals coming in to your eyes,
+
+0:43:32.690,0:43:39.280
+striking your retina. You have a few layers of neurons in your retina in front of your photoreceptors that, kind of, pre-process the
+
+0:43:40.250,0:43:43.270
+signal, if you want. They kind of compress it, because you can't have—
+
+0:43:44.330,0:43:48.610
+you know the human eye is something like a hundred million pixels.
+
+0:43:49.280,0:43:52.090
+So it's like a hundred million pixel camera, megapixel camera.
+
+0:43:52.640,0:43:56.859
+But the problem is you cannot have a hundred million fibers coming out of your eyes, because otherwise
+
+0:43:56.930,0:43:59.050
+your optical nerve would be this big. And you
+
+0:43:59.990,0:44:01.990
+wouldn't be able to move your eyes.
+
+0:44:03.020,0:44:06.880
+So those neurons in front of your retina do
+
+0:44:07.640,0:44:13.509
+compression. They don't do JPEG compression, but they do compression. So that the signal can be compressed to one million fibers. Right.
+
+0:44:13.510,0:44:15.969
+You have one million fibers coming out of each of your eyes. And
+
+0:44:17.420,0:44:24.940
+that makes your, you know, optical nerve about this big, which means, you know, you can carry the signal and turn your eyes.
+
+0:44:26.630,0:44:30.999
+This is actually a mistake that evolution made for vertebrates.
+
+0:44:33.350,0:44:38.019
+Invertebrates are not like that. Invertebrates have actually—so, it's a big mistake because
+
+0:44:38.810,0:44:40.220
+the wires
+
+0:44:40.220,0:44:43.120
+collecting the information from your retina,
+
+0:44:45.560,0:44:51.039
+because the neurons that process the signal in front of your retina, the wires have to kind of—
+
+0:44:52.700,0:44:56.050
+it'll be in front of your retina, and so blocking part of the view, if you want. And
+
+0:44:56.270,0:44:59.199
+then they have to punch a hole through your retina to get through your brain.
+
+0:44:59.660,0:45:04.780
+So there's a blind spot in your visual field because that's where your optical nerve punches through your retina.
+
+0:45:07.070,0:45:08.380
+So it's kind of ridiculous
+
+0:45:08.380,0:45:12.189
+if you have a camera like this to have the wires coming out the front and then,
+
+0:45:12.290,0:45:17.979
+you know, dig a hole in your sensor to get the wires back. It's much better if the wires come out the back, right? And
+
+0:45:19.100,0:45:21.519
+vertebrates got that wrong. Invertebrates got it right. So,
+
+0:45:23.630,0:45:28.509
+you know, like squid and octopus actually have wires coming out the back. They're much luckier.
+
+0:45:30.890,0:45:32.890
+But anyway.
+
+0:45:33.620,0:45:41.079
+So, the signal goes from your eyes to a little piece of brain called the lateral geniculate nucleus,
+
+0:45:41.080,0:45:44.199
+which is under your brain actually—and like at the basis of it.
+
+0:45:44.750,0:45:46.750
+It does a little bit of
+
+0:45:46.760,0:45:48.820
+contrast normalization. We'll talk about this
+
+0:45:49.730,0:45:51.730
+again in a few lectures.
+
+0:45:52.610,0:45:53.930
+And,
+
+0:45:53.930,0:45:59.470
+and, then that goes to the back of your brain where the the primary visual cortex area called v1 is.
+
+0:45:59.960,0:46:06.520
+It's called V1 in humans. And there's something called the ventral hierarchy: V1, V2, V4 (IT),
+
+0:46:06.770,0:46:11.020
+which is a bunch of brain areas going from the back to the side. And
+
+0:46:11.930,0:46:17.260
+in the infero-temporal cortex right here, this is where object categories are represented.
+
+0:46:17.260,0:46:19.989
+So, when you go around and you see your grandmother,
+
+0:46:19.990,0:46:24.429
+you have a bunch of neurons firing that represent your grandmother in this area. And it doesn't matter
+
+0:46:25.040,0:46:27.040
+what your grandmother is wearing,
+
+0:46:27.740,0:46:33.280
+you know, what what position she is in, if there is occlusion or whatever—those neurons will fire if you see your grandmother.
+
+0:46:37.550,0:46:39.550
+So the sort of category-level things.
+
+0:46:39.800,0:46:45.699
+And those things have been discovered by experiments with patients that had to have their skull open for a few weeks, and
+
+0:46:46.610,0:46:51.880
+where, you know, people poked electrode and had them watch movies and realize this is known that turns on if
+
+0:46:52.070,0:46:55.750
+Jennifer Aniston is on the movie. And it only turns on for Jennifer Aniston.
+
+0:47:03.800,0:47:05.800
+So with the
+
+0:47:06.740,0:47:12.849
+idea that somehow the visual context, you know, can do pattern recognition and seems to have this sort of hierarchical structure,
+
+0:47:13.880,0:47:15.880
+multi-layer structure,
+
+0:47:15.920,0:47:18.309
+there's also the idea that the visual
+
+0:47:19.370,0:47:26.920
+process is essentially a feed-forward process. So the process by which you recognize an everyday object is very fast. It takes about 100 milliseconds.
+
+0:47:26.920,0:47:32.139
+There's barely enough time for the signal to go from your retina to the infero-temporal cortex.
+
+0:47:32.140,0:47:36.220
+It takes about, it's a few millisecond delay per neuron that you have to go through.
+
+0:47:36.290,0:47:41.860
+100 milliseconds you barely have time to, for just you know, a few spikes to go through the entire system.
+
+0:47:41.860,0:47:48.460
+So there's no time for like, you know, recurrent connections and like, you know, etc. Doesn't mean that there are no recurrent connections.
+
+0:47:48.460,0:47:50.460
+There's tons of them but somehow
+
+0:47:50.960,0:47:52.960
+fast recognition is done without them.
+
+0:47:53.630,0:47:57.549
+So this is called the the feed-forward ventral pathway. And
+
+0:47:58.490,0:48:03.579
+this gentleman here, Kunihiko Fukushima, had the idea of taking inspiration from
+
+0:48:05.210,0:48:11.470
+Hubel and Wiesel in the 70s, and sort of built a neural net model on the computer that had this idea that,
+
+0:48:13.250,0:48:14.440
+first there were layers,
+
+0:48:14.440,0:48:21.519
+But also the idea that Hubel and Wiesel discovered, that individual neurons only react to a small part of the visual field.
+
+0:48:22.100,0:48:24.100
+So they poked electrodes in
+
+0:48:24.500,0:48:28.359
+neurons in V1 and they realized that this neuron in V1 only reacts to
+
+0:48:30.140,0:48:34.000
+motifs that appear in a very small area in the visual field.
+
+0:48:35.780,0:48:40.780
+And then the neuron next to it will react to another area that's next to the first one, right.
+
+0:48:40.780,0:48:43.269
+So the neurons seem to be organized in what's called a retinotopic way,
+
+0:48:43.270,0:48:48.190
+which means that neighboring neurons react to neighboring regions in the visual field.
+
+0:48:48.560,0:48:54.100
+What they also realized is that the group of neurons that all react to the same area in the visual field, and they seem to
+
+0:48:54.170,0:48:58.750
+turn on for edges at a particular orientation. So one neuron will turn on for, if
+
+0:48:59.300,0:49:04.210
+it's receptive field has an edge, a vertical edge, and then the one next to it if the
+
+0:49:04.430,0:49:07.059
+edge is a little slanted, and then the one next to it if the edge is a little
+
+0:49:07.640,0:49:09.590
+rotated, etc.
+
+0:49:09.590,0:49:11.679
+And so they had this picture of
+
+0:49:12.650,0:49:14.630
+V1 basically as
+
+0:49:14.630,0:49:17.890
+oriented, orientation selectivity, so neurons that look at a local
+
+0:49:18.290,0:49:24.790
+field and then react to orientations. And those groups of neurons that react to multiple orientations are replicated over the entire visual field.
+
+0:49:25.430,0:49:30.159
+So this guy Fukushima said, well, why don't I build a neural net that that does this? I'm not going to,
+
+0:49:30.680,0:49:34.450
+you know, necessarily insist that my system extracts oriented
+
+0:49:34.970,0:49:37.629
+features, but I'm going to use some sort of unsupervised learning algorithm to
+
+0:49:38.480,0:49:39.340
+to train it.
+
+0:49:39.340,0:49:44.769
+So he was not training his system end-to-end. He was training it layer by layer in some sort of unsupervised fashion,
+
+0:49:45.230,0:49:47.230
+which I'm not going to go into the details of.
+
+0:49:48.050,0:49:50.649
+And then he used another concept from,
+
+0:49:51.350,0:49:55.449
+so he used the concept that those neurons were replicated across the visual field, and
+
+0:49:55.820,0:49:59.949
+then he used another concept from Hubel and Wiesel called complex cells.
+
+0:50:00.110,0:50:06.459
+So complex cells are units that pool the activities of a bunch of simple cells, which are those
+
+0:50:06.980,0:50:08.570
+oriented
+
+0:50:08.570,0:50:10.959
+orientation-selective units. And
+
+0:50:12.380,0:50:14.380
+they pull them in such a way that if
+
+0:50:15.109,0:50:18.459
+an orientation, if an oriented edge is moved a little bit
+
+0:50:19.310,0:50:22.359
+it will activate different simple cells, but the complex cell,
+
+0:50:23.180,0:50:27.669
+since it integrates the outputs from all those simple cells, will stay activated
+
+0:50:28.160,0:50:31.540
+until the edge moves beyond its receptive field.
+
+0:50:32.180,0:50:36.159
+So those complex cells build a little bit of shift invariance in the representation.
+
+0:50:36.160,0:50:41.290
+You can shift an edge a little bit, and it will not change the activation the activity of one of those complex cells.
+
+0:50:42.500,0:50:44.480
+So that's
+
+0:50:44.480,0:50:49.810
+what we now call "convolution" and "pooling" in the context of convolutional nets.
+
+0:50:50.840,0:50:52.840
+And that basically is what
+
+0:50:54.350,0:50:59.139
+led me in the mid-80s or late-80s to come up with convolutional nets. So they are basically
+
+0:51:00.920,0:51:07.210
+networks where the connections are local; they are replicated across the visual field; and
+
+0:51:08.150,0:51:10.150
+you
+
+0:51:10.730,0:51:12.730
+intersperse,
+
+0:51:13.550,0:51:21.230
+sort of, feature detection layers that detect those local features with pooling operation. We'll talk about this at length in three weeks.
+
+0:51:21.230,0:51:23.510
+So I'm not going to go to into every detail.
+
+0:51:24.480,0:51:26.040
+But it has,
+
+0:51:26.040,0:51:29.719
+it recycles this idea from Hubel and Wiesel and Fukushima that
+
+0:51:31.830,0:51:33.830
+(...if I can can get my pointer...)
+
+0:51:34.080,0:51:40.940
+that, basically, every neuron in one layer computes a weighted sum of a small area of the input, and
+
+0:51:43.350,0:51:45.350
+the weighted sum uses those weights.
+
+0:51:45.570,0:51:50.000
+But those weights are replicated across, so every neuron in a layer uses the same
+
+0:51:50.610,0:51:53.870
+set of weights. OK, so this is the idea of weight tying or weight sharing.
+
+0:51:57.690,0:52:01.669
+So using backprop we were able to train neural nets like this to recognize
+
+0:52:02.370,0:52:05.089
+handwritten digits. This is back from the late-80s early-90s.
+
+0:52:09.450,0:52:13.099
+And this is me when I was about your age, maybe a little older. I'm about thirty
+
+0:52:14.100,0:52:16.100
+in this video. And
+
+0:52:16.230,0:52:18.619
+this is my phone number when I was working at Bell Labs.
+
+0:52:20.280,0:52:21.050
+Doesn't work anymore.
+
+0:52:21.050,0:52:28.189
+It's a New Jersey number. And I hit a key, and there is this neural net running on the 386 PC with a special accelerator card
+
+0:52:28.830,0:52:34.220
+recognizing those characters, running a neural net very similar to the one I just showed you the animation of.
+
+0:52:34.920,0:52:36.920
+And the thing could,
+
+0:52:37.800,0:52:40.429
+you know, recognize characters of any style,
+
+0:52:43.200,0:52:46.040
+including very strange styles,
+
+0:52:47.340,0:52:49.340
+including even stranger styles.
+
+0:52:51.210,0:52:55.909
+And so this was kind of new at the time because this was back when
+
+0:52:56.850,0:52:59.990
+character recognition, or pattern recognition in general,
+
+0:52:59.990,0:53:01.260
+were still on the model of:
+
+0:53:01.260,0:53:03.889
+we extract features and then we train a classifier on top.
+
+0:53:04.020,0:53:07.339
+And this could basically train the entire, like, learn the entire task from end-to-end.
+
+0:53:08.040,0:53:13.129
+You know, basically, the first few layers of that neural net would would play the role of a feature extractor,
+
+0:53:13.130,0:53:15.000
+but it was trained from data.
+
+0:53:15.000,0:53:17.929
+The reason why we used character recognition is because this was
+
+0:53:18.210,0:53:20.210
+this was the only thing for which we had data.
+
+0:53:20.250,0:53:23.839
+The only task for which there was enough data was either character recognition of speech recognition.
+
+0:53:24.810,0:53:28.040
+Speech recognition experiments were somewhat successful, but not as much.
+
+0:53:29.970,0:53:31.970
+Pretty quickly, we realized we could use those
+
+0:53:32.760,0:53:35.719
+convolutional nets not just to recognize individual characters,
+
+0:53:35.720,0:53:42.199
+but to recognize groups of characters, so multiple characters at a single time. And it's because of this convolutional nature of the network,
+
+0:53:42.200,0:53:45.109
+which I'll come back to in three lectures, that
+
+0:53:45.630,0:53:50.869
+basically allowed those systems to just, you know, be applied to a large image and then they will just
+
+0:53:51.270,0:53:54.050
+turn on whenever they see in their
+
+0:53:56.220,0:54:00.020
+field of view, whenever they see a shape that they can recognize.
+
+0:54:02.610,0:54:07.760
+So, basically, if you have a large image, you train a convolutional net that it has a small input window, and you swipe it
+
+0:54:07.760,0:54:11.659
+over the entire image, and whenever it turns on it means it's detected
+
+0:54:12.690,0:54:14.690
+the object that you trained it to detect.
+
+0:54:15.360,0:54:19.190
+So here the system, you know, is capable of doing simultaneous segmentation and recognition.
+
+0:54:19.190,0:54:21.200
+You know, back in the—before that
+
+0:54:21.480,0:54:29.089
+people in pattern recognition would have an explicit program that would separate individual objects from their background and from each other, and then send each
+
+0:54:29.160,0:54:32.240
+individual object, character for example, to a recognizer.
+
+0:54:33.540,0:54:35.989
+But with this you could, you can do both at the same time.
+
+0:54:35.989,0:54:38.860
+You don't have to worry about it. You don't have to build any special program for it.
+
+0:54:42.420,0:54:48.260
+So in particular this could be applied to natural images for things like facial detection, pedestrian detection, things like this. Right.
+
+0:54:48.260,0:54:50.440
+Same thing, train a
+
+0:54:51.600,0:54:53.220
+convolutional net to
+
+0:54:53.220,0:54:58.879
+distinguish between an image where you have a face and an image where you don't have a face, train this with several thousand examples, and
+
+0:54:59.370,0:55:02.839
+then take that window, swipe it over an image: whenever it turns on
+
+0:55:02.840,0:55:05.780
+there is a face. Of course, the face could be bigger than the window
+
+0:55:05.780,0:55:11.329
+so you sub-sample the image: you make it smaller, and you swipe your network again, and then make it smaller again, swipe your network
+
+0:55:11.330,0:55:13.880
+again. So now you can detect faces regardless of size.
+
+0:55:15.630,0:55:17.630
+OK.
+
+0:55:19.590,0:55:26.300
+In particular you can use this to drive robots. So this is things that were done before deep running became popular, OK.
+
+0:55:27.990,0:55:31.579
+So this is an example where the the network here is a convolutional net.
+
+0:55:31.580,0:55:35.559
+It's applied to the image coming from a camera, from a you know, running robot.
+
+0:55:36.260,0:55:38.030
+And it's trying to classify
+
+0:55:38.030,0:55:42.540
+every window of a small window—like, 40 x 40 pixels or so, even less—
+
+0:55:43.060,0:55:48.540
+as to whether the central pixel in that window is on the ground or is an obstacle, right.
+
+0:55:48.550,0:55:51.639
+So whatever it classifies as being on the ground is green
+
+0:55:51.740,0:55:57.399
+Whatever it classifies as being an obstacle is red or purple, if it's on a foot of the obstacle.
+
+0:55:57.710,0:56:02.290
+And then you can sort of map this to a map, which you see at the top.
+
+0:56:03.080,0:56:06.789
+And then do planning in this map to reach a particular goal, and then use this to navigate.
+
+0:56:09.380,0:56:11.980
+And so these are two former PhD students.
+
+0:56:13.520,0:56:18.850
+Raia Hadsell on the right, Pierre Sermanet on the Left, who are annoying this poor robot.
+
+0:56:20.480,0:56:25.659
+Pretty confident the robot is not going to break their legs, since they actually wrote the code and trained it.
+
+0:56:28.250,0:56:32.469
+Pierre Sermanet is a research scientist at Google Brain in California working on robotics.
+
+0:56:33.200,0:56:36.820
+Raia Hadsell is head of robotics research—
+
+0:56:37.460,0:56:40.600
+Director of Robotics research at DeepMind. They did pretty well.
+
+0:56:42.500,0:56:45.550
+So a similar idea can be used for what's called semantic segmentation.
+
+0:56:45.550,0:56:50.889
+So semantic segmentation is the idea that you can, again, with this kind of sliding window approach,
+
+0:56:51.980,0:56:57.550
+you can train a convolutional net to classify the central pixel using a window as a context.
+
+0:56:58.340,0:57:00.729
+But here it's not just trained to classify
+
+0:57:01.730,0:57:05.469
+obstacles from non-obstacles. It's trained to classify something like 30 categories. This is—
+
+0:57:06.200,0:57:08.200
+this is down
+
+0:57:09.650,0:57:11.889
+Washington Place, I think. This is Washington Square Park.
+
+0:57:13.010,0:57:17.469
+And, it you know, it knows about roads, and people, and plants, and
+
+0:57:18.140,0:57:24.220
+trees, and whatever—but it finds, you know, desert in the middle of Washington Square Park, which is not...
+
+0:57:26.119,0:57:28.299
+There's no beach that I'm aware of...
+
+0:57:29.840,0:57:32.949
+So it's not perfect. At the time it was state of the art, though. That was the best
+
+0:57:33.740,0:57:36.280
+system there was to do this kind of semantic segmentation.
+
+0:57:36.920,0:57:42.490
+I was running around giving talks like trying to evangelize people about deep learning back then. This was around 2010.
+
+0:57:42.950,0:57:45.649
+So this is before the, kind of, deep learning revolution, if you want.
+
+0:57:48.900,0:57:51.680
+And one person, a professor from
+
+0:57:54.150,0:58:00.259
+Israel was sitting in one of my talks. And he's a theoretician, but he was really kind of transfixed by the
+
+0:58:00.900,0:58:03.259
+potential applications of this, and he was just about to
+
+0:58:03.690,0:58:07.609
+take a sabbatical and work for a company called Mobileye, which was a start-up in Israel at the time—
+
+0:58:08.640,0:58:15.799
+working on autonomous driving. And so, a couple of months after he heard my talk, he started working at Mobileye.
+
+0:58:15.799,0:58:19.248
+He told the Mobileye people, you know—"You should try this convolutional net stuff.
+
+0:58:19.249,0:58:24.919
+This works really well." And the engineers there said—Nah. No, we don't believe in that stuff. We have our own method.
+
+0:58:26.069,0:58:30.139
+So he implemented it, and tried it himself, beat the hell out of
+
+0:58:30.749,0:58:32.749
+all the benchmarks they had.
+
+0:58:32.789,0:58:35.689
+And all of a sudden the whole company switched to using convolutional nets.
+
+0:58:36.719,0:58:39.649
+And they were the first company to actually come up with a
+
+0:58:40.619,0:58:47.088
+vision system for cars that, you know, can keep a car in a highway, and can break if there is a pedestrian or
+
+0:58:48.119,0:58:49.920
+cyclist
+
+0:58:49.920,0:58:53.539
+crossing. I'll come back to this in a minute. They were basically using this technique.
+
+0:58:54.420,0:58:57.739
+Semantic segmentation, very similar to the one I showed for the robot before.
+
+0:58:59.640,0:59:04.519
+This was a guy by the name of Shai Shalev-Schwartz.
+
+0:59:08.009,0:59:12.619
+You have to be aware of the fact also that back in the 80s, people were really interested in using, in sort of
+
+0:59:13.049,0:59:16.218
+implementing special types of hardware that could run neural nets really fast.
+
+0:59:16.380,0:59:21.680
+And these are kind of a few examples of neural net chips that were actually implemented—I had to do with some of them—
+
+0:59:21.680,0:59:27.169
+but they were implemented by people working in the same group as I was, as I was at Bell Labs in New Jersey.
+
+0:59:28.680,0:59:32.419
+So this was kind of a hot topic in the 1980s, and then of course with the
+
+0:59:32.849,0:59:39.018
+interest in neural nets dying in the mid-90s people weren't working on this anymore, until a few years ago. Now
+
+0:59:39.959,0:59:46.039
+the hottest topic in in chip design in the chip industry is neural net accelerators.
+
+0:59:46.559,0:59:48.559
+You go to any conference on
+
+0:59:49.199,0:59:51.199
+computer architecture
+
+0:59:52.049,0:59:59.149
+you know, chip, like ISSCC, which is the big kind of solid-state circuit conference—half the talks are about
+
+1:00:00.009,1:00:02.009
+neural net accelerators.
+
+1:00:03.700,1:00:05.700
+And I worked on a few of those things.
+
+1:00:07.240,1:00:09.190
+OK, so then
+
+1:00:09.190,1:00:12.869
+something happened, as I told you, around 2010, -13, -15
+
+1:00:13.269,1:00:20.099
+in speech recognition, image recognition, natural language processing, and it's continuing. We're in the middle of it now for other topics.
+
+1:00:23.200,1:00:28.349
+And what happened, and I'm really sad to say it didn't happen in my lab, but
+
+1:00:29.560,1:00:31.359
+but with our friends,
+
+1:00:31.360,1:00:37.200
+we started, with Yoshua Bengio and Geoff Hinton back in the early 2000s—we knew, you know
+
+1:00:37.740,1:00:40.440
+that deep learning was working really well and
+
+1:00:41.200,1:00:45.960
+we knew that the whole community was making a mistake by dismissing neural nets and deep learning. And so—
+
+1:00:46.240,1:00:51.869
+we didn't use the term deep learning yet. We invented it a few years later—so, around 2003 or so, 2004,
+
+1:00:51.869,1:00:56.500
+we started kind of a conspiracy, if you want. We got together and we said we're just going to
+
+1:00:57.300,1:01:03.420
+try to, kind of, beat some records, and some data sets, invent some new algorithms that will allow us to train very large neural nets.
+
+1:01:03.420,1:01:07.880
+So that will, and will collect very large data sets, so that we will show the world that those things really work,
+
+1:01:08.140,1:01:10.140
+because nobody really believed it.
+
+1:01:11.019,1:01:12.339
+
+
+1:01:12.339,1:01:17.939
+That really kind of succeeded beyond our wildest dreams. In particular, in 2012
+
+1:01:18.160,1:01:23.160
+Geoff Hinton had one student Alex Krizhevsky, who spent a lot of time implementing
+
+1:01:23.680,1:01:25.269
+convolutional nets on
+
+1:01:25.269,1:01:29.939
+GPUs, which were kind of new at the time—they were not entirely new but they were starting to become really
+
+1:01:30.460,1:01:32.319
+high-performance.
+
+1:01:32.319,1:01:35.579
+So he was very good at sort of hacking that and
+
+1:01:36.910,1:01:44.039
+and then they were able to train much larger neural nets, convolutional nets, than anybody was able to do before.
+
+1:01:44.890,1:01:46.890
+And so they used it to
+
+1:01:48.039,1:01:51.839
+to train on the ImageNet dataset. The ImageNet dataset is a bunch of natural photos.
+
+1:01:54.640,1:01:56.259
+
+
+1:01:56.259,1:01:58.469
+And the system is supposed to recognize
+
+1:01:59.650,1:02:01.920
+the main objects in the photo among
+
+1:02:02.680,1:02:06.450
+1,000 different categories. And the training set had 1.3 million samples.
+
+1:02:07.119,1:02:09.119
+Which is kinda large.
+
+1:02:09.640,1:02:12.450
+So what they did was build this really large,
+
+1:02:13.329,1:02:14.779
+and very deep
+
+1:02:14.779,1:02:19.869
+convolutional net, pretty much on the same model as what we had before, implemented on GPUs, and let it run
+
+1:02:20.509,1:02:23.559
+for a couple weeks. And with that they beat
+
+1:02:24.589,1:02:26.589
+the performance of best competing systems
+
+1:02:27.380,1:02:33.789
+by a large margin. So this is the error rate on ImageNet going back to 2010. So 2010
+
+1:02:33.789,1:02:35.829
+it was about 28% error, top 5.
+
+1:02:35.829,1:02:42.669
+So, basically you get an error if the correct category is not in the top 5 among 1,000. OK, so it's kind of a mild
+
+1:02:44.390,1:02:46.390
+measure of error.
+
+1:02:47.119,1:02:52.298
+2011 it was 25.8%, the system that was able to do this was actually very, very large.
+
+1:02:53.029,1:02:58.748
+It was sort of somewhat convolutional-net-like, but it wasn't trained. I mean only the last layer was trained.
+
+1:03:01.099,1:03:03.099
+And then
+
+1:03:04.369,1:03:08.768
+Geoff and his team got it down to 16.4%, and then that was a
+
+1:03:10.219,1:03:15.999
+watershed moment for the computer vision community. A lot of people said, Okay, you know now we know that this thing works.
+
+1:03:18.140,1:03:20.979
+And the whole community went from
+
+1:03:22.640,1:03:28.629
+basically refusing every paper that had neural nets in them in 2011 and 2012
+
+1:03:29.269,1:03:34.149
+to refusing every paper that does not have a convolutional net in it in 2016.
+
+1:03:35.359,1:03:41.078
+So now it's the new religion, right. You can't get a paper in a computer vision conference unless you use ConvNets somehow.
+
+1:03:42.469,1:03:48.698
+And the error rate went down really quickly, you know people found all kinds of really cute architectural tricks
+
+1:03:50.209,1:03:56.649
+that, sort of, made those things work better. And what you'd see in there is that there was an inflation of the number of layers.
+
+1:03:56.959,1:04:02.919
+So my convolutional nets from the 90s had 7 layers or so, and from the early 2000s. And then
+
+1:04:03.229,1:04:05.859
+AlexNet had, I don't know, 12.
+
+1:04:06.949,1:04:10.569
+Then VGG the year afterward, after that had 19.
+
+1:04:11.509,1:04:17.619
+GoogLeNet had I don't know how many, because it's hard to figure out how you count. And then the workhorse now of
+
+1:04:18.650,1:04:20.650
+object recognition, the standard
+
+1:04:20.989,1:04:23.529
+backbone, as people called them, has 50 layers.
+
+1:04:24.500,1:04:26.500
+It's called ResNet-50.
+
+1:04:26.940,1:04:29.960
+But some, you know, some networks have 100 layers or so.
+
+1:04:29.970,1:04:33.649
+So Alfredo a few years ago put together this chart that shows
+
+1:04:35.490,1:04:40.879
+where each of those blob is a particular network architecture. 
+
+1:04:41.850,1:04:46.219
+And the x-axis is the number of billions of operations you need to do to compute the output.
+
+1:04:46.950,1:04:49.460
+Okay, those things are really big billions of connections.
+
+1:04:50.760,1:04:56.570
+The y-axis is the top one accuracy on ImageNet. So it's not the same measure of performance as the one I showed you before.
+
+1:04:57.150,1:05:00.200
+So the best systems are around 84, today.
+
+1:05:01.920,1:05:07.310
+And the size of the of the blob is the memory occupancy, so the
+
+1:05:08.070,1:05:09.810
+number of
+
+1:05:09.810,1:05:11.810
+millions of
+
+1:05:12.930,1:05:18.080
+floats that you need to store to store the weight, the weight values. Now people are very smart about compressing those things like
+
+1:05:18.080,1:05:19.710
+you know quantizing them, and
+
+1:05:19.710,1:05:27.500
+there's entire teams at Google, Facebook, and various other places that only work on optimizing those networks and compressing the
+
+1:05:27.840,1:05:29.840
+things so they can run fast.
+
+1:05:30.150,1:05:32.150
+Because,
+
+1:05:32.160,1:05:34.020
+to give you just a
+
+1:05:34.020,1:05:35.610
+rough idea,
+
+1:05:35.610,1:05:37.610
+the number of times
+
+1:05:37.680,1:05:42.740
+Facebook, for example, runs a convolutional net on its servers per day is in the tens of billions.
+
+1:05:44.220,1:05:50.179
+Okay. So there's a huge incentive to optimizing the amount of computation necessary for this.
+
+1:05:55.110,1:05:57.110
+So one...
+
+1:05:58.920,1:06:00.920
+one reason why
+
+1:06:01.890,1:06:03.870
+convolutional nets are being so successful
+
+1:06:03.870,1:06:08.299
+is that they exploit a property of natural data, which is compositionality.
+
+1:06:09.540,1:06:11.130
+So
+
+1:06:11.130,1:06:12.780
+compositionality is
+
+1:06:12.780,1:06:14.160
+the
+
+1:06:14.160,1:06:16.160
+property by which
+
+1:06:16.470,1:06:18.470
+a scene is composed of objects;
+
+1:06:18.750,1:06:20.750
+objects are composed of parts;
+
+1:06:20.790,1:06:26.810
+parts are composed of sub-parts; sub-parts are really combinations of motifs; and motifs are combinations of
+
+1:06:28.500,1:06:30.500
+contours or edges,
+
+1:06:30.600,1:06:32.600
+right, or textures.
+
+1:06:33.330,1:06:39.159
+And those are just combinations of pixels. Okay, so there's this so-called compositional hierarchy that,
+
+1:06:40.220,1:06:42.399
+you know, particular combinations of
+
+1:06:43.190,1:06:45.669
+objects at one layer in the hierarchy
+
+1:06:46.730,1:06:47.900
+form
+
+1:06:47.900,1:06:48.999
+objects at the next layer.
+
+1:06:48.999,1:06:55.599
+And so if you, kind of, mimic this compositional  hierarchy in the architecture of the network, and you let it learn the appropriate
+
+1:06:56.150,1:06:58.150
+combinations of features at one layer that,
+
+1:06:58.700,1:07:05.649
+you know, form the the features of the next layer, that's really what deep learning is.
+
+1:07:06.739,1:07:12.309
+Okay. Learning to represent the world and exploit the structure of the world—and the world, being the fact that
+
+1:07:13.369,1:07:16.209
+there is organization in the world because the world is compositional.
+
+1:07:17.690,1:07:19.690
+
+
+1:07:19.819,1:07:23.619
+A statistician by the name of Stuart Geman, who is at Brown University, said—
+
+1:07:25.009,1:07:29.529
+so he was kind of playing on the famous Einstein quote, Einstein said:
+
+1:07:31.009,1:07:34.988
+The most incomprehensible thing about the world is that the world is comprehensible.
+
+1:07:35.930,1:07:39.999
+Like, among all the complicated things that the world, you know, the world could be extremely complicated,
+
+1:07:39.999,1:07:42.699
+so complicated that we have no way of understanding it.
+
+1:07:42.829,1:07:46.479
+And it looks like a conspiracy that we are able to understand at least part of the world.
+
+1:07:47.900,1:07:54.039
+And so Stuart Geman's version of this is that the world is compositional... or there is a God.
+
+1:07:58.999,1:08:00.999
+(Because you need supernatural
+
+1:08:02.150,1:08:04.690
+things to be able to understand it if the world is not compositional.)
+
+1:08:06.019,1:08:11.498
+So this has led to incredible progress in things like computer vision, as you know, from
+
+1:08:12.079,1:08:18.068
+you know, being able to unreliably identify, you know, detect people, to being able to generate masks for every object,
+
+1:08:20.119,1:08:25.539
+accurate masks, and then even to figure out the pose, and then do this in real time on a mobile platform, you know.
+
+1:08:25.540,1:08:30.580
+I mean the progress has been sort of nothing short of incredible, and most of those things are based on
+
+1:08:31.190,1:08:33.549
+two basic families of architectures.
+
+1:08:34.069,1:08:36.069
+This sort of so-called one-pass
+
+1:08:36.469,1:08:38.469
+object detection/recognition
+
+1:08:39.350,1:08:43.149
+architectures called RetinaNet, feature pyramid network. There's various names for it.
+
+1:08:43.150,1:08:48.460
+Or U-Net. Then another type called Mark-RCNN, both of them actually originated from Facebook.
+
+1:08:50.080,1:08:56.849
+Or, the people who originated them are now at Facebook—they sometimes came up with it before they came to Facebook.
+
+1:08:59.020,1:09:04.859
+But, you know, those things work really well, you know, they can do things like that: detect objects that are partially occluded, and,
+
+1:09:05.770,1:09:12.659
+you know, draw a mask of every object. So basically, this is a neural net, a convolutional net where the input is an image.
+
+1:09:13.509,1:09:20.060
+But the output is also an image. In fact, the output is a whole bunch of images, one per category. And for each category
+
+1:09:20.060,1:09:22.199
+outputs the mask of the object from that category.
+
+1:09:23.980,1:09:27.810
+Those things can also do what's called "instant segmentation." So if you have a whole bunch of sheeps,
+
+1:09:28.569,1:09:31.678
+it can tell you, you know, not just that this region is sheep,
+
+1:09:31.679,1:09:37.799
+but actually pick out the individual sheeps and will tell them apart, and it will count the sheeps right, and fall asleep.
+
+1:09:40.569,1:09:43.169
+That's what you're supposed to do right, to fall asleep you count sheeps, right?
+
+1:09:48.310,1:09:50.199
+And
+
+1:09:50.199,1:09:51.159
+the cool thing about
+
+1:09:51.159,1:09:57.089
+deep learning is that a lot of the community has embraced the whole concept that research has to be done in the open.
+
+1:09:57.250,1:10:00.869
+So a lot of the stuff that we're gonna be talking about, as you probably know,
+
+1:10:01.420,1:10:03.420
+in the class is
+
+1:10:05.230,1:10:07.230
+it's not just published, but it's
+
+1:10:07.810,1:10:12.869
+you know, published with code. It's not just code, it's actually pre-trained models that you can just download and run.
+
+1:10:13.810,1:10:16.139
+All open source. All free to use.
+
+1:10:16.750,1:10:18.460
+So that's
+
+1:10:18.460,1:10:22.799
+really new. I mean people didn't use to do research this way, particularly in industry.
+
+1:10:23.110,1:10:26.339
+But even in academia people weren't used to kind of distributing their code.
+
+1:10:27.460,1:10:29.460
+But deep learning has sort of,
+
+1:10:29.830,1:10:34.199
+somehow the race has kind of driven people to kind of be more open about research.
+
+1:10:34.780,1:10:38.759
+So there's a lot of applications of all this, as I said, you know self-driving cars.
+
+1:10:38.760,1:10:44.940
+This is actually a video from Mobileye, and Mobileye was pretty early in this in using convolutional nets for autonomous driving.
+
+1:10:45.460,1:10:47.219
+To the point that in 2015
+
+1:10:47.219,1:10:52.769
+they had managed to shoehorn a convolutional net on the chip that they had designed for some other purpose. And they sold the
+
+1:10:52.960,1:10:56.189
+licensed the technology to Tesla. So the first self-driving Tesla's,
+
+1:10:56.739,1:11:00.149
+I mean self-driving, not really self-driving, they have driving assistance, right.
+
+1:11:00.150,1:11:04.779
+They can keep in lane on the highway and change lane—had this Mobileye system.
+
+1:11:05.690,1:11:11.379
+And, and that's, that's pretty cool. So that's a convolutional net. It's a little chip that is, you know,
+
+1:11:11.380,1:11:14.560
+just behind the, it looks out the window and it's behind the
+
+1:11:15.770,1:11:17.770
+the rear-view mirror.
+
+1:11:18.350,1:11:22.779
+Since then this—you know, four/five years ago—since then this kind of technology has been
+
+1:11:23.900,1:11:26.440
+very widely deployed by a lot of different companies.
+
+1:11:26.840,1:11:32.110
+Mobileye still now was bought by Intel, and they have like 70 or 80 percent of the market for those vision systems.
+
+1:11:32.110,1:11:34.110
+But, but there is a lot of
+
+1:11:35.060,1:11:37.899
+companies that—and car manufacturers—
+
+1:11:38.449,1:11:41.139
+that use those things. So in fact
+
+1:11:41.690,1:11:49.359
+in some European countries, every single car that comes out, even low-end cars, has convolutional-net-based vision systems. And they call this:
+
+1:11:50.810,1:11:56.289
+emergency, emergency, sort of, advanced emergency braking system or automated emergency braking system. 
+
+1:11:56.960,1:11:58.100
+AEBS—
+
+1:11:58.100,1:12:00.279
+is deployed in every car in France, for example.
+
+1:12:00.949,1:12:02.949
+It reduces collisions by 40%.
+
+1:12:04.400,1:12:08.770
+So not every car on the roads have them yet, because you know people keep their cars for a long time.
+
+1:12:10.760,1:12:13.060
+But what that means is that it saves lives.
+
+1:12:14.989,1:12:17.709
+So a very positive application of deep learning.
+
+1:12:21.020,1:12:24.699
+Another big category of applications, of course, is medical imaging.
+
+1:12:24.699,1:12:29.709
+So this is a, it's probably the hottest topic in radiology these days—is how to use
+
+1:12:31.730,1:12:33.730
+AI (which means convolutional nets)
+
+1:12:34.310,1:12:40.629
+for radiology. This [slide image] is lifted from a paper by some of our colleagues here at NYU,
+
+1:12:41.300,1:12:49.270
+where they analyzed MRI images. So there's one big advantage to convolutional nets: it's that they don't need to look at the screen to
+
+1:12:50.120,1:12:52.120
+look at an MRI. In particular
+
+1:12:53.179,1:12:56.679
+to be able to look at an MRI, they don't have to slice it into 2D images.
+
+1:12:56.679,1:12:59.139
+They can look at the entire 3D volume. This is
+
+1:13:00.110,1:13:01.969
+one property that this thing
+
+1:13:01.969,1:13:06.969
+uses. It's a 3D convolutional net that looks at the entire volume of an MRI image and
+
+1:13:07.489,1:13:09.100
+then produces, you know,
+
+1:13:09.100,1:13:14.499
+it uses the very similar technique for, as I was showing before, for semantic segmentation. And it produces,
+
+1:13:14.980,1:13:17.529
+it basically turns on on the output image wherever there is some,
+
+1:13:18.410,1:13:21.249
+you know, here a femur bone, but you know, it could be—
+
+1:13:22.310,1:13:24.310
+so this is the kind of result it produces.
+
+1:13:25.040,1:13:29.470
+It works better in 3D than in 2D slices. Or, it can turn on when it detects
+
+1:13:31.580,1:13:33.580
+malignant tumor in
+
+1:13:34.640,1:13:36.640
+mammograms. (This is to 2D, it's not 3D.)
+
+1:13:37.850,1:13:42.249
+And there's, you know, various other projects in medical imaging that are going around.
+
+1:13:45.320,1:13:47.320
+Okay.
+
+1:13:47.720,1:13:53.559
+Lots of applications in science and physics, bioinformatics, you know, whatever, which we'll come back to so...
+
+1:13:56.900,1:13:58.900
+Okay.
+
+1:14:00.410,1:14:05.229
+So there's a bunch mysteries in deep learning. They're not complete mysteries, because people have some understanding of all this,
+
+1:14:05.230,1:14:08.560
+but they are mysteries in the sense that we don't have, like, a nice theory for everything.
+
+1:14:11.750,1:14:13.750
+Why do they work so well?
+
+1:14:15.890,1:14:16.870
+So one big question
+
+1:14:16.870,1:14:21.789
+that theoreticians were asking many years ago, when I was trying to convince the world that deep longing was a good idea,
+
+1:14:21.950,1:14:25.239
+was that they would tell me: Well, you can approximate any function with just two layers,
+
+1:14:25.239,1:14:27.759
+why do you need more? And I'll come back to this in a minute.
+
+1:14:29.420,1:14:31.160
+What's so special about convolutional nets?
+
+1:14:31.160,1:14:38.859
+I talked about the compositionality of natural images, or natural data, in general. This is true for speech also and values of the signals, natural signals.
+
+1:14:40.340,1:14:42.790
+But it seems a little contrived.
+
+1:14:45.260,1:14:51.100
+How is it that we can train the system, despite the fact that the objective function we're minimizing is very non-convex. We may have
+
+1:14:51.100,1:14:52.070
+lots of local minima.
+
+1:14:52.070,1:14:54.190
+This was a big criticism that people were
+
+1:14:54.350,1:14:59.890
+throwing at neural nets, people who'd never played with neural nets were throwing out neural nets back in the old days. Say, like
+
+1:14:59.890,1:15:03.099
+you know, you have no guarantee that your algorithm will converge—you know,
+
+1:15:03.980,1:15:05.980
+it's too scary. I'm not gonna use it.
+
+1:15:08.870,1:15:10.730
+
+
+1:15:10.730,1:15:13.569
+And, the last one is: why is it that
+
+1:15:14.450,1:15:19.029
+the way we train neural nets breaks everything that every textbook in statistics tell you?
+
+1:15:19.700,1:15:22.239
+Every textbook in statistics tells you,
+
+1:15:22.940,1:15:25.509
+if you have n data points, you shouldn't have more than n parameters,
+
+1:15:26.210,1:15:28.540
+because you're going to overfit like crazy.
+
+1:15:29.310,1:15:32.660
+You know, you might regularize.  If you're a Bayesian, you might through a prior.
+
+1:15:33.390,1:15:34.950
+But...
+
+1:15:34.950,1:15:36.950
+(which is equivalent)
+
+1:15:37.410,1:15:38.910
+But
+
+1:15:38.910,1:15:40.910
+what guarantee do you have? And
+
+1:15:41.520,1:15:49.220
+with neural nets, neural nets are wildly over parametrized. We train neural nets with hundreds of millions of parameters, routinely. They're used in production. And
+
+1:15:49.680,1:15:52.789
+the number of training samples is nowhere near that. How does that work?
+
+1:15:53.760,1:15:55.760
+But it works!
+
+1:15:59.489,1:16:02.809
+OK, so things we can do with deep learning today: You know, we can
+
+1:16:03.720,1:16:08.449
+have safer cars; we can have better medical analysis, medical image analysis systems;
+
+1:16:09.210,1:16:12.830
+we can have pretty good language translation, far from perfect, but useful;
+
+1:16:13.470,1:16:15.470
+stupid chatbots;
+
+1:16:16.440,1:16:19.339
+you know, very good information search retrieval and filtering.
+
+1:16:19.890,1:16:25.489
+Google and Facebook nowadays are completely built around deep learning. You take deep learning out of them and they crumble.
+
+1:16:27.120,1:16:28.200
+And,
+
+1:16:28.200,1:16:34.489
+you know, lots of applications in energy management and production, and all kinds of stuff; manufacturing, environmental protection.
+
+1:16:34.710,1:16:38.149
+But we don't have really intelligent machines. We don't have machines with common sense. We don't have
+
+1:16:39.300,1:16:41.300
+intelligent personal assistants. We don't have,
+
+1:16:43.170,1:16:45.739
+you know, smart chatbots. We don't have household robots.
+
+1:16:45.739,1:16:50.149
+You know, I mean, there's a lot of things we don't know how to do, right. Which is why we still do research.
+
+1:16:51.989,1:16:55.789
+OK, so, deep learning is really about learning representations.
+
+1:16:57.180,1:17:03.109
+But really we should know in advance what representations are. So I talked about the traditional model of pattern recognition.
+
+1:17:04.770,1:17:06.770
+But...
+
+1:17:07.380,1:17:09.380
+Representation is really about
+
+1:17:09.720,1:17:15.679
+you know, you have your raw data, and you want to turn it into a form that is useful, somehow.
+
+1:17:17.370,1:17:20.839
+Ideally, you'd like to turn it into a form that's useful regardless of what you want to do with it.
+
+1:17:22.530,1:17:26.810
+Sort of "useful" in a general way. OK, and it's not entirely clear what that means.
+
+1:17:28.860,1:17:34.190
+But, at least, you want to turn it into a representation that's useful for the task that you are envisioning.
+
+1:17:38.719,1:17:42.558
+And there's been a lot of ideas over the decades on,
+
+1:17:44.099,1:17:51.799
+sort of, general ways to pre-process natural data in such a way that you produce good representations of it.
+
+1:17:54.300,1:17:57.559
+I'm not going to go through the details of this laundry list.
+
+1:17:58.979,1:18:05.059
+But the things like tallying the space, doing random projection. So random projection is actually, kind of,
+
+1:18:06.329,1:18:08.329
+you know, like a monster that
+
+1:18:09.840,1:18:14.329
+rears its head periodically, like every five years. And you have to whack it on the head every time he pops up.
+
+1:18:15.030,1:18:21.079
+That was the idea behind the Perceptron. So the first layer of a perceptron is a layer of random projections.
+
+1:18:21.079,1:18:24.558
+What does that mean? A random projection is a random matrix,
+
+1:18:25.769,1:18:29.209
+which you know, has a smaller output dimension than input dimension,
+
+1:18:30.809,1:18:37.099
+with some sort of non-linearity at the end, right. So think about a single layer neural net with nonlinearities, but the weights are random.
+
+1:18:38.010,1:18:40.010
+So you can think of this as
+
+1:18:40.199,1:18:42.199
+random projections.
+
+1:18:43.019,1:18:47.119
+And a lot of people are rediscovering that wheel periodically,
+
+1:18:47.760,1:18:50.659
+claiming that it's great because you don't have to do multi-layer training.
+
+1:18:50.659,1:18:54.288
+And so it started with the Perceptron, and then you know
+
+1:18:54.289,1:18:59.539
+it came back in the 60s, and then it came back again in the 1980s, and then it came back again.
+
+1:18:59.539,1:19:04.849
+And now it came back. There's a whole community, mostly in Asia. They call
+
+1:19:05.849,1:19:11.689
+two layer neural nets, where the first layer is random, they call this "extreme learning machines," OK.
+
+1:19:12.239,1:19:15.379
+It's like, it's ridiculous, but it exists.
+
+1:19:17.760,1:19:20.960
+They're not "extreme," I mean they're extremely stupid, but—you know.
+
+1:19:27.630,1:19:30.049
+Right, so I was mentioning the compositionality of the world.
+
+1:19:30.780,1:19:37.909
+It's, you know, from pixels to edges to texton, motifs, parts, objects. In text you have characters, word, word groups, clauses, sentences, stories.
+
+1:19:38.010,1:19:40.400
+In speech it's the same, you have individual samples.
+
+1:19:41.099,1:19:43.099
+You have, you know,
+
+1:19:44.519,1:19:47.748
+spectral band, sound, phone, phonemes, words, etc.
+
+1:19:49.710,1:19:51.710
+You always have this kind of hierarchy.
+
+1:19:52.110,1:19:57.499
+OK, so here are many attempts at dismissing the whole idea of deep learning. OK, first,
+
+1:19:58.050,1:20:00.979
+first thing. And this is things that I've heard for decades, OK—
+
+1:20:01.770,1:20:05.570
+from mostly theoreticians, but a lot of people, and you have to know about them because
+
+1:20:05.910,1:20:08.869
+they're going to come back in five years when people say, "Oh, deep learning sucks."
+
+1:20:10.350,1:20:12.800
+Why not use support-vector machines? OK, so,
+
+1:20:13.350,1:20:17.149
+here is support-vector machines here on the top left. Support-vector machine is a,
+
+1:20:17.610,1:20:21.679
+and I'm sure many of you have heard about kernel machines and support-vector machines.
+
+1:20:22.320,1:20:24.320
+Who knows what this is?
+
+1:20:25.140,1:20:31.399
+I mean, even if it's a rough idea what this is. OK, a few hands. Who has no idea what a support-vector machine is?
+
+1:20:32.070,1:20:34.399
+Don't be shy. Yeah. Yeah, I mean it's okay if you don't.
+
+1:20:35.250,1:20:38.149
+OK, like most people haven't raised their hands for either. 
+
+1:20:38.149,1:20:42.580
+[Alfredo: Hands up, please, who knows support-vector machines.] 
+
+1:20:42.780,1:20:50.500
+OK, come on all the way up. Cool, all right. Who has no idea what it is? Don't be shy, it's okay. [Alfredo: inaudible]
+
+1:20:52.320,1:20:54.320
+All right, good.
+
+1:20:55.800,1:21:00.169
+Right, so here's the support-vector machine. Support-vector machine is a two layer neural net.
+
+1:21:00.170,1:21:04.100
+It's not really a neural net, people don't like when it's formulated this way, but really you can think of it this way.
+
+1:21:04.100,1:21:06.100
+It's a two layer neural net,
+
+1:21:06.210,1:21:09.950
+where the first layer, which is symbolized by this function K here,
+
+1:21:10.830,1:21:16.550
+each unit in the first layer compares the input vector X to one of the training samples X^i's. 
+
+1:21:16.560,1:21:19.850
+OK, so you take your training samples, let's say you have a thousand of them—
+
+1:21:20.160,1:21:22.789
+so you have a thousand X^i's, from i = 1 to 1,000,
+
+1:21:23.190,1:21:26.360
+and you have some function K that is going to compare X and X^i. 
+
+1:21:26.520,1:21:31.490
+Good example of a function to compare the two is you take the dot product between X and X^i, and you pass the result
+
+1:21:31.490,1:21:32.790
+through,
+
+1:21:32.790,1:21:37.399
+like, exponential minus square or something. So you get a Gaussian
+
+1:21:38.220,1:21:39.300
+response,
+
+1:21:39.300,1:21:42.800
+as a function of the distance between X and X^i, OK.
+
+1:21:42.800,1:21:45.559
+So it's a way of comparing to two vectors, doesn't matter what it is.
+
+1:21:46.980,1:21:48.510
+
+
+1:21:48.510,1:21:54.019
+And, then you take those scores coming out of this K function that compares the input to every sample and
+
+1:21:54.690,1:21:58.490
+you compute a weighted sum of them. And what you're going to learn are the weights, the alphas.
+
+1:21:59.580,1:22:04.399
+Okay, so it's a two-layer neural net in which the second layer is trainable and the first layer is fixed.
+
+1:22:05.120,1:22:09.649
+But in a way you can think of the first layer as being trained in an unsupervised manner, because it uses the data
+
+1:22:09.930,1:22:13.430
+from the training set, but it only uses the X's, doesn't use the Y's.
+
+1:22:14.010,1:22:18.349
+It uses the data in the stupidest way you can imagine, which is you store every X and
+
+1:22:18.810,1:22:22.610
+use every single X as the weight of a neuron, if you want.
+
+1:22:23.790,1:22:25.790
+Okay.
+
+1:22:26.670,1:22:32.180
+That's what support vector machine is. You can write a thousand page book about the cute mathematics
+
+1:22:32.850,1:22:38.030
+behind that. But the bottom line is it's a two-layer neural net where the first layer is trainied a very
+
+1:22:38.250,1:22:41.600
+stupid way unsupervised, and the second layer is just a linear classifier.
+
+1:22:44.370,1:22:50.720
+So, it's basically glorified template matching, because it basically compares the input vector to all the all the training samples. 
+
+1:22:51.360,1:22:54.499
+And so, it doesn't work if you want to do like,
+
+1:22:54.500,1:22:58.580
+you know, computer vision with raw images. If X is an image and
+
+1:22:59.070,1:23:01.789
+the X^i's are a million images from ImageNet—
+
+1:23:02.100,1:23:06.860
+first of all, for every image you're gonna have to compare it with a million images,
+
+1:23:07.260,1:23:09.829
+or maybe a little less if you're smart, and how you train it.
+
+1:23:11.670,1:23:16.640
+That's going to be very expensive, and the kind of comparison you're making is basically
+
+1:23:19.170,1:23:23.270
+what solves the problem. The weighted sum you're gonna get at the end is really the cherry on the cake.
+
+1:23:24.960,1:23:26.960
+I use that analogy too often, actually.
+
+1:23:28.110,1:23:29.400
+So...
+
+1:23:29.400,1:23:35.120
+You can approximate, you can have theorems that show that you can approximate any function you want, as close as you want, by
+
+1:23:35.250,1:23:37.250
+tuning the
+
+1:23:37.260,1:23:39.260
+K function and the alphas. 
+
+1:23:39.840,1:23:43.099
+And so, if you were to talk to a theoretician, they'll tell you: Why do you need deep learning?
+
+1:23:43.100,1:23:46.399
+I can approximate any function I want with a kernel machine.
+
+1:23:50.130,1:23:55.820
+The number of terms in that sum can be very large, and nobody tells you what kernel function you can use. And so,
+
+1:23:57.300,1:23:59.300
+that doesn't solve the problem.
+
+1:24:01.110,1:24:07.309
+You can use a two-layer neural net, OK. So this is the top right here. The first layer is a nonlinear function
+
+1:24:07.310,1:24:13.820
+F applied to the product of a matrix W^0 by input vector; and then the second layer multiplied by the second matrix; and then
+
+1:24:14.040,1:24:16.040
+passes it through another non-linearity.
+
+1:24:16.710,1:24:22.970
+OK, so this is a composition of two linear and non-linear operations. Again, you can show that under some conditions
+
+1:24:22.970,1:24:25.819
+you can approximate any function you want with something like this.
+
+1:24:27.420,1:24:29.420
+Given that you have a large enough
+
+1:24:29.850,1:24:31.320
+vector in the middle.
+
+1:24:31.320,1:24:35.090
+OK, so the dimension of what comes out of the first layer, if it's high enough
+
+1:24:36.690,1:24:41.660
+—potentially infinite—you can approximate any function you want as close as you want, by making this layer go to infinity.
+
+1:24:43.170,1:24:49.250
+So again, you talk to theoreticians and they tell you: Why do you need layers? I can approximate anything I want with two layers.
+
+1:24:50.490,1:24:52.490
+But there is an argument, which is
+
+1:24:53.160,1:24:55.789
+it could be very, very expensive to do it in two layers.
+
+1:24:59.640,1:25:01.640
+And...
+
+1:25:03.390,1:25:07.189
+For some of you this may sound familiar. For most of you probably not.
+
+1:25:09.060,1:25:11.779
+Let's say I want to design a logic circuit.
+
+1:25:12.030,1:25:19.220
+OK, so, when you design logic circuits, right, you have AND-gates and OR-gates and... or NAND-gates, right.
+
+1:25:19.220,1:25:21.740
+You can do everything with just NAND's, right, negative ANDs. 
+
+1:25:24.090,1:25:25.110
+And if you..
+
+1:25:25.110,1:25:30.020
+You can show that any Boolean function can be written as a bunch of ORs on a bunch of, a bunch...
+
+1:25:30.020,1:25:35.029
+you know, a bunch of ANDs and then an OR on top of this. That's called disjointed normal form (DNF).
+
+1:25:36.150,1:25:38.839
+So any function can be written in two layers.
+
+1:25:40.110,1:25:45.230
+The problem is that for most functions, the number of terms you need in the middle is exponential in the size of the input.
+
+1:25:46.530,1:25:48.270
+So, for example,
+
+1:25:48.270,1:25:54.649
+if I give you N bits, and ask you to construct a circuit that tells me if the number of bits that are on
+
+1:25:54.960,1:25:56.960
+in the input string is
+
+1:25:57.390,1:25:59.190
+even or odd.
+
+1:25:59.190,1:26:01.790
+OK, it's a simple Boolean function: 1 or 0 on the output.
+
+1:26:03.360,1:26:05.990
+The number of gates that you need is essentially exponential,
+
+1:26:06.990,1:26:08.990
+in the middle. If you do it in two layers.
+
+1:26:09.570,1:26:11.570
+If you allow yourself to do it in
+
+1:26:12.210,1:26:14.720
+log(N) layers, where N is number of input bits,
+
+1:26:16.290,1:26:22.160
+then it's linear. OK. So you go from exponential complexity to linear complexity if you allow yourself to use multiple layers.
+
+1:26:23.070,1:26:25.070
+It's as if, you know, when you write a program—
+
+1:26:27.440,1:26:28.880
+I'll tell you
+
+1:26:28.880,1:26:31.000
+write the program in such a way that
+
+1:26:31.790,1:26:38.950
+there is only two sequential steps that are necessary to run your program. So basically your program has two sequential instructions.
+
+1:26:42.110,1:26:45.100
+You can have, you can run as many instructions as you want in your program
+
+1:26:45.100,1:26:50.109
+but they have to run in parallel, most of them. And you're only allowed two sequential steps.
+
+1:26:52.160,1:26:54.160
+OK.
+
+1:26:54.170,1:26:59.234
+And, the kind of instructions you have access to are things like, you know, linear combinations, nonlinearities—
+
+1:26:59.234,1:27:01.630
+like simple things, right. Not like entire sub-programs.
+
+1:27:04.070,1:27:06.070
+So for most,
+
+1:27:08.600,1:27:10.520
+most problems,
+
+1:27:10.520,1:27:13.749
+the number of intermediate values you're going to have to compute in the first step
+
+1:27:14.690,1:27:16.989
+is going to be exponential in the size of the input.
+
+1:27:19.880,1:27:25.210
+There's only a tiny number of problems for which you're going to be able to get away with a non-exponential number of minterms.
+
+1:27:25.489,1:27:31.059
+But if you allow your program to run multiple steps sequentially then all of a sudden, you know,
+
+1:27:31.060,1:27:33.700
+it can be much simpler. It will run slower, but
+
+1:27:35.270,1:27:37.569
+it will take a lot less memory. It will
+
+1:27:38.420,1:27:40.420
+take a lot less stuff—
+
+1:27:40.790,1:27:47.589
+resources. So people who design computers circuits know this, right. You can design, for example, a circuit that adds two binary numbers. And
+
+1:27:47.780,1:27:49.780
+there is a very simple way to do this,
+
+1:27:49.780,1:27:54.009
+which is that you first you take the first two bits, you add them, and then you propagate the carry at the
+
+1:27:54.380,1:27:56.060
+second bit, the second pair of bits,
+
+1:27:56.060,1:28:00.039
+you know, taking the carry into account that gives you the second bit of result, and then carry, you know,
+
+1:28:00.380,1:28:02.710
+propagate the carry, and then you do this sequentially, right.
+
+1:28:02.710,1:28:06.339
+So problem with this is that it takes the time that's proportional to the size of the
+
+1:28:07.250,1:28:10.959
+numbers that you're trying to add. So circuit designers
+
+1:28:11.989,1:28:13.280
+have a way of,
+
+1:28:13.280,1:28:15.850
+basically, pre-computing the carry, it's called carry lookahead,
+
+1:28:16.060,1:28:20.680
+so that the number of steps necessary to do an addition is actually not N, it's much less than that.
+
+1:28:21.650,1:28:26.319
+OK. But that, that's at the expense of a huge increase in the
+
+1:28:27.320,1:28:31.630
+complexity of the circuit. The the number, like the area that it takes on the chip.
+
+1:28:35.900,1:28:40.210
+So this exchange between time and space, or, between depth and
+
+1:28:41.000,1:28:42.200
+and...
+
+1:28:42.200,1:28:45.550
+and, kind of, time is is known.
+
+1:28:46.940,1:28:48.940
+So what do we call deep
+
+1:28:49.610,1:28:52.960
+models? So, you know, a two-layer neural net, one that has one hidden layer,
+
+1:28:52.960,1:28:57.369
+I don't call that "deep," even though technically it uses backprop. But, eh, you know, it doesn't really learn
+
+1:28:58.850,1:29:00.850
+complex representations.
+
+1:29:01.640,1:29:06.340
+So there's this idea of hierarchy in deep learning. SVMs definitely aren't deep.
+
+1:29:07.520,1:29:11.529
+Unless you learn complicated kernels, but then they're not SVM's anymore.
+
+1:29:14.930,1:29:17.079
+So what are good features? What are good representations?
+
+1:29:20.540,1:29:26.049
+So, here's an example I like. There is something called the manifold hypothesis, and it's the fact that
+
+1:29:26.780,1:29:28.400
+natural data—
+
+1:29:28.400,1:29:30.400
+So, if I take a picture of this room
+
+1:29:30.950,1:29:32.810
+with, you know, a
+
+1:29:32.810,1:29:38.049
+camera with a 1,000 x 1,000 pixel resolution. That's 1 million pixels at 3 million values.
+
+1:29:42.560,1:29:45.369
+It leaves, you can think of it as a vector with 3 million
+
+1:29:46.190,1:29:47.750
+components.
+
+1:29:47.750,1:29:53.739
+Among all the possible vectors with 3 million components, how many of them correspond to what we would call natural images?
+
+1:29:54.050,1:29:56.770
+We can tell when we see a picture whether it's a natural image or not.
+
+1:29:58.220,1:30:03.520
+We have a model in our visual system that tells us this looks like a real, like a real image.
+
+1:30:04.430,1:30:07.300
+And we can tell when it's not. So the number of
+
+1:30:08.000,1:30:11.409
+combinations of pixels that actually are things that we 
+
+1:30:11.870,1:30:14.980
+think of as natural images is a tiny, tiny, tiny,
+
+1:30:14.980,1:30:21.759
+tiny, tiny subset of the set of all possible images. There's way more ways of combining random pixels in
+
+1:30:22.160,1:30:26.860
+nonsensical images than there are ways of combining pixels into things that look like natural images.
+
+1:30:27.290,1:30:30.159
+So the manifold hypothesis is that the set of
+
+1:30:30.710,1:30:31.970
+things that,
+
+1:30:31.970,1:30:35.409
+you know, look natural to us live in a low-dimensional
+
+1:30:36.020,1:30:38.020
+surface inside the high-dimensional
+
+1:30:38.930,1:30:40.130
+ambient space.
+
+1:30:40.130,1:30:43.810
+And a good example to convince yourself of this: Imagine
+
+1:30:43.810,1:30:48.909
+I take lots of pictures of a person making faces, right. So the person is in front of a white background.
+
+1:30:49.550,1:30:51.550
+Her hair not moving.
+
+1:30:51.560,1:30:55.539
+And she, kind of, moves her head around and, you know, makes faces, etc.
+
+1:30:57.980,1:31:03.700
+The set of all images of that person—so I take a long video of that person—the set of all images of that person 
+
+1:31:04.400,1:31:06.969
+lives in a low dimensional surface.
+
+1:31:07.820,1:31:11.139
+So a question I have for you is, What's the dimension of that surface?
+
+1:31:14.780,1:31:18.369
+Whatever magnitude, okay. Any, yes?
+
+1:31:18.369,1:31:20.369
+[Inaudible student comment.]
+
+1:31:20.930,1:31:23.229
+Yeah, you've probably heard my spiel before, but... [Speaker: What did the person say?]
+
+1:31:25.850,1:31:27.850
+Huh? [Speaker: What did they say?]
+
+1:31:28.100,1:31:33.999
+OK, so for whoever hasn't heard this, you have a shot, another shot at an answer.
+
+1:31:36.710,1:31:38.710
+OK, any guess?
+
+1:31:41.600,1:31:48.550
+No? Don't be shy. I want like multiple proposals.
+
+1:31:55.230,1:32:01.669
+Anyone. You can look down your laptop, but, you know, I can point at you or something.
+
+1:32:05.310,1:32:07.310
+OK, any idea?
+
+1:32:09.810,1:32:11.810
+Yes.
+
+1:32:11.940,1:32:13.940
+No idea? It's OK.
+
+1:32:14.520,1:32:17.120
+You, any idea?  Maybe you heard what he said. [Inaudible student comment.]
+
+1:32:19.500,1:32:22.860
+Linear, what does that mean? [Inaudible student comment.]
+
+1:32:23.060,1:32:25.060
+It's a 1D space.
+
+1:32:26.490,1:32:28.939
+OK, a one-dimensional subspace.
+
+1:32:30.240,1:32:32.240
+OK, any other proposal?
+
+1:32:37.740,1:32:39.740
+Any idea?
+
+1:32:41.560,1:32:49.020
+OK, the images I'm taking are a million pixels. OK, so the ambient space is 3 million dimensions.
+
+1:32:52.440,1:32:55.180
+[Inaudible student comment]
+
+1:32:55.400,1:32:57.400
+They don't change, no.
+
+1:32:58.130,1:33:03.940
+And the person can move the head, you know, turn around, things like this. But not really move the whole body.
+
+1:33:03.940,1:33:06.700
+I mean you only see the face, it's mostly centered.
+
+1:33:09.380,1:33:11.380
+[Student: A thousand.]
+
+1:33:11.420,1:33:15.860
+A thousand, OK. Why?
+
+1:33:16.500,1:33:23.100
+[Inaudible student comment.]
+
+1:33:23.260,1:33:24.820
+OK yeah, that's a good guess.
+
+1:33:25.860,1:33:27.860
+At least the motivation.
+
+1:33:27.860,1:33:29.310
+[Inaudible student comment.]
+
+1:33:29.310,1:33:31.480
+Say again. [Student: The surface area of the person.] 
+
+1:33:31.580,1:33:35.000
+The surface area of the person. Right. So it's bounded by the number of pixels
+
+1:33:35.640,1:33:38.209
+occupied by the person. That's for sure. That's a, that's an upper bound.
+
+1:33:39.000,1:33:41.000
+Yes.
+
+1:33:41.160,1:33:46.729
+Those pixels, of course, are not gonna take all possible values. So that's a wide upper ground. Any other idea?
+
+1:33:49.740,1:33:52.249
+OK. So, basically
+
+1:33:54.180,1:33:55.410
+the
+
+1:33:55.410,1:33:57.799
+dimension of that, as you said,
+
+1:33:58.890,1:34:02.390
+Is bounded by the number of muscles in the face of the person.
+
+1:34:03.030,1:34:05.030
+Right. The number of degrees of freedom
+
+1:34:05.700,1:34:07.700
+that you observe in that person
+
+1:34:08.790,1:34:10.910
+is the number of muscles in their face.
+
+1:34:11.610,1:34:14.960
+The number of independently movable muscles, right.
+
+1:34:14.960,1:34:20.330
+So there's 3 degrees of freedom due to the fact that you can tilt your head this way, that way, or that way.
+
+1:34:20.670,1:34:22.670
+That's 3, right there.
+
+1:34:24.300,1:34:32.090
+Then there is translation, this way, that way. Maybe this way and that way, maybe up or down. That's 6.
+
+1:34:32.700,1:34:35.809
+And then the number of muscles in your face, right. So you can
+
+1:34:36.480,1:34:38.480
+smile. You can,
+
+1:34:39.090,1:34:44.720
+you know, pout. You can do all kinds of stuff, right. And you can do this, you know, independently. You close one eye.
+
+1:34:46.050,1:34:48.890
+You can smile in one direction, you know, I mean...
+
+1:34:48.890,1:34:54.049
+So, whatever independent muscles, you have—not counting the tongue, because there's tons of muscles in the tongue.
+
+1:34:56.700,1:34:58.700
+And that's about 50.
+
+1:34:59.130,1:35:01.050
+Maybe a little more.
+
+1:35:01.050,1:35:02.220
+So,
+
+1:35:02.220,1:35:05.990
+regardless, it's less than 100. OK, so the surface,
+
+1:35:07.050,1:35:11.900
+locally, if you want to parameterize the surface occupied by all those pictures—move from one picture to another—
+
+1:35:12.510,1:35:14.510
+it's a surface with less than 100
+
+1:35:15.390,1:35:20.209
+parameters that determine the position of a point on that surface. Of course it's a highly nonlinear surface.
+
+1:35:21.150,1:35:25.220
+It's not like this beautiful Calabi-Yau manifold here, but
+
+1:35:26.340,1:35:28.340
+but it's a it is a surface nonetheless.
+
+1:35:30.900,1:35:33.260
+Of course the answer was in the slide so, you know.
+
+1:35:35.300,1:35:41.860
+So what you'd like is an ideal feature extractor to be able to disentangle the explanatory factors of variation of what you're observing.
+
+1:35:42.620,1:35:45.759
+Right. So the different aspects of my face, you know,
+
+1:35:45.760,1:35:51.400
+it's not just I move my muscles and I move my head around—each of those is an independent factor of variation. Again
+
+1:35:51.400,1:35:53.400
+I can also remove my glasses.
+
+1:35:53.600,1:35:59.439
+You know, the lighting could change. That's another set of, you know, variable—
+
+1:36:00.170,1:36:05.920
+variables. And what you'd like is a representation that basically individually represents each of those factors of variations.
+
+1:36:06.590,1:36:10.600
+So if there is a criterion to satisfy in learning good representations
+
+1:36:11.300,1:36:17.230
+it's that: it's finding independent explanatory factors of variation of the data that you're looking at.
+
+1:36:18.140,1:36:21.640
+And the bottom line is that nobody has any idea how to do this. OK.
+
+1:36:23.239,1:36:26.049
+But that would be the ultimate goal of
+
+1:36:29.360,1:36:31.360
+representation learning.
+
+1:36:32.000,1:36:34.000
+And we basically are at the end. OK.
+
+1:36:35.929,1:36:38.679
+I'll take two more questions, if there is any.
+
+1:36:44.100,1:36:46.100
+Yes.
+
+1:36:46.320,1:36:52.140
+[Inaudible student question.]
+
+1:36:52.480,1:37:00.180
+OK, so the question is: Is there some sort of pre-processing like PCA that will find those vectors? Yeah, so PCA will find
+
+1:37:00.730,1:37:05.580
+those if the manifold is linear. So if you assume that the surface
+
+1:37:06.190,1:37:09.330
+occupied by all those examples or faces is a plane,
+
+1:37:11.290,1:37:15.749
+then PCA will find the dimension of that plane—principal component analysis, right.
+
+1:37:18.520,1:37:23.310
+But, no, it's not linear unfortunately, right. Let me...
+
+1:37:26.980,1:37:28.980
+Yeah, let me give you an example.
+
+1:37:29.980,1:37:32.819
+If you take me and my oldest son that looks like me, and
+
+1:37:34.390,1:37:37.289
+you place us making the same face in the same position,
+
+1:37:37.810,1:37:41.069
+the distance between our images will be relatively small even though we're not the same person.
+
+1:37:41.470,1:37:44.339
+Now if you take my face and my face shifted by
+
+1:37:45.250,1:37:46.870
+20 pixels,
+
+1:37:46.870,1:37:52.079
+there's more distance between me and myself shifted than there is between me and my son, OK.
+
+1:37:53.890,1:37:55.890
+So...
+
+1:37:56.140,1:37:58.140
+What that means is that, you know,
+
+1:37:58.900,1:38:02.069
+the manifold of my face, you know, is some complicated manifold in that space.
+
+1:38:02.110,1:38:05.009
+My son is a slight different manifold which does not intersect mine.
+
+1:38:06.460,1:38:11.520
+Yet these two, those two manifolds are very close to each other, and they're closer to each other than
+
+1:38:12.130,1:38:18.779
+any two samples from my manifold, and two samples from his manifold. So PCA is not going to tell you anything, basically.
+
+1:38:20.590,1:38:25.140
+OK, here is another reason why that surface is not, is not a plane.
+
+1:38:26.620,1:38:28.020
+You're looking at me right now.
+
+1:38:28.020,1:38:35.100
+Now imagine the manifold, which is a linear manifold, one dimensional manifold, of me turning my head all the way 360.
+
+1:38:36.280,1:38:38.110
+OK.
+
+1:38:38.110,1:38:42.150
+That manifold is topologically identical to a circle. It's not flat.
+
+1:38:45.070,1:38:48.390
+Can't be, it can't be aligned. So PCA is not going to find it.
+
+1:38:51.630,1:38:54.720
+OK, I gotta blast off. Thanks! See you next week.

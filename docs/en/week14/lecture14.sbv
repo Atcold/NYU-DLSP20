@@ -1,0 +1,5105 @@
+0:00:00.399,0:00:03.840
+uh okay there's a number of topics i want to talk about today uh this is our
+
+0:00:03.840,0:00:06.560
+last lecture and i want to keep some time at the end for
+
+0:00:06.560,0:00:09.920
+like you know random questions on random topics that you might want to ask
+
+0:00:09.920,0:00:13.599
+you know maybe sort of general questions in general about like approaches to
+
+0:00:13.599,0:00:18.400
+machine learning ai deep learning etc uh you know maybe questions really
+
+0:00:18.400,0:00:21.840
+you know kind of you know maybe that may be a little more philosophical but
+
+0:00:21.840,0:00:25.760
+um but let me start with uh something more concrete so
+
+0:00:25.760,0:00:28.800
+um i want to talk about structure prediction i alluded to this topic a
+
+0:00:28.800,0:00:33.360
+number of times during the previous lectures but i think not enough
+
+0:00:33.360,0:00:36.880
+in depth for for most people to understand so i want
+
+0:00:36.880,0:00:42.079
+to come back to this so structure prediction is basically
+
+0:00:42.079,0:00:47.200
+the problem of uh predicting a variable that itself is not just like a single
+
+0:00:47.200,0:00:50.719
+category or uh you know a single object but
+
+0:00:50.719,0:00:54.079
+basically a sort of a combinatorial object so for for
+
+0:00:54.079,0:00:57.199
+example things like a sentence you're doing speech recognition you're
+
+0:00:57.199,0:01:01.039
+doing handwriting recognition you're doing natural language
+
+0:01:01.039,0:01:07.200
+generation or translation and what you need to output is a sort of
+
+0:01:07.200,0:01:12.640
+grammatically correct consistent sequence of symbols
+
+0:01:12.640,0:01:16.159
+and there is no you can't say that there is a
+
+0:01:16.159,0:01:19.759
+a finite number of possibilities of the output because the
+
+0:01:19.759,0:01:23.439
+the length of the output might be variable uh but even if it's
+
+0:01:23.439,0:01:27.759
+if the length is has a maximum and the number is in principle finite
+
+0:01:27.759,0:01:33.280
+because it's combinatorial um there's no way to kind of enumerate all possible
+
+0:01:33.280,0:01:38.560
+different outputs and so to express the the type constraint that the output has
+
+0:01:38.560,0:01:42.640
+to reflect that's that's what's called structural prediction and
+
+0:01:42.640,0:01:45.759
+this uh you know there's a lot of work on this
+
+0:01:45.759,0:01:49.600
+going back uh uh to basically the early days of speech
+
+0:01:49.600,0:01:52.320
+recognition so this is not a recent problem
+
+0:01:52.320,0:01:57.920
+um and in fact the the i'm going to start by a little bit of history uh in
+
+0:01:57.920,0:02:01.680
+my mind the the first model to do structural
+
+0:02:01.680,0:02:04.079
+prediction combined with things like neural
+
+0:02:04.079,0:02:10.000
+networks uh trained discriminatively was this speech recognition model for uh
+
+0:02:10.000,0:02:14.640
+four words by uh javier de la cruz ii back in the
+
+0:02:14.640,0:02:18.000
+early 90s 1991 and there was kind of similar work about
+
+0:02:18.000,0:02:22.319
+the same time by joshua banjo and about a year or two later by patrick hefner
+
+0:02:22.319,0:02:25.680
+so these are people who worked on discriminative training
+
+0:02:25.680,0:02:28.720
+for systems are supposed to produce a sequence of symbols
+
+0:02:28.720,0:02:33.440
+uh from uh uh you know a signal that says speech
+
+0:02:33.440,0:02:37.440
+or handwriting and where once the the first step basically
+
+0:02:37.440,0:02:42.720
+is a neural net uh here uh in this this neural net i wrote td
+
+0:02:42.720,0:02:46.160
+and n this means time data neural net is basically a temporal convolutional net
+
+0:02:46.160,0:02:49.599
+uh so this is the you know the first model i i can
+
+0:02:49.599,0:02:56.080
+i can find of uh structural prediction uh sort of
+
+0:02:56.080,0:02:58.080
+hybridized with with neural nets if you want
+
+0:02:58.080,0:03:02.640
+so the problem that uh the idler currently ubuntu are trying to solve was
+
+0:03:02.640,0:03:09.360
+recognizing words using a neural net and to some extent the modern approaches
+
+0:03:09.360,0:03:13.360
+are kind of similar to this but in in some ways
+
+0:03:13.360,0:03:17.360
+so the speech signal is represented as a sequence of acoustic vectors
+
+0:03:17.360,0:03:21.440
+so those are uh you know you you you slice the signal into
+
+0:03:21.440,0:03:25.280
+little chunks and then on one of the chunks you do a for your transform which
+
+0:03:25.280,0:03:27.920
+uh fredo has explained to you and you turn
+
+0:03:27.920,0:03:30.799
+it into basically a feature vector and you have one of those vectors
+
+0:03:30.799,0:03:33.920
+it's typically 30 dimensions or so maybe 40.
+
+0:03:33.920,0:03:37.280
+and you want one of those vectors every 10 milliseconds so
+
+0:03:37.280,0:03:40.959
+so about 100 times per second so you have a sequence of 40 dimensional
+
+0:03:40.959,0:03:45.360
+vectors uh uh about 100 per second and you you
+
+0:03:45.360,0:03:48.720
+you run this through a convolutional net a temporal convolutional net and at the
+
+0:03:48.720,0:03:52.319
+output of it uh what you get is a sequence of feature
+
+0:03:52.319,0:03:55.599
+vectors you can think of it this way uh in modern systems those feature
+
+0:03:55.599,0:03:59.840
+vectors are actually uh kind of soft max factors that indicate a
+
+0:03:59.840,0:04:06.080
+category but in that case it wasn't um and those can be at the same
+
+0:04:06.080,0:04:09.760
+rate or they can be slower so if the if the neural net has
+
+0:04:09.760,0:04:13.439
+if the conversion that has temporal sep sampling you're not going to get
+
+0:04:13.439,0:04:17.440
+10 of those feature vectors per second you might get you know 25
+
+0:04:17.440,0:04:20.479
+um you know two and a half or something right oh i'm sorry
+
+0:04:20.479,0:04:23.680
+at the input there is a hundred so if you have a sub sampling by a factor of
+
+0:04:23.680,0:04:25.840
+four you will get 25 feature vectors per
+
+0:04:25.840,0:04:29.759
+second not 100. or something like that now here's the
+
+0:04:29.759,0:04:34.880
+problem the problem is you want to recognize which word was just pronounced
+
+0:04:34.880,0:04:41.680
+and different people will pronounce the same word at different speeds and so
+
+0:04:41.680,0:04:44.639
+what you need to do is uh what's called dynamic time wiping
+
+0:04:44.639,0:04:47.440
+and i explained this uh already in the in the past
+
+0:04:47.440,0:04:51.199
+so let's imagine that you've recorded this person you don't want to do
+
+0:04:51.199,0:04:55.040
+uh speaker independent speech recognition for now just speaker
+
+0:04:55.040,0:05:01.919
+specific so you've recorded that person saying uh uh you know let's say the
+
+0:05:01.919,0:05:08.320
+the ten digits uh uh spoken digits like zero one two three four five etc
+
+0:05:08.320,0:05:11.520
+because you're only interested in recognizing uh
+
+0:05:11.520,0:05:14.720
+uh spoken digits isolated spoken digits maybe this is
+
+0:05:14.720,0:05:18.000
+a system that is supposed to uh you know dial
+
+0:05:18.000,0:05:22.320
+a number uh on your phone right so it just needs to recognize sequences of
+
+0:05:22.320,0:05:26.080
+digits or perhaps it's a very simple speech
+
+0:05:26.080,0:05:31.360
+recognition system that tries to spot the the wake up word for uh you know
+
+0:05:31.360,0:05:34.720
+amazon alexa or something like this so the only thing the system is supposed
+
+0:05:34.720,0:05:39.600
+to recognize is alexa or hey google or you know something like that right a
+
+0:05:39.600,0:05:44.160
+wake up word um so uh the system may have a bunch of
+
+0:05:44.160,0:05:47.440
+uh pre-recorded templates that correspond to uh
+
+0:05:47.440,0:05:54.240
+sequences of future vectors uh that were produced by uh someone
+
+0:05:54.240,0:05:59.120
+speaking each of the words um and now the way you want to train the
+
+0:05:59.120,0:06:03.919
+system is that you would like to train the neural net at the same time as
+
+0:06:03.919,0:06:08.160
+the template so that the overall system recognizes the words uh as best as
+
+0:06:08.160,0:06:11.440
+possible this is a classification problem
+
+0:06:11.440,0:06:14.720
+but there is a latent variable in it and the latent variable is how
+
+0:06:14.720,0:06:17.840
+how are you going to time warp the sequence of future vectors so that it
+
+0:06:17.840,0:06:20.800
+matches the length of those templates and again i'm kind of
+
+0:06:20.800,0:06:24.560
+repeating myself because i talked a little bit about this before
+
+0:06:24.560,0:06:27.759
+so you do this with damage time wiping and what that consists of
+
+0:06:27.759,0:06:32.400
+is that you line up all the feature vectors
+
+0:06:32.400,0:06:36.000
+along the bottom here of this so this is think of this as a matrix
+
+0:06:36.000,0:06:40.400
+you line up all the future vectors uh at the uh at the input so that you get the
+
+0:06:40.400,0:06:44.319
+the sequence of future vectors are here and then you put the sequence of
+
+0:06:44.319,0:06:47.360
+template vectors so uh future vectors coming out of the
+
+0:06:47.360,0:06:53.199
+template on this axis and then each entry in the matrix
+
+0:06:53.199,0:06:57.039
+is an indication of the distance between the feature vector
+
+0:06:57.039,0:07:02.800
+here and the feature vector there okay so you get this probability matrix with
+
+0:07:02.800,0:07:06.479
+uh distances between feature vectors essentially
+
+0:07:06.479,0:07:10.880
+um and the best uh the best way to map the sequence of each vector into another
+
+0:07:10.880,0:07:16.240
+one to to see if they fit is to basically view this matrix as kind
+
+0:07:16.240,0:07:20.400
+of a a set of nodes in a graph and what you
+
+0:07:20.400,0:07:24.160
+want is go from the lower left hand corner of that graph to
+
+0:07:24.160,0:07:29.440
+the upper right hand corner by going through a path that
+
+0:07:29.440,0:07:32.639
+minimizes the sum of the distances along the past
+
+0:07:32.639,0:07:35.840
+okay uh so obviously you're going to have to go
+
+0:07:35.840,0:07:39.520
+horizontally you know more steps than you go vertically so
+
+0:07:39.520,0:07:42.080
+on a few occasions you're going to diagonally in a few occasions you're
+
+0:07:42.080,0:07:44.879
+going to go vertically up but on many occasions you're probably going to go
+
+0:07:44.879,0:07:49.680
+horizontally to the to the right and that would be
+
+0:07:49.680,0:07:52.479
+the situation where you have multiple feature vectors here
+
+0:07:52.479,0:07:54.560
+that are essentially identical that match
+
+0:07:54.560,0:07:58.000
+the single feature vector in the template okay so for example
+
+0:07:58.000,0:08:01.280
+you pronounce the word seven very slowly the uh
+
+0:08:01.280,0:08:04.879
+uh initially it's gonna be you know repeated multiple times because you you
+
+0:08:04.879,0:08:07.039
+stick on it for like a quarter of a second so
+
+0:08:07.039,0:08:11.599
+you're gonna have 25 instances of this and all of this will be mapped to
+
+0:08:11.599,0:08:14.720
+maybe a single feature actor here that corresponds to this
+
+0:08:14.720,0:08:21.440
+sound up um so finding this path that best warps the
+
+0:08:21.440,0:08:24.720
+the the sequence into the template sequence
+
+0:08:24.720,0:08:27.759
+is like minimizing with respect to a related variable z okay
+
+0:08:27.759,0:08:30.800
+so it's like you have an energy function and you're minimizing this energy
+
+0:08:30.800,0:08:32.719
+function with respect to the relative variable
+
+0:08:32.719,0:08:38.320
+the latent variable is the path in that graph um so now what you have is
+
+0:08:38.320,0:08:41.839
+the best warping that matches the sequence of future vector to the first
+
+0:08:41.839,0:08:44.640
+template now you keep doing it with doing the
+
+0:08:44.640,0:08:46.880
+with with doing this with all the templates
+
+0:08:46.880,0:08:50.720
+okay so for every template every word you know from zero
+
+0:08:50.720,0:08:54.240
+one two three to nine you have the best way to warp
+
+0:08:54.240,0:08:58.160
+the the the feature vector to that template
+
+0:08:58.160,0:09:05.279
+um and uh and now you can if your system has been trained you you
+
+0:09:05.279,0:09:08.080
+pick the the category of the word template
+
+0:09:08.080,0:09:11.519
+with a smaller distance okay as simple as that that's for
+
+0:09:11.519,0:09:14.640
+classification now how about training so for training
+
+0:09:14.640,0:09:18.640
+um this is a latent variable model essentially and what you need to do
+
+0:09:18.640,0:09:23.760
+is you need to make the energy for the correct answer as small
+
+0:09:23.760,0:09:26.800
+as possible and make sure the energy for the
+
+0:09:26.800,0:09:33.519
+incorrect answers are larger okay so um so let's imagine the correct
+
+0:09:33.519,0:09:37.600
+answer is is oops sorry
+
+0:09:37.600,0:09:41.839
+is this word here the second last one that correspond to zero one two three
+
+0:09:41.839,0:09:45.600
+the category three for example okay so we know the correct answer is
+
+0:09:45.600,0:09:52.080
+three so what we need to do now is uh basically change the word template
+
+0:09:52.080,0:09:58.399
+here a little bit so that it gets closer to the the feature vector sequence
+
+0:09:58.399,0:10:01.440
+and then change the feature vector sequence so that it gets closer to the
+
+0:10:01.440,0:10:05.600
+template right you can think of this dtw uh
+
+0:10:05.600,0:10:09.680
+distance this dynamic time warping distance as a kind of distance
+
+0:10:09.680,0:10:12.640
+uh which involves minimization with respect to a path but in the end it's
+
+0:10:12.640,0:10:17.200
+some sort of distance or divergence and what you need to do is and that's
+
+0:10:17.200,0:10:20.480
+basically your energy so what you need to do is make that distance smaller
+
+0:10:20.480,0:10:24.880
+for the correct answer okay so the energy of the correct answer goes down
+
+0:10:24.880,0:10:28.640
+uh and simultaneously you need to make sure the energy of all the e correct
+
+0:10:28.640,0:10:32.000
+answers get uh are larger okay so you might need to
+
+0:10:32.000,0:10:34.959
+push them away so you might need to have an objective
+
+0:10:34.959,0:10:38.399
+function that is going to uh take the templates for the wrong
+
+0:10:38.399,0:10:43.839
+words and somehow push them away from the current sequence of features
+
+0:10:43.839,0:10:47.279
+okay so that's how you learn the templates
+
+0:10:47.279,0:10:53.040
+um and then simultaneously uh you you need to you you're gonna have kind
+
+0:10:53.040,0:10:57.200
+of a combination of gradients that are gonna back propagate through this dtw
+
+0:10:57.200,0:11:00.320
+one um one is going to try to make that a
+
+0:11:00.320,0:11:04.959
+sequence of feature vector uh such that once you go the time wiping
+
+0:11:04.959,0:11:09.600
+it gets closer to the correct word template but also uh
+
+0:11:09.600,0:11:15.279
+change it so that it gets away from the the other templates the the templates
+
+0:11:15.279,0:11:20.399
+for the other categories okay um so that is simply
+
+0:11:20.399,0:11:24.720
+back propagating through the uh you know through the dynamic time marking and the
+
+0:11:24.720,0:11:28.079
+dynamic time marking really is a switch it's a giant switch right
+
+0:11:28.079,0:11:31.200
+it basically tells you uh those values here
+
+0:11:31.200,0:11:36.240
+on the along the path matter because uh they are the ones that indicate whether
+
+0:11:36.240,0:11:39.519
+my input vector matches my template vector okay
+
+0:11:39.519,0:11:43.120
+all the other ones that my pass is is not taking are irrelevant they don't
+
+0:11:43.120,0:11:46.480
+matter so the distance is just the sum of those
+
+0:11:46.480,0:11:49.040
+values so when i back propagate i just get
+
+0:11:49.040,0:11:53.440
+uh for each vector here a gradient that corresponds to
+
+0:11:53.440,0:11:57.279
+uh the gradient of uh you know basically the
+
+0:11:57.279,0:12:02.639
+the distance uh to the corresponding vector in the template
+
+0:12:02.800,0:12:06.399
+so for the correct template this is going to cause
+
+0:12:06.399,0:12:09.680
+all those vectors to get closer to the corresponding vector in the template
+
+0:12:09.680,0:12:13.279
+and all those vectors to move away from the corresponding vector in the
+
+0:12:13.279,0:12:16.560
+bad templates that you decide to push away and then you can just back prop and
+
+0:12:16.560,0:12:20.639
+get those gradients all the way through now i'm kind of explaining the mechanics
+
+0:12:20.639,0:12:23.519
+of it but you don't actually have to think
+
+0:12:23.519,0:12:28.320
+about it you know in principle kind of um
+
+0:12:28.720,0:12:33.680
+conceptually it's just a energy-based model with lithium variable
+
+0:12:33.680,0:12:37.120
+and you just compute the gradient of your energy with respect to
+
+0:12:37.120,0:12:40.639
+uh you know to everything in your in your network
+
+0:12:40.639,0:12:44.480
+uh for you know values related variables that depend on
+
+0:12:44.480,0:12:48.959
+you know the position of the of uh of this switch here you can think of this
+
+0:12:48.959,0:12:54.079
+switch as the one that tells you which of the answers is correct
+
+0:12:54.079,0:12:57.120
+and so it's nothing more than an energy-based model
+
+0:12:57.120,0:13:02.480
+okay now there's a question um so why am i introducing this before talking
+
+0:13:02.480,0:13:05.279
+about structure prediction because this is a very simple
+
+0:13:05.279,0:13:08.320
+form of structure prediction particularly if now the problem is not
+
+0:13:08.320,0:13:12.399
+to recognize a single word but it is to recognize a sequence of
+
+0:13:12.399,0:13:16.000
+words right so a word is a sequence of sounds uh but a
+
+0:13:16.000,0:13:19.440
+sentence is a sequence of words and so therefore also a sequence of
+
+0:13:19.440,0:13:23.839
+sounds right so i could build uh a collection of possible
+
+0:13:23.839,0:13:26.399
+sequences which are grammatically correct
+
+0:13:26.399,0:13:31.519
+sequences of words which correspond to some grammatically correct sequences of
+
+0:13:31.519,0:13:34.720
+sounds and then this kind of dynamic time
+
+0:13:34.720,0:13:39.519
+marking if you want will sort of find among all the possible uh sequences of
+
+0:13:39.519,0:13:42.880
+uh of symbols or or or sounds or words
+
+0:13:42.880,0:13:45.199
+we'll find the one that has the lowest energy
+
+0:13:45.199,0:13:50.320
+okay that this future vector is closest to somehow
+
+0:13:52.160,0:13:56.560
+okay so that's the general problem with sequence labeling
+
+0:13:56.560,0:13:58.800
+and um and it can be formulated uh
+
+0:14:04.639,0:14:10.160
+at a general level uh in this way um now i'm i'm kind of uh i kind of set the
+
+0:14:10.160,0:14:12.560
+stage a little bit and now i'm going to talk about something that you're not
+
+0:14:12.560,0:14:18.000
+going to see immediately is connected but um it's gonna come up at the end
+
+0:14:18.000,0:14:21.040
+okay so let's say you have a learning system
+
+0:14:21.040,0:14:25.519
+that is uh composed of an input x okay it gets an input x
+
+0:14:25.519,0:14:29.600
+and it's an energy model in which the energy is a sum of three terms in this
+
+0:14:29.600,0:14:34.639
+case so those those uh blue squares here are basically
+
+0:14:34.639,0:14:36.880
+factors in a factor graphs they're energy terms
+
+0:14:36.880,0:14:40.079
+additive energy terms in your energy function
+
+0:14:40.079,0:14:46.880
+uh and your output is uh is a sequence in this case a sequence of four symbols
+
+0:14:46.880,0:14:52.880
+and those symbols um do not all uh contribute to all the terms in the
+
+0:14:52.880,0:14:55.680
+energy so basically your energy function the first term
+
+0:14:55.680,0:15:01.279
+takes into account the first two output [Music]
+
+0:15:01.279,0:15:04.800
+symbols or or variables in your in your output in your sequence of output
+
+0:15:04.800,0:15:08.720
+the second one take the second two the third one takes the
+
+0:15:08.720,0:15:12.240
+the third and fourth okay now imagine that
+
+0:15:12.240,0:15:17.120
+um this were a sequence of words and your system was supposed to do
+
+0:15:17.120,0:15:21.120
+something like speech recognition or something so x is the speech signal
+
+0:15:21.120,0:15:24.160
+uh in the blue boxes you have neural nets and various other things there
+
+0:15:24.160,0:15:26.160
+might be another neural net that looks at x
+
+0:15:26.160,0:15:29.600
+x and then produces future vectors that go into those boxes but
+
+0:15:29.600,0:15:36.079
+uh that's the detail for now um and um what those blue boxes would would
+
+0:15:36.079,0:15:38.959
+have to uh implement is basically grammatical
+
+0:15:38.959,0:15:43.600
+constraints so uh you know in english certain words can
+
+0:15:43.600,0:15:47.759
+follow others but not uh others right so you rarely have two
+
+0:15:47.759,0:15:54.000
+two verbs that follow each other um and so you could implement this in
+
+0:15:54.000,0:15:56.880
+this uh energy term that would make you pay a
+
+0:15:56.880,0:16:00.800
+price for uh you know making a verb follow another
+
+0:16:00.800,0:16:04.880
+verb all right or having uh i don't know you know two
+
+0:16:04.880,0:16:07.600
+prepositions you can have two objectives that follow each other
+
+0:16:07.600,0:16:10.720
+you know things like that right so basically those would you know implement
+
+0:16:10.720,0:16:13.839
+sort of basic grammatical rules and you can think of this as kind of a
+
+0:16:13.839,0:16:16.959
+language model right so i know what word came before
+
+0:16:16.959,0:16:20.720
+uh tell me what work and can come after and i can train this on the corpus of
+
+0:16:20.720,0:16:24.880
+text to learn this energy function so
+
+0:16:24.880,0:16:28.480
+you know it's a it would be a very basic crude language model
+
+0:16:28.480,0:16:32.160
+so this type of model would implement a very cool language model
+
+0:16:32.160,0:16:35.440
+by just you know taking the previous word and then telling you what the the
+
+0:16:35.440,0:16:37.920
+next word what next words are possible making you
+
+0:16:37.920,0:16:40.320
+pay a price for picking a word that is not
+
+0:16:40.320,0:16:47.600
+uh not correct um okay so um how you do inference this is
+
+0:16:47.600,0:16:50.880
+just a basically an energy model here which in
+
+0:16:50.880,0:16:53.759
+this case doesn't actually have a lithium variable but
+
+0:16:53.759,0:16:57.440
+basically i give you an x and you have to find the sequence of y that minimizes
+
+0:16:57.440,0:17:00.399
+the energy but in this case because the energy is
+
+0:17:00.399,0:17:03.440
+the sum of three terms the efficient way to find the sequence
+
+0:17:03.440,0:17:06.799
+of y's that minimize the energy that may not require
+
+0:17:06.799,0:17:10.160
+a completely exhaustive search or gradient descent or something like this
+
+0:17:10.160,0:17:13.520
+okay i'm going to place myself in a situation where why
+
+0:17:13.520,0:17:16.799
+the y's are actually discrete okay so this thing's like words or
+
+0:17:16.799,0:17:20.959
+or sounds or categories of some kind and so this applies to uh
+
+0:17:28.000,0:17:31.360
+you know this situation where the the variables you need to infer are all
+
+0:17:31.360,0:17:34.559
+outputs which means they're going to be visible
+
+0:17:34.559,0:17:37.600
+on the training set and you can train your system to kind of infer them
+
+0:17:37.600,0:17:41.679
+correctly but it could also be another situation where
+
+0:17:41.679,0:17:46.000
+uh you know some of the variables are observed like x here on the left
+
+0:17:46.000,0:17:49.840
+and y is observed during training on the right but then all the intermediate
+
+0:17:49.840,0:17:52.400
+variables are never observed there are latent variables they need to you need
+
+0:17:52.400,0:17:56.080
+to minimize over um as well but again here this factor
+
+0:17:56.080,0:18:00.799
+graph is factorized in the sense that the energy is a sum of of different
+
+0:18:00.799,0:18:04.640
+terms that only take subsets of the variables into
+
+0:18:04.640,0:18:06.960
+account all right okay so let's say uh let's
+
+0:18:09.919,0:18:15.600
+take a very concrete example now and let's say the uh
+
+0:18:15.760,0:18:18.799
+energy here in this case is a sum of four terms
+
+0:18:18.799,0:18:25.120
+four energy terms okay uh the first two uh depend on x
+
+0:18:25.120,0:18:29.760
+the observation the last one depend uh the last two depend on y which is the
+
+0:18:29.760,0:18:32.080
+variable you need to predict which you're given during training but not
+
+0:18:32.080,0:18:34.720
+during tests and then two other nodes are our latent
+
+0:18:34.720,0:18:39.200
+variable nodes okay and let's say uh x is some high
+
+0:18:39.200,0:18:42.720
+dimensional variable we don't care what it is because we just observe it
+
+0:18:42.720,0:18:49.919
+and z1 is binary z2 is binary y1 is binary and y2 is ternary so we can
+
+0:18:49.919,0:18:54.559
+take three values zero one two okay now uh
+
+0:18:54.559,0:18:58.480
+if you count how many possible configurations of z one z two y one y
+
+0:18:58.480,0:19:03.120
+two they are there are basically uh
+
+0:19:03.120,0:19:08.720
+uh uh 24 right uh two times two times two times three right
+
+0:19:08.720,0:19:13.440
+that's that's 24 uh different possible configurations of
+
+0:19:13.440,0:19:18.320
+values so if you wanted to do exact inference uh you might have to try
+
+0:19:18.320,0:19:22.080
+all 24 of those configurations and then compute the energy of all 24 of
+
+0:19:22.080,0:19:25.039
+those configurations and then pick the one with the lowest energy
+
+0:19:25.039,0:19:33.520
+to do inference right and in fact those those 24 configurations correspond to
+
+0:19:33.520,0:19:39.039
+uh 24 times three evaluations of those energy terms right because we
+
+0:19:39.039,0:19:42.080
+have three energy terms so we'll have to compute 96 different
+
+0:19:42.080,0:19:45.919
+energies to be able to do this okay and this is a small example where
+
+0:19:45.919,0:19:50.480
+the sequence is short and the the the variables are binary okay this
+
+0:19:50.480,0:19:53.520
+goes exponentially with the number of with the length of
+
+0:19:53.520,0:19:59.600
+the sequence uh and uh uh
+
+0:19:59.600,0:20:07.600
+uh sorry with the the number of uh possible values of the of the
+
+0:20:07.600,0:20:11.039
+of the z's uh and the length of the sequence so if you have
+
+0:20:11.039,0:20:16.000
+you know uh uh you know n possibilities for each of the
+
+0:20:16.000,0:20:19.440
+variables and the length is l you know it's n to the l right exponential in the
+
+0:20:19.440,0:20:21.760
+ninth okay but the thing is there is a more
+
+0:20:26.640,0:20:31.760
+efficient way of figuring out what is the configuration of lowest
+
+0:20:31.760,0:20:34.159
+energy and it's due to the fact that you have
+
+0:20:34.159,0:20:40.799
+those kind of local this local structure right so uh z1 can only take two values
+
+0:20:40.799,0:20:43.840
+okay and z2 can only also only take two values
+
+0:20:43.840,0:20:48.000
+so this energy term here can only take four values it's ever going to see
+
+0:20:48.000,0:20:51.360
+only four different values because it can only see
+
+0:20:51.360,0:20:54.960
+zero zero zero one one zero one one right
+
+0:20:54.960,0:20:58.480
+so you could imagine could be pre-computing those four values
+
+0:20:58.480,0:21:02.320
+okay this guy is also going to see only four values right so you can
+
+0:21:02.320,0:21:05.600
+you can because this is binary and that binary that's binary
+
+0:21:05.600,0:21:08.799
+so you can pre-compute those four values okay
+
+0:21:08.799,0:21:12.320
+so that's another four evaluation of an objective function that we're up to
+
+0:21:12.320,0:21:14.480
+eight and this guy has six different values
+
+0:21:14.480,0:21:17.200
+because this variable is binary this one ternary so it's
+
+0:21:17.200,0:21:20.720
+two by two times three so now you have six different configurations
+
+0:21:20.720,0:21:25.280
+so by pre-computing the four here the four here and the six here
+
+0:21:25.280,0:21:36.480
+um uh you you have computed all the possible uh configurations basically
+
+0:21:39.600,0:21:43.200
+and that's kind of represented here at the bottom so
+
+0:21:43.200,0:21:47.200
+this is called a trellis and it's basically a graph that has a source node
+
+0:21:47.200,0:21:50.320
+and a target node and every path in a graph corresponds to
+
+0:21:50.320,0:21:55.600
+a particular assignment of of the variables okay
+
+0:21:55.600,0:22:03.840
+so for example if i go through this path okay it means y1 equals z1 equals 1
+
+0:22:03.840,0:22:11.039
+z2 equals 0 y1 equals 1 and y2 equals 2 let's say okay
+
+0:22:11.039,0:22:17.919
+and if i add up the the terms on each arc i get the overall energy
+
+0:22:17.919,0:22:23.600
+each arc is is uh basically annotated by the
+
+0:22:23.600,0:22:26.880
+energy term the value of the energy that corresponds to this configuration
+
+0:22:26.880,0:22:31.919
+so for example this arc here is this energy and that's the value of this
+
+0:22:31.919,0:22:38.159
+energy term for y one equals one and y two equals two
+
+0:22:38.840,0:22:45.039
+okay uh so each of these args is a value of
+
+0:22:45.039,0:22:49.280
+this energy term each of these rx is the value of that energy term
+
+0:22:49.280,0:22:55.679
+etc and now the finding the the best lowest energy
+
+0:22:55.679,0:22:59.760
+configuration of z1 z2 y1 y2 simply consists in
+
+0:22:59.760,0:23:06.000
+finding the shortest path in this graph okay and
+
+0:23:06.000,0:23:12.000
+to do this i only have to evaluate uh four times four terms of energy here
+
+0:23:12.000,0:23:13.760
+four terms here and six terms here and that's
+
+0:23:13.760,0:23:21.120
+it okay so that's uh 14 i don't know why i said 16 here or 16
+
+0:23:21.120,0:23:26.640
+because of the first two here yes so 16 values total
+
+0:23:28.000,0:23:35.360
+but uh so that's a lot less than 96 okay and that's because
+
+0:23:35.360,0:23:39.039
+the energy is the sum of terms and you can use those kind of efficient
+
+0:23:39.039,0:23:43.279
+algorithms uh to do the inference okay so this is a
+
+0:23:43.279,0:23:46.240
+simple case where the output is a sequence
+
+0:23:46.240,0:23:49.440
+and when the output is a sequence there is a simple algorithm
+
+0:23:49.440,0:23:53.279
+and it's basically shoulder space in a graph right in a in a trellis
+
+0:23:53.279,0:23:58.720
+so that's just dynamic programming uh um and it's very simple it's efficient you
+
+0:23:58.720,0:24:03.120
+know it's uh it's nice so to train a system like this
+
+0:24:03.120,0:24:06.000
+what you need to tell it is you need to tell it here is the correct
+
+0:24:06.000,0:24:10.400
+configuration of y1 y2 i don't know what z1z2 is because it's a latent variable
+
+0:24:10.400,0:24:14.080
+so find me the path that goes to the correct
+
+0:24:14.080,0:24:20.400
+uh combination of y1 y2 okay so you know that let's say y1 equal
+
+0:24:20.400,0:24:24.880
+1 and y2 equal 2. so you know that the correct path
+
+0:24:24.880,0:24:31.600
+has to include this link right and so there's only a subset of
+
+0:24:31.600,0:24:33.520
+path for the the previous ones that are
+
+0:24:33.520,0:24:36.320
+possible right you can't go to y one equals zero because
+
+0:24:36.320,0:24:41.919
+that would be incorrect uh so basically only this this guy survives
+
+0:24:41.919,0:24:45.039
+and then the other paths you can take whatever you want as long as you get to
+
+0:24:45.039,0:24:48.720
+that point so you can just find the one that minimizes the energy here
+
+0:24:48.720,0:24:52.080
+so minimizing energy with respect to z1 z2 so that
+
+0:24:52.080,0:24:55.919
+uh y1 and y2 take the right value okay constraining where when
+
+0:24:55.919,0:25:00.000
+where you to take the the right value and the way you train the system now is
+
+0:25:00.000,0:25:04.799
+that you migrate and descent you back you back propagate the gradient of the
+
+0:25:04.799,0:25:08.080
+overall energy okay for this particular y and this
+
+0:25:08.080,0:25:11.600
+particular x and the z that you obtain by minimizing
+
+0:25:11.600,0:25:17.039
+you back propagate uh the the the gradient of of this energy with
+
+0:25:17.039,0:25:19.679
+respect to the parameters of all those energy terms
+
+0:25:19.679,0:25:23.440
+and you try to make that smaller right you know you have the correct y the
+
+0:25:23.440,0:25:26.880
+correct x and whatever z value uh
+
+0:25:26.880,0:25:33.600
+z mistake try to make that energy lower by tweaking the parameters
+
+0:25:33.600,0:25:38.000
+at the same time uh you have to make sure the energy of incorrect answers for
+
+0:25:38.000,0:25:44.159
+y1 and y2 that are incorrect is higher right so you take other values
+
+0:25:44.159,0:25:49.120
+of y1 y2 uh including y1 equals zero and y2
+
+0:25:49.120,0:25:52.320
+equals whatever it wants okay and for all of those other
+
+0:25:52.320,0:25:55.600
+configurations of y1y2 you want to make sure whatever energy
+
+0:25:55.600,0:25:59.440
+you you get by minimizing over z is higher than whatever you got for the
+
+0:25:59.440,0:26:02.799
+correct one okay so your loss function is going to
+
+0:26:02.799,0:26:05.679
+be something where you take the energy of the correct
+
+0:26:05.679,0:26:08.480
+answer you try to make it lower and then you take the energies of incorrect
+
+0:26:08.480,0:26:13.919
+answers and you try to make them larger okay that's discriminative
+
+0:26:13.919,0:26:17.919
+uh training for structure prediction structural prediction because the
+
+0:26:17.919,0:26:22.720
+structure here is uh represented by this uh
+
+0:26:22.720,0:26:28.320
+you know sequence of of costs okay but conceptually at a high level it's no
+
+0:26:28.320,0:26:30.880
+different from everything we talked about before when
+
+0:26:30.880,0:26:34.240
+we have a latin variable and when we train with a criterion that
+
+0:26:34.240,0:26:37.679
+says i want to make the energy of the correct time so small and the energy of
+
+0:26:37.679,0:26:43.520
+all the other answers higher okay any question at this point um i had a
+
+0:26:43.520,0:26:48.320
+question so based on this diagram it seems like
+
+0:26:48.320,0:26:54.320
+this this network only really takes discrete
+
+0:26:54.320,0:26:59.679
+values um and my understanding was that
+
+0:26:59.679,0:27:03.520
+back propagation doesn't isn't really effective if you
+
+0:27:03.520,0:27:07.760
+just have only working with discrete values
+
+0:27:07.760,0:27:11.520
+so i'm wondering if i'm missing something or if that's like
+
+0:27:11.520,0:27:18.240
+how how you connect those things right okay so uh in this case z1 z2 y1
+
+0:27:18.240,0:27:22.480
+y2 are not variables that that you learn okay they're labels
+
+0:27:22.480,0:27:25.679
+essentially okay they're discrete so one way to are
+
+0:27:25.679,0:27:29.440
+discrete just like uh you know the the class the category at
+
+0:27:29.440,0:27:34.720
+the output of the continent is discrete except you have two of them but whatever
+
+0:27:34.720,0:27:38.000
+z1 z2 are basically of the same nature the discrete variables
+
+0:27:38.000,0:27:40.640
+they're not things you're going to learn by grading descent they're just latent
+
+0:27:40.640,0:27:44.320
+variable you you have to to minimize over to do inference right
+
+0:27:44.320,0:27:47.760
+let's not talk about learning for now once your system is trained right i give
+
+0:27:47.760,0:27:51.840
+you an x and by energy minimization you find z1 z2 y1 y2
+
+0:27:51.840,0:27:56.720
+that minimizes the energy okay and because you've trained the
+
+0:27:56.720,0:28:00.080
+correct y1y2 to have the lowest energy among all
+
+0:28:00.080,0:28:04.320
+possible configurations of y2 you're going to get the correct one okay
+
+0:28:04.320,0:28:08.320
+now uh for training the the training takes
+
+0:28:08.320,0:28:11.120
+place uh you know uh basically affects the
+
+0:28:11.120,0:28:14.480
+parameters of each of those factors inside those factors there are
+
+0:28:14.480,0:28:19.360
+parameters you know w a w b w c w d which i i didn't
+
+0:28:19.360,0:28:22.960
+represent here and the way you train the system is you
+
+0:28:22.960,0:28:27.520
+you say you know at the gradient of the energy of the correct answer
+
+0:28:27.520,0:28:30.559
+uh with respect to those parameters i'm going to tweak the parameters so that
+
+0:28:30.559,0:28:35.039
+energy goes down that's continuous uh differentiable
+
+0:28:35.039,0:28:38.320
+okay and then simultaneously i have the energy of bad answers
+
+0:28:38.320,0:28:42.000
+i'm going to back propagate gradients and according to my loss function i'm
+
+0:28:42.000,0:28:46.080
+going to push up the energy of those so that my energy my loss function goes
+
+0:28:46.080,0:28:51.039
+down okay my training objective goes down
+
+0:28:51.039,0:28:57.039
+not my energy right now so so now the what i'm explaining it
+
+0:28:57.039,0:29:00.480
+down there with the trellis is the fact that because those variables
+
+0:29:00.480,0:29:04.240
+are discrete you can't use gradient descent to infer
+
+0:29:04.240,0:29:09.679
+them okay and so you have to infer them by
+
+0:29:09.679,0:29:15.520
+combinatorial search essentially and the first solution i i mentioned with
+
+0:29:15.520,0:29:19.919
+the 96 factor evaluations uh basically is exhaustive search right
+
+0:29:19.919,0:29:22.799
+try every combination of z one z two y one y two
+
+0:29:22.799,0:29:26.480
+and we and figure out which one has the lowest energy
+
+0:29:26.480,0:29:30.559
+but uh but the whole point of this is that this is wasteful
+
+0:29:30.559,0:29:34.159
+in the sense that because the energy decomposes into terms that only take
+
+0:29:34.159,0:29:38.320
+subsets of variables you can actually decompose this into uh
+
+0:29:38.320,0:29:42.000
+you can reduce this to finding the shortest paths in a graph
+
+0:29:42.000,0:29:48.320
+where the transitions in this graph are are annotated by the energies that
+
+0:29:48.320,0:29:52.559
+correspond to the value of the variables of the two
+
+0:29:52.559,0:29:57.520
+corresponding nodes okay now this is a slightly more general
+
+0:29:57.520,0:30:02.399
+form of what i told you about earlier uh so this this model here
+
+0:30:02.399,0:30:07.279
+with the dynamic time marking uh is very much the same right you you
+
+0:30:07.279,0:30:11.600
+you know the z1 z2 here are basically the paths in the dynamic time marking
+
+0:30:11.600,0:30:17.679
+uh module the y is which of the word template matches
+
+0:30:17.679,0:30:21.360
+okay and the training consists in just you
+
+0:30:21.360,0:30:23.520
+know doing gradient descent to make the energy
+
+0:30:23.520,0:30:27.919
+of the correct answer small and the energy of the incorrect answer is larger
+
+0:30:27.919,0:30:32.320
+using some loss function which i lift i live unspecified at the moment
+
+0:30:32.320,0:30:35.919
+professor when you say that you're finding that the shortest um the
+
+0:30:35.919,0:30:38.320
+shortest path you're saying that the distance between
+
+0:30:38.320,0:30:45.279
+nodes is the energy between the nodes uh the the shortest path is the path
+
+0:30:45.279,0:30:52.159
+that has the smallest sum of terms along along the along the edges right so
+
+0:30:52.159,0:30:55.600
+each edge here is marked by an energy so for
+
+0:30:55.600,0:30:57.760
+example this edge here is marked by the energy
+
+0:30:57.760,0:31:05.279
+of the term uh b uh when z one equals zero
+
+0:31:05.279,0:31:11.840
+and z two equals one okay okay so if i take this path i'm gonna
+
+0:31:11.840,0:31:16.799
+pay that energy right and if i take this this
+
+0:31:16.799,0:31:22.240
+edge i'm going to pay that energy and so you know finding the lowest energy
+
+0:31:22.240,0:31:25.679
+configuration of variables consisting finding the path
+
+0:31:25.679,0:31:32.000
+with the the the smallest sum of uh value along on the edges along that
+
+0:31:32.000,0:31:34.240
+path okay so it's the shortest path in the
+
+0:31:34.240,0:31:36.480
+graph okay is that clear
+
+0:31:40.640,0:31:44.240
+yeah that makes sense thank you and then so the the zeros before the
+
+0:31:44.240,0:31:48.320
+the black node those are zeros just because the the summation itself is zero
+
+0:31:48.320,0:31:51.279
+energy right is that is that yeah that's right yeah
+
+0:31:51.279,0:31:56.320
+okay no i'm not counting uh yeah like i don't care which of those
+
+0:31:56.320,0:32:00.799
+paths it is right i don't have an energy term here for uh
+
+0:32:00.799,0:32:04.000
+like what's the value of y2 so if i had an extra factor here
+
+0:32:04.000,0:32:08.960
+that only took y2 then uh that factor would basically put an
+
+0:32:08.960,0:32:15.600
+energy here on the you know we replace those zeros
+
+0:32:15.600,0:32:17.840
+right okay there's a question here coming from
+
+0:32:23.360,0:32:27.039
+the students so we are pushing down on the energy or
+
+0:32:27.039,0:32:31.519
+we are actually doing a minimization for training and inference but then when
+
+0:32:31.519,0:32:36.399
+are we actually pushing up just during training all right so let me
+
+0:32:36.399,0:32:39.600
+remind you how uh training energy-based models work
+
+0:32:39.600,0:32:45.120
+right particularly contrasting methods uh and if you have latent variables
+
+0:32:45.120,0:32:48.799
+right so you have your you have your energy function e of xyz
+
+0:32:48.799,0:32:51.120
+uh sorry the arguments are in the wrong order here it
+
+0:32:51.120,0:32:54.240
+doesn't matter so you have your energy function e of xyz
+
+0:32:54.240,0:33:00.000
+i give you i give you an x so in in training mode i give you an x and a y
+
+0:33:00.000,0:33:03.120
+i don't give you z ever but i give you an x and a y here is a
+
+0:33:03.120,0:33:07.360
+training sample it's an x and a y the first thing you do is you find a z
+
+0:33:07.360,0:33:14.799
+that minimizes the the energy e of x y z okay and you call that f of x y
+
+0:33:14.799,0:33:20.080
+right but the way you compute it is just min over z of e of x y z
+
+0:33:20.080,0:33:25.440
+now uh for for the the correct y in your training
+
+0:33:25.440,0:33:30.399
+set you want that energy to be small right and for your inference algorithm
+
+0:33:30.399,0:33:34.399
+to work at test time at this time i don't give
+
+0:33:34.399,0:33:37.600
+you the y i just give you the x and what you have to find is the y that
+
+0:33:37.600,0:33:40.480
+has the smallest energy so for this to work
+
+0:33:40.480,0:33:44.960
+it has to be the case that the correct y has the lowest energy among all possible
+
+0:33:44.960,0:33:49.200
+y's right so what i need to do now during
+
+0:33:49.200,0:33:52.960
+training is that i give you the correct y and
+
+0:33:52.960,0:33:55.600
+what you need to do is give a low energy to the correct y
+
+0:33:55.600,0:34:00.960
+and give a higher energy to every other possible configuration of y
+
+0:34:00.960,0:34:07.679
+right and exactly how you do this or how
+
+0:34:07.679,0:34:11.040
+all those energies enter in your objective function
+
+0:34:11.040,0:34:14.480
+uh depends on the objectives that you choose we're going to come to this in a
+
+0:34:14.480,0:34:17.200
+minute okay but almost certainly you're going
+
+0:34:17.200,0:34:20.240
+to have one term in your last function that's going to say make the energy of
+
+0:34:20.240,0:34:23.599
+the correct answer low and another term that that's going
+
+0:34:23.599,0:34:27.280
+to say make the energy of all the other answers or some of them
+
+0:34:27.280,0:34:31.760
+high and we talked about this last time actually three weeks ago okay but i'm
+
+0:34:31.760,0:34:37.119
+going to come back to it right is that clear or do you need
+
+0:34:37.119,0:34:42.639
+another clarification uh i don't see any reply
+
+0:34:42.639,0:34:44.879
+here okay
+
+0:34:51.200,0:34:55.119
+all right um another one would be what if the
+
+0:34:55.119,0:34:59.200
+factor graph is not possible do we have to search for all possible combination
+
+0:34:59.200,0:35:02.240
+of ys maybe i think this is the continuous
+
+0:35:02.240,0:35:07.040
+case i think no not necessarily so uh i mean
+
+0:35:07.040,0:35:13.280
+this this idea of decomposing into uh energies also gives you an advantage
+
+0:35:13.280,0:35:17.280
+even in the case of continuous variables right because you can do independent
+
+0:35:17.280,0:35:21.760
+optimizations like like the combination of uh values
+
+0:35:21.760,0:35:27.119
+of z1 and z2 uh only affects eb you know even if z1
+
+0:35:27.119,0:35:30.560
+and z2 are continuous and so you can do kind of the a little
+
+0:35:30.560,0:35:33.040
+bit of the equivalent of dynamic programming there it's a little
+
+0:35:33.040,0:35:35.200
+more complicated in the continuous case but
+
+0:35:35.200,0:35:39.839
+uh but it could be uh uh possible yeah i mean the the worst situation
+
+0:35:39.839,0:35:45.520
+is when uh all the z's and the y's enter a giant factor and there is no way
+
+0:35:45.520,0:35:48.960
+of factorizing it and then you know you
+
+0:35:48.960,0:35:54.400
+have to do exhaustive search or some approximate uh search heuristics
+
+0:35:54.400,0:35:57.599
+okay inference algorithm that minimizes the energy
+
+0:35:57.599,0:36:00.880
+yeah yeah that was actually the case the student was referring it
+
+0:36:00.880,0:36:06.800
+and the other student is also satisfied so you answer both questions
+
+0:36:07.040,0:36:10.720
+yeah don't hesitate to ask if you do something that's not clear
+
+0:36:10.720,0:36:17.040
+okay so uh here is a an instance of this uh and if you encounter this in uh the
+
+0:36:17.040,0:36:18.960
+literature you'll know what it is it's called a
+
+0:36:18.960,0:36:22.000
+conditional random field okay so conditional random field
+
+0:36:22.000,0:36:27.119
+is a very special type of such uh structural prediction model
+
+0:36:27.119,0:36:30.880
+where uh you know the here you have y's or these doesn't matter
+
+0:36:30.880,0:36:36.640
+here they're only wise but the the way those factors are parameterized
+
+0:36:36.640,0:36:41.040
+is that there is a fixed feature extractor let's call it f of x y
+
+0:36:41.040,0:36:45.680
+one y two in this case here uh and then a weight vector that just
+
+0:36:45.680,0:36:49.839
+computes the dot product of this future vector uh with with this
+
+0:36:49.839,0:36:51.520
+weight vector and that gives you a score here
+
+0:36:51.520,0:36:56.000
+uh just an energy okay the overall energy is just the sum of all those
+
+0:36:56.000,0:36:58.720
+terms so basically those are shadow neural nets if you want
+
+0:36:58.720,0:37:03.680
+single layer neural nets with a feature extractor at the input
+
+0:37:04.160,0:37:07.839
+and then we can think about like what type of uh loss function are we going to
+
+0:37:07.839,0:37:13.200
+minimize to train something like this so one possibility is to use the
+
+0:37:13.200,0:37:16.000
+negative likelihood loss so basically you say i
+
+0:37:16.000,0:37:18.320
+want the energy of the correct answer to be
+
+0:37:18.320,0:37:23.760
+low and i want the log of the sum of the exponentials of all
+
+0:37:23.760,0:37:26.480
+the energies of all the bad all the answers including
+
+0:37:26.480,0:37:31.200
+the good one uh uh to be uh
+
+0:37:31.200,0:37:37.200
+to be large okay uh in fact more more more correctly you
+
+0:37:37.200,0:37:40.720
+want the minus log of the sum of
+
+0:37:40.720,0:37:44.160
+all configurations of your output of the exponential minus
+
+0:37:44.160,0:37:48.960
+the energy of all those configurations to be as small as possible
+
+0:37:48.960,0:37:55.280
+okay um so um so basically you want the the
+
+0:37:55.280,0:37:59.280
+combination of energies or bad answers to be as large as possible
+
+0:37:59.280,0:38:03.200
+okay and we've encountered that loss function before
+
+0:38:03.200,0:38:06.880
+right i mean that's basically what's using softmax softmax says that softmax
+
+0:38:06.880,0:38:10.720
+says uh i want the the you know
+
+0:38:10.720,0:38:14.079
+negative log probability of the correct answer to be as low as possible the
+
+0:38:14.079,0:38:15.599
+probability of the correct answer to be as
+
+0:38:15.599,0:38:19.920
+large as possible that's like an energy okay
+
+0:38:19.920,0:38:24.400
+but then simultaneously i compute the the sum of the exponential the log of
+
+0:38:24.400,0:38:27.040
+the sum of the exponentials of all the answers
+
+0:38:27.040,0:38:32.400
+okay and i want that to be uh to be small i want all those energies to
+
+0:38:32.400,0:38:35.280
+be uh to be large i want all those probabilities to be
+
+0:38:35.280,0:38:39.280
+small okay soft max does that to you when you
+
+0:38:39.280,0:38:42.960
+or logs of max criterion when you back propagate it it does
+
+0:38:42.960,0:38:45.760
+classification and it does exactly that it pushes
+
+0:38:45.760,0:38:48.560
+down the energy of the correct answer it pushes out the energies of all the other
+
+0:38:48.560,0:38:51.200
+answers by computing the log of the sum of the
+
+0:38:51.200,0:38:54.480
+answers of exponential minus the energies
+
+0:38:54.480,0:39:00.000
+um so here uh conditional random field is basically an example of that but
+
+0:39:00.000,0:39:03.200
+you're not doing classification you're doing kind of structured prediction
+
+0:39:03.200,0:39:07.200
+and uh in the positive case you have the correct
+
+0:39:07.200,0:39:13.440
+uh configuration of y one y two y four one one way two or three and four and
+
+0:39:13.440,0:39:17.599
+the incorrect ones are not you know uh incorrect categories as in
+
+0:39:17.599,0:39:20.079
+uh as in classification but there are
+
+0:39:20.079,0:39:24.960
+incorrect configurations of y1 y2 or 3y4 other than that it's just you know
+
+0:39:30.320,0:39:34.480
+backprop i mean it's not even backward here because it's a shallow network
+
+0:39:34.480,0:39:37.839
+if you put a whole neural net in there parametrized by w's that
+
+0:39:37.839,0:39:42.880
+would be perfectly kosher and uh that would be kind of a deep conditional
+
+0:39:42.880,0:39:45.920
+random field if you want which happened to actually exist before conditional
+
+0:39:45.920,0:39:49.119
+running fields uh here's another idea you can use a
+
+0:39:49.119,0:39:53.680
+hinge loss so the hinge last says i want the energy of the correct answer
+
+0:39:53.680,0:39:58.400
+to be low and then among all possible configurations of incorrect answers
+
+0:39:58.400,0:40:02.000
+incorrect configurations of ys i'm going to look for the one that has the lowest
+
+0:40:02.000,0:40:05.599
+energy among all the wrong all the bad ones and
+
+0:40:05.599,0:40:08.240
+that one i'm going to push up okay i don't need to push the other ones
+
+0:40:08.240,0:40:13.520
+because they are larger anyway so i'm just going to you know figure out
+
+0:40:13.520,0:40:19.119
+which configuration of y1y2 by 3y4 is both incorrect but among all
+
+0:40:19.119,0:40:22.319
+incorrect configurations has the lowest energy and then push that
+
+0:40:22.319,0:40:25.440
+up okay and the way i push up and push down
+
+0:40:25.440,0:40:28.800
+is i'm going to put the difference of those two energies in a hinge loss
+
+0:40:28.800,0:40:33.760
+so that the hinge will push the energy of the correct answer to be low
+
+0:40:33.760,0:40:36.079
+and will push the energy of the incorrect
+
+0:40:36.079,0:40:39.599
+most offending answer to be higher by at least some margin
+
+0:40:39.599,0:40:44.240
+okay um so that's called the maximum margin uh
+
+0:40:44.240,0:40:48.000
+mark of net if you regularize the weights with least square and if you
+
+0:40:48.000,0:40:50.720
+have this kind of linear parametrization of
+
+0:40:50.720,0:40:55.920
+the energy terms you can also use the perception loss and
+
+0:40:55.920,0:41:00.000
+michael collins who's a well-known professor at colombia in nlp
+
+0:41:00.000,0:41:03.599
+actually you know kind of made a success you know built his career around this
+
+0:41:03.599,0:41:05.680
+idea of using perception lots for structural
+
+0:41:05.680,0:41:09.920
+prediction so that perception loss only works if you have linear parametrization
+
+0:41:09.920,0:41:13.680
+of the factors if you make them deep neural nets you can't use the perception
+
+0:41:13.680,0:41:16.240
+loss anymore it's because the margin is zero we
+
+0:41:16.240,0:41:20.079
+talked about this a little bit before but i'll come back to it in a minute
+
+0:41:20.079,0:41:22.319
+um right so uh so those ideas have been
+
+0:41:27.760,0:41:30.079
+around for a long time the probably the first people to
+
+0:41:30.079,0:41:34.720
+to think about things like this where people who worked on what's called
+
+0:41:34.720,0:41:37.599
+discriminative training for speech recognition and that goes back to the
+
+0:41:37.599,0:41:41.760
+late 80s early 90s so yo-yo and rabinera for example at
+
+0:41:41.760,0:41:45.040
+atnt had something they called minimum
+
+0:41:45.040,0:41:48.960
+empirical error loss and this is kind of a particular loss for a speech
+
+0:41:48.960,0:41:51.599
+recognition system they didn't have neural nets they had
+
+0:41:51.599,0:41:56.800
+some other way of kind of turning uh speech signals into you know
+
+0:41:56.800,0:42:01.520
+basically sound categories if you want um but but they had this way of training
+
+0:42:01.520,0:42:04.880
+at the sequence level uh by not telling the system you know
+
+0:42:04.880,0:42:07.599
+here is this sound at that location that's on that location
+
+0:42:07.599,0:42:10.880
+we're just telling it uh here is uh an input
+
+0:42:10.880,0:42:14.400
+uh sentence here is the transcription of it in terms of words
+
+0:42:14.400,0:42:17.760
+you know figure it out by doing this time warping um
+
+0:42:17.760,0:42:21.520
+you know in the context of hidden markov models which is kind of very similar
+
+0:42:21.520,0:42:26.640
+to to the the damage mapping i was talking you talking about earlier
+
+0:42:26.640,0:42:30.800
+then as i said in the early 90s people started working on
+
+0:42:30.800,0:42:34.240
+using neural nets to kind of feed one of those kind of
+
+0:42:34.240,0:42:38.720
+uh structural prediction system as i said the first one i know about is by
+
+0:42:38.720,0:42:41.599
+xavier de la cruz number two for speech recognition
+
+0:42:41.599,0:42:45.599
+but they had a 10 delay neural that joshua benjo did his phd on this
+
+0:42:45.599,0:42:50.800
+um and and had some results around 1992 and patrick hafner the the year after
+
+0:42:50.800,0:42:54.720
+that um uh leonbotul joshua benjamin patrick
+
+0:42:54.720,0:43:01.520
+hefner are the co-authors of uh my paper from 1998 about handwriting
+
+0:43:01.520,0:43:08.079
+recognition because i hired all three of them at a t
+
+0:43:08.160,0:43:11.359
+to work on this problem that figure basically figured out
+
+0:43:11.359,0:43:15.200
+you know somewhere doing this in the phd thesis and i i knew that was
+
+0:43:15.200,0:43:18.720
+the the trick uh that needed to be worked on for
+
+0:43:18.720,0:43:24.000
+things like handwriting recognition structural prediction with neural nets
+
+0:43:24.839,0:43:30.079
+um right uh let's see
+
+0:43:31.280,0:43:36.240
+okay so um so here is a way um and i only alluded to this really
+
+0:43:36.240,0:43:39.200
+quickly in an earlier lecture here's a way to sort of
+
+0:43:39.200,0:43:44.560
+put this in the context of deep learning so as i said before one
+
+0:43:44.560,0:43:47.200
+way to to do this in the context of deep learning
+
+0:43:47.200,0:43:51.520
+is you make those factors deep neural nets basically right they
+
+0:43:51.520,0:43:54.240
+just compute some energy and they are parameterized by a bunch of
+
+0:43:54.240,0:43:58.640
+parameters and nothing changes uh you you know we know how to do back
+
+0:43:58.640,0:44:03.839
+prop and we have pi torch um but here is uh uh here's a slightly
+
+0:44:03.839,0:44:08.240
+different idea and this which kind of draws on the same type of
+
+0:44:08.240,0:44:14.160
+of model and this is when uh the
+
+0:44:14.160,0:44:18.880
+the structure is more complex than just you know a bunch of fixed factors
+
+0:44:18.880,0:44:26.400
+from uh known um with a known structure if you want
+
+0:44:26.400,0:44:32.160
+so the example i'm going to use here is uh is handwriting recognition but
+
+0:44:33.359,0:44:36.960
+you know because there's a long history of it and i have uh
+
+0:44:36.960,0:44:40.640
+uh you know drawings that are that are prepared for this
+
+0:44:40.640,0:44:43.920
+that have been around for a long time but okay so
+
+0:44:43.920,0:44:47.440
+um so here the problem we have is that you know we have a sequence of
+
+0:44:47.440,0:44:50.720
+digits at the input and we don't know how to
+
+0:44:50.720,0:44:56.000
+uh segment this digit into individual this this sequence into individual
+
+0:44:56.000,0:44:59.119
+digits because we don't know what the parts are for each of the digits
+
+0:44:59.119,0:45:02.640
+the four here is kind of broken into two parts
+
+0:45:02.640,0:45:06.319
+and so what we can do is uh build a graph in which each path
+
+0:45:06.319,0:45:13.040
+is a possible way of breaking up this sequence of uh blobs into
+
+0:45:13.040,0:45:17.760
+into characters right so i can group you know i can make each of the separate
+
+0:45:17.760,0:45:21.839
+pieces a separate character so that's the path at the top i can
+
+0:45:21.839,0:45:25.760
+group the first two pieces three four and the left part of the four
+
+0:45:25.760,0:45:32.480
+and then have the last two be separate or i can have the first uh the first um
+
+0:45:32.480,0:45:37.680
+uh be by itself the the following two be regrouped and then
+
+0:45:37.680,0:45:41.599
+the last one be by itself right so what have i done here i've
+
+0:45:41.599,0:45:46.560
+basically uh uh said okay
+
+0:45:46.560,0:45:51.040
+the way i do i did inference in the in the context of soccer prediction
+
+0:45:51.040,0:45:59.359
+was by having uh uh energy terms that tell me the the the
+
+0:45:59.359,0:46:02.480
+the cost of a particular combination of variables
+
+0:46:02.480,0:46:06.079
+right so this this graph here represents basically
+
+0:46:06.079,0:46:12.560
+is a explicit representation of that energy model uh as long as i put on
+
+0:46:12.560,0:46:16.880
+those arcs here the energies that are computed by those by those modules
+
+0:46:16.880,0:46:20.880
+for each each value but what if i just manipulate this this
+
+0:46:20.880,0:46:25.680
+graph so what if uh you know the state
+
+0:46:25.680,0:46:31.200
+that i manipulate in a neural net is not a particular assignment or
+
+0:46:31.200,0:46:34.640
+variable together with something to compute energies but it's
+
+0:46:34.640,0:46:38.880
+directly a graph like this okay so a graph like this basically you
+
+0:46:38.880,0:46:43.040
+can think of as representing a list of energies for every possible
+
+0:46:43.040,0:46:47.359
+configurations of the of the variables of interest
+
+0:46:47.359,0:46:51.359
+okay it's a compact way of representing uh a list of energies for all
+
+0:46:51.359,0:46:56.800
+configurations of the sequences of symbols um
+
+0:46:56.800,0:47:03.920
+so what if i i build a neural net so that this internal states of that
+
+0:47:03.920,0:47:08.800
+neural net are basically those uh those graphs
+
+0:47:08.800,0:47:13.359
+and the graphs are just again i repeat a compact way of representing a list of
+
+0:47:13.359,0:47:16.319
+energies for every possible configurations of the variable of
+
+0:47:16.319,0:47:21.359
+interest nothing more okay
+
+0:47:22.640,0:47:27.200
+so uh but i can use this for other things and energies
+
+0:47:27.200,0:47:31.920
+so here a path in a graph corresponds to a particular way of breaking up
+
+0:47:31.920,0:47:37.520
+this uh blobs of ink into into characters and each path is a
+
+0:47:37.520,0:47:42.240
+particular way of grouping those blobs into into characters i can run
+
+0:47:42.240,0:47:45.119
+those uh images so now this graph is annotated
+
+0:47:45.119,0:47:49.680
+by images not by energies okay uh i can run those images through a
+
+0:47:49.680,0:47:53.599
+comment the content is going to tell me for each arcs in this graph is
+
+0:47:53.599,0:47:56.319
+going to tell me well this is very likely to be a three and
+
+0:47:56.319,0:48:00.160
+here is the energy for that three okay low energy if it's a good three
+
+0:48:00.160,0:48:04.240
+high energy if it's a bad three um it could also tell me well this may
+
+0:48:04.240,0:48:07.599
+be a two but uh with a higher energy or it could be a
+
+0:48:07.599,0:48:11.760
+zero with a higher energy okay so it's going to build this graph which
+
+0:48:11.760,0:48:14.400
+you can uh which you can call the uh interpretation
+
+0:48:16.559,0:48:20.720
+graph each path in this graph is a possible labeling
+
+0:48:20.720,0:48:27.359
+of each path in this graph and the labels you know indicate the categories
+
+0:48:27.359,0:48:31.520
+and the energies attached to the to the arcs
+
+0:48:31.520,0:48:34.880
+are basically the energies of the you know produced by
+
+0:48:34.880,0:48:38.480
+my comp net here for each of those answers okay
+
+0:48:38.480,0:48:42.960
+so uh discount net is going to look at this little piece of a four
+
+0:48:42.960,0:48:46.319
+it's going to tell me well that looks kind of like a two with a low energy or
+
+0:48:46.319,0:48:49.520
+that may look like a piece of a four with a higher energy
+
+0:48:49.520,0:48:54.640
+okay uh the guy that looks at this piece who's you know it's somewhere here is
+
+0:48:54.640,0:48:57.119
+going to tell me well this is a four i'm quite sure of it
+
+0:48:57.119,0:49:00.319
+uh with low energy and you know it's going to tell me maybe it's something
+
+0:49:00.319,0:49:03.839
+else with higher energy so each of those arcs here is going to
+
+0:49:03.839,0:49:07.119
+be replaced by 10 arcs i'm only representing two here but
+
+0:49:07.119,0:49:11.119
+uh essentially 10 arcs corresponding to the 10 possible categories
+
+0:49:11.119,0:49:14.880
+each of them with a different energy that is just the output
+
+0:49:14.880,0:49:19.760
+of the corresponding output of the continent that are applied here
+
+0:49:19.760,0:49:23.359
+now inference again is finding the shortest path in this graph
+
+0:49:23.359,0:49:27.839
+so uh you know finding the path with the minimum energy basically right
+
+0:49:27.839,0:49:31.040
+so finding the shortest path so it's basically
+
+0:49:31.040,0:49:34.079
+you can think of it as a module that selects uh
+
+0:49:34.079,0:49:37.359
+that you know selects the shortest path in fact it's this one here i call the
+
+0:49:37.359,0:49:39.920
+future transformer so the the word transformer
+
+0:49:39.920,0:49:44.960
+in the context of neural nets was used in 1997 but it's been you know
+
+0:49:44.960,0:49:48.960
+kind of recycled for something else now
+
+0:49:50.640,0:49:56.839
+right okay so here's a complete example of how this might work
+
+0:49:56.839,0:50:04.319
+um so again we have an input an input image
+
+0:50:04.319,0:50:07.760
+we run this through this kind of segmenter that proposes
+
+0:50:07.760,0:50:11.520
+multiple alternative segmentations which are ways to group those
+
+0:50:11.520,0:50:14.800
+blob of links together each fact in the in this graph corresponds to one
+
+0:50:14.800,0:50:19.119
+particular way of grouping the the blobs of ink we run each of those
+
+0:50:19.119,0:50:22.880
+through a neural net uh identical copies of the same content
+
+0:50:22.880,0:50:26.480
+that just is trying to do character recognition okay
+
+0:50:26.480,0:50:31.359
+each of those comp nets produces a list of 10 scores so it tells
+
+0:50:31.359,0:50:35.040
+you know this guy tells me this is one with energy 0.1 this is 4 with energy
+
+0:50:35.040,0:50:39.119
+2.4 etc this guy tells me well this piece is
+
+0:50:39.119,0:50:45.119
+four with energy point six or nine with energy 1.2 or whatever etc etc
+
+0:50:45.119,0:50:48.880
+right uh this guy is going to give me kind of relatively high energy for
+
+0:50:48.880,0:50:51.200
+everything because that doesn't look good
+
+0:50:51.200,0:50:57.040
+same for this guy okay so now i get a graph here and think of it as kind of
+
+0:50:57.040,0:51:00.480
+a weird form of tensor right it's a sparse tensor really
+
+0:51:00.480,0:51:06.000
+okay it's something that says uh it's a tensor that you know for each
+
+0:51:06.000,0:51:10.640
+possible configuration of this variable tells me the the cost of that of that
+
+0:51:10.640,0:51:13.119
+variable so it's not really it's more like a
+
+0:51:13.119,0:51:18.319
+distribution over tensors if you want okay or log distribution it's not
+
+0:51:18.319,0:51:22.480
+normalized because we're talking about energies
+
+0:51:22.480,0:51:28.640
+um okay then i take this this graph and i uh
+
+0:51:28.640,0:51:32.000
+i want to compute the energy of the correct answer because i'm you know i
+
+0:51:32.000,0:51:35.839
+might want to train the system right so i'm telling you the correct answer is
+
+0:51:35.839,0:51:39.520
+three four select within those paths the one that
+
+0:51:39.520,0:51:43.200
+actually says three four okay and there's two of them there's
+
+0:51:43.200,0:51:47.920
+three four with energy uh point one plus point six
+
+0:51:47.920,0:51:52.480
+and then there is three four with energy 3.4 plus 2.4
+
+0:51:52.480,0:51:55.760
+which is my trial right so i get those two paths
+
+0:51:55.760,0:51:59.040
+and then among those two paths i i pick the best one
+
+0:51:59.040,0:52:04.640
+uh three four okay so i told the system here is the correct answer give me the
+
+0:52:04.640,0:52:08.640
+path that has the lowest energy but yet gives me the correct answer
+
+0:52:08.640,0:52:13.119
+okay so finding that path is like minimizing over a latent variable where
+
+0:52:13.119,0:52:15.599
+the latent variable is which path you pick
+
+0:52:15.599,0:52:18.880
+right because actually it's an energy model where the latent variable is a
+
+0:52:18.880,0:52:23.680
+path a professor yes three or four in the
+
+0:52:23.680,0:52:28.000
+graph should be labeled before training or that that latent variable will figure
+
+0:52:28.000,0:52:31.760
+out for the system uh so here uh
+
+0:52:31.760,0:52:35.200
+i'm putting myself in a situation where i'm gonna train the system supervised i
+
+0:52:35.200,0:52:37.200
+know the correct answer this is the desired answer
+
+0:52:37.200,0:52:40.720
+think of this as a target okay so we just know the
+
+0:52:40.720,0:52:44.319
+target but i don't know which part is three and which part is for
+
+0:52:44.319,0:52:47.200
+well that's right so we know what the target is we don't know which path has
+
+0:52:47.200,0:52:50.640
+the correct uh is the correct segmentation right it
+
+0:52:50.640,0:52:52.559
+could be it could be this path or it could be
+
+0:52:52.559,0:52:54.960
+that path right and and here what we do is we just
+
+0:52:58.079,0:53:00.640
+pick the the one with the lowest energy which happened to be the correct one
+
+0:53:00.640,0:53:02.880
+here okay so is this recognition transformer
+
+0:53:07.200,0:53:14.000
+is each of these like um you know n and box are each are those all shared
+
+0:53:14.000,0:53:18.800
+like okay yeah this is multiple copies of the same neural net
+
+0:53:18.800,0:53:23.839
+right it's just a character recognition in this case
+
+0:53:24.000,0:53:28.000
+um okay now you have we have the energy of the correct answer
+
+0:53:28.000,0:53:36.000
+it's 0.7 it's the sum of 0.1 and 0.6 okay and what we need to do now is back
+
+0:53:36.000,0:53:38.319
+propagate gradient through this entire structure
+
+0:53:38.319,0:53:41.839
+so that we can change the weights of that neural net in such a way that this
+
+0:53:41.839,0:53:45.920
+energy goes down okay and this looks daunting but it's
+
+0:53:45.920,0:53:49.920
+entirely possible because this entire system here is built
+
+0:53:49.920,0:53:53.680
+out of uh elements that we already know about
+
+0:53:53.680,0:53:58.000
+that's just a regular neural net and those passed electrons and v2
+
+0:53:58.000,0:54:00.400
+transformers are basically switches that pick
+
+0:54:00.400,0:54:04.240
+uh you know a particular edge or not right so it's like a switch
+
+0:54:04.240,0:54:07.920
+it's like max pooling it's except it's min pulling if you want
+
+0:54:07.920,0:54:13.200
+okay right so how do i propagate well this point seven is just the sum of
+
+0:54:13.200,0:54:17.920
+this point one and this point six so uh if i have uh if i compute the
+
+0:54:17.920,0:54:21.359
+gradient of this with respect to this point one it's it's
+
+0:54:21.359,0:54:25.440
+just one the gradient of of this output with
+
+0:54:25.440,0:54:29.359
+respect to this value here 0.6 is also one okay
+
+0:54:29.359,0:54:32.960
+because that is just the sum of those two things and just back propagating
+
+0:54:32.960,0:54:37.839
+one through a plot to a sum and that's just that's just a y connection
+
+0:54:37.839,0:54:40.799
+okay now back propagating through the viterbi transformer this guy just
+
+0:54:40.799,0:54:44.240
+selected one path among two so what he's going to do is that it's
+
+0:54:44.240,0:54:47.440
+going to take those those gradients here and just copy them
+
+0:54:47.440,0:54:51.359
+on the corresponding edge on the input graph and then set the gradients for the
+
+0:54:51.359,0:54:55.520
+other path that was not selected to zero it's exactly what's happening in you
+
+0:54:55.520,0:54:59.200
+know max putting or mean pulling you're propagating through the switch at
+
+0:54:59.200,0:55:05.440
+that right position but not propagating next to it so it's nothing fancy okay
+
+0:55:05.440,0:55:09.359
+um pass it actually is the same it's uh it's just a system that selects the path
+
+0:55:09.359,0:55:14.240
+that could uh produce the correct answer and so um
+
+0:55:14.240,0:55:20.000
+i'm i'm just gonna set you know whatever uh you know through this i'm
+
+0:55:20.000,0:55:23.599
+gonna propagate the plus one to the the arcs
+
+0:55:23.599,0:55:26.319
+uh that appear here so this arc is that one
+
+0:55:26.319,0:55:29.520
+you see a zero here but i'm coming back to this in a minute
+
+0:55:29.520,0:55:33.040
+it should be a one for now and plus one here and that corresponds
+
+0:55:33.040,0:55:36.400
+to this plus one here okay and then you can propagate those
+
+0:55:36.400,0:55:38.720
+gradients all the way to the neural net and adjust the weights
+
+0:55:38.720,0:55:42.880
+so that this energy goes down okay so that will take care of making the energy
+
+0:55:42.880,0:55:47.280
+of the correct answer small okay by back propagating through this
+
+0:55:47.280,0:55:49.599
+thing now what's important about this is that
+
+0:55:49.599,0:55:53.200
+this structure here is dynamic in the sense that
+
+0:55:53.200,0:55:58.319
+if i give you a new input the number of instances of this neural net will change
+
+0:55:58.319,0:56:02.319
+with the number of segments the graph here will change uh
+
+0:56:02.319,0:56:05.680
+those graphs will change completely and so i need to be able to back propagate
+
+0:56:05.680,0:56:08.559
+through this kind of dynamical structure if you want
+
+0:56:08.559,0:56:12.079
+and this is you know situations where things like pie torch are really
+
+0:56:12.079,0:56:15.280
+important because you want to be able to handle those you know kind of
+
+0:56:15.280,0:56:18.559
+dynamical structures that change with every sample
+
+0:56:18.559,0:56:22.640
+okay so this back propagation phase takes care of
+
+0:56:22.640,0:56:25.760
+uh making the energy of the correct answer small
+
+0:56:25.760,0:56:29.680
+now how do we make the energy of incorrect answers large
+
+0:56:29.680,0:56:34.480
+well uh there's gonna be a second phase where we're just gonna in this case
+
+0:56:34.480,0:56:37.119
+we're just gonna let the system pick whatever answer it wants
+
+0:56:37.119,0:56:43.599
+okay um and um this is kind of a simplified form of
+
+0:56:43.599,0:56:46.240
+uh discriminative training for structural prediction
+
+0:56:46.240,0:56:51.040
+uh that used uses a form of perceptron loss if you want
+
+0:56:51.040,0:56:56.160
+um okay so i'm the first few stages are exactly identical to what i talked about
+
+0:56:56.160,0:56:59.839
+earlier uh but here the viterbi transformer just
+
+0:56:59.839,0:57:04.319
+picks the best pass among all the paths you don't constrain it to pick the
+
+0:57:04.319,0:57:07.760
+the uh the correct one you just literally pick whatever it wants
+
+0:57:07.760,0:57:11.280
+okay so it's going to pick the best path that it thinks that that has the lowest
+
+0:57:11.280,0:57:15.680
+energy that it thinks is the you know gives the correct answer now
+
+0:57:15.680,0:57:19.839
+the energy you get out of this necessarily is going to be smaller or
+
+0:57:19.839,0:57:23.680
+equal to the one you got previously because this one is the smallest of all
+
+0:57:23.680,0:57:26.960
+the possible configurations the other ones is not the smallest of all possible
+
+0:57:26.960,0:57:29.680
+ones it's only the smallest of the correct ones
+
+0:57:29.680,0:57:31.680
+and so this guy necessarily is going to get smaller
+
+0:57:31.680,0:57:36.079
+so we don't pick the one sorry i i lost you do we pick the one do we take out
+
+0:57:36.079,0:57:39.119
+the one that are actually producing the correct sequence or not
+
+0:57:39.119,0:57:42.400
+okay so you have two forms of it uh the form i'm explaining here you're not
+
+0:57:42.400,0:57:46.720
+taking out the correct one okay in fact in this particular example
+
+0:57:46.720,0:57:50.400
+it wouldn't make any difference but uh if you want the system to work
+
+0:57:50.400,0:57:52.720
+properly what you what you should do here
+
+0:57:52.720,0:57:56.000
+is have a pass selector that takes out the correct answers
+
+0:57:56.000,0:57:59.760
+yeah yeah exactly yes yes yes that's right so
+
+0:57:59.760,0:58:02.960
+you would want to tell the system give me your best shot
+
+0:58:02.960,0:58:08.400
+a wrong answer okay the lowest energy wrong answer exactly the white bar in
+
+0:58:08.400,0:58:10.400
+your paper right that would be the white bar
+
+0:58:10.400,0:58:13.839
+yeah here i'm not doing this i'm just asking you what's your best shot you
+
+0:58:13.839,0:58:18.640
+know i don't care if it's correct or incorrect all right
+
+0:58:18.640,0:58:21.839
+uh we'll come back to this in a minute i'm
+
+0:58:21.839,0:58:24.640
+putting this all together my loss function is going to be the difference
+
+0:58:24.640,0:58:28.640
+between the energy i get for the correct answer
+
+0:58:28.640,0:58:32.000
+minus the energy i get for whatever answer the system wants to
+
+0:58:32.000,0:58:35.839
+produce okay so i compute the difference between
+
+0:58:35.839,0:58:38.720
+those two and that's my loss function now i can back propagate through this
+
+0:58:38.720,0:58:42.000
+entire thing i told you i was back propagating just to make the energy here
+
+0:58:42.000,0:58:43.920
+small i'm not actually doing this i'm
+
+0:58:43.920,0:58:46.799
+computing a loss function here which in this case is just the difference between
+
+0:58:46.799,0:58:50.160
+this and that and uh and i'm back propagating gradient
+
+0:58:50.160,0:58:55.040
+through this entire structure right so whatever path
+
+0:58:55.040,0:58:59.839
+appears only on the left we'll get a plus one so this guy gets a
+
+0:58:59.839,0:59:02.960
+plus one because this edge only appears on this side
+
+0:59:02.960,0:59:07.200
+and so it gets a plus one the paths that only appear
+
+0:59:07.200,0:59:11.280
+on the right side like this guy sorry like this guy
+
+0:59:11.280,0:59:15.760
+get a minus one okay the gradient here gets a minus one because
+
+0:59:15.760,0:59:18.400
+uh you have a minus sign here so the gradients you know when they back
+
+0:59:18.400,0:59:23.599
+propagate they end up being minus ones okay this guy also gets minus one this
+
+0:59:23.599,0:59:27.599
+guy here appear appears on both sides and so the minus
+
+0:59:27.599,0:59:30.640
+one and the plus one cancel and these guys you know get zero
+
+0:59:30.640,0:59:34.400
+gradient it's it's in the correct path but it's also in the past that the
+
+0:59:34.400,0:59:36.640
+system produces so you shouldn't change anything
+
+0:59:36.640,0:59:41.839
+it's it's okay right so the guys that have a minus one are the incorrect paths
+
+0:59:41.839,0:59:45.200
+the other parts are in the incorrect answer but not in the correct answer
+
+0:59:45.200,0:59:49.520
+the one that i have a plus one are the the edges that are in the correct
+
+0:59:49.520,0:59:55.760
+uh answer but not in the incorrect one okay the one has zero are in neither or
+
+0:59:55.760,0:59:59.920
+they are in both right so now you get gradients here you
+
+0:59:59.920,1:00:02.960
+those gradients are gradients for all the outputs of all those neural nets you
+
+1:00:02.960,1:00:07.839
+back propagate to the neural nets and compute and update the weights okay
+
+1:00:07.839,1:00:11.839
+and what if you do this then the system will eventually minimize its loss
+
+1:00:11.839,1:00:13.680
+function which is the difference between the
+
+1:00:13.680,1:00:16.480
+energy of the correct answer and the energy of
+
+1:00:16.480,1:00:20.480
+the best answer whatever it is that loss function is the perceptron loss
+
+1:00:20.480,1:00:25.280
+and we talked about this before um in fact let me go to this just now
+
+1:00:25.280,1:00:30.400
+okay right so the the loss function we just talked about is the second
+
+1:00:30.400,1:00:35.680
+oops the second one in this list here uh this is the energy of the correct
+
+1:00:35.680,1:00:39.520
+answer minus the energy of whatever answer your
+
+1:00:39.520,1:00:43.599
+your system wants to produce okay that's the perceptron loss or the
+
+1:00:43.599,1:00:47.359
+generalized perceptron loss if you want and the bad news about this cross
+
+1:00:50.720,1:00:53.680
+function is that it doesn't have a margin so it doesn't ensure that the
+
+1:00:53.680,1:00:57.200
+energy of the incorrect answers is larger strictly
+
+1:00:57.200,1:01:01.839
+larger than the energy of the good answer uh you know it might just
+
+1:01:01.839,1:01:06.720
+collapse it might just uh make every energy zero or the same
+
+1:01:06.720,1:01:10.559
+okay so it's not a good loss function to use
+
+1:01:10.559,1:01:14.319
+it just happens to work when your energy is linearly parametrizing w
+
+1:01:14.319,1:01:18.799
+but in the general case it doesn't work so you're much better off using
+
+1:01:18.799,1:01:24.240
+something like this a hinge but in the case of a hinge what you need
+
+1:01:24.240,1:01:27.920
+to have here is this y bar which is the energy of the
+
+1:01:27.920,1:01:33.839
+most offending incorrect answer so basically uh in the second phase
+
+1:01:33.839,1:01:39.599
+as uh alfredo was uh pointing out instead of picking the path with the
+
+1:01:39.599,1:01:41.680
+lowest energy the answer with the lowest energy
+
+1:01:41.680,1:01:45.839
+you constrain the system to pick a wrong answer and then among all of those pick
+
+1:01:45.839,1:01:49.520
+the one with the lowest energy and then you take the difference between
+
+1:01:49.520,1:01:51.520
+those two energies so energy or correct answer
+
+1:01:51.520,1:01:55.359
+energy of most offending incorrect answer compute the difference between
+
+1:01:55.359,1:01:58.880
+them and uh plug this into a hinge so that
+
+1:01:58.880,1:02:02.000
+you want this energy to be lower than that energy
+
+1:02:02.000,1:02:06.880
+by at least m okay uh
+
+1:02:06.880,1:02:10.319
+and this is the kind of objective here that
+
+1:02:10.319,1:02:16.480
+uh on botu used um so it's you know it looks very similar
+
+1:02:16.480,1:02:20.640
+um uh this is uh someone something called
+
+1:02:20.640,1:02:24.000
+nce that people in um speech recognition produce so it's
+
+1:02:24.000,1:02:26.559
+basically like this looks a bit like a sigmoid
+
+1:02:26.559,1:02:29.680
+so basically it's a sigmoid function you take the difference between the energy
+
+1:02:29.680,1:02:32.799
+of the correct cancer and the energy of incorrect answers and
+
+1:02:32.799,1:02:35.760
+you plug them into a sigmoid right it's one over one plus
+
+1:02:35.760,1:02:38.799
+exponential minus blah blah and so it basically wants to make that
+
+1:02:38.799,1:02:41.920
+difference uh you know kind of small but then it
+
+1:02:41.920,1:02:46.839
+doesn't care if it's if it's too small and if it's too large it kind of gives
+
+1:02:46.839,1:02:50.319
+up and then you have you know this is the
+
+1:02:50.319,1:02:53.520
+negative likelihood loss so make the energy of the correct answer
+
+1:02:53.520,1:02:57.839
+small and then make make the log of the sum over all answers
+
+1:02:57.839,1:03:03.280
+of e to the minus the energy of those answers large
+
+1:03:03.280,1:03:08.480
+okay make the minus log large which means make the logs small
+
+1:03:08.480,1:03:12.559
+which means makes those energies large okay
+
+1:03:12.559,1:03:16.000
+and then the yoyo rabiner thing i was telling you about is
+
+1:03:16.000,1:03:20.319
+another form of objective function that sort of you know pushes them and push up
+
+1:03:20.319,1:03:23.760
+most of those are derived from sort of privacy principles but many of them
+
+1:03:23.760,1:03:27.680
+aren't okay all the ones at the top aren't
+
+1:03:27.680,1:03:30.720
+hey professor i had a question about the margin of the losses
+
+1:03:30.720,1:03:33.760
+um i think in the previous lecture we discussed how the negative
+
+1:03:33.760,1:03:36.880
+likelihood loss converges to the perceptron loss when beta is
+
+1:03:36.880,1:03:40.240
+uh going towards infinity correct or something like that but
+
+1:03:40.240,1:03:43.280
+how come the not the no loss has a positive
+
+1:03:43.280,1:03:47.200
+margin and the perceptual loss doesn't well just you know because the uh
+
+1:03:47.200,1:03:51.200
+because the the temperature is i mean the the one over beta
+
+1:03:51.200,1:03:54.799
+because beta is not is not infinite because one over beta is not zero
+
+1:03:54.799,1:03:59.200
+so yeah i mean if you take the limit of this for beta goes to infinity
+
+1:03:59.200,1:04:03.599
+uh this one over beta log sum converges to min over y
+
+1:04:03.599,1:04:09.119
+of uh energy of w i x i and so that's exactly what the
+
+1:04:09.119,1:04:13.359
+perceptron does okay so the perceptron is a
+
+1:04:13.359,1:04:16.559
+zero temperature limit or infinite beta limit of
+
+1:04:16.559,1:04:24.000
+negative likelihood indeed but the margin is essentially infinite
+
+1:04:24.000,1:04:27.920
+in this case whereas the margin here is zero
+
+1:04:27.920,1:04:32.079
+okay so there's a bit of a discontinuity here
+
+1:04:32.079,1:04:36.720
+uh admittedly though if you make beta very large here numerically
+
+1:04:36.720,1:04:40.000
+uh the energies of anything but the lowest energy
+
+1:04:40.000,1:04:45.599
+term uh i mean the the the role of the importance of the terms
+
+1:04:45.599,1:04:48.720
+uh for various y's in this sum will kind of
+
+1:04:48.720,1:04:51.760
+diminish and so numerically it may actually
+
+1:04:51.760,1:04:55.200
+uh start behaving very much like the perceptron
+
+1:04:55.200,1:04:59.839
+early on um there's a problem with it also which i
+
+1:04:59.839,1:05:05.039
+mentioned before which is that uh this uh this wants to make the energy
+
+1:05:05.039,1:05:09.760
+of incorrect answers infinite and you know it's not going to make them
+
+1:05:09.760,1:05:13.200
+infinite because as they get larger and larger they're
+
+1:05:13.200,1:05:19.039
+uh you know the the gradient of this sum with respect to each of them gets very
+
+1:05:19.039,1:05:22.400
+small but they're going to get pushed to infinity
+
+1:05:22.400,1:05:24.880
+and so it's it's not necessarily a good thing
+
+1:05:24.880,1:05:26.799
+the hinge is better in a way because you know
+
+1:05:26.799,1:05:29.839
+it just says well i just want it to be larger
+
+1:05:29.839,1:05:34.000
+you know by by some value i don't care how much
+
+1:05:34.000,1:05:38.079
+um i give you another form of the the hinge loss in the past
+
+1:05:38.079,1:05:44.240
+uh where you have a a sum over y so instead of just taking the
+
+1:05:44.240,1:05:46.720
+most of any incorrect answer in the hinge
+
+1:05:46.720,1:05:50.880
+uh you take all answers and you sum over all of them and for each of them you
+
+1:05:50.880,1:05:53.200
+have a different margin which depends on the on the
+
+1:05:53.200,1:05:57.680
+y i and the y i bar that's a more general form it might be
+
+1:05:57.680,1:06:01.599
+more expensive depending on how you compute it
+
+1:06:01.599,1:06:05.200
+there are a bunch of questions here yeah so first
+
+1:06:05.200,1:06:09.280
+there are a few students asking about the segmenter do we learn the segmenter
+
+1:06:09.280,1:06:13.839
+is he also do we backprop there is a latent variable something
+
+1:06:13.839,1:06:18.160
+uh in this particular case no it's just uh it's just um
+
+1:06:18.160,1:06:22.160
+and handcrafted heuristics uh but you could imagine
+
+1:06:22.160,1:06:25.599
+uh building a differentiable segmenter and then back propagating all the way
+
+1:06:25.599,1:06:27.680
+through it yes this was actually one of the original
+
+1:06:27.680,1:06:32.000
+plans when we built this thing in the mid-90s we never got to it
+
+1:06:32.000,1:06:35.599
+but and the reason we never got to it is because there is another approach to
+
+1:06:35.599,1:06:38.960
+character recognition which is the kind of sliding window approach which i
+
+1:06:38.960,1:06:41.119
+explained right so you just take the input you never
+
+1:06:41.119,1:06:45.359
+segment it you just apply the neural net to every location on the input and you
+
+1:06:45.359,1:06:48.480
+record the output and then you do structure prediction on top of that
+
+1:06:48.480,1:06:53.280
+so now you have to have some sort of sequence models that tells you
+
+1:06:53.280,1:06:59.200
+uh you know if i observe uh you know three three three blank blank
+
+1:06:59.200,1:07:02.640
+two four four four four it's actually three
+
+1:07:02.640,1:07:05.520
+four the blank and the two basically are spurious
+
+1:07:05.520,1:07:11.760
+right so you would have uh a grammar uh that would indicate like what are you
+
+1:07:11.760,1:07:13.680
+know correct combinations of characters on
+
+1:07:13.680,1:07:17.200
+the output and you would do this to finding the
+
+1:07:17.200,1:07:21.039
+shortest paths in the graph so the graph on the bottom is generated
+
+1:07:21.039,1:07:24.160
+by the segmenter is it correct yeah the one
+
+1:07:24.160,1:07:28.400
+with the one hop like two hops or two hops one up one hop
+
+1:07:28.400,1:07:33.119
+yep okay and there you go yeah you can think of this as kind of a simple form
+
+1:07:33.119,1:07:36.000
+of graph neural net or or kind of a specific form of graph
+
+1:07:36.000,1:07:40.480
+neural nets where uh the this entire deep learning
+
+1:07:40.480,1:07:45.839
+architecture manipulates graphs instead of tensors as its kind of
+
+1:07:45.839,1:07:49.760
+way of representing inputs okay or states
+
+1:07:49.760,1:07:53.280
+so think of this as a multi-layer architecture where the states or graphs
+
+1:07:53.280,1:07:56.799
+are annotated graphs all right and then you can have modules
+
+1:07:56.799,1:08:01.039
+here that turns graph into other graphs we used to call these graph transformers
+
+1:08:01.039,1:08:03.920
+in fact that's this is called graph transformer network right
+
+1:08:03.920,1:08:09.520
+okay so this is from 1997 right this is not recent
+
+1:08:09.520,1:08:13.920
+and uh in fact 1996. the first paper is in 1997.
+
+1:08:13.920,1:08:19.839
+uh and uh uh and then those can be you know as long as the way you compute
+
+1:08:19.839,1:08:23.679
+those scores uh is with differentiable functions that
+
+1:08:23.679,1:08:26.799
+are parametrized you can back propagate gradient through this entire thing
+
+1:08:26.799,1:08:30.400
+and i can demonstrate it how you do this in this particular case
+
+1:08:30.400,1:08:33.839
+i see then there is another question which i'm i may not be able to
+
+1:08:33.839,1:08:37.040
+understand which is what are the dimensions of of
+
+1:08:37.040,1:08:42.080
+the interpretation graphs i don't know what dimensions uh uh
+
+1:08:42.080,1:08:46.719
+dimensions so basically each uh arc okay you can do it in two ways
+
+1:08:46.719,1:08:51.600
+the way i've represented it here is that each arc has a label
+
+1:08:51.600,1:08:56.000
+uh three here for this particular edge and an energy 3.4
+
+1:08:56.000,1:08:59.839
+and then the number in parenthesis is the gradient that comes from the top
+
+1:08:59.839,1:09:06.239
+okay so here is a scalar but here on the graph at the bottom the
+
+1:09:06.239,1:09:12.000
+annotation is an entire tensor it's an image okay
+
+1:09:12.000,1:09:19.520
+so i don't specify what uh what you can annotate the graphs with as long as
+
+1:09:19.520,1:09:23.520
+whatever it is that you annotate it with if it's computed by some continuous
+
+1:09:23.520,1:09:27.199
+functions you you want to be able to propagate gradient to it
+
+1:09:27.199,1:09:30.560
+now another way of representing this graph is not by having
+
+1:09:30.560,1:09:35.040
+a separate arc here for each category but by having a vector
+
+1:09:35.040,1:09:38.319
+and the vector just contains the list of categories together with a
+
+1:09:41.679,1:09:46.080
+list of scores okay so 0 to 9 and then the list of
+
+1:09:46.080,1:09:48.319
+energies for each of the thing and that would be
+
+1:09:48.319,1:09:51.120
+just one arc but it would be annotated by
+
+1:09:51.120,1:09:55.040
+this vector yeah i see i think okay okay but because uh you know this guy the
+
+1:09:58.880,1:10:02.960
+viterbi and the past elector selects individual paths it's clearer if you
+
+1:10:02.960,1:10:08.320
+kind of write it this way how you implement it is up to you um
+
+1:10:08.320,1:10:12.080
+so those guys transform networks um there are speech recognition systems
+
+1:10:12.080,1:10:14.880
+today that uh so basically in a speech
+
+1:10:14.880,1:10:19.199
+recognition system this whole way of inferring the correct
+
+1:10:19.199,1:10:22.560
+sequence uh using for example a language model is
+
+1:10:22.560,1:10:26.480
+called a decoder okay so a decoder at the output of a
+
+1:10:26.480,1:10:28.480
+neural net generally you have a sequence of
+
+1:10:28.480,1:10:33.120
+vectors that indicate the the score the energy the probability whatever you want
+
+1:10:33.120,1:10:36.719
+of individual sounds or phonemes or sometimes words
+
+1:10:36.719,1:10:39.600
+and then you have to pass this to a language model that tells you you know
+
+1:10:39.600,1:10:42.239
+this sequence is possible that all the sequence isn't
+
+1:10:42.239,1:10:46.640
+and then it picks out the best possible interpretation according to the
+
+1:10:46.640,1:10:49.760
+language model and according to the scores produced by your system
+
+1:10:49.760,1:10:53.920
+that's called a decoder okay and the big question is
+
+1:10:53.920,1:10:57.120
+how do you back proper get rid into the decoder is only
+
+1:10:57.120,1:11:00.640
+a very small number of speech recognition systems today that actually
+
+1:11:00.640,1:11:03.840
+do this uh the latest one i think is by ronald
+
+1:11:03.840,1:11:08.239
+corbeau the original author of torch
+
+1:11:08.640,1:11:12.640
+and here's how this works uh so let's say you want to
+
+1:11:12.640,1:11:16.239
+so this is a a particular concept called graph composition or
+
+1:11:16.239,1:11:20.480
+graph transducers and which kind of explains how you can
+
+1:11:23.360,1:11:25.840
+combine graphs with each other for example
+
+1:11:25.840,1:11:32.080
+together with a language model okay so you can think of a language model
+
+1:11:32.080,1:11:36.159
+as as a graph you can represent it as a graph as a neural net it doesn't matter
+
+1:11:36.159,1:11:38.080
+but i'm going to represent i'm going to
+
+1:11:38.080,1:11:41.840
+represent it as a graph right so here this is basically a lexicon that is
+
+1:11:41.840,1:11:48.080
+represented represented as a tree tree t-r-i-e okay and it can represent
+
+1:11:48.080,1:11:51.840
+the words barn but
+
+1:11:51.840,1:11:58.400
+cute cure cap cat and card okay
+
+1:11:58.400,1:12:02.239
+so each terminal node is a word and each path
+
+1:12:02.239,1:12:05.199
+and each terminal node corresponds to a path and each path is is a word
+
+1:12:05.199,1:12:09.199
+basically right the sequence of symbols is a word
+
+1:12:09.199,1:12:13.120
+now so let's imagine our entire lexicon is is this
+
+1:12:13.120,1:12:17.679
+and we have a neural net or something that produces uh a trellis of possible
+
+1:12:17.679,1:12:19.920
+interpretation that corresponds to this graph so it says
+
+1:12:19.920,1:12:23.199
+the first character i can't tell you exactly what it is but i think it's c
+
+1:12:23.199,1:12:25.520
+with energy point four it's always energy one
+
+1:12:25.520,1:12:30.239
+or is d with energy one point eight okay it's a character recognizer
+
+1:12:30.239,1:12:33.440
+and the second one says it's x with energy point one or a with point two or
+
+1:12:33.440,1:12:37.520
+u with point eight and the last one p with point two t with point eight so
+
+1:12:37.520,1:12:42.560
+we need to do now is what is the best uh
+
+1:12:42.560,1:12:48.239
+interpretation uh of this the best path in this that also happens to be present
+
+1:12:48.239,1:12:52.719
+in our lexicon okay and the operation you need to do for this
+
+1:12:52.719,1:12:57.120
+is a concept that was invented by fernando pereira who is head of the nlp
+
+1:12:57.120,1:13:00.000
+research group and more than that actually at google research but that was
+
+1:13:00.000,1:13:06.080
+back when he was at at their labs in the early 90s
+
+1:13:06.080,1:13:09.920
+and it was sort of implemented in an open source library called the fsm
+
+1:13:09.920,1:13:14.800
+library which was implemented by mary amore who is a professor at nyu
+
+1:13:14.800,1:13:18.320
+he did this while he was at a t and then at google
+
+1:13:18.320,1:13:22.719
+and the the way you do this is this composition operation so you you start
+
+1:13:22.719,1:13:25.199
+from the initial node of both of those graphs
+
+1:13:25.199,1:13:28.239
+and you say is there a path is there a path i can
+
+1:13:28.239,1:13:33.760
+take in this graph that is legal here okay so here
+
+1:13:33.760,1:13:41.760
+i can have b or c and here i can have c o or d only c is common between the two
+
+1:13:41.760,1:13:46.400
+okay so i'm going to combine those two by saying in my output graph
+
+1:13:46.400,1:13:50.480
+i'm gonna have one of those transitions which is the the only transition that is
+
+1:13:50.480,1:13:56.560
+common here and here okay so now i'm in this node oops sorry i mean this
+
+1:13:56.560,1:14:02.320
+node here i mean that node there here i can i can take x a or u
+
+1:14:02.320,1:14:06.880
+and here i can take u or a okay so i have two possibilities u or a
+
+1:14:06.880,1:14:11.120
+a with point two u with point eight and so i add those two here
+
+1:14:11.120,1:14:14.719
+okay so basically what i'm doing here is uh whenever
+
+1:14:14.719,1:14:18.560
+i come at a node and i have to take a transition i find you know which of the
+
+1:14:18.560,1:14:22.640
+nodes that can be in here i look at the possible transitions and
+
+1:14:22.640,1:14:25.120
+if the transition exists if there is one that matches
+
+1:14:25.120,1:14:32.080
+i create a outgoing uh i going arc and i annotated by the energy of
+
+1:14:32.080,1:14:35.520
+whatever arc i had here if i also had an energy in this arc i
+
+1:14:35.520,1:14:38.719
+could just add those two terms or combine them in some way
+
+1:14:38.719,1:14:46.239
+okay so now i have two nodes here um and uh
+
+1:14:46.239,1:14:49.280
+the last one can be p or t so i can start from those two nodes and have
+
+1:14:49.280,1:14:51.679
+either p or t and it can be in either in this node or
+
+1:14:51.679,1:14:56.000
+this node so i can go here with t i can go here with p or here is t and i
+
+1:14:56.000,1:14:59.920
+end up with this those three things so now i have my
+
+1:14:59.920,1:15:05.120
+interpretation is either cat or cap or cut these are the three
+
+1:15:05.120,1:15:08.640
+interpretations that are grammatically correct and at the same
+
+1:15:08.640,1:15:13.040
+time are present as a possibility produced by neural net and now i just
+
+1:15:13.040,1:15:18.320
+have to find the shortest path there and that's my answer okay
+
+1:15:18.320,1:15:22.880
+so that operation here is called graph composition
+
+1:15:22.880,1:15:26.880
+and it basically allows you to basically combine two graphs
+
+1:15:26.880,1:15:31.520
+essentially or combine two knowledge bases that are
+
+1:15:31.520,1:15:34.800
+conceptually graphed but they could be represented by neural nets so here i can
+
+1:15:34.800,1:15:38.320
+represent this thing this whole language model by neural net uh
+
+1:15:38.320,1:15:41.920
+when i'm at a particular location it means you know when i'm here it means i
+
+1:15:41.920,1:15:45.760
+observed the sequence cu and then i can run cu in
+
+1:15:45.760,1:15:48.960
+my in my language model and ask my neural net to predict so what's the next
+
+1:15:48.960,1:15:50.960
+letter and my neural net would say well it's
+
+1:15:50.960,1:15:55.600
+either t or r uh you know in this soft max output with
+
+1:15:55.600,1:15:58.480
+the 26 letters it's going to tell me you know t and r
+
+1:15:58.480,1:16:00.800
+have five probabilities the other ones are low probabilities
+
+1:16:00.800,1:16:04.320
+or if it produces energy is going to say t and r have low energies
+
+1:16:04.320,1:16:08.960
+the other ones have higher energies okay so it doesn't matter how you
+
+1:16:08.960,1:16:13.840
+actually represent this if it's represented as a neural net then
+
+1:16:13.840,1:16:16.960
+uh implicitly then you can train this neural net you can train the language
+
+1:16:16.960,1:16:18.719
+model because you can back properly a gradient
+
+1:16:18.719,1:16:22.800
+to this entire thing okay that so that would be sort of an example
+
+1:16:22.800,1:16:26.400
+of what people called uh differentiable programming i mean
+
+1:16:26.400,1:16:29.920
+basically the way to implement this is a really really complicated program
+
+1:16:29.920,1:16:32.880
+what you need to do is backdrop a gradient through this entire program and
+
+1:16:32.880,1:16:40.320
+this program has loops and ifs and recursions okay so not trivial
+
+1:16:41.040,1:16:44.719
+i'm not telling you how we actually implemented this in 1994
+
+1:16:44.719,1:16:50.400
+1995 but but that's basically how our check reading system back in those
+
+1:16:50.400,1:16:54.800
+days was uh was implemented so the last function we used uh in the
+
+1:16:54.800,1:16:56.880
+end to train the system was actually the negative
+
+1:16:56.880,1:17:03.840
+likelihood loss function so negative likelihood says
+
+1:17:03.840,1:17:07.440
+you have an interpretation graph here where each path is a possible
+
+1:17:07.440,1:17:10.000
+interpretation and the sum of the energies along the
+
+1:17:10.000,1:17:13.920
+path is the energy of that interpretation
+
+1:17:13.920,1:17:16.560
+you give it the correct answer you select the path that have the correct
+
+1:17:16.560,1:17:20.000
+interpretation okay same on the other side so here you
+
+1:17:20.000,1:17:23.199
+combine with the grammar so the grammar restricts the
+
+1:17:23.199,1:17:28.239
+number the the the sequences to those that are syntactically correct
+
+1:17:28.239,1:17:31.520
+okay so if it's an amount on the check for example you know it's got
+
+1:17:31.520,1:17:36.239
+a decimal dot uh it might have you know a dollar sign in front it might have
+
+1:17:36.239,1:17:40.480
+stars you know um there's a grammar for it um which you
+
+1:17:40.480,1:17:44.640
+can build by hand it's a finite state grammar uh you com
+
+1:17:44.640,1:17:48.080
+you compose those two graphs and you get the set of paths in this graph that
+
+1:17:48.080,1:17:50.400
+actually contain a grammatically correct
+
+1:17:50.400,1:17:53.600
+interpretation and now you don't do viterbi you do forward okay what is
+
+1:17:53.600,1:17:58.480
+forward so viterbi computes the path
+
+1:17:58.480,1:18:02.239
+in a graph that has the minimum energy basically it minimizes with respect to
+
+1:18:02.239,1:18:05.679
+the latent variable where the latent variable is a path in the graph
+
+1:18:05.679,1:18:10.480
+forward computes the log of the sum of the exponentials of minus the energies
+
+1:18:10.480,1:18:16.560
+of all the paths okay so basically it marginalizes over the
+
+1:18:16.560,1:18:19.440
+latent variable which is the path in the graph
+
+1:18:19.440,1:18:23.040
+now it turns out that you can do this very easily and
+
+1:18:23.040,1:18:26.480
+it's very cheap it doesn't cost more than doing viterbi
+
+1:18:26.480,1:18:29.679
+uh and uh and you can back properly get to it
+
+1:18:29.679,1:18:34.000
+um and i don't have a slide for this so i'm gonna
+
+1:18:34.000,1:18:36.560
+switch to drawing it okay so
+
+1:18:48.800,1:18:57.840
+all right so you have one pass you have
+
+1:18:57.840,1:19:02.400
+another path and maybe another path that skips over here
+
+1:19:06.960,1:19:15.280
+okay and each of those guys has an energy right e1 e2
+
+1:19:15.280,1:19:22.080
+e3 e4 e5 e6 let's say okay
+
+1:19:22.080,1:19:26.000
+so if you do viterbi shortest paths in a graph you're just going to find the path
+
+1:19:26.000,1:19:30.320
+that has the minimum energy but what i'm going to talk about here is
+
+1:19:30.320,1:19:33.840
+computing so think of the path as a latent
+
+1:19:33.840,1:19:39.760
+variable z and remember to compute f of x y
+
+1:19:39.760,1:19:43.280
+you can do two things you can do mean over z of e
+
+1:19:43.280,1:19:48.960
+of x y z and remember z is the path or if you want to marginalize
+
+1:19:48.960,1:19:55.440
+you do minus 1 over beta log sum over all z's
+
+1:19:55.440,1:20:02.080
+of e to the minus beta e of x y z and that's marginalizing it's a discrete
+
+1:20:02.080,1:20:05.440
+sum of z is a discrete variable which is the case here because it's a discrete
+
+1:20:05.440,1:20:10.159
+path okay so this is f beta
+
+1:20:10.159,1:20:13.920
+x y and you can think of this as f infinity right this is the limit for
+
+1:20:13.920,1:20:17.920
+beta goes to infinity of the one at the bottom
+
+1:20:21.920,1:20:25.760
+or neural network to be trained in the model
+
+1:20:25.760,1:20:28.880
+i didn't understand the question i'm sorry can you repeat uh it's the
+
+1:20:28.880,1:20:34.159
+energy function here some simple some simple function like loss function
+
+1:20:34.159,1:20:39.679
+or some some some some neural networks to be trained in the model
+
+1:20:39.679,1:20:44.480
+it doesn't matter okay this is the this is the energy that you use to measure
+
+1:20:44.480,1:20:48.159
+the score of an answer y okay the observation
+
+1:20:48.159,1:20:53.040
+is x yeah the answer you are supposed to predict in this case a
+
+1:20:53.040,1:20:58.800
+sequence of symbols uh is y um and so for you know each of those
+
+1:20:58.800,1:21:01.520
+things here is annotated with a particular y
+
+1:21:01.520,1:21:07.760
+okay so this could be uh you know uh
+
+1:21:09.280,1:21:12.880
+you know each of those arcs is annotated by a symbol
+
+1:21:12.880,1:21:19.360
+so let's say a and this is b and this is b
+
+1:21:19.360,1:21:26.800
+and c and this is i don't know x and this is g or something right
+
+1:21:26.800,1:21:31.280
+so here the possible interpretation for y so y would be a string of symbols and
+
+1:21:31.280,1:21:35.600
+it can be either a b or it can be
+
+1:21:35.600,1:21:39.920
+b c g or it can be c cg okay this is c
+
+1:21:46.560,1:21:52.320
+okay those are the next x right ec sorry i'm sorry you're right this is
+
+1:21:52.320,1:21:58.320
+this is a six it's x thanks you're right sorry about that
+
+1:21:58.320,1:22:01.440
+okay those are the only three possible interpretations
+
+1:22:01.440,1:22:04.480
+uh in that in that graph that can come out of that graph
+
+1:22:04.480,1:22:10.960
+um and z is which fast you're taking okay so
+
+1:22:10.960,1:22:14.719
+if z is the first path then the output will be a b if z is the second part the
+
+1:22:14.719,1:22:18.960
+output will be bcg et cetera okay okay thank you
+
+1:22:18.960,1:22:22.840
+right but this is not used for training this is the energy function okay use for
+
+1:22:22.840,1:22:27.840
+inference um okay so
+
+1:22:27.840,1:22:31.520
+this the the log of the sum of the exponentials of the energies
+
+1:22:31.520,1:22:34.880
+uh for all the paths the sum of uh over all the paths okay
+
+1:22:34.880,1:22:39.840
+so the sum here is over path okay uh that's like marginalizing over z
+
+1:22:46.639,1:22:51.440
+and we saw that before right we explained that before
+
+1:22:51.440,1:23:00.480
+um now how do i compute this um now it turns out it's very simple
+
+1:23:00.480,1:23:03.120
+it's done using what's called a forward algorithm i'm actually going to draw a
+
+1:23:03.120,1:23:07.520
+different tree a different graph a graph that's
+
+1:23:07.520,1:23:11.120
+going to look more like the one i had before
+
+1:23:11.600,1:23:25.520
+which was kind of like this right okay so y is a sequence of uh
+
+1:23:26.159,1:23:34.000
+three symbols in this case and uh each um
+
+1:23:34.000,1:23:38.880
+and the first symbol can be um oh i'm sorry i'm using nodes here
+
+1:23:40.560,1:23:45.280
+instead of instead of arcs that's a little confusing
+
+1:23:45.920,1:23:49.840
+let me correct that okay so each path in this graph is a
+
+1:23:54.239,1:23:59.360
+possible interpretation okay so for each each edge i'm taking
+
+1:23:59.360,1:24:03.520
+i'm emitting a symbol and i don't have skipping connections so
+
+1:24:03.520,1:24:08.400
+here they all have exactly four symbols coming out
+
+1:24:08.400,1:24:12.719
+because every path is of length four okay
+
+1:24:12.880,1:24:16.320
+but how do i compute this sum this this sum
+
+1:24:16.320,1:24:21.040
+uh basically i go at a node okay when i'm at i don't know it here let's let's
+
+1:24:21.040,1:24:25.440
+take this node right right here i'm gonna call it red
+
+1:24:28.080,1:24:36.159
+okay the the cost from the input node
+
+1:24:36.159,1:24:42.400
+the the energy from the input node to that node is the log of the sum of
+
+1:24:42.400,1:24:46.080
+the exponentials of the energies from along all paths to go from the input
+
+1:24:49.920,1:24:54.320
+node to that node okay so
+
+1:24:54.320,1:24:58.719
+and of course you know i have i have an energy right here which is just the
+
+1:24:58.719,1:25:03.040
+energy of that branch i have an energy here which is just the
+
+1:25:03.040,1:25:08.239
+energy of that branch okay i have an f here um
+
+1:25:08.239,1:25:14.639
+and to compute the uh the f for this guy i just compute the
+
+1:25:14.639,1:25:19.040
+log of the sum of the exponentials of those two guys
+
+1:25:21.120,1:25:26.639
+okay right so let me unwrap this okay i've got an energy here
+
+1:25:26.639,1:25:31.600
+y1 i've got energy here y2 i got one here y3 oh e3 sorry and one
+
+1:25:31.600,1:25:36.639
+here uh this guy is e4
+
+1:25:36.800,1:25:41.840
+all right the f i'm gonna get here okay so this is i'm going to call this
+
+1:25:50.320,1:25:54.480
+i'm going to call it anything so the value i should have here
+
+1:25:54.480,1:25:56.719
+is is e1 plus
+
+1:26:06.840,1:26:09.840
+e3 exponential of that minus beta that
+
+1:26:15.679,1:26:25.520
+plus exponential minus beta e2 plus e4
+
+1:26:26.080,1:26:32.320
+and i take minus one over beta log of this
+
+1:26:34.840,1:26:39.679
+okay so how is the event calculated i mean
+
+1:26:39.679,1:26:43.040
+the smaller yield lower list whatever comes out of your
+
+1:26:43.040,1:26:46.159
+energy right um each of those graphs you know as i said
+
+1:26:46.159,1:26:50.400
+you you represent uh possible interpretations as a graph each
+
+1:26:50.400,1:26:54.320
+node in the graph has an energy and a complete energy of the function
+
+1:26:54.320,1:27:00.639
+which is an f of x y for a particular y in a particular z following a path is uh
+
+1:27:00.639,1:27:05.679
+is is uh is e of x y z and now what you want to compute is log
+
+1:27:05.679,1:27:11.040
+of sum of e to the minus e of x y z uh which is the
+
+1:27:11.040,1:27:14.880
+marginalization over all the paths so it's basically combining the cost of
+
+1:27:14.880,1:27:20.080
+all the paths in kind of a soft minimum way right
+
+1:27:20.080,1:27:23.120
+but the algorithm is is super simple because
+
+1:27:23.120,1:27:27.840
+uh you maintain a variable basically for each node
+
+1:27:27.840,1:27:31.600
+for each node you compute a variable alpha
+
+1:27:31.600,1:27:35.520
+for a particular node and it's going to be equal to
+
+1:27:35.520,1:27:42.400
+minus log sum over all the nodes that are
+
+1:27:44.400,1:27:48.719
+up from from so let's say it's not i up from i
+
+1:27:48.719,1:27:56.000
+okay so all the parent nodes of of i and then you do e to the minus beta the
+
+1:27:56.000,1:28:04.800
+alpha uh k and and you add to it
+
+1:28:04.800,1:28:07.440
+uh e of uh
+
+1:28:11.440,1:28:15.280
+k i which would be the energy of the link coming from node k
+
+1:28:15.280,1:28:18.320
+to node i okay that's called a forward algorithm
+
+1:28:30.000,1:28:34.159
+and if you've heard about this it's actually a special case
+
+1:28:34.159,1:28:38.159
+of the so-called belief propagation algorithm
+
+1:28:43.920,1:28:49.120
+so belief propagation is a general algorithm for
+
+1:28:49.120,1:28:53.040
+graphical models and [Music]
+
+1:28:53.040,1:28:56.800
+the fourth algorithm is a special case when the your graph is basically a chain
+
+1:28:56.800,1:29:00.480
+graph okay um but i'm not going to go into
+
+1:29:00.480,1:29:03.679
+this you can take a course on video nets or
+
+1:29:03.679,1:29:06.880
+or graphical models or probabilistic methods you take a
+
+1:29:06.880,1:29:11.440
+course you know with rajesh she will explain that to you
+
+1:29:11.440,1:29:15.280
+this would take us too far but that that would be
+
+1:29:15.280,1:29:22.480
+kind of the thing okay so now this is just a feed forward neural net
+
+1:29:22.480,1:29:25.520
+where basically where the function at each
+
+1:29:25.520,1:29:29.600
+node is a log of sum of exponentials plus
+
+1:29:29.600,1:29:34.320
+addition of some some term right this is a neural
+
+1:29:34.320,1:29:39.040
+net where alpha i is the activation and of
+
+1:29:39.040,1:29:46.400
+of the the neurons if you want the nodes and the weights are those uh
+
+1:29:46.400,1:29:52.639
+e of ki that link unit k to unit i okay and the operations you do is log
+
+1:29:52.639,1:29:56.719
+some exponentials so instead of a neural net in which you do
+
+1:29:56.719,1:30:00.320
+a product by a weight and then you sum the products
+
+1:30:00.320,1:30:04.480
+here you add the weights and then you do a log sum exponential
+
+1:30:04.480,1:30:08.080
+algebraically it's actually equivalent this is like
+
+1:30:08.080,1:30:11.679
+weighted sum in the log domain okay but the point is you can do this
+
+1:30:15.440,1:30:18.800
+forward prop this forward algorithm and you can back propagate gradient so
+
+1:30:18.800,1:30:23.440
+whatever f you get at the end you know by the time you run through this network
+
+1:30:23.440,1:30:30.960
+at the end here you basically get f of x y the value at that node the alpha
+
+1:30:30.960,1:30:34.560
+here is f of x y and
+
+1:30:34.560,1:30:41.440
+you've eliminated z by doing this log of sum of exponentials over all paths
+
+1:30:43.040,1:30:46.560
+right now if you want to compute the the gradient
+
+1:30:46.560,1:30:49.760
+of f of x y with respect to each of the e k i
+
+1:30:49.760,1:30:52.960
+which themselves probably are outputs of some neural net you can do that you can
+
+1:30:52.960,1:30:57.040
+back propagate to this network okay it's a it's a neural net who's
+
+1:30:57.040,1:31:00.560
+again whose structure is dynamic it you know it changes from
+
+1:31:00.560,1:31:04.239
+example to example but you can you can clearly
+
+1:31:04.239,1:31:08.719
+backpropagate gradient to it and that's basically what what we do
+
+1:31:08.719,1:31:11.040
+here in this system we we run the forward
+
+1:31:15.280,1:31:18.480
+algorithm on this graph and we get a score which is the
+
+1:31:18.480,1:31:23.280
+log of the sum of the exponentials of minus the energies for all the paths
+
+1:31:23.280,1:31:26.159
+okay we do the same here we get another score
+
+1:31:26.159,1:31:29.360
+i mean it's minus log of the sum of the exponential of the energy of minus
+
+1:31:29.360,1:31:34.639
+energy okay this guy necessarily is larger than this
+
+1:31:34.639,1:31:38.000
+one you compute the difference and that's the negative likelihood loss
+
+1:31:38.000,1:31:42.639
+it's a difference between the log sum x of energy over the
+
+1:31:42.639,1:31:46.320
+relative variable of the correct answer and looks a mass over a latent variable
+
+1:31:46.320,1:31:50.719
+of every answer although here these are grammatical
+
+1:31:50.719,1:31:54.000
+answers but it's the same and then you just back propagate
+
+1:31:54.000,1:31:56.800
+gradients through this entire thing and then it goes back properly
+
+1:31:56.800,1:32:01.199
+propagating gradient through this uh graph here which you can think of as
+
+1:32:01.199,1:32:04.639
+some sort of weird neural net with where the node operation is like some
+
+1:32:04.639,1:32:07.679
+exponentials and you get gradients for each of the
+
+1:32:07.679,1:32:11.280
+e's and each of the e's are the values that you get here which
+
+1:32:11.280,1:32:14.159
+are produced by the neural net and so you get you get
+
+1:32:14.159,1:32:18.159
+gradients with respect to the parameters when you're on it
+
+1:32:22.400,1:32:26.239
+okay so that's structural prediction for you
+
+1:32:26.239,1:32:29.920
+there's a couple more topics i wanted to talk about today and variational
+
+1:32:29.920,1:32:34.159
+methods in bayesian inference because we talked about it in the context of ea
+
+1:32:34.159,1:32:39.760
+but without really explaining what it was or at least i didn't maybe you did
+
+1:32:39.760,1:32:44.080
+alfredo but like the general form of variational inference or i can talk
+
+1:32:44.080,1:32:48.159
+about the lagrangian formulation of backprop i can actually do both because
+
+1:32:48.159,1:32:50.960
+it's kind of fast it will take more than five minutes but you can leave whenever
+
+1:32:50.960,1:32:54.320
+you want okay then let's go for both uh the long
+
+1:32:54.320,1:32:58.719
+orange thing is short so i'm going to do that first okay
+
+1:33:00.560,1:33:05.840
+okay so you can formulate back prop as a minimization under constraint
+
+1:33:05.840,1:33:09.920
+so you have an input variable x is going through
+
+1:33:09.920,1:33:14.800
+a first functional module let's call it f1
+
+1:33:14.800,1:33:22.639
+of x w1 and it produces
+
+1:33:22.639,1:33:31.440
+uh we're gonna call it z1 actually let me call this f0 f0
+
+1:33:31.440,1:33:35.600
+okay and then the second one is going to be f1
+
+1:33:35.600,1:33:42.639
+of z1 w1 and that produces z2
+
+1:33:42.639,1:33:48.639
+etc so and then at the end we have the last module and it goes into
+
+1:33:48.639,1:33:53.840
+some sort of uh energy term
+
+1:33:53.840,1:33:56.639
+okay with let's say desired output if we do supervise running but it doesn't
+
+1:33:56.639,1:33:59.679
+matter it's just a cost let's call this guy z
+
+1:34:04.560,1:34:07.360
+n okay zn and y
+
+1:34:11.840,1:34:18.239
+um okay so the the forward pass can be written as
+
+1:34:18.239,1:34:21.679
+z k plus 1 is equal to f
+
+1:34:28.320,1:34:35.920
+k of ck wk
+
+1:34:35.920,1:34:40.880
+okay that's just a forward pass and then you have a cost function
+
+1:34:40.880,1:34:44.159
+c which you want to minimize which is z of
+
+1:34:44.159,1:34:49.600
+c of zn y okay that's just whatever cost
+
+1:34:49.600,1:34:52.560
+function you want to minimize now you can write that you can write the
+
+1:34:56.800,1:34:59.520
+the entire problem as a minimization of the
+
+1:34:59.520,1:35:04.719
+constraint so and the and the statement is minimize
+
+1:35:04.719,1:35:06.880
+c with the constraint such that
+
+1:35:17.679,1:35:21.199
+the above constraint is verified okay and
+
+1:35:25.199,1:35:28.159
+when you have a minimization problem under constraint the best thing to do is
+
+1:35:28.159,1:35:33.760
+to write a lagrangian right so you write a lagrange function i'm not going to
+
+1:35:33.760,1:35:37.119
+tell you right away what is this function of
+
+1:35:37.119,1:35:41.360
+and for a single training sample x y is going to be the
+
+1:35:41.360,1:35:48.080
+the cost zn y okay
+
+1:35:48.960,1:35:52.239
+well the other thing we might we might say also is there is another constraint
+
+1:35:52.239,1:35:57.360
+which is that z zero equals x
+
+1:35:57.360,1:36:04.400
+plus sum over layers okay so we're going to have an index k
+
+1:36:04.480,1:36:07.679
+from 1 to n and a lagrange
+
+1:36:11.520,1:36:14.960
+multiplier and a constraint which should be
+
+1:36:14.960,1:36:18.239
+equal to 0 and that constraint is going to be
+
+1:36:18.239,1:36:26.560
+zk plus 1 minus fk of uh z k
+
+1:36:26.560,1:36:33.679
+w k and i need to i'm gonna call this lambda k plus one
+
+1:36:33.679,1:36:39.040
+and this is gonna have to be up to n minus one and probably starting
+
+1:36:39.040,1:36:42.159
+at zero actually
+
+1:36:43.679,1:36:47.600
+okay so this is a lagrangian formulation of
+
+1:36:47.600,1:36:52.320
+uh my back part problem where basically you have an overall cost function
+
+1:36:52.320,1:36:56.080
+and i have a bunch of constraints so the constraints are that
+
+1:36:56.080,1:37:01.760
+the input to layer k is the output of layer k minus one
+
+1:37:01.920,1:37:06.800
+okay so this regression is a function of x
+
+1:37:06.800,1:37:15.760
+y all the lambdas the lambda k's all the z's and w
+
+1:37:15.760,1:37:22.639
+all the w's okay so what i need to do now to do this uh
+
+1:37:22.639,1:37:25.520
+minimization under constraint is i need to
+
+1:37:25.520,1:37:33.920
+do dl over d lambda k equals zero okay and if i this condition
+
+1:37:33.920,1:37:36.719
+uh the the gradient of l with respect to
+
+1:37:36.719,1:37:41.040
+lambda k is just the it's just this
+
+1:37:41.040,1:37:47.520
+right i mean the k plus one i'm sorry it's just this parenthesis okay so i
+
+1:37:47.520,1:37:52.400
+just get zk plus 1 equal
+
+1:37:52.400,1:37:59.280
+fk of zk wk which is just the forward propagation formula
+
+1:38:00.400,1:38:08.400
+if i do dl over d z k equals zero
+
+1:38:08.639,1:38:12.480
+uh it's a little more complicated right so i get the first term
+
+1:38:12.480,1:38:17.920
+which is lambda k because i'm going to have a z k here and that z
+
+1:38:17.920,1:38:23.119
+k is going to be a factor of this lambda lambda k here right so i
+
+1:38:23.119,1:38:28.639
+get uh i get i i guess i get longer k transpose
+
+1:38:29.440,1:38:32.639
+and then i get minus and then for this zk
+
+1:38:32.639,1:38:39.199
+i have a lambda k plus one here times the jacobian function of this
+
+1:38:39.199,1:38:42.560
+with respect to z okay so it's going to be
+
+1:38:42.560,1:38:51.679
+something like dfk of zkw over zk
+
+1:38:53.679,1:39:01.679
+that's it times ooh okay
+
+1:39:04.719,1:39:09.520
+times lambda k plus one transpose and that should be equal to zero so i'm
+
+1:39:12.639,1:39:15.040
+going to rearrange all that stuff and what i get
+
+1:39:15.040,1:39:21.040
+is uh lambda k equals
+
+1:39:21.040,1:39:23.760
+dfk zkw with respect to zk so that the
+
+1:39:28.480,1:39:35.920
+jacobian matrix uh of f transposed times lambda k plus 1.
+
+1:39:35.920,1:39:40.719
+and funnily enough this is actually the backpropagation formula
+
+1:39:40.719,1:39:44.080
+right this is the thing that gives you the gradients at la at
+
+1:39:44.080,1:39:50.080
+level k given the gradients of level k plus one you multiply by the jacobian of
+
+1:39:50.080,1:39:55.040
+of the of the box that you propagate it through
+
+1:39:55.040,1:39:59.840
+okay so you don't have to think about it you know you just kind of
+
+1:39:59.840,1:40:03.840
+write back prop as a constraint optimization problem and backprop
+
+1:40:03.840,1:40:07.360
+naturally comes out of it now the first people to figure this out
+
+1:40:07.360,1:40:10.560
+were people in control theory in fact first people to figure this out
+
+1:40:10.560,1:40:16.960
+where people like lagrange or or or euler or people like hamilton and
+
+1:40:16.960,1:40:20.800
+jacoby that's the classical formulation of of
+
+1:40:20.800,1:40:26.639
+of mechanics if you want um and in mechanics when you write uh
+
+1:40:26.639,1:40:30.239
+something like this you say uh where c of zn
+
+1:40:30.239,1:40:34.400
+uh y would be uh uh the energy of the system
+
+1:40:34.400,1:40:37.600
+like a potential energy is something like this and then the other term was
+
+1:40:37.600,1:40:41.040
+basically implements the dynamic constraints the fact that
+
+1:40:41.040,1:40:44.719
+you have a differential equation that tells you that the state at time t plus
+
+1:40:44.719,1:40:46.639
+one is a function of the state at time t
+
+1:40:46.639,1:40:51.360
+with some constraint right so that's the dynamic constraint and
+
+1:40:51.360,1:40:56.480
+then if you do this uh you you know you figure out that
+
+1:40:56.480,1:41:02.080
+uh the if you have an energy for every you know
+
+1:41:02.080,1:41:08.880
+think of k now as a time step and the forward propagation as
+
+1:41:08.880,1:41:13.360
+a differential equation that governs a system
+
+1:41:13.360,1:41:17.040
+and then you could have a term here that is not just
+
+1:41:17.040,1:41:21.119
+an energy term at the output but basically an energy term that
+
+1:41:21.119,1:41:23.360
+uh you can have one of those terms for
+
+1:41:26.639,1:41:32.480
+every time step right so the lagonchan function would be summer time
+
+1:41:32.480,1:41:36.880
+steps of c for that time step of
+
+1:41:36.880,1:41:41.440
+z k okay and there might be some external variable
+
+1:41:41.440,1:41:47.840
+uh let's call it y k you know plus those constraints
+
+1:41:51.040,1:41:57.920
+k plus one minus f k of z k w k
+
+1:41:59.280,1:42:02.880
+okay and the the sun takes place over all things
+
+1:42:02.880,1:42:07.760
+um when you look at uh you know lagoon formulation of classical mechanics
+
+1:42:07.760,1:42:10.880
+that's basically the way they're expressed
+
+1:42:10.880,1:42:15.360
+c is the energy and the second term are the constraints now in classical
+
+1:42:15.360,1:42:20.800
+mechanics uh the the lambda variable is actually
+
+1:42:20.800,1:42:24.719
+the momentum so z is the position variables and
+
+1:42:24.719,1:42:28.719
+lambda becomes the momentum so the second term becomes basically the
+
+1:42:28.719,1:42:33.520
+the kinetic energy or the negative kinetic energy more more
+
+1:42:35.920,1:42:41.119
+specifically um anyway this is just an apartheid okay
+
+1:42:41.119,1:42:44.320
+why am i telling you this it's because conceptually
+
+1:42:44.320,1:42:48.080
+the you know the mathematics of this is super simple if you know
+
+1:42:48.080,1:42:53.600
+lagrangian minimization of the constraint
+
+1:42:54.880,1:42:58.000
+and this is something you can use also in
+
+1:42:58.000,1:43:04.480
+a new class of model called neural ode so neural
+
+1:43:06.400,1:43:11.920
+ordinary differential equation and this is something else wanted me to talk
+
+1:43:11.920,1:43:14.159
+about thank you
+
+1:43:19.760,1:43:24.080
+so neural od so this is a type of neural net which is basically a recurrent
+
+1:43:24.080,1:43:30.800
+neural net where you say my state at time t plus delta t
+
+1:43:30.800,1:43:39.440
+is equal to my state at time t plus delta t times you know some function
+
+1:43:39.440,1:43:46.159
+uh which is a constant function of uh zt
+
+1:43:46.159,1:43:50.880
+and a bunch of parameters which are fixed okay they're not they don't value
+
+1:43:50.880,1:43:55.280
+with time i can write it this way i can write it in a
+
+1:43:55.280,1:43:58.719
+differential equation form where i can say dz
+
+1:43:58.719,1:44:06.320
+over dt at time t is equal to f of zt
+
+1:44:06.320,1:44:12.400
+w okay so that's the differential equation ordinary differential equation
+
+1:44:12.400,1:44:15.440
+uh in this case the first order well it depends what's in z
+
+1:44:15.440,1:44:18.639
+but um if i you know i could i could i can express
+
+1:44:20.639,1:44:24.080
+just about anything this way uh and the question is how do you train
+
+1:44:24.080,1:44:28.080
+something like this and basically uh if you write the lagrangian
+
+1:44:28.080,1:44:34.239
+formulation of this it's trivial the uh so there are two ways
+
+1:44:34.239,1:44:37.440
+you might want to train something like this you might want to train the system
+
+1:44:37.440,1:44:43.520
+to map one point you know z at time zero
+
+1:44:43.520,1:44:50.000
+to a particular point zero times big t after some trajectory you may not want
+
+1:44:50.000,1:44:53.520
+to constrain the trajectory you just just want it to reach that point and you
+
+1:44:53.520,1:44:57.360
+don't care what it does afterwards i just wanted to reach that point and so
+
+1:44:57.360,1:44:59.840
+you can have a cost function which is basically
+
+1:44:59.840,1:45:03.440
+you know the distance of z to that target point
+
+1:45:03.440,1:45:06.800
+uh zero big t you know i'm gonna call it y
+
+1:45:06.800,1:45:15.280
+and then so the target would be uh the target would be a point y
+
+1:45:15.280,1:45:18.480
+and then your cost function would be the distance between
+
+1:45:18.480,1:45:23.360
+z t and y or something like that okay another thing you might want to do is
+
+1:45:23.360,1:45:25.679
+you might want to train the system so that
+
+1:45:25.679,1:45:30.000
+it has stable states at particular points y
+
+1:45:30.000,1:45:36.400
+okay so that uh for a particular point y that you decide from your training set
+
+1:45:36.400,1:45:44.320
+uh f of this particular y w equals zero
+
+1:45:44.320,1:45:47.679
+which means you know that state is going to be stable
+
+1:45:47.679,1:45:50.719
+right the the trajectory so you would have a point
+
+1:45:50.719,1:45:56.480
+y in your space and then you know you might start from some point
+
+1:45:56.480,1:46:01.920
+when you arrive at that point the the dynamics stop stops
+
+1:46:02.480,1:46:08.719
+so if you formulate this in terms of uh lagoon it becomes like super simple in
+
+1:46:08.719,1:46:14.880
+the sense that the gradients now contrary to backpop through time so
+
+1:46:14.880,1:46:20.480
+if you were to unfold this network here consider this a recurrent net
+
+1:46:20.480,1:46:24.719
+and you enfold it in time to compute the gradient
+
+1:46:24.719,1:46:28.719
+of the end point with respect to the parameters
+
+1:46:28.719,1:46:32.159
+you you cannot have to and with respect to the initial for you have to back
+
+1:46:32.159,1:46:34.000
+propagate through time right you have to kind of
+
+1:46:34.000,1:46:38.639
+remember the entire sequence and then do backdrop two time
+
+1:46:38.639,1:46:44.159
+okay but if what you're interested in is just learning a stable state like this
+
+1:46:44.159,1:46:47.440
+then you don't need to store the trajectory you
+
+1:46:47.440,1:46:52.239
+uh you start from some point you convert to
+
+1:46:52.239,1:46:58.880
+some other point and you want to make y a stable state
+
+1:47:01.040,1:47:08.080
+what you just need to do is ensure that this is true uh
+
+1:47:08.080,1:47:13.119
+and the way you can do this is uh you know basically by minimizing your
+
+1:47:13.119,1:47:15.920
+cost which would be some something like the norm the square norm
+
+1:47:15.920,1:47:20.320
+of f of y w but the point of the the point is that
+
+1:47:20.320,1:47:22.719
+you don't need to remember the entire trajectory
+
+1:47:22.719,1:47:26.400
+the gradient with respect to the weights can be obtained by
+
+1:47:26.400,1:47:32.080
+running a very similar type of differential equation backwards in time
+
+1:47:34.480,1:47:37.840
+and i'm sorry i'm not going to be able to go into details of that i can refer
+
+1:47:37.840,1:47:41.440
+you to a paper um so this is a neural ide paper which
+
+1:47:41.440,1:47:48.560
+doesn't really mention that but there is an earlier paper of mine called a
+
+1:47:48.840,1:47:51.840
+theoretical framework
+
+1:47:57.360,1:48:02.159
+for back propagation and basically it explains this
+
+1:48:02.960,1:48:06.719
+uh lagrangian formulation as well as how you apply it
+
+1:48:06.719,1:48:09.760
+for recurrent nets uh that might be sort of
+
+1:48:09.760,1:48:13.920
+you know continuous and continuous in time and that you want to train to
+
+1:48:13.920,1:48:18.000
+go to particular fixed points uh this is paper from 1988.
+
+1:48:18.000,1:48:22.239
+it's not recent uh you'll find it on my web page
+
+1:48:22.239,1:48:26.159
+down on the bottom of the publication page but i don't want to go into the
+
+1:48:26.159,1:48:28.880
+details of this and there is the bayesian stuff asian
+
+1:48:34.400,1:48:37.760
+stuff yes people are still here i don't know
+
+1:48:37.760,1:48:41.840
+they are enjoying it stick around you don't have to if you don't want to
+
+1:48:41.840,1:48:45.199
+uh it's not the basic stuff it's more the virtual
+
+1:48:45.199,1:48:49.040
+oh sorry yeah you're right i'm not confused
+
+1:48:49.040,1:48:51.280
+uh so let's say i have some uh loss
+
+1:48:55.280,1:48:57.920
+function okay and i'm going to talk about a loss
+
+1:48:57.920,1:49:00.560
+not not an energy but it's the same thing
+
+1:49:00.560,1:49:05.760
+and my last function uh is a marginalized loss function over a
+
+1:49:05.760,1:49:10.239
+latent variable right so remember you know i i talked about
+
+1:49:10.239,1:49:14.480
+this before if you have an energy function
+
+1:49:16.560,1:49:22.400
+f of x y let's say and you want to derive it from a more
+
+1:49:22.400,1:49:26.880
+elementary energy function e of x y z by doing the equivalent operation of
+
+1:49:28.560,1:49:32.480
+marginalizing over z's yeah so the way you uh you
+
+1:49:32.480,1:49:37.679
+marginalize right is you uh you do
+
+1:49:37.679,1:49:46.400
+minus beta e to the minus you sum over all z's and you take minus one over beta
+
+1:49:46.400,1:49:49.280
+log okay so this is uh the formula for
+
+1:49:49.280,1:49:56.159
+marginalizing a relative variable um and that also applies to
+
+1:49:56.159,1:49:58.719
+loss functions you know whatever function you want to marginalize over a
+
+1:49:58.719,1:50:02.880
+latent variable that's what you compute so let's say you
+
+1:50:02.880,1:50:07.119
+have a model with a latent variable and
+
+1:50:07.119,1:50:10.000
+you don't know what the value of the latent variable is and you want to
+
+1:50:10.000,1:50:13.760
+compute what is my loss uh which would be the log of the sum of
+
+1:50:13.760,1:50:16.800
+the exponentials of the loss over all values of the latent variables so
+
+1:50:16.800,1:50:21.199
+right so i'm kind of marginalizing over this certain variable let's say it's a
+
+1:50:21.199,1:50:24.000
+you know rational autoencoder or something i have a latent variable in
+
+1:50:24.000,1:50:27.679
+the middle and i want to compute the
+
+1:50:28.000,1:50:32.639
+minus 1 over beta log sum over all values of my little variable of e to the
+
+1:50:32.639,1:50:36.800
+minus beta l i'm using l but i could use just any
+
+1:50:36.800,1:50:41.199
+symbol here this is whatever function you need to compute
+
+1:50:42.800,1:50:46.480
+but it's useful for things you want to minimize like energies or
+
+1:50:46.480,1:50:52.880
+or or objectives okay so here this loss function here is
+
+1:50:52.880,1:50:58.480
+no longer a function of z it's only a function of x and y
+
+1:51:00.080,1:51:10.719
+i can rewrite this as the following
+
+1:51:11.360,1:51:21.280
+q of z e to the minus beta l of x y z
+
+1:51:21.280,1:51:25.679
+or eq right i've just multiplied and divided by q of z
+
+1:51:25.679,1:51:32.800
+okay i've done nothing now q of z here uh i assume is a
+
+1:51:32.800,1:51:35.840
+a probability distribution over z so it's a
+
+1:51:35.840,1:51:39.599
+density function that integrates to 1 when i integrate over z
+
+1:51:39.599,1:51:43.679
+so you can interpret this integral as the expected value
+
+1:51:43.679,1:51:49.679
+with respect to the distribution of e to the minus beta l of x y z divided
+
+1:51:49.679,1:51:54.480
+by q of z okay now
+
+1:51:54.480,1:52:03.840
+here's the trick there's something called jensen's inequality
+
+1:52:05.520,1:52:10.639
+and jensen's inequality says something very interesting it says
+
+1:52:10.639,1:52:20.159
+let's imagine i have a convex function like say minus log okay i'm not drawing
+
+1:52:20.159,1:52:26.239
+minus log here very well but it looks a bit like minus log now
+
+1:52:26.239,1:52:36.480
+if i uh if i take um a bunch of values
+
+1:52:36.639,1:52:41.440
+over a range okay and i compute the average of the value
+
+1:52:44.639,1:52:49.040
+of the function minus log over that range
+
+1:52:51.520,1:52:58.400
+okay because the function is convex i'm going to get a value that is smaller
+
+1:52:58.400,1:53:05.199
+than the function applied to the average okay so my diagram is not that great
+
+1:53:05.199,1:53:08.080
+because the the curvature is not high enough let me
+
+1:53:08.080,1:53:10.719
+draw it again so here's a convex function i'm going to
+
+1:53:14.080,1:53:19.679
+vary a variable here over a range okay and compute the average of that
+
+1:53:19.679,1:53:22.480
+function over that range so it's going to you
+
+1:53:22.480,1:53:26.480
+know give me some some value
+
+1:53:26.480,1:53:31.599
+you know probably around here and then i'm going to take the
+
+1:53:31.599,1:53:34.719
+average of all those values in this range the average of the range the
+
+1:53:34.719,1:53:39.440
+midpoint of that range and pass it to the to the function
+
+1:53:39.440,1:53:41.840
+okay and i get i get something below this so
+
+1:53:51.199,1:53:54.159
+i didn't draw this properly so if i take the average of this plus
+
+1:53:54.159,1:53:56.800
+this you know this this this this and this
+
+1:53:56.800,1:54:00.239
+i'm going to get something that's higher than that because
+
+1:54:00.239,1:54:03.760
+because the function is not convex if the is convex if the function was
+
+1:54:03.760,1:54:07.119
+straight then the average after going to the
+
+1:54:07.119,1:54:10.960
+function would be the same as before going to the function right if
+
+1:54:10.960,1:54:14.080
+i computed the average of all those values
+
+1:54:14.080,1:54:17.679
+or the y values of those points it would be at the same place
+
+1:54:17.679,1:54:24.159
+as the function applied to the average okay so you can make the intercept
+
+1:54:24.159,1:54:27.840
+between the the convex function in a line right that goes from those two
+
+1:54:27.840,1:54:30.800
+extrema that's right yeah there you go so that
+
+1:54:30.800,1:54:35.760
+that the mean would be the yeah that point yeah that's right
+
+1:54:35.760,1:54:43.840
+so the the the the mean applied to the function values
+
+1:54:43.840,1:54:47.599
+would be something like this chord it wouldn't be that but it would be kind of
+
+1:54:47.599,1:54:52.400
+close to that okay now it let's forget about a function like
+
+1:54:52.400,1:54:54.960
+actually i should have explained this inverse simple way which is just two
+
+1:54:54.960,1:54:58.080
+values um let's say it's just the sum of two
+
+1:54:58.080,1:55:01.199
+terms okay so i have a convex function i have
+
+1:55:01.199,1:55:08.639
+two values uh the average of those two values after
+
+1:55:08.639,1:55:13.119
+i passed through the function okay so basically let's say this is
+
+1:55:13.119,1:55:18.880
+my function is minus log so the average of minus log of let's
+
+1:55:18.880,1:55:22.159
+call it x1 and x2 minus log of x1 plus minus log of x2
+
+1:55:28.880,1:55:34.480
+divided by 2 okay is this point
+
+1:55:35.360,1:55:40.480
+okay and then minus log of x1 plus
+
+1:55:47.360,1:55:54.639
+x2 divided by 2 is that point and that's below
+
+1:55:54.639,1:55:58.320
+okay and jensen's inequality basically says if you have a convex function
+
+1:55:58.320,1:56:04.800
+like like minus log um the
+
+1:56:06.960,1:56:10.239
+okay and then here i computed on average but you know it's true for any
+
+1:56:10.239,1:56:14.239
+expectation it says the
+
+1:56:15.360,1:56:18.159
+expectation so basically
+
+1:56:23.119,1:56:32.560
+convex of expectation over any distribution of some function h
+
+1:56:34.560,1:56:38.239
+well that would be z in that case okay uh
+
+1:56:43.920,1:56:48.320
+i have to write this in the proper way is less than or equal
+
+1:56:48.320,1:56:57.840
+to sum over z q z of this convex function
+
+1:56:58.960,1:57:02.000
+applied to h and z okay that's john's sense inequality
+
+1:57:08.000,1:57:12.480
+so this this works with uh minus log which means i can write that
+
+1:57:12.480,1:57:17.840
+my objective function here is less than uh minus one over beta which i'm going
+
+1:57:17.840,1:57:20.000
+to actually put inside uh i take this back
+
+1:57:28.400,1:57:35.760
+it's going to be less than sum over z of q of z
+
+1:57:35.920,1:57:45.360
+times minus 1 over beta log e to the minus beta l of x y z
+
+1:57:47.679,1:57:54.990
+divided by q z okay obviously the
+
+1:57:54.990,1:57:59.199
+[Music] the one over beta the minus one over
+
+1:57:59.199,1:58:04.880
+beta log exponential minus beta cancel okay so what i get is
+
+1:58:04.880,1:58:09.199
+sum summary z q of z l of x y z
+
+1:58:13.360,1:58:19.840
+so that's just the expected value of l averaged over the distribution q z and
+
+1:58:19.840,1:58:22.960
+then i get a second term and the second term is the negative
+
+1:58:29.840,1:58:35.119
+log 1 over beta the negative log of of q of z but there is you know q of z
+
+1:58:35.119,1:58:38.000
+is a denominator so i'm going to bring it to the top
+
+1:58:38.000,1:58:41.760
+that's going to cancel the minus 1 over beta and so i'm going to get something
+
+1:58:41.760,1:58:45.920
+like plus 1 over beta
+
+1:58:45.920,1:58:50.560
+log q of z right and i can write this again as sum over z
+
+1:58:54.960,1:59:02.880
+of q of z l x y z
+
+1:59:02.880,1:59:08.000
+plus sum over z 1 over beta q z plug q z
+
+1:59:17.440,1:59:19.760
+okay this is the
+
+1:59:24.639,1:59:27.040
+average loss energy whatever it is let's call it
+
+1:59:30.480,1:59:35.520
+energy and this is the
+
+1:59:36.800,1:59:42.560
+uh this is one over this is minus one over beta times the
+
+1:59:42.840,1:59:45.840
+entropy of q
+
+1:59:50.000,1:59:53.040
+okay the entropy of a distribution is minus
+
+1:59:53.040,1:59:59.679
+sum over the random variable of distribution log distribution okay so
+
+1:59:59.679,2:00:03.440
+this is minus one over beta e entropy so what does that mean what
+
+2:00:03.440,2:00:06.800
+that means is that i have an upper bound on my the last
+
+2:00:06.800,2:00:11.760
+function that i want to minimize l of x y okay for my energy that i want
+
+2:00:11.760,2:00:14.159
+to minimize whatever it is whatever function it is i want to
+
+2:00:14.159,2:00:18.400
+minimize i have an upper bound on it now and this upper bound is the sum of two
+
+2:00:18.400,2:00:24.480
+terms one is the average of the energy i get
+
+2:00:24.480,2:00:28.480
+by basically sampling the latent variable
+
+2:00:28.480,2:00:32.000
+okay so i have a system with a latent variable i sample some
+
+2:00:32.000,2:00:35.040
+value of the latent variable according to some distribution q
+
+2:00:35.040,2:00:38.719
+which of course i pick a queue from which i can easily sample
+
+2:00:38.719,2:00:42.960
+okay i can choose q whatever i want whatever i want right
+
+2:00:42.960,2:00:49.840
+um so i pick a queue gaussian whatever and i i pick a z according to that
+
+2:00:49.840,2:00:54.800
+distribution and i compute the expected value of the function i want to
+
+2:00:54.800,2:00:58.960
+minimize with respect to uh to that q and i can do this by just
+
+2:00:58.960,2:01:02.480
+sampling z from the the q distribution and then
+
+2:01:02.480,2:01:08.000
+computing the average of the function l that i obtain as a result
+
+2:01:08.000,2:01:11.920
+okay so that's the first term and then the second term
+
+2:01:11.920,2:01:15.119
+is the entropy of z so what i need to do is
+
+2:01:15.119,2:01:19.360
+basically change my distribution z in such a way that
+
+2:01:19.360,2:01:22.400
+the entropy is maximized so if it's a gaussian for example it means i need to
+
+2:01:22.400,2:01:25.360
+make the variance of z as large as possible but if i make
+
+2:01:25.360,2:01:28.800
+it too large then the average energy term is going to blow up
+
+2:01:28.800,2:01:31.920
+so i need to optimize this overall this this
+
+2:01:31.920,2:01:35.280
+this whole function and if i optimize this whole function
+
+2:01:35.280,2:01:39.760
+with respect to q and with respect to whatever parameter of l i want to
+
+2:01:39.760,2:01:43.119
+minimize because l is an objective function with
+
+2:01:43.119,2:01:47.360
+respect to i don't know weights of a neural net or something right
+
+2:01:47.360,2:01:50.880
+so i can simultaneously minimize with respect to
+
+2:01:50.880,2:01:54.960
+those parameters w which i didn't write here and with respect to the q
+
+2:01:54.960,2:01:58.719
+uh distribution and if the q distribution is in a family that's wide
+
+2:01:58.719,2:02:01.440
+enough uh then this upper bound will be fairly
+
+2:02:01.440,2:02:05.440
+close to the actual loss that i want to minimize which is
+
+2:02:05.440,2:02:10.239
+the marginalized loss over the over the latent variable but i never
+
+2:02:10.239,2:02:14.080
+need to actually compute explicitly the marginalization of a latent variable so
+
+2:02:14.080,2:02:16.719
+this is a way of marginalizing a related variable
+
+2:02:16.719,2:02:20.480
+without actually doing it okay by marginalizing over a latent variable
+
+2:02:20.480,2:02:23.440
+that you can sample from like a gaussian but
+
+2:02:23.440,2:02:25.840
+what you have to do is maximize its entropy
+
+2:02:25.840,2:02:29.360
+and when you think about variational autoencoders that's just what they do
+
+2:02:29.360,2:02:34.639
+okay they minimize the expected reconstruction error which is l of x y z
+
+2:02:34.639,2:02:37.920
+with respect to the parameters by sampling the latent variable z
+
+2:02:37.920,2:02:42.480
+according to a gaussian distribution okay but at the same time there is
+
+2:02:42.480,2:02:45.280
+what's called the kl term which is the second term but basically tries to make
+
+2:02:45.280,2:02:49.280
+that distribution as high entropy as possible now this
+
+2:02:49.280,2:02:52.960
+formula is exactly identical to a formula that
+
+2:02:52.960,2:02:58.639
+people use in uh in statistical physics so physicists
+
+2:02:58.639,2:03:02.159
+have a very famous formula
+
+2:03:06.480,2:03:13.679
+which is this it says the free energy is equal to the average
+
+2:03:13.679,2:03:17.599
+energy minus the temperature times the entropy
+
+2:03:17.599,2:03:23.119
+okay what they call the temperature is what i call one over beta
+
+2:03:24.080,2:03:29.440
+okay and that's identical to this formula because here this is the minus
+
+2:03:29.440,2:03:31.840
+entropy okay this is the same formula so what
+
+2:03:36.320,2:03:41.360
+we're minimizing now is a is a free energy and if q of z
+
+2:03:41.360,2:03:45.440
+is sufficiently powerful to actually be the
+
+2:03:45.440,2:03:49.199
+actual distribution that it needs to be then the inequality becomes an equality
+
+2:03:52.880,2:03:56.480
+but um but that's the idea of variational
+
+2:03:56.480,2:04:02.079
+uh methods you basically use gensense inequality to turn
+
+2:04:02.079,2:04:08.800
+the log of a of a of an average into the average of the log okay and now
+
+2:04:08.800,2:04:14.239
+you get an upper bound right so it's uh
+
+2:04:14.239,2:04:18.000
+this step right here when i turn the equality
+
+2:04:18.000,2:04:22.320
+uh that was here into an inequality by applying json's inequality
+
+2:04:22.320,2:04:25.360
+what i did is that i put the log inside there was a log
+
+2:04:25.360,2:04:29.440
+outside and i put it inside so now it's the expectation of a log instead of a
+
+2:04:29.440,2:04:35.520
+log of an expectation okay and then
+
+2:04:35.520,2:04:39.040
+because this is a ratio it's a difference of two logs and
+
+2:04:39.040,2:04:42.320
+because this is uh exponential of an energy and i take the log and i divide
+
+2:04:42.320,2:04:45.280
+by beta i get this kind of nice formula and now
+
+2:04:45.280,2:04:50.079
+this is called a variational free energy okay and you get the expected value of
+
+2:04:50.079,2:04:53.520
+the energy minus the inverse temperature times the
+
+2:04:53.520,2:04:56.719
+entropy of the distribution now how you minimize this you know is
+
+2:04:59.520,2:05:02.880
+another story but what that means now is that you can use
+
+2:05:02.880,2:05:05.119
+a surrogate distribution to sample from your
+
+2:05:05.119,2:05:08.560
+to sample unit and variable form you don't have to sample from the real
+
+2:05:08.560,2:05:13.840
+distribution when which uh you know here the the real distribution
+
+2:05:13.840,2:05:17.040
+of z is really complicated i should have written it
+
+2:05:17.040,2:05:21.840
+the real distribution of z p or z is e to the minus theta this actually
+
+2:05:25.040,2:05:28.320
+would be a different beta it doesn't have to be the same
+
+2:05:28.320,2:05:35.440
+e of x y z divided by the integral over z of e to
+
+2:05:35.440,2:05:39.760
+the minus beta prime of e of x y
+
+2:05:40.719,2:05:49.280
+z that's the real if you plug this p into um
+
+2:05:49.280,2:05:54.560
+into here uh the the equality here the inequality
+
+2:05:54.560,2:05:59.840
+here becomes an equality okay you can show that uh
+
+2:05:59.840,2:06:04.400
+the the smallest value for this variable is when q equals p
+
+2:06:04.400,2:06:10.000
+okay and then uh the two terms in the inequality are equal
+
+2:06:10.239,2:06:13.280
+okay so that's kind of the sort of energy view if you want of
+
+2:06:13.280,2:06:17.840
+variational inference if you need to compute the log of a sum
+
+2:06:19.840,2:06:25.199
+of exponentials replace it by uh
+
+2:06:26.000,2:06:31.599
+the average of your function plus a entropy term and
+
+2:06:31.599,2:06:34.960
+that will give you an upper bound you minimize the upper bound and because
+
+2:06:34.960,2:06:37.679
+you push down on you you push down on the upper bound you also push down on
+
+2:06:37.679,2:06:40.400
+the function you actually want to minimize
+
+2:06:40.400,2:06:45.280
+beautiful it's like you know the bare bones kind of
+
+2:06:45.280,2:06:49.360
+simplest formulation of variational inference
+
+2:06:49.360,2:06:57.199
+okay in terms of energy uh i mean you you can replace l by
+
+2:06:57.199,2:07:01.040
+p and with some normalized stuff right but it doesn't it makes it more
+
+2:07:01.040,2:07:02.800
+complicated i mean it doesn't make any difference
+
+2:07:02.800,2:07:07.119
+really but it makes it harder to interpret
+
+2:07:08.480,2:07:15.520
+okay uh i think we're done this is a lot of people stuck around for
+
+2:07:15.520,2:07:19.360
+this sort of extracurricular session of more than half an hour yeah
+
+2:07:19.360,2:07:23.119
+40 people uh it was a pleasure teaching this class
+
+2:07:23.119,2:07:27.280
+particularly given the circumstances alright see you tomorrow guys and stay
+
+2:07:27.280,2:07:32.079
+safe all right take care bye
