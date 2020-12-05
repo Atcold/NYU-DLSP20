@@ -10,11 +10,11 @@ translator: Mingyang Zhao
 
 **DS-GA 1008 · 2020 春季 · [纽约大学数据科学中心](http://cds.nyu.edu/)**
 
-| 指导教师          | Yann LeCun 和 Alfredo Canziani  |
-| 讲座课            | 周一 16:55 – 18:35, [GCASL C95] |
-| 动手做            | 周二 19:10 – 20:00, [GCASL C95] |
-| [PIAZZA 讨论区]   | 验证码: `DLSP20`                |
-| 资料              | [Google 云端硬盘], [Notebooks]  |
+| 指导教师 | Yann LeCun 和 Alfredo Canziani  |
+| 讲座课   | 周一 16:55 – 18:35, [GCASL C95] |
+| 动手做   | 周二 19:10 – 20:00, [GCASL C95] |
+| 網絡論壇 | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| 资料     | [Google 云端硬盘], [Notebooks]  |
 
 <!-- Links -->
 [GCASL C95]: http://libzuorary.nyu.edu/services/campus-media/classrooms/gcasl-c95/
@@ -148,6 +148,7 @@ translator: Mingyang Zhao
       <td rowspan="1">动手做</td>
       <td><a href="en/week06/06-3">训练循环神经网路</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>
