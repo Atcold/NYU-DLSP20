@@ -13,24 +13,13 @@ translator: Nantas Nardelli
 | ISTRUTTORI  | Yann LeCun & Alfredo Canziani |
 | LEZIONI     | Lunedì 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRATICA    | Martedì 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Codice d'accesso: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIALE   | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## Description
 
-Questo corso tratta delle ultime tecniche in apprendimento profondo (DL, Deep learning) e
-apprendimento della rappresentazione (representation learning), concentrandosi
-su apprendimento profondo supervisionato e non-supervisionato, metodi di
-embedding, apprendimento metrico (metric learning), reti convoluzionali e
-ricorrenti (CNN, Convolutional Neural Network); RNN, Recurrent Neural Network),
-con applicazioni di visione artificiale (computer vision), comprendimento del
-linguaggio naturale (NLU, Natural Language Understanding) e
-riconoscimento vocale (Speech Processing).
-I prerequisiti del corso includono: [DS-GA 1001 Intro to Data
-Science](https://cds.nyu.edu/academics/ms-curriculum/) o un corso di machine
-learning universitario.
-
+Questo corso tratta delle ultime tecniche in apprendimento profondo (DL, Deep learning) e apprendimento della rappresentazione (representation learning), concentrandosi su apprendimento profondo supervisionato e non-supervisionato, metodi di embedding, apprendimento metrico (metric learning), reti convoluzionali e ricorrenti (CNN, Convolutional Neural Network); RNN, Recurrent Neural Network), con applicazioni di visione artificiale (computer vision), comprendimento del linguaggio naturale (NLU, Natural Language Understanding) e riconoscimento vocale (Speech Processing).  I prerequisiti del corso includono: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) o un corso di machine learning universitario.
 
 ## Lezioni
 
@@ -154,6 +143,7 @@ learning universitario.
       <td rowspan="1">Pratica</td>
       <td><a href="{{site.baseurl}}/it/week06/06-3">Architettura delle RNN e modelli LSTM</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>

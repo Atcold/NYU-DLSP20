@@ -13,7 +13,7 @@ translator: Go Inoue
 | 講師 | Yann LeCun & Alfredo Canziani |
 | 講義    | 月曜日 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | 演習    | 火曜日 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | アクセスコード: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | 資料    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
@@ -146,6 +146,7 @@ translator: Go Inoue
       <td rowspan="1">演習</td>
       <td><a href="{{site.baseurl}}/ja/week06/06-3">RNNの訓練</a></td>
       <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>

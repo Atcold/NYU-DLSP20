@@ -10,10 +10,10 @@ translator: Murat Ekici
 
 **DS-GA 1008 · BAHAR 2020 · [NYU CENTER FOR DATA SCIENCE](http://cds.nyu.edu/)**
 
-| EĞİTMENLER  | Yann LeCun & Alfredo Canziani |
-| DERS SAATLERİ     | Pazartesi 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| UYGULAMA    | Salı 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Giriş kodu: `DLSP20` |
+| EĞİTMENLER    | Yann LeCun & Alfredo Canziani |
+| DERS SAATLERİ | Pazartesi 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| UYGULAMA      | Salı 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| FORUMU        | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERYALLER   | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
@@ -146,7 +146,8 @@ Bu kurs, gözetimli ve gözetimsiz derin öğrenme, gömme yöntemleri, ölçev 
       <td rowspan="1">Uygulama</td>
       <td><a href="{{site.baseurl}}/tr/week06/06-3">RNN eğitimi </a></td>
       <td>
-	<a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/09-echo_data.ipynb">📓</a>
         <a href="https://youtu.be/8cAffg2jaT0">🎥</a>
       </td>

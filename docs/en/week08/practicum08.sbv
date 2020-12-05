@@ -1,0 +1,3654 @@
+0:00:00.030,0:00:10.010
+okay Oh 97 yes almost 100 come on three
+
+0:00:04.440,0:00:12.900
+more please I should invite my mom so
+
+0:00:10.010,0:00:16.109
+she hacked this morning conversation it
+
+0:00:12.900,0:00:18.930
+was funny how the heck she managed to
+
+0:00:16.109,0:00:22.140
+hack assume only God knows
+
+0:00:18.930,0:00:26.160
+yeah don't join with the two devices
+
+0:00:22.140,0:00:30.359
+just increase the number yeah 100 101
+
+0:00:26.160,0:00:33.540
+ok it's like the dogs all right so
+
+0:00:30.359,0:00:36.180
+let's get back to the auto-encoders
+
+0:00:33.540,0:00:39.899
+that we have started auto-encoders
+
+0:00:36.180,0:00:42.750
+generative models right and so let's
+
+0:00:39.899,0:00:45.660
+restart by having a quick review about
+
+0:00:42.750,0:00:48.210
+the auto-encoders so again we have an
+
+0:00:45.660,0:00:50.010
+input at the bottom in pink as now you
+
+0:00:48.210,0:00:52.079
+can see the colors then you have the
+
+0:00:50.010,0:00:55.379
+rotation the affine transformation and
+
+0:00:52.079,0:00:56.969
+then you get the hidden layer again
+
+0:00:55.379,0:00:59.870
+another rotation and then you get the
+
+0:00:56.969,0:01:02.309
+final output which we are going to be
+
+0:00:59.870,0:01:05.610
+trying to enforce to be close to be
+
+0:01:02.309,0:01:08.670
+similar to the input again you have a
+
+0:01:05.610,0:01:11.460
+parallel kind of diagram where each
+
+0:01:08.670,0:01:13.920
+transformation is represented with with
+
+0:01:11.460,0:01:15.840
+a box right so in this case people call
+
+0:01:13.920,0:01:17.900
+this network is a two layer neural net
+
+0:01:15.840,0:01:21.180
+because there are two transformations
+
+0:01:17.900,0:01:22.740
+but what I actually you know advocated
+
+0:01:21.180,0:01:25.619
+is that this is a three layer neural net
+
+0:01:22.740,0:01:27.630
+because for me the layers are the
+
+0:01:25.619,0:01:31.799
+activations that's kind of what is
+
+0:01:27.630,0:01:34.200
+usually the definition and then yeah now
+
+0:01:31.799,0:01:37.770
+uses that new kind of symbols that look
+
+0:01:34.200,0:01:39.600
+like a box with a round top okay all
+
+0:01:37.770,0:01:41.670
+right so we have two different diagrams
+
+0:01:39.600,0:01:43.140
+here because we can switch back and
+
+0:01:41.670,0:01:45.149
+forth between the representations
+
+0:01:43.140,0:01:47.820
+sometimes is easier to use the left one
+
+0:01:45.149,0:01:49.920
+when we want to talk about the single
+
+0:01:47.820,0:01:52.009
+neurons but then sometimes we prefer to
+
+0:01:49.920,0:01:55.049
+use the other one which you can also
+
+0:01:52.009,0:01:58.110
+like you know account for multiple
+
+0:01:55.049,0:02:00.030
+layers so each like block here or like
+
+0:01:58.110,0:02:03.229
+the encoder and the decoder can be
+
+0:02:00.030,0:02:07.380
+several layers as well so again these
+
+0:02:03.229,0:02:09.989
+two macro modules I guess and so the
+
+0:02:07.380,0:02:13.020
+input get goes inside an encoder
+
+0:02:09.989,0:02:13.560
+which gives us a code so h which was
+
+0:02:13.020,0:02:15.380
+before
+
+0:02:13.560,0:02:18.510
+hidden representation of a neural net
+
+0:02:15.380,0:02:21.569
+when we talk about you know auto-encoders
+
+0:02:18.510,0:02:23.640
+h is called code and therefore we have
+
+0:02:21.569,0:02:25.980
+an encoder which is encoding the input
+
+0:02:23.640,0:02:28.709
+into this code and then we have a
+
+0:02:25.980,0:02:31.230
+decoder which is decoding the code into
+
+0:02:28.709,0:02:33.630
+whatever representation in this case is
+
+0:02:31.230,0:02:36.470
+is a similar as the same representation
+
+0:02:33.630,0:02:36.470
+as the input
+
+0:02:42.329,0:02:47.769
+okay so on the right hand side you have
+
+0:02:44.829,0:02:49.930
+an auto-encoder, on the left hand side
+
+0:02:47.769,0:02:53.439
+you're gonna be seen what is a variational
+
+0:02:49.930,0:02:53.890
+auto-encoder, alright so there
+
+0:02:53.439,0:02:55.900
+you go
+
+0:02:53.890,0:02:57.879
+a variational auto-encoder okay it looks
+
+0:02:55.900,0:03:00.459
+the same so what's the difference
+
+0:02:57.879,0:03:02.200
+nothing is missing something so the
+
+0:03:00.459,0:03:05.500
+first difference is here that instead of
+
+0:03:02.200,0:03:08.439
+having the hidden layer h now we have
+
+0:03:05.500,0:03:11.230
+the code is actually made of two things
+
+0:03:08.439,0:03:16.000
+it's made of one thing that is this kind
+
+0:03:11.230,0:03:18.819
+of capital E of z and V of z and they're
+
+0:03:16.000,0:03:21.189
+gonna be representing soon the mean and
+
+0:03:18.819,0:03:25.329
+the variance of this latent variable
+
+0:03:21.189,0:03:27.969
+z then we are going to be sampling
+
+0:03:25.329,0:03:30.669
+from this distribution that has been
+
+0:03:27.969,0:03:33.219
+parameterize by the encoder and we get
+
+0:03:30.669,0:03:36.790
+to z, it's my latent variable
+
+0:03:33.219,0:03:38.889
+my latent representation and then this
+
+0:03:36.790,0:03:43.629
+latent representation goes inside the
+
+0:03:38.889,0:03:45.459
+decoder so the parameters that I sample
+
+0:03:43.629,0:03:48.579
+from like I have a normal distribution
+
+0:03:45.459,0:03:50.769
+which have some parameters E and V. E and
+
+0:03:48.579,0:03:53.620
+V are deterministically determined by
+
+0:03:50.769,0:03:55.659
+the input x but then z is not
+
+0:03:53.620,0:03:58.150
+deterministic z is a random variable
+
+0:03:55.659,0:04:00.159
+which which gets sampled from a
+
+0:03:58.150,0:04:06.069
+distribution which is parameterized by
+
+0:04:00.159,0:04:12.189
+the encoder okay so let's say h was of
+
+0:04:06.069,0:04:13.479
+size d now the code here
+
+0:04:12.189,0:04:16.419
+on the left hand side is going to be of
+
+0:04:13.479,0:04:18.940
+size two times d right because we had to
+
+0:04:16.419,0:04:21.310
+represent the all the means and then all
+
+0:04:18.940,0:04:25.360
+the variances in this case we assume
+
+0:04:21.310,0:04:28.060
+that we have you know d means and d
+
+0:04:25.360,0:04:35.949
+variance so each of those components re
+
+0:04:28.060,0:04:38.050
+are independent okay alright so we can
+
+0:04:35.949,0:04:41.380
+also think about the classic auto-encoder
+
+0:04:38.050,0:04:42.970
+as just encoding the means and so if you
+
+0:04:41.380,0:04:44.940
+encode the mean and you have basically
+
+0:04:42.970,0:04:49.210
+zero variance you're going to get a
+
+0:04:44.940,0:04:52.120
+again a deterministic auto-encoder so h
+
+0:04:49.210,0:04:55.090
+might be in this case d and therefore on
+
+0:04:52.120,0:04:55.540
+the left-hand side E and V will be total
+
+0:04:55.090,0:04:59.140
+2d.
+
+0:04:55.540,0:05:01.830
+since we have d means so does that mean
+
+0:04:59.140,0:05:05.170
+we're sampling the distributions
+
+0:05:01.830,0:05:08.710
+it's gonna be one multivariate Gaussian
+
+0:05:05.170,0:05:10.150
+that is orthogonal and so if you have
+
+0:05:08.710,0:05:12.000
+all those components that are
+
+0:05:10.150,0:05:14.770
+independent from each other and
+
+0:05:12.000,0:05:18.420
+therefore z is going to be a d
+
+0:05:14.770,0:05:21.880
+dimensional vector but then to sample a
+
+0:05:18.420,0:05:24.760
+d dimensional vector from a Gaussian you
+
+0:05:21.880,0:05:27.700
+will need d means and then in this case
+
+0:05:24.760,0:05:29.470
+the variances because we assuming that
+
+0:05:27.700,0:05:31.600
+all the other components in the
+
+0:05:29.470,0:05:33.850
+covariance matrix are all zeros
+
+0:05:31.600,0:05:37.060
+you have only have the diagonal where
+
+0:05:33.850,0:05:38.860
+you have all the variances okay so here
+
+0:05:37.060,0:05:41.020
+just to make a recap you have the
+
+0:05:38.860,0:05:43.840
+encoder that is mapping this kind of
+
+0:05:41.020,0:05:47.290
+input distribution into like the input
+
+0:05:43.840,0:05:49.120
+set of samples into this R 2d and so we
+
+0:05:47.290,0:05:52.360
+can think in this case that we met from
+
+0:05:49.120,0:05:55.450
+x to the hidden representation and then
+
+0:05:52.360,0:05:58.480
+the decoder instead maps the z space
+
+0:05:55.450,0:06:00.930
+into R n which is back to the original
+
+0:05:58.480,0:06:05.160
+space of the X and therefore we go from
+
+0:06:00.930,0:06:08.950
+lower case z into x hat. Someone asked
+
+0:06:05.160,0:06:12.460
+E of z and the V of z is that the output of
+
+0:06:08.950,0:06:14.440
+the encoder yeah E of z and V of z are
+
+0:06:12.460,0:06:17.140
+just parameters that are
+
+0:06:14.440,0:06:19.630
+deterministically output by the encoder
+
+0:06:17.140,0:06:21.550
+so the encoder is a deterministic you
+
+0:06:19.630,0:06:25.900
+know it's just the classical rotation
+
+0:06:21.550,0:06:27.910
+and squashing and then another fine
+
+0:06:25.900,0:06:29.530
+transformation so it's just a piece of a
+
+0:06:27.910,0:06:31.810
+neural network which is outputting some
+
+0:06:29.530,0:06:34.330
+parameters ok so this is the encoder
+
+0:06:31.810,0:06:38.620
+which is giving me these parameters E
+
+0:06:34.330,0:06:41.170
+and V given my input x right so this is
+
+0:06:38.620,0:06:43.390
+deterministic part then given that we
+
+0:06:41.170,0:06:47.710
+had these parameters these parameters
+
+0:06:43.390,0:06:50.410
+are you know giving me a Gaussian
+
+0:06:47.710,0:06:52.240
+distribution with specific means and
+
+0:06:50.410,0:06:54.160
+specific variances and from these
+
+0:06:52.240,0:06:58.570
+variance from this Gaussian distribution
+
+0:06:54.160,0:07:02.470
+we sample one one sample set okay and
+
+0:06:58.570,0:07:05.919
+then we decode which means we're gonna
+
+0:07:02.470,0:07:07.570
+see what means this in a in a second but
+
+0:07:05.919,0:07:08.700
+basically you're going to be encoding
+
+0:07:07.570,0:07:10.560
+the
+
+0:07:08.700,0:07:13.920
+they mean and then you're going to be
+
+0:07:10.560,0:07:17.220
+adding some additional some noise okay
+
+0:07:13.920,0:07:19.080
+to that encoding in the in the denoising
+
+0:07:17.220,0:07:21.540
+auto-encoder we were getting our input
+
+0:07:19.080,0:07:23.100
+you were adding noise to the input and
+
+0:07:21.540,0:07:25.740
+then you were trying to reconstruct the
+
+0:07:23.100,0:07:28.440
+input without noise in here the only
+
+0:07:25.740,0:07:30.570
+thing that is changed is the fact that
+
+0:07:28.440,0:07:33.090
+the noise is added to the inner
+
+0:07:30.570,0:07:36.990
+representation rather rather than to the
+
+0:07:33.090,0:07:39.420
+input does it make sense yeah that makes
+
+0:07:36.990,0:07:41.370
+a lot more sense thank you so I noticed
+
+0:07:39.420,0:07:43.680
+that the notation itself kind of looks
+
+0:07:41.370,0:07:47.730
+like expected value are we generating
+
+0:07:43.680,0:07:49.440
+just a normal mean from z or we actually
+
+0:07:47.730,0:07:54.000
+computing my kind of a weighted average
+
+0:07:49.440,0:07:57.510
+no no there is no okay so my x instead
+
+0:07:54.000,0:07:59.970
+of outputting the is outputting let's
+
+0:07:57.510,0:08:02.310
+say d is gonna be 10 that is the hidden
+
+0:07:59.970,0:08:04.830
+representation now instead of having 10
+
+0:08:02.310,0:08:07.110
+values representing the mean we're gonna
+
+0:08:04.830,0:08:09.030
+have 20 values 10 values are
+
+0:08:07.110,0:08:12.720
+representing the mean and 10 values are
+
+0:08:09.030,0:08:16.530
+representing the variances okay so we
+
+0:08:12.720,0:08:18.930
+just output a vector h here given my x
+
+0:08:16.530,0:08:21.330
+the first half of the vector represents
+
+0:08:18.930,0:08:24.000
+the means of a standard deviation of a
+
+0:08:21.330,0:08:26.250
+Gaussian distribution and the other half
+
+0:08:24.000,0:08:28.220
+of the vector represents the variances
+
+0:08:26.250,0:08:31.230
+for the same Gaussian distribution okay
+
+0:08:28.220,0:08:34.650
+so the component h the first component
+
+0:08:31.230,0:08:36.720
+h1 is going to be the the mean of the
+
+0:08:34.650,0:08:40.890
+first Gaussian and then the component
+
+0:08:36.720,0:08:42.900
+h let's say okay let's call it h2 in
+
+0:08:40.890,0:08:44.610
+this case is gonna be the variance then
+
+0:08:42.900,0:08:48.120
+you have h3 it's gonna be another mean
+
+0:08:44.610,0:08:51.570
+h4 it's gonna be another variance
+
+0:08:48.120,0:08:54.900
+and so on okay so does that make with
+
+0:08:51.570,0:08:57.960
+that make z like a 10 dimensional vector
+
+0:08:54.900,0:09:00.720
+that's sampled from yeah yeah yeah so z
+
+0:08:57.960,0:09:02.820
+is that here it's gonna be half of these
+
+0:09:00.720,0:09:05.520
+sides here right so the encoder gives me
+
+0:09:02.820,0:09:09.060
+twice the dimension of z and then
+
+0:09:05.520,0:09:12.450
+because you get half of the dimensions
+
+0:09:09.060,0:09:14.400
+like one set of these are for the memes
+
+0:09:12.450,0:09:17.490
+and one set of these are the variances
+
+0:09:14.400,0:09:20.520
+then we sample from a Gaussian that has
+
+0:09:17.490,0:09:22.470
+these values so the network simply gives
+
+0:09:20.520,0:09:25.470
+me not just the means as
+
+0:09:22.470,0:09:30.480
+for the classical auto-encoder but also
+
+0:09:25.470,0:09:32.970
+gives me some what is the range that I
+
+0:09:30.480,0:09:35.220
+can pick things from right before when
+
+0:09:32.970,0:09:39.300
+we were using the classical auto-encoder
+
+0:09:35.220,0:09:42.390
+here we only have the means and then you
+
+0:09:39.300,0:09:44.670
+simply decode the means in this case you
+
+0:09:42.390,0:09:47.510
+not only have the means but also you can
+
+0:09:44.670,0:09:52.950
+have some variants some variations
+
+0:09:47.510,0:09:55.800
+across those means okay so auto-encoder
+
+0:09:52.950,0:09:58.260
+normal auto-encoder is deterministic the
+
+0:09:55.800,0:10:00.180
+output is deterministic input a function
+
+0:09:58.260,0:10:04.550
+of the input a variational auto-encoder
+
+0:10:00.180,0:10:06.870
+the output is not longer a deterministic
+
+0:10:04.550,0:10:09.320
+it's no longer a deterministic function
+
+0:10:06.870,0:10:13.050
+of the input is going to be a
+
+0:10:09.320,0:10:14.640
+distribution given the input right so is
+
+0:10:13.050,0:10:19.560
+a conditional distribution given the
+
+0:10:14.640,0:10:21.390
+input so in this case we did see that we
+
+0:10:19.560,0:10:23.550
+saw similar a similar diagram last time
+
+0:10:21.390,0:10:26.130
+where we were going from a specific
+
+0:10:23.550,0:10:29.430
+point on the left hand side to the right
+
+0:10:26.130,0:10:31.920
+hand side in this case we start here
+
+0:10:29.430,0:10:35.100
+like a point and then we get through the
+
+0:10:31.920,0:10:37.590
+encoder you're gonna get some position
+
+0:10:35.100,0:10:39.840
+here but then there is a addition of
+
+0:10:37.590,0:10:42.540
+noise right if you only have the mean
+
+0:10:39.840,0:10:44.730
+you would get just one z but then
+
+0:10:42.540,0:10:47.250
+given that there is some additional
+
+0:10:44.730,0:10:49.860
+noise that is due to the fact that we
+
+0:10:47.250,0:10:51.990
+don't have a zero variance that final
+
+0:10:49.860,0:10:53.880
+point that final z is not going to be
+
+0:10:51.990,0:10:55.860
+just one point it's gonna be like a
+
+0:10:53.880,0:10:59.340
+fuzzy point okay so instead of having
+
+0:10:55.860,0:11:01.680
+one point now one one X is going to be
+
+0:10:59.340,0:11:02.850
+mapped into one region of points okay so
+
+0:11:01.680,0:11:06.000
+is going to be actually taking some
+
+0:11:02.850,0:11:07.890
+space and then we how do we train the
+
+0:11:06.000,0:11:11.580
+system, we train the system by
+
+0:11:07.890,0:11:14.880
+sending this latent variable z back to
+
+0:11:11.580,0:11:17.700
+the the decoder in order to get these x
+
+0:11:14.880,0:11:20.100
+a hat and of course it's not going to be
+
+0:11:17.700,0:11:21.960
+getting it exactly to the original point
+
+0:11:20.100,0:11:26.400
+because perhaps we haven't yet trained
+
+0:11:21.960,0:11:28.170
+so we have to reconstruct the original
+
+0:11:26.400,0:11:30.360
+input and to do that we're going to be
+
+0:11:28.170,0:11:32.850
+trying to minimize what is the square
+
+0:11:30.360,0:11:36.030
+distance between the reconstruction and
+
+0:11:32.850,0:11:36.780
+the original input and then we had the
+
+0:11:36.030,0:11:40.020
+problem
+
+0:11:36.780,0:11:41.970
+before like to go to the latent to go
+
+0:11:40.020,0:11:44.130
+from the latent to the input space we
+
+0:11:41.970,0:11:45.630
+need to know or to learn the
+
+0:11:44.130,0:11:48.210
+distribution or to enforce some
+
+0:11:45.630,0:11:50.490
+distribution last time we were seeing
+
+0:11:48.210,0:11:53.610
+that we're doing something similar when
+
+0:11:50.490,0:11:56.640
+we are using the the classical the
+
+0:11:53.610,0:12:00.330
+standard auto-encoder but we were going
+
+0:11:56.640,0:12:03.330
+from one point x to one point z and then
+
+0:12:00.330,0:12:05.790
+back to x right right now instead we are
+
+0:12:03.330,0:12:07.890
+going to be enforcing a distribution
+
+0:12:05.790,0:12:09.900
+over these points in the latent space
+
+0:12:07.890,0:12:12.270
+before we were going through one point
+
+0:12:09.900,0:12:13.800
+one point at one point and then you
+
+0:12:12.270,0:12:16.170
+don't know what's happening if you move
+
+0:12:13.800,0:12:18.570
+around in the latent space remember so
+
+0:12:16.170,0:12:20.430
+if you have on the left hand side at any
+
+0:12:18.570,0:12:22.470
+samples you're gonna have automatically
+
+0:12:20.430,0:12:25.410
+on the other side ten latent variables
+
+0:12:22.470,0:12:27.720
+but then you don't know how to go
+
+0:12:25.410,0:12:29.880
+between this input between these you
+
+0:12:27.720,0:12:33.570
+don't know how to travel in this latent
+
+0:12:29.880,0:12:36.660
+space because we don't know how this
+
+0:12:33.570,0:12:39.390
+space behave okay variational auto-encoders
+
+0:12:36.660,0:12:43.400
+enforce some structure and they
+
+0:12:39.390,0:12:46.320
+do this by adding a penalty of being
+
+0:12:43.400,0:12:51.650
+different or far from a normal
+
+0:12:46.320,0:12:54.060
+distribution so if you have a latent
+
+0:12:51.650,0:12:56.640
+distribution which is not really
+
+0:12:54.060,0:12:59.040
+resembling a Gaussian then this term
+
+0:12:56.640,0:13:01.230
+here will be very strong very high and
+
+0:12:59.040,0:13:02.940
+when we train a variational auto-encoder
+
+0:13:01.230,0:13:05.610
+we're going to be training it by
+
+0:13:02.940,0:13:09.120
+minimizing both this term over here
+
+0:13:05.610,0:13:11.250
+and this term over here so the term on
+
+0:13:09.120,0:13:14.340
+the left hand side makes sure that we
+
+0:13:11.250,0:13:17.310
+can get back to the original position a
+
+0:13:14.340,0:13:19.830
+term on the right hand side enforce some
+
+0:13:17.310,0:13:21.990
+structure in the latent space because
+
+0:13:19.830,0:13:24.810
+otherwise we wouldn't be able to you
+
+0:13:21.990,0:13:27.800
+know sample from there when we'd like to
+
+0:13:24.810,0:13:31.470
+use this decoder as a generative model
+
+0:13:27.800,0:13:34.380
+okay this is maybe not too clear but let
+
+0:13:31.470,0:13:37.800
+me give you a little bit more things to
+
+0:13:34.380,0:13:41.340
+think about so how do we actually create
+
+0:13:37.800,0:13:45.860
+this latent variable z so my z is simply
+
+0:13:41.340,0:13:47.840
+going to be my mean E of z plus some
+
+0:13:45.860,0:13:50.750
+you know
+
+0:13:47.840,0:13:53.630
+some noise epsilon which is a sample
+
+0:13:50.750,0:13:56.210
+from a normal distribution which is like
+
+0:13:53.630,0:13:58.460
+a normal multivariate Gaussian
+
+0:13:56.210,0:14:01.250
+distribution with zero mean an identity
+
+0:13:58.460,0:14:05.240
+matrix as the covariance matrix which
+
+0:14:01.250,0:14:08.510
+has each components multiplied by the
+
+0:14:05.240,0:14:10.700
+standard deviation right so you should be
+
+0:14:08.510,0:14:13.400
+familiar with this equation here on the
+
+0:14:10.700,0:14:16.370
+top right this is how you rescale a
+
+0:14:13.400,0:14:19.760
+random variable epsilon which again is a
+
+0:14:16.370,0:14:21.920
+normal you have to use this kind of
+
+0:14:19.760,0:14:23.720
+repair metallization in order to get a
+
+0:14:21.920,0:14:28.100
+Gaussian that has you know a specific
+
+0:14:23.720,0:14:30.260
+mean in a specific variant ok, the
+
+0:14:28.100,0:14:32.990
+noise in the latent variable z just in
+
+0:14:30.260,0:14:36.140
+coded version of the noise introduced in
+
+0:14:32.990,0:14:38.240
+the input so there is no noise in the
+
+0:14:36.140,0:14:41.210
+input you put the input inside the
+
+0:14:38.240,0:14:44.779
+encoder and then the encoder gives you
+
+0:14:41.210,0:14:47.690
+two parameters E and variance when you
+
+0:14:44.779,0:14:50.540
+sample from this distribution you
+
+0:14:47.690,0:14:54.200
+basically get z and what you get here
+
+0:14:50.540,0:14:56.630
+it's simply you can write the sampling
+
+0:14:54.200,0:14:58.970
+part as this one so the problem with
+
+0:14:56.630,0:15:00.980
+sampling is that we don't know how to
+
+0:14:58.970,0:15:02.930
+perform back propagation through a
+
+0:15:00.980,0:15:06.200
+sampling module actually there is no way
+
+0:15:02.930,0:15:07.910
+to perform back propagation through same
+
+0:15:06.200,0:15:10.339
+thing because this one is just
+
+0:15:07.910,0:15:13.010
+generating a new z so how do we get
+
+0:15:10.339,0:15:15.710
+gradients through this module in order
+
+0:15:13.010,0:15:18.230
+to train the encoder and so this can be
+
+0:15:15.710,0:15:20.540
+done if you use this trick which is
+
+0:15:18.230,0:15:22.550
+called the reparameterization trick
+
+0:15:20.540,0:15:26.630
+the reparameterization trick allows
+
+0:15:22.550,0:15:29.330
+you to express your sampling in terms of
+
+0:15:26.630,0:15:32.300
+you know additions and multiplication
+
+0:15:29.330,0:15:35.060
+which we can differentiate thrown right
+
+0:15:32.300,0:15:37.880
+the epsilon is simply a additional input
+
+0:15:35.060,0:15:41.360
+that is you know coming from whatever
+
+0:15:37.880,0:15:43.640
+wherever well we don't have any need to
+
+0:15:41.360,0:15:45.620
+send gradients through this input the
+
+0:15:43.640,0:15:46.910
+gradients will be coming going through
+
+0:15:45.620,0:15:48.370
+the multiplication and through the
+
+0:15:46.910,0:15:50.839
+addition okay
+
+0:15:48.370,0:15:53.420
+so whenever you have gradients for
+
+0:15:50.839,0:15:56.870
+training this system the gradient comes
+
+0:15:53.420,0:16:00.230
+down and then here we can replace the
+
+0:15:56.870,0:16:01.700
+sampling module with a addition between
+
+0:16:00.230,0:16:03.410
+E Plus
+
+0:16:01.700,0:16:06.410
+the epsilon multiplied by the square
+
+0:16:03.410,0:16:07.910
+root of the variance okay such that now
+
+0:16:06.410,0:16:09.290
+you have you know addition you know how
+
+0:16:07.910,0:16:12.050
+to back prop through an addition
+
+0:16:09.290,0:16:14.630
+therefore you get gradients for the
+
+0:16:12.050,0:16:17.000
+encoder here a output gradient and then
+
+0:16:14.630,0:16:18.800
+you can compute the partial derivatives
+
+0:16:17.000,0:16:21.040
+of the you know final costs with
+
+0:16:18.800,0:16:26.360
+respect to the parameters in this module
+
+0:16:21.040,0:16:29.900
+okay so in just in a you know intuition
+
+0:16:26.360,0:16:32.690
+part this KL here allows me to enforce a
+
+0:16:29.900,0:16:35.780
+structure in the latent space okay
+
+0:16:32.690,0:16:37.160
+that's what we think about like that's
+
+0:16:35.780,0:16:40.010
+how I'd like you to think about this
+
+0:16:37.160,0:16:43.790
+KL term and so let's actually figure
+
+0:16:40.010,0:16:48.410
+out how this stuff works okay so we have
+
+0:16:43.790,0:16:49.520
+two terms in my per ample loss, we have
+
+0:16:48.410,0:16:51.620
+the first one which is the
+
+0:16:49.520,0:16:53.540
+reconstruction loss and then there is
+
+0:16:51.620,0:16:56.570
+the second term which is going to be
+
+0:16:53.540,0:17:00.920
+these KL this relative entropy term okay
+
+0:16:56.570,0:17:03.800
+so we have some z in this case which are
+
+0:17:00.920,0:17:07.100
+spheres bubbles okay in this case why
+
+0:17:03.800,0:17:09.680
+they are bubbles because if you we add
+
+0:17:07.100,0:17:12.740
+some additional noise right we had the
+
+0:17:09.680,0:17:14.720
+means and the means are basically the
+
+0:17:12.740,0:17:17.780
+center of these points right so you have
+
+0:17:14.720,0:17:23.350
+one mean here one mean over here one
+
+0:17:17.780,0:17:25.880
+mean over here one mean over here and then
+
+0:17:23.350,0:17:28.610
+what the reconstruction term is going to
+
+0:17:25.880,0:17:31.370
+be doing is the following so if this
+
+0:17:28.610,0:17:34.550
+means if these bubbles overlap what does
+
+0:17:31.370,0:17:37.250
+it happen so if you have one mean here and
+
+0:17:34.550,0:17:38.930
+another mean like one bubble here
+
+0:17:37.250,0:17:40.940
+another bubble it is overlapping and
+
+0:17:38.930,0:17:42.800
+there is a region where there is you
+
+0:17:40.940,0:17:46.640
+know intersection
+
+0:17:42.800,0:17:49.610
+how can you reconstruct these two points
+
+0:17:46.640,0:17:52.190
+later on right you can't right you're
+
+0:17:49.610,0:17:53.900
+following so far if you have a bubble
+
+0:17:52.190,0:17:57.320
+here and then you have another bubble
+
+0:17:53.900,0:17:58.820
+here all points on this bubble here will
+
+0:17:57.320,0:18:01.610
+be reconstructed to the original input
+
+0:17:58.820,0:18:04.130
+here so you start from an original point
+
+0:18:01.610,0:18:05.870
+you go to the latent space over here and
+
+0:18:04.130,0:18:08.930
+then you have some noise you actually
+
+0:18:05.870,0:18:11.330
+have a volume here then you take another
+
+0:18:08.930,0:18:13.870
+point and this other point it gets
+
+0:18:11.330,0:18:17.799
+reconstructed here
+
+0:18:13.870,0:18:20.620
+right now if these two guys overlap how
+
+0:18:17.799,0:18:22.360
+can you reconstruct the points over here
+
+0:18:20.620,0:18:23.799
+so if the points are in this bubble I'd
+
+0:18:22.360,0:18:26.380
+like to go back to the original point
+
+0:18:23.799,0:18:28.289
+here if the points are in this bubble
+
+0:18:26.380,0:18:31.630
+I'd like to go to the other point
+
+0:18:28.289,0:18:33.070
+but if points are overlapped sorry if
+
+0:18:31.630,0:18:35.860
+the bubbles are overlapped then you
+
+0:18:33.070,0:18:38.770
+can't really figure out where to go back
+
+0:18:35.860,0:18:41.440
+right so then the reconstruction term
+
+0:18:38.770,0:18:43.240
+we'll just do this the reconstruction
+
+0:18:41.440,0:18:45.370
+term will try to get all those bubbles
+
+0:18:43.240,0:18:48.159
+as far as possible such that they don't
+
+0:18:45.370,0:18:50.220
+overlap because if they overlap then the
+
+0:18:48.159,0:18:56.080
+reconstruction is not going to be good
+
+0:18:50.220,0:19:00.100
+and so now we have to fix this so there
+
+0:18:56.080,0:19:02.470
+are a few ways to fix this right how can
+
+0:19:00.100,0:19:05.500
+you tell me right now how can we fix
+
+0:19:02.470,0:19:08.409
+this overlapping issue right why didn't
+
+0:19:05.500,0:19:11.169
+we have this overlapping issue with the
+
+0:19:08.409,0:19:13.750
+normal auto-encoder because there is no
+
+0:19:11.169,0:19:16.990
+variance AHA and so what does it mean
+
+0:19:13.750,0:19:20.140
+okay can you translate what not being
+
+0:19:16.990,0:19:21.640
+not having a variance mean the spheres
+
+0:19:20.140,0:19:23.860
+are not spheres but they're points
+
+0:19:21.640,0:19:27.520
+correct right so if you have just points
+
+0:19:23.860,0:19:30.190
+points will never overlap right well
+
+0:19:27.520,0:19:32.500
+they have to be the exact same point but
+
+0:19:30.190,0:19:35.169
+you have the exact same point only if
+
+0:19:32.500,0:19:38.380
+the encoder is dead right or you have
+
+0:19:35.169,0:19:41.080
+the same input I think well it's
+
+0:19:38.380,0:19:42.429
+unlikely the two points overlap if now
+
+0:19:41.080,0:19:46.240
+instead of having points you have
+
+0:19:42.429,0:19:48.580
+actually volumes well you know volume
+
+0:19:46.240,0:19:50.320
+can overlap because they are many
+
+0:19:48.580,0:19:53.049
+infinite points right in that volume
+
+0:19:50.320,0:19:56.649
+okay so one option is going to be
+
+0:19:53.049,0:19:59.679
+kill the variance and so you have points and
+
+0:19:56.649,0:20:01.299
+now this defeats the whole variational
+
+0:19:59.679,0:20:05.380
+thing right
+
+0:20:01.299,0:20:06.730
+without this spacey thing by killing the
+
+0:20:05.380,0:20:08.409
+variance now you don't know anymore
+
+0:20:06.730,0:20:11.649
+what's happening between the points
+
+0:20:08.409,0:20:14.649
+right because if you have space like if
+
+0:20:11.649,0:20:17.200
+they takes volume you can walk around in
+
+0:20:14.649,0:20:20.080
+the latent space you can always figure
+
+0:20:17.200,0:20:22.990
+out where to go back if these are points
+
+0:20:20.080,0:20:26.679
+as soon as you leave this position here
+
+0:20:22.990,0:20:27.430
+you have no whatsoever whatsoever idea
+
+0:20:26.679,0:20:30.790
+how
+
+0:20:27.430,0:20:34.480
+where to go okay anyhow first point we
+
+0:20:30.790,0:20:36.550
+can kill the variance other option well
+
+0:20:34.480,0:20:39.790
+the one I show you here I the other
+
+0:20:36.550,0:20:42.130
+option is gonna get these bubbles as far
+
+0:20:39.790,0:20:46.680
+as possible right so if they are as far
+
+0:20:42.130,0:20:50.680
+as possible what's gonna happen in your
+
+0:20:46.680,0:20:55.720
+Python script so if these these
+
+0:20:50.680,0:20:57.760
+means right they go very very far then
+
+0:20:55.720,0:21:01.810
+they will increase a lot a lot a lot
+
+0:20:57.760,0:21:03.430
+right and then the problem is that
+
+0:21:01.810,0:21:05.470
+you're going to get infinite right this
+
+0:21:03.430,0:21:07.150
+stuff is gonna explode because all these
+
+0:21:05.470,0:21:10.660
+values are try to go as far as possible
+
+0:21:07.150,0:21:13.060
+such that they don't overlap and then
+
+0:21:10.660,0:21:15.670
+that's not good okay all right so let's
+
+0:21:13.060,0:21:18.700
+figure out how the variational variational
+
+0:21:15.670,0:21:20.950
+auto-encoder fixes this problem. Could you
+
+0:21:18.700,0:21:22.450
+just clarify what you mean by pushing
+
+0:21:20.950,0:21:24.730
+the points apart like are you putting
+
+0:21:22.450,0:21:28.120
+them in a higher dimensional space? No no
+
+0:21:24.730,0:21:29.650
+no so as they are here so each if you
+
+0:21:28.120,0:21:31.810
+don't have the variance all those
+
+0:21:29.650,0:21:34.300
+circles here all those bubbles here are
+
+0:21:31.810,0:21:37.260
+just points even that we have some
+
+0:21:34.300,0:21:41.320
+variance they will take some space now
+
+0:21:37.260,0:21:43.480
+if this space taken by two bubbles
+
+0:21:41.320,0:21:45.280
+overlaps with another bubble the
+
+0:21:43.480,0:21:47.170
+reconstruction error will increase
+
+0:21:45.280,0:21:49.360
+because you have no idea how to go back
+
+0:21:47.170,0:21:52.090
+to the original point that generated
+
+0:21:49.360,0:21:54.810
+that sphere and so the network the
+
+0:21:52.090,0:21:58.120
+encoder has two options in order to
+
+0:21:54.810,0:21:59.650
+reduce this reconstruction error one
+
+0:21:58.120,0:22:01.780
+option is going to be to kill the
+
+0:21:59.650,0:22:03.250
+variance such that you get points the
+
+0:22:01.780,0:22:05.890
+other option is going to be to send all
+
+0:22:03.250,0:22:08.470
+those points in any direction such that
+
+0:22:05.890,0:22:10.330
+they don't overlap okay okay yeah that
+
+0:22:08.470,0:22:12.040
+makes sense, okay good so a
+
+0:22:10.330,0:22:15.850
+reconstruction error and gets these
+
+0:22:12.040,0:22:19.060
+stuff to fly around but then let's
+
+0:22:15.850,0:22:21.030
+introduce the second term so I would
+
+0:22:19.060,0:22:24.370
+really recommend you to compute these
+
+0:22:21.030,0:22:26.230
+relative entropy between the a Gaussian
+
+0:22:24.370,0:22:30.580
+and a normal distribution such that you
+
+0:22:26.230,0:22:31.990
+can practice maybe for next week but
+
+0:22:30.580,0:22:34.240
+then if you compute that relative
+
+0:22:31.990,0:22:38.260
+entropy you get these stuff right you
+
+0:22:34.240,0:22:39.790
+get several, four terms basically and
+
+0:22:38.260,0:22:40.790
+everyone should understand how these
+
+0:22:39.790,0:22:42.980
+look
+
+0:22:40.790,0:22:44.690
+no okay I'm just joking I'm gonna be
+
+0:22:42.980,0:22:46.580
+actually explaining it okay so we have
+
+0:22:44.690,0:22:48.560
+this expression let's try to analyze a
+
+0:22:46.580,0:22:51.050
+little bit in more detail what they
+
+0:22:48.560,0:22:53.510
+these terms represent so the first term
+
+0:22:51.050,0:22:56.390
+you'd have these variants - log variants
+
+0:22:53.510,0:22:59.090
+- one so if we graph it it looks like
+
+0:22:56.390,0:23:03.560
+this you have a linear function right on
+
+0:22:59.090,0:23:06.160
+the after you know after 2 on the x-axis
+
+0:23:03.560,0:23:08.930
+and then on the other terms you have
+
+0:23:06.160,0:23:11.300
+subtracted you subtract a logarithm
+
+0:23:08.930,0:23:13.070
+which goes to plus infinity like if you
+
+0:23:11.300,0:23:15.890
+sum a minus logarithm it goes to plus
+
+0:23:13.070,0:23:19.670
+infinity at zero and then otherwise it's
+
+0:23:15.890,0:23:21.620
+gonna be just you know decaying so if
+
+0:23:19.670,0:23:23.960
+you sum the two and subtract one you get
+
+0:23:21.620,0:23:26.330
+this kind of cute function and if you
+
+0:23:23.960,0:23:30.380
+minimize this function you get just one
+
+0:23:26.330,0:23:34.670
+and therefore these shows you how these
+
+0:23:30.380,0:23:37.750
+term and forces those spheres here to
+
+0:23:34.670,0:23:40.490
+have a radius of one in each direction
+
+0:23:37.750,0:23:43.070
+because if it tries to be smaller than
+
+0:23:40.490,0:23:45.830
+one this stuff you know goes up as crazy
+
+0:23:43.070,0:23:48.830
+and if the increases here doesn't go as
+
+0:23:45.830,0:23:51.200
+up as crazy so they are it slightly you
+
+0:23:48.830,0:23:54.770
+know roughly always at least one
+
+0:23:51.200,0:23:56.000
+or you know half but it won't be that much
+
+0:23:54.770,0:24:01.780
+smaller because this stuff you know
+
+0:23:56.000,0:24:04.250
+increases a lot so in this case we have
+
+0:24:01.780,0:24:07.550
+enforced the network not to collapse
+
+0:24:04.250,0:24:09.800
+these bubbles in order to make it grow
+
+0:24:07.550,0:24:14.420
+them too much right because otherwise
+
+0:24:09.800,0:24:17.480
+they still get penalized here so then we
+
+0:24:14.420,0:24:19.910
+have another term here these E of z
+
+0:24:17.480,0:24:22.250
+everything squared and that's classical
+
+0:24:19.910,0:24:25.130
+problem which has a minimum over there
+
+0:24:22.250,0:24:27.680
+and so this term here basically says
+
+0:24:25.130,0:24:30.800
+that all it means should be condensed
+
+0:24:27.680,0:24:33.190
+towards zero and so basically you get
+
+0:24:30.800,0:24:37.070
+like this additional force here by this
+
+0:24:33.190,0:24:41.000
+purple side and now you get that all
+
+0:24:37.070,0:24:43.760
+those bubbles get squashed together in
+
+0:24:41.000,0:24:46.010
+this bigger bubble so here you get the
+
+0:24:43.760,0:24:48.880
+bubbles of bubbles representation of a
+
+0:24:46.010,0:24:48.880
+variational auto-encoder
+
+0:24:49.720,0:25:00.120
+how cute is this very cute
+
+0:24:53.860,0:25:03.789
+how can you pack more bubbles so what is
+
+0:25:00.120,0:25:06.100
+the only parameter here which is telling
+
+0:25:03.789,0:25:06.669
+you the strength of your variational
+
+0:25:06.100,0:25:09.600
+auto-encoder
+
+0:25:06.669,0:25:11.980
+it's gonna be simply the dimension d
+
+0:25:09.600,0:25:15.129
+because you know given a dimension you
+
+0:25:11.980,0:25:17.259
+always know how many bubbles you can
+
+0:25:15.129,0:25:18.639
+pack in a larger bubble right so it's
+
+0:25:17.259,0:25:20.889
+just a function of the dimension you
+
+0:25:18.639,0:25:23.980
+pick and you choose for your hidden
+
+0:25:20.889,0:25:26.649
+layer, though is the reconstruction last
+
+0:25:23.980,0:25:29.409
+the first term the yellow term is that
+
+0:25:26.649,0:25:32.019
+the one that actually pushes the bubbles
+
+0:25:29.409,0:25:35.019
+further apart and not gonna the rest of
+
+0:25:32.019,0:25:38.230
+it is what kind of keeps them from doing
+
+0:25:35.019,0:25:42.610
+that right so the reconstruction would
+
+0:25:38.230,0:25:46.750
+push things around because we have these
+
+0:25:42.610,0:25:49.090
+additional taking volumes thing right so
+
+0:25:46.750,0:25:51.129
+if we wouldn't be taking volumes the
+
+0:25:49.090,0:25:53.440
+reconstruction term wouldn't be pushing
+
+0:25:51.129,0:25:55.360
+anything away because it don't overlap
+
+0:25:53.440,0:25:58.659
+given that we actually have some
+
+0:25:55.360,0:26:00.669
+variance the variance will have these
+
+0:25:58.659,0:26:03.399
+points actually taking some volume and
+
+0:26:00.669,0:26:06.820
+therefore this reconstruction will try
+
+0:26:03.399,0:26:09.129
+to get those points away so if you check
+
+0:26:06.820,0:26:12.639
+again those few animations I'll show you
+
+0:26:09.129,0:26:15.070
+so we had at the beginning those were
+
+0:26:12.639,0:26:16.779
+the points with additional noise now you
+
+0:26:15.070,0:26:20.169
+get the reconstruction that is you know
+
+0:26:16.779,0:26:22.809
+pushing everything away then you get the
+
+0:26:20.169,0:26:26.080
+variance it is assuring you that those
+
+0:26:22.809,0:26:27.879
+little bubbles don't collapse and then
+
+0:26:26.080,0:26:30.610
+you had the final term which is the
+
+0:26:27.879,0:26:33.429
+spring term because it's the quadratic
+
+0:26:30.610,0:26:36.940
+term in the loss which is basically
+
+0:26:33.429,0:26:38.950
+adding these additional pressure such
+
+0:26:36.940,0:26:41.590
+that all the little guys get you know
+
+0:26:38.950,0:26:43.450
+packed towards zero but they don't overlap
+
+0:26:41.590,0:26:46.350
+because there is the reconstruction term
+
+0:26:43.450,0:26:50.110
+so no overlap due to the reconstruction
+
+0:26:46.350,0:26:53.519
+size not going to smaller than one
+
+0:26:50.110,0:26:56.409
+because of the first part of the
+
+0:26:53.519,0:26:58.240
+relative entropy and then all these guys
+
+0:26:56.409,0:27:01.400
+are parked again for the quadratic part
+
+0:26:58.240,0:27:05.040
+which is the spring force
+
+0:27:01.400,0:27:07.950
+it's a term something that needs to be
+
+0:27:05.040,0:27:11.490
+tuned like hyper parameter kind of thing
+
+0:27:07.950,0:27:14.340
+so the beta is the actual in the
+
+0:27:11.490,0:27:16.260
+original version of this variation
+
+0:27:14.340,0:27:19.380
+auto-encoder there was no beta and then there
+
+0:27:16.260,0:27:22.170
+is a paper which is the beta variation
+
+0:27:19.380,0:27:25.650
+of auto-encoder just to say that you can
+
+0:27:22.170,0:27:28.620
+use a hyper parameter to change how much
+
+0:27:25.650,0:27:32.550
+these two terms you know contribute for
+
+0:27:28.620,0:27:35.580
+the final loss. This loss the second
+
+0:27:32.550,0:27:38.040
+loss term with the beta that's the KL
+
+0:27:35.580,0:27:40.080
+divergence? yeah then the normal
+
+0:27:38.040,0:27:41.660
+distribution rate yeah between the
+
+0:27:40.080,0:27:46.710
+z which is coming from a Gaussian
+
+0:27:41.660,0:27:49.650
+of mean E and variance V and then the
+
+0:27:46.710,0:27:52.500
+second term is going to be this normal
+
+0:27:49.650,0:27:56.460
+distribution and so this term tries to
+
+0:27:52.500,0:28:00.210
+get z to be as close as possible to a
+
+0:27:56.460,0:28:03.930
+normal distribution in the space V
+
+0:28:00.210,0:28:11.910
+dimensional space okay and this formula
+
+0:28:03.930,0:28:15.000
+that you that's a generic this is so I
+
+0:28:11.910,0:28:18.090
+would recommend you to take a paper and
+
+0:28:15.000,0:28:19.950
+pen and then then try to write the
+
+0:28:18.090,0:28:22.590
+relative entropy between a Gaussian and
+
+0:28:19.950,0:28:27.030
+a normal distribution and you should get
+
+0:28:22.590,0:28:31.580
+all these terms the relative entropy so
+
+0:28:27.030,0:28:31.580
+yeah this lKL is the relative entropy
+
+0:28:31.670,0:28:37.650
+yeah so just look up the formula for the
+
+0:28:35.280,0:28:41.730
+relative entropy which is telling you
+
+0:28:37.650,0:28:43.680
+basically how far to distributions are
+
+0:28:41.730,0:28:47.010
+and the first distribution is going to
+
+0:28:43.680,0:28:48.120
+be a multivariate Gaussian and the
+
+0:28:47.010,0:28:51.090
+second one is going to be a normal
+
+0:28:48.120,0:28:53.820
+distribution right yeah normal
+
+0:28:51.090,0:28:56.820
+distribution is not the same thing the
+
+0:28:53.820,0:29:01.050
+Gaussian has a mean vector and the
+
+0:28:56.820,0:29:03.720
+covariance matrix the normal has 0 mean
+
+0:29:01.050,0:29:06.240
+and identity matrix for the covariance
+
+0:29:03.720,0:29:08.370
+matrix we said earlier though that the z
+
+0:29:06.240,0:29:10.800
+should not have covariance it should be
+
+0:29:08.370,0:29:12.810
+diagonal right yeah yeah so all it's
+
+0:29:10.800,0:29:13.779
+gonna be diagonal but the values on the
+
+0:29:12.810,0:29:16.989
+diagonal
+
+0:29:13.779,0:29:19.869
+those V variances okay it's an off-center
+
+0:29:16.989,0:29:25.269
+big normal versus a centered in normal
+
+0:29:19.869,0:29:30.489
+small normal so it's off center and then
+
+0:29:25.269,0:29:31.989
+each direction is scaled by the by the
+
+0:29:30.489,0:29:35.679
+standard deviation right of that
+
+0:29:31.989,0:29:37.330
+dimension so if you have a large
+
+0:29:35.679,0:29:38.799
+standard deviation in one dimension it
+
+0:29:37.330,0:29:44.109
+means that in that direction is very
+
+0:29:38.799,0:29:46.960
+very spread, make sense? but that there is
+
+0:29:44.109,0:29:49.779
+both a line it's a line on the d axis
+
+0:29:46.960,0:29:51.940
+right because again all the components
+
+0:29:49.779,0:29:53.830
+are independent yeah is the
+
+0:29:51.940,0:29:57.279
+reconstruction loss the pixel wise
+
+0:29:53.830,0:29:59.109
+distance between the final out and the
+
+0:29:57.279,0:30:03.279
+original image? The reconstruction loss
+
+0:29:59.109,0:30:07.089
+we we saw that last week and we have two
+
+0:30:03.279,0:30:10.450
+options for the reconstruction was one
+
+0:30:07.089,0:30:12.609
+was the binary for binary data and we
+
+0:30:10.450,0:30:14.399
+have the binary cross-entropy and the
+
+0:30:12.609,0:30:18.009
+other one is going to be instead the
+
+0:30:14.399,0:30:22.389
+real value of one so such that you can
+
+0:30:18.009,0:30:23.979
+use the half or one DMS MSC right so
+
+0:30:22.389,0:30:27.429
+these are the reconstruction losses we
+
+0:30:23.979,0:30:29.679
+can use for example you talk more with
+
+0:30:27.429,0:30:31.389
+me than with Yann good now well not
+
+0:30:29.679,0:30:37.899
+good you should talk as well with Yann
+
+0:30:31.389,0:30:39.429
+but we should be going over the the
+
+0:30:37.899,0:30:41.589
+notebook such that we can see how to
+
+0:30:39.429,0:30:44.440
+code the stuff and also play with the
+
+0:30:41.589,0:30:46.719
+distributions because before again the
+
+0:30:44.440,0:30:49.029
+main point was that before we were
+
+0:30:46.719,0:30:51.249
+mapping points to points and back to
+
+0:30:49.029,0:30:54.429
+points right right now instead you're
+
+0:30:51.249,0:30:57.429
+gonna map points to space and then space
+
+0:30:54.429,0:31:01.029
+to points but then also all the space
+
+0:30:57.429,0:31:03.700
+now is going to be all cover by these
+
+0:31:01.029,0:31:06.099
+bubbles because of several factors right
+
+0:31:03.700,0:31:08.710
+if you have some space between these
+
+0:31:06.099,0:31:11.229
+bubbles then you have no idea how to go
+
+0:31:08.710,0:31:13.719
+from this region here back to the input
+
+0:31:11.229,0:31:15.580
+space right instead of variation
+
+0:31:13.719,0:31:18.070
+auto-encoder gets you to this very
+
+0:31:15.580,0:31:22.400
+well-behaved coverage you know these
+
+0:31:18.070,0:31:27.669
+nice covers of the latent space okay
+
+0:31:22.400,0:31:32.770
+good I can't see you you miss you guys
+
+0:31:27.669,0:31:36.230
+okay so good, are there any questions so far? I
+
+0:31:32.770,0:31:42.500
+hope you can see stuff I just give
+
+0:31:36.230,0:31:54.640
+feedback, can you see stuff? yeah yes yep so
+
+0:31:42.500,0:31:54.640
+work get pDL conda activate pDL and
+
+0:31:55.899,0:32:07.070
+Jupyter notebook boom okay so I'm gonna
+
+0:32:02.870,0:32:09.260
+be covering now the VAE and so now I'm gonna
+
+0:32:07.070,0:32:10.909
+just execute everything such that this
+
+0:32:09.260,0:32:14.870
+stuffs are training and then I'm gonna
+
+0:32:10.909,0:32:16.490
+be explaining things alright so at the
+
+0:32:14.870,0:32:19.070
+beginning I'm gonna be just import
+
+0:32:16.490,0:32:21.140
+all random [ __ ] as usual then I have a
+
+0:32:19.070,0:32:25.210
+display routine we don't care don't add
+
+0:32:21.140,0:32:27.919
+it to the notes I have some default
+
+0:32:25.210,0:32:30.320
+values for the random seed such that
+
+0:32:27.919,0:32:33.350
+you're gonna get the same numbers I get
+
+0:32:30.320,0:32:37.370
+then here I just use the MNIST dataset
+
+0:32:33.350,0:32:39.980
+we modify MNIST from Yann device
+
+0:32:37.370,0:32:42.279
+I set the CPU or GPU in theory I could
+
+0:32:39.980,0:32:45.049
+have used GP one because my Mac here
+
+0:32:42.279,0:32:47.750
+actually has a GPU and then I have my
+
+0:32:45.049,0:32:50.090
+variational auto-encoder okay so my
+
+0:32:47.750,0:32:54.230
+variational auto-encoder has two parts as a
+
+0:32:50.090,0:33:00.710
+encoder here let me turn on the line
+
+0:32:54.230,0:33:04.309
+numbers so my encoder goes from 784
+
+0:33:00.710,0:33:07.520
+which is the sides size of the input to
+
+0:33:04.309,0:33:13.100
+this square for example d in this case
+
+0:33:07.520,0:33:16.789
+is 20 so 400 and then from d square I go
+
+0:33:13.100,0:33:19.330
+to 2 times d which is gonna be half of
+
+0:33:16.789,0:33:23.179
+my means and half is gonna be for my
+
+0:33:19.330,0:33:25.490
+Sigma squares for my variances the other
+
+0:33:23.179,0:33:29.059
+case the other the decoder instead picks
+
+0:33:25.490,0:33:31.340
+only d right you can see right d here we
+
+0:33:29.059,0:33:33.559
+go from d to d square and then from d
+
+0:33:31.340,0:33:35.960
+square to 794 such that we match the
+
+0:33:33.559,0:33:36.500
+input dimensionality and then finally I
+
+0:33:35.960,0:33:39.500
+have a sigmoid
+
+0:33:36.500,0:33:41.660
+why do we have a sigmoid? because my input
+
+0:33:39.500,0:33:46.190
+is going to be limited from zero to one
+
+0:33:41.660,0:33:48.140
+there are images from zero to one then
+
+0:33:46.190,0:33:51.080
+there is a module here which is called
+
+0:33:48.140,0:33:53.480
+reparameterise and if we are
+
+0:33:51.080,0:33:57.050
+training we use the reparameterisation
+
+0:33:53.480,0:33:59.360
+part, could you just say again
+
+0:33:57.050,0:34:03.170
+why you use the sigmoid in the? yeah
+
+0:33:59.360,0:34:05.480
+because my data it's leaving between
+
+0:34:03.170,0:34:08.510
+zero and one so I have those digits from
+
+0:34:05.480,0:34:11.389
+the MNIST and they are they are
+
+0:34:08.510,0:34:14.480
+values like the values of the digits are
+
+0:34:11.389,0:34:18.230
+going to be from 0 to 1 so I'd like to
+
+0:34:14.480,0:34:19.909
+have my network this module here outputs
+
+0:34:18.230,0:34:22.129
+things that goes from minus infinity to
+
+0:34:19.909,0:34:24.139
+plus infinity if I send it through a
+
+0:34:22.129,0:34:29.780
+sigmoid this stuff sends things through
+
+0:34:24.139,0:34:31.520
+like 0 to 1 okay when you say the values
+
+0:34:29.780,0:34:32.980
+of the digits you mean the deactivations
+
+0:34:31.520,0:34:37.460
+right?
+
+0:34:32.980,0:34:39.530
+so I use the MNIST dataset and this
+
+0:34:37.460,0:34:42.230
+is going to be both my input and also my
+
+0:34:39.530,0:34:45.320
+targets right and the images and the
+
+0:34:42.230,0:34:49.550
+values of these images will be ranging
+
+0:34:45.320,0:34:52.429
+between 0 to 1 like is a real value each
+
+0:34:49.550,0:34:54.740
+pixel can be between 0 and 1 yeah I
+
+0:34:52.429,0:34:58.460
+think actually the the inputs are binary
+
+0:34:54.740,0:35:00.590
+so the inputs are all 0 or 1 but my
+
+0:34:58.460,0:35:02.960
+network will be outputting a real range
+
+0:35:00.590,0:35:08.320
+between 0 & 1
+
+0:35:02.960,0:35:11.810
+so reparameterization we have the we
+
+0:35:08.320,0:35:15.490
+what do we do here so reparameterization
+
+0:35:11.810,0:35:19.070
+given a mu and a log variance
+
+0:35:15.490,0:35:21.620
+explain later why we use log variance if
+
+0:35:19.070,0:35:23.510
+you are in a you know in training we
+
+0:35:21.620,0:35:26.000
+compute the standard deviation is going
+
+0:35:23.510,0:35:28.370
+to be log variance multiplied by 1/2 and
+
+0:35:26.000,0:35:29.960
+then I take the exponential and so I get
+
+0:35:28.370,0:35:33.020
+the standard deviation from the log
+
+0:35:29.960,0:35:34.850
+variance and then I get my epsilon which
+
+0:35:33.020,0:35:38.180
+is simply sampled from a normal
+
+0:35:34.850,0:35:40.640
+distribution which with whatever size I
+
+0:35:38.180,0:35:43.760
+have here right so standard deviation I
+
+0:35:40.640,0:35:46.570
+get the size I create a new tensor and I
+
+0:35:43.760,0:35:50.030
+fill it with a normal distribution data
+
+0:35:46.570,0:35:52.130
+then I return the epsilon multiply by
+
+0:35:50.030,0:35:55.280
+the standard deviation and I add the mu which
+
+0:35:52.130,0:35:57.830
+is what I show you before if I am NOT
+
+0:35:55.280,0:36:01.040
+training I don't have to add noise right
+
+0:35:57.830,0:36:04.070
+so I can simply return my mu so I use
+
+0:36:01.040,0:36:05.510
+this network in a deterministic way the
+
+0:36:04.070,0:36:09.710
+forward mode is the following
+
+0:36:05.510,0:36:12.790
+so here we have that the encoder get the
+
+0:36:09.710,0:36:15.800
+input which is going to be reshaped into
+
+0:36:12.790,0:36:17.960
+you know these things such that
+
+0:36:15.800,0:36:21.230
+basically I enroll the images into a
+
+0:36:17.960,0:36:23.270
+vector then the encoder is going to be a
+
+0:36:21.230,0:36:25.070
+output output in something and I will
+
+0:36:23.270,0:36:28.400
+shape that one such that I have batch
+
+0:36:25.070,0:36:30.530
+size two and then d where d is the
+
+0:36:28.400,0:36:33.290
+dimension of the mean and the dimension
+
+0:36:30.530,0:36:37.610
+of the variances then I have mu which is
+
+0:36:33.290,0:36:40.400
+the mean simply the first part right of
+
+0:36:37.610,0:36:41.720
+these guys of this d and then the log
+
+0:36:40.400,0:36:44.780
+variance is going to be the other guy
+
+0:36:41.720,0:36:46.700
+and then I have my z which is going to
+
+0:36:44.780,0:36:49.040
+be my latent variable it's going to be
+
+0:36:46.700,0:36:53.330
+these reparameterisation given my mu
+
+0:36:49.040,0:36:57.910
+and the logvar why do I use a logvar
+
+0:36:53.330,0:36:57.910
+you tell me why do I use a logvar
+
+0:36:59.620,0:37:05.600
+right right right so given that
+
+0:37:02.900,0:37:08.090
+variances are only positive if I compute
+
+0:37:05.600,0:37:12.560
+the log allows you to output the full
+
+0:37:08.090,0:37:15.620
+real range for the encoder right so you
+
+0:37:12.560,0:37:17.990
+can use the whole real range and then I
+
+0:37:15.620,0:37:20.420
+define my model as this VAE and I send it
+
+0:37:17.990,0:37:22.090
+to the device here I define the
+
+0:37:20.420,0:37:26.240
+optimization optimizer
+
+0:37:22.090,0:37:28.910
+and then I define my loss function which
+
+0:37:26.240,0:37:31.570
+is the sum of two parts the binary cross
+
+0:37:28.910,0:37:35.060
+entropy between the input and the
+
+0:37:31.570,0:37:40.070
+reconstruction which is here so I have
+
+0:37:35.060,0:37:45.350
+the x_hat and then the X and then I
+
+0:37:40.070,0:37:48.500
+try I sum all of them and then the KL
+
+0:37:45.350,0:37:51.080
+divergence so we have the var which is
+
+0:37:48.500,0:37:52.580
+the you know linear then you have the
+
+0:37:51.080,0:37:55.340
+minus logvar which is the logarithmic
+
+0:37:52.580,0:37:58.430
+flip down and then minus one and then we
+
+0:37:55.340,0:37:59.420
+have the mu and then we try to minimize
+
+0:37:58.430,0:38:02.780
+this stuff right
+
+0:37:59.420,0:38:03.680
+all right so training scripts it's very
+
+0:38:02.780,0:38:05.990
+simple right
+
+0:38:03.680,0:38:08.540
+so you have the model which is
+
+0:38:05.990,0:38:10.970
+outputting the prediction x_hat let me
+
+0:38:08.540,0:38:13.430
+let's see here right forward outputs the
+
+0:38:10.970,0:38:16.730
+output of the decoder the mu and the log
+
+0:38:13.430,0:38:19.220
+var so here you get the model
+
+0:38:16.730,0:38:22.160
+you feed the input you get x_hat mu
+
+0:38:19.220,0:38:26.630
+logvar you can compute the loss using the
+
+0:38:22.160,0:38:30.470
+x_hat, x, mu and logvar, x being the input
+
+0:38:26.630,0:38:33.440
+but also the target and then we you know
+
+0:38:30.470,0:38:36.260
+yeah we add the item for the loss we
+
+0:38:33.440,0:38:39.170
+clean up the gradient from the previous
+
+0:38:36.260,0:38:42.580
+steps perform computational compute the
+
+0:38:39.170,0:38:45.260
+partial derivatives and then you step
+
+0:38:42.580,0:38:47.570
+and then here I just do the testing and
+
+0:38:45.260,0:38:51.140
+do some caching for later on so we
+
+0:38:47.570,0:38:54.680
+started with initial error of 500
+
+0:38:51.140,0:38:56.870
+roughly 514 this is pre before training
+
+0:38:54.680,0:39:02.360
+and any goes immediately immediately
+
+0:38:56.870,0:39:05.870
+down to 200 and then goes down to 100
+
+0:39:02.360,0:39:08.420
+okay and so now I'm gonna be showing you
+
+0:39:05.870,0:39:11.330
+a few of the results this is the input I
+
+0:39:08.420,0:39:14.030
+feed to the network and the untrained
+
+0:39:11.330,0:39:18.950
+network reconstructions of course look
+
+0:39:14.030,0:39:20.240
+like [ __ ] right but okay that's fine so
+
+0:39:18.950,0:39:22.310
+we can keep going and there's gonna be
+
+0:39:20.240,0:39:25.850
+the first epoch right cool
+
+0:39:22.310,0:39:28.070
+second epoch third fourth and so on
+
+0:39:25.850,0:39:31.580
+right and it looked better and better
+
+0:39:28.070,0:39:36.710
+of course so what can we do right now a
+
+0:39:31.580,0:39:40.460
+few things we can do for example now we
+
+0:39:36.710,0:39:43.550
+can simply sample z from normal
+
+0:39:40.460,0:39:46.220
+distribution and then I decode this
+
+0:39:43.550,0:39:48.980
+random stuff right so this doesn't come
+
+0:39:46.220,0:39:50.900
+from our encoder and I show you now what
+
+0:39:48.980,0:39:53.630
+the decoder does whenever you sample
+
+0:39:50.900,0:39:56.540
+from the distribution that the latent
+
+0:39:53.630,0:40:00.370
+variable should have been following and
+
+0:39:56.540,0:40:03.700
+so these are a few examples of how
+
+0:40:00.370,0:40:07.850
+sampling from the latent distribution
+
+0:40:03.700,0:40:09.830
+you know gets decoded into something we
+
+0:40:07.850,0:40:12.680
+got a nine here we go to zero we got
+
+0:40:09.830,0:40:15.410
+some five so some of the regions are
+
+0:40:12.680,0:40:17.500
+very well defined nine two but then other
+
+0:40:15.410,0:40:21.040
+regions like this thing here
+
+0:40:17.500,0:40:25.330
+or this thing here or the number 14 here
+
+0:40:21.040,0:40:27.820
+they don't really look like well like
+
+0:40:25.330,0:40:29.650
+digits this is because why what's the
+
+0:40:27.820,0:40:32.680
+problem here we haven't really covered
+
+0:40:29.650,0:40:33.160
+the whole space I just trained for one
+
+0:40:32.680,0:40:34.960
+minute
+
+0:40:33.160,0:40:36.730
+if I trained for 10 minutes it's going
+
+0:40:34.960,0:40:39.550
+to be just working perfectly okay so
+
+0:40:36.730,0:40:42.100
+here those bubbles don't yet fill the
+
+0:40:39.550,0:40:44.590
+whole space right and it's the same
+
+0:40:42.100,0:40:46.510
+problem which you would have with a
+
+0:40:44.590,0:40:48.970
+normal out encoder without this
+
+0:40:46.510,0:40:51.550
+variational thing right with very normal
+
+0:40:48.970,0:40:54.310
+auto-encoders you don't have you know any
+
+0:40:51.550,0:40:55.870
+kind of structure any kind of defined
+
+0:40:54.310,0:40:58.180
+behavior in the regions between
+
+0:40:55.870,0:40:59.680
+different points with the variational
+
+0:40:58.180,0:41:01.750
+auto-encoder we actually take the
+
+0:40:59.680,0:41:04.630
+space and enforce that the
+
+0:41:01.750,0:41:09.490
+reconstruction of the all these region
+
+0:41:04.630,0:41:12.550
+actually are to make sense again so
+
+0:41:09.490,0:41:19.140
+let's do some cute stuff and then I am
+
+0:41:12.550,0:41:19.140
+done here I just show you a few digits
+
+0:41:19.590,0:41:25.810
+and so let's pick two of them for
+
+0:41:22.570,0:41:29.530
+example let's pick three and eight which
+
+0:41:25.810,0:41:32.190
+is going to be let me show you here so
+
+0:41:29.530,0:41:36.310
+we'd like to find a interpolation now
+
+0:41:32.190,0:41:38.500
+between a five and a four okay and this
+
+0:41:36.310,0:41:41.740
+is my five reconstructed and our four
+
+0:41:38.500,0:41:44.260
+reconstructed so if I perform a linear
+
+0:41:41.740,0:41:46.510
+interpolation in the latent space and I
+
+0:41:44.260,0:41:50.470
+then send it to the decoder we get this
+
+0:41:46.510,0:41:54.040
+one so the five gets morphed into a four
+
+0:41:50.470,0:41:55.900
+you can see slowly but it looks like
+
+0:41:54.040,0:41:58.540
+crap let's try to get something that
+
+0:41:55.900,0:42:02.800
+stays on a manifold so let's get for
+
+0:41:58.540,0:42:09.840
+example these three so it's going to be
+
+0:42:02.800,0:42:16.710
+number one number one and then let's say
+
+0:42:09.840,0:42:16.710
+maybe these 14 here
+
+0:42:16.780,0:42:23.540
+so I do interpolation of these guys here
+
+0:42:20.770,0:42:27.410
+you can see my auto-encoder actually
+
+0:42:23.540,0:42:31.550
+fixed those kind of issues here and then
+
+0:42:27.410,0:42:33.860
+you can see now how the three gets those
+
+0:42:31.550,0:42:36.020
+little edges closed to look like an
+
+0:42:33.860,0:42:37.850
+eight right and so all of them look like
+
+0:42:36.020,0:42:39.920
+kind of legit no it's just kind of a
+
+0:42:37.850,0:42:42.620
+three kind of a three a three day became
+
+0:42:39.920,0:42:44.840
+an eight right and so you can see how
+
+0:42:42.620,0:42:47.000
+now by walking in the latent space we
+
+0:42:44.840,0:42:50.420
+get to reconstruct things that look
+
+0:42:47.000,0:42:52.370
+legit in the input space right this
+
+0:42:50.420,0:42:56.810
+would have never worked with a normal
+
+0:42:52.370,0:42:59.120
+auto-encoder finally I'm gonna show you a
+
+0:42:56.810,0:43:04.640
+few nice representation of the
+
+0:42:59.120,0:43:07.640
+embeddings of the means for this train
+
+0:43:04.640,0:43:10.190
+auo-encoder so here I'll just show you a
+
+0:43:07.640,0:43:13.790
+collection of the embeddings of you know
+
+0:43:10.190,0:43:15.620
+the test data set and then I perform a
+
+0:43:13.790,0:43:19.220
+like a dimensionality reduction and then
+
+0:43:15.620,0:43:22.250
+I show you how the encoder clusters all
+
+0:43:19.220,0:43:25.340
+the means in different regions in the
+
+0:43:22.250,0:43:28.280
+latent space and so here is what you
+
+0:43:25.340,0:43:30.680
+get when you train this variational
+
+0:43:28.280,0:43:32.120
+auto-encoder so this is the the beginning
+
+0:43:30.680,0:43:34.880
+when the network is not trained
+
+0:43:32.120,0:43:37.250
+you can still see you know clusters of
+
+0:43:34.880,0:43:39.530
+digits but then as you keep training
+
+0:43:37.250,0:43:42.010
+well at least you know after five epochs
+
+0:43:39.530,0:43:45.970
+you get these groups to be you know
+
+0:43:42.010,0:43:48.890
+separated and then I think if you keep
+
+0:43:45.970,0:43:53.360
+training more you should have like more
+
+0:43:48.890,0:43:57.980
+separation okay so here I'm basically
+
+0:43:53.360,0:44:01.730
+doing the testing part I get all the
+
+0:43:57.980,0:44:04.640
+means so my model outputs x_hat, mu and
+
+0:44:01.730,0:44:08.210
+logvar right and so my means I append
+
+0:44:04.640,0:44:10.820
+them I append all my mus into this mean
+
+0:44:08.210,0:44:13.220
+list I append all the logvars in this
+
+0:44:10.820,0:44:17.690
+logvars list and I append all the y's
+
+0:44:13.220,0:44:20.870
+to these labels list during the testing
+
+0:44:17.690,0:44:23.750
+part right so this is testing and so I
+
+0:44:20.870,0:44:28.100
+have like a list here of codes which is
+
+0:44:23.750,0:44:29.990
+a I have the mu, logvar and then y's
+
+0:44:28.100,0:44:33.830
+right so here later on I
+
+0:44:29.990,0:44:38.750
+put those lists inside my a dictionary
+
+0:44:33.830,0:44:43.160
+and then later here below I compute a
+
+0:44:38.750,0:44:48.349
+dimensionality reduction for epoch zero
+
+0:44:43.160,0:44:50.660
+epoch five and epoch ten so I use this
+
+0:44:48.349,0:44:53.680
+TSNE which is a technique for reducing
+
+0:44:50.660,0:44:56.869
+the dimensions of the codes which are
+
+0:44:53.680,0:45:01.580
+twenty right now the dimension height is
+
+0:44:56.869,0:45:03.920
+20 so I fit I get my X is gonna be let's
+
+0:45:01.580,0:45:08.000
+say the first thousand component first
+
+0:45:03.920,0:45:11.599
+thousand samples of the means and then I
+
+0:45:08.000,0:45:15.140
+get these Es which are basically a 2d
+
+0:45:11.599,0:45:18.619
+projection somehow of these twenty
+
+0:45:15.140,0:45:22.130
+dimensional mus okay and then I show
+
+0:45:18.619,0:45:25.820
+you in this chart here how these 2d
+
+0:45:22.130,0:45:27.830
+projections they look at epoch 0 before
+
+0:45:25.820,0:45:31.130
+training the network because this one is
+
+0:45:27.830,0:45:34.400
+before the first training epoch and then
+
+0:45:31.130,0:45:37.970
+at epoch five you can see how the
+
+0:45:34.400,0:45:42.560
+network gets all this mess here to be
+
+0:45:37.970,0:45:44.869
+you know kind of more nicely put here I
+
+0:45:42.560,0:45:47.990
+didn't visualize the variances I'm
+
+0:45:44.869,0:45:50.960
+thinking whether I can if I'm able to do
+
+0:45:47.990,0:45:52.700
+that as well not sure so each of these
+
+0:45:50.960,0:45:55.430
+points represent the location of the
+
+0:45:52.700,0:45:55.880
+mean after training the variational
+
+0:45:55.430,0:45:58.940
+auto-encoder
+
+0:45:55.880,0:46:02.839
+I haven't represented the area that
+
+0:45:58.940,0:46:07.720
+these means are actually taking okay are
+
+0:46:02.839,0:46:13.010
+that means supposed to be random at epoch 0
+
+0:46:07.720,0:46:16.010
+the randomness is in the encoder right
+
+0:46:13.010,0:46:19.160
+but then you still feed to the encoder
+
+0:46:16.010,0:46:22.390
+and those inputs digits so the input
+
+0:46:19.160,0:46:24.530
+digits all the ones are kind of similar
+
+0:46:22.390,0:46:27.200
+right so if you perform a random
+
+0:46:24.530,0:46:29.510
+transformation of those similarly
+
+0:46:27.200,0:46:32.500
+looking initial vectors
+
+0:46:29.510,0:46:35.599
+you're going to have similarly looking
+
+0:46:32.500,0:46:39.080
+transformed versions but then they are
+
+0:46:35.599,0:46:42.080
+not necessarily grouped all together
+
+0:46:39.080,0:46:43.700
+like most of them are for it for example
+
+0:46:42.080,0:46:46.490
+let's say these are 1s let me turn on
+
+0:46:43.700,0:46:47.230
+the color bar so we can see what this
+
+0:46:46.490,0:46:50.869
+stuff is
+
+0:46:47.230,0:46:53.420
+so let's say these are the zeros these
+
+0:46:50.869,0:46:57.020
+over here so all zeros look like they
+
+0:46:53.420,0:46:59.570
+all look similar therefore even a random
+
+0:46:57.020,0:47:02.510
+projection of those zeros will all be
+
+0:46:59.570,0:47:04.430
+kind of together what you can see
+
+0:47:02.510,0:47:06.650
+instead is gonna be this purple is all
+
+0:47:04.430,0:47:08.930
+spread around right so means the force
+
+0:47:06.650,0:47:11.900
+there yeah there are very many ways of
+
+0:47:08.930,0:47:14.810
+drawing four you know someone right is
+
+0:47:11.900,0:47:16.400
+closest the top someone doesn't so if
+
+0:47:14.810,0:47:19.280
+you see on the right hand side inside
+
+0:47:16.400,0:47:21.079
+all the fours are almost all here right
+
+0:47:19.280,0:47:23.540
+there is just a little cluster here next
+
+0:47:21.079,0:47:25.820
+to the nine because you can you can
+
+0:47:23.540,0:47:28.700
+think about if you if you write a four
+
+0:47:25.820,0:47:32.240
+like that it's very similar to write a
+
+0:47:28.700,0:47:34.670
+nine right and so you had these fours
+
+0:47:32.240,0:47:36.800
+here that are very close to the nines
+
+0:47:34.670,0:47:39.650
+just because of how people drew this
+
+0:47:36.800,0:47:42.349
+specific fours okay nevertheless they
+
+0:47:39.650,0:47:46.130
+are still clustered over here you get
+
+0:47:42.349,0:47:47.180
+all these things are spread around and
+
+0:47:46.130,0:47:49.460
+so this is very bad
+
+0:47:47.180,0:47:51.170
+nevertheless they tell you this that
+
+0:47:49.460,0:47:53.240
+this diagram here shows you that there
+
+0:47:51.170,0:47:56.930
+is very little variance across the
+
+0:47:53.240,0:48:00.020
+drawing of a zero okay so it shows you
+
+0:47:56.930,0:48:02.210
+like somehow there is a specific mode it
+
+0:48:00.020,0:48:05.470
+is very concentrated here but it's
+
+0:48:02.210,0:48:08.270
+really not concentrated for these guys
+
+0:48:05.470,0:48:12.589
+so I'm just curious like what are some
+
+0:48:08.270,0:48:16.700
+other some other like like motivations
+
+0:48:12.589,0:48:23.270
+or usages of variational auto-encoder
+
+0:48:16.700,0:48:27.310
+like so the main point was the whenever
+
+0:48:23.270,0:48:30.230
+I show you in class the two weeks ago a
+
+0:48:27.310,0:48:31.609
+generative model you cannot have a
+
+0:48:30.230,0:48:34.369
+generative model with a classical
+
+0:48:31.609,0:48:37.400
+auto-encoder in this case here again I train
+
+0:48:34.369,0:48:38.980
+I didn't train this stuff a lot if you
+
+0:48:37.400,0:48:42.220
+train it longer you can have better
+
+0:48:38.980,0:48:46.310
+performance here and the point is that
+
+0:48:42.220,0:48:49.040
+my input z comes from just this
+
+0:48:46.310,0:48:51.410
+random distribution okay and then by
+
+0:48:49.040,0:48:53.540
+sending this random number here a random
+
+0:48:51.410,0:48:55.130
+a number coming from a normal
+
+0:48:53.540,0:48:55.700
+distribution you send an inside this
+
+0:48:55.130,0:48:57.590
+decoder
+
+0:48:55.700,0:48:59.390
+if this
+
+0:48:57.590,0:49:01.490
+this is a coder is actually a powerful
+
+0:48:59.390,0:49:06.260
+decoder then this stuff will actually
+
+0:49:01.490,0:49:08.030
+draw very nice shapes or numbers like
+
+0:49:06.260,0:49:11.420
+for example those two images I show you
+
+0:49:08.030,0:49:14.660
+of the two faces in the first part of
+
+0:49:11.420,0:49:16.460
+the class last time those are simply you
+
+0:49:14.660,0:49:18.830
+take a number from my random
+
+0:49:16.460,0:49:20.570
+distribution you feed it to a decoder
+
+0:49:18.830,0:49:22.850
+and the decoder is going to be drawing
+
+0:49:20.570,0:49:25.760
+you this very beautiful picture of
+
+0:49:22.850,0:49:28.460
+whatever you trained this decoder on okay
+
+0:49:25.760,0:49:30.950
+and you cannot use a standard
+
+0:49:28.460,0:49:33.230
+auto-encoder to get these kinds of properties
+
+0:49:30.950,0:49:36.800
+because again here we enforce the
+
+0:49:33.230,0:49:39.680
+decoder to reconstruct meaningful or
+
+0:49:36.800,0:49:41.800
+good-looking reconstruction when they
+
+0:49:39.680,0:49:44.690
+are sample from this normal distribution
+
+0:49:41.800,0:49:47.240
+therefore later on we can sample from
+
+0:49:44.690,0:49:48.440
+this normal distribution feed things to
+
+0:49:47.240,0:49:50.810
+the decoder and the decoder will
+
+0:49:48.440,0:49:54.740
+generate stuff that looks like legit
+
+0:49:50.810,0:49:57.200
+right if you didn't train the decoder in
+
+0:49:54.740,0:49:59.870
+order to perform a good reconstruction
+
+0:49:57.200,0:50:01.430
+when you sample from this normal
+
+0:49:59.870,0:50:03.200
+distribution you wouldn't be able to
+
+0:50:01.430,0:50:07.340
+actually get anything meaningful okay
+
+0:50:03.200,0:50:09.320
+that's the big takeaway here next time
+
+0:50:07.340,0:50:10.850
+we're going to be seen said
+
+0:50:09.320,0:50:14.510
+generative adversarial network
+
+0:50:10.850,0:50:18.200
+and how they how they are very similar
+
+0:50:14.510,0:50:19.790
+to these stuff we have seen today on hi
+
+0:50:18.200,0:50:22.940
+Alfredo I have a question for the
+
+0:50:19.790,0:50:25.460
+yellow bubble yellow yeah
+
+0:50:22.940,0:50:30.200
+each yellow bubble comes from one input
+
+0:50:25.460,0:50:32.270
+example yeah so if we have 1000 I don't
+
+0:50:30.200,0:50:34.520
+know what images or 1000 inputs
+
+0:50:32.270,0:50:38.180
+that means we have 1000 exactly yellow
+
+0:50:34.520,0:50:42.410
+bubbles yeah and each yellow bubble
+
+0:50:38.180,0:50:44.690
+it comes from the the E of z, V of z
+
+0:50:42.410,0:50:48.770
+distribution together with the noise
+
+0:50:44.690,0:50:52.310
+added to latent variable so the bubble
+
+0:50:48.770,0:50:53.750
+come from here let me show you should I
+
+0:50:52.310,0:50:57.200
+show you this one is okay or should I
+
+0:50:53.750,0:50:59.410
+say okay so here you get these X and
+
+0:50:57.200,0:51:01.490
+these X goes inside the model right
+
+0:50:59.410,0:51:04.580
+whenever you send these X through the
+
+0:51:01.490,0:51:07.070
+model it goes inside forward so X goes
+
+0:51:04.580,0:51:11.390
+inside here and then it goes inside the
+
+0:51:07.070,0:51:14.869
+encoder right okay and then from the
+
+0:51:11.390,0:51:17.359
+gives me this mu logvar from which I
+
+0:51:14.869,0:51:19.789
+just extract the mu and logvar okay so
+
+0:51:17.359,0:51:21.980
+so far is everything it's like a normal
+
+0:51:19.789,0:51:27.289
+auto-encoder okay
+
+0:51:21.980,0:51:30.170
+the bubble comes here so my z now comes
+
+0:51:27.289,0:51:33.829
+out from these self-reparameterise and
+
+0:51:30.170,0:51:36.740
+this self-reparameterise is gonna be
+
+0:51:33.829,0:51:38.960
+working in a different way if we are in
+
+0:51:36.740,0:51:41.420
+the training loop or we are not in the
+
+0:51:38.960,0:51:44.000
+training loop so if we are not in the
+
+0:51:41.420,0:51:46.760
+training loop I just returned the min so
+
+0:51:44.000,0:51:48.670
+there is no bubble when I use the
+
+0:51:46.760,0:51:52.339
+testing part ok so I get the best
+
+0:51:48.670,0:51:55.819
+value the encoder can give me if I am
+
+0:51:52.339,0:51:58.220
+training instead what this is what
+
+0:51:55.819,0:52:01.549
+happens so my I compute the standard
+
+0:51:58.220,0:52:03.799
+deviation from this logvar so I get the
+
+0:52:01.549,0:52:05.960
+logvar I divid it by two and then I take
+
+0:52:03.799,0:52:10.519
+the exponential right so I have E to the
+
+0:52:05.960,0:52:12.890
+one half logvar such that you get you
+
+0:52:10.519,0:52:17.089
+know the standard deviation and then the
+
+0:52:12.890,0:52:20.000
+epsilon it can be simply an a d
+
+0:52:17.089,0:52:23.329
+dimensional vector sample from a normal
+
+0:52:20.000,0:52:25.940
+distribution and so this one is one
+
+0:52:23.329,0:52:27.769
+sample coming from this normal
+
+0:52:25.940,0:52:31.970
+distribution and the normal distribution
+
+0:52:27.769,0:52:34.250
+it's you know like a sphere in d
+
+0:52:31.970,0:52:35.930
+dimensions right a sphere with the
+
+0:52:34.250,0:52:38.539
+radius which is going to be square root
+
+0:52:35.930,0:52:40.819
+of d but then so here at the end
+
+0:52:38.539,0:52:43.490
+you simply resize that thing the point
+
+0:52:40.819,0:52:46.009
+is that every time you go you called is
+
+0:52:43.490,0:52:47.779
+reparameterization the reparameterize
+
+0:52:46.009,0:52:50.240
+function you can I get a different
+
+0:52:47.779,0:52:52.339
+epsilon because epsilon it's sampled
+
+0:52:50.240,0:52:57.890
+from a normal distribution right so
+
+0:52:52.339,0:52:59.900
+given a mu and given a logvar you're
+
+0:52:57.890,0:53:02.809
+gonna be getting every time different
+
+0:52:59.900,0:53:04.880
+Epsilon's and therefore these stuff here
+
+0:53:02.809,0:53:09.589
+if you call it a hundred times it's
+
+0:53:04.880,0:53:12.829
+gonna give you 100 different points all
+
+0:53:09.589,0:53:15.019
+of them cluster in mu with the radius of
+
+0:53:12.829,0:53:18.410
+you know roughly standard deviation and
+
+0:53:15.019,0:53:21.319
+so this is the line which returns you
+
+0:53:18.410,0:53:22.910
+every time just one sample but if you
+
+0:53:21.319,0:53:25.050
+call this in a for loop you're gonna get
+
+0:53:22.910,0:53:27.080
+you know a cloud of points all
+
+0:53:25.050,0:53:30.870
+them centered mu which has a specific
+
+0:53:27.080,0:53:33.870
+radius okay and so this is where we get
+
+0:53:30.870,0:53:39.480
+these bubbles come from the sampling and
+
+0:53:33.870,0:53:43.590
+of these thing right I have to run it
+
+0:53:39.480,0:53:46.440
+100 times if you want 100 samples you
+
+0:53:43.590,0:53:49.560
+get 100 times you had to run into 100
+
+0:53:46.440,0:53:52.070
+times this reparameterization gives
+
+0:53:49.560,0:53:54.800
+you every time a different point which
+
+0:53:52.070,0:53:58.230
+is you know parameterize by this
+
+0:53:54.800,0:54:01.620
+location and this kind of you know up
+
+0:53:58.230,0:54:04.080
+you know volume yeah and this comes from
+
+0:54:01.620,0:54:06.960
+the mu and log variance comes
+
+0:54:04.080,0:54:10.230
+from one sample one input example yeah
+
+0:54:06.960,0:54:12.960
+yeah yeah so my one input x here gives
+
+0:54:10.230,0:54:16.260
+me one mu and gives me one logvar and
+
+0:54:12.960,0:54:20.220
+this one mu and well one logvar gives
+
+0:54:16.260,0:54:22.890
+me z which is one sample from the whole
+
+0:54:20.220,0:54:26.370
+distribution if you run this function
+
+0:54:22.890,0:54:29.580
+here 1,000 times you're gonna get 1,000
+
+0:54:26.370,0:54:34.410
+z which all of them will take this
+
+0:54:29.580,0:54:35.250
+volume right off okay got it got it
+
+0:54:34.410,0:54:39.480
+thank you
+
+0:54:35.250,0:54:41.040
+of course I have a question about auto-encoders,
+
+0:54:39.480,0:54:42.630
+sorry, encoders and decoders in general
+
+0:54:41.040,0:54:43.590
+yeah it looks like in this
+
+0:54:42.630,0:54:45.060
+implementation
+
+0:54:43.590,0:54:47.280
+it's like fairly straightforward in
+
+0:54:45.060,0:54:49.020
+terms of like it just has like a couple
+
+0:54:47.280,0:54:52.440
+linear layers with a relu and a
+
+0:54:49.020,0:54:54.870
+sigmoid are most like I like I
+
+0:54:52.440,0:54:56.280
+previously they seemed encoders where
+
+0:54:54.870,0:54:59.100
+there's like attention all this
+
+0:54:56.280,0:55:01.710
+stuff like is is this is something kind
+
+0:54:59.100,0:55:04.410
+of as basic as this it seems like it's
+
+0:55:01.710,0:55:06.300
+pretty satisfactory like is that I mean
+
+0:55:04.410,0:55:10.730
+are are they usually this basic or
+
+0:55:06.300,0:55:15.750
+more complex okay okay that does I think
+
+0:55:10.730,0:55:18.240
+softball for me so everything we see in
+
+0:55:15.750,0:55:22.290
+class is things that I've tried it works
+
+0:55:18.240,0:55:24.360
+and it's fairly a representative of what
+
+0:55:22.290,0:55:27.080
+is sufficient to get this stuff to run
+
+0:55:24.360,0:55:30.300
+so you know I'm running on my laptop on
+
+0:55:27.080,0:55:33.810
+the MNIST data set you can run several of
+
+0:55:30.300,0:55:37.020
+this kind of test and play and so today
+
+0:55:33.810,0:55:38.329
+we have seen how you can encode how can
+
+0:55:37.020,0:55:41.119
+you code up a
+
+0:55:38.329,0:55:43.670
+auto-encoder, all you need is like three
+
+0:55:41.119,0:55:45.289
+lines four lines of code which are like
+
+0:55:43.670,0:55:47.869
+like what are the differences between
+
+0:55:45.289,0:55:49.429
+the playing an auto-encoder and so the
+
+0:55:47.869,0:55:50.779
+difference is that you have the
+
+0:55:49.429,0:55:53.259
+reparameterization
+
+0:55:50.779,0:55:57.319
+reparameterization, reparameterize module
+
+0:55:53.259,0:55:59.900
+method here and then you know just these
+
+0:55:57.319,0:56:03.640
+three lines over here right so you have
+
+0:55:59.900,0:56:06.769
+like six lines plus the relative entropy
+
+0:56:03.640,0:56:07.969
+the architecture that's completely
+
+0:56:06.769,0:56:10.910
+different so it's completely orthogonal
+
+0:56:07.969,0:56:12.469
+right one thing is gonna be at the
+
+0:56:10.910,0:56:13.729
+architecture which is based on the
+
+0:56:12.469,0:56:14.959
+current input you can use a
+
+0:56:13.729,0:56:16.339
+convolutional net you can use a
+
+0:56:14.959,0:56:18.289
+recurrent net you can use anything you
+
+0:56:16.339,0:56:21.380
+want and the other thing is the fact
+
+0:56:18.289,0:56:24.319
+that you convert some deterministic
+
+0:56:21.380,0:56:27.529
+Network into a network that allows you
+
+0:56:24.319,0:56:31.640
+to sample and then generate samples from
+
+0:56:27.529,0:56:33.589
+a distribution okay so we never had to
+
+0:56:31.640,0:56:34.670
+talk about distributions before we
+
+0:56:33.589,0:56:36.949
+didn't know how to generate
+
+0:56:34.670,0:56:40.579
+distributions now with generative model
+
+0:56:36.949,0:56:45.319
+you can actually generate data which are
+
+0:56:40.579,0:56:48.019
+basically a you know you say like a
+
+0:56:45.319,0:56:51.769
+bending a rotation or a transformation
+
+0:56:48.019,0:56:53.029
+of whatever with the original Gaussian
+
+0:56:51.769,0:56:56.029
+right so we had this multivariate
+
+0:56:53.029,0:56:58.640
+gaussian and then the decoder takes this
+
+0:56:56.029,0:57:00.739
+ball and then it shapes it to make it
+
+0:56:58.640,0:57:02.989
+look like the input the input maybe like
+
+0:57:00.739,0:57:05.449
+something curved you have this bubble
+
+0:57:02.989,0:57:08.359
+here this big bubble of bubbles and then
+
+0:57:05.449,0:57:11.799
+you the decoder gets it back to whatever
+
+0:57:08.359,0:57:15.469
+looks like how the input looks like so
+
+0:57:11.799,0:57:18.289
+all you need depends on the specific
+
+0:57:15.469,0:57:20.509
+data you are using for MNIST this is
+
+0:57:18.289,0:57:22.849
+sufficient if you're using a
+
+0:57:20.509,0:57:25.849
+convolutional version is maybe worth
+
+0:57:22.849,0:57:27.650
+working much better the point is that
+
+0:57:25.849,0:57:30.170
+this class was about variational auto-encoder
+
+0:57:27.650,0:57:31.789
+know how to get crazy stuff all the
+
+0:57:30.170,0:57:33.380
+crazy stuff is simply you know adding
+
+0:57:31.789,0:57:36.979
+several of these things I've been
+
+0:57:33.380,0:57:38.739
+teaching you so far but the bit about
+
+0:57:36.979,0:57:44.440
+variational auto-encoder I think it was
+
+0:57:38.739,0:57:49.839
+covered mostly here okay okay thanks
+
+0:57:44.440,0:57:52.839
+other questions? no okay okay that was it
+
+0:57:49.839,0:57:59.380
+okay thank you so much for joining us
+
+0:57:52.839,0:58:04.530
+okay everyone almost left 70% see you
+
+0:57:59.380,0:58:04.530
+next week bye all right okay
+
