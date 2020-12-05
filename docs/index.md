@@ -290,6 +290,7 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 14 =============================== -->
     <tr>
+      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
       <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
       <td rowspan="2">Lecture</td>
       <td><a href="en/week14/14-1">Structured Prediction</a></td>
