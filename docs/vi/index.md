@@ -1,10 +1,10 @@
 ---
-layout: Defaut
+layout: default
 title: HỌC SÂU
 author: Alfredo Canziani
-lang-ref: Home
+lang-ref: home
 lang: vi
-translation-date: 16 Sept 2020
+translation-date: 16 Sep 2020
 translator: Huynh Nguyen
 ---
 
@@ -15,7 +15,7 @@ translator: Huynh Nguyen
 | Thực hành    | Thứ ba 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Mã truy cập: `DLSP20` |
 | Tài liệu    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
-    
+
 ## Mô tả khóa học
 
 Khóa học này liên quan đến các kỹ thuật mới nhất trong học sâu (Deep learning) và học biểu diễn (Representation learning), nội dung tập trung vào học sâu có giám sát (Supervised earning) và không giám sát (Unsupervised learning), phương pháp nhúng (Embedding method), học số liệu (Metric learning), mạng tích chập (Convolutional) và lặp lại (recurrent nets), với các ứng dụng cho thị giác máy tính (Computer vision), hiểu ngôn ngữ tự nhiên (Natural language understanding) và nhận diện giọng nói (Speech recognition). Các điều kiện tiên quyết, bao gồm: Giới thiệu về khoa học dữ liệu ([DS-GA 1001](https://cds.nyu.edu/academics/ms-curriculum/)) hoặc các khóa học máy học cấp độ sau đại học.
@@ -292,7 +292,7 @@ Khóa học này liên quan đến các kỹ thuật mới nhất trong học s�
     </tr>
 <!-- =============================== WEEK 14 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href={{site.baseurl}}/vi/Week14/14">⑭</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/vi/Week14/14">⑭</a></td>
       <td rowspan="2">Bài giảng</td>
       <td><a href="{{site.baseurl}}/vi/Week14/14-1">Cấu trúc dự đoán (Structured Prediction)</a></td>
       <td rowspan="2">
