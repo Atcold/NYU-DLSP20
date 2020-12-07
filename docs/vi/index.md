@@ -18,7 +18,7 @@ translator: Huynh Nguyen
 
 ## Mô tả khóa học
 
-Khóa học này liên quan đến các kỹ thuật mới nhất trong học sâu (Deep learning) và học biểu diễn (Representation learning), nội dung tập trung vào học sâu có giám sát (Supervised earning) và không giám sát (Unsupervised learning), phương pháp nhúng (Embedding method), học số liệu (Metric learning), mạng tích chập (Convolutional) và lặp lại (recurrent nets), với các ứng dụng cho thị giác máy tính (Computer vision), hiểu ngôn ngữ tự nhiên (Natural language understanding) và nhận diện giọng nói (Speech recognition). Các điều kiện tiên quyết, bao gồm: Giới thiệu về khoa học dữ liệu ([DS-GA 1001](https://cds.nyu.edu/academics/ms-curriculum/)) hoặc các khóa học máy học cấp độ sau đại học.
+Khóa học này liên quan đến các kỹ thuật mới nhất trong học sâu (Deep learning) và học biểu diễn (Representation learning), nội dung tập trung vào học sâu có giám sát (Supervised learning) và không giám sát (Unsupervised learning), các phương pháp nhúng (Embedding methods), học số liệu (Metric learning), mạng tích chập (Convolutional) và lặp lại (recurrent nets), với các ứng dụng cho thị giác máy tính (Computer vision), hiểu ngôn ngữ tự nhiên (Natural language understanding) và nhận diện giọng nói (Speech recognition). Các điều kiện tiên quyết, bao gồm: Giới thiệu về khoa học dữ liệu ([DS-GA 1001](https://cds.nyu.edu/academics/ms-curriculum/)) hoặc các khóa học máy học cấp độ sau đại học.
 
 ## Bài giảng
 
