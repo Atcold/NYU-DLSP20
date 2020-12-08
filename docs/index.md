@@ -10,7 +10,7 @@ lang-ref: home
 | INSTRUCTORS | Yann LeCun & Alfredo Canziani |
 | LECTURES    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRACTICA    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIAL    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
@@ -290,6 +290,7 @@ This course concerns the latest techniques in deep learning and representation l
     </tr>
 <!-- =============================== WEEK 14 =============================== -->
     <tr>
+      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
       <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
       <td rowspan="2">Lecture</td>
       <td><a href="en/week14/14-1">Structured Prediction</a></td>
@@ -308,6 +309,23 @@ This course concerns the latest techniques in deep learning and representation l
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/08%20-%20Bayesian%20NN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/13-bayesian_nn.ipynb">📓</a>
         <a href="https://youtu.be/DL7iew823c0">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2">Practicum</td>
+      <td><a href="en/week15/15-1">Inference for Latent-Variable EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="en/week15/15-2">Training Latent-Variable EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
       </td>
     </tr>
   </tbody>
