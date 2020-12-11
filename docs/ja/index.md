@@ -274,6 +274,65 @@ translator: Go Inoue
         <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 13 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="2">講義</td>
+      <td><a href="en/week13/13-1">グラフ畳み込みネットワーク I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
+        <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week13/13-2">グラフ畳み込みネットワーク II</a></td></tr>
+    <tr>
+      <td rowspan="1">演習</td>
+      <td><a href="en/week13/13-3">グラフ畳み込みネットワーク III</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
+        <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 14 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
+      <td rowspan="2">講義</td>
+      <td><a href="en/week14/14-1">構造化予測</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
+        <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week14/14-2">グラフ手法</a></td></tr>
+    <tr>
+      <td rowspan="1">演習</td>
+      <td><a href="en/week14/14-3">正則化とベイズ</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/08%20-%20Bayesian%20NN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/13-bayesian_nn.ipynb">📓</a>
+        <a href="https://youtu.be/DL7iew823c0">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2">演習</td>
+      <td><a href="en/week15/15-1">潜在変数EBMの推論</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="en/week15/15-2">潜在変数EBMの学習</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -286,9 +345,20 @@ translator: Go Inoue
 |講師|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科助教|
 |アシスタント|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
 |サイト管理者|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
+
+
+<!--
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Raghav Jajodia <br>rj1408@nyu.edu|
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Priyank Pathak <br>pp1953@nyu.edu|
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
 |採点者|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
+-->
+
+
+## 注意事項
+
+このサイトにあるテキストの元はニューヨーク大学の学生のレクチャー・ノートのです。日本語の翻訳は複数のボランティアによって翻訳されたものであるため、言葉遣い・訳語・スタイルが統一されてないことがあります。
+
+また、誤訳、翻訳漏れ、入力ミスもあるかもしれません。それに気づく場合、[GitHub](https://github.com/Atcold/pytorch-Deep-Learning/pulls)にプルリクエストを提出し、タイトルに`[JA]`(和訳に関わるもの)を記載していただけると嬉しいです。

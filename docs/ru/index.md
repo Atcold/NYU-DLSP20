@@ -325,6 +325,23 @@ lang: ru
         <a href="https://youtu.be/DL7iew823c0">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="{{site.baseurl}}/ru/week15/15">⑮</a></td>
+      <td rowspan="2">Практикум</td>
+      <td><a href="{{site.baseurl}}/ru/week15/15-1">Вывод для энергетических моделей со скрытыми переменными</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="{{site.baseurl}}/ru/week15/15-2">Обучение энергетических моделей со скрытыми переменными</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
