@@ -11,7 +11,7 @@ lang: sr
 | PREDAVAČI   | Yann LeCun & Alfredo Canziani |
 | LEKCIJE     | Ponedeljak 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | VEŽBE       | Utorak 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Pristupni kod: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIJALI  | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
