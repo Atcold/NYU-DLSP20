@@ -17,7 +17,7 @@ lang: sr
 
 ## Opis
 
-Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. Fokusira se na nadgledano i nenadgledano učenje, embedding metode, učenje metrika, konvolucione i rekurentne neuronske mreže, sa primenama u kompjuterskoj viziji, razumevanju prirodnog jezika i prepoznavanju govora. Potrebno predznanje: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) ili kurs mašinskog učenja na nivou master ili doktorskih studija.
+Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacija. Fokusira se na nadgledano i nenadgledano učenje, embedding metode, učenje metrika, konvolucione i rekurentne neuronske mreže, sa primenama u računarskoj viziji, razumevanju prirodnog jezika i prepoznavanju govora. Potrebno predznanje: [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) ili kurs mašinskog učenja na nivou master ili doktorskih studija.
 
 ## Lekcije
 
@@ -136,7 +136,7 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
         <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week06/06-2">Rekurentne neuronske mreže (RNN) i attention mehanizam</a></td></tr>
+    <tr><td><a href="en/week06/06-2">Rekurentne neuronske mreže (RNN) i mehanizam pažnje (attention)</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
       <td><a href="en/week06/06-3">Obučavanje RNN</a></td>
@@ -177,7 +177,7 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
         <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week08/08-2">Regularizovani latent</a></td></tr>
+    <tr><td><a href="en/week08/08-2">Regularizovani latentni modeli energije</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
       <td><a href="en/week08/08-3">Obučavanje varijacionih autoenkodera (VAE)</a></td>
@@ -211,13 +211,13 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
     <tr>
       <td rowspan="3" align="center"><a href="en/week10/10">⑩</a></td>
       <td rowspan="2">Lekcije</td>
-      <td><a href="en/week10/10-1">Kompjuterska vizija (CV) SSL I</a></td>
+      <td><a href="en/week10/10-1">Računarska vizija (CV) SSL I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
         <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week10/10-2">Kompjuterska vizija (CV) SSL II</a></td></tr>
+    <tr><td><a href="en/week10/10-2">Računarska vizija (CV) SSL II</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
       <td><a href="en/week10/10-3">Prediktivno upravljanje</a></td>
@@ -262,7 +262,7 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
     <tr><td><a href="en/week12/12-2">Duboko učenje za obradu prirodnih jezika (NLP) II</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
-      <td><a href="en/week12/12-3">Attention mehanizam i transformer</a></td>
+      <td><a href="en/week12/12-3">Mehanizmi pažnje (attention) i Transformeri</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
@@ -273,16 +273,16 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
     <tr>
       <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
       <td rowspan="2">Lekcije</td>
-      <td><a href="en/week13/13-1">Graf-konvolucione mreže (GCN) I</a></td>
+      <td><a href="en/week13/13-1">Grafovske konvolucione mreže (GCN) I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
         <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week13/13-2">Graf-konvolucione mreže (GCN) II</a></td></tr>
+    <tr><td><a href="en/week13/13-2">Grafovske konvolucione mreže (GCN) II</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
-      <td><a href="en/week13/13-3">Graf-konvolucione mreže (GCN) III</a></td>
+      <td><a href="en/week13/13-3">Grafovske konvolucione mreže (GCN) III</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
@@ -299,7 +299,7 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
         <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week14/14-2">Grafovske metode</a></td></tr>
+    <tr><td><a href="en/week14/14-2">Grafičke metode</a></td></tr>
     <tr>
       <td rowspan="1">Praktikum</td>
       <td><a href="en/week14/14-3">Regularizacija i Bajesovske neuronske mreže</a></td>
@@ -319,10 +319,10 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
 
 | Uloga| Slika | Kontakt | O nama |
 |:-----|:-----:|:--------|:------|
-|Predavač  |<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver profesor računarskih nauka na NYU<br>i dobitnih Turing nagrade|
+|Predavač  |<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Profesor računarskih nauka na NYU<br>i dobitnih Turing nagrade|
 |Predavač  |<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. računarskih nauka na NYU|
-|Asistent  |<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student računarskih nauka na NYU|
-|Webmaster |<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student računarskih nauka na NYU|
+|Asistent  |<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doktorski student računarskih nauka na NYU|
+|Webmaster |<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doktorski student računarskih nauka na NYU|
 
 
 <!--
@@ -337,8 +337,8 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacije. F
 
 ## Disclaimer
 
-Svi ostali tekstovi na ovom sajtu su beleške sa predavanja studenata New York Univerziteta tokom lekcija koje su držali Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
-Dakle, tekstove na engleskom je pisalo oko 130 ljudi pa to utiče na homogenost teksta (nešto je u prošlom vremenu, nešto u sadašnjem; skraćenice nisu uvek iste; neke rečenice su kratke, a neke su u 5-6 redova, itd.).
-Moguće je da postoje neke greške: greške u kucanju, slovne greške, itd. Ako primetite neku, pozivamo vas da postavite PR na [GitHub direktorijumu sajta](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifirajući sa `[EN]` da je u vezi tekstova na engleskom.
+Svi ostali tekstovi na ovom sajtu su beleške sa predavanja studenata Njujorškog Univerziteta tokom lekcija koje su držali Yann LeCun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
+Dakle, tekstove na engleskom je pisalo oko 130 ljudi što utiče na homogenost teksta (nešto je napisano u prošlom vremenu, nešto u sadašnjem; skraćenice nisu uvek iste; neke rečenice su kratke, a neke su u 5-6 redova, itd.).
+Moguće je da postoje neke greške: greške u kucanju, slovne greške, itd. Ako primetite neku, pozivamo vas da postavite PR na [GitHub direktorijumu sajta](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifirajući sa `[SR]` da je u vezi tekstova na srpskom.
 
 Želimo vam duboko čitanje!
