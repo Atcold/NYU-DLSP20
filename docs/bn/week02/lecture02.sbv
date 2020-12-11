@@ -1,0 +1,2783 @@
+0:00:00.000,0:00:04.740
+I guess we can get started alright so today we're going to talk about back
+
+0:00:04.740,0:00:08.849
+prop and I'm sure for some of you a lot of this is gonna look familiar
+
+0:00:08.849,0:00:14.719
+I'm going to start with some sort of ring pressure is about busy concepts and
+
+0:00:14.719,0:00:20.640
+in talked about sort of a more general formulation of back prop a little later
+
+0:00:20.640,0:00:27.930
+and then tomorrow alfredo will go through like how you use Otto grad and
+
+0:00:27.930,0:00:33.840
+things like this in PI torch okay so basic concepts we have
+
+0:00:33.840,0:00:39.540
+parameterize models so parameterize models are nothing more than functions
+
+0:00:39.540,0:00:44.040
+that depends on that depend on two parameters an input and a trainable
+
+0:00:44.040,0:00:47.969
+parameter and there is no conceptual difference between the parameter and the
+
+0:00:47.969,0:00:52.410
+input they're just they're both parameters of the of the deterministic
+
+0:00:52.410,0:01:01.500
+function the the thing is though the parameter is shared across training
+
+0:01:01.500,0:01:04.530
+samples whereas the samples of course are different for every training samples
+
+0:01:04.530,0:01:11.520
+so in things like in most deep learning for Mark's the parameter is actually
+
+0:01:11.520,0:01:15.540
+implicit to the to the parameterize function when you call the function you
+
+0:01:15.540,0:01:20.580
+don't actually pass the parameter value it's sort of stored inside if you if at
+
+0:01:20.580,0:01:28.860
+least in the object-oriented versions of models but just need to remember that
+
+0:01:28.860,0:01:32.130
+you know you have primary trans model is just a prioritized function it takes an
+
+0:01:32.130,0:01:37.829
+input and it has a parameter vector it produces an output in simple supervised
+
+0:01:37.829,0:01:41.549
+running this output goes into a cost function that compares the output of the
+
+0:01:41.549,0:01:47.159
+model with the output you want here is called C the prediction the output of
+
+0:01:47.159,0:01:51.720
+the module is called Y bar and the C function compared Y in Y bar where why
+
+0:01:51.720,0:02:00.090
+is he at what you want Y bar is he I put the output you get so I'm giving here
+
+0:02:00.090,0:02:03.540
+two very simple examples parameterized functions which I'm sure you're familiar
+
+0:02:03.540,0:02:07.770
+with the first one is a linear model so a linear model just computes a weighted
+
+0:02:07.770,0:02:10.720
+sum of the components of its input vector multiply
+
+0:02:10.720,0:02:15.610
+by weights and if you do linear regression with queloz
+
+0:02:15.610,0:02:20.500
+the the C function is just the squared distance you create a distance between
+
+0:02:20.500,0:02:28.060
+the Y vector and the Y bar vector when y bar can be vectors or scalars or tensors
+
+0:02:28.060,0:02:33.610
+or whatever doesn't matter things with numbers in them basically or things that
+
+0:02:33.610,0:02:40.180
+you can compute distances between that's actually all you need technically but
+
+0:02:40.180,0:02:45.280
+who needs a slightly more complicated prioritized function here down on the
+
+0:02:45.280,0:02:52.990
+bottom which actually computes nearest neighbor so here there is the input X
+
+0:02:52.990,0:03:01.300
+and then W is a matrix each row of the matrix is indexed by the index K and to
+
+0:03:01.300,0:03:13.630
+compute the output we actually I put the number K that corresponds to the row of
+
+0:03:13.630,0:03:18.160
+W that is closest to X okay so we compute the distance between X and a
+
+0:03:18.160,0:03:24.340
+particular row of W which is wk and then we value overall case and we figure out
+
+0:03:24.340,0:03:28.450
+which of those difference is smallest okay
+
+0:03:28.450,0:03:35.140
+and we output that K so augment that's what the argument function does right it
+
+0:03:35.140,0:03:42.010
+returns the the value of the argument that minimizes the function right so
+
+0:03:42.010,0:03:46.540
+it's a function of K and that returns the K that minimizes that function the
+
+0:03:46.540,0:03:50.860
+point I'm making with this which is a complicated way of explaining nearest
+
+0:03:50.860,0:03:55.810
+neighbor is that the the type of competition that takes place in your
+
+0:03:55.810,0:03:58.600
+parametrize model could be very complicated it doesn't have to be just
+
+0:03:58.600,0:04:02.250
+like a neuron that something that you compute with weighted sums and and
+
+0:04:02.250,0:04:06.370
+anomaly era T's it can be something complicated and involves a minimization
+
+0:04:06.370,0:04:09.070
+of something else I mean what could be the minima with
+
+0:04:09.070,0:04:14.820
+some function okay and we'll come back to this in a few weeks
+
+0:04:14.820,0:04:17.820
+yes you can denote it in a different way I
+
+0:04:26.229,0:04:34.919
+could have written W the W matrix multiplied by let's say the Z vector and
+
+0:04:34.919,0:04:41.020
+the Z vector would be constrained to be a a one hut and in which case we would
+
+0:04:41.020,0:04:46.690
+select a column of W and you could do a mean over this is a vector okay then it
+
+0:04:46.690,0:04:49.840
+would be a different notation but kind of a different effect a similar effect
+
+0:04:49.840,0:04:53.860
+but then you know I would have to read to write to another equation like you
+
+0:04:53.860,0:05:00.190
+know Z is one hot and explain what that means let me forget about the notation
+
+0:05:00.190,0:05:05.139
+you know just remember the fact that there could be something complicated
+
+0:05:05.139,0:05:08.289
+going on in this parameterize function it's not necessarily just you know a
+
+0:05:08.289,0:05:15.210
+very simple very simple thing so what I've done with this diagram here is that
+
+0:05:15.210,0:05:20.110
+I've introduced a sort of way of denoting of sort of writing neural nets
+
+0:05:20.110,0:05:25.300
+and various other models as block diagrams and I'm using three different
+
+0:05:25.300,0:05:33.909
+types of symbols here or for really the bubbles represent variables the bubbles
+
+0:05:33.909,0:05:37.630
+that I've filled up represent variables that are observed so X is an observed
+
+0:05:37.630,0:05:40.509
+variable is the input to your system so you observe it on the training set and
+
+0:05:40.509,0:05:47.349
+the test set and whatever Y bar is a computed variable so it's it's something
+
+0:05:47.349,0:05:50.919
+that's just you know produced by a deterministic function you can just
+
+0:05:50.919,0:05:56.860
+compute from the observe variable through a deterministic function so Y
+
+0:05:56.860,0:06:00.190
+similarly is an observed variable because on the or it's observed on the
+
+0:06:00.190,0:06:02.740
+training sites it's not observed on the test set but during training it's
+
+0:06:02.740,0:06:07.750
+observed and then you have two types of functional modules one type is those
+
+0:06:07.750,0:06:12.569
+kind of blue round shaped modules which represent deterministic functions and
+
+0:06:12.569,0:06:21.000
+the the round side indicates in which direction it's easy to compute okay so
+
+0:06:21.000,0:06:26.770
+here you can compute Y bar from X it's considerably more complicated to compute
+
+0:06:26.770,0:06:29.520
+X from Y bar if I give you a white bar but you have a
+
+0:06:32.230,0:06:37.870
+hard time giving me an X that corresponds to it okay and then you have
+
+0:06:37.870,0:06:42.780
+another type of module which are usually used to represent cost functions
+
+0:06:42.780,0:06:46.830
+represented by squares red squares to make them more visible in this case and
+
+0:06:46.830,0:06:53.410
+they have an implicit output which is a scalar output a single number and they
+
+0:06:53.410,0:06:57.490
+can take multiple inputs and basically compute a single number usually a
+
+0:06:57.490,0:07:02.670
+distance between the inputs or something similar to that
+
+0:07:03.570,0:07:09.460
+so with also basic symbols you can you know you can represent sort of standard
+
+0:07:09.460,0:07:14.560
+supervised learning systems for those of you who are familiar with graphical
+
+0:07:14.560,0:07:19.810
+models this this is a similar notation that is used in what's called factor
+
+0:07:19.810,0:07:24.940
+graphs where the squares where factors factor graphs don't have those
+
+0:07:24.940,0:07:27.460
+deterministic functions because they don't care about in which you know which
+
+0:07:27.460,0:07:38.230
+way dependencies can be computed but in our case it's really important okay so
+
+0:07:38.230,0:07:42.430
+loss functions so loss functions are things that we minimize during training
+
+0:07:42.430,0:07:50.320
+and these two types of rust is the per sample loss so in this case L of X Y W
+
+0:07:50.320,0:07:55.570
+so you give it a sample a pair x and y and evaluate the parameter and it
+
+0:07:55.570,0:07:59.350
+computes just the scalar value okay in all case here we use a very simple loss
+
+0:07:59.350,0:08:03.310
+which is just equal to the cost module the output of the customer you Allah
+
+0:08:03.310,0:08:07.330
+will put on top over system this is kind of the standard sort of supervised
+
+0:08:07.330,0:08:15.160
+learning paradigm here where the loss is simply the average I mean the first
+
+0:08:15.160,0:08:19.780
+sample loss is just the output of the cost function that we we put in it's not
+
+0:08:19.780,0:08:25.090
+always the case and then the loss that we actually minimize to retraining is
+
+0:08:25.090,0:08:30.430
+the average loss over a training set so training set s is a set of pairs X Y P Y
+
+0:08:30.430,0:08:36.940
+of P for P equals 0 to P minus 1 and the overall loss which depends of course on
+
+0:08:36.940,0:08:40.240
+the training set and the parameter values is the
+
+0:08:40.240,0:08:44.669
+average of the per sample loss overall the samples
+
+0:08:49.529,0:09:00.509
+and I forgot to say in the first son here it's X Y belongs to s so machine
+
+0:09:00.509,0:09:04.110
+learning is all about optimizing functions most of the time minimizing
+
+0:09:04.110,0:09:09.660
+functions sometimes maximizing functions occasionally finding Nash equilibria
+
+0:09:09.660,0:09:13.170
+between two functions as in the case of Ganz but most of the time we minimize
+
+0:09:13.170,0:09:19.680
+functions and we do this with gradient based methods not necessarily gradient
+
+0:09:19.680,0:09:22.680
+descent but gradient based methods what is a gradient based method gradient
+
+0:09:22.680,0:09:28.470
+based method is a method that finds the minimum of a function assuming that you
+
+0:09:28.470,0:09:33.059
+get easily compute the gradient of that function so that assumes the function is
+
+0:09:33.059,0:09:37.290
+more or less differentiable it doesn't actually have to be everywhere
+
+0:09:37.290,0:09:42.300
+differentiable technically it needs to be continuous and it needs to be almost
+
+0:09:42.300,0:09:47.009
+everywhere differentiable otherwise you run into trouble but it can have kinks
+
+0:09:47.009,0:09:50.990
+in it as long as they're not too nasty and grainy descent of course as you
+
+0:09:54.300,0:09:59.790
+probably know consists in computing the the gradient so you see a function here
+
+0:09:59.790,0:10:09.000
+at the top it's got a minimum at the top right i drawn the lines of equal cost of
+
+0:10:09.000,0:10:13.470
+that function and the arrows that you see are the gradient vectors the
+
+0:10:13.470,0:10:19.199
+gradient is pointing up okay at every every location and the gradient is
+
+0:10:19.199,0:10:24.059
+always orthogonal to the lines of equal cost okay
+
+0:10:24.059,0:10:33.569
+equal altitude if you want okay so when in this set is like you know being in
+
+0:10:33.569,0:10:37.230
+the mountain in the fog and it's night and you can't see anything but you want
+
+0:10:37.230,0:10:39.720
+to go down to the village and so you look around you and you look for the
+
+0:10:39.720,0:10:45.149
+direction of steepest descent and you take a step okay so the algorithm here
+
+0:10:45.149,0:10:50.339
+at the top the division vector which is your position is replaced by the double
+
+0:10:50.339,0:10:55.139
+your current W vector minus some constant times the gradient vector and
+
+0:10:55.139,0:11:00.230
+the gradient vector points up so when you do - you're kind of walking downhill
+
+0:11:00.230,0:11:06.360
+in the direction of steepest descent now this is if ADA is a scalar constant
+
+0:11:06.360,0:11:13.350
+but in sophisticated algorithms that can actually be a matrix so if it's a matrix
+
+0:11:13.350,0:11:18.860
+if it's a positive semi definite matrix it will still go down go downhill
+
+0:11:18.860,0:11:23.580
+except that not necessarily in the direction of steepest descent in fact
+
+0:11:23.580,0:11:27.450
+the direction of steepest descent is not necessarily the one you want to go to if
+
+0:11:27.450,0:11:31.980
+you have a situation like the one at the top where the the value is a little Ella
+
+0:11:31.980,0:11:35.640
+gated the gradient actually does not point towards the minimum it point
+
+0:11:35.640,0:11:40.920
+started you know off off center and so it should go directly to the minimum you
+
+0:11:40.920,0:11:43.200
+don't want to follow the gradient you want to be a little smarter than this
+
+0:11:43.200,0:11:49.950
+and by using sort of idea that all matrices you can actually you could in
+
+0:11:49.950,0:11:57.270
+principle do this with so called second order methods which are still gradient
+
+0:11:57.270,0:12:03.420
+based methods but they're kind of impractical in most cases we'll talk
+
+0:12:03.420,0:12:10.560
+about some issues with this in a few weeks now there are algorithms that are
+
+0:12:10.560,0:12:15.060
+not gradient based optimization algorithms are not gradient based so
+
+0:12:15.060,0:12:19.920
+when your function is not differentiable when it's like a golf course you know
+
+0:12:19.920,0:12:25.080
+it's flat and it's got a hole in it or when it's kind of staircase like where
+
+0:12:25.080,0:12:28.380
+the gradient doesn't give you an information useful information or when
+
+0:12:28.380,0:12:34.320
+it may be differentiable but you don't know the function you don't you know you
+
+0:12:34.320,0:12:37.800
+don't write you didn't write the program that actually computes it because that
+
+0:12:37.800,0:12:43.890
+function might might be the entire environment around you then you cannot
+
+0:12:43.890,0:12:49.070
+compute the gradient efficiently ok so then you have to resort to other methods
+
+0:12:49.070,0:12:55.920
+methods are called zeroth order methods or gradient free methods and there's a
+
+0:12:55.920,0:13:00.630
+whole bunch of whole family of those functions of those methods which I'm not
+
+0:13:00.630,0:13:04.950
+going to talk about ok at all deep learning is all about gradient
+
+0:13:04.950,0:13:10.170
+based methods that said if you're interested in reinforcement learning
+
+0:13:10.170,0:13:13.709
+most of reinforcement learning actually uses
+
+0:13:13.709,0:13:18.899
+great at estimation without the gradient what you want is I don't know you want
+
+0:13:18.899,0:13:27.380
+to get a robot to learn to ride a bike and once in a while the robot Falls and
+
+0:13:27.380,0:13:32.940
+you don't have a gradient for the objective function that says don't fall
+
+0:13:32.940,0:13:37.980
+or the objective function that measures how long you the bike stays up without
+
+0:13:37.980,0:13:43.649
+falling nobody tells you what to do to minimize that cost function right so you
+
+0:13:43.649,0:13:48.510
+try things you can't compute a gradient of that function okay so in RL your cost
+
+0:13:48.510,0:13:52.320
+function is not differentiable most of the time but the network that computes
+
+0:13:52.320,0:13:57.389
+the output that goes into the environment is differentiable okay so
+
+0:13:57.389,0:14:02.130
+from that point on that's that's great in this only the cost is not
+
+0:14:02.130,0:14:05.910
+differentiable okay so there'll be a situation like the
+
+0:14:05.910,0:14:12.149
+diagram I showed earlier imagine here that G is differentiable you can compute
+
+0:14:12.149,0:14:15.209
+the gradient of the output of G with respect to the parameters and its input
+
+0:14:15.209,0:14:18.120
+and everything but C is not differentiable in fact it's completely
+
+0:14:18.120,0:14:21.839
+unknown the only thing you know about C is that if you give it a Y bar and Y it
+
+0:14:21.839,0:14:26.010
+tells you the value but doesn't give you the gradient okay that's kind of what RL
+
+0:14:26.010,0:14:29.880
+is there are the things about RL okay but that's the basic difference between
+
+0:14:29.880,0:14:37.850
+reinforcement learning and supervised learning yeah
+
+0:14:43.930,0:14:48.410
+well the reward is just the output of C that's all okay so it's use a black box
+
+0:14:48.410,0:14:53.839
+and what you get is the output of C you don't you don't get a Y either right so
+
+0:14:53.839,0:14:58.399
+you're not being told what the correct answer is you just talk about black box
+
+0:14:58.399,0:15:02.060
+you give it a white bar and it gives your sink that's it
+
+0:15:02.060,0:15:10.730
+you can't compute the gradient of C with respect to Y bar that's right so what
+
+0:15:10.730,0:15:13.819
+you do is you change Y by a little bit and you see the C go up or down
+
+0:15:13.819,0:15:19.819
+two goes down you kind of reinforce that he goes up you do something else okay so
+
+0:15:19.819,0:15:23.689
+basically you're telling the system how good it is doing without turning it the
+
+0:15:23.689,0:15:28.180
+correct answer and it doesn't have access to acquit yeah
+
+0:15:28.180,0:15:34.129
+okay so what that tells you is that RL is horribly inefficient right because
+
+0:15:34.129,0:15:41.120
+you don't have a gradient so you have to try you know if the if the output Y bar
+
+0:15:41.120,0:15:46.550
+is row dimensional then you know it's okay right you can you can try to make
+
+0:15:46.550,0:15:51.560
+it larger smaller things like that but it's not too bad if Y bar is a high
+
+0:15:51.560,0:15:56.959
+dimensional vector there's like such a huge space to search it's probably no
+
+0:15:56.959,0:16:02.209
+way you're gonna find an optimal value for it unless you try lots and lots of
+
+0:16:02.209,0:16:10.370
+different times right so that's a huge problem with RL and I would take weeks
+
+0:16:10.370,0:16:14.839
+in RL actually I'm not gonna talk about hourly this course actually except today
+
+0:16:14.839,0:16:21.290
+maybe but a very properly technique in RL is so-called actual critic methods
+
+0:16:21.290,0:16:27.050
+and a critic method basically consists in having a second C module which you
+
+0:16:27.050,0:16:32.059
+know which is a trainable module and you train you see your own C module which is
+
+0:16:32.059,0:16:36.769
+differentiable to approximate the one to approximate the cost function the value
+
+0:16:36.769,0:16:42.949
+function that you get the rewards the reward function you get so reward is the
+
+0:16:42.949,0:16:49.730
+inverse of a cost okay so I mean this is a negative of a cost and you get more
+
+0:16:49.730,0:16:53.900
+like your punishment actually but so then that that's a way
+
+0:16:53.900,0:16:58.250
+of making the cost function differentiable or at least approximating
+
+0:16:58.250,0:17:02.600
+it by a differentiable function and that you can just use back pop so the you
+
+0:17:02.600,0:17:11.839
+know AC a AC and a AAA C are versions of this actor critic Adventures actor
+
+0:17:11.839,0:17:23.410
+critic etc okay right so what you have to know how to do is compute the
+
+0:17:23.410,0:17:30.080
+gradient of your per sample you of your objective function with respect to the
+
+0:17:30.080,0:17:36.110
+parameters in practice we'll use the caste gradient as you probably aware so
+
+0:17:36.110,0:17:40.250
+instead of computing the gradient of the entire objective function which is the
+
+0:17:40.250,0:17:48.650
+average of all samples we just take one sample compute the loss L Big L compute
+
+0:17:48.650,0:17:51.860
+the gradient of these charts with respect to their parameters and then
+
+0:17:51.860,0:18:00.200
+take one step in the negative gradient direction okay so that's the the second
+
+0:18:00.200,0:18:05.090
+formula here W is replaced by W minus some step size times the gradient of the
+
+0:18:05.090,0:18:12.970
+per sample loss function with respect to the parameter for a given sample XP YP
+
+0:18:13.840,0:18:32.960
+yep yep okay so in practice people use batches so instead of doing this on a
+
+0:18:32.960,0:18:36.560
+single sample so first of all if you do this on a single sample you're going to
+
+0:18:36.560,0:18:40.070
+get a very noisy trajectory you're gonna get trajectory like the one you see here
+
+0:18:40.070,0:18:44.720
+at the bottom where instead of the parameter vector directly kind of going
+
+0:18:44.720,0:18:50.090
+downhill it's going to oscillate so some people say it should not be called SGD
+
+0:18:50.090,0:18:53.030
+which means to get the gradient descent because it's not actually a descent
+
+0:18:53.030,0:18:56.390
+algorithm should be called stochastic gradient optimization but it's
+
+0:18:56.390,0:19:00.690
+stochastic so it's very noisy every sample you get is going to
+
+0:19:00.690,0:19:03.990
+in a different direction it's just the average that pulls you towards the
+
+0:19:03.990,0:19:09.780
+minimum of the average so it looks inefficient but in fact it's actually
+
+0:19:09.780,0:19:14.040
+fast it's much faster than batch gradient at least in the context of
+
+0:19:14.040,0:19:19.830
+machine learning when the samples had some redundancy between them and it goes
+
+0:19:19.830,0:19:24.510
+faster to do stochastic gradient so to the the question of batching so what
+
+0:19:24.510,0:19:28.440
+people do most of the time is that they compute the average of the gradient over
+
+0:19:28.440,0:19:34.920
+a batch of samples not a single sample and then do one step and the only reason
+
+0:19:34.920,0:19:44.300
+for doing this this has nothing to do with you know algorithmic convergence
+
+0:19:44.300,0:19:48.900
+efficacy or do you think the only reason for doing this is because the kind of
+
+0:19:48.900,0:19:55.500
+hardware we that is given to us there are is our disposal GPUs and multi-core
+
+0:19:55.500,0:20:02.910
+CPUs is more efficient if you if you have batches it's easier to paralyze so
+
+0:20:02.910,0:20:07.920
+you get more efficient computation use of your hardware if you use batches it's
+
+0:20:07.920,0:20:13.200
+a bad reason for batching but we have no choice until you know someone builds a
+
+0:20:13.200,0:20:19.080
+piece of hardware that actually is properly designed the reason we have to
+
+0:20:19.080,0:20:24.050
+do this again is for is because the chips that we have you know in DDR GPUs
+
+0:20:24.050,0:20:31.440
+are so you know heavily paralyzed but they depart lies in a simple way and the
+
+0:20:31.440,0:20:37.400
+simplest way to paralyze is to batch yes yeah but okay so so here is why
+
+0:20:46.320,0:20:51.330
+stochastic gradient is is better right if I give you a million samples but in
+
+0:20:51.330,0:20:56.310
+these million samples I actually only have actually 10,000 different samples
+
+0:20:56.310,0:21:00.270
+and I repeat those 10,000 samples 100 times and I shuffle them and I give you
+
+0:21:00.270,0:21:03.930
+this training sample and I give you it's a million samples you don't know it's
+
+0:21:03.930,0:21:08.040
+actually only 10,000 samples repeated 100 times if you use batch gradient you
+
+0:21:08.040,0:21:09.840
+can compute a hundred times the same
+
+0:21:09.840,0:21:14.970
+quantities and average them so gonna spend how many times more computation
+
+0:21:14.970,0:21:19.100
+than necessary well she used to catch the gradient by the time you've seen
+
+0:21:19.100,0:21:23.370
+20,000 samples you voted on two iterations your two passes through your
+
+0:21:23.370,0:21:28.440
+entire training set okay so it'll be at least a hundred times more efficient so
+
+0:21:28.440,0:21:34.890
+the question is you know what's you know how much can you average in a batch
+
+0:21:34.890,0:21:40.410
+without using you know efficiency in the redundancy and some people have done
+
+0:21:40.410,0:21:44.970
+experiments with this is some empirical evidence that the number of samples that
+
+0:21:44.970,0:21:50.730
+you can put in a batch is roughly equal to the number of categories you have if
+
+0:21:50.730,0:21:54.930
+you do classification between one and two times the number of categories you
+
+0:21:54.930,0:21:59.820
+have so if you train on imagenet you have 1,000 categories you can you can
+
+0:21:59.820,0:22:04.160
+have batches up to about two thousand and beyond this you start losing
+
+0:22:04.160,0:22:15.360
+conversion speed that means are completely random basically I mean that
+
+0:22:15.360,0:22:19.470
+never occurs right because think about okay think about the refirming scenario
+
+0:22:19.470,0:22:23.310
+that you can be that training set and what I do is that I split it in half and
+
+0:22:23.310,0:22:27.390
+I use the first as a training set and the second one the second half as the
+
+0:22:27.390,0:22:32.250
+validation set if there is zero we doesn't see in your in your in your set
+
+0:22:32.250,0:22:36.980
+that means my machine is not gonna work at all right it's not gonna be able to
+
+0:22:36.980,0:22:41.430
+generalize on the second half right so if there is any possibility of
+
+0:22:41.430,0:22:56.320
+generalization there has to be some redundancy okay so let's start
+
+0:22:56.320,0:23:01.269
+and talk about traditional neural nets okay traditional neural nets are
+
+0:23:01.269,0:23:06.730
+basically interspersed layers of linear operations and point where's nonlinear
+
+0:23:06.730,0:23:13.090
+operations so the linear operation you have an input vector you compute a
+
+0:23:13.090,0:23:18.759
+weighted sum of that vector with a bunch of weights and in this case here we have
+
+0:23:18.759,0:23:23.320
+six inputs with three hidden units in the first layer so there's three
+
+0:23:23.320,0:23:28.320
+different sets of ways with which we compute weighted sums of the six inputs
+
+0:23:28.320,0:23:34.000
+the conceptually the operation to go from the input the six dimensional input
+
+0:23:34.000,0:23:37.570
+vector to the three dimensional weighted sum is just a matrix vector
+
+0:23:37.570,0:23:43.179
+multiplication right take the input vector multiplied by a matrix form by
+
+0:23:43.179,0:23:48.639
+the weights it's going to be a three by six matrix right and so you multiply
+
+0:23:48.639,0:23:54.730
+this by six dimensional vector you get a three dimensional vector okay so that's
+
+0:23:54.730,0:23:57.759
+the first type of operation in a case called neural net and the second type of
+
+0:23:57.759,0:24:01.389
+operation is that you take all the components of the the vector the
+
+0:24:01.389,0:24:05.559
+weighted sums and you pass them through simple nonlinearities in this case this
+
+0:24:05.559,0:24:11.500
+is called a value it's called a half wave rectification in engineering you
+
+0:24:11.500,0:24:15.000
+know there's different names for it but basically it's the positive part
+
+0:24:15.000,0:24:22.960
+mathematically so it's equal to identity when X when the argument is positive and
+
+0:24:22.960,0:24:28.889
+is equal to zero and the argument is negative and then you repeat the process
+
+0:24:28.889,0:24:33.519
+so the third stage is again a linear stage multiply that three dimensional
+
+0:24:33.519,0:24:37.330
+vector by a matrix in this case a two by three matrix you get a two dimensional
+
+0:24:37.330,0:24:44.169
+vector pass the components two nonlinearities okay I could insert a two
+
+0:24:44.169,0:24:48.450
+layer Network because I think what matters are the pairs linear non linear
+
+0:24:48.450,0:24:52.509
+okay so most people recall this a two layer Network some people recall it's a
+
+0:24:52.509,0:24:55.960
+3 layer Network because they count the variables but I don't think that's fair
+
+0:24:55.960,0:25:00.990
+you do this but you know what you don't want to do this
+
+0:25:01.680,0:25:07.080
+if there is no nonlinearities in the in the middle as I said last week you might
+
+0:25:07.080,0:25:12.780
+as well have a single layer because the product of two linear functions is a
+
+0:25:12.780,0:25:17.430
+linear function and so you can collapse them into a single one basically a
+
+0:25:17.430,0:25:29.670
+single matrix that is the product of the two matrices okay so here it is a little
+
+0:25:29.670,0:25:42.080
+more detail the sum of unit I is so s I which is a weighted sum for unit I is is
+
+0:25:42.080,0:25:50.190
+the sum over all the predecessors of I which is denoted up of I okay so the J
+
+0:25:50.190,0:25:55.490
+index goes over all the predecessors of I of W IJ x zj where Z J is the output
+
+0:25:55.490,0:26:00.360
+the J side pull from the previous layer this is a sort of stack you know kind of
+
+0:26:00.360,0:26:08.250
+regular layered neural net and then you take a particular si and you pass it
+
+0:26:08.250,0:26:14.240
+through one of those nonlinear functions F and you get Zi
+
+0:26:21.110,0:26:25.400
+talk about early computer gradients and things like this
+
+0:26:25.400,0:26:29.450
+and these two forms of it okay there is an intuitive form that I'm going to
+
+0:26:29.450,0:26:34.550
+explain right now which does not even require you to know what a derivative is
+
+0:26:34.550,0:26:40.370
+funnily enough and then there is a slightly more general form there's an
+
+0:26:40.370,0:26:46.340
+even more general form that maybe I'll talk about next week okay so let's say
+
+0:26:46.340,0:26:53.480
+we have a big network we have a cost function and so or thing has an X on a Y
+
+0:26:53.480,0:26:56.720
+and it's gonna cost coming out but in fact you don't need to make this
+
+0:26:56.720,0:26:59.510
+assumption the only assumption you need to make is that you have some primary
+
+0:26:59.510,0:27:02.240
+choice function that produces a scalar on the output that's it
+
+0:27:02.240,0:27:09.980
+okay and somewhere in that network you have a nonlinear function H I called it
+
+0:27:09.980,0:27:15.140
+F in the previous slide but i call it h here so it takes a one of those weighted
+
+0:27:15.140,0:27:18.410
+sum s you pass it through this H function and then it produces one of
+
+0:27:18.410,0:27:22.430
+those Z Z variables okay I'm not putting an index here because you know it's just
+
+0:27:22.430,0:27:29.630
+I'm taking one particular you know one of those functions outside of the
+
+0:27:29.630,0:27:34.670
+network and I do the the rest of the network as kind of a black box so let's
+
+0:27:34.670,0:27:38.720
+assume that okay so we're going to use chain rule chain rule if you remember
+
+0:27:38.720,0:27:52.430
+from kindergarten okay high school okay college if you have two functions that
+
+0:27:52.430,0:27:58.310
+fill each other your G of H of s and you want to differentiate it so G of H of s
+
+0:27:58.310,0:28:04.100
+prime is equal to the derivative of G at point H of s multiplied by the
+
+0:28:04.100,0:28:11.530
+derivative of H at Point s all right this going back
+
+0:28:12.250,0:28:19.330
+okay but if you want through you know couple years of college you can write
+
+0:28:19.330,0:28:26.289
+this the way Newton wrote it or earlier or whatever with the infinitesimal
+
+0:28:26.289,0:28:31.950
+quantities so you can write D C over D s which means the derivative at 0 s by 2 s
+
+0:28:31.950,0:28:37.780
+is equal to D C over DZ times DZ over the s ok so it's the derivative of C
+
+0:28:37.780,0:28:42.280
+with respect to Z Z multiplied by the derivative of Z with respect to s and
+
+0:28:42.280,0:28:46.750
+the nice the nice reason for writing it like this is that it's obvious you can
+
+0:28:46.750,0:28:52.330
+simplify by DZ right you have dizzy at the bottom and at the top and so by
+
+0:28:52.330,0:28:57.970
+simplifying by DZ this is the second line you get DC over the s ok so you
+
+0:28:57.970,0:29:02.409
+kind of split the derivative by having certain intermediate variable that you
+
+0:29:02.409,0:29:06.370
+put at the bottom and at the top right it's very simple manipulation simple
+
+0:29:06.370,0:29:12.429
+equally palacios now DZ over D s is just the derivative of Z with respect to s
+
+0:29:12.429,0:29:20.440
+with Z is equal to H of s so that's just H prime of s ok so D Co VDS is equal to
+
+0:29:20.440,0:29:27.010
+DT over D G times H prime of s so if if someone gives you the derivative of the
+
+0:29:27.010,0:29:34.539
+cost function with respect to Z you multiplied by the derivative of your
+
+0:29:34.539,0:29:37.450
+nonlinear function and you get the derivative of the cost function with
+
+0:29:37.450,0:29:43.780
+respect to s ok so imagine you have a chain of those functions in your network
+
+0:29:43.780,0:29:49.090
+you can back propagate by multiplying by the derivatives of all those H functions
+
+0:29:49.090,0:29:55.960
+H functions when after the other all the way back to the to the bottom ok so
+
+0:29:55.960,0:29:58.720
+basically if you want to compute a gradient
+
+0:29:58.720,0:30:03.460
+you basically have to use a network that looks very much like this one except you
+
+0:30:03.460,0:30:07.120
+have signals that go backwards and wherever you had an H function what you
+
+0:30:07.120,0:30:13.720
+have now is derivative coming from the top ok so scalar just the same as e
+
+0:30:13.720,0:30:18.669
+you're multiplied by the derivative of the H function and then you get the
+
+0:30:18.669,0:30:23.409
+derivative of the cost function with respect to the input variable to H which
+
+0:30:23.409,0:30:26.980
+is s so basically what you have now is a
+
+0:30:26.980,0:30:34.360
+basically a transform network that computes your gradient okay now you can
+
+0:30:34.360,0:30:39.100
+convince yourself of this because if you don't really sort of completely grok
+
+0:30:39.100,0:30:46.510
+chain world which I hope you do but imagine that you are you know twiddling
+
+0:30:46.510,0:30:53.400
+s by little okay we're going to we're going to perturb s by Diaz
+
+0:30:53.400,0:31:00.880
+so as we go through h h as a stroke which is s prime of s so Z is going to
+
+0:31:00.880,0:31:05.850
+be perturbed by D s times that derivative right D s times H prime of s
+
+0:31:05.850,0:31:14.020
+okay this is what is being written here for tubing s by D s were perturb Z by DZ
+
+0:31:14.020,0:31:22.810
+equal D s times H prime of s this will perturb CV by the small perturbation DZ
+
+0:31:22.810,0:31:27.220
+times the gradient of I mean the derivative of C with respect to Z right
+
+0:31:27.220,0:31:34.690
+which is DC or dizzy so basically we get that DC equals DZ the perturbation of Z
+
+0:31:34.690,0:31:38.740
+so patch will show C is equal to the perturbation with Z DZ times the
+
+0:31:38.740,0:31:45.360
+gradient of other derivative of single spec to Z okay but we've computed this
+
+0:31:45.360,0:31:52.180
+DZ before we know is the s time H prime of s so we just substitute in and then
+
+0:31:52.180,0:31:59.200
+we pass the s on the other side and we get simply that DT over D is equal to C
+
+0:31:59.200,0:32:03.220
+over DZ times H prime of s okay we just we derive chain rule okay I've done
+
+0:32:03.220,0:32:06.580
+nothing more than really IV general but it's a lot more intuitive if you think
+
+0:32:06.580,0:32:10.480
+of it in terms of you know twitting things around and sometimes it's useful
+
+0:32:10.480,0:32:15.180
+when you're writing the backup function for a module to think in those terms
+
+0:32:15.270,0:32:19.240
+okay because sometimes it's easier to think about it in those terms than to
+
+0:32:19.240,0:32:26.380
+actually write down the equations alright now we had two types of modules
+
+0:32:26.380,0:32:30.750
+in orbit you know or you know on that the other one is a linear module okay
+
+0:32:30.750,0:32:35.960
+and for this one I'm gonna again use the internet work as a black
+
+0:32:35.960,0:32:42.890
+except for just three connections going from AZ variable to a bunch of s
+
+0:32:42.890,0:32:50.330
+variables okay so an SRO is a weighted sum so s 0 for example is going to take
+
+0:32:50.330,0:32:54.950
+Z the Z at the bottom here by multiplying it but it's only W which I
+
+0:32:54.950,0:32:59.530
+call W 0 okay I draw up all indices that are annoying
+
+0:32:59.530,0:33:07.990
+and so then I can ask again the question if I if I twiddle Z by how much will CB
+
+0:33:07.990,0:33:18.080
+twiddled ok so if I twiddle Z s 0 is going to be twiddle by Z times W 0 right
+
+0:33:18.080,0:33:24.920
+because Z is multiplied by W 0 so if I so it W 0 is is 2 and I twiddle Z by by
+
+0:33:24.920,0:33:32.120
+DZ the output after the weight is going to be twice okay it's gonna be trolled
+
+0:33:32.120,0:33:38.000
+by twice the value but now Z actually influences several variables in this
+
+0:33:38.000,0:33:44.180
+case 3 so it's also going to cause a probation for s of 1 and s of to the
+
+0:33:44.180,0:33:50.420
+prohibition for s oh one is going to be d ZW 1 and for s of 2 is going to be d
+
+0:33:50.420,0:34:00.190
+ZW 2 okay so the overall perturbation now okay so so we get D Z times W 0 that
+
+0:34:07.250,0:34:14.210
+is the prohibition for a 0 DZ times W 1 for s 1 DZ times W 2 4 is 2 but now s 0
+
+0:34:14.210,0:34:22.010
+s 1 and s 2 are going to influence C and the question is by how much so C is
+
+0:34:22.010,0:34:27.230
+going to vary by whatever a 0 was varying times the derivative of C with
+
+0:34:27.230,0:34:34.760
+respect to a 0 right but also C is also going to vary because s 1 is varying and
+
+0:34:34.760,0:34:38.330
+also because s 2 is varying if the variations are small enough then the
+
+0:34:38.330,0:34:41.460
+overall value variation is just the sum of the three
+
+0:34:41.460,0:34:45.990
+variations okay and so what you have here at the bottom
+
+0:34:45.990,0:34:52.679
+is that the entire variation of the cost is going to be equal to the variation of
+
+0:34:52.679,0:34:58.590
+Z multiplied by W zero multiplet which is the version of a zero and then you're
+
+0:34:58.590,0:35:02.510
+going to have to multiply that by the derivative of C with respect to a 0
+
+0:35:02.510,0:35:08.940
+which is DC over da 0 ok so what you see here at the last in the last equation is
+
+0:35:08.940,0:35:18.780
+exactly that and and you have to sum the contributions from the three components
+
+0:35:18.780,0:35:26.310
+ok so this year which is easy and is DC over D s 0 times W 0 plus DC over the s
+
+0:35:26.310,0:35:31.190
+1 times W 1 plus GC over the as 2 times W 2
+
+0:35:31.190,0:35:36.930
+okay when you have a branch like this you perturb the input variable all
+
+0:35:36.930,0:35:42.300
+branches or perturb and you have to sum up the results on the cost function okay
+
+0:35:42.300,0:35:48.330
+which you assume you know others are the DC over the whatever variables any
+
+0:35:48.330,0:35:53.930
+question is it clear Iko principle okay what does that mean like look at
+
+0:36:00.660,0:36:05.790
+this formula here it says if I have the gradient of or if I have the derivative
+
+0:36:05.790,0:36:12.690
+of C the derivative derivative of C with respect to s 0 s 1 and s 2 okay all
+
+0:36:12.690,0:36:16.680
+three of them then I compute the weighted sum of those derivatives with
+
+0:36:16.680,0:36:21.120
+the weights going up but I'm using them going down and that gives me the
+
+0:36:21.120,0:36:25.950
+derivative of the cost function with respect to Z which feeds those three
+
+0:36:25.950,0:36:31.340
+weights so basically when you back propagate through a neural net you
+
+0:36:31.340,0:36:42.720
+compute weighted sum of gradients using the weights backwards ok all right so
+
+0:36:42.720,0:36:45.180
+this is to give a little bit of intuition but there is a much more
+
+0:36:45.180,0:36:51.510
+general general formulation for this before we do this let's let's write it
+
+0:36:51.510,0:36:56.490
+this way okay do it one step at a time so conceptually you know on that the way
+
+0:36:56.490,0:37:02.010
+you want to see it is more something like this where you have at least a
+
+0:37:02.010,0:37:08.160
+traditional neural net we have an input variable you multiply the input variable
+
+0:37:08.160,0:37:13.620
+by the first matrix W 0 that gives you s 1 and then pass that through a
+
+0:37:13.620,0:37:17.760
+non-linearity that gives you Z 1 then multiply that by the weight matrix W 1
+
+0:37:17.760,0:37:22.980
+that gives us two paths out to a non-linearity that gives you Z 2 linear
+
+0:37:22.980,0:37:34.010
+again bah-bah-bah how many how many how many layer neural net is this three yes
+
+0:37:34.010,0:37:39.960
+layer is gonna repair in your nonlinear right most modern neural Nets don't
+
+0:37:39.960,0:37:45.570
+actually have clear linear nonlinear separations they're like more complex
+
+0:37:45.570,0:37:54.000
+things okay so so SK plus one basically equals W K times Z K where wk is a
+
+0:37:54.000,0:38:01.110
+matrix DK is a vector XK plus 1 is a vector and then Z K equals h HK where H
+
+0:38:01.110,0:38:09.060
+is kind of application of the scalar h function to every component so if you
+
+0:38:09.060,0:38:13.470
+write this in Python you write something like this there's
+
+0:38:13.470,0:38:16.830
+many ways to write it in pi torch you can you can write it from scratch she
+
+0:38:16.830,0:38:20.160
+can write it in a functional way or you can write it this way which is more like
+
+0:38:20.160,0:38:29.000
+object-oriented and it kind of hides a video complexity for you so your torch
+
+0:38:29.000,0:38:34.760
+you for import an end from torch you make a sort of an input which is some
+
+0:38:34.760,0:38:40.530
+300 310 sir you can't how many elements it has and that's going to be the size
+
+0:38:40.530,0:38:45.240
+of your input layer we're going to turn it into a vector okay but not yet and
+
+0:38:45.240,0:38:51.240
+then you define a class for your neural net so the the constructor is going to
+
+0:38:51.240,0:38:57.630
+just initialize three linear layers so linear layers need to in this case these
+
+0:38:57.630,0:39:02.970
+separate objects because they contain a vector for the parameter the values
+
+0:39:02.970,0:39:08.850
+don't need to be separate objects could do not actually have parameters okay so
+
+0:39:08.850,0:39:12.450
+that's the complexity that's hidden in those NN linear so an engineer actually
+
+0:39:12.450,0:39:15.210
+does a little bit more than just multiplying the matrix it also adds a
+
+0:39:15.210,0:39:22.770
+bias factor but that's okay so you initialize those layers with the right
+
+0:39:22.770,0:39:27.240
+sizes that you passed as argument to the constructor and then you define a
+
+0:39:27.240,0:39:31.410
+forward function which is you know how you can compute the output as a function
+
+0:39:31.410,0:39:37.020
+of the input and so the the first one here X dot view minus one just flattens
+
+0:39:37.020,0:39:41.910
+the input tensor into its into a vector and then you apply the n zero module to
+
+0:39:41.910,0:39:48.900
+X you get s1 then apply the value the non-linearity to s1 you get Z one etc
+
+0:39:48.900,0:39:57.990
+etc and then you return s3 okay and the beauty of pie charts which Alfredo will
+
+0:39:57.990,0:40:03.000
+explain to you they hatch tomorrow is that you don't need to worry about
+
+0:40:03.000,0:40:07.730
+computing the gradient because as you you've written the forward function and
+
+0:40:07.730,0:40:12.690
+patrasche knows what this looks like and he knows how to back propagate gradient
+
+0:40:12.690,0:40:16.920
+to it it knows how to transform the graph that corresponds to your forward
+
+0:40:16.920,0:40:20.520
+function into a graph that corresponds to the back function so you're not too
+
+0:40:20.520,0:40:23.109
+worried about it but you still need to know how to keep
+
+0:40:23.109,0:40:27.849
+your gradients because sometimes you have to write your own module you invent
+
+0:40:27.849,0:40:31.630
+this new type of neural net that's got this new you know like you know multi
+
+0:40:31.630,0:40:38.099
+head multi tail you know memory attention STM whatever
+
+0:40:38.099,0:40:42.010
+you know you have to write your own thing and you basically you might have
+
+0:40:42.010,0:40:52.320
+to write your own and CUDA kernel or whatever right but it's pretty simple
+
+0:40:52.320,0:41:16.180
+yes so as I said if you don't have a non-linearity the whole thing is linear
+
+0:41:16.180,0:41:20.920
+so it doesn't there's no point having layers okay now you have to think you
+
+0:41:20.920,0:41:24.190
+know what is the simplest non-linearity you can think of it's gonna be a point
+
+0:41:24.190,0:41:28.240
+where is you know component or as non-linearity was it was the simplest
+
+0:41:28.240,0:41:31.089
+component wise non-linearity you can think of something that has a single
+
+0:41:31.089,0:41:33.280
+kink now the funny thing is we're talking
+
+0:41:33.280,0:41:36.250
+about gradient baserunning this is not even differentiable right because it's
+
+0:41:36.250,0:41:43.750
+got a kink but if you're a mathematician and you obsessive-compulsive about it
+
+0:41:43.750,0:41:51.790
+you would call this not gradient but a sub gradient but you know how many
+
+0:41:51.790,0:42:01.540
+mathematicians are there here yes there's several sub gradient so here a
+
+0:42:01.540,0:42:08.440
+function that has a kink in it at this point any slope that is between this one
+
+0:42:08.440,0:42:14.200
+and that one is correct it's fine okay all of those are good sub gradients and
+
+0:42:14.200,0:42:16.540
+so the question is you should use something in the kind of somewhere in
+
+0:42:16.540,0:42:20.410
+the middle or just zero it doesn't matter because it's just one point so it
+
+0:42:20.410,0:42:23.670
+has no impact no practical impact okay so here's the strategy more general
+
+0:42:34.470,0:42:43.349
+form we're going from the kind of specific to the strategy more general so
+
+0:42:43.349,0:42:50.880
+here's a form of chain rule for modules that may have multiple outputs and
+
+0:42:50.880,0:42:55.910
+multiple inputs or may have inputs that are vectors and outputs that are vectors
+
+0:42:55.910,0:43:03.299
+okay I don't I don't give them different symbols here the the basic formula DC
+
+0:43:03.299,0:43:11.940
+over dzf in this case equal this here it is e G times DZ g or DZ f holds right
+
+0:43:11.940,0:43:17.970
+this is the same chain rule formula that we were previously for scalar functions
+
+0:43:17.970,0:43:23.790
+it also applies to vector functions okay but there's one thing that we need to
+
+0:43:23.790,0:43:30.540
+remember the gradient of the scalar function with respect to a vector is a
+
+0:43:30.540,0:43:35.329
+vector of the same size as the vector with respect to which you differentiate
+
+0:43:35.329,0:43:40.500
+make sure if you write it this way and you want the notations to be consistent
+
+0:43:40.500,0:43:45.510
+it's a row vector it's not a column vector anymore okay so we'll take a
+
+0:43:45.510,0:43:51.589
+scalar function which depends on the vector therefore a column vector
+
+0:43:51.589,0:43:56.940
+differentiate this scalar function with respect to the to this column vector
+
+0:43:56.940,0:44:00.900
+what you get is a row vector that's the gradient it's not the gradient
+
+0:44:00.900,0:44:05.520
+technically the gradient is once you transpose it but it's DC over DZ F
+
+0:44:05.520,0:44:14.880
+that's the that's the notation and you can see that it kind of checks out so
+
+0:44:14.880,0:44:24.079
+let's imagine that Z G is a vector column vector so of size DG by one and
+
+0:44:24.079,0:44:32.880
+ZF is a column vector of size DF by one then this little general equation here
+
+0:44:32.880,0:44:36.580
+gives you a world vector size DF is equal to
+
+0:44:36.580,0:44:44.920
+vector of size DG multiplied by a matrix who is number of rows is DG and the real
+
+0:44:44.920,0:44:53.740
+columns is DF ok and of course the size the last size of the vector and the
+
+0:44:53.740,0:45:01.420
+first size of the matrix have to match if you want this product to work out so
+
+0:45:01.420,0:45:04.720
+a more convenient form for this would be to kind of transpose everything to say
+
+0:45:04.720,0:45:09.910
+this here with ETR transpose which is now a column vector is equal to the
+
+0:45:09.910,0:45:14.440
+transpose of the product here and that would be the transpose of DZ over DZ f
+
+0:45:14.440,0:45:19.810
+times the transpose of d c over d GG and that would be kind of a more convenient
+
+0:45:19.810,0:45:30.070
+form of writing it but it's kind of simpler this way Okin system okay so
+
+0:45:30.070,0:45:37.030
+what's this funny animal here DZ g over DZ f so we have little neural net here
+
+0:45:37.030,0:45:43.720
+that has two modules in it FNG the output of F the of the F module
+
+0:45:43.720,0:45:55.920
+is ZF and the output of the G model is e G okay and basically we want the
+
+0:45:55.920,0:46:00.580
+gradient of the cost function with respect to Z F we assume we know the
+
+0:46:00.580,0:46:03.070
+gradient of this cost function is affected Z G we know how to back
+
+0:46:03.070,0:46:08.560
+propagate to see and to compute the gradient with respect to Z F if we know
+
+0:46:08.560,0:46:12.580
+the greater respect to Z G we need to multiply by this matrix d zg / DZ f
+
+0:46:12.580,0:46:21.910
+which is called the Jacobian matrix of G with respect to its input okay G has two
+
+0:46:21.910,0:46:25.330
+arguments so we can differentiate it with respect to Z or respect to W which
+
+0:46:25.330,0:46:30.310
+is going to differentiate it with respect to Z okay what is this matrix so
+
+0:46:30.310,0:46:37.840
+the entry I J of that matrix the Jacobian matrix is equal to the partial
+
+0:46:37.840,0:46:42.190
+derivative of the eyes I put okay the ice component of the
+
+0:46:42.190,0:46:46.210
+output vector of the G module with respect to the jth component of the
+
+0:46:46.210,0:46:53.160
+input vector so if I twiddle the J's input is gonna
+
+0:46:53.160,0:47:03.900
+make all the output to twiddle and that basically is an entire column of the
+
+0:47:03.900,0:47:16.700
+Jacobian matrix okay that's back problem right so if you have
+
+0:47:16.700,0:47:25.050
+a network composed of a cascade of modules you just keep multiplying by the
+
+0:47:25.050,0:47:28.320
+Jacobian matrix of all the modules going down and you get all the gradient
+
+0:47:28.320,0:47:37.380
+suspect to all the eternal variables now you actually need two sets of of
+
+0:47:37.380,0:47:39.630
+gradients you need the gradient so respect to the Statesville so the
+
+0:47:39.630,0:47:43.530
+gradients with respect to the weights and there's a as I said a module that
+
+0:47:43.530,0:47:48.900
+has parameters has two Jacobian matrices it has one with respect to its input
+
+0:47:48.900,0:47:52.800
+state and another one with respect to its parameters okay so you have the two
+
+0:47:52.800,0:47:57.300
+equations here so let's say now you have kind of a slightly more general neural
+
+0:47:57.300,0:48:08.099
+net which is a stack of you know many modules each module is called FK so okay
+
+0:48:08.099,0:48:15.800
+it's kind of an index for that module in its input is ZK and it's parameters WK
+
+0:48:15.800,0:48:23.660
+and the output is you know ZK plus 1 so ZK plus 1 equals F KO z k WK very simple
+
+0:48:23.660,0:48:29.339
+so how do i compute DC / g zk which is the gradient of the cost function or
+
+0:48:29.339,0:48:34.310
+whatever function you want to minimize with respect to the input of module ZK
+
+0:48:34.310,0:48:41.369
+assuming I know GC / gz k plus 1 already you just multiplied by the Jacobian
+
+0:48:41.369,0:48:49.080
+matrix of the module care which is G ZK plus 1 over G ZK or in other words the
+
+0:48:49.080,0:48:58.650
+FK of Z k WK respect to z k okay so it's just chain rule again D Z over G ZK
+
+0:48:58.650,0:49:03.590
+equals this z k equals DC or DZ k plus one which i
+
+0:49:03.590,0:49:10.730
+assume i know x the Jacobian matrix of f k with respect to z k second line is
+
+0:49:10.730,0:49:16.430
+same thing with respect to w vc over DW k is equal to DC over DZ k plus 1 which
+
+0:49:16.430,0:49:22.040
+already had at the top and then DZ k plus 1 over d WK which is the Jacobian
+
+0:49:22.040,0:49:27.320
+matrix of the F function with respect to its weights to its parameters
+
+0:49:27.320,0:49:41.860
+whatever they are that's all there is to back part we okay
+
+0:49:42.790,0:49:46.120
+any question she's a little cute example was so
+
+0:49:55.990,0:49:58.420
+Michael Crete so let's say we've you know one of those
+
+0:49:58.420,0:50:05.290
+simple functions here G of X W we don't know what's inside but it's okay and it
+
+0:50:05.290,0:50:12.160
+goes to a cost function it's a graph and through this manipulation of you know
+
+0:50:12.160,0:50:18.640
+multiplying by Jacobian matrices we can transform this graph into the graph that
+
+0:50:18.640,0:50:23.740
+will compute the gradients going backwards and so things like by torsion
+
+0:50:23.740,0:50:27.160
+circle do this automatically for you you write a function it turns it into a
+
+0:50:27.160,0:50:33.160
+graph and then there is something that turns its graph into the derivative
+
+0:50:33.160,0:50:37.800
+graph if you want that back propagates the gradient so in this case here the
+
+0:50:37.800,0:50:44.380
+the gradient graph looks like the one at the at the right when you start with one
+
+0:50:44.380,0:50:53.170
+at the top and then you compute the Jacobian of C with respect to y bar you
+
+0:50:53.170,0:51:01.330
+multiply this one number by this Jacobian Jacobian is actually a vector
+
+0:51:01.330,0:51:09.780
+okay it's a gradient it's a row vector and that's DC over dy bar then you
+
+0:51:09.780,0:51:14.470
+multiply that but it could be enough G with respect to its weight and you get
+
+0:51:14.470,0:51:20.620
+the gradient of respect to the weights that's what you need to train so that's
+
+0:51:20.620,0:51:23.890
+an example of you know automatic transformation that's what odigo a does
+
+0:51:23.890,0:51:30.580
+now where becomes complicated is when the the graph the architecture of the
+
+0:51:30.580,0:51:38.830
+graph is not fixed but is data dependent so let's imagine that depending on the
+
+0:51:38.830,0:51:44.800
+value of x you have a test in your neuron that code that decides that you
+
+0:51:44.800,0:51:50.440
+know if X is a vector that is longer than a certain length then you do
+
+0:51:50.440,0:51:55.360
+something to do one thing and it is shorter you do another thing you know
+
+0:51:55.360,0:51:58.480
+then you're gonna have kind of the condition Intergraph depending on
+
+0:51:58.480,0:52:03.330
+the input right you still need to generate the graph of backpropagation
+
+0:52:03.330,0:52:27.250
+she have loops it becomes complicated you can still do it yeah yeah it it
+
+0:52:27.250,0:52:30.790
+usually doesn't work very well if the number of loops that you have is more
+
+0:52:30.790,0:52:38.260
+than say 50 and same 50 it could be 20 right it depends and you've probably
+
+0:52:38.260,0:52:42.580
+heard of STM and what's special about it STM compared to regular recurrent Nets
+
+0:52:42.580,0:52:50.620
+is one way of basically making them work for longer than like five but they don't
+
+0:52:50.620,0:53:00.700
+work very well past twenty years old the point is that you can have a variable
+
+0:53:00.700,0:53:06.640
+number of steps it's it's specified by program and it could be variable depends
+
+0:53:06.640,0:53:11.310
+on the size of the input a lot of them you all know some people use nowadays a
+
+0:53:11.310,0:53:17.110
+variable size X's could be a variable size multi-dimensional array and that
+
+0:53:17.110,0:53:21.330
+means Genie has variable size inside and you can have you know kind of
+
+0:53:21.330,0:53:30.430
+complicated he's going on there so again in terms of the the sizes that those
+
+0:53:30.430,0:53:40.030
+things take so DC / GW is is a row vector which is 1 by n where n is the
+
+0:53:40.030,0:53:46.390
+number of components of W DC / dy bar is 1 by M where m is the dimension of the
+
+0:53:46.390,0:53:55.570
+output and dy bar DW is number of number of rows is the number of outputs of G
+
+0:53:55.570,0:54:01.360
+and the number of columns is the dimension of W which is n so it takes
+
+0:54:01.360,0:54:03.540
+out so so fine okay now what kind of modules
+
+0:54:16.760,0:54:24.140
+are we using in neural net so as I said the linear and rare modules or
+
+0:54:24.140,0:54:28.010
+non-linear point-wise non-linearity modules are just two examples of things
+
+0:54:28.010,0:54:31.220
+that we use to build neural nets but what you build deep learning systems in
+
+0:54:31.220,0:54:35.119
+general but it's tons of and tons I mean if you look at the Python documentation
+
+0:54:35.119,0:54:41.150
+there is like a huge list of them of such modules and the reason why you need
+
+0:54:41.150,0:54:45.650
+it a lot of them I mean most of them are kind of can be built out of kind of
+
+0:54:45.650,0:54:51.230
+smaller like more elementary functions but the reason why they are pre-built is
+
+0:54:51.230,0:54:54.530
+because first they have a name but and the debug but also because they
+
+0:54:54.530,0:55:00.710
+optimized so sometimes you can kind of write you know CUDA kernels directly or
+
+0:55:00.710,0:55:05.930
+you know they're generated by a compiler or something so but here's a bunch of
+
+0:55:05.930,0:55:13.930
+elementary modules and I'm not sure I'm going to be able to use my
+
+0:55:21.940,0:55:27.290
+okay let's start with a duplicate module so what in the duplicate module is say
+
+0:55:27.290,0:55:33.849
+it's a module that takes a single takes you know it's basically a Y connector
+
+0:55:33.849,0:55:39.530
+okay you want two people to listen to music on your iPhone you need one of
+
+0:55:39.530,0:55:50.990
+those Y cables so the first output is equal to the input and the second output
+
+0:55:50.990,0:55:57.410
+is also equal to the input okay y1 equals x y2 equals x so you think you
+
+0:55:57.410,0:55:59.510
+know you would think that you don't even either with your like this but you
+
+0:55:59.510,0:56:06.230
+actually do sometimes in fact in patrasche this kind of implicit but but
+
+0:56:06.230,0:56:11.480
+you need to make it explicit sometimes so whenever you have a wire that splits
+
+0:56:11.480,0:56:19.520
+into 2 or n on the way back the gradients get summed okay and it's
+
+0:56:19.520,0:56:24.470
+exactly the same situation that I explained earlier in fact you can
+
+0:56:24.470,0:56:28.810
+decompose this video module that I explain here you can think of this Z
+
+0:56:37.940,0:56:45.410
+variable spitting into three wires as one of those branch modules and as the
+
+0:56:45.410,0:56:51.400
+three wire converge you have to sum the gradients okay which we figured out but
+
+0:56:51.400,0:56:59.540
+you can you can sort of build this into this speed module just duplicate module
+
+0:56:59.540,0:57:08.300
+or triplicate or n ticket whatever it is okay so whatever you copy a variable we
+
+0:57:08.300,0:57:12.589
+are whatever you use available in multiple places you need to sum the
+
+0:57:12.589,0:57:22.400
+gradients again the auto grading in PI tortoises for you but remember this so
+
+0:57:22.400,0:57:29.250
+add so if you have two variables and you sum them up we
+
+0:57:29.250,0:57:33.300
+this guy the output which will by the same quantity for you to love this guy
+
+0:57:33.300,0:57:37.860
+the output will twiddle by the same quantity what that means is that the
+
+0:57:37.860,0:57:42.630
+gradient of whatever function you want to minimize with respect to the output
+
+0:57:42.630,0:57:53.400
+of a sum is equal to the equal when you have the gradient of the cost function
+
+0:57:53.400,0:57:58.800
+with respect to the some weight is the gradient with respect to each of the two
+
+0:57:58.800,0:58:11.130
+branches that you added up it's actually equal for both branches okay so if you
+
+0:58:11.130,0:58:15.480
+have a connection going this way and you get a gradient from the top you just
+
+0:58:15.480,0:58:24.230
+copy the gradient okay it's because you get the same influence from both sides
+
+0:58:28.430,0:58:39.120
+no it's independent of the value of the inputs if you think about it but it's
+
+0:58:39.120,0:58:49.700
+pretty obvious actually let me try this can you be able to do this
+
+0:58:56.420,0:58:59.420
+okay this work ha only works if I mirror my
+
+0:59:21.079,0:59:37.519
+screen because I can't write on the screen that doesn't exist okay hang on
+
+0:59:37.519,0:59:46.779
+with me for just a minute here know what I want
+
+1:00:04.530,1:00:07.530
+okay oops oh wow
+
+1:00:21.740,1:00:28.480
+okay all right here we go sorry about that let's go to
+
+1:00:40.440,1:01:03.600
+a place that actually works okay you see this works so so if y equals x 1 plus x
+
+1:01:03.600,1:01:22.650
+2 DC over the X 1 let's say is equal to D C over D Y D Y over the X 1 okay this
+
+1:01:22.650,1:01:39.380
+we assume we know how much is this one and of course the Y of the X 2 is also 1
+
+1:01:39.380,1:01:49.680
+okay so there you have it this here the X 1 equals to C over D Y is your really
+
+1:01:49.680,1:01:57.480
+X to equal this you're really why just take this already why copy it and you're
+
+1:01:57.480,1:01:59.630
+done max that's an interesting one so y
+
+1:02:21.950,1:02:39.170
+equals max of XY next to this you're ready x1 equal this your D Y D Y over
+
+1:02:39.170,1:02:55.630
+the X 1 right let's just chain rule what is the worry DX 1 yep and otherwise
+
+1:02:55.630,1:03:00.730
+it's 1 yes correct so in fact you can
+
+1:03:00.730,1:03:15.980
+completely understand this graphically basically you have X 1 this again yes
+
+1:03:15.980,1:03:27.380
+yes yes right so the answer was D Y DX 1 0 if X 2 is larger than x1 and is 1 if X
+
+1:03:27.380,1:03:34.900
+1 is larger than X 2 but intuitively is very simple if you have variable X 1 and
+
+1:03:34.900,1:03:42.160
+variable X 2 basically the output this max module is basically just a
+
+1:03:46.910,1:03:55.550
+switch okay I'm putting an arrow here but it's not an arrow it's a switch okay
+
+1:03:55.550,1:04:01.190
+I can move this switch from left to right okay I can choose to connect x1 to
+
+1:04:01.190,1:04:07.850
+Y or to connect X 2 to y now once I've decided on which side I connect is just
+
+1:04:07.850,1:04:14.810
+a wire right regardless on how high chose to put the switch in one position
+
+1:04:14.810,1:04:19.970
+of the other in this case I use max okay but it's just a switch that I decide to
+
+1:04:19.970,1:04:23.990
+put on one side or the other when I decide to put it on one side then I've
+
+1:04:23.990,1:04:28.940
+just connected x1 to Y and it's just a wire so x2 if I twiddle it has no
+
+1:04:28.940,1:04:32.630
+influence on the output therefore the gradient of the cost function is fed to
+
+1:04:32.630,1:04:39.080
+x2 is 0 okay and the gradient of the cost function with respect to x1 is of
+
+1:04:39.080,1:04:42.020
+course equal to the gradient of the cost function inspector why because it's just
+
+1:04:42.020,1:04:45.110
+a wire it's the same variable really okay
+
+1:04:45.110,1:04:55.190
+so that generalizes to a switch a switch of multiple variables so are the many
+
+1:04:55.190,1:05:04.310
+valuable I have if the output is determined by you know a switch that I
+
+1:05:04.310,1:05:08.120
+can move to one of the input variables then when I back propagate I just
+
+1:05:08.120,1:05:11.540
+propagate through the variable that was connected and the other ones just get
+
+1:05:11.540,1:05:20.430
+zero okay it's easier to draw this way than to actually write the
+
+1:05:20.430,1:05:29.130
+math you have to use Delta functions and stuff is okay knocks off max that's a
+
+1:05:29.130,1:05:31.460
+fun one oh I have to use any page but next page
+
+1:05:49.860,1:06:00.880
+actually doesn't go to the next page okay so softmax is module where the ad
+
+1:06:00.880,1:06:18.610
+put why i is equal to e to the X I so it's a module with which I should not
+
+1:06:18.610,1:06:32.010
+draw this way should draw this way and it has as many outputs as it has inputs
+
+1:06:32.010,1:06:43.960
+I'm pulling this the Y I and is the X J let's say okay or X whatever so softmax
+
+1:06:43.960,1:06:54.850
+is this okay it's a very convenient way of transforming a bunch of numbers into
+
+1:06:54.850,1:07:01.090
+a bunch of positive numbers between 0 & 1 that sum to 1 okay when I take the
+
+1:07:01.090,1:07:05.470
+exponential so X the X J's can be any number when I take the exponential of
+
+1:07:05.470,1:07:09.940
+those numbers I get positive numbers and I normalize by their sum so what I get
+
+1:07:09.940,1:07:14.440
+is a bunch of numbers that are between 0 & 1 & sum to 1 which some people call a
+
+1:07:14.440,1:07:20.800
+probability distribution okay so you can interpret why I as a vector of
+
+1:07:20.800,1:07:28.829
+probabilities over the discrete set of outcomes what is
+
+1:07:28.829,1:07:41.099
+dog stuff max so locks off max is oops no what I want you to do it's the log of
+
+1:07:41.099,1:07:52.589
+that so you get the log of the stuff at the top minus the log of the stuff at
+
+1:07:52.589,1:07:59.219
+the bottom right so you get the log of exponential X I and that's going to be X
+
+1:07:59.219,1:08:06.209
+I and there's a mistaken and then you get the log of the sum of you get minus
+
+1:08:06.209,1:08:09.809
+the log of this some of the Exponential's of X J's right so that
+
+1:08:09.809,1:08:25.549
+will give us X I minus log of sum over J of e to the X J let's call log surf max
+
+1:08:32.760,1:08:42.100
+now the guy who invented softmax in 1989 or so or maybe 88 I don't remember is a
+
+1:08:42.100,1:08:46.020
+gentleman by the name of john vidal a from britain and he regretted calling it
+
+1:08:49.960,1:08:56.920
+softmax he said it should have been called soft egg max but it's too late
+
+1:08:56.920,1:09:07.240
+people call it soft max so here's an interesting exercise for you I'm not
+
+1:09:07.240,1:09:11.500
+going to tell you how you back propagate through this okay but I want you to do
+
+1:09:11.500,1:09:16.750
+the calculation it's a very good exercise so laps off meg is actually a
+
+1:09:16.750,1:09:22.570
+module in Python but do it on your own it's a perfect exercise
+
+1:09:22.570,1:09:34.960
+so basically compute DC or by DX K assuming that you know although DC
+
+1:09:34.960,1:09:42.070
+already why eyes okay so you're gonna have a bunch of detail
+
+1:09:42.070,1:09:54.880
+with you eyes so here you only have one output actually but it's okay so what I
+
+1:09:54.880,1:10:00.460
+say there is only one Y I and you know the gradient of the loss with respect to
+
+1:10:00.460,1:10:07.500
+this why I what is the gradient of the loss with respect to all of the X K's
+
+1:10:07.800,1:10:14.290
+that's good exercise is it an official homework it's an official homework
+
+1:10:14.290,1:10:22.960
+tonight okay it's more than just an exercise you can find the answer but
+
+1:10:22.960,1:10:26.350
+it's more fun to kind of you know I mean you're not you don't you don't run as
+
+1:10:26.350,1:10:31.140
+much if you don't kind of try about yourself you should just look the answer
+
+1:10:35.889,1:10:46.369
+okay so the softmax analog is a combination of modules that is very
+
+1:10:46.369,1:10:50.449
+commonly used in a multi-class classification right so you may take an
+
+1:10:50.449,1:10:53.320
+all-night the last module would be a soft max so we'd normalize all the
+
+1:10:53.320,1:10:57.409
+outputs make them positive made them look like probabilities and what you
+
+1:10:57.409,1:11:04.849
+want is you want to maximize the probability that the model gives to the
+
+1:11:04.849,1:11:07.250
+correct answer okay so you know the correct answer is
+
+1:11:07.250,1:11:13.460
+bird bird is number four in your categories you want the fourth I put
+
+1:11:13.460,1:11:23.119
+yourself Mac to be as high as possible okay so that's the BB dog soft max now
+
+1:11:23.119,1:11:27.230
+if you separate this into things so if you have soft Max and then you take the
+
+1:11:27.230,1:11:30.800
+log of the output as your cost function the log of the correct output on your
+
+1:11:30.800,1:11:37.820
+cost function you get a you get numerical issues because you don't get
+
+1:11:37.820,1:11:43.309
+log of zero okay so as the score gets very very small the log kind of diverges
+
+1:11:43.309,1:11:47.210
+and you get sort of numerical problems so we're better off writing locks off
+
+1:11:47.210,1:11:53.860
+max directly as a single module because then that numerical issue disappears
+
+1:11:57.590,1:12:04.590
+okay that's a good question in fact it's a very good question for the next 20
+
+1:12:04.590,1:12:18.630
+minutes not just the next 20 minutes actually I stupidly put my pin back did
+
+1:12:18.630,1:12:32.480
+I what did you do my pen I have no idea what I did with a pen it's here okay
+
+1:12:35.390,1:12:40.770
+okay so let's say you're gonna have any on that and it's gonna take an X
+
+1:12:40.770,1:12:54.660
+variable and then it's gonna have w0 and then value and then w1 okay and now we
+
+1:12:54.660,1:13:11.690
+get a bunch of scores and we're gonna turn this into a score between 0 & 1 now
+
+1:13:11.690,1:13:16.830
+this network has only one output and so we can only do a two class
+
+1:13:16.830,1:13:25.440
+classification and the module we're going to put here is the sigmoid
+
+1:13:25.440,1:13:36.450
+function also called logistic function and so this function is H of discredit s
+
+1:13:36.450,1:13:48.420
+since we've called this s before 1 over 1 plus exponential minus s okay so this
+
+1:13:48.420,1:13:54.360
+function when s is very large this exponential is equal to close to 0 and
+
+1:13:54.360,1:14:06.720
+so H is equal to 1 and when s is very small or highly negative then this
+
+1:14:06.720,1:14:10.630
+exponential becomes very large and so the overall function is you
+
+1:14:10.630,1:14:21.789
+okay so that function is like this and here it's 0.5 and the asymptote here is
+
+1:14:21.789,1:14:40.639
+plus 1 and here is just 0 a 0.5 is unreadable ok so I could just take the
+
+1:14:40.639,1:14:49.929
+output here which I can call Y bar and plug this through some cost function
+
+1:14:52.420,1:15:02.809
+which I compare with y okay now so Y would be also a binary variable 0 1 now
+
+1:15:02.809,1:15:08.179
+what what do this cost function what should it do I could use square error
+
+1:15:08.179,1:15:17.559
+right so C could be equal to the difference between y and y bar squared
+
+1:15:18.730,1:15:21.579
+sounds perfectly reasonable doesn't work very well
+
+1:15:21.579,1:15:31.190
+reason it doesn't work very well is that the is that the sigmoid and people you
+
+1:15:31.190,1:15:35.510
+know in the early days of neural nets in the 1980s we're doing this very commonly
+
+1:15:35.510,1:15:40.460
+and the network wouldn't converging I would say neural nets don't work they
+
+1:15:40.460,1:15:44.360
+were just doing it wrong so the problem that you have here is
+
+1:15:44.360,1:15:54.559
+that if Y is equal to 1 for one class and 0 for the other class the system
+
+1:15:54.559,1:15:59.480
+wants to get the output equal to 1 and it can't because it's an asymptote so it
+
+1:15:59.480,1:16:05.659
+tries to make the weights that we won very very large so that it gets to 1 or
+
+1:16:05.659,1:16:11.420
+to 0 it has to make the weighted sum enormous you know if it wants to get
+
+1:16:11.420,1:16:15.349
+close to the desired output the bell the gradient is very small right because the
+
+1:16:15.349,1:16:19.639
+derivative of that sigmoid that Sigma is very flat there so when you back
+
+1:16:19.639,1:16:22.230
+propagate the gradient is basically zero because
+
+1:16:22.230,1:16:32.220
+the Sigma is flat so you get the saturation problem so some people like
+
+1:16:32.220,1:16:39.510
+said you know back in the old days one of two things either you set your
+
+1:16:39.510,1:16:46.350
+targets in between so not at the asymptotes or you use a different loss
+
+1:16:46.350,1:16:52.710
+okay so so basically you say here is the sigmoid function the target for a
+
+1:16:52.710,1:16:56.700
+category one is going to be at I don't know point eight and the target
+
+1:16:56.700,1:17:02.250
+for category 2 is going to be at point two so there those would be a table and
+
+1:17:02.250,1:17:07.320
+so the weights won't go to infinity and you won't have those problems but here's
+
+1:17:07.320,1:17:12.570
+another idea and the other idea is just take the log of it okay
+
+1:17:12.570,1:17:16.980
+take the log so if you think about this the zero function here it's actually a
+
+1:17:16.980,1:17:22.980
+softmax it's a soft max between two variables one of which is equal to minus
+
+1:17:22.980,1:17:27.990
+x the other one is equal to 1 and what you're getting is the surf max output
+
+1:17:27.990,1:17:39.720
+from from the input that's always equal to 1 okay then you write this function
+
+1:17:39.720,1:17:50.430
+in another way I'm going to multiply the top and the bottom by e to the S okay so
+
+1:17:50.430,1:17:58.620
+I get e to the s divided by e to the S plus e to the x times e to the minus s
+
+1:17:58.620,1:18:09.060
+and that's 1 okay this is our faqs it's off max where when input is 1 the other
+
+1:18:09.060,1:18:14.760
+one is s and what I'm looking at is the S the output corresponding to the s
+
+1:18:14.760,1:18:17.090
+input so when Sigma it's just you know softmax
+
+1:18:24.290,1:18:30.409
+is just a generalization is assimilated for multiple outputs now if you take a
+
+1:18:30.409,1:18:32.980
+lot of this you get s minus log of 1 plus e to the S
+
+1:19:06.120,1:19:09.120
+okay the question is and again this is a
+
+1:19:17.670,1:19:21.810
+special occasion softmax with only two inputs where one is equal to one one of
+
+1:19:21.810,1:19:30.420
+the one of the two inputs is equal to one okay so the effect of the log like
+
+1:19:30.420,1:19:44.370
+look at this this function here this function looks like this where when s is
+
+1:19:44.370,1:19:48.870
+very large the 1 doesn't count in the sum and so you basically a vlog of
+
+1:19:48.870,1:19:52.710
+exponential s which is just s right so for large s is just the identity
+
+1:19:52.710,1:20:00.960
+function and for small s the 1 dominates and so it slope 1 which is 0 as we get 0
+
+1:20:00.960,1:20:08.970
+it's kind of like a soft really kind of thing but the point is it doesn't
+
+1:20:08.970,1:20:16.250
+saturate so you don't get those vanishing gradient issue
+
+1:20:34.710,1:20:43.480
+yes we have a log in front so log E power s is s oh yeah I mean sure I mean
+
+1:20:43.480,1:20:48.039
+if you could do as far as s then I was just talking about the second term yeah
+
+1:20:48.039,1:20:57.280
+yeah I mean s - this is kind of the other way around yeah absolutely yeah
+
+1:20:57.280,1:21:08.699
+you should take the entire the entire function it's it's the exact opposite
+
+1:21:21.680,1:21:33.560
+okay do you have softmax also as one of the exercises yeah right okay all right
+
+1:21:33.560,1:21:44.030
+so let's end with a few tricks practical tricks and you will you'll see more of
+
+1:21:44.030,1:21:50.540
+them tomorrow and as you start playing with back prop so the idea of using
+
+1:21:50.540,1:21:54.500
+value instead of hyperbole tension so hyperbole tension is just like the Sigma
+
+1:21:54.500,1:21:59.240
+8 I just showed except that it's multiplied by 2 and you subtract 1 so it
+
+1:21:59.240,1:22:04.900
+it goes from minus 1 to 1 instead of 0 to 1 but it's essentially the same shape
+
+1:22:04.900,1:22:09.290
+huh yeah we talked about it last week
+
+1:22:09.290,1:22:16.610
+and they're both putting out of favor value tends to work much better when you
+
+1:22:16.610,1:22:22.700
+have many layers and probably the reason is that it's it's scale invariant in the
+
+1:22:22.700,1:22:28.790
+sense that or scale equivalent if if the input is if you multiply the input by 2
+
+1:22:28.790,1:22:33.590
+the output we multiplied by 2 but otherwise unchanged right it's got only
+
+1:22:33.590,1:22:38.870
+one kink and so it has no scale to it whereas if you had 2 Kings then you know
+
+1:22:38.870,1:22:42.950
+the input has to have a particular the onions to kind of fit those 2 kings in
+
+1:22:42.950,1:22:51.170
+the right place so people will use read you the use cross-entropy does for
+
+1:22:51.170,1:22:59.050
+classification lock softmax is a special case a simple special case of
+
+1:22:59.290,1:23:08.140
+cross-entropy laws we'll come back to that yes
+
+1:23:11.400,1:23:16.830
+cross interview was like definitely expect the logs on taxes but it's super
+
+1:23:16.830,1:23:29.670
+easy right yeah you want to use well so long soft max not soft max definitely if
+
+1:23:29.670,1:23:33.630
+you feed it to a question Cheerios function it expects outputs from a lock
+
+1:23:33.630,1:23:39.120
+soft max notice off length if you don't know this yet you might waste a lot of
+
+1:23:39.120,1:23:44.640
+time in stochastic gradient on mini batches we talked about this before you
+
+1:23:44.640,1:23:48.780
+shuffle the training samples we've used the casi gradient the order of the
+
+1:23:48.780,1:23:54.030
+examples matters if you have I don't know a 10-way classification doing
+
+1:23:54.030,1:23:58.230
+endless try to classifying the ten digits from 0 to 9 if you put all the
+
+1:23:58.230,1:24:02.489
+zeros and all the ones then all the tools and etc it's not going to work
+
+1:24:02.489,1:24:06.690
+because what's going to happen is that in the first few examples of zeros the
+
+1:24:06.690,1:24:11.100
+system will adapt the biases of the last layer to just produce the correct output
+
+1:24:11.100,1:24:14.969
+and we'll never learn what a zero looks like and then you show one and it's
+
+1:24:14.969,1:24:18.929
+going to take just a few samples for it to adapt to biases so that it learns to
+
+1:24:18.929,1:24:22.350
+produce one without actually looking at the input and it's going to keep doing
+
+1:24:22.350,1:24:27.510
+this for eons and eons and it's never gonna converge so you absolutely need to
+
+1:24:27.510,1:24:31.469
+shuffle the examples in the case of n days but it's true also for a lot of
+
+1:24:31.469,1:24:35.760
+others you probably want in a mini batch as I
+
+1:24:35.760,1:24:39.480
+said before it may be that you want examples of all the categories if you
+
+1:24:39.480,1:24:45.480
+really want to use an e batch use samples from different categories and if
+
+1:24:45.480,1:24:49.260
+you don't use a mini batch just you know have samples of different categories one
+
+1:24:49.260,1:24:53.760
+after the other there is debate as to whether you need to change the order of
+
+1:24:53.760,1:24:59.610
+the samples at every pass through the samples it's not an entirely clear some
+
+1:24:59.610,1:25:02.400
+people claim it's better if you don't some people people claim it's better if
+
+1:25:02.400,1:25:09.929
+you do with you know various theoretical arguments for it you need to normalize
+
+1:25:09.929,1:25:15.929
+the input variables so if you look at standard code that people publish for
+
+1:25:15.929,1:25:20.730
+training on imagenet or speech recognition or whatever the first
+
+1:25:20.730,1:25:24.159
+operation they do is that they normalize the inputs what do they
+
+1:25:24.159,1:25:27.210
+do they so an image is really going to be three
+
+1:25:52.470,1:26:05.590
+planes are G and D okay so it's think of it as a three-dimensional array where
+
+1:26:05.590,1:26:12.430
+the first dimension is color plane and the other two dimensions are space or
+
+1:26:12.430,1:26:18.700
+sometimes the other way around sometimes the channel is last but it is
+
+1:26:18.700,1:26:22.750
+better to think of it this way so what you do is you take each of those
+
+1:26:22.750,1:26:32.680
+guys so let's say blue you compute the mean of all the all the variables in
+
+1:26:32.680,1:26:36.520
+this blue image and you do this for every single image in your training set
+
+1:26:36.520,1:26:40.630
+okay take the entire training set or a good chunk of it and compute the mean of
+
+1:26:40.630,1:26:44.920
+all the blue inputs for the entire training set that
+
+1:26:44.920,1:26:51.460
+gives you a single scalar right let's call it MB so it's the mean of all the
+
+1:26:51.460,1:26:56.740
+Blues okay so interesting you can do the same you can compute the standard
+
+1:26:56.740,1:27:01.360
+deviation where I compute the variance of all the Blues and take the square
+
+1:27:01.360,1:27:08.640
+root that's substandard deviation Sigma B you know same for green
+
+1:27:11.630,1:27:19.370
+same for red okay so we get six numbers six scalar values and now what you do is
+
+1:27:19.370,1:27:37.040
+you take whatever you see an image you take the all component IJ and to
+
+1:27:37.040,1:27:48.889
+normalize it you replace it by itself minus the mean divided by the standard
+
+1:27:48.889,1:27:58.460
+deviation or the max of the standard deviation and some small quantity so it
+
+1:27:58.460,1:28:04.790
+doesn't blow up what does that do for you it normalizes the contrast and
+
+1:28:04.790,1:28:11.630
+normal eye and it makes the variant zero this is good for various reasons in fact
+
+1:28:11.630,1:28:15.770
+it's a good idea to have variables inside of a neural net that are zero
+
+1:28:15.770,1:28:20.780
+mean and unit variance or kind of variance there are more or less all the
+
+1:28:20.780,1:28:38.300
+same of course you do this also for the green and blue yeah across across many
+
+1:28:38.300,1:28:45.050
+images it's a single mean yeah I mean there's various ways to do it some you
+
+1:28:45.050,1:28:48.980
+can do it for a single image for Google Images you can do it which is what
+
+1:28:48.980,1:28:55.130
+batchman does you can also do it like on a small piece of an image that's called
+
+1:28:55.130,1:28:59.690
+high pass filtering but the simplest thing is and what almost everybody does
+
+1:28:59.690,1:29:04.100
+internet standard standard image that pipeline or image processing image
+
+1:29:04.100,1:29:08.800
+recognition pipeline with commercial nets for example is this
+
+1:29:15.969,1:29:23.300
+yeah the channels have very different means and and so you know in a typical
+
+1:29:23.300,1:29:29.780
+natural image when you're in you know outside and inside the the components
+
+1:29:29.780,1:29:37.630
+would be very different you have color shift and the amplitude of blue is
+
+1:29:37.630,1:29:41.949
+relatively low for example if you are in full Sun the amplitude of red is
+
+1:29:41.949,1:29:46.119
+basically non-existent if you are underwater
+
+1:29:46.119,1:29:52.489
+so you know if if you want any kind of signal you need to kind of normalize
+
+1:29:52.489,1:29:57.409
+this is basically like automatic gain control the means are very different of
+
+1:29:57.409,1:30:00.139
+course because that depends on the overall luminosity and you don't want a
+
+1:30:00.139,1:30:03.889
+system that where the recognition depends too much on the global
+
+1:30:03.889,1:30:07.099
+illumination of your image so that's a way of kind of getting rid of global
+
+1:30:07.099,1:30:13.909
+illumination if you want and sort of you know kind of bad tuning of your exposure
+
+1:30:13.909,1:30:19.369
+or contrast or whatever it is but is really good so numerical reasons for
+
+1:30:19.369,1:30:33.679
+doing this so in most precooked and welcome back for why this is a good idea
+
+1:30:33.679,1:30:37.340
+okay later in most pre-code code you will
+
+1:30:37.340,1:30:40.969
+also find things schedules to decrease the running rate so the learning rate
+
+1:30:40.969,1:30:46.789
+the ADA system first of all most systems don't use just plain stochastic gradient
+
+1:30:46.789,1:30:51.530
+they use things like atom which automatically adapt the the step size or
+
+1:30:51.530,1:30:57.170
+other tricks they also use what's called a momentum trick or necessary Fomento in
+
+1:30:57.170,1:31:04.280
+particular you know which atom integrates and generally if you really
+
+1:31:04.280,1:31:07.010
+want good results you need to kind of decrease your running way that as time
+
+1:31:07.010,1:31:11.840
+goes by and so there are kind of standard ways of you know scheduling the
+
+1:31:11.840,1:31:16.179
+decrease of the learning rate that you can use
+
+1:31:21.690,1:31:27.720
+occasionally not always you can use a bit of l2 r1 regularization on the way
+
+1:31:27.720,1:31:34.390
+so what does that mean that means so l2 regularization means at every update you
+
+1:31:34.390,1:31:42.360
+multiply every way by one minus a small constant multiplied by the learning rate
+
+1:31:43.050,1:31:56.130
+so basically and people call this way DK says sessions call this l2
+
+1:32:01.390,1:32:13.150
+regularization this guy you have an additional in in addition to your in
+
+1:32:13.150,1:32:21.760
+Europe in your last function in addition to your cost you have a regularization
+
+1:32:21.760,1:32:27.820
+term that only depends on the weight the cost depends on the sample as well right
+
+1:32:27.820,1:32:35.530
+and you have some sort of variable to control these importance here so l2
+
+1:32:35.530,1:32:46.990
+regularization means our W equals the square norm of W when you compute the
+
+1:32:46.990,1:32:53.770
+gradient of R with respect to a particular component to W what you get
+
+1:32:53.770,1:32:56.310
+is to - w hi and so in the update rule when
+
+1:33:14.890,1:33:24.430
+you do WI is replaced by WI - ADA gradient of your overall loss with
+
+1:33:24.430,1:33:33.550
+respect to W what you get is WI - ADA times the gradient of the cost with
+
+1:33:33.550,1:33:52.350
+respect to W - because it's a - gradient - of WI oh you're right
+
+1:33:54.330,1:34:10.560
+which I can rewrite as so this is WI and I can rewrite as WI times 1 minus 2
+
+1:34:10.980,1:34:25.750
+alpha minus C over D WI ok so what does that mean you take every weight and at
+
+1:34:25.750,1:34:33.070
+every iteration you shrink it by a constant that's slightly less than 1 and
+
+1:34:33.070,1:34:39.310
+so that's why it's called weight decay in the absence of any gradient from
+
+1:34:39.310,1:34:45.730
+seeing the weights exponentially decay to zero ok so what that does is that it
+
+1:34:45.730,1:34:52.000
+tries to tell the system you know minimize my cost function but do it with
+
+1:34:52.000,1:34:55.980
+a weight vector that is as short as possible
+
+1:34:58.749,1:35:04.269
+okay the other one is a one so l1 regularization
+
+1:35:10.689,1:35:25.599
+is basically a regularization term equal to some of our I of absolute value of W
+
+1:35:25.599,1:35:46.659
+is for e which is yeah one norm so when you do the the gradient a day you get WI
+
+1:35:46.659,1:36:02.559
+- yeah you see already WI and then where's the gradient of this or - the
+
+1:36:02.559,1:36:09.869
+gradient of this that would be sine of WI and of course you need e alpha in
+
+1:36:13.809,1:36:23.590
+front so this is a constant which is positive which is positive if WI is
+
+1:36:23.590,1:36:28.530
+positive negative it is negative but there's a minus sign in front so
+
+1:36:29.400,1:36:36.219
+basically here WI is being shrunk towards zero by a constant equal to area
+
+1:36:36.219,1:36:45.119
+times alpha the state sessions converse less soon
+
+1:36:48.699,1:36:59.440
+needs to absolute whatever okay I mean it's some cute I quit name right this is
+
+1:36:59.440,1:37:04.420
+some sort of pun in it but and they pronounce it let's sue for reason I
+
+1:37:04.420,1:37:11.170
+never understood and so that basically shrinks the all the weights toward zero
+
+1:37:11.170,1:37:16.239
+by a constant and what that means is that if a weight is not useful it's
+
+1:37:16.239,1:37:27.280
+gonna get eliminated to zero okay and that is very interesting when you have
+
+1:37:27.280,1:37:33.070
+like a very large particularly a very large uh like a network with a very
+
+1:37:33.070,1:37:36.519
+large number of inputs many of which are not very useful this will basically
+
+1:37:36.519,1:37:40.360
+eliminate the inputs that are not very useful because the weights that connect
+
+1:37:40.360,1:37:52.360
+to it will go to zero so when I did a question okay so first of all you don't
+
+1:37:52.360,1:37:56.829
+want to use it at at the start because there is a curious thing with neural
+
+1:37:56.829,1:38:02.949
+nets which is that the origin of weight space is kind of a saddle point and so
+
+1:38:02.949,1:38:06.969
+if you if you crank up at one or l2 initially the weights just go to zero
+
+1:38:06.969,1:38:13.989
+and nothing works so so so it's in one of the tricks actually I forgot a very
+
+1:38:13.989,1:38:19.929
+important one in this list which is that the weights have to be initialized in
+
+1:38:19.929,1:38:23.860
+the neural net and they have to be initialized properly these various
+
+1:38:23.860,1:38:28.570
+tricks that are built into PI torch to initialize when trick is called the
+
+1:38:28.570,1:38:33.729
+climbing trick it's actually the glioma to attract from 20 years earlier but and
+
+1:38:33.729,1:38:43.239
+the idea is it was reinvented multiple times but the idea is you want the the
+
+1:38:43.239,1:38:47.739
+weights that they're going to a unit to be to be random I mean you initialize
+
+1:38:47.739,1:38:50.920
+them randomly but you don't know them to be too large or too small you want them
+
+1:38:50.920,1:38:53.559
+to be kind of roughly the right size so that the output
+
+1:38:53.559,1:38:57.849
+is roughly the same variance as the inputs okay so if the inputs to a unit
+
+1:38:57.849,1:39:06.189
+are independent the variance of the output the variance of the weighted sum
+
+1:39:06.189,1:39:11.199
+will be equal to the sum of the variances of the input multiplied by
+
+1:39:11.199,1:39:17.739
+weighted by the square of the weights okay so if you want if you have n inputs
+
+1:39:17.739,1:39:23.050
+and you want the output to have the same variance as the input and into weights
+
+1:39:23.050,1:39:30.550
+to be proportional to the inverse square root of the number of inputs okay and
+
+1:39:30.550,1:39:34.449
+that's that's basically the trick so we initialize the weights to values which
+
+1:39:34.449,1:39:40.599
+are drawn randomly with zero mean and the variance is 1 over the square root
+
+1:39:40.599,1:39:45.159
+of the number of inputs to that unit okay and that's you know hard you know
+
+1:39:45.159,1:39:51.099
+built into pie charts as well so initialization is super important and it
+
+1:39:51.099,1:40:11.079
+can if you do it wrong your network is not gonna cover yeah well I mean you
+
+1:40:11.079,1:40:15.280
+probably want to start with a alpha equal zero and then maybe crank it up
+
+1:40:15.280,1:40:18.249
+and then it depends you know how much you want to regularize how much is
+
+1:40:18.249,1:40:22.829
+necessary I mean a lot of people just don't use any okay either everyone or l2
+
+1:40:22.829,1:40:26.800
+but they didn't drop out okay so the road patch is another type of
+
+1:40:26.800,1:40:31.749
+regularization and and you can think of it as a layer inside of a neural net
+
+1:40:31.749,1:40:36.659
+that you just insert in the neural net where drop out does is that it randomly
+
+1:40:36.659,1:40:44.800
+it's a it's a box that has an input and an output and it randomly sets n over
+
+1:40:44.800,1:40:49.869
+two of the outputs to zero and it's a random draw at every new sample that you
+
+1:40:49.869,1:40:58.199
+draw that layer basically kills half of its components okay this is crazy right
+
+1:40:58.199,1:41:03.550
+but in fact it kind of makes the other variables more robust basically it
+
+1:41:03.550,1:41:08.610
+forces the system to not rely on any single unit to produce an answer
+
+1:41:08.610,1:41:12.720
+it sort of distributes the information across all the units because it knows
+
+1:41:12.720,1:41:16.830
+that you're in training you know half of them can disappear so it tends to kind
+
+1:41:16.830,1:41:20.670
+of distribute the information better it's a trick that you know Jeff Fenton
+
+1:41:20.670,1:41:24.960
+and his team came up with and turns out to be you know quite efficient way of
+
+1:41:24.960,1:41:30.720
+regularizing neural nets a lot of people use ok there's variations of it but and
+
+1:41:30.720,1:41:34.110
+we'll talk about more of those there are in one of those papers efficient
+
+1:41:34.110,1:41:42.690
+backdrops that I wrote many years ago and that you are invited to read ok last
+
+1:41:42.690,1:41:47.910
+thing for today even though we're late this trick I mean it's this whole
+
+1:41:47.910,1:41:52.470
+framework of having a computer graph and that propagating to it of course it
+
+1:41:52.470,1:41:59.550
+doesn't work just for stacked module it works for any arrangement of module
+
+1:41:59.550,1:42:05.930
+including the ones that I dynamical that depend on on on the inputs question
+
+1:42:13.760,1:42:19.710
+yeah so the question is why why do we care about the fact that values are
+
+1:42:19.710,1:42:24.539
+scale equivariance if we're going to normalize anyway the question is where
+
+1:42:24.539,1:42:29.130
+do you normalize to so if you have sigmoids and you normalize you're
+
+1:42:29.130,1:42:32.400
+basically forcing the system if your normal is it is a variance for example
+
+1:42:32.400,1:42:35.039
+is too small then the system is not gonna be able to use the non-linearity
+
+1:42:35.039,1:42:40.650
+in the sigmoid hyperbole tangent let's say if you make it too small is gonna
+
+1:42:40.650,1:42:47.249
+saturate so what's the right setup no clear well you you don't care as long
+
+1:42:47.249,1:42:50.369
+it's the same variance all over the network if you just let me variance all
+
+1:42:50.369,1:42:54.480
+over the network then you know what you're gonna get issues some layers are
+
+1:42:54.480,1:42:57.059
+gonna learn faster than others some are going to diverge when others are
+
+1:42:57.059,1:43:01.110
+converging so you want the variances to be roughly the same all over the network
+
+1:43:01.110,1:43:08.880
+and you know that's what things like betcha norm do for you we haven't talked
+
+1:43:08.880,1:43:14.219
+about batch alone yet but okay that's it for today thank you see you
