@@ -1,6 +1,6 @@
 ---
 layout: default
-title: DEEP LEARNING
+title: APRENDIZAJE PROFUNDO
 author: Alfredo Canziani
 lang-ref: home
 lang: es
