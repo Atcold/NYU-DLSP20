@@ -15,7 +15,7 @@ Naredne instrukcije rade za Mac i Ubuntu Linux, a za Windows je potrebno da se i
 ## Podešavanje radnog okruženja
 
 Potrebno je otići na [sajt Anaconda](https://conda.io/miniconda.html).
-Skinuti i instalirat *najnoviju* Miniconda verziju za *Python* 3.7 za vaš operativni sistem.
+Skinuti i instalirati *najnoviju* Miniconda verziju za *Python* 3.7 za vaš operativni sistem.
 
 ```bash
 wget <http:// link to miniconda>
