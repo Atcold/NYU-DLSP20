@@ -13,14 +13,14 @@ lang: ru
 <!-- | INSTRUCTORS | Yann LeCun & Alfredo Canziani |
 | LECTURES    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRACTICA    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIAL    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) | -->
 
 | ПРЕПОДАВАТЕЛИ | Yann LeCun & Alfredo Canziani |
-| ЛЕКЦИИ    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| ЛЕКЦИИ        | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | ПРАКТИКУМЫ    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
-| МАТЕРИАЛЫ    | [Google Drive](https://bitly.com/DLSP20), [Рабочие тетради](https://github.com/Atcold/pytorch-Deep-Learning) |
+| ФОРУМ         | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| МАТЕРИАЛЫ     | [Google Drive](https://bitly.com/DLSP20), [Рабочие тетради](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 <!-- ## Description -->
