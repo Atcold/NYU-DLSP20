@@ -1,8 +1,9 @@
 ---
 layout: default
-title: DEEP LEARNING
+title: DUBOKO UČENJE
 author: Alfredo Canziani
 lang-ref: home
+lang: sr
 ---
 
 **DS-GA 1008 · PROLEĆE 2020 · [NYU CENTAR ZA DATA SCIENCE](http://cds.nyu.edu/)**

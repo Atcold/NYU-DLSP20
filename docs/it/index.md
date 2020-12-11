@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Apprendimento Profondo
+title: APPRENDIMENTO PROFONDO
 author: Alfredo Canziani
 lang-ref: home
 lang: it
