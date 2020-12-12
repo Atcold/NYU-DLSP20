@@ -1,0 +1,5144 @@
+0:00:00.080,0:00:04.319
+so welcome everyone and to this lecture on graph conventional
+
+0:00:04.319,0:00:10.080
+networks um okay so this is the outline of the
+
+0:00:10.080,0:00:13.920
+lecture so first i will go quickly um on the
+
+0:00:13.920,0:00:17.840
+traditional coordinates the architecture and then i
+
+0:00:17.840,0:00:22.480
+will introduce graphs and i will also
+
+0:00:22.480,0:00:28.880
+remind definitions of convolutions to extend it to two graphs then i will
+
+0:00:28.880,0:00:33.040
+represent two classes of graph coordinates
+
+0:00:33.040,0:00:36.719
+the first one is what i call a spectral graph of let's and the second one is the
+
+0:00:36.719,0:00:40.399
+spatial graph problems and we'll talk a little bit about the
+
+0:00:40.399,0:00:45.840
+benchmarking graph neural networks and finally i will conclude
+
+0:00:47.360,0:00:51.120
+okay so let's start with the traditional covenant
+
+0:00:51.120,0:00:56.000
+so we all know coordinates are a breakthrough in computer vision
+
+0:00:56.000,0:01:00.559
+so when uh for the imagenet competition you know for the
+
+0:01:00.559,0:01:04.320
+image classification task um when combinate was used
+
+0:01:04.320,0:01:07.439
+uh they decreased by almost a factor two the error
+
+0:01:07.439,0:01:11.760
+of classification it was in 2012 and it was basically the end
+
+0:01:11.760,0:01:17.759
+of uh and crafting features and we shift the paradigm to and crafting learning
+
+0:01:17.759,0:01:20.640
+systems and now for this very specific task we
+
+0:01:20.640,0:01:25.680
+all know that we we go to superhuman performance
+
+0:01:25.680,0:01:29.840
+coordinates are also a breakthrough in speech
+
+0:01:29.840,0:01:33.360
+and natural language processing so a facebook when you want to translate you
+
+0:01:33.360,0:01:39.520
+are also using coordinates so contents are powerful
+
+0:01:39.520,0:01:42.640
+architectures to actually solve high dimensional
+
+0:01:42.640,0:01:46.000
+learning problems so we all know about the curse of dimensionality
+
+0:01:46.000,0:01:52.560
+so if you have an image let's say 1 000 by 1 000 pixels so it's you have 1
+
+0:01:52.560,0:01:56.799
+million variables an image can be seen as a point in a space of one million
+
+0:01:56.799,0:02:00.320
+dimensions and for each dimension if you sample by
+
+0:02:00.320,0:02:04.880
+using um by using 10 samples then you have a 10
+
+0:02:04.880,0:02:08.560
+to the power 1 million possible images so these spaces are
+
+0:02:08.560,0:02:11.520
+really huge and of course this is the question how
+
+0:02:11.520,0:02:14.640
+do you find the needle of information in this big
+
+0:02:14.640,0:02:18.879
+haystack so covenants are really powerful to extract
+
+0:02:18.879,0:02:22.800
+basically this this information of the best possible representation
+
+0:02:22.800,0:02:28.080
+of your of your image data to uh to solve problems
+
+0:02:28.080,0:02:32.400
+of course we don't know yet everything about
+
+0:02:32.959,0:02:37.840
+yeah we don't know yet everything about convnets so it's a kind of a miracle how
+
+0:02:37.840,0:02:43.440
+and how powerful how good they are and it's also quite exciting because
+
+0:02:43.440,0:02:48.840
+this opened many research areas to understand better and to develop new
+
+0:02:48.840,0:02:54.080
+architectures okay so when you use convnets you are
+
+0:02:54.080,0:02:57.040
+doing an assumption and the main assumption that you are
+
+0:02:57.040,0:03:02.640
+using is that your data so images videos speech is compositional
+
+0:03:02.640,0:03:05.840
+it means that it is form of patterns that are
+
+0:03:05.840,0:03:10.319
+local so you know this is the contribution of urban envision so
+
+0:03:10.319,0:03:14.159
+if you are at this layer for this neuron this neuron is going to be connected to
+
+0:03:14.159,0:03:18.400
+a few neurons in the previous layer and not all neurons okay so this is the
+
+0:03:18.400,0:03:23.599
+local reception field um assumption then you have also the
+
+0:03:23.599,0:03:27.040
+property of stationary stationarity so basically you have some
+
+0:03:27.040,0:03:31.200
+patterns um that are similar and that are
+
+0:03:31.200,0:03:34.640
+shared across your image domain okay so like
+
+0:03:34.640,0:03:39.200
+the yellow uh the yellow patches and the blue patches so they are they are all
+
+0:03:39.200,0:03:43.599
+similar to each other the last property is the article so you
+
+0:03:43.599,0:03:48.720
+make the assumption that your data is hierarchical in the sense that
+
+0:03:48.720,0:03:51.200
+your low level features are going to be
+
+0:03:51.200,0:03:56.080
+combined together to form a medium level features and then
+
+0:03:56.080,0:03:58.480
+this medium feature are going to be again
+
+0:03:58.480,0:04:02.159
+combined to each other to form higher and higher
+
+0:04:02.159,0:04:08.720
+abstract features so um so any convent work the same way
+
+0:04:08.720,0:04:11.760
+so the first part of the architecture is to extract
+
+0:04:11.760,0:04:16.000
+these conventional features and then the second part will be to solve your
+
+0:04:16.000,0:04:19.359
+specific task you know like classification
+
+0:04:19.359,0:04:22.479
+recommendation and so on and this is what we call you
+
+0:04:22.479,0:04:24.639
+know end-to-end systems and the first part
+
+0:04:24.639,0:04:29.840
+is to learn the features the second part is to solve your task
+
+0:04:31.120,0:04:37.440
+okay okay let's see more precisely what is the data domain
+
+0:04:37.440,0:04:43.680
+so if you have images volumes or videos basically so for example you
+
+0:04:43.680,0:04:46.320
+can see this image and if you zoom in this image
+
+0:04:46.320,0:04:50.320
+what you have is a 2d grid okay you have a 2d grid
+
+0:04:50.320,0:04:55.199
+this is the structure of of the domain of this image
+
+0:04:55.199,0:04:58.720
+and on the top of the of this grid you have some features
+
+0:04:58.720,0:05:02.000
+so for example in the case of a color image you will have
+
+0:05:02.000,0:05:05.600
+three features which are red green and blue
+
+0:05:05.600,0:05:12.560
+okay now if i'm looking at um natural language processing so like
+
+0:05:12.560,0:05:16.479
+sentences you will have a sequence of words and
+
+0:05:16.479,0:05:19.520
+basically you can see that you know as a 1d grid
+
+0:05:19.520,0:05:24.320
+and on the top of this grid for each node of the grid you will have a word
+
+0:05:24.320,0:05:27.520
+okay so a word can be represented by just
+
+0:05:27.520,0:05:31.520
+an integer for example the same also for speech
+
+0:05:31.520,0:05:35.680
+so what you see here is um the variation of the air pressure
+
+0:05:35.680,0:05:40.080
+and it's the same you know it's like you have the support is a one degree
+
+0:05:40.080,0:05:44.080
+and each for each node of the grid you will have
+
+0:05:44.080,0:05:48.560
+the the air pressure value okay which is which is a real number
+
+0:05:48.560,0:05:54.479
+so uh i think it's clear we all we all use all the time grids and grits
+
+0:05:54.479,0:05:57.520
+as you know as very strong regular special structure
+
+0:05:57.520,0:06:01.759
+and for this for this um for this structure this is good
+
+0:06:01.759,0:06:06.960
+because we mathematically we can define the confident operations like
+
+0:06:06.960,0:06:12.080
+convolution and pulling and also in practice it's very fast to do it
+
+0:06:12.080,0:06:16.800
+so everything everything is good now let's look at you know
+
+0:06:16.800,0:06:20.560
+new new data so for example social networks
+
+0:06:20.560,0:06:24.000
+okay so you want you want to do your task for example would be to do
+
+0:06:24.000,0:06:28.000
+advertisement or to also make recommendation so for a
+
+0:06:28.000,0:06:30.800
+social network i'm going to it's going to be clear but
+
+0:06:30.800,0:06:34.319
+i'm going to show you that if you take two notes so for example
+
+0:06:34.319,0:06:38.720
+you know you have this user let's say this user i and user j
+
+0:06:38.720,0:06:42.160
+and all the others you see that this is not a grid
+
+0:06:42.160,0:06:46.160
+okay so the connection the pairwise connection between all users
+
+0:06:46.160,0:06:50.720
+they do not form a grid they have a very special pattern of connections
+
+0:06:50.720,0:06:56.080
+and this is basically a graph okay so uh how do you define your graph you're
+
+0:06:56.080,0:06:58.720
+gonna see the connection between users so
+
+0:06:58.720,0:07:03.520
+if i user i user j are friends you're gonna have you know connection and then
+
+0:07:03.520,0:07:06.880
+for this you are going to use what we call an adjacency matrix
+
+0:07:06.880,0:07:13.039
+which is just going to record all the connection or non-connection um between
+
+0:07:13.039,0:07:17.360
+notes in your in your social networks okay and
+
+0:07:17.360,0:07:20.400
+on the top of your network uh for each user you
+
+0:07:20.400,0:07:23.280
+will have features so for example you have you know
+
+0:07:23.280,0:07:28.800
+messages you have images you have videos so they form you know some feature in a
+
+0:07:28.800,0:07:31.840
+d dimensional space in in neuroscience
+
+0:07:35.440,0:07:39.039
+in brain analysis for example we are really interesting to understand
+
+0:07:39.039,0:07:44.960
+uh you know the fundamental relationship between structure and function of the
+
+0:07:44.960,0:07:48.720
+brain so they are really um connected to each other and it's very
+
+0:07:48.720,0:07:51.919
+fundamental to understand that we also want for example to predict
+
+0:07:51.919,0:07:55.680
+uh neurodegenerative disease different stages of this disease
+
+0:07:55.680,0:07:59.599
+so that this is very important um for this we need to understand the brain and
+
+0:07:59.599,0:08:02.879
+the brain if you look at the brain the brain is uh
+
+0:08:02.879,0:08:06.879
+composed of what we call region of interest okay
+
+0:08:06.879,0:08:10.400
+and this region of interest if you take one region of interest
+
+0:08:10.400,0:08:13.759
+this region is not connected to all other regions in the brain actually they
+
+0:08:13.759,0:08:16.400
+are only connected to a few other regions
+
+0:08:16.400,0:08:20.000
+so it's it's and again you can see nothing to do with the grid
+
+0:08:20.000,0:08:25.520
+okay so this special connection uh between different region of the
+
+0:08:25.520,0:08:29.120
+brains they can be measured by the structural mri
+
+0:08:29.120,0:08:32.800
+signal and then you also have an adjacency matrix
+
+0:08:32.800,0:08:37.599
+between region i and region j and and here you have a strength of connection
+
+0:08:37.599,0:08:41.200
+which depends how many connections how many fibers do you have
+
+0:08:41.200,0:08:47.040
+to connect region iron region j okay and then on the top of this graph
+
+0:08:47.040,0:08:50.959
+so if you look at the region i then you will have activations you know
+
+0:08:50.959,0:08:54.880
+functional activation which is basically a time
+
+0:08:54.880,0:08:58.080
+series that you can see here and also we can record this
+
+0:08:58.080,0:09:02.640
+activation of the brain with a functional mri
+
+0:09:02.959,0:09:07.279
+okay the last example i want to show you is in quantum chemistry
+
+0:09:07.279,0:09:10.880
+so for example the task would be to design
+
+0:09:10.880,0:09:16.480
+new molecules for drugs and materials so so you see again the connection
+
+0:09:16.480,0:09:19.040
+between atoms has nothing to do with the grid
+
+0:09:19.040,0:09:23.519
+okay it really depends um how you're going to connect
+
+0:09:23.519,0:09:27.279
+your atoms and then you will have you know molecules
+
+0:09:27.279,0:09:31.279
+so uh so the connection between atoms they are called bond
+
+0:09:31.279,0:09:36.000
+um and you have you know different kind of bonds they can be a
+
+0:09:36.000,0:09:40.480
+single bond double bond aromatic bond and you have and you have also different
+
+0:09:40.480,0:09:44.240
+features like energy and many other features that you can use
+
+0:09:44.240,0:09:48.720
+from from chemistry um for for the node of the graph so they
+
+0:09:48.720,0:09:52.480
+are atoms and again you you you may have different features like the
+
+0:09:52.480,0:09:56.240
+type of atom if it is you know hydrogen if it is
+
+0:09:56.240,0:09:58.480
+hazard all this all these types you have also
+
+0:09:58.480,0:10:01.680
+the 3d coordinates you have the charge and so on you may have
+
+0:10:01.680,0:10:08.000
+multiple features okay so um and it's not uh
+
+0:10:08.000,0:10:11.760
+the list actually goes on to give you example
+
+0:10:11.760,0:10:17.360
+of graph graph domains so you also have you know computer graphics
+
+0:10:17.360,0:10:21.600
+with 3d meshes you also want maybe to analyze
+
+0:10:21.600,0:10:28.320
+transportation network and the density of of cars or maybe i don't know
+
+0:10:28.320,0:10:32.079
+trains you have also you know gene regulatory network
+
+0:10:32.079,0:10:36.880
+you have knowledge graphs um world relationships
+
+0:10:36.880,0:10:41.200
+you know users products where you want to do recommendations you have also seen
+
+0:10:41.200,0:10:44.640
+understanding you want to give more common sense to your computer
+
+0:10:44.640,0:10:48.079
+vision machine so you want to understand the relationship between between your
+
+0:10:48.079,0:10:51.519
+objects you also have you know for example if
+
+0:10:51.519,0:10:55.839
+you want to detect high energy physics particles so you
+
+0:10:55.839,0:11:00.800
+have characters and the captures are not you know structure as a regular grid so
+
+0:11:00.800,0:11:03.519
+for all this you see that there is a
+
+0:11:03.519,0:11:06.959
+denominator uh which is basically you can represent
+
+0:11:06.959,0:11:11.680
+all these um problems as graphs
+
+0:11:11.680,0:11:17.760
+okay and and here is the command setting i would
+
+0:11:17.760,0:11:23.040
+say the mathematical command setting for all these uh problems um
+
+0:11:23.040,0:11:29.360
+so the graphs uh let's let's call it uh g okay they are defined by three
+
+0:11:29.360,0:11:33.440
+entities so the first entity is going to be the set of vertices
+
+0:11:33.440,0:11:37.839
+so usually you are going to index the set of vertices from one to n
+
+0:11:37.839,0:11:41.519
+n is is the number of nodes in your in your graph
+
+0:11:41.519,0:11:45.120
+okay so for example this will be the index one
+
+0:11:45.120,0:11:50.639
+two three and so on then you will have you know the set of edges basically they
+
+0:11:50.639,0:11:55.120
+are the connections between um between the notes
+
+0:11:55.120,0:11:58.959
+and finally you will have the adjacency matrix a which will give you the
+
+0:11:58.959,0:12:05.600
+strength of the connection of your of your edge okay um
+
+0:12:05.600,0:12:12.240
+okay then you have graph features so for example for each node not i or not j
+
+0:12:12.240,0:12:16.000
+you will have some um some node features so it's
+
+0:12:16.000,0:12:20.800
+basically a vector of dimensionality dv okay
+
+0:12:20.800,0:12:25.120
+the same also it's possible that you can get
+
+0:12:25.680,0:12:29.760
+you can get h features and it's going to be a vector
+
+0:12:29.760,0:12:35.120
+of dimensionality d e so for example for molecules
+
+0:12:35.120,0:12:38.720
+the node feature maybe you know the atom type and the edge feature may be the
+
+0:12:38.720,0:12:43.040
+bond type to give you an example and finally you can have also some graph
+
+0:12:43.040,0:12:45.920
+feature okay for all for the whole graph you can have
+
+0:12:45.920,0:12:50.839
+some feature so again it's um it's a vector of dimensionality
+
+0:12:50.839,0:12:54.720
+dj and and in the case of of uh of
+
+0:12:54.720,0:12:59.040
+chemistry that that that may be the molecule energy
+
+0:12:59.040,0:13:06.399
+okay so this is um i would say the general definition of graphs
+
+0:13:06.399,0:13:10.959
+okay so now what i'm going to do is that i'm going to talk about convolution
+
+0:13:10.959,0:13:16.000
+and the question how do we extend convolution to graphs
+
+0:13:17.440,0:13:22.720
+okay so first let me remind you um the classical way to use convolutional
+
+0:13:22.720,0:13:28.320
+layer uh for grids when we use confinets for computer vision so
+
+0:13:28.320,0:13:35.680
+let's say um i have this image and or maybe this is some uh you know
+
+0:13:35.680,0:13:41.600
+hidden uh feature at layer l okay and i'm going to do the convolution with
+
+0:13:41.600,0:13:45.519
+uh some pattern or kernel um
+
+0:13:45.519,0:13:48.880
+that of course i will learn by back propagation and then i will get some
+
+0:13:48.880,0:13:53.279
+activation okay so this is the the features at the
+
+0:13:53.279,0:13:56.880
+next layer so to give you maybe some dimensionality
+
+0:13:56.880,0:14:00.160
+so for example n1 and 2 is going to be the number of pixels
+
+0:14:00.160,0:14:04.399
+in the x and y direction and d is the dimensionality
+
+0:14:04.399,0:14:08.959
+of uh of each pixel so if this is a color image the dimensionality is going
+
+0:14:08.959,0:14:12.079
+to be three for the three colors and if this
+
+0:14:12.079,0:14:14.880
+is like intermediate uh hidden feature maybe you
+
+0:14:14.880,0:14:19.760
+have 100 you know dimensions for the kernel usually you take small
+
+0:14:19.760,0:14:24.720
+kernels because you want to know the local reception field so that might be
+
+0:14:24.720,0:14:29.519
+you know three by three pixels kernel or five by one five by five and
+
+0:14:29.519,0:14:33.120
+of course you have d because you need to uh to respect the
+
+0:14:33.120,0:14:38.079
+dimensionality of your input uh after input features
+
+0:14:39.040,0:14:43.199
+okay so maybe for this one so you see that uh so you are going to convert this
+
+0:14:43.199,0:14:45.920
+image with this feature which is oriented in this
+
+0:14:45.920,0:14:51.600
+direction so you will basically identify uh you know
+
+0:14:51.600,0:14:56.160
+lines in in in this direction of the image
+
+0:14:56.160,0:14:59.839
+so that was just an example and we use padding right right now right so we have
+
+0:14:59.839,0:15:04.560
+the same dimensionality of the uh yes yes absolutely against padding so
+
+0:15:04.560,0:15:06.959
+you basically you don't reduce the size of your image
+
+0:15:06.959,0:15:13.120
+right yeah okay so so how do we mathematically define
+
+0:15:13.120,0:15:18.399
+convolution so the first definition is to do is to
+
+0:15:18.399,0:15:22.160
+see convolution as a template matching okay
+
+0:15:22.160,0:15:28.079
+so so template matching so here is the definition the mathematical definition
+
+0:15:28.079,0:15:31.360
+of a convolution so what you're going to do is that
+
+0:15:31.360,0:15:35.040
+you are going to take your template you are going to take your image
+
+0:15:35.040,0:15:41.920
+and then you are going to sum over um the index in the whole
+
+0:15:41.920,0:15:48.880
+image domain omega okay of wj and this is going to be a product
+
+0:15:48.880,0:15:53.120
+between vector w j and vector h i minus g
+
+0:15:53.120,0:15:56.320
+okay so this is the pure definition of convolution
+
+0:15:56.320,0:16:00.480
+and what we do usually in a in computer vision is that we don't take minus
+
+0:16:00.480,0:16:04.560
+we take plus okay and we call that because because when when we do that we
+
+0:16:04.560,0:16:08.320
+have the definition of correlation and this is this is you know because
+
+0:16:08.320,0:16:11.120
+it's more uh like it's it's exactly like template
+
+0:16:11.120,0:16:16.639
+matching okay so it doesn't change anything if you if you do i minus j or i
+
+0:16:16.639,0:16:20.639
+plus j in the learning sense because the only thing that you do is that you flip
+
+0:16:20.639,0:16:24.079
+up and down and left and right your uh your
+
+0:16:24.079,0:16:28.720
+your your kernel and when you learn you it doesn't change anything basically
+
+0:16:28.720,0:16:32.000
+okay but this is the definition of correlation so it's it's really a
+
+0:16:32.000,0:16:34.720
+template matching and then i'm going to take for the
+
+0:16:34.720,0:16:38.480
+notation i j okay so basically and yeah and something very
+
+0:16:38.480,0:16:43.279
+important that you have here is that you when when we do um convolutional
+
+0:16:43.279,0:16:47.600
+layers we are using kernel with compact support you know
+
+0:16:47.600,0:16:53.199
+like a 3x3 it's very small support when we do that we don't do the sum over
+
+0:16:53.199,0:16:56.880
+the whole domain the image domain we just do the sum over the
+
+0:16:56.880,0:17:01.440
+neighborhood of the node i okay and this is very
+
+0:17:01.440,0:17:03.759
+important it's very important because suddenly
+
+0:17:03.759,0:17:07.120
+the sum is not over the whole pixel it's just you know
+
+0:17:07.120,0:17:12.400
+um in the neighborhood and then the complexity of doing convolution is
+
+0:17:12.400,0:17:16.079
+actually um to the order of the number of nodes so
+
+0:17:16.079,0:17:20.640
+the number of pixels in your in your image so so the
+
+0:17:20.640,0:17:24.319
+the complete is quite easy to to compute so what you're going to do is that
+
+0:17:24.319,0:17:27.199
+you're going to take your uh your pattern you're going to slice
+
+0:17:27.199,0:17:32.640
+your pattern so it's going to be n slicing because n number of locations
+
+0:17:32.640,0:17:36.640
+and then you're gonna do you know a scalar product of three by three
+
+0:17:36.640,0:17:40.000
+elements and and you're gonna do you know um
+
+0:17:40.000,0:17:45.520
+um the vector a product of vectors of dimensionality so
+
+0:17:45.520,0:17:48.720
+you see the complexity of doing this operation is just
+
+0:17:48.720,0:17:51.840
+n times three times three times d so the completed is n
+
+0:17:51.840,0:17:55.120
+and and again everything can be done in parallel if you have a gpu the
+
+0:17:55.120,0:17:59.039
+computation that you are doing in this in this location is independent
+
+0:17:59.039,0:18:01.440
+to the competition that you're doing in this location so
+
+0:18:01.440,0:18:08.400
+everything is is linear complexity okay so doing that uh okay
+
+0:18:08.400,0:18:12.240
+so so at the end of the day if you want to do convolution with template matching
+
+0:18:12.240,0:18:17.440
+you're just going to compute this um scalar products between your template
+
+0:18:17.440,0:18:25.120
+and between uh your your image um i would say your image patch okay
+
+0:18:25.120,0:18:28.880
+um okay so something that is very important to see
+
+0:18:28.880,0:18:34.559
+in the case of the graph being grid so this is for standard convolution
+
+0:18:34.559,0:18:38.240
+in computer vision if you look at if you are looking at you
+
+0:18:38.240,0:18:42.880
+know your template which is here okay so you see that i'm going to give
+
+0:18:42.880,0:18:48.720
+some node ordering j1 g2 j3 and so on to g9
+
+0:18:48.720,0:18:52.160
+and this node ordering is actually very important
+
+0:18:52.160,0:18:58.559
+okay because for for all time i mean it's not i mean this this notes so for
+
+0:18:58.559,0:19:03.600
+example the node g3 will always be positioned at the same
+
+0:19:03.600,0:19:06.160
+location so it's always going to be at the top right
+
+0:19:06.160,0:19:11.440
+corner of the pattern okay so that's that's very important why
+
+0:19:11.440,0:19:15.200
+it's very important so let me go to the next slide
+
+0:19:15.200,0:19:19.360
+so why it's very important is so when i will do the convolution so the pattern
+
+0:19:19.360,0:19:22.640
+matching again i will take my my pattern and i
+
+0:19:22.640,0:19:26.480
+will slice the pattern over my image domain okay so that would
+
+0:19:26.480,0:19:30.400
+be maybe here and i put it here and and also this is
+
+0:19:30.400,0:19:33.600
+position i position i prime that i put here
+
+0:19:33.600,0:19:37.120
+so when i'm going to do the template matching between
+
+0:19:37.120,0:19:41.039
+the kernel and the image what i will do is that for
+
+0:19:41.039,0:19:46.799
+this index so the index g3 it will always match you know the
+
+0:19:46.799,0:19:51.440
+information in the image at this index here
+
+0:19:51.440,0:19:56.880
+okay so this is very important so you when you have a grid the node
+
+0:19:56.880,0:20:00.720
+ordering the node positioning is always the same whatever the position
+
+0:20:00.720,0:20:03.200
+in your image so when you do the template matching
+
+0:20:03.200,0:20:06.880
+between index g3 and this index here in the image you
+
+0:20:06.880,0:20:11.919
+always compare the same information you always compare the feature uh at the
+
+0:20:11.919,0:20:15.120
+top right corner uh of your pattern and the
+
+0:20:15.120,0:20:20.480
+type of corner of the image patch okay so this um this
+
+0:20:20.480,0:20:24.720
+uh you see this matching scores they are for the same information
+
+0:20:24.720,0:20:30.880
+okay so that's very important now let's look at what happened for graphs
+
+0:20:32.559,0:20:36.960
+okay so the question is can we extend this definition of template matching for
+
+0:20:36.960,0:20:40.080
+graphs and there are two main issues so the
+
+0:20:40.080,0:20:44.480
+first issue is basically on a graph you don't have
+
+0:20:44.480,0:20:52.080
+any uh ordering of your notes okay so on the graph you you have
+
+0:20:52.080,0:20:55.919
+no given position uh for your notes so let's say for example
+
+0:20:55.919,0:21:02.320
+i have this uh graph template okay so there are like four notes with
+
+0:21:02.320,0:21:07.760
+this connection and i have this uh vertex here the thing is for this
+
+0:21:07.760,0:21:10.640
+vertex i know nothing about the position the
+
+0:21:10.640,0:21:14.240
+only thing that i know is the index okay so maybe this is the
+
+0:21:14.240,0:21:17.760
+index number three for this one and then when i when if i
+
+0:21:17.760,0:21:20.799
+want to use the template machine definition what i'm going to do is that
+
+0:21:20.799,0:21:27.039
+i need to match you know this uh index with other index uh
+
+0:21:27.039,0:21:30.559
+in the graph domain so this is my graph and let's say this is for
+
+0:21:30.559,0:21:33.760
+the node i and they are the neighbors of the node i so
+
+0:21:33.760,0:21:37.600
+for this neighbor this is the index the same index j3
+
+0:21:37.600,0:21:42.720
+but here i mean how can i match you know this information with this
+
+0:21:42.720,0:21:46.400
+information when i do not know if they match to it they
+
+0:21:46.400,0:21:50.000
+mature to each other because on the graph you don't have any
+
+0:21:50.000,0:21:54.640
+ordering of your notes you don't know if it's not it's for the
+
+0:21:54.640,0:21:58.559
+top right corner of any information you don't know that
+
+0:21:58.559,0:22:03.280
+so on the graph you have no notion of where is the up where is the down where
+
+0:22:03.280,0:22:07.440
+is the right where is the left okay so when you do this matching
+
+0:22:07.440,0:22:11.120
+between uh this feature vector and this picture
+
+0:22:11.120,0:22:16.720
+vector actually this matching usually generally has no meaning okay you
+
+0:22:16.720,0:22:20.159
+you you don't know what you compare to each other okay
+
+0:22:20.159,0:22:23.440
+and again the index is completely arbitrary
+
+0:22:23.440,0:22:26.480
+okay so you can have the value 3 here but it can be here
+
+0:22:26.480,0:22:30.080
+the value number 2 or value number 12. you you don't have
+
+0:22:30.080,0:22:34.880
+this is this is not you know any good information
+
+0:22:34.880,0:22:39.280
+so basically because you don't have any ordering of your notes on graphs
+
+0:22:39.280,0:22:42.559
+you cannot choose the definition of template matching
+
+0:22:42.559,0:22:47.360
+you cannot use that directly so we need to do something else
+
+0:22:49.840,0:22:53.360
+okay the second issue with template matching for graphs
+
+0:22:53.360,0:22:58.480
+is what happens if um the number of nodes in your template
+
+0:22:58.480,0:23:02.080
+does not match the number of nodes you know uh
+
+0:23:02.080,0:23:05.840
+in your in your graph so for example here i have four nodes
+
+0:23:05.840,0:23:10.400
+here i have four nodes fine maybe i can find a way to compare
+
+0:23:10.400,0:23:14.000
+the two in the two sets of of nodes but here i have
+
+0:23:14.000,0:23:18.559
+uh i have seven nodes so how i'm going to compare seven nodes to four nodes
+
+0:23:18.559,0:23:23.840
+so that's also you know an open issue okay so the third mathematical
+
+0:23:26.640,0:23:30.240
+definition was to use template matching to define convolution
+
+0:23:30.240,0:23:34.640
+now the second definition is to use the convolution the convolution theorem
+
+0:23:34.640,0:23:39.360
+so the convolution theorem from um from fourier is basically the fourier
+
+0:23:39.360,0:23:42.240
+transform of the convolution of two functions
+
+0:23:42.240,0:23:45.919
+is the pointwise product of the fourier transform this is what you see here
+
+0:23:45.919,0:23:50.159
+okay so the fourier transform of the convolution of
+
+0:23:50.159,0:23:54.640
+a function w and function h is the fourier transform of f
+
+0:23:54.640,0:23:58.159
+and point twice multiplication the fourier transform of h then if you do
+
+0:23:58.159,0:24:02.559
+the inverse for your transform you go back to your to your convolution
+
+0:24:02.559,0:24:06.080
+so nice okay we have a very um nice formula to
+
+0:24:06.080,0:24:10.159
+do the convolution of w and h and but the thing is in the general
+
+0:24:10.159,0:24:12.880
+case doing the fourier transform is n square
+
+0:24:12.880,0:24:18.799
+complexity we come back to that however if you if your domain uh like
+
+0:24:18.799,0:24:23.520
+uh like the image grid has some very particular structure
+
+0:24:23.520,0:24:27.520
+then you can reduce the complexity to n log n uh by using you know
+
+0:24:27.520,0:24:31.520
+uh fast fourier transform okay so the question is
+
+0:24:31.520,0:24:38.159
+can we extend this definition of uh of convolution theorem to graphs
+
+0:24:38.159,0:24:41.840
+so the question is how do we redefine a fourier transform
+
+0:24:41.840,0:24:47.039
+for four graphs okay and and the thing is how to make it fast
+
+0:24:47.039,0:24:51.520
+okay so remember that in the case of uh of template matching
+
+0:24:51.520,0:24:54.880
+uh we have linear complexity so how do we
+
+0:24:54.880,0:24:58.000
+have a fast spectral convolution in linear time
+
+0:24:58.000,0:25:01.120
+for compact kernels so that's that's the two open question
+
+0:25:01.120,0:25:04.559
+okay so basically we are going to use these two definitions
+
+0:25:04.559,0:25:11.520
+of convolution to uh design two classes of graph neural network so the
+
+0:25:11.520,0:25:15.520
+this will be the template machine will be for the spatial graph cornets
+
+0:25:15.520,0:25:19.600
+and the conversion rotary i'm going to use that for the spectral graph net and
+
+0:25:19.600,0:25:22.960
+this is the next the next part that i'm going to talk
+
+0:25:22.960,0:25:25.440
+about now okay so let's talk about
+
+0:25:31.520,0:25:36.799
+how we do spectral convolution okay so i there is a book that i like very
+
+0:25:42.400,0:25:45.360
+much uh which is the book of uh fan chung
+
+0:25:45.360,0:25:48.320
+which is a spectrograph theory so there is
+
+0:25:48.320,0:25:51.919
+everything in nice like harmonic analysis graphery combinatorial
+
+0:25:51.919,0:25:56.400
+problems and optimization so i really recommend you know people to
+
+0:25:56.400,0:26:00.159
+read the books they want to know more and a lot more
+
+0:26:00.159,0:26:03.600
+about about these these questions so how do we perform
+
+0:26:03.600,0:26:07.039
+spectral convolution so we are going to use four steps so the
+
+0:26:07.039,0:26:11.120
+first step will be to do would be to define graph application
+
+0:26:11.120,0:26:14.880
+second step will be to define fourier functions then
+
+0:26:14.880,0:26:17.919
+we will do fourier transform and eventually
+
+0:26:17.919,0:26:21.919
+convolution theorem okay
+
+0:26:21.919,0:26:25.919
+so the what is the graph location so the graph calculation
+
+0:26:25.919,0:26:29.600
+this is the core operator in spectral graph theory okay
+
+0:26:29.600,0:26:33.760
+so remember how we define a graph we have a set of vertices
+
+0:26:33.760,0:26:36.880
+a set of edges and then we have the adjacency matrix
+
+0:26:36.880,0:26:40.799
+so if the graph has n vertices the adjacency matrix
+
+0:26:40.799,0:26:45.919
+is a n by n matrix so we are going simply to define the
+
+0:26:45.919,0:26:49.919
+laplacian which is also going to be an n by n matrix to be
+
+0:26:49.919,0:26:53.760
+the identity minus the adjacency matrix and we are
+
+0:26:53.760,0:27:00.159
+going to normalize the adjacency matrix by using
+
+0:27:00.159,0:27:05.520
+the degree of each node so d is basically a diagonal matrix
+
+0:27:05.520,0:27:09.360
+and the diagonal each element of the diagonal is basically the degree of the
+
+0:27:09.360,0:27:12.080
+node okay so we are doing and this is called
+
+0:27:12.080,0:27:15.760
+the normalized location okay so this is i would say this is by
+
+0:27:15.760,0:27:21.679
+default the definition of uh laplacian that we use for for graphs
+
+0:27:21.679,0:27:25.520
+so we can interpret uh this uh this operator
+
+0:27:25.520,0:27:31.360
+so the laplacian is this combination so the a was that matrix with basically all
+
+0:27:31.360,0:27:33.600
+zeros and the one was representing the
+
+0:27:33.600,0:27:38.320
+connection between edges right um yes so
+
+0:27:38.320,0:27:42.799
+uh for facebook for example i would say that this is exactly the definition so
+
+0:27:42.799,0:27:48.720
+if not a user i is a friend with a user j then you will
+
+0:27:48.720,0:27:52.080
+have adjacency matrix value will be i j equal
+
+0:27:52.080,0:27:56.080
+to one and if two users are not friends
+
+0:27:56.080,0:28:00.240
+then you will get the value zero but sometimes you have a real value
+
+0:28:00.240,0:28:05.279
+for a for example for the for the brain connectivity graph
+
+0:28:05.279,0:28:10.399
+the value of aij is the degree of connection between the two regions so
+
+0:28:10.399,0:28:15.360
+basically what we say the number of fibers that connect
+
+0:28:15.360,0:28:19.760
+region i and region j so that can be binary that can be also a continuous
+
+0:28:19.760,0:28:23.200
+value and also this is symmetric if it's non
+
+0:28:23.200,0:28:27.600
+oriented graph otherwise yes so yeah for
+
+0:28:27.600,0:28:32.080
+usually it is symmetric uh and you want you want the symmetry for for
+
+0:28:32.080,0:28:36.320
+mathematical reasons um but you may have some not so here
+
+0:28:36.320,0:28:39.760
+this is the normalized elevation but if you have the random walk
+
+0:28:39.760,0:28:43.039
+laplacian then this is non-symmetric okay
+
+0:28:43.039,0:28:46.480
+so it's um it's it's different definition of the application so
+
+0:28:46.480,0:28:49.919
+in the case of laplacian it's very interesting so in the continuous setting
+
+0:28:49.919,0:28:52.799
+you have only one definition for the application this is called the laplace
+
+0:28:52.799,0:28:55.919
+beltrami operator in the discrete setting you have
+
+0:28:55.919,0:28:59.279
+multiple definitions you can do your own definition of the application depending
+
+0:28:59.279,0:29:03.200
+on on the assumptions that that you are going to use i
+
+0:29:03.200,0:29:07.760
+understand thank you okay so we can interpret the
+
+0:29:07.760,0:29:10.399
+application so the application is nothing else than a measure of
+
+0:29:10.399,0:29:14.880
+smoothness of a function on a on a graph
+
+0:29:14.880,0:29:18.080
+so this is nothing else then you you see you see so i'm doing the elaboration
+
+0:29:18.080,0:29:22.399
+that i reply to a function h okay on the graph and i'm looking at
+
+0:29:22.399,0:29:26.000
+what happened at the vertex i and if i expand this
+
+0:29:26.000,0:29:30.399
+definition i will have the value of h i minus
+
+0:29:30.399,0:29:36.080
+the mean value of the neighborhood okay so basically if your signal is smooth
+
+0:29:36.080,0:29:41.039
+you know if it doesn't vary much then this difference will be very small
+
+0:29:41.039,0:29:43.600
+but if your signal you know there is a lot
+
+0:29:43.600,0:29:46.240
+it oscillates a lot then the difference will be very
+
+0:29:46.240,0:29:50.240
+high so the laplacian is nothing else and a measure of smoothness of function
+
+0:29:50.240,0:29:55.840
+on a on a on a graph okay all right so
+
+0:30:01.279,0:30:04.880
+now let's define fourier functions so let's let's take the
+
+0:30:04.880,0:30:09.279
+laplacian matrix and let's do a little bit of linear algebra
+
+0:30:09.279,0:30:12.559
+let's do eigen decomposition of the graph operation
+
+0:30:12.559,0:30:15.760
+so when you do eigen decomposition you will have the
+
+0:30:15.760,0:30:19.279
+you will you are going to factorize your laplacian matrix
+
+0:30:19.279,0:30:23.039
+into three matrices so you have a phi transpose
+
+0:30:23.039,0:30:30.000
+lambda and five so this matrix five of the size n by n actually
+
+0:30:30.000,0:30:33.200
+uh have the what are the laplacian eigenvectors
+
+0:30:33.200,0:30:36.480
+okay for each column and the laplacian eigenvectors
+
+0:30:36.480,0:30:40.960
+they are called the fourier functions okay the famous fourier functions
+
+0:30:40.960,0:30:44.000
+and of course this is an orthonormal basis
+
+0:30:44.000,0:30:49.039
+um so when you do the the product between two bases you will get one
+
+0:30:49.039,0:30:52.799
+if they are the same and then you get zero if they are orthogonal
+
+0:30:52.799,0:30:59.120
+if they are different this is also an invertible matrix this
+
+0:30:59.120,0:31:05.279
+guy so this matrix this is the diagonal matrix of the laplacian
+
+0:31:05.279,0:31:09.279
+eigenvalues so lambda 1 to number n
+
+0:31:09.279,0:31:12.559
+and and we know that for the normalized application
+
+0:31:12.559,0:31:16.080
+that these values are bonded between zero and between
+
+0:31:16.080,0:31:19.840
+two so this is the maximum value that you can get this guy
+
+0:31:19.840,0:31:23.200
+the laplacian eigenvalues they are known as the spectrum
+
+0:31:23.200,0:31:27.200
+of the graph okay so if you take a graph here you have 27
+
+0:31:27.200,0:31:32.080
+nodes if i compute the laplacian eigenvalues and if i put them
+
+0:31:32.080,0:31:36.320
+i have a signature of the graph which is called the spectrum of the graph
+
+0:31:36.320,0:31:39.840
+okay that which would be different for each each graph
+
+0:31:39.840,0:31:43.519
+okay and here you have okay this is what i say so this is
+
+0:31:43.519,0:31:47.360
+doing um again decomposition so if you take your
+
+0:31:47.360,0:31:50.880
+laplacian matrix and you apply to a vector
+
+0:31:50.880,0:31:57.200
+phi of k then you will get the eigenvalue lambda k times the same
+
+0:31:57.200,0:32:00.399
+vector phi of k okay so this is the definition
+
+0:32:00.399,0:32:05.679
+of the um eigen decomposition okay so you see that
+
+0:32:05.679,0:32:08.720
+fourier functions they are nothing else than
+
+0:32:08.720,0:32:15.840
+the laplacian eigenvectors okay let me illustrate uh these uh
+
+0:32:20.240,0:32:24.880
+fourier functions so we actually we already know uh for your functions
+
+0:32:24.880,0:32:28.480
+uh if you if you take the greater for example you take here a one degree
+
+0:32:28.480,0:32:32.480
+and you compute the fourier functions so you so you will get a phi
+
+0:32:32.480,0:32:38.960
+zero okay then you will get phi one which is this one which is smooth phi
+
+0:32:38.960,0:32:42.320
+two which is less a little less mousse and
+
+0:32:42.320,0:32:46.880
+phi 3 and so on and so on so this is well known this is the cosine function
+
+0:32:46.880,0:32:50.559
+and the semi-zoids and we use that you know for
+
+0:32:50.559,0:32:54.320
+for image compression so if we take an image and we project the image
+
+0:32:54.320,0:32:58.480
+on the fourier functions then the image is going to be the the transformation is
+
+0:32:58.480,0:33:00.799
+going to be sparse so you only keep you know the highest
+
+0:33:00.799,0:33:04.320
+coefficient and you can do compression so this is something that we've used for
+
+0:33:04.320,0:33:08.080
+a very long time for for graph for the graph
+
+0:33:08.080,0:33:12.880
+domain this is this is quite interesting so you see that this is a graph and i'm
+
+0:33:12.880,0:33:17.360
+computing here the the first uh four uh you know fourier
+
+0:33:17.360,0:33:21.919
+function of the graphs so you see for phi one uh you still have
+
+0:33:21.919,0:33:24.159
+oscillations you know between positive and negative
+
+0:33:24.159,0:33:28.880
+value the same with positive and negative value and and here as well
+
+0:33:28.880,0:33:32.880
+um what is interesting is that this oscillation
+
+0:33:32.880,0:33:36.640
+uh depends on the topology of the graph okay
+
+0:33:36.640,0:33:40.480
+so so it's related to the to the geometry of the graph like communities
+
+0:33:40.480,0:33:44.080
+like hubs and so on and we know that uh so for example
+
+0:33:44.080,0:33:47.840
+if you want to capture k communities on graph
+
+0:33:47.840,0:33:54.480
+uh a very good algorithm is to apply k-means on the first key
+
+0:33:54.480,0:33:58.240
+fourier functions if you do that you have something that we call spectrograph
+
+0:33:58.240,0:34:01.840
+theory and it's it's a it's a huge literature
+
+0:34:01.840,0:34:04.000
+uh and and if you want to know more about
+
+0:34:04.000,0:34:07.039
+this there is this very nice tutorial by van looks pro
+
+0:34:07.039,0:34:11.359
+about about spectrograph clustering and using all these notions of fourier
+
+0:34:11.359,0:34:13.760
+functions okay okay now let me introduce you
+
+0:34:17.919,0:34:23.040
+a fourier transform okay so for this i'm going to
+
+0:34:23.040,0:34:26.560
+do the fourier series for your series if is nothing else
+
+0:34:26.560,0:34:30.320
+then you take a function h defined on your graph
+
+0:34:30.320,0:34:34.480
+and then you are going to decompose this function using the fourier function
+
+0:34:34.480,0:34:38.399
+okay so i take my function h i project my function
+
+0:34:38.399,0:34:44.960
+h on each fourier function phi of k and i will get you know
+
+0:34:44.960,0:34:48.639
+this coefficient of this fourier series it's going to be a scalar
+
+0:34:48.639,0:34:52.399
+multiply by my function phi of k okay of the time and
+
+0:34:52.399,0:34:59.040
+n by one of the size and n by one okay so and doing that you know
+
+0:34:59.040,0:35:02.160
+just projecting my function on the fourier functions
+
+0:35:02.160,0:35:06.000
+give me the fourier transform okay so the fourier transform
+
+0:35:06.000,0:35:09.680
+is is just you know the coefficient of the fourier series nothing else
+
+0:35:09.680,0:35:15.119
+okay then h you know is basically a linear combination of the fourier
+
+0:35:15.119,0:35:19.440
+transform times the the fourier functions okay i can
+
+0:35:19.440,0:35:22.880
+rewrite everything in matrix vector
+
+0:35:22.880,0:35:27.440
+representation and these guys so doing the um phi
+
+0:35:27.440,0:35:32.560
+times the the fourier transform this is actually the inverse for your transform
+
+0:35:32.560,0:35:39.280
+okay so let me summarize this if i do if i project h on the fourier
+
+0:35:39.280,0:35:42.880
+functions i will have the fourier transform okay so i'm taking
+
+0:35:42.880,0:35:48.079
+the matrix of the fourier functions and multiply by h so this is n by
+
+0:35:48.079,0:35:51.359
+n by n this is n by one so this is n by one
+
+0:35:51.359,0:35:58.160
+okay uh and now if i do inverse fourier transform of the fourier
+
+0:35:58.160,0:36:02.560
+transform okay so i would have phi of um
+
+0:36:02.560,0:36:05.920
+fourier transform of h and this guy is here
+
+0:36:05.920,0:36:13.040
+okay so i just put phi transpose h and we know that um the the basis
+
+0:36:13.040,0:36:17.280
+is orthonormal so this guy is actually identity function
+
+0:36:17.280,0:36:22.079
+that am sorry identity matrix okay so this is energy matrix so i come back to
+
+0:36:22.079,0:36:29.040
+h so so the inverse for your transform is is of of the fourier transform is h
+
+0:36:29.040,0:36:32.480
+obviously okay so one thing that you can observe is that
+
+0:36:32.480,0:36:36.160
+the fourier transform and the inverse fourier transform
+
+0:36:36.160,0:36:39.599
+can be done in one line of code okay you just take
+
+0:36:39.599,0:36:43.520
+your vector h you multiply by this matrix and that's it
+
+0:36:43.520,0:36:47.680
+and the same also to do the inverse for your transform you take your your signal
+
+0:36:47.680,0:36:52.800
+and you multiply by this matrix so it's basically just linear operations
+
+0:36:52.800,0:36:56.240
+uh just multiplying a matrix by a vector and this is how you do fourier
+
+0:36:56.240,0:37:00.400
+transforming inversely transform on graphs
+
+0:37:03.520,0:37:07.200
+okay now let's let's do the convolution theorem
+
+0:37:07.200,0:37:11.280
+so again the convolution theorem the fourier transform
+
+0:37:11.280,0:37:16.320
+the fourier transform of your um the free transform of the convolution
+
+0:37:16.320,0:37:20.079
+is is going to be the pointwise product of the fourier transform of
+
+0:37:20.079,0:37:27.119
+each signal okay so let's say i have um w convolution h uh so i'm going
+
+0:37:27.119,0:37:30.400
+first to do the fourier transform of w then
+
+0:37:30.400,0:37:33.520
+this is going to be a vector of the size n by one
+
+0:37:33.520,0:37:37.839
+then i'm going to multiply point twice by another vector which is the fourier
+
+0:37:37.839,0:37:40.720
+transform of h okay so how do we get the free
+
+0:37:40.720,0:37:45.440
+transform just by doing phi transpose w and phi transpose h and
+
+0:37:45.440,0:37:47.839
+then i'm going to do the inverse fourier transform to come
+
+0:37:47.839,0:37:52.320
+to go back to the spatial domain so i just multiplied by the matrix five
+
+0:37:52.320,0:37:55.920
+okay and by n so this is what i write here
+
+0:37:55.920,0:38:01.440
+okay i have phi i have um w hat which is a fourier transform and i
+
+0:38:01.440,0:38:03.839
+have this this i'm going to change it i'm going to
+
+0:38:03.839,0:38:08.400
+change it to this line what is this line um shouldn't there be a phi transpose
+
+0:38:08.400,0:38:11.359
+before w hat sorry shouldn't there be a 5's transpose
+
+0:38:15.359,0:38:20.480
+before w hat no the inverse fourier transform is fine
+
+0:38:20.480,0:38:23.760
+okay so you do phi and you multiply by the
+
+0:38:23.760,0:38:26.480
+fourier transform which is a phi transpose w
+
+0:38:26.480,0:38:31.520
+which i call hat w so i'm going i'm going to use that a lot
+
+0:38:31.520,0:38:34.560
+uh i will come back to this and then here you have the fourier
+
+0:38:34.560,0:38:38.720
+transform of h which is just phi transpose h which is here
+
+0:38:38.720,0:38:44.640
+okay so this guy um okay this guy is actually what we call
+
+0:38:44.640,0:38:49.280
+the spectral function okay the spectral filter so this guy is
+
+0:38:49.280,0:38:53.359
+a vector of n by one okay and i'm writing i'm writing here uh
+
+0:38:53.359,0:38:56.640
+this vector here so you see this is a vector of uh n
+
+0:38:56.640,0:38:59.920
+elements and this is actually the spectral
+
+0:38:59.920,0:39:04.240
+function which is um evaluated
+
+0:39:04.240,0:39:09.920
+at the at the uh at the eigenvalue lambda 1 which is here so this is this
+
+0:39:09.920,0:39:14.160
+point here then you have a w uh hat
+
+0:39:14.160,0:39:18.960
+number two which is this this value here and so on and so on okay
+
+0:39:18.960,0:39:22.400
+and then i'm going to rewrite this you know i'm going to put this
+
+0:39:22.400,0:39:25.520
+uh in a diagonal okay so i will do diagonal of
+
+0:39:25.520,0:39:29.119
+this vector so this will create a matrix of the size
+
+0:39:29.119,0:39:33.280
+n by n okay and i'm putting this guy back here
+
+0:39:33.280,0:39:38.160
+so i'm going to change the the point twice multiplication of this vector n by
+
+0:39:38.160,0:39:41.359
+one and this vector by one by the matrix vector
+
+0:39:41.359,0:39:44.640
+multiplication and it's going to be the same right this
+
+0:39:44.640,0:39:47.119
+is a diagonal matrix which contains this guy
+
+0:39:47.119,0:39:52.000
+multiply multiply by this by this vector so this it's exactly the same these two
+
+0:39:52.000,0:39:55.440
+lines but what i want to do that because i want to get rid of the
+
+0:39:55.440,0:39:58.160
+parenthesis okay so i don't have the parenthesis anymore
+
+0:39:58.160,0:40:02.240
+and i have just you know matrix matrix multiplication
+
+0:40:02.240,0:40:08.960
+okay so this is this is what i get um then i'm going to do something is
+
+0:40:08.960,0:40:11.520
+that we know that when you apply a function
+
+0:40:11.520,0:40:15.359
+on the eigenvalues okay if you have some orthogonal basis
+
+0:40:15.359,0:40:18.720
+then you can put it inside you can put it inside and this is what i do here
+
+0:40:18.720,0:40:24.480
+i put phi and phi transpose inside and this guy is precisely the definition
+
+0:40:24.480,0:40:28.880
+of the application okay the operation uh when i do the
+
+0:40:28.880,0:40:33.599
+again the composition is phi launder file transpose
+
+0:40:33.599,0:40:39.440
+okay um then so what i have is basically the spectral
+
+0:40:39.440,0:40:42.960
+function that i applied to the application uh
+
+0:40:42.960,0:40:47.680
+operator and this is n by n uh matrix
+
+0:40:47.680,0:40:51.440
+and applied to the vector n by one so at the end i would get
+
+0:40:51.440,0:40:57.359
+an n by one vector okay so you see that if you want to do so it's important now
+
+0:40:57.359,0:41:02.000
+so if you want to do a convolution of two functions on graph
+
+0:41:02.000,0:41:04.960
+w and h what you're going to do is that you're
+
+0:41:04.960,0:41:09.680
+going to take the spectral function of w you will apply it
+
+0:41:09.680,0:41:12.079
+to the uh to the laplacian and then you
+
+0:41:12.079,0:41:16.960
+multiply by h okay this is the definition of uh
+
+0:41:16.960,0:41:21.040
+of spectral convolution okay and and the thing is
+
+0:41:21.040,0:41:25.440
+this is very expensive uh in practice to do it why it is expensive
+
+0:41:25.440,0:41:31.680
+it's because the matrix phi is a full matrix okay it contains uh
+
+0:41:31.680,0:41:37.440
+the n uh the n um fourier functions and they are not zero okay so it's a
+
+0:41:37.440,0:41:40.880
+dense matrix and you are going to pay the price of n square
+
+0:41:40.880,0:41:44.160
+and you don't have any fft because the thing you don't have any fft
+
+0:41:44.160,0:41:47.200
+for uh for general graph okay so this is a
+
+0:41:47.200,0:41:50.880
+this is this is a lot and why it is a lot because n remember
+
+0:41:50.880,0:41:54.160
+and this is the number of nodes in your domain
+
+0:41:54.160,0:41:58.800
+so if you have um if you have a big graph for example if you have
+
+0:41:58.800,0:42:05.040
+uh the web the web has you know billions of nodes n is equal to the billions so
+
+0:42:05.040,0:42:08.319
+you need to do b and square which is going to be a huge
+
+0:42:08.319,0:42:12.560
+computation to do so you cannot really do it
+
+0:42:12.640,0:42:16.000
+can i summarize so h is going to be a function defined
+
+0:42:16.000,0:42:21.200
+over every vertex in your graph right uh and w instead is going to be like a
+
+0:42:21.200,0:42:26.800
+kernel as well or is he but w is going to be a function
+
+0:42:26.800,0:42:30.960
+like this so w is a spectral function w hat
+
+0:42:30.960,0:42:34.240
+is the spectral function so you are working
+
+0:42:34.240,0:42:37.920
+in the frequency space in the frequency space you are working with this
+
+0:42:37.920,0:42:41.440
+what this is this is a spectral function so for example
+
+0:42:41.440,0:42:45.200
+if you if you know image processing a little bit so for example if you want to
+
+0:42:45.200,0:42:49.440
+do image denoising if you want to do image denoising what
+
+0:42:49.440,0:42:53.359
+you what you know is that you know that the noise is usually in
+
+0:42:53.359,0:42:57.359
+the high frequency part of your image of your signal so what you
+
+0:42:57.359,0:43:00.400
+can do is that you can design a spectral filter
+
+0:43:00.400,0:43:04.640
+which is going to be zero for the high frequency and you are going
+
+0:43:04.640,0:43:07.040
+to preserve you know the low frequency to preserve
+
+0:43:07.040,0:43:11.040
+your your geometry so this is just you know doing filtering
+
+0:43:11.040,0:43:15.520
+of the frequencies you know contain in your signal
+
+0:43:15.520,0:43:19.040
+okay okay but the wd without the hat would be still a small guy right would
+
+0:43:19.040,0:43:23.440
+be a small uh filter exactly so w without hat
+
+0:43:23.440,0:43:27.280
+is the special filter yeah the small one right which is exactly so
+
+0:43:27.280,0:43:30.319
+exactly so if you have the grid w will be
+
+0:43:30.319,0:43:34.720
+you know a three by three uh a three by three you know the
+
+0:43:34.720,0:43:41.359
+patch for example now i see okay okay okay
+
+0:43:41.359,0:43:46.960
+thanks yeah sure um so in the context of graph uh so it's it's
+
+0:43:46.960,0:43:50.880
+a small property um to know is that you don't have any
+
+0:43:50.880,0:43:54.640
+shifting values um so if you have a grid and if you are
+
+0:43:54.640,0:43:59.680
+using the convolutional um theorem uh to to move around you know
+
+0:43:59.680,0:44:03.440
+your function for example the function is aggression here on the grid you are
+
+0:44:03.440,0:44:05.839
+not going to change the shape of your function
+
+0:44:05.839,0:44:10.240
+but on a graph because you have you know uh irregular structure
+
+0:44:10.240,0:44:14.240
+if you move around your gaussian then you will have different shapes
+
+0:44:14.240,0:44:17.520
+okay so this is something that that you lose when you go
+
+0:44:17.520,0:44:22.319
+to graphs but in practice actually it has absolutely no effect so it's not
+
+0:44:22.319,0:44:25.119
+really important it's just a mathematical property that you lose
+
+0:44:25.119,0:44:30.480
+when you go to graphs okay there is another question there is
+
+0:44:30.480,0:44:34.400
+another question i got here so can you ask can you remind us what is
+
+0:44:34.400,0:44:37.599
+actually the overall goal here what is the goal of defining these
+
+0:44:37.599,0:44:41.760
+convolutions or the spectral correspondence over these graphs i think
+
+0:44:41.760,0:44:45.760
+uh maybe it's not yeah if we can remind everyone it's going to be
+
+0:44:45.760,0:44:49.680
+yeah so so what i'm trying the the goal of the lecture
+
+0:44:49.680,0:44:55.920
+is to define a convolutional graph convolutional nets okay
+
+0:44:55.920,0:45:02.480
+so i need to redefine a convolution in the case of graphs and there are two
+
+0:45:02.480,0:45:06.319
+ways to define convolutions uh you can do convolution with template
+
+0:45:06.319,0:45:11.520
+matching or you can do convolution with a graph spectral theory
+
+0:45:11.520,0:45:17.119
+so what i'm doing here um i'm i'm redefining convolution in the case of
+
+0:45:17.119,0:45:20.640
+spectral theory and then i'm going to use this definition
+
+0:45:20.640,0:45:26.400
+of convolution to define graph convolutional nets so my goal is
+
+0:45:26.400,0:45:28.640
+just to define convolution in the case of graphs
+
+0:45:28.640,0:45:36.720
+so i can i can i can design a graph convolutional nodes okay sounds great
+
+0:45:37.200,0:45:42.800
+okay so let's go to um now okay so now the first part was okay i defined a
+
+0:45:42.800,0:45:44.640
+spectral convolution now i'm going to use
+
+0:45:44.640,0:45:49.440
+spectral convolution to define gcn okay okay so the first model
+
+0:45:53.280,0:45:56.560
+what i call vanilla spectral gcn was introduced
+
+0:45:56.560,0:46:00.640
+actually by januka and his collaborators so
+
+0:46:00.640,0:46:06.960
+john brenner zahamba and archer slam in 2014 i think it was for
+
+0:46:06.960,0:46:12.160
+the first uh iqr conference um and what they did
+
+0:46:12.160,0:46:15.520
+they did you know the the simple uh idea to do
+
+0:46:15.520,0:46:20.319
+okay let's let's let's uh you know define a graph uh spectral convolutional
+
+0:46:20.319,0:46:24.319
+layer so we know what is you know a standard
+
+0:46:24.319,0:46:28.240
+convolutional layer so you you this is the activation at the next layer
+
+0:46:28.240,0:46:33.359
+a plus one this is your non-linear activation so this is for example
+
+0:46:33.359,0:46:36.800
+um and then i'm going to do the spatial filter so
+
+0:46:36.800,0:46:40.560
+the template wl convolution by hm okay so this is
+
+0:46:40.560,0:46:43.920
+in the special domain uh the graph domain
+
+0:46:43.920,0:46:47.359
+and then i'm going to do that and remember that what i just defined
+
+0:46:47.359,0:46:51.520
+so doing this convolution in the spectral domain it's just doing that
+
+0:46:51.520,0:46:57.119
+okay so this is the spectral filter apply to the application and then you
+
+0:46:57.119,0:47:02.319
+multiply by hl okay so this guy is is a
+
+0:47:02.319,0:47:05.359
+i can decompose this guy i will get the fourier
+
+0:47:05.359,0:47:09.280
+matrix times the spectral function that i apply to the
+
+0:47:09.280,0:47:16.160
+eigenvalues uh phi transpose hm okay and and and this is my uh this is
+
+0:47:16.160,0:47:20.480
+my spectral filter okay so i do not work directly here okay
+
+0:47:20.480,0:47:25.119
+i work directly here and and here the thing that i'm going to
+
+0:47:25.119,0:47:28.319
+learn i'm going to actually to learn this
+
+0:47:28.319,0:47:32.319
+function w hat number one so i'm going to learn
+
+0:47:32.319,0:47:36.640
+um the spectral filter and i'm going to learn it by back propagation
+
+0:47:36.640,0:47:43.839
+okay so i don't need to um you know handcraft the the the spectral
+
+0:47:43.839,0:47:47.040
+filter i don't need to do that this will be learned by by propagation
+
+0:47:47.040,0:47:51.440
+so that was really a great idea to do it and this was the
+
+0:47:51.440,0:47:54.800
+first spectral technique but but it has some limitations so the
+
+0:47:54.800,0:47:58.480
+first limitation is that you don't have any guarantee of special localization of
+
+0:47:58.480,0:48:02.400
+filters uh so remember that uh what we want we
+
+0:48:02.400,0:48:07.040
+want to have the local reception field because it's it's a very good property
+
+0:48:07.040,0:48:11.839
+to be able to extract uh you know multi-scale um multiscale
+
+0:48:11.839,0:48:16.000
+feature which is scale patterns from from your signal so you don't have
+
+0:48:16.000,0:48:19.119
+you don't have this guarantee the second thing is that how many
+
+0:48:19.119,0:48:24.720
+parameters do you need to learn so you need to learn n parameters
+
+0:48:24.720,0:48:28.000
+okay you need to learn this w hat number one to
+
+0:48:28.000,0:48:31.200
+do when you have number n so it's n parameters so
+
+0:48:31.200,0:48:37.440
+if again if the graph is is large like uh like like the the web you know
+
+0:48:37.440,0:48:41.359
+or facebook then this is gonna be billions uh of
+
+0:48:41.359,0:48:44.800
+parameters to learn and this is for each layer so it's gonna
+
+0:48:44.800,0:48:48.079
+be really huge and again the learning complexity is going to be n square
+
+0:48:48.079,0:48:54.960
+because your phi is a dense matrix so so we need to improve this okay so
+
+0:48:54.960,0:48:59.920
+so uh so jan and his collaborator so they improve
+
+0:48:59.920,0:49:03.520
+the improved true properties so the first property was
+
+0:49:03.520,0:49:10.319
+okay how do we get localized spatial filters okay so for this
+
+0:49:10.319,0:49:14.839
+what what they propose is to um okay to get
+
+0:49:14.839,0:49:19.520
+um localized special filter so you want something which is localized
+
+0:49:19.520,0:49:26.720
+uh what you need to do is to uh compute smooth spectral filters something very
+
+0:49:26.720,0:49:30.240
+smooth like this okay so why do you why do you want
+
+0:49:30.240,0:49:34.160
+smooth spectral filter it's because if you are smooth in the
+
+0:49:34.160,0:49:37.680
+frequency space then you are going to be localized in
+
+0:49:37.680,0:49:40.559
+the space domain okay so this is in physics you know the
+
+0:49:40.559,0:49:44.319
+eisenberg's entity principle and you can see that you know with the
+
+0:49:44.319,0:49:48.000
+personal identity if let's let's say that k is equal to
+
+0:49:48.000,0:49:51.280
+one if k is equal to one you have the first derivative of
+
+0:49:51.280,0:49:54.640
+uh of the spectral function so if you want this to be
+
+0:49:54.640,0:49:58.800
+small okay so you're going to have a smooth function
+
+0:49:58.800,0:50:03.200
+and for k equal to one you see here is this is going to be the variance
+
+0:50:03.200,0:50:06.640
+of your spatial filter so if this is small
+
+0:50:06.640,0:50:11.599
+if the variance is small it means that you're gonna have a small
+
+0:50:11.599,0:50:15.440
+you're going to have a special filter with a small compact
+
+0:50:15.440,0:50:21.040
+support okay so if you are smooth in the frequency space you're going to
+
+0:50:21.040,0:50:24.720
+be localized in the spatial space okay so you need
+
+0:50:24.720,0:50:28.480
+smoothness how do you get smoothness for spectral feature so you
+
+0:50:28.480,0:50:31.920
+can also think about the uh the transform of the delta of the
+
+0:50:31.920,0:50:35.119
+dirac right so we if we have a delta in the iraq in the in
+
+0:50:35.119,0:50:37.599
+the time domain then in the frequency we're going to have
+
+0:50:37.599,0:50:40.720
+basically a flat a completely flat transform right
+
+0:50:40.720,0:50:44.079
+so there's another maybe a way to see uh if someone doesn't
+
+0:50:44.079,0:50:47.359
+quite know the parseval identity yeah exactly
+
+0:50:47.359,0:50:52.880
+right um and so so how do you get a smooth spectral filter
+
+0:50:52.880,0:50:56.880
+so the idea is okay we can simply decompose
+
+0:50:56.880,0:51:01.280
+you know the spectral filter to be a linear combination
+
+0:51:01.280,0:51:07.200
+of smooth kernels okay so the smooth kernel was chosen to be
+
+0:51:07.200,0:51:10.079
+splines because splines are nice they are you
+
+0:51:10.079,0:51:14.400
+know with compact support and they are smooth and basically the
+
+0:51:14.400,0:51:19.520
+idea is okay now let's learn a vector of k coefficient uh and this is
+
+0:51:19.520,0:51:22.400
+the case muscular node okay and you learn this coefficient by
+
+0:51:22.400,0:51:27.200
+by propagation but suddenly you know everything is nice because you have
+
+0:51:27.200,0:51:31.359
+locality localization in space and the number of parameters that you're
+
+0:51:31.359,0:51:35.680
+going to learn is going to be key parameters so here for example let's
+
+0:51:35.680,0:51:39.920
+say it's nine okay remember that before uh in the case
+
+0:51:39.920,0:51:42.400
+of um of convolution so you have a three by
+
+0:51:42.400,0:51:45.599
+three which is which is nine parameters so that can be the same you can have
+
+0:51:45.599,0:51:48.800
+nine parameters to learn you're gonna you're gonna learn
+
+0:51:48.800,0:51:54.960
+a combination of nine spline functions and and that's it so you have a constant
+
+0:51:54.960,0:52:00.000
+number of parameters to learn earlier so this is nice but we still have you
+
+0:52:00.000,0:52:04.240
+know the the phi matrix so we the learning
+
+0:52:04.240,0:52:08.800
+complexity is still quadratic okay
+
+0:52:12.000,0:52:15.520
+okay so so the question is um how do we learn
+
+0:52:15.520,0:52:22.400
+in linear time okay so how do we learn uh with respect to the to the graph size
+
+0:52:22.400,0:52:26.559
+n so the problem of the quadratic complexity
+
+0:52:26.559,0:52:30.319
+comes from directly from the use of the laplacian again vectors
+
+0:52:30.319,0:52:34.800
+okay so you see that uh the thing that is that is annoying
+
+0:52:34.800,0:52:39.440
+uh in this spectral convolution is not this diagonal matrix
+
+0:52:39.440,0:52:44.160
+it's not this vector it's this guy okay this is this is the phi
+
+0:52:44.160,0:52:47.280
+matrix because it's a full matrix right it's a dense matrix
+
+0:52:47.280,0:52:51.040
+and and then and then it's n square number of elements so this is the price
+
+0:52:51.040,0:52:55.359
+that we need to pay so we know that if we want to avoid
+
+0:52:55.359,0:53:00.880
+the quadratic complexity we need to avoid the eigen decomposition okay
+
+0:53:00.880,0:53:06.480
+um and and okay so we can avoid organic position but simply directly
+
+0:53:06.480,0:53:10.000
+learn function of the application okay so this is what what we proposed in
+
+0:53:10.000,0:53:15.119
+2007 2016. so the spectral
+
+0:53:15.119,0:53:20.480
+function is just going to be you know a monomial
+
+0:53:20.480,0:53:24.640
+function of the application that's it so we just have a sum
+
+0:53:24.640,0:53:28.160
+of some parameters that we learned by by propagation
+
+0:53:28.160,0:53:35.200
+w k and laplacian to the power of k okay so so when we do that
+
+0:53:35.200,0:53:39.119
+uh first there is something uh which is which is good is that
+
+0:53:39.119,0:53:43.280
+uh we're gonna have filters that are exactly localized
+
+0:53:43.280,0:53:48.160
+in a k-hop support okay so if we have the application to the power k
+
+0:53:48.160,0:53:51.839
+the spectral um i mean the spatial filters
+
+0:53:51.839,0:53:54.960
+will be exactly localized in the support of k-hop
+
+0:53:54.960,0:53:58.000
+so what is the what is the one hope neighbor
+
+0:53:58.000,0:54:01.119
+neighborhood so let's say for example you have this
+
+0:54:01.119,0:54:05.280
+graph and here i'm going to put a heat source so the value is going to be 1
+
+0:54:05.280,0:54:10.720
+at this node and 0 for all other nodes if i apply the application to this heat
+
+0:54:10.720,0:54:14.480
+source then the signal the support of the signal is going to be
+
+0:54:14.480,0:54:19.680
+increased by one hop so every uh basically every node
+
+0:54:19.680,0:54:23.520
+that can be reached by one jump okay that you do that
+
+0:54:23.520,0:54:26.800
+and and if you do two jumps from this you will
+
+0:54:26.800,0:54:33.040
+you will reach the the second hop uh neighborhood which is your range uh
+
+0:54:33.040,0:54:37.119
+the orange nodes here okay so if you apply the
+
+0:54:37.119,0:54:40.640
+application uh two times this is gonna be the support okay if you
+
+0:54:40.640,0:54:44.079
+apply the application k times then you will have the support of k-hops
+
+0:54:44.079,0:54:48.640
+so you you exactly uh control the the size of your spatial
+
+0:54:48.640,0:54:53.839
+filters okay so that that was the first point
+
+0:54:54.640,0:54:58.079
+the second point let me show you that you get uh
+
+0:54:58.079,0:55:04.400
+learning complexity okay so so again you have your convolution wh
+
+0:55:04.400,0:55:08.079
+you have your spectral convolution definition i'm using here
+
+0:55:08.079,0:55:14.240
+as a spectral convolution um monomials of the of the application and then i'm
+
+0:55:14.240,0:55:18.799
+going to replace this guy so the laplacian power of k times the
+
+0:55:18.799,0:55:22.319
+vector h by the vector x
+
+0:55:22.319,0:55:27.200
+k okay and x k is actually given by your recursive equation
+
+0:55:27.200,0:55:31.200
+okay so recursive is always good right so it's given by this recursive equation
+
+0:55:31.200,0:55:35.520
+which is the application times the vector
+
+0:55:35.520,0:55:42.240
+xk minus one and the x k equal to zero is simply the original uh function h
+
+0:55:42.240,0:55:47.280
+okay so so when i do that you see that this sequence
+
+0:55:47.280,0:55:51.839
+x of k is generated by multiplying a matrix
+
+0:55:51.839,0:55:55.119
+so the operation and the vector x k minus 1.
+
+0:55:55.119,0:55:59.119
+so the complexity of doing that is the number of edges
+
+0:55:59.119,0:56:03.359
+okay and you do it that you know k times so number of edges
+
+0:56:03.359,0:56:07.440
+times k and the thing is uh for real graph
+
+0:56:07.440,0:56:11.599
+real world graphs um basically they are all sparse
+
+0:56:11.599,0:56:16.000
+okay because sparsity is structure so remember for example for
+
+0:56:16.000,0:56:22.640
+um for for the web the web has a billions of of web pages but for each
+
+0:56:22.640,0:56:25.920
+webpage it is in average connected to 50 other
+
+0:56:25.920,0:56:30.000
+webpage so comparing 50 to 1 billion is nothing
+
+0:56:30.000,0:56:34.799
+so usually and the same also for the brain the brain it's very highly sparse
+
+0:56:34.799,0:56:38.160
+the same also for uh transport networks so everything
+
+0:56:38.160,0:56:42.839
+every natural graph is usually sparse because sparsity is structure
+
+0:56:42.839,0:56:48.240
+okay so so the number of edges is you know some value times n so at the
+
+0:56:48.240,0:56:52.400
+end of the day uh you have linear complexity uh because
+
+0:56:52.400,0:56:58.799
+for for sparse real world graphs okay um okay so and you see here is that i'm
+
+0:56:58.799,0:57:02.799
+using the laplacian and i never do any eigen decomposition
+
+0:57:02.799,0:57:07.839
+of the elaboration okay um and there is so there is a bit
+
+0:57:07.839,0:57:12.559
+of um of confusion that sometimes i see
+
+0:57:12.559,0:57:16.319
+is that so i call this spectral uh you know gcn
+
+0:57:16.319,0:57:20.079
+but this is this might be misguided because i don't do
+
+0:57:20.079,0:57:24.640
+any spectral uh operations like you know i don't use any either again the
+
+0:57:24.640,0:57:28.400
+composition with the application we i don't have any eigenvectors again
+
+0:57:28.400,0:57:31.599
+values so so at the end of the day even if i use
+
+0:57:31.599,0:57:36.720
+you know the spectral theory to define this gcn um
+
+0:57:36.720,0:57:40.480
+at the end of the day the computation are all done in the special domain using
+
+0:57:40.480,0:57:44.960
+the operation okay i don't use any i don't choose the
+
+0:57:44.960,0:57:48.000
+spectral domain for the computation i use i do
+
+0:57:48.000,0:57:53.119
+everything in the special domain so even we call that spectral gcn
+
+0:57:53.119,0:57:56.319
+we don't choose you know in practice and the spectral
+
+0:57:56.319,0:58:00.400
+uh decomposition so just just one one one command
+
+0:58:00.400,0:58:04.079
+okay and the last like the last comment i want to do is that so graph
+
+0:58:04.079,0:58:08.640
+conditional layers again this is just linear operations so you just multiply a
+
+0:58:08.640,0:58:11.760
+vector a matrix by a vector so you're just
+
+0:58:11.760,0:58:14.240
+doing in operation so this is gpu friendly
+
+0:58:14.240,0:58:20.880
+the issue um is that here you are doing sparse linear algebra and the existing
+
+0:58:20.880,0:58:23.760
+gpu are not optimized for that so this is i
+
+0:58:23.760,0:58:26.400
+think one of the limitations today for graph neural
+
+0:58:26.400,0:58:30.319
+networks we need to have specialized eyewear for graph neural networks we
+
+0:58:30.319,0:58:35.200
+need to have hardware that adapt uh to the to the sparsity
+
+0:58:35.200,0:58:38.559
+uh of of these operations and we don't have this today so
+
+0:58:38.559,0:58:43.680
+uh if we want this to to to get far very far with graphene network we need
+
+0:58:43.680,0:58:46.400
+to have this this uh this specialized hardware
+
+0:58:46.400,0:58:50.160
+what about tpus do you know whether tpus can handle that's the same that's the
+
+0:58:50.160,0:58:54.559
+same they are optimized for uh full uh you know linear
+
+0:58:54.559,0:58:57.839
+operations like full matrices uh they're
+
+0:58:57.839,0:59:01.119
+specialized for that but if you if you want to do sparse
+
+0:59:01.119,0:59:04.799
+linear algebra you need specialized hardware to do that
+
+0:59:04.799,0:59:08.160
+gotcha thanks yeah
+
+0:59:08.640,0:59:13.839
+okay so how do we implement um how do we implement this and so for
+
+0:59:13.839,0:59:19.280
+example we have a signal we have a function defined on the on the
+
+0:59:19.280,0:59:23.359
+graph so n is the number of vertices of your graph and d is the
+
+0:59:23.359,0:59:28.400
+dimensionality uh of uh of the feature right so for
+
+0:59:28.400,0:59:32.160
+each node you have a feature a vector of d
+
+0:59:32.160,0:59:36.480
+dimension okay so how we do that so we have x k
+
+0:59:36.480,0:59:39.520
+and what we do is that we are just going to uh do a
+
+0:59:39.520,0:59:42.960
+shape stuff to do just linear operations so
+
+0:59:42.960,0:59:50.720
+x k are going to be arranged in a matrix you know um x bar which is of the size
+
+0:59:50.720,0:59:54.400
+of k times nd okay so we just reshape you
+
+0:59:54.400,0:59:58.000
+know this xk to be 1 times nd and
+
+0:59:58.000,1:00:01.440
+and we have k times nd and then we multiply this
+
+1:00:01.440,1:00:06.000
+by the vector that we will learn by back propagation which is of the size k by
+
+1:00:06.000,1:00:08.559
+one okay we do that the operation will give
+
+1:00:08.559,1:00:11.760
+you one times nd you reshape and you get n times d
+
+1:00:11.760,1:00:15.119
+so this is how how i implement it you know
+
+1:00:15.119,1:00:18.480
+with pi torch or tensorflow that would be the same
+
+1:00:18.480,1:00:22.960
+and this is how you do this spectral convolution
+
+1:00:22.960,1:00:27.520
+so again the properties is that filters are exactly localized
+
+1:00:27.520,1:00:31.839
+you have a constant number of parameters to learn so this is a key
+
+1:00:31.839,1:00:35.040
+you know this is this is this k a parameters that you need to learn by
+
+1:00:35.040,1:00:38.720
+back propagation you have a learning complexity a linear
+
+1:00:38.720,1:00:43.200
+learning complexity but the thing uh which uh which is not
+
+1:00:43.200,1:00:47.040
+good is that um here i'm using monomial um basis
+
+1:00:47.040,1:00:51.440
+okay so i'm using uh laplacian to the power zero laplacian to the power one
+
+1:00:51.440,1:00:54.559
+power two power three and so on okay this is what i use here
+
+1:00:54.559,1:00:57.920
+and the thing is monomial bases are unstable for
+
+1:00:57.920,1:01:01.599
+uh for for optimization because this basis
+
+1:01:01.599,1:01:07.520
+you know is not too orthogonal so if you change one coefficient then
+
+1:01:07.520,1:01:09.920
+you are going to change the approximation of your
+
+1:01:09.920,1:01:15.839
+function so you need orthogonality if you want to learn
+
+1:01:15.839,1:01:21.760
+with stability okay so then you can use your favorite you know
+
+1:01:21.760,1:01:25.520
+orthonormal basis but your favorite orthonormal
+
+1:01:25.520,1:01:29.680
+basis must have a recursive equation okay so
+
+1:01:29.680,1:01:33.119
+this is the only thing that that that you that you need you need
+
+1:01:33.119,1:01:36.640
+your autonomous basis to to have a relationship equation because this is
+
+1:01:36.640,1:01:40.559
+the key to have the linear complexity so we use
+
+1:01:40.559,1:01:44.000
+a chebychev polynomials so this is uh something very
+
+1:01:44.000,1:01:47.760
+well known in signal processing um so we are going to approximate you
+
+1:01:47.760,1:01:52.799
+know the spectral convolution uh with the cheby uh jb chef chebyshev
+
+1:01:52.799,1:01:56.240
+function the chef functions apply to h again can
+
+1:01:56.240,1:02:00.240
+be represented by xk and xk is given by this recursive
+
+1:02:00.240,1:02:03.119
+equation okay so it's a little more complex than
+
+1:02:03.119,1:02:06.880
+before but in practice this is just doing again
+
+1:02:06.880,1:02:11.119
+multiplication of uh your elaboration times the vec one
+
+1:02:11.119,1:02:13.680
+vector okay at the end of the day the the
+
+1:02:13.680,1:02:16.400
+complexity is still linear you don't change anything
+
+1:02:16.400,1:02:23.760
+um and this time you have stability during your during the learning process
+
+1:02:23.760,1:02:28.559
+okay so what we did we did the sanity check with mnist
+
+1:02:28.559,1:02:31.920
+um so and you see that so this is the number
+
+1:02:31.920,1:02:36.960
+of vertices so so for mnist the the graph is the standard grid
+
+1:02:36.960,1:02:40.799
+okay we use the k-nearest neighbor grid to do that
+
+1:02:40.799,1:02:45.119
+and you see that um you have linear complexity okay this is the
+
+1:02:45.119,1:02:48.799
+number of vertices and and and you have this
+
+1:02:48.799,1:02:52.480
+number of of uh you have the linear complexity so this is good
+
+1:02:52.480,1:02:56.000
+for the accuracy you get to see 99 percent of accuracy
+
+1:02:56.000,1:03:02.880
+compared to the standard n5 okay so chad net uh social
+
+1:03:02.880,1:03:06.319
+is basically combat for arbitrary graph and we have the same linear
+
+1:03:06.319,1:03:12.400
+learning complexity of course um the complexity constant is much larger than
+
+1:03:12.400,1:03:16.160
+than the standard uh than the standard net
+
+1:03:16.160,1:03:19.760
+so it's something like 20 or 30. so it's much much smaller
+
+1:03:19.760,1:03:23.920
+to learn on this but you get you know covenant for any arbitrary graph
+
+1:03:23.920,1:03:28.000
+so that's that's uh that's what you mean another limitation is
+
+1:03:28.000,1:03:33.680
+um it's an isotropic model so so let me talk a little bit about i
+
+1:03:33.680,1:03:37.520
+uh isotropy versus anisotropy so if you look at you know the standard
+
+1:03:37.520,1:03:42.799
+complex then you are going to produce anisotropic filters like this one okay
+
+1:03:42.799,1:03:44.799
+so you see that this filter is an isotropic
+
+1:03:44.799,1:03:49.440
+it goes in this direction okay and we can get anisotropic
+
+1:03:49.440,1:03:53.119
+filters with standard coordinates because we are using
+
+1:03:53.119,1:03:59.839
+a grid and on a grid we have you know a directional we have directions we know
+
+1:03:59.839,1:04:02.640
+where is the up where is down where is left where is
+
+1:04:02.640,1:04:08.160
+right right remember that we know the ordering of uh of the nodes
+
+1:04:08.160,1:04:11.760
+on on the grid we know that but this is different for graphs
+
+1:04:11.760,1:04:15.280
+we don't have any notion of direction we we don't know where is the
+
+1:04:15.280,1:04:18.319
+where is up where is down where is left or is right
+
+1:04:18.319,1:04:21.920
+so the thing the only thing that we can do at this point
+
+1:04:21.920,1:04:25.520
+is that we can only compute isotropic filters
+
+1:04:25.520,1:04:28.799
+isotropic filters means that the value of the filter
+
+1:04:28.799,1:04:33.280
+will be the same you know for in in all directions
+
+1:04:33.280,1:04:39.680
+uh for for for four cycles okay for for cycles of the same radius
+
+1:04:39.680,1:04:41.920
+okay so this is uh this is what we can get we
+
+1:04:41.920,1:04:46.400
+can only get isotropic filters when we use a chip net
+
+1:04:46.400,1:04:50.319
+because we have no notion of direction on arbitrary graphs
+
+1:04:50.319,1:04:55.119
+and i will come back to that i will come back to the isotropy versus anisotropy
+
+1:04:55.119,1:04:57.760
+a bit later okay so what we what we did also is to
+
+1:05:03.440,1:05:08.640
+uh very quickly i don't i don't have the time now oh wow the time is uh so i need
+
+1:05:08.640,1:05:13.119
+to speed up a little bit so we did we did expand also this um
+
+1:05:13.119,1:05:17.039
+spectral convolution from one graph to multiple graphs so you can
+
+1:05:17.039,1:05:20.880
+do that you know it's like extending from 1d signal processing to
+
+1:05:20.880,1:05:25.039
+2d image processing so extension is mathematically
+
+1:05:25.039,1:05:29.039
+straightforward to do and we did that you know for for
+
+1:05:29.039,1:05:32.400
+example for recommender systems because we have users of movies and
+
+1:05:32.400,1:05:36.720
+users of graphs so with that we also as i said before is
+
+1:05:36.720,1:05:41.359
+that you can use your favorite uh you know orthogonal uh polynomial
+
+1:05:41.359,1:05:45.760
+basis uh so we use uh kylie nets because uh
+
+1:05:45.760,1:05:50.240
+chebychev are unstable to localize frequency bands of interest which are
+
+1:05:50.240,1:05:55.599
+basically the graph communities we use that something a
+
+1:05:55.599,1:06:00.480
+more powerful you know more powerful spectral functions
+
+1:06:00.480,1:06:05.359
+okay which is kind of neat okay so now let me go to the
+
+1:06:05.359,1:06:08.799
+to the to this class of uh graph continents that i call
+
+1:06:08.799,1:06:14.000
+special graphs and then for this class i'm going back to the template matching
+
+1:06:14.000,1:06:18.720
+uh you know definition of convolution so how we do clamping matching for graphs
+
+1:06:18.720,1:06:25.280
+so remember that um the main issue um the main issue when you want to do
+
+1:06:25.280,1:06:29.760
+template matching for graph is that you you don't have any node ordering or
+
+1:06:29.760,1:06:33.760
+positioning for your template okay uh
+
+1:06:33.760,1:06:37.599
+we don't have any positioning so basically with the only thing that we
+
+1:06:37.599,1:06:41.599
+have we have the the index of the notes and that's it but
+
+1:06:41.599,1:06:45.280
+the index is not enough to match you know information between
+
+1:06:45.280,1:06:49.599
+between nodes um so how can we design
+
+1:06:49.599,1:06:54.160
+template matching to be invariant to node reparametrization
+
+1:06:54.160,1:06:57.599
+okay so you have a graph this index of the node
+
+1:06:57.599,1:07:02.960
+is maybe let's say six but it's completely arbitrary i can have an
+
+1:07:02.960,1:07:07.760
+index with the number 122 for example so i want to be able to
+
+1:07:07.760,1:07:11.119
+do template matching independently of the
+
+1:07:11.119,1:07:14.880
+index of this node okay so how i do that so
+
+1:07:14.880,1:07:18.880
+the simplest thing you can do is actually to
+
+1:07:18.880,1:07:26.079
+have only one uh you know template vector to do the matching this is
+
+1:07:26.079,1:07:32.240
+so you don't have you know w j1 wg2 wj3 you don't have this you just have one
+
+1:07:32.240,1:07:35.440
+vector w and you are doing the matching of this
+
+1:07:35.440,1:07:39.359
+vector with all other you know feature
+
+1:07:39.359,1:07:43.440
+on your on your graph okay this is the simplest
+
+1:07:43.440,1:07:47.799
+template feature matching you can do which is environment by node
+
+1:07:47.799,1:07:50.799
+reparameterization and actually this property is going to
+
+1:07:50.799,1:07:54.799
+be used for most graph neural networks today
+
+1:07:54.799,1:07:58.000
+okay so here is the mathematical definition
+
+1:07:58.000,1:08:03.520
+um so i'm just going to do the the product between uh the template
+
+1:08:03.520,1:08:07.680
+vector w at layer l so this is the d by one
+
+1:08:07.680,1:08:13.119
+and and i have the vector at node j which is also the dimensionality d by
+
+1:08:13.119,1:08:17.199
+one okay i will get to scalar so here this is only for one feature
+
+1:08:17.199,1:08:20.319
+of course you will have to get more features so instead of having
+
+1:08:20.319,1:08:24.640
+a vector d by one you're going to use a matrix
+
+1:08:24.640,1:08:31.279
+d by d so this way you can get you know d features for each node i okay
+
+1:08:31.279,1:08:35.520
+and then i so this is the the representation at
+
+1:08:35.520,1:08:38.880
+a node i i can put everything in vector representation
+
+1:08:38.880,1:08:46.239
+okay this is my um this is my activation at layer a plus one it is defined on
+
+1:08:46.239,1:08:50.000
+on the graph of m vertices and it has d dimensions
+
+1:08:50.000,1:08:56.239
+okay and and this can be rewritten as uh the adjacency matrix a so this is
+
+1:08:56.239,1:09:00.000
+n by n matrix this is my activation at the layer
+
+1:09:00.000,1:09:07.279
+l so this is the n by d uh you know matrix and this is the the template
+
+1:09:07.279,1:09:10.480
+that i'm going to learn by back propagation of the size d by d
+
+1:09:10.480,1:09:15.679
+okay so you do you do this product you get n by d
+
+1:09:17.520,1:09:22.880
+okay so based on this template matching of graph now i'm going to define
+
+1:09:22.880,1:09:30.400
+uh two classes of uh spatial gcn which are the isotropy gcn
+
+1:09:30.400,1:09:35.120
+and the anisotropy gcn so let's start with the isotropic gcn
+
+1:09:35.120,1:09:39.279
+so this is act actually as a as quite some history
+
+1:09:39.279,1:09:44.640
+okay so uh the simplest formulation of special gcn was introduced by
+
+1:09:44.640,1:09:49.759
+uh scarcely and his co-author so he was in 2009 before the deep learning
+
+1:09:49.759,1:09:53.520
+revolution and then more recently by uh thomas
+
+1:09:53.520,1:09:58.320
+keith maxwelling um and also saiyan suk bata
+
+1:09:58.320,1:10:06.159
+and archer slam and rob fergus in 2016. so this is actually um this graph neural
+
+1:10:06.159,1:10:11.120
+networks of what they call the vennina graph combination nets okay this is
+
+1:10:11.120,1:10:14.480
+exactly the same definition that i have before just here i put you know the gb
+
+1:10:14.480,1:10:17.040
+matrix in such a way that i have the mean value
+
+1:10:17.040,1:10:20.560
+okay i just do the mean value over the neighborhood okay but this is
+
+1:10:20.560,1:10:25.840
+exactly the the equation that i used before okay
+
+1:10:25.840,1:10:32.560
+um and you see that so this equation is um it can handle
+
+1:10:32.560,1:10:36.800
+uh absence of no ordering so this is completely invariant to another or
+
+1:10:36.800,1:10:43.199
+parametrization so again if this index is maybe six and i change to be 122 is
+
+1:10:43.199,1:10:47.760
+not going to change anything in the computation of the of h
+
+1:10:47.760,1:10:51.760
+at the next layer it's not going to change anything you can also deal with
+
+1:10:51.760,1:10:56.080
+a neighborhood of different sizes okay you don't care if you have
+
+1:10:56.080,1:10:59.520
+a neighborhood of four nodes or neighborhood of 10 nodes it's not going
+
+1:10:59.520,1:11:01.679
+to change or one or not it's going to change anything
+
+1:11:01.679,1:11:05.679
+you have the local reception field by design with graph neural network you
+
+1:11:05.679,1:11:09.920
+just need to look at the neighbors and and that's it so it's given to you
+
+1:11:09.920,1:11:12.880
+you have weight sharing okay you have weight sharing it means
+
+1:11:12.880,1:11:16.719
+that for for all features you are going to use the
+
+1:11:16.719,1:11:19.840
+same w whatever the position on the graph
+
+1:11:19.840,1:11:25.199
+okay so this is a convolution property um this formulation is also independent
+
+1:11:25.199,1:11:28.800
+of the graph size because all operations are done locally
+
+1:11:28.800,1:11:31.600
+okay you just use you know local information
+
+1:11:31.600,1:11:35.679
+for the next from the next layer so you can have a graph of 10 knots or you can
+
+1:11:35.679,1:11:39.120
+have a graph a graph of 10 billion nodes it doesn't
+
+1:11:39.120,1:11:42.159
+care so you can do also everything in parallel
+
+1:11:42.159,1:11:46.159
+and but this is limited to isotropic capability so the w
+
+1:11:46.159,1:11:50.480
+is the same for all neighbors so it's again it's an isotropic
+
+1:11:50.480,1:11:54.480
+model it's going to give the same value for all neighbors okay but at the end of
+
+1:11:54.480,1:11:57.360
+the day this model can be represented by this
+
+1:11:57.360,1:12:01.840
+figure so um this uh
+
+1:12:01.840,1:12:05.280
+so the activation at the next layer is basically a function
+
+1:12:05.280,1:12:08.400
+of the activation at the current layer at
+
+1:12:08.400,1:12:15.199
+uh index at at the node i and the neighborhood of the node i okay
+
+1:12:15.199,1:12:18.320
+and the only thing that we're going to do basically uh
+
+1:12:18.320,1:12:21.520
+is to change the function the instantiation of
+
+1:12:21.520,1:12:25.360
+of the function and then you will get all family of graph
+
+1:12:25.360,1:12:29.679
+neural network by just you know deciding a different function here but
+
+1:12:29.679,1:12:32.800
+everything is based on this equation so again
+
+1:12:32.800,1:12:37.760
+you have your your your core node and then you have your neighborhood
+
+1:12:37.760,1:12:42.560
+to decide what will be the activation at the next layer
+
+1:12:43.840,1:12:47.280
+okay so i'm running out of time so i'm not going to take too much time on this
+
+1:12:47.280,1:12:50.320
+but what you can show is that this previous
+
+1:12:50.320,1:12:53.679
+vernier gcn i just showed you is actually a
+
+1:12:53.679,1:12:57.760
+simplification of chebnet so if you truncate the expansion of
+
+1:12:57.760,1:13:03.440
+chain by using the first two chef function that at the end you end up
+
+1:13:03.440,1:13:08.960
+with the same equation so so this is this is the relationship
+
+1:13:08.960,1:13:15.199
+uh okay so one interesting uh gcn is graph sage
+
+1:13:15.199,1:13:21.440
+that was introduced by william in turn lee and yuri leskovek so let's say for
+
+1:13:21.440,1:13:25.199
+let's let's go back to the vanilla gcn so and let's suppose that the adjacency
+
+1:13:25.199,1:13:29.520
+matrix has a value one for for for the edges
+
+1:13:29.520,1:13:34.080
+okay so i have this equation so the thing is for this equation i'm
+
+1:13:34.080,1:13:38.480
+going to treat you know the central vertex i
+
+1:13:38.480,1:13:42.239
+and the neighborhood with the same template weight
+
+1:13:42.239,1:13:46.800
+okay but i can differentiate that you know i can have a template
+
+1:13:46.800,1:13:50.400
+for the central node w1 and i can have a template
+
+1:13:50.400,1:13:53.520
+for the one hope neighborhood okay by doing that
+
+1:13:53.520,1:13:57.760
+you improve already a lot you know your the performance of your official graph
+
+1:13:57.760,1:14:02.640
+neural networks so you go from here to here so you have
+
+1:14:02.640,1:14:06.320
+again um some templates for the central node
+
+1:14:06.320,1:14:08.480
+and the template for for the neighborhood
+
+1:14:08.480,1:14:13.760
+okay but this is still an isotropic uh isotopic gcn okay because you are
+
+1:14:13.760,1:14:16.400
+treating all the neighbors with the same weight
+
+1:14:16.400,1:14:20.080
+uh here this is the mean but you can change you can take the sum you can also
+
+1:14:20.080,1:14:22.400
+take the max you can take also something more
+
+1:14:22.400,1:14:28.560
+elaborated like lstm okay now more recently people um try to
+
+1:14:28.560,1:14:32.800
+improve the uh the theoretical understanding
+
+1:14:32.800,1:14:39.360
+of uh of gcn so there was um the graph isomorphous i i think isomorphism
+
+1:14:39.360,1:14:44.960
+networks are introduced by yuri leskovec in 2018 so the idea is can we design an
+
+1:14:48.080,1:14:50.880
+architecture that can differentiate graphs that are not
+
+1:14:50.880,1:14:56.960
+isomorphic so you know isomorphic is basically a measure of equivalence
+
+1:14:56.960,1:15:00.480
+between between graphs so these two graphs are isomorphic to each other
+
+1:15:00.480,1:15:04.400
+and of course you want to treat them the same way but if you are not isomorphic
+
+1:15:04.400,1:15:08.080
+you want especially to treat them in a different way okay
+
+1:15:08.080,1:15:11.280
+so so there was um a graph neural network uh
+
+1:15:11.280,1:15:15.360
+based on this one on this on this definition but this is still an
+
+1:15:15.360,1:15:19.840
+isotropic gcn okay
+
+1:15:19.840,1:15:23.520
+so so now i'm going to talk about anisotropic gcn so again
+
+1:15:23.520,1:15:28.800
+um again so i go back to what i said before is that standard cornet can
+
+1:15:28.800,1:15:32.480
+produce uh isotropic filters because there is a
+
+1:15:32.480,1:15:36.400
+notion of directions on grids okay so you have this um
+
+1:15:36.400,1:15:42.159
+isotropic filter in this direction uh gcn like a chemnet kylie net veneer gcn
+
+1:15:42.159,1:15:45.920
+graph sage and gene they compute isotropic filters so you
+
+1:15:45.920,1:15:49.520
+have this kind of filters that you learn during the
+
+1:15:49.520,1:15:53.360
+process but they are they are isotropic but we know that isotropy is
+
+1:15:53.360,1:15:56.560
+very powerful right so um how do we get back
+
+1:15:56.560,1:16:00.320
+anesthotropine graphene our networks so you can you can get an isotropic
+
+1:16:00.320,1:16:05.040
+naturally for example if you have edge features um
+
+1:16:05.040,1:16:08.640
+for like if you're taking chemistry molecules you know that
+
+1:16:08.640,1:16:12.800
+the bond features can be different they can be you know single double aromatic
+
+1:16:12.800,1:16:15.840
+bonds so naturally you would get an isotropic
+
+1:16:15.840,1:16:20.800
+you know gcm and again if we want to
+
+1:16:20.800,1:16:25.520
+design um a mechanism for isotropy we want this mechanism to be independent
+
+1:16:25.520,1:16:28.880
+with respect to the node parametrization so to do that
+
+1:16:28.880,1:16:34.320
+we can use for example h degrees and so that was proposed by monet edge gate
+
+1:16:34.320,1:16:38.159
+that we propose um in getty gcn or attention mechanism
+
+1:16:38.159,1:16:41.120
+uh in get and the idea is what what i put
+
+1:16:41.120,1:16:45.440
+here as an illustration okay so um here you're going to treat
+
+1:16:45.440,1:16:49.280
+your neighbors in the same way okay so with the same
+
+1:16:49.280,1:16:52.480
+template but you want you want to treat your
+
+1:16:52.480,1:16:55.760
+neighbors in a different way right if this is j1 you want a different
+
+1:16:55.760,1:16:59.840
+weight than if it was for j2 what do you want that is for example if
+
+1:16:59.840,1:17:02.560
+you want to analyze graphs you know that you have
+
+1:17:02.560,1:17:07.040
+communities of people um which are different for example i
+
+1:17:07.040,1:17:10.320
+don't know if it is politics you have republicans and democrats
+
+1:17:10.320,1:17:14.640
+so you don't want to know to have the the same analysis for for the same group
+
+1:17:14.640,1:17:17.120
+of people so you want anisotropy for graph that
+
+1:17:17.120,1:17:20.159
+that's quite important okay so the first model uh who deal with
+
+1:17:23.600,1:17:26.880
+endoscopy was monette so he was introduced by federico monty
+
+1:17:26.880,1:17:30.400
+michael bronstein and their co-author and the idea was to do
+
+1:17:30.400,1:17:34.400
+was to use gmm so gaussian mixture model and to learn the parameters of the
+
+1:17:34.400,1:17:38.000
+gaussian mixture so here they have k washington model and
+
+1:17:38.000,1:17:40.239
+they learn the parameters by using the degree
+
+1:17:40.239,1:17:46.880
+of uh of the graph um then there is also gat so uh it was
+
+1:17:46.880,1:17:50.560
+developed by peter velikovic and uh joshua banjo and
+
+1:17:50.560,1:17:53.440
+their co-author was basically to use the attention
+
+1:17:53.440,1:17:58.320
+mechanism developed by jimmy badeno yeshua banjo
+
+1:17:58.320,1:18:01.520
+to introduce anisotropy in the neighborhood allegation function
+
+1:18:01.520,1:18:04.560
+okay and so this is this is what you see here
+
+1:18:04.560,1:18:07.760
+so you have um you're going to concatenate so it's a multi-head
+
+1:18:07.760,1:18:12.320
+um wiki and architecture and here you have uh
+
+1:18:12.320,1:18:15.440
+this weight which are basically the soft max
+
+1:18:15.440,1:18:19.199
+um on the neighborhood okay you do the soft max on the neighborhood so
+
+1:18:19.199,1:18:23.760
+some info some um some notes will be more important than the others
+
+1:18:23.760,1:18:30.719
+you know by given by soft softmax what we use um with um thomas laurent um
+
+1:18:30.719,1:18:37.120
+and me in 2017 we we use a simple uh age uh getting mechanism which is which
+
+1:18:37.120,1:18:39.520
+is which is you know what a sort of soft
+
+1:18:39.520,1:18:42.159
+attention process compared to the sparse attention
+
+1:18:42.159,1:18:48.000
+mechanism of your show avenger and and here what we did also we use
+
+1:18:48.000,1:18:51.679
+edge feature explicitly and this actually recently we discovered
+
+1:18:51.679,1:18:54.719
+that this is very important for edge prediction task if you have explicit
+
+1:18:54.719,1:18:59.199
+explanation task this is important to keep it okay
+
+1:18:59.199,1:19:05.520
+so so this is the model that we used uh okay um
+
+1:19:05.520,1:19:09.440
+then okay so if i take transformer and if i if i
+
+1:19:09.440,1:19:12.640
+write down the equation of the graph version of transformer this is
+
+1:19:12.640,1:19:16.560
+that i would get okay so you recognize here the value
+
+1:19:16.560,1:19:20.960
+here you have the query here you have the key and here you have the softmax
+
+1:19:20.960,1:19:24.080
+but the softmax is done in the neighborhood in one hot neighborhood
+
+1:19:24.080,1:19:28.719
+okay that would be this and here i'm going to make um
+
+1:19:28.719,1:19:34.840
+um a connection with a transformer of uh vesmani and and their and his
+
+1:19:34.840,1:19:39.040
+collaborators so what is a transformer so a standard
+
+1:19:39.040,1:19:42.480
+transformer is actually a special case of uh graph
+
+1:19:42.480,1:19:46.320
+conventional nets when the graph is fully connected okay
+
+1:19:46.320,1:19:49.120
+so this is a fully connected graph so you
+
+1:19:49.120,1:19:53.760
+take any node i and this node is going to be connected
+
+1:19:53.760,1:19:58.960
+to all other nodes in your graph and included itself okay so
+
+1:19:58.960,1:20:02.000
+if you look at this equation the equation i just wrote before
+
+1:20:02.000,1:20:07.600
+you know if the the neighborhood uh is this time not the one hop
+
+1:20:07.600,1:20:12.000
+neighborhood but the whole graph then you will get you know uh the
+
+1:20:12.000,1:20:16.320
+standard equation that if if you do nlp and and transformer you
+
+1:20:16.320,1:20:20.480
+will recognize directly okay we saw this last week so
+
+1:20:20.480,1:20:24.320
+just exactly so that's that's a nice connect and that's a
+
+1:20:24.320,1:20:28.159
+transition so so you see you have the concatenation so this is multi-head you
+
+1:20:28.159,1:20:30.960
+have the softmax the query the key and the value and then
+
+1:20:30.960,1:20:34.960
+you have the weight uh for the meeting head so and the only
+
+1:20:34.960,1:20:38.000
+thing that i do here mathematically just having the neighborhood
+
+1:20:38.000,1:20:43.040
+uh that that use you know all connection and when i do that so there is the
+
+1:20:43.040,1:20:48.719
+question so what does it mean to do you know graph convolutional nets
+
+1:20:48.719,1:20:51.760
+for fully connected graphs and i think in this case
+
+1:20:51.760,1:20:55.840
+it becomes less useful to talk about graphs because when you when you have
+
+1:20:55.840,1:21:00.000
+each data connected to all other data then you don't have any more you know
+
+1:21:00.000,1:21:02.960
+specific graph structure because the graph which is what is
+
+1:21:02.960,1:21:05.679
+really interesting is graph is the sparsity structure
+
+1:21:05.679,1:21:09.120
+right like the brain connectivity like uh you know
+
+1:21:09.120,1:21:12.239
+the social networks what is interesting is not everything to be connected to
+
+1:21:12.239,1:21:15.120
+each other it's only to have a sparse connection
+
+1:21:15.120,1:21:18.320
+between between between the nodes so i think in this case it would be
+
+1:21:18.320,1:21:22.239
+better to talk about sets than to talk about graphs and and we
+
+1:21:22.239,1:21:24.560
+know that we know that transformers are set
+
+1:21:24.560,1:21:29.679
+neural networks so so in some sense instead of you know looking at you know
+
+1:21:29.679,1:21:33.600
+a fully connected graph with with uh with feature the thing that
+
+1:21:33.600,1:21:35.520
+we should look at is more a set of features
+
+1:21:35.520,1:21:39.040
+and transformers are really good you know to process uh sets
+
+1:21:39.040,1:21:46.560
+of uh of of feature vectors um okay so so there is a lab um
+
+1:21:46.560,1:21:53.120
+that i i uh i put here so um the lab is based on um so this is
+
+1:21:53.120,1:21:56.880
+the gate gcn so the model i'm i i propose and this is
+
+1:21:56.880,1:22:00.560
+with ggl so this is the deep graph library so it was developed by nyu
+
+1:22:00.560,1:22:05.679
+shanghai by professor zanzen and uh and and here this is the link to the lab
+
+1:22:05.679,1:22:09.440
+so if you click on this link you will go directly
+
+1:22:09.440,1:22:14.000
+to the lab uh and this is this using google google collab so you will just
+
+1:22:14.000,1:22:16.800
+need a you know a gmail account to access to this and you will be able to
+
+1:22:16.800,1:22:20.400
+run it on on the google cloud and what i put
+
+1:22:20.400,1:22:26.320
+here i put really you know the the only the the most interesting uh
+
+1:22:26.320,1:22:32.080
+functions that you need to develop uh a gcm so uh so so maybe tomorrow uh
+
+1:22:32.080,1:22:35.679
+yeah tomorrow tomorrow we're gonna be going over everything okay perfect
+
+1:22:35.679,1:22:41.120
+okay okay so and and here uh i again you know i put some comments
+
+1:22:41.120,1:22:45.760
+on the code yeah and also yeah also understand dgl
+
+1:22:45.760,1:22:49.280
+uh how how dga works so probably you do that tomorrow yes yes
+
+1:22:49.280,1:22:53.920
+nice okay so let me now i'm going to the answer let me talk
+
+1:22:53.920,1:22:59.440
+a little bit about um benchmarking graph neural networks so recently we
+
+1:22:59.440,1:23:04.800
+um we have this paper of benchmarking networks so why we did this matchmark
+
+1:23:04.800,1:23:07.440
+because if you look at you know most published
+
+1:23:07.440,1:23:12.159
+um gcn papers um most of the work actually
+
+1:23:12.159,1:23:16.560
+use small data set like a quora rtu data set and only one task the
+
+1:23:16.560,1:23:19.360
+classification and when i you know when i started doing
+
+1:23:19.360,1:23:22.080
+some experiment on that i just realized that
+
+1:23:22.080,1:23:26.159
+if you use gcn or if you don't use an egcn you will get statistically the same
+
+1:23:26.159,1:23:28.719
+performance because the standard deviation is very
+
+1:23:28.719,1:23:34.000
+high for the small data sets so so the thing is um we
+
+1:23:34.000,1:23:39.360
+we cannot identify you know good uh gcm uh we need we need we need something
+
+1:23:39.360,1:23:42.320
+else and also recently so there has been you
+
+1:23:42.320,1:23:46.719
+know a new theoretical development for for gcm
+
+1:23:46.719,1:23:50.320
+and the question is you know how good they are in practice
+
+1:23:50.320,1:23:54.800
+it's important to to have some good mathematical justification but
+
+1:23:54.800,1:23:59.040
+you know we need to be able to prove that this is something that is useful
+
+1:23:59.040,1:24:03.600
+and and i think also benchmark i think very essential to make progress
+
+1:24:03.600,1:24:08.639
+uh in many fields um like you know of course deep learning with imagenet
+
+1:24:08.639,1:24:12.560
+by faith lee um but the thing is what i upsell is actually
+
+1:24:12.560,1:24:16.320
+the people are quite really time to give credit to benchmarks
+
+1:24:16.320,1:24:19.440
+um anyway so we introduced this open benchmark
+
+1:24:19.440,1:24:23.679
+infrastructure so it's it's on github and it's based on pi torch
+
+1:24:23.679,1:24:27.840
+and dgl and we introduced you know six new medium scale data sets
+
+1:24:27.840,1:24:31.760
+for the four fundamental graph problems like you know graph classification
+
+1:24:31.760,1:24:35.600
+graph regression not classification and edge classification which i think
+
+1:24:35.600,1:24:39.600
+if you cover these four fundamental problems you you already
+
+1:24:39.600,1:24:43.040
+know quite a lot about the performance of your of your gcn
+
+1:24:43.040,1:24:46.400
+can you spend a few words more about these four fundamental graph problems i
+
+1:24:46.400,1:24:51.600
+think we haven't mentioned them so far i think yeah um exactly
+
+1:24:51.600,1:24:56.400
+but but well so what i mentioned is basically the first part of any you know
+
+1:24:56.400,1:25:00.320
+convolutional nets is how do you extract a powerful feature
+
+1:25:00.320,1:25:04.639
+the rest is quite easy no if you want to do uh regression you
+
+1:25:04.639,1:25:06.800
+just use an mlp if you want to do
+
+1:25:06.800,1:25:09.760
+classification you should use mlp with cross entropy
+
+1:25:09.760,1:25:13.600
+and the thing i think is is i mean i can take more time to do that but
+
+1:25:13.600,1:25:17.120
+what i present is i think is more uh you know uh
+
+1:25:17.120,1:25:20.639
+is more interesting than doing just these these guys
+
+1:25:20.639,1:25:24.080
+but would you give me another hour we could do that
+
+1:25:24.080,1:25:27.920
+i was making the point that i i think i understand now how we can build a
+
+1:25:27.920,1:25:31.840
+basically a representation of a graph but then so you would have like this uh
+
+1:25:31.840,1:25:35.679
+basically uh feature per node but then how would you go from
+
+1:25:35.679,1:25:39.600
+this feature per node to the final task so maybe we can mention this such
+
+1:25:39.600,1:25:44.639
+that we can give someone sure so so what you do basically um
+
+1:25:44.639,1:25:48.320
+so for example if uh so you have feature exactly so you extract convolutional
+
+1:25:48.320,1:25:51.120
+features per node and and then suddenly if you want to do
+
+1:25:51.120,1:25:54.560
+for example graph classification so what you will do you will do some
+
+1:25:54.560,1:25:58.800
+kind of aggregation you know function on this feature node
+
+1:25:58.800,1:26:02.480
+so for example the most common one is to do the average
+
+1:26:02.480,1:26:06.239
+so you do the average of all feature nodes and then on the top of
+
+1:26:06.239,1:26:09.440
+that you use an mlp and then you will do classification
+
+1:26:09.440,1:26:14.080
+uh of of your graph and this would be for always the same kind of structure of
+
+1:26:14.080,1:26:17.600
+the graph or you have different structures like different numbers of
+
+1:26:17.600,1:26:22.080
+nodes so is it like would you use if you use the mean it's
+
+1:26:22.080,1:26:24.239
+completely independent of the number of nodes
+
+1:26:24.239,1:26:27.520
+right right right the same so if you do the sum if you do the max
+
+1:26:27.520,1:26:31.570
+so you have many operators which are independent of the number of nodes
+
+1:26:31.570,1:26:37.520
+[Music] and yeah so so we have this and um and
+
+1:26:37.520,1:26:40.719
+this medium says uh this medium size are actually enough you
+
+1:26:40.719,1:26:46.080
+know statistically separate the performance of graph neural networks
+
+1:26:46.080,1:26:49.760
+so we make easy you know for new users to add a new
+
+1:26:49.760,1:26:54.080
+new graph graph models and also new data sets
+
+1:26:54.080,1:26:57.360
+and this is this is the link to the to the repo so
+
+1:26:57.360,1:27:01.520
+let me now explain the graph neural network pipeline
+
+1:27:01.520,1:27:05.040
+so a standard graph neural network pipeline is composed of three layers
+
+1:27:05.040,1:27:08.800
+so the first layer is going to be an input layer and it's going to make an
+
+1:27:08.800,1:27:12.880
+embedding of the input node and edge features then
+
+1:27:12.880,1:27:17.199
+you will have a series of kraftner network layers and
+
+1:27:17.199,1:27:19.520
+finally you have a task layer so there will be a
+
+1:27:19.520,1:27:24.800
+prediction layer for graph node and edge task
+
+1:27:24.800,1:27:30.800
+let me now describe in details you know each of these three layers
+
+1:27:31.199,1:27:35.199
+so for the input layer um so again we will have you know the input node and
+
+1:27:35.199,1:27:40.080
+edge features so this comes from the application that can be you
+
+1:27:40.080,1:27:44.159
+know a node feature for example for um you know for recommend for
+
+1:27:44.159,1:27:47.199
+recommender system for products so it will give you you know some feature of
+
+1:27:47.199,1:27:50.000
+your product so what you will do is that you will
+
+1:27:50.000,1:27:53.360
+take this um this raw feature and you will make you
+
+1:27:53.360,1:27:56.800
+know an embedding a linear medium and you will get a vector of d
+
+1:27:56.800,1:28:01.120
+dimensions we can do the same if we have some edge feature we can do
+
+1:28:01.120,1:28:05.040
+an embedding of the input edge feature and we'll get a vector of
+
+1:28:05.040,1:28:09.040
+the dimension so basically the output of the embedding
+
+1:28:09.040,1:28:13.520
+layer will be um for h it's going to be a matrix
+
+1:28:13.520,1:28:18.639
+of endnotes and d dimensions for the features
+
+1:28:18.639,1:28:22.880
+for the edge is going to be a matrix of e the number of edges
+
+1:28:22.880,1:28:30.639
+times the the number of features and then so we will give that
+
+1:28:33.760,1:28:39.600
+and we will give you know this output of the embedding layer it's going to be
+
+1:28:39.600,1:28:43.760
+the input of the graph neural network layers
+
+1:28:43.760,1:28:47.520
+okay which is which is here then what we will do is that we will
+
+1:28:49.280,1:28:54.639
+apply our favorite graph normal layer
+
+1:28:54.639,1:29:00.320
+a number of l times okay so we have um the the node and the edge
+
+1:29:00.320,1:29:04.639
+representation at layer l it will go through uh the
+
+1:29:04.639,1:29:07.840
+gnn layer and it will give you node representation of h
+
+1:29:07.840,1:29:11.120
+and e at the next layer and we will do that you know
+
+1:29:11.120,1:29:14.800
+l number of times this will give us you know
+
+1:29:14.800,1:29:17.920
+uh the output of the graph network layers
+
+1:29:17.920,1:29:21.280
+and again it's going to be a matrix of endnotes and d dimensions
+
+1:29:21.280,1:29:26.239
+for the nodes and for the edges is going to be a matrix of
+
+1:29:26.239,1:29:30.400
+e which is the number of edges times the dimensionality
+
+1:29:30.400,1:29:35.040
+okay so this is the output of our graph and all network layers
+
+1:29:35.040,1:29:38.639
+and then finally for the last layer so this is
+
+1:29:38.639,1:29:43.920
+you know task based uh layer so if we if we are doing some prediction at
+
+1:29:43.920,1:29:46.719
+the graph levels what happened is that we are
+
+1:29:46.719,1:29:50.320
+going to take you know the the output of the kraftner network
+
+1:29:50.320,1:29:56.159
+layers and we're going to make a mean with respect to all nodes of the graph
+
+1:29:56.159,1:30:01.199
+okay so this will give us a representation of the graph
+
+1:30:01.199,1:30:07.760
+of the dimension then we will give that through to an mlp multi-layer perceptron
+
+1:30:07.760,1:30:11.440
+and it will give us you know a score which can be a scatter if we are
+
+1:30:11.440,1:30:16.000
+doing some graph degradation like you know chemical property
+
+1:30:16.000,1:30:20.239
+estimation or it can be a classification
+
+1:30:20.239,1:30:23.520
+if we are trying to classify you know molecules to
+
+1:30:23.520,1:30:26.639
+some classes we can also have you know a nod level
+
+1:30:29.360,1:30:32.880
+prediction so what we will do is that we will take
+
+1:30:32.880,1:30:36.880
+the node representation at the output of the graph neural network
+
+1:30:36.880,1:30:40.639
+and we will give that to an mlp and we will get a score
+
+1:30:40.639,1:30:44.159
+for the node i which can be a scalar for regression
+
+1:30:44.159,1:30:48.320
+or can be a k dimensional vector for classification
+
+1:30:48.320,1:30:52.480
+we can also do you know edge level prediction
+
+1:30:52.480,1:30:56.800
+so we have a link between node i and node j
+
+1:30:56.800,1:31:02.639
+uh it's going to be concatenation of the you know the graph neural network uh
+
+1:31:02.639,1:31:07.040
+representation for node i and not j we give that to an mlp and again we'll
+
+1:31:07.040,1:31:10.400
+have a score for the link between node i and j and it can be
+
+1:31:10.400,1:31:15.440
+regression or classification okay so quickly because i'm running out
+
+1:31:15.440,1:31:17.760
+of time so the task you have the graph
+
+1:31:17.760,1:31:20.560
+classification task the graph regression path sorry
+
+1:31:20.560,1:31:23.600
+so this is for molecules so here we want to
+
+1:31:23.600,1:31:27.679
+predict you know the molecular solubility
+
+1:31:27.679,1:31:31.040
+and here you have the table so this is like you know
+
+1:31:31.040,1:31:35.840
+agnostic gcn so we don't use any graph structure
+
+1:31:35.840,1:31:40.320
+the lower the better and and here this is isotropic
+
+1:31:40.320,1:31:44.000
+gcn and this is anisotropic gcn so usually you will see
+
+1:31:44.000,1:31:50.560
+that for most experiments um anisotropic gcn do better job than than
+
+1:31:50.560,1:31:54.080
+isotropic gcn because you use some of course on
+
+1:31:54.080,1:31:58.239
+directional property so this is for graph regression this is
+
+1:31:58.239,1:32:00.800
+for graph classification so you have super nodes
+
+1:32:00.800,1:32:08.239
+of um of images and you want to classify the the image to belong to one of
+
+1:32:08.239,1:32:15.920
+the classes uh you also have h classification so this is here the
+
+1:32:15.920,1:32:21.280
+combinatorial optimization problem of tsp so the traveling salesman problem
+
+1:32:21.280,1:32:24.800
+so you have a graph and then you want to know if this edge belongs to the
+
+1:32:24.800,1:32:26.880
+solution so if it belongs to a solution this is
+
+1:32:26.880,1:32:30.639
+the class one and if it doesn't belong this is class zero
+
+1:32:30.639,1:32:34.880
+and we see that here you need explicit edge feature so you see that the only
+
+1:32:34.880,1:32:38.560
+model that does a good job compared to the naive
+
+1:32:38.560,1:32:45.520
+stick is is by using explicit um edge feature okay so here i'm using i'm
+
+1:32:45.520,1:32:48.080
+using this combinatorial example to make a
+
+1:32:48.080,1:32:50.320
+workshop announcement so this is also what we
+
+1:32:50.320,1:32:56.330
+organizing next year with jan [Music]
+
+1:33:00.159,1:33:03.760
+organizing a workshop on combining deep learning and combinatory optimization
+
+1:33:03.760,1:33:07.040
+which i think is very interesting directional research
+
+1:33:07.040,1:33:12.880
+okay conclusion um so we generalize the covenant to data on
+
+1:33:12.880,1:33:16.560
+graphs for this we we needed to redesign a
+
+1:33:16.560,1:33:19.520
+convolution opera operator on graphs so we do that for
+
+1:33:19.520,1:33:25.280
+template matching which lead to the class of special gcn
+
+1:33:25.280,1:33:29.040
+we also did that with a spectral convolution which leads to the class
+
+1:33:29.040,1:33:34.719
+of spectral convolution per spectral gcm we have linear complexity from
+
+1:33:34.719,1:33:38.639
+real-world graphs we have gpu implementation but yet it's
+
+1:33:38.639,1:33:43.520
+not optimized for the gpu that we we have today we have universal learning
+
+1:33:43.520,1:33:47.040
+capacity so this is uh the recent theoretical works
+
+1:33:47.040,1:33:51.520
+and we can do that for multiple graphs and also for graphs that that that can
+
+1:33:51.520,1:33:55.280
+change you know dynamically application so i'm happy
+
+1:33:55.280,1:33:58.639
+that now that i don't need to justify anymore the why
+
+1:33:58.639,1:34:03.040
+we are doing graph conventional nets to to anybody so it's it's getting more and
+
+1:34:03.040,1:34:06.880
+more application uh we see that at the nice uh at the
+
+1:34:06.880,1:34:10.960
+last um actually this week um
+
+1:34:10.960,1:34:18.080
+iclear uh conference so um the the the keyword that gets you know
+
+1:34:18.080,1:34:21.600
+the most uh improvement was graph neural networks
+
+1:34:21.600,1:34:24.000
+and and you can have you know you have now you
+
+1:34:24.000,1:34:26.960
+know a workshop and tutorials on graphical networks at
+
+1:34:26.960,1:34:30.560
+many of the top uh deep learning and ai conferences
+
+1:34:30.560,1:34:34.719
+and this is um the first probably tutorials on graph
+
+1:34:34.719,1:34:39.440
+deep learning that we we organized at norips in 2017 and cdpr
+
+1:34:39.440,1:34:44.560
+and also if you want some materials to uh to look more so we have this
+
+1:34:44.560,1:34:50.400
+ipam workshop um organized in 2018 and also a follow-up
+
+1:34:50.400,1:34:53.440
+in 2019 and for this we have the video talks so
+
+1:34:53.440,1:34:58.800
+if you want to know more about this uh so yeah thank michael writer so you
+
+1:34:58.800,1:35:04.400
+saw banjo michael bronstein felicia monty chattana joshi
+
+1:35:04.400,1:35:10.000
+uh g willie yo leo thomas lawrence archer slam only michael
+
+1:35:10.000,1:35:16.080
+duffy are playing earlier so thank you
+
+1:35:17.199,1:35:21.920
+thank you it was really impressive and i think everyone here was stunned by your
+
+1:35:21.920,1:35:25.040
+the quality of the slides and your explanations we
+
+1:35:25.040,1:35:29.280
+really really enjoyed like i'm getting so many private messages here i'm
+
+1:35:29.280,1:35:32.320
+it's like like everyone's pretty very excited
+
+1:35:32.320,1:35:36.000
+um i i have actually a few questions if you
+
+1:35:36.000,1:35:40.840
+have some time left yes um we haven't talked about generative
+
+1:35:40.840,1:35:44.719
+models um do you have any any words about like how
+
+1:35:44.719,1:35:48.639
+we can for example generate i don't know like new proteins
+
+1:35:48.639,1:35:51.679
+for uh i don't know uh figuring out whether
+
+1:35:51.679,1:35:54.800
+we can find a cure for this kovid right now
+
+1:35:54.800,1:35:58.320
+just you know actually like how do you say current
+
+1:35:58.320,1:36:03.440
+question for the current world yeah absolutely so so yeah the community
+
+1:36:03.440,1:36:07.920
+is also working on the graph generative models so you have two
+
+1:36:07.920,1:36:10.560
+directions the first direction you can do it in a
+
+1:36:10.560,1:36:14.400
+recursive way so um what you're going to do is that you
+
+1:36:14.400,1:36:18.960
+are create you know your molecule atom after atom okay so you create you you
+
+1:36:18.960,1:36:21.600
+start with an atom then you have a candidate for the next
+
+1:36:21.600,1:36:25.199
+atom and also the next bound between the two atoms
+
+1:36:25.199,1:36:29.520
+and you can do that you know it's a kind of lstm style
+
+1:36:29.520,1:36:32.560
+and the second direction is to do it you know
+
+1:36:32.560,1:36:37.679
+in uh in one shot so you need um a network that can
+
+1:36:37.679,1:36:43.520
+that can predict uh what is the length or the size of
+
+1:36:43.520,1:36:47.280
+your uh of your molecule and then uh
+
+1:36:47.280,1:36:50.639
+and then what are the connection so you have this two direction you can do it in
+
+1:36:50.639,1:36:52.719
+a recursive way or you can do it in one shot
+
+1:36:52.719,1:36:56.560
+so they are they are different um so the community
+
+1:36:56.560,1:36:59.600
+is more interesting in the recursive way today um
+
+1:36:59.600,1:37:03.600
+and i i have a paper on the one shot and basically they are they are performing
+
+1:37:03.600,1:37:07.360
+the same i mean it's uh i don't i don't see any any
+
+1:37:07.360,1:37:10.480
+difference but you can do it yeah so the only thing
+
+1:37:10.480,1:37:13.679
+is how do you treat yeah how the question is your molecule
+
+1:37:13.679,1:37:18.239
+can have different uh size uh and this is the key
+
+1:37:18.239,1:37:23.040
+um this is the key uh [Music]
+
+1:37:23.040,1:37:26.800
+i would say the challenge here so how do you deal with different sizes
+
+1:37:26.800,1:37:30.880
+but we have different options to do that which is very interesting related to the
+
+1:37:32.639,1:37:35.600
+chemistry of that is that so graph what i want to make is that graph neural
+
+1:37:35.600,1:37:39.520
+network in some sense are too much flexible
+
+1:37:39.520,1:37:45.360
+okay so um what you need so when you go from from the standard of
+
+1:37:45.360,1:37:48.639
+net um so this this as you know the grid is
+
+1:37:48.639,1:37:51.920
+very structured okay so you can get a lot of information
+
+1:37:51.920,1:37:54.800
+for the structure of the grid but you don't have this in
+
+1:37:54.800,1:37:59.440
+graph again you lose you know um the node ordering and
+
+1:37:59.440,1:38:02.960
+everything so we need to find a way to you know to
+
+1:38:02.960,1:38:06.000
+have more and more structure inside the graph neural networks
+
+1:38:06.000,1:38:09.040
+one way to do that is uh the architecture so the architecture for
+
+1:38:09.040,1:38:13.520
+example you would like to combine uh for example if you do uh chemistry
+
+1:38:13.520,1:38:15.600
+you would like to combine schroedinger equation
+
+1:38:15.600,1:38:21.119
+you know like hamilton energy so people are doing that yes to constrain better
+
+1:38:21.119,1:38:23.119
+you know your graph neural network so again
+
+1:38:23.119,1:38:27.360
+graphene network are in some sense um you know too much flexible you need to
+
+1:38:27.360,1:38:31.600
+find a way to to add more um universal you know
+
+1:38:31.600,1:38:34.080
+constraints yeah actually about the universal
+
+1:38:34.080,1:38:37.360
+constraints i got here a question uh what do you mean by universal learning
+
+1:38:37.360,1:38:41.199
+capacity yeah so this is the recent works on
+
+1:38:41.199,1:38:45.040
+rafale network so people are trained to um
+
+1:38:45.040,1:38:48.239
+in some sense you're trying to classify your neural networks right there are
+
+1:38:48.239,1:38:52.080
+many publication neural networks so how do you classify them so you need
+
+1:38:52.080,1:38:56.239
+to find mathematical properties like you know isotropic properties anisotropic
+
+1:38:56.239,1:38:59.360
+properties and more recently there are you know
+
+1:38:59.360,1:39:04.480
+theoretical work on you know isomorphism and you know um
+
+1:39:04.480,1:39:07.679
+exposibility of craft neural network depending on some class
+
+1:39:07.679,1:39:13.440
+of of theoretical graphs graphs are you know starting by
+
+1:39:13.440,1:39:16.719
+earlier like two 200 years ago so we know a lot about graphs
+
+1:39:16.719,1:39:20.400
+and we want to classify graphs according to some mathematical property
+
+1:39:20.400,1:39:24.360
+so this is what i was i was trying to mention that
+
+1:39:24.360,1:39:28.400
+um uh you can you can design graph neural networks
+
+1:39:28.400,1:39:31.840
+for some special mathematical properties let's see
+
+1:39:31.840,1:39:35.920
+thank you um guys feel free to ask questions you can
+
+1:39:35.920,1:39:40.320
+also write to me if you're too shy i mean i'm not shy i can just read
+
+1:39:40.320,1:39:44.639
+uh i have a question and thank you so much for this great lecture uh and
+
+1:39:44.639,1:39:48.400
+you mentioned that you created like a benchmark data set
+
+1:39:48.400,1:39:52.320
+uh type of like uh so people can benchmark their different graph neural
+
+1:39:52.320,1:39:55.520
+networks um but i i feel like a lot of those
+
+1:39:55.520,1:39:59.440
+networks also learn some like representation in the graph
+
+1:39:59.440,1:40:03.119
+and a lot of downstream tasks could be like an unsupervised setting
+
+1:40:03.119,1:40:06.400
+where i think in the benchmarking data sets you're
+
+1:40:06.400,1:40:11.440
+all just using accuracy uh more or less so it's like you have labels ground
+
+1:40:11.440,1:40:15.199
+truth labels so it's more in the supervised setting so
+
+1:40:15.199,1:40:20.639
+do you have any thoughts on how we could benchmark like the graph network's
+
+1:40:20.639,1:40:25.080
+performance in an unsupervised setting or i don't know like some
+
+1:40:25.080,1:40:29.119
+semi-supervised setting um or like by measuring their
+
+1:40:29.119,1:40:33.760
+performance in some common downstream tasks or application
+
+1:40:33.760,1:40:36.800
+uh i would like to hear your thoughts on that thank you
+
+1:40:36.800,1:40:40.320
+so i think this is one of the most favorite uh topics of jan
+
+1:40:40.320,1:40:43.440
+and the self-supervised yeah that's right uh yeah as you can
+
+1:40:46.400,1:40:49.440
+tell i brainwashed the students in the class really well
+
+1:40:49.440,1:40:56.880
+yes yes so that's why i'm asking no of course i mean um of course
+
+1:40:56.880,1:41:04.400
+one important question um is um you you want to to learn efficiently
+
+1:41:04.400,1:41:08.480
+right you don't want to have too much labels to be able to
+
+1:41:08.480,1:41:13.280
+to predict well so so self-supervised learning um
+
+1:41:13.280,1:41:18.960
+um is is one way to do that right you want to um and you can do that also with
+
+1:41:18.960,1:41:21.679
+graph right you can you can hide some part of the
+
+1:41:21.679,1:41:24.320
+information of your graph and then you can predict
+
+1:41:24.320,1:41:28.159
+this hidden information to get you know a presentation
+
+1:41:28.159,1:41:32.080
+so um i guess now it's hard for me to follow
+
+1:41:32.080,1:41:35.760
+uh the recent all the recent gcn work but
+
+1:41:35.760,1:41:38.800
+i guess if you google it there will probably be already one or two papers on
+
+1:41:38.800,1:41:43.679
+this on this idea i mean there is nothing special with gcn
+
+1:41:43.679,1:41:47.280
+so you can apply the same ideas like self-supervised learning
+
+1:41:47.280,1:41:51.440
+to gcn so we don't we don't put that in the
+
+1:41:51.440,1:41:54.719
+in the benchmark yet it's a good idea so that's something maybe we
+
+1:41:54.719,1:42:01.199
+we could do so actually arguably uh all of self-supervised learning
+
+1:42:01.199,1:42:03.199
+actually exploits some sort of graph structure
+
+1:42:03.199,1:42:07.840
+right so when you do self-supervised running in text for
+
+1:42:07.840,1:42:10.719
+example you take you know you take a sequence of words
+
+1:42:10.719,1:42:15.520
+and you learn uh you know to predict uh a word in the middle of missing words
+
+1:42:15.520,1:42:19.520
+whatever they are uh there is a graph structure and that graph structure
+
+1:42:19.520,1:42:25.199
+is uh how many times a word appears uh you know some distance away from
+
+1:42:25.199,1:42:28.400
+another word so make um you know imagine you have all the
+
+1:42:28.400,1:42:32.800
+words and then you uh you say you know within this context
+
+1:42:32.800,1:42:36.080
+you know make a graph between words so this would be a very simplified
+
+1:42:36.080,1:42:38.800
+version of it but make a graph that indicates
+
+1:42:38.800,1:42:42.639
+uh how many times this word appears at distance
+
+1:42:42.639,1:42:45.840
+three from that uh from that other word right
+
+1:42:45.840,1:42:49.440
+then you have another graph for distance one and another one for distance two etc
+
+1:42:49.440,1:42:53.280
+right so that constitutes a graph and it's a graph that sort of indicates you
+
+1:42:53.280,1:42:57.600
+know in white context two words seven simultaneously appear um you can
+
+1:42:57.600,1:43:01.280
+think of uh uh you know a text as you know
+
+1:43:01.280,1:43:05.360
+basically a linear graph and you know the the neighbors that you take
+
+1:43:05.360,1:43:07.440
+uh in a you know when you train a
+
+1:43:07.440,1:43:10.239
+transformer basically you know sticking a neighborhood in this graph
+
+1:43:10.239,1:43:15.840
+right so um when you do metric learning uh the type of stuff that is trying
+
+1:43:15.840,1:43:19.280
+talked about uh you know using contrastive training
+
+1:43:19.280,1:43:22.480
+where you have two samples that you know are similar and two samples you know are
+
+1:43:22.480,1:43:24.800
+dissimilar this basically is a graph it's a
+
+1:43:24.800,1:43:28.719
+similarity graph that you're using you're saying you're telling the system
+
+1:43:28.719,1:43:32.320
+here are two samples that are linked uh because i know they are similar and
+
+1:43:32.320,1:43:35.840
+here are two samples that i know are not linked because i know they're dissimilar
+
+1:43:35.840,1:43:39.440
+and i'm trying to find a graph embedding essentially you can think of
+
+1:43:39.440,1:43:43.119
+those neural nets are learning a graph embedding for nodes
+
+1:43:43.119,1:43:47.760
+so that uh nodes that are linked in the graph have similar vectors and
+
+1:43:47.760,1:43:51.119
+nodes that are not are dissimilar vectors so
+
+1:43:51.119,1:43:54.320
+there is a very very strong connection between self-supervised running
+
+1:43:54.320,1:44:00.719
+and uh uh you know kind of the graph view of uh of a training set
+
+1:44:00.719,1:44:04.080
+i don't think it's been exploited or kind of realized yet
+
+1:44:04.080,1:44:06.800
+by a lot of people so there might be really interesting stuff to do there i
+
+1:44:06.800,1:44:09.119
+don't know what you think about this have you but
+
+1:44:09.119,1:44:13.119
+yeah exactly this is completely related to the you know on the on the graph you
+
+1:44:13.119,1:44:16.480
+don't have any uh non-positioning and what you are
+
+1:44:16.480,1:44:19.440
+saying and is exactly that so how do we get you know
+
+1:44:19.440,1:44:23.760
+positioning between notes that are relevant to your particular application
+
+1:44:23.760,1:44:27.119
+and and and you want to do it in a self-supervised way
+
+1:44:27.119,1:44:30.320
+because because then you will learn you know all possible you know
+
+1:44:30.320,1:44:35.440
+configurations and you don't need to to have labels to do that so yeah this
+
+1:44:35.440,1:44:38.880
+is the point see you will get if you if you know how to
+
+1:44:38.880,1:44:43.440
+compare you know um notes so basically how do you extract
+
+1:44:43.440,1:44:46.960
+positional encoding then you you will do a great job you know
+
+1:44:46.960,1:44:50.639
+that's that's that's that's one of the most important uh question in graph
+
+1:44:50.639,1:44:55.119
+neural networks and also for for nlp and many other applications
+
+1:44:55.119,1:44:58.560
+great thank you a question just arrived here
+
+1:44:58.560,1:45:02.480
+uh so could you possibly highlight the most important parts of graph
+
+1:45:02.480,1:45:05.520
+with attention i think we maybe have gone a little fast
+
+1:45:05.520,1:45:12.239
+there and someone got a little bit lost yeah so uh graph attention network so
+
+1:45:12.239,1:45:16.080
+the first technique was developed by joshua banjo peter
+
+1:45:16.080,1:45:20.080
+will actually wix and uh so it's probably you know the first work you you
+
+1:45:20.080,1:45:24.239
+you would like to see um but you can also do like uh you can
+
+1:45:24.239,1:45:27.440
+take you know the transformer the standard transformer and then you
+
+1:45:27.440,1:45:31.280
+can make it you know a graph version it's it's quite straightforward
+
+1:45:31.280,1:45:34.000
+to do it just by multiplying the just by
+
+1:45:34.000,1:45:37.840
+multiplying with the urgency agency matrix right yeah exactly
+
+1:45:37.840,1:45:40.080
+so you can already do it you know with spy
+
+1:45:40.080,1:45:44.960
+touch transformer so there is a mask exactly with a minus infinity yeah
+
+1:45:44.960,1:45:49.040
+exactly so if you put minus infinite with soft max you will get zero exactly
+
+1:45:49.040,1:45:51.199
+so i think i'm gonna show these tomorrow so
+
+1:45:51.199,1:45:54.639
+they are yeah exactly so you can already do graph you know transformer very
+
+1:45:54.639,1:45:58.080
+easily with with spy touch but the thing is it's
+
+1:45:58.080,1:46:01.920
+it's going to be a full matrix yeah so so it's going to take you it's
+
+1:46:01.920,1:46:03.679
+going to it's going to use a lot of your gm
+
+1:46:03.679,1:46:07.119
+memory because there are many values that you don't need
+
+1:46:07.119,1:46:10.800
+so if you if you want to to scale to larger graphs
+
+1:46:10.800,1:46:14.159
+then you need something that exploits the sparsity like dgn
+
+1:46:14.159,1:46:18.239
+or python geometric for example yeah so last week we coded by
+
+1:46:18.239,1:46:22.080
+by from scratch so we we actually see all the operations inside
+
+1:46:22.080,1:46:25.360
+and then maybe we can just add one additional matrix there just to make
+
+1:46:25.360,1:46:28.480
+like this masked part such that we can retrieve
+
+1:46:28.480,1:46:31.760
+the graph convolutional net from the code that we already
+
+1:46:31.760,1:46:34.800
+have written so that would be i think a connection
+
+1:46:34.800,1:46:38.320
+for tomorrow and hold on there are more questions coming
+
+1:46:38.320,1:46:41.600
+is there any application where using chebnet
+
+1:46:41.600,1:46:51.119
+might be better than spatial gcn um so
+
+1:46:52.960,1:46:56.000
+i would say they are part of the you know isotropic
+
+1:46:56.000,1:47:01.679
+um this is the class i uh yeah this is what i call you know isotropic uh gcns
+
+1:47:01.679,1:47:07.119
+so um uh for me i mean of course it will
+
+1:47:07.119,1:47:10.080
+depend on your data and you will depend on your task you
+
+1:47:10.080,1:47:12.639
+know if you have some tasks where your data is uh
+
+1:47:12.639,1:47:15.920
+you know isotropic this kind of information then chemnet will do a very
+
+1:47:15.920,1:47:19.119
+good job uh for sure now if you have information
+
+1:47:19.119,1:47:22.000
+where the topic is important for example for social networks
+
+1:47:22.000,1:47:25.119
+you don't want you know to treat people the same way the same
+
+1:47:25.119,1:47:28.880
+you don't want to treat the neighbors the same way then is not going to do a
+
+1:47:28.880,1:47:31.440
+good job so it really depends on on your task
+
+1:47:31.440,1:47:35.600
+where isotropy is is very important if isotropic is very important then you
+
+1:47:35.600,1:47:39.520
+should use net because chemnet you know is using um
+
+1:47:39.520,1:47:43.199
+all bit of information about your graph in an isotopic way
+
+1:47:43.199,1:47:47.520
+and if you are using you know gcn the veneer gcn you are just using you know
+
+1:47:47.520,1:47:50.639
+the first two terms of approximation of gemini
+
+1:47:50.639,1:47:55.040
+yes it is there we can learn the edges right we can learn the representation
+
+1:47:55.040,1:47:58.880
+for the edges such that they discriminate between neighbors right
+
+1:47:58.880,1:48:02.400
+no no no this is um no this is that this one is isotropic
+
+1:48:02.400,1:48:06.320
+oh okay okay isotropic what i mean by isotropic is that
+
+1:48:06.320,1:48:12.400
+if um if you have a pure isotropic you know uh graph problems then you
+
+1:48:12.400,1:48:15.920
+should use a chemical otherwise but otherwise yeah it's better
+
+1:48:15.920,1:48:20.159
+to use enzotropic of course
+
+1:48:21.360,1:48:25.520
+more questions guys i'm really um hey i have a question thanks for the talk
+
+1:48:25.520,1:48:28.880
+uh i was wondering a lot of these methods require
+
+1:48:28.880,1:48:35.119
+a existing adjacency matrix and for uh some problems for example like you
+
+1:48:35.119,1:48:38.000
+don't you know that there is a graph structure but you don't know the
+
+1:48:38.000,1:48:41.199
+underlying connections do you know of any work that addresses
+
+1:48:41.199,1:48:45.840
+this problem yeah absolutely so um so far most works
+
+1:48:45.840,1:48:49.199
+uh focus on having already you know the
+
+1:48:49.199,1:48:54.159
+graph structure and and and of course uh you
+
+1:48:54.159,1:48:57.440
+like sometimes sometimes you just have data like for example you know you just
+
+1:48:57.440,1:49:01.360
+have a set of uh set of features and and you want to
+
+1:49:01.360,1:49:06.719
+learn you know some graph structure it's very hard very very hard
+
+1:49:06.719,1:49:11.119
+so um there are some works you know doing that
+
+1:49:11.119,1:49:14.480
+so they are trying to learn some some graph structure at the same time they're
+
+1:49:14.480,1:49:18.239
+trying to learn you know another presentation uh so
+
+1:49:18.239,1:49:20.560
+that's that's promising that that's that's interesting
+
+1:49:20.560,1:49:23.679
+and this is also somewhat that i'm trying to do now but i can tell you
+
+1:49:23.679,1:49:28.719
+it's very hard to do and especially because um if you
+
+1:49:28.719,1:49:32.960
+if you if you let you know the adjacency matrix to be a variable
+
+1:49:32.960,1:49:36.719
+then you are n square okay you have n square
+
+1:49:36.719,1:49:42.960
+unknown parameters to learn so um so it's uh it's not easy um but yeah this
+
+1:49:42.960,1:49:46.239
+is a so i would say that these techniques um
+
+1:49:46.239,1:49:50.159
+there are many natural that are coming with graphs okay you
+
+1:49:50.159,1:49:53.760
+don't need to build any graphs and this is already giving you you know
+
+1:49:53.760,1:49:58.080
+a lot of of good tools now if you can give me
+
+1:49:58.080,1:50:00.320
+maybe what you have in mind what kind of
+
+1:50:00.320,1:50:02.960
+application you have in mind what you want to use you know when you want to
+
+1:50:02.960,1:50:06.960
+learn graphs uh at the same time maybe we can talk
+
+1:50:06.960,1:50:09.040
+about it so i can tell you xavier of course
+
+1:50:09.040,1:50:12.320
+zimming uh you know will will correct me but
+
+1:50:12.320,1:50:16.480
+zooming is actually uh working on uh predicting uh protein function predict
+
+1:50:16.480,1:50:18.480
+uh you know protein function prediction
+
+1:50:18.480,1:50:22.000
+basically and and so the underlying graph would be the
+
+1:50:22.000,1:50:26.480
+for example a contact map or the the kind of proximity graph of different
+
+1:50:26.480,1:50:29.599
+sites on a protein and you don't have that i mean in most
+
+1:50:29.599,1:50:32.320
+cases you don't that's that's kind of one of the things you
+
+1:50:32.320,1:50:35.520
+you have to predict so you could view this as some sort of related
+
+1:50:35.520,1:50:40.480
+you know graph variable let's see maybe you had some other idea
+
+1:50:40.480,1:50:43.840
+in mind yeah i i think actually so the more specific
+
+1:50:43.840,1:50:47.679
+problem is that uh some of these graphs you know the edges
+
+1:50:47.679,1:50:51.040
+and you uh you know some of the edges but you
+
+1:50:51.040,1:50:55.119
+don't know the other ones for example in protein function prediction
+
+1:50:55.119,1:50:59.760
+you can imagine like two proteins that have um similar functions as having an
+
+1:50:59.760,1:51:03.040
+edge between them um but they might not have the same
+
+1:51:03.040,1:51:07.040
+function so you don't know sort of the edge weights and you kind of have like a
+
+1:51:07.040,1:51:12.239
+human labels that are inaccurate so uh you know that they're connected in
+
+1:51:12.239,1:51:14.719
+some way but you don't know the edge weights and you know that
+
+1:51:14.719,1:51:18.800
+there are other proteins that should be connected but you don't have labels for
+
+1:51:18.800,1:51:22.239
+so i guess this is more of a graph completion problem yeah and but
+
+1:51:22.239,1:51:27.040
+and this one is easy this one if you have it's like the semi you know the
+
+1:51:27.040,1:51:29.760
+semi graph clustering problem so if you
+
+1:51:29.760,1:51:33.599
+already have some label just a few labels and you have some
+
+1:51:33.599,1:51:37.119
+structure around this that's something you can you can live
+
+1:51:37.119,1:51:40.320
+with uh if you are absolutely no structure on the edge
+
+1:51:40.320,1:51:43.440
+and then you need to learn the graph that is very hard
+
+1:51:43.440,1:51:50.320
+i see okay thank you hey i have a question about uh
+
+1:51:50.320,1:51:54.320
+uh splits of the data when you're actually training
+
+1:51:54.320,1:51:58.000
+a graph neural network um because it's uh
+
+1:51:58.000,1:52:02.000
+like can you talk about some of the things that you would want to consider
+
+1:52:02.000,1:52:05.440
+when actually splitting the data into say training and validation
+
+1:52:05.440,1:52:10.880
+um like you might want to have uh all of the nodes in the training data
+
+1:52:10.880,1:52:13.840
+for it to actually be exposed to everything that's
+
+1:52:13.840,1:52:20.239
+um in in the in in the graph data um and you might have a case where
+
+1:52:20.239,1:52:24.320
+different types of edges are imbalanced in the data set um can you
+
+1:52:24.320,1:52:27.840
+talk about when that would be important what are some of the considerations in
+
+1:52:27.840,1:52:32.320
+splitting the data training sorry i'm not sure i understand the
+
+1:52:32.320,1:52:37.360
+question so you are talking about uh unbalanced training sets uh
+
+1:52:37.360,1:52:40.960
+yes and also like so if you have like a huge relational
+
+1:52:40.960,1:52:45.920
+uh data set right um you can talk about some of the
+
+1:52:45.920,1:52:49.040
+considerations for uh for splitting the data when you're
+
+1:52:49.040,1:52:56.480
+trying to train a graph network so for a condition on the data sets um
+
+1:52:56.480,1:53:00.480
+so you may have you know millions of small graphs
+
+1:53:00.480,1:53:03.599
+and it is fine i mean because this graph neural network they're independent
+
+1:53:03.599,1:53:08.320
+of the size of your graph so uh so this is this is not issue to learn some
+
+1:53:08.320,1:53:12.320
+good graphene representation there is no issue with that now
+
+1:53:12.320,1:53:18.800
+if you have unbalanced data set um i don't know um so that's maybe you can
+
+1:53:18.800,1:53:21.280
+maybe apply some standard techniques to uh
+
+1:53:21.280,1:53:25.199
+to do that so uh you can also you know for cross entropy for example you can
+
+1:53:25.199,1:53:29.760
+you can weight your cross-entropy depending on the size of each class
+
+1:53:29.760,1:53:33.360
+so that may be something you can do yeah but i
+
+1:53:33.360,1:53:36.960
+never you know thought too much about this
+
+1:53:36.960,1:53:42.719
+okay thank you any more questions i'm still getting
+
+1:53:42.719,1:53:48.719
+things written here but you can voice yourself if you are
+
+1:53:51.199,1:53:54.800
+i have a question actually uh first of all thanks a lot for the lecture at this
+
+1:53:54.800,1:53:59.679
+time especially for you so how do you deal with cases where the
+
+1:53:59.679,1:54:03.599
+nodes do not have the same dimension like if i want to run a small
+
+1:54:03.599,1:54:07.360
+simple vanilla graph convolutional network but my nodes
+
+1:54:07.360,1:54:10.400
+are something like even for facebook uh people
+
+1:54:10.400,1:54:13.840
+and then pages and i want different dimensions so how do you think about
+
+1:54:13.840,1:54:16.800
+graph like very a very simple graph neural
+
+1:54:16.800,1:54:21.360
+network in that uh nothing it has nothing to do with
+
+1:54:21.360,1:54:25.520
+graph neural networks if you have different dimensions for your vector so
+
+1:54:25.520,1:54:28.239
+probably you need to to to put everything on the same
+
+1:54:28.239,1:54:31.360
+dimension and then you need to use some indicator function
+
+1:54:31.360,1:54:33.840
+like one when you have the information and then when you don't have any
+
+1:54:33.840,1:54:38.080
+information and this will be used during the computation of the loss and
+
+1:54:38.080,1:54:41.440
+then when you back propagate you if you if you don't have any feature
+
+1:54:41.440,1:54:45.199
+information you will not use it but i i don't think he has anything to
+
+1:54:45.199,1:54:48.320
+do with graph neural network okay thank you
+
+1:54:59.599,1:55:05.840
+hold on you're writing i'm reading so much
+
+1:55:13.280,1:55:16.480
+so maybe i don't understand the question but i will read it
+
+1:55:16.480,1:55:22.080
+out loud anyway uh is there any gcn which can work on multiple
+
+1:55:22.080,1:55:28.080
+urgency matrices together for example a bidirectional graph i don't know what
+
+1:55:28.080,1:55:32.080
+this mean so if the question is about hyper graph
+
+1:55:32.080,1:55:36.480
+so you know you may have more than one age uh connecting your nodes yes there
+
+1:55:36.480,1:55:39.280
+are some work about this it's an extension to natural
+
+1:55:39.280,1:55:43.280
+extension mathematically so you can yeah you can do that there is
+
+1:55:43.280,1:55:46.639
+a there is no limitation to go to hyper graph
+
+1:55:46.639,1:55:49.840
+it's fine and there are now some data sets
+
+1:55:49.840,1:55:58.080
+for this for this task so if there is a an application
+
+1:55:58.080,1:56:01.520
+so students would be interesting to do yeah it's there is already
+
+1:56:01.520,1:56:05.679
+data set and papers okay uh another question would be
+
+1:56:05.679,1:56:09.599
+does it make sense to have notes that are features of a person
+
+1:56:09.599,1:56:14.480
+and do graph classification or have notes as person and do
+
+1:56:14.480,1:56:17.520
+node classification i don't know i don't know um so
+
+1:56:21.119,1:56:25.280
+often you know people ask me the question can i do a graph given this
+
+1:56:25.280,1:56:29.599
+data so it's really task dependent i think
+
+1:56:29.599,1:56:32.800
+it's ready you know when when it's going to be useful or not
+
+1:56:32.800,1:56:35.119
+when you get you know some good relationships
+
+1:56:35.119,1:56:38.560
+um because what is the graph you know it's just a collection of pairwise
+
+1:56:38.560,1:56:42.320
+you know uh or pairwise connections so that's it
+
+1:56:42.320,1:56:45.679
+so the question is when when it is relevant
+
+1:56:45.679,1:56:49.360
+to solve your task sometimes it is relevant sometimes it's not
+
+1:56:49.360,1:56:53.199
+so it really depends on the on the yeah it's obvious but it really depends on
+
+1:56:53.199,1:56:56.000
+the data and and the task you want to solve so
+
+1:56:56.000,1:57:01.040
+yeah yeah the student is satisfied with your answer
+
+1:57:02.400,1:57:05.920
+i think we run out of questions unless there are more
+
+1:57:05.920,1:57:13.360
+coming my way uh no it's it starts getting bright outside
+
+1:57:13.360,1:57:15.760
+there exactly exactly it was notice here the
+
+1:57:15.760,1:57:21.040
+sun is rising uh that's nice okay i think
+
+1:57:21.040,1:57:25.679
+that was it uh thank you so so much it was like
+
+1:57:25.679,1:57:29.360
+i mean really those were so pretty uh these slides were so pretty
+
+1:57:29.360,1:57:36.080
+i i i had to learn so much from the way it teach this world um
+
+1:57:36.080,1:57:40.800
+yeah thank you again uh for waking up so early
+
+1:57:40.800,1:57:45.040
+i mean i think this is a fascinating topic you know as you know i've been uh
+
+1:57:45.040,1:57:49.280
+involved in this at the beginning and uh i think it opens a completely new door
+
+1:57:49.280,1:57:52.480
+to applications of machine learning and neural nets
+
+1:57:52.480,1:57:55.599
+you know it's a new world it's completely different world um i know
+
+1:57:55.599,1:57:58.800
+your phd advisor had been working on you know
+
+1:57:58.800,1:58:02.320
+graph signal processing for a long time so this was kind of a natural
+
+1:58:02.320,1:58:06.239
+transition for for him and for you i guess but um
+
+1:58:06.239,1:58:11.360
+uh i you know i i think we haven't seen the the end of this we'll we'll uh
+
+1:58:11.360,1:58:14.239
+we're going to be surprised by what's going to come out of this i mean there's
+
+1:58:14.239,1:58:19.599
+really already sort of fascinating work in that area in high energy physics in
+
+1:58:19.599,1:58:24.480
+computational chemistry in uh you know social uh
+
+1:58:24.480,1:58:30.159
+network uh applications and uh you you kind of cited all the big names
+
+1:58:30.159,1:58:33.520
+in the you know if you are interested in this topic if you're listening to this
+
+1:58:33.520,1:58:36.960
+yuri leskovitch is is one of the big names you know in addition to xavier
+
+1:58:36.960,1:58:40.560
+obviously but um and uh jean broner whom you know
+
+1:58:40.560,1:58:43.040
+because he's a professor here and he talks about it in in this
+
+1:58:43.040,1:58:48.239
+in this course uh mikhail bronstein uh is also a big contributor he's made some
+
+1:58:48.239,1:58:51.840
+really interesting uh uh contributions to the to the topic
+
+1:58:51.840,1:58:54.560
+also on sort of different methods than the one
+
+1:58:54.560,1:58:58.159
+uh that you talked about today uh on like you know
+
+1:58:58.159,1:59:04.400
+uh like you know using graph neural nets for like 3d meshes and uh
+
+1:59:04.400,1:59:08.639
+for computer graphics and things like that so um i
+
+1:59:08.639,1:59:11.520
+agree i think i think this is also a field you know
+
+1:59:11.520,1:59:14.800
+where there is a back and forth between you
+
+1:59:14.800,1:59:18.719
+know mathematics and also applications so if you look at
+
+1:59:18.719,1:59:23.119
+for example this protein stuff it's very very hard but at the same
+
+1:59:23.119,1:59:25.679
+times we can learn a lot you know from the mathematical side
+
+1:59:25.679,1:59:30.080
+we can we can and it's very exciting right because you want both if you want
+
+1:59:30.080,1:59:34.400
+to be able to make a scientific discovery you need to be
+
+1:59:34.400,1:59:39.760
+you know um uh driven by some real world very hard problem and then at
+
+1:59:39.760,1:59:42.840
+the same time you have these new tools you know coming up with a
+
+1:59:42.840,1:59:47.360
+graphic neural networks and and it's a way also for us to better
+
+1:59:47.360,1:59:49.840
+understand you know why neural networks work so well
+
+1:59:49.840,1:59:53.679
+and and this is you know a direction where
+
+1:59:53.679,1:59:57.280
+it looks like you know each day they are like a new problem in this in this
+
+1:59:57.280,2:00:00.800
+direction so the pie is big and for everyone for
+
+2:00:00.800,2:00:05.599
+for the young students to come and to uh to enjoy you know this this area
+
+2:00:05.599,2:00:08.159
+of research great well thank you again and uh enjoy
+
+2:00:11.119,2:00:16.480
+your day yeah thanks again thank you so much guys
+
+2:00:16.480,2:00:23.920
+all right bye-bye bye-bye guys see you tomorrow

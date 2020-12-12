@@ -1,0 +1,4184 @@
+0:00:00.399,0:00:04.720
+all right you guys see the slides I assume
+
+0:00:05.120,0:00:08.559
+Alfredo I can't see you I can't see anyone else so yes all right
+
+0:00:08.559,0:00:12.320
+yeah it's all good you can also make signs I can see you
+
+0:00:12.320,0:00:17.359
+okay um so um we're going to talk about still talk
+
+0:00:17.359,0:00:21.520
+about energy-based models and mostly in the context of
+
+0:00:21.520,0:00:25.119
+self supervised or unsupervised learning continuing
+
+0:00:25.119,0:00:31.119
+where we left off last time so let me start with a little bit of
+
+0:00:31.119,0:00:35.840
+reminder of where we where we left last time
+
+0:00:35.840,0:00:40.879
+we talked about self supervised learning as the idea of
+
+0:00:41.040,0:00:45.680
+basically trying to predict everything from everything else
+
+0:00:45.680,0:00:49.280
+pretending that a part of the input is not visible to the system and another
+
+0:00:49.280,0:00:52.559
+part is visible and we train the system to predict the
+
+0:00:52.559,0:00:56.719
+non-visible part from the visible part and of course it could be it could be
+
+0:00:58.559,0:01:00.640
+anything could be part of a video or it could be
+
+0:01:00.640,0:01:04.000
+something else there is a special case where uh
+
+0:01:04.000,0:01:08.000
+we don't assume that anything is visible at any time and so we're just asking the
+
+0:01:08.000,0:01:13.439
+system to just predict uh out of the blue without any input
+
+0:01:13.439,0:01:18.479
+so we talked about this the approach of energy-based models
+
+0:01:18.479,0:01:23.840
+which consist in essentially basically having an implicit function
+
+0:01:23.840,0:01:26.000
+that captures the dependency between x and y
+
+0:01:26.000,0:01:29.920
+or in the case where you don't have an x is the dependency between the various
+
+0:01:29.920,0:01:34.079
+components of y and the reason why we need a implicit
+
+0:01:34.079,0:01:37.680
+function is that for a particular value of x there could
+
+0:01:37.680,0:01:43.200
+be multiple values of y that are that are possible
+
+0:01:43.439,0:01:46.880
+and so if we had a direct prediction from x to y we could only make one
+
+0:01:46.880,0:01:51.200
+prediction and using an implicit function we can make multiple
+
+0:01:51.200,0:01:55.119
+predictions implicitly by basically having a function that gives
+
+0:01:55.119,0:01:58.159
+lower energy for multiple values of y for a given value of x
+
+0:01:58.159,0:02:02.399
+and that's a little bit what's uh represented on the on the left with
+
+0:02:02.399,0:02:06.399
+uh essentially you can think of this as some sort of
+
+0:02:06.399,0:02:10.000
+landscape mountainous landscape where the data points
+
+0:02:10.000,0:02:14.720
+are in the valleys and everything else at size the manifold of data is
+
+0:02:14.720,0:02:18.000
+uh has higher energy so inference in this context proceeds by
+
+0:02:21.840,0:02:24.640
+basically finding a y or a set of y's that
+
+0:02:24.640,0:02:30.080
+minimize F of x y for a given x so this is not learning yet learning
+
+0:02:30.080,0:02:33.599
+consists in shaping F but this we're just talking about
+
+0:02:33.599,0:02:37.280
+inference so it's very important to be able to make the difference between
+
+0:02:37.280,0:02:40.800
+the inference process of minimizing the energy function to
+
+0:02:40.800,0:02:43.200
+find y and then the learning process which is
+
+0:02:43.200,0:02:46.160
+minimizing a loss function not the energy function
+
+0:02:46.160,0:02:49.519
+with respect to the parameters of the energy function okay the two different
+
+0:02:49.519,0:02:51.840
+things and in the case of
+
+0:02:56.400,0:03:00.560
+the unconditional case you don't have an x and so you're only capturing the
+
+0:03:00.560,0:03:07.360
+mutual dependencies between y's we talked about latent variable models
+
+0:03:07.360,0:03:10.319
+and the reason why we talk about latent variable models is that it's a
+
+0:03:10.319,0:03:14.319
+particular way of representing uh or building the architecture of the
+
+0:03:14.319,0:03:17.599
+energy function in such a way that it can have a
+
+0:03:17.599,0:03:22.720
+multiple y for a given x so essentially a latent variable is an
+
+0:03:22.720,0:03:26.319
+extra variable z that nobody gives you the value of but
+
+0:03:26.319,0:03:29.040
+the first thing you do when you see a z is that you minimize your energy
+
+0:03:29.040,0:03:33.040
+function with respect to that z and that gives you now an energy
+
+0:03:33.040,0:03:35.200
+function that does not depend on z anymore
+
+0:03:35.200,0:03:40.959
+okay or if you want to do uh inference with a model with latent
+
+0:03:40.959,0:03:44.000
+variable I give you an x and you find the combination of y and z
+
+0:03:44.000,0:03:46.640
+that minimize the energy and then you give me y
+
+0:03:46.640,0:03:50.400
+that's the that's the inference process these two ways to do
+
+0:03:50.400,0:03:54.159
+inference with respect to a variable that you don't observe uh one is to just
+
+0:03:54.159,0:03:58.640
+minimize over it as I just indicated and the other one is to marginalize over
+
+0:03:58.640,0:04:03.680
+it if you are a probabilist but even in other cases
+
+0:04:03.680,0:04:08.239
+and there is a simple formula to kind of go from one to the other
+
+0:04:08.239,0:04:12.799
+which is basically a log sum exponential over all possible values of z and this
+
+0:04:12.799,0:04:14.799
+may be intractable so we don't do this very
+
+0:04:14.799,0:04:17.120
+often okay so training an energy based model
+
+0:04:20.880,0:04:24.800
+consists in parameterizing the energy function
+
+0:04:24.800,0:04:28.639
+and collecting of course a bunch of training samples a bunch of x and y's
+
+0:04:28.639,0:04:31.840
+in the conditional case or just a bunch of y's in a
+
+0:04:31.840,0:04:38.000
+unconditional case and then it consists in shaping the energy function so that
+
+0:04:38.000,0:04:42.000
+you give low energy to good combinations of x and y's and higher energy to buy
+
+0:04:42.000,0:04:46.400
+combinations of x and y so for a given observed x
+
+0:04:46.400,0:04:51.440
+you try to make F of y for the corresponding y that corresponds to
+
+0:04:51.440,0:04:54.240
+x as low as possible but then you also need to make the
+
+0:04:54.240,0:04:58.560
+energy F of x and y larger for all other values of y all
+
+0:04:58.560,0:05:02.560
+other possible values of y and it's probably a good idea to keep
+
+0:05:02.560,0:05:05.520
+this energy function smooth if you are in a continuous space if y is a
+
+0:05:05.520,0:05:09.199
+continuous variable because I'll make inference easier
+
+0:05:09.199,0:05:11.440
+subsequently you'll be able to use gradient descent
+
+0:05:11.440,0:05:15.120
+based methods to do inference or maybe other methods
+
+0:05:15.120,0:05:20.960
+so there's two classes of learning algorithms as we talked about last time
+
+0:05:20.960,0:05:26.400
+the first class is contrastive methods which consist in basically pushing down
+
+0:05:26.400,0:05:30.080
+on the energy of training samples so you
+
+0:05:30.080,0:05:34.479
+get a training sample x[i] y[i] uh you plug it into your energy
+
+0:05:34.479,0:05:36.800
+function and then you tune the parameters of the
+
+0:05:36.800,0:05:38.880
+energy function so that that energy goes down
+
+0:05:38.880,0:05:43.039
+and you can do this uh with uh you know with backdrop if
+
+0:05:43.039,0:05:48.960
+if your energy function is some sort of neural net with other things in it as
+
+0:05:48.960,0:05:50.960
+long as as it's a differentiable function you
+
+0:05:50.960,0:05:56.560
+can you can do that but then uh what you have to do as well
+
+0:05:56.560,0:05:58.400
+is pick other points that are outside the
+
+0:05:58.400,0:06:01.680
+manifold of data and then push their energy up
+
+0:06:01.680,0:06:04.880
+so that the energy gets takes the right shape okay
+
+0:06:04.880,0:06:08.319
+so those are contrastive methods and then there's architectural methods and
+
+0:06:08.319,0:06:12.319
+the architectural methods basically consist in building F of x y
+
+0:06:12.319,0:06:17.440
+in such a way that the volume of space that can take low
+
+0:06:17.440,0:06:22.720
+energy is limited perhaps minimized in some way
+
+0:06:22.720,0:06:26.319
+and so if you push down on the energy of certain points automatically the rest
+
+0:06:26.319,0:06:29.600
+will be up because we go up because the
+
+0:06:29.600,0:06:31.680
+volume of stuff that can take low energy is
+
+0:06:31.680,0:06:35.840
+is limited and I've made a list here uh so this is
+
+0:06:39.280,0:06:44.800
+an important slide which you you saw last time
+
+0:06:44.800,0:06:48.560
+and there's a list of various methods that you may have heard of
+
+0:06:48.560,0:06:52.080
+some of which are contrastive some of which are architectural I must say that
+
+0:06:52.080,0:06:55.840
+those two classes of methods are not necessarily incompatible with each other
+
+0:06:55.840,0:06:59.039
+you can very well use a combination of the two
+
+0:06:59.039,0:07:04.560
+but most methods only use one so things like maximum likelihood if your
+
+0:07:04.560,0:07:07.360
+probability consists in pushing down on the energy of data
+
+0:07:07.360,0:07:09.520
+points and then pushing up every everywhere else
+
+0:07:09.520,0:07:14.479
+for every other value of y in proportion to how low the energy is so you push up
+
+0:07:14.479,0:07:18.720
+harder if the energy is lower so that in the end you get kind of the
+
+0:07:18.720,0:07:23.759
+the right shape maximum likelihood incidentally only cares about
+
+0:07:23.759,0:07:27.199
+differences of energy it doesn't doesn't care about absolute values of
+
+0:07:27.199,0:07:31.759
+energies um which is an important point and then
+
+0:07:31.759,0:07:34.479
+there are other methods like contrastive divergence
+
+0:07:34.479,0:07:38.720
+uh metric learning ratio matching noise contrastive estimation minimum
+
+0:07:38.720,0:07:42.400
+probability flow things like that which and uh generative
+
+0:07:42.400,0:07:45.759
+average several networks that also are based on the idea of
+
+0:07:45.759,0:07:52.560
+pushing up on the energy of data points outside the data manifold
+
+0:07:54.720,0:08:00.639
+then there are similar methods uh um denoising autoencoders that we will
+
+0:08:00.639,0:08:04.400
+talk about in just a minute and uh as we saw last time they've been
+
+0:08:04.400,0:08:08.479
+extremely successful in the context of natural language processing uh systems
+
+0:08:08.479,0:08:12.400
+like BERT for example basically are denoising autoencoder of
+
+0:08:12.400,0:08:15.199
+a particular kind and then there are architectural methods
+
+0:08:15.199,0:08:18.400
+and last time we talked a little bit about PCA and k-means
+
+0:08:18.400,0:08:22.720
+um but they we're going to talk about a few more
+
+0:08:22.720,0:08:28.800
+today particularly sparse coding and something called LISTA
+
+0:08:29.360,0:08:32.959
+and I'm not going to talk about the remaining ones
+
+0:08:32.959,0:08:37.039
+so this is a rehash again of something that we talked about last
+
+0:08:37.039,0:08:40.959
+last week which is a very simple latent variable model for
+
+0:08:40.959,0:08:45.440
+unsupervised learning k-means which I'm sure you all you've all heard about
+
+0:08:45.440,0:08:49.360
+there the energy function is simply the square reconstruction error between the
+
+0:08:49.360,0:08:53.600
+data vector and the product of a prototype matrix
+
+0:08:53.600,0:08:56.720
+times a latent variable vector and that latent
+
+0:08:56.720,0:09:00.959
+variable vector is constrained to be a one-hot vector so in other words it
+
+0:09:00.959,0:09:03.120
+selects one of the columns of w when you
+
+0:09:03.120,0:09:08.399
+multiply W by by it and so what you get in the end
+
+0:09:08.399,0:09:11.920
+is the uh the square distance between the
+
+0:09:11.920,0:09:17.600
+data vector and the uh column of W that is closest to it
+
+0:09:17.600,0:09:20.480
+uh once you do the minimization with respect to z which means you know
+
+0:09:20.480,0:09:24.160
+looking for which column W is closest to y so that's the energy
+
+0:09:24.160,0:09:28.800
+function that's the inference algorithm looking for the closest prototype and uh
+
+0:09:28.800,0:09:32.640
+the energy function of course is zero wherever there is a prototype
+
+0:09:32.640,0:09:36.000
+and grows quadratically as you move away from the prototype
+
+0:09:36.000,0:09:39.440
+until you get closer to another prototype in which case the energy
+
+0:09:39.440,0:09:42.640
+again goes down as you get closer to the second prototype
+
+0:09:42.640,0:09:48.399
+so if you train k-means on a data set where the training samples are generated
+
+0:09:48.399,0:09:52.160
+by uh peeking around this little uh spiral
+
+0:09:52.160,0:09:57.360
+here shown at the bottom um what you'll you you with kaggle 20 in
+
+0:09:57.360,0:10:01.440
+that case you get those uh little dark areas which indicate the
+
+0:10:01.440,0:10:03.760
+the minima of the energy function and there is a
+
+0:10:03.760,0:10:08.640
+ridge in the middle um where you know the sort of energy uh
+
+0:10:08.640,0:10:11.600
+it's like um you know the energy kind of goes down on
+
+0:10:11.600,0:10:18.800
+both sides it's like a ridge um but here is uh a method that's become
+
+0:10:18.800,0:10:22.800
+very popular over the last few months and it's very recent
+
+0:10:22.800,0:10:26.240
+the the first papers on this actually go back a long time there are some of my
+
+0:10:26.240,0:10:31.519
+papers from the early 90s and from the the mid-2000s um and they were called
+
+0:10:31.519,0:10:34.560
+siamese networks or metric learning at the time
+
+0:10:34.560,0:10:40.720
+and the idea is to build a uh a uh sort of energy-based model if you want
+
+0:10:40.720,0:10:44.000
+by uh having two copies of the same network or
+
+0:10:44.000,0:10:47.600
+two different networks but very often these two copies of the same network
+
+0:10:47.600,0:10:52.959
+and you feed uh x to the first network and y to the second network
+
+0:10:52.959,0:10:56.320
+you have them compute some feature vector on the output h and h prime
+
+0:10:56.320,0:10:59.519
+and then you compare those two feature vectors with some
+
+0:10:59.519,0:11:03.279
+some methods some some way of computing a similarity or dissimilarity
+
+0:11:03.279,0:11:06.399
+between vectors it could be a dot product could be a cosine
+
+0:11:06.399,0:11:10.320
+a similarity it could be something of that type
+
+0:11:10.320,0:11:14.480
+and what you do is uh to train the system is that
+
+0:11:14.480,0:11:18.320
+you you train it with a data point basically is a pair
+
+0:11:18.320,0:11:23.440
+of x and y um so you indicate the location of the the
+
+0:11:23.440,0:11:26.399
+data manifold to the system by basically telling it
+
+0:11:26.399,0:11:30.480
+here is a here is a sample tell me is a sample x
+
+0:11:30.480,0:11:33.839
+give me another sample that basically has
+
+0:11:33.839,0:11:38.880
+the same content as x but it's different and of course you're never going to ask
+
+0:11:38.880,0:11:41.440
+the system to give you that sample you're going to generate
+
+0:11:41.440,0:11:44.800
+those samples and train the system with it so
+
+0:11:44.800,0:11:48.880
+there are there are two pairs uh positive pairs so pairs are compatible
+
+0:11:48.880,0:11:51.600
+with each other which is a whole idea of energy based models
+
+0:11:51.600,0:11:55.360
+and a compatible pair is or a positive pair if you want
+
+0:11:55.360,0:12:00.480
+is consist of x being an image and y being a transformation of this image
+
+0:12:00.480,0:12:05.360
+that basically does not change its content so it's still the same content
+
+0:12:05.360,0:12:10.480
+of the image if you want so you want basically uh representations
+
+0:12:10.480,0:12:12.880
+extracted by those two networks to be very similar
+
+0:12:12.880,0:12:16.000
+because those images are similar and that's exactly what you're gonna do
+
+0:12:16.000,0:12:19.360
+you're gonna feed those two images to those two those two networks
+
+0:12:19.360,0:12:23.519
+and you're gonna have a loss function that that says minimize the energy which
+
+0:12:23.519,0:12:27.200
+means minimize the distance or similarity measure between h and h prime
+
+0:12:27.200,0:12:32.399
+between the outputs of the two networks um so that's the positive part so that's
+
+0:12:32.399,0:12:38.480
+a way to kind of lower the energy for for training samples
+
+0:12:38.480,0:12:41.600
+okay and then you have to generate random
+
+0:12:41.600,0:12:45.760
+uh negative samples and the way you generate them is by
+
+0:12:45.760,0:12:50.320
+basically picking again a sample for x and then picking another image that you
+
+0:12:50.320,0:12:52.160
+know is different that has nothing to do with
+
+0:12:52.160,0:12:56.320
+x, it's incompatible with it if you want it's very different
+
+0:12:56.320,0:12:59.600
+and now what you do is you feed those two images to those two networks
+
+0:12:59.600,0:13:05.760
+and you try to push h and h prime away from each other
+
+0:13:05.760,0:13:11.680
+so basically you're trying to make the the similarity matrix c of h and h prime
+
+0:13:11.680,0:13:15.680
+large for those two samples okay
+
+0:13:15.680,0:13:18.959
+and the objective function here is going to take into account
+
+0:13:18.959,0:13:24.240
+uh uh the the object the the energy function for similar part
+
+0:13:24.240,0:13:27.040
+pairs and the energy function for dissimilar pairs
+
+0:13:27.040,0:13:30.240
+is going to push down on the energy function for similar pairs push up on
+
+0:13:30.240,0:13:36.560
+the energy function for dissimilar pairs okay um
+
+0:13:36.560,0:13:39.680
+so there's been a number of uh uh so paper
+
+0:13:39.680,0:13:42.720
+you know people have used metric learning for various things for a long
+
+0:13:42.720,0:13:46.399
+time for uh image search for example uh for
+
+0:13:46.399,0:13:50.000
+uh feature recognition for for things like that
+
+0:13:50.000,0:13:53.120
+but it's only in the last few months that there's been
+
+0:13:53.120,0:13:57.120
+a couple of works that have shown they can use those methods to
+
+0:13:57.120,0:14:00.399
+learn good features for object recognition
+
+0:14:00.399,0:14:03.760
+and those are really the first papers that produce features
+
+0:14:03.760,0:14:08.560
+in a unsupervised or self-supervised way that produce features that can rival the
+
+0:14:08.560,0:14:11.839
+features that are obtained through supervised learning
+
+0:14:11.839,0:14:16.240
+so the three papers in question are PIRL which means protecting
+
+0:14:16.240,0:14:20.079
+representation learning by Isha Misra and
+
+0:14:20.079,0:14:23.440
+Lawrence van der Maaten at facebook in new york another one called
+
+0:14:23.440,0:14:27.680
+Moco by KamingHe and his collaborators at facebook in Menlo park
+
+0:14:27.680,0:14:30.880
+and the third one which appeared more recently is called SimCLR
+
+0:14:30.880,0:14:36.399
+by a group from google Chen et al. and the last author being
+
+0:14:36.399,0:14:39.120
+Jeffery Hinton so the um
+
+0:14:45.519,0:14:49.199
+there's been other work uh using those kind of methods uh, I think there was a
+
+0:14:49.199,0:14:51.839
+question, perhaps it wasn't a question, it was actually my
+
+0:14:51.839,0:14:57.440
+phone waking up because I said Google and oh I see okay and and through
+
+0:14:57.440,0:15:00.240
+features that's something we'll talk we'll talk about later which is
+
+0:15:00.240,0:15:05.680
+a little a little similar okay so these are examples of results
+
+0:15:05.680,0:15:09.199
+that are obtained with MoCo and uh they essentially show that even with
+
+0:15:09.199,0:15:12.959
+a very large model you can which is basically a version of resnet50
+
+0:15:12.959,0:15:15.839
+that you train using this code some contrasting method
+
+0:15:15.839,0:15:19.839
+uh you get sort of decent performance this is I believe uh
+
+0:15:19.839,0:15:24.399
+uh top five performance on uh on imagenet
+
+0:15:24.399,0:15:27.760
+PIRL actually works uh quite a bit better than than MoCo this is
+
+0:15:27.760,0:15:35.199
+uh top one accuracy this time um with uh uh networks of this size so
+
+0:15:35.199,0:15:39.600
+sizes, so here the there's several scenarios the the main scenario is
+
+0:15:39.600,0:15:44.079
+you take all of your imagenet you uh you take a sample from imagenet
+
+0:15:44.079,0:15:49.680
+distort it and that gives you a positive pair uh run it through
+
+0:15:49.680,0:15:53.440
+your two networks and train the the network to
+
+0:15:53.440,0:15:57.440
+produce similar outputs basically the two networks are identical
+
+0:15:57.440,0:16:01.920
+actually for both MoCo and PIRL it's the same its net and then
+
+0:16:01.920,0:16:06.560
+take dissimilar pairs and push the outputs away from each other using a
+
+0:16:06.560,0:16:11.360
+particular cost function that we'll see in a minute
+
+0:16:11.920,0:16:17.360
+and then you have to do this many many times and you have to be smart about
+
+0:16:17.360,0:16:20.720
+how you cache the negative samples because
+
+0:16:20.720,0:16:24.160
+most samples are already very different by the time they they get to the output
+
+0:16:24.160,0:16:28.000
+to the network so you basically have to be smart about how
+
+0:16:28.000,0:16:32.399
+you kind of pick the the good negatives so the type of uh objective function
+
+0:16:32.399,0:16:36.399
+that is used by by PIRL is called the noise
+
+0:16:36.399,0:16:40.000
+contrastive estimation and that goes back to kind of
+
+0:16:40.000,0:16:42.959
+previous papers it's not it's not their uh invention
+
+0:16:42.959,0:16:47.519
+where the the similarity metric is this uh is the cosine similarity
+
+0:16:47.519,0:16:51.519
+measure between the outputs of the commercial nets
+
+0:16:51.519,0:16:57.040
+and and then what you compute is this uh basically the softmax-like
+
+0:16:57.040,0:17:00.959
+function which computes the exponential of the similarity metric
+
+0:17:00.959,0:17:04.000
+of two outputs for similar pairs and then divides by
+
+0:17:04.000,0:17:08.319
+the sum of the similarity metric exponentiated for similar pairs and the
+
+0:17:08.319,0:17:12.959
+sum of dissimilar pairs so you have a batch where you have one similar pair
+
+0:17:12.959,0:17:16.480
+and a bunch of dissimilar pairs and you compute this kind of softmax
+
+0:17:16.480,0:17:22.240
+thing and if you minimize its softmax cost function is going to push the
+
+0:17:22.240,0:17:25.120
+similarity similarity metric of similar pair to be
+
+0:17:25.120,0:17:29.600
+as large as possible and the the similarity metric the cosine
+
+0:17:29.600,0:17:34.160
+similarity of dissimilar pair to be basically as small as possible. I had
+
+0:17:34.160,0:17:39.360
+this question that why are we separately using an LNCE
+
+0:17:39.360,0:17:42.080
+function whereas we could have probably directly
+
+0:17:42.080,0:17:47.840
+computed laws using the the h v(I) v(I transformed) uh
+
+0:17:47.840,0:17:51.679
+probability that we have by taking the negative log of that probability
+
+0:17:51.679,0:17:55.520
+so like what benefit would LNCE provide
+
+0:17:55.520,0:18:00.000
+using uh like not directly taking the negative log of the
+
+0:18:00.000,0:18:05.120
+probability that we have from h? Well that's a good question um it's not
+
+0:18:05.120,0:18:09.600
+entirely clear to me why uh I think uh what what what happened
+
+0:18:09.600,0:18:12.080
+there is that people tried lots and lots of different
+
+0:18:12.080,0:18:14.799
+things and this is what ended up working best
+
+0:18:14.799,0:18:19.120
+there is uh in the the Hinton paper there's kind of a similar thing where
+
+0:18:19.120,0:18:22.720
+they tried different types of uh objective function
+
+0:18:22.720,0:18:26.160
+and found that something like NCE actually works quite well
+
+0:18:26.160,0:18:30.799
+so it's an empirical question and I I don't have a good tuition for why
+
+0:18:30.799,0:18:34.320
+you need this uh this term uh in addition to the just the
+
+0:18:34.320,0:18:39.679
+denominator uh in h um I hope this answers your question
+
+0:18:39.679,0:18:43.039
+although sorry I don't have any answer for it
+
+0:18:43.039,0:18:47.039
+why do you use cosines similarity instead of l2 norm
+
+0:18:47.039,0:18:50.400
+instead of l2 norm or instead of okay it's because
+
+0:18:50.400,0:18:53.679
+you it's because you want to normalize it's very easy to make two vectors
+
+0:18:53.679,0:18:57.360
+similar by making them very short or to make two vectors very
+
+0:18:57.360,0:19:03.360
+dissimilar but making them very long okay so by doing cosine similarity
+
+0:19:03.360,0:19:06.160
+you're basically normalizing right you're computing a dot product but
+
+0:19:06.160,0:19:10.000
+you're normalizing this dot product and so you make the measure independent
+
+0:19:10.000,0:19:15.600
+of the length of the of the vectors and so it uh it forces
+
+0:19:15.600,0:19:18.400
+the system to kind of find a good good solution to the problem without
+
+0:19:18.400,0:19:23.919
+just without cheating by just making the uh you know vectors either short or or
+
+0:19:23.919,0:19:27.520
+large it it also removes a an instability that
+
+0:19:27.520,0:19:30.799
+they could be in the system the the design of those contrasting
+
+0:19:30.799,0:19:34.320
+functions is actually quite uh quite a bit of a black heart
+
+0:19:34.320,0:19:38.080
+okay so what they actually do in PIRL is that they um
+
+0:19:38.080,0:19:44.480
+they they don't use directly the uh the output of the of the convnet for the
+
+0:19:44.480,0:19:48.240
+for the objective function they they have different heads
+
+0:19:48.240,0:19:52.160
+so basically the the convnet has different set of heads f and g
+
+0:19:52.160,0:19:55.600
+which are different for the two networks and
+
+0:19:55.600,0:19:59.200
+that's what they use in the context of this contractive learning and then there
+
+0:19:59.200,0:20:01.440
+is you know another head that they use for
+
+0:20:01.440,0:20:05.440
+the the ultimate task of of classification
+
+0:20:05.440,0:20:09.039
+so those f and g functions are you can think of as sort of extra
+
+0:20:09.039,0:20:12.559
+layers that are kind of uh on top of the network that
+
+0:20:12.559,0:20:16.240
+are different for the two the two for the two networks all right so these are
+
+0:20:16.240,0:20:18.080
+the these are the results that are produced
+
+0:20:18.080,0:20:22.640
+by uh by PIRL and uh you can get so this is this
+
+0:20:22.640,0:20:26.480
+particular experiment is one in which you pre-trained the the system using
+
+0:20:26.480,0:20:32.960
+perl on the imagenet training set and then what you do is uh you
+
+0:20:32.960,0:20:37.200
+you you retrain you fine tune the system using either one percent of the labeled
+
+0:20:37.200,0:20:40.000
+samples or ten percent of the label samples and you you measure the
+
+0:20:40.000,0:20:42.799
+performance top five accuracy or top one accuracy
+
+0:20:42.799,0:20:45.919
+so this paper appeared in uh in January on archive
+
+0:20:45.919,0:20:49.919
+um and then just a few weeks ago uh this paper appeared called SimCLR
+
+0:20:49.919,0:20:56.080
+by Chen et al. which is a team from google and they
+
+0:20:56.080,0:21:01.360
+have a very sophisticated corruption or data augmentation method to generate
+
+0:21:01.360,0:21:05.600
+similar pairs and they train uh for a very very long
+
+0:21:05.600,0:21:11.039
+time on a lot of TPUs and they get really interestingly good
+
+0:21:11.039,0:21:16.559
+results so much better than either PIRL or MoCo
+
+0:21:16.559,0:21:20.159
+using very large models and they can reach you know more than 75
+
+0:21:22.640,0:21:26.480
+percent correct top one on imagenet by just
+
+0:21:26.480,0:21:30.080
+pre-training in self supervised fashion and then kind
+
+0:21:30.080,0:21:33.520
+of fine tuning with only one percent of the
+
+0:21:33.520,0:21:39.919
+other samples yeah so this is uh in fact the previous slide is a
+
+0:21:39.919,0:21:42.400
+different scenario uh where you only train a linear
+
+0:21:42.400,0:21:46.400
+classifier on top of the on top of the network the this is the
+
+0:21:46.400,0:21:49.919
+scenario where you train with either one percent or ten percent of uh labeled
+
+0:21:49.919,0:21:54.159
+samples and uh you get uh eighty-five percent
+
+0:21:54.159,0:21:58.080
+the top five with one percent of the labels which is uh
+
+0:21:58.080,0:22:02.240
+you know pretty pretty amazing results to some extent I think
+
+0:22:02.240,0:22:06.080
+this shows the limits of contrasting methods because the amount of
+
+0:22:06.080,0:22:10.159
+computation and training that is required for this is absolutely gigantic
+
+0:22:10.159,0:22:13.200
+it's it's really enormous so here is a scenario where you
+
+0:22:13.200,0:22:17.440
+just train a linear classifier on top so you you freeze the features
+
+0:22:17.440,0:22:21.280
+uh produced by the system that has been uh pre-trained using uh
+
+0:22:21.280,0:22:24.320
+self-supervised learning and then you just train a linear classifier on top
+
+0:22:24.320,0:22:26.880
+and you measure the performance of total point of top five
+
+0:22:26.880,0:22:31.039
+on the full image net having trained supervisor on the full imagenet
+
+0:22:31.039,0:22:34.320
+and again the numbers are really impressive
+
+0:22:34.320,0:22:38.080
+but again I think it shows the limit of contracting methods here is the
+
+0:22:38.080,0:22:41.840
+the main issue with contrasting methods is that there are many many many
+
+0:22:41.840,0:22:45.039
+locations in a high dimensional space where you
+
+0:22:45.039,0:22:49.280
+need to push up the energy to make sure that it's actually higher
+
+0:22:49.280,0:22:54.320
+uh everywhere than on the data manifold
+
+0:22:54.320,0:22:58.080
+and so as you increase the dimension of the representation
+
+0:22:58.080,0:23:02.559
+you need more and more negative samples to make sure that the energy is higher
+
+0:23:02.559,0:23:06.720
+uh where it needs to be higher. Okay so let's talk about another
+
+0:23:06.720,0:23:11.280
+another crop of uh of contrasting methods called denoising auto-encoder and
+
+0:23:11.280,0:23:14.400
+that's become really uh kind of important over the
+
+0:23:14.400,0:23:17.440
+last uh year and a half or so for for natural
+
+0:23:17.440,0:23:21.600
+language processing uh so the idea of denoising auto encoder
+
+0:23:21.600,0:23:24.640
+is that you take a y and the way you generate x is by
+
+0:23:24.640,0:23:27.760
+corrupting y so this sounds a little bit like the opposite of what we were just
+
+0:23:27.760,0:23:31.520
+doing with contrastive methods but
+
+0:23:31.520,0:23:35.679
+basically you take a clean image why you corrupt it in some way by removing a
+
+0:23:35.679,0:23:38.320
+piece of it for example or you take a piece of text and you
+
+0:23:38.320,0:23:43.919
+remove some of the words or you mask a piece of it so a special case is the
+
+0:23:43.919,0:23:48.480
+masked auto encoder where the corruption consists in masking a subset
+
+0:23:48.480,0:23:51.200
+of the input and then you run this through an auto
+
+0:23:51.200,0:23:57.200
+encoder which is uh you know essentially a an encoder or
+
+0:23:57.200,0:24:02.159
+called a predictor here a decoder and you know perhaps uh
+
+0:24:02.159,0:24:05.840
+you know final layers that that you know may have uh
+
+0:24:05.840,0:24:09.840
+uh softmax in the context of text or not if you know nothing of its
+
+0:24:09.840,0:24:13.440
+images and then you compute you compare the predicted output
+
+0:24:13.440,0:24:17.600
+uh y bar with the uh with the observed data
+
+0:24:17.600,0:24:19.840
+y and so what's the what's the principle
+
+0:24:24.960,0:24:27.919
+of this the principle of this is that is is the following
+
+0:24:27.919,0:24:31.360
+and uh you can thank Alfredo for those beautiful pictures
+
+0:24:31.360,0:24:34.480
+basically, yeah we saw this in class last Tuesday
+
+0:24:34.480,0:24:39.039
+that's right so uh this is basically just a reminder
+
+0:24:39.039,0:24:42.480
+you take a data point you so which is one of those
+
+0:24:42.480,0:24:47.279
+pink points right and you corrupt it so you get one of those
+
+0:24:47.279,0:24:54.240
+brown points and then you train the uh auto encoder to
+
+0:24:54.240,0:24:57.520
+from the brown point to produce the pink points
+
+0:24:57.520,0:25:01.600
+the the original pink point what does that mean that means that
+
+0:25:01.600,0:25:05.120
+now the energy function which is the reconstruction error is going to be
+
+0:25:05.120,0:25:07.520
+equal to the difference between the original
+
+0:25:07.520,0:25:10.640
+point the pink point the distance the square distance
+
+0:25:10.640,0:25:14.559
+if C is the euclidean square euclidean distance
+
+0:25:14.559,0:25:18.559
+so c yybar is going to be the if you think it's properly trained
+
+0:25:18.559,0:25:22.880
+is going to be the the distance between the corrupted point
+
+0:25:22.880,0:25:29.200
+uh x uh the the brown point and the and the pink point you started from y
+
+0:25:29.200,0:25:31.760
+okay so basically it basically it basically
+
+0:25:31.760,0:25:35.840
+trains the the system to produce an energy function that grows
+
+0:25:35.840,0:25:42.320
+quadratically as you move away from the data manifold okay
+
+0:25:42.320,0:25:46.080
+um and so it's an example of a contrastive method because you push up
+
+0:25:46.080,0:25:48.880
+on the energy of points that are outside the data manifold essentially you tell
+
+0:25:48.880,0:25:50.640
+them your energy should be the square
+
+0:25:50.640,0:25:54.159
+distance to the data manifold or at least to the point that was used
+
+0:25:54.159,0:26:00.080
+before you know to through corruption
+
+0:26:00.799,0:26:05.120
+but the problem with it is that again in a high dimensional continuous space
+
+0:26:05.120,0:26:08.320
+there is many many many ways you can corrupt
+
+0:26:08.320,0:26:13.760
+a piece of data and uh it's not entirely clear that you're going to be able to
+
+0:26:13.760,0:26:17.600
+kind of shape the energy function the proper way by just pushing up on lots of
+
+0:26:17.600,0:26:21.360
+different locations it works in text because text is
+
+0:26:21.360,0:26:24.480
+discrete it doesn't work so well in images people
+
+0:26:24.480,0:26:27.679
+have used this in the context of imaging painting for example so the corruption
+
+0:26:27.679,0:26:31.039
+consists of masking a piece of the image and then training a
+
+0:26:31.039,0:26:34.960
+system to reconstruct it and the reason why it doesn't work is
+
+0:26:34.960,0:26:38.559
+because uh people tend to train the system without latent variables and
+
+0:26:38.559,0:26:42.240
+in my little diagram here there is a latente variable but uh
+
+0:26:42.240,0:26:47.039
+in fact in uh versions of this that are used
+
+0:26:47.039,0:26:52.320
+for uh in the context of images there is no real latent variable and it's very
+
+0:26:52.320,0:26:54.080
+difficult for the system to just dream up
+
+0:26:54.080,0:26:57.679
+a single solution to the in painting problem here it's a
+
+0:26:57.679,0:27:00.799
+it's a multimodal [Music]
+
+0:27:00.799,0:27:04.000
+manifold I mean it's a it's a manifold it's probably not
+
+0:27:04.000,0:27:10.400
+just a single point there's many ways to complete the image here uh by
+
+0:27:10.400,0:27:14.880
+filling in the the the the masked uh part
+
+0:27:14.880,0:27:19.120
+and so uh without latent variable the system produces blurry predictions and
+
+0:27:19.120,0:27:23.679
+doesn't learn particularly good features. Is the multi-modal part also the reason
+
+0:27:23.679,0:27:28.000
+why we had that internal purple area in the spiral because each
+
+0:27:28.000,0:27:31.600
+of those points have two predictions right in between the two branches of the
+
+0:27:31.600,0:27:34.000
+spiral? right so this is the additional problem
+
+0:27:34.000,0:27:39.039
+that uh if you don't uh if you're not careful the you know
+
+0:27:39.039,0:27:42.960
+points that are in the middle that you know that that could be the
+
+0:27:42.960,0:27:48.080
+result of a corruption of uh uh one uh pink point on one side of the
+
+0:27:48.080,0:27:50.720
+manifold or a pink point on another side of the manifold
+
+0:27:50.720,0:27:53.760
+the those points right in the middle don't know where to go because half the
+
+0:27:53.760,0:27:58.159
+time they're trained to go to uh one part of the manifold the other
+
+0:27:58.159,0:28:00.960
+half of the time they're trying to go to the other part of the manifold
+
+0:28:00.960,0:28:07.360
+and so uh that might create kind of flat spots in the energy function that uh are
+
+0:28:07.360,0:28:11.200
+not good so there you know there are ways to alleviate this but they're not
+
+0:28:11.200,0:28:15.600
+kind of completely uh worked out unless you use latent
+
+0:28:15.600,0:28:18.960
+variable models. okay other contrasting methods this is
+
+0:28:18.960,0:28:22.799
+just in passing for for your own uh interest there are
+
+0:28:22.799,0:28:28.159
+things like contrastive divergence um and and others which I'm not going to
+
+0:28:28.159,0:28:33.200
+talk about but contrastive divergence is is a very simple idea you pick a
+
+0:28:33.200,0:28:36.720
+training sample you lower the energy at that point of
+
+0:28:36.720,0:28:41.360
+course and then from that sample you using some sort of gradient-based
+
+0:28:41.360,0:28:46.000
+process you move down the energy surface with noise so
+
+0:28:46.000,0:28:49.840
+start from the sample and figure out how do I change my sample how do I change my
+
+0:28:49.840,0:28:55.120
+y in such a way that my
+
+0:28:55.120,0:28:59.039
+current energy based model produces a lower energy than the one I just
+
+0:28:59.039,0:29:04.240
+i just measured for that sample okay so basically you're trying to find
+
+0:29:04.240,0:29:08.000
+another point in input space that has lower energy than
+
+0:29:08.000,0:29:11.279
+the training point you just fed it okay so you can think of this as
+
+0:29:11.279,0:29:16.159
+kind of a smart way of corrupting a training sample smart
+
+0:29:16.159,0:29:20.720
+because you you don't randomly uh uh
+
+0:29:20.720,0:29:26.320
+corrupt it you corrupt it by uh basically modifying it to find a point
+
+0:29:26.320,0:29:30.320
+in space that your model already gives low energy to so it would
+
+0:29:30.320,0:29:33.440
+be a point that you would want to push up because
+
+0:29:33.440,0:29:38.080
+your model gives low energy to it and you don't want it to have low energy so
+
+0:29:38.080,0:29:43.200
+you push it up and I'm gonna uh professor have people try tried uh
+
+0:29:43.200,0:29:48.240
+contrastive methods with the this image inpainting method and
+
+0:29:48.240,0:29:52.480
+how would one do that does that really work if they if you do that together
+
+0:29:52.480,0:29:57.039
+so inpainting is a contrastive method right you you take an image
+
+0:29:57.039,0:30:02.240
+you corrupt it by uh blocking some piece of it
+
+0:30:02.240,0:30:08.799
+and then you train uh a neural net uh basically an autoencoder to generate the
+
+0:30:08.799,0:30:11.679
+the full image and then you compare this reconstruction
+
+0:30:11.679,0:30:15.840
+of the full image with the original uncorrupted image and that's your energy
+
+0:30:15.840,0:30:21.600
+function okay so it is it is a contrasting method
+
+0:30:21.600,0:30:28.559
+right so if we if we use like uh the NCE loss with this uh inpainting loss
+
+0:30:28.559,0:30:34.320
+uh does that uh like is that useful uh you can really use NCE loss because
+
+0:30:34.320,0:30:40.880
+NCE kind of relies on the fact that you you have sort of a finite number of
+
+0:30:40.880,0:30:46.240
+negative samples okay here you sort of artificially generate
+
+0:30:46.240,0:30:50.640
+negative samples and so uh it's really a completely
+
+0:30:50.640,0:30:53.200
+different scenario i don't think you would
+
+0:30:53.200,0:30:56.720
+you could use uh something similar to NCE
+
+0:30:56.720,0:31:00.240
+or at least not in a meaningful way okay so this is why space
+
+0:31:05.919,0:31:13.200
+okay y one y two and let's say your your data manifold
+
+0:31:13.919,0:31:16.960
+is something like this um but let's say your energy function
+
+0:31:22.000,0:31:24.640
+currently is something like this so here I'm drawing
+
+0:31:27.679,0:31:33.840
+the region of low energy and I'm drawing the lines of
+
+0:31:40.159,0:31:45.919
+equal cost okay so the energy looks nice at the bottom left right you have data
+
+0:31:45.919,0:31:49.840
+points here that your model gives low energy to but
+
+0:31:49.840,0:31:53.919
+then your model is not good because uh at the bottom right it gives low
+
+0:31:53.919,0:31:56.640
+energy to regions that have no data and then at the
+
+0:31:56.640,0:32:00.000
+at the top you have data points that that your model gives high energy
+
+0:32:00.000,0:32:03.679
+to okay so here's how contrasty divergence would work
+
+0:32:03.679,0:32:09.919
+you take a sample a training sample it tells this guy and by gradient
+
+0:32:09.919,0:32:13.600
+descent you go down the energy surface
+
+0:32:13.600,0:32:21.600
+to a point that has low energy okay now this was a training sample y
+
+0:32:21.600,0:32:26.559
+the one you obtain now is a contrastive sample y bar
+
+0:32:26.960,0:32:30.880
+and what you do now is you change the parameters of your energy function
+
+0:32:30.880,0:32:35.519
+so that you make the energy of y smaller and the energy of y bar larger
+
+0:32:35.519,0:32:38.640
+okay using some kind of loss function that
+
+0:32:38.640,0:32:42.159
+you know pushes down on one pushes up on the other which loss function you use
+
+0:32:42.159,0:32:47.760
+is a material you just need one that will do the right thing
+
+0:32:47.760,0:32:51.120
+okay so what I've described here is kind of a deterministic version of
+
+0:32:51.120,0:32:54.000
+uh contrasting divergence but in fact contrasted divergence is kind of a
+
+0:32:54.000,0:32:58.080
+probabilistic version of this where what you do is you you do this
+
+0:32:58.080,0:33:02.399
+sort of gradient based descent i mean this sort of
+
+0:33:02.399,0:33:07.440
+search for a low energy point but you do it with some level of random
+
+0:33:07.440,0:33:11.279
+randomness some noise in it so one way to do this in a continuous
+
+0:33:11.279,0:33:15.760
+space like like this one is that you give a random kick
+
+0:33:15.760,0:33:20.720
+you you think of your data point here as a sort of a marble
+
+0:33:20.720,0:33:24.720
+that is going to go down the energy surface you give it a random kick in
+
+0:33:24.720,0:33:28.960
+in some random direction say this and then you let the the system kind of
+
+0:33:31.360,0:33:34.240
+follow the gradient and you stop when you're tired you don't
+
+0:33:37.120,0:33:40.240
+wait for it to kind of go down all the way you just stop when
+
+0:33:40.240,0:33:44.559
+you're tired and then there is a rule to select whether you keep the point or not
+
+0:33:44.559,0:33:48.559
+um and that's your that's your y bar why is the kick necessary okay so the
+
+0:33:53.440,0:33:57.760
+kick is necessary so that you can go over energy barriers that would be
+
+0:33:57.760,0:34:01.919
+between you and the the lowest energy uh
+
+0:34:01.919,0:34:08.399
+uh areas okay that's why you need the the kick now uh if you have
+
+0:34:08.399,0:34:13.440
+uh a space a y space that is not continuous but is discrete
+
+0:34:13.440,0:34:17.359
+uh you can still kind of do this energy minimization by basically doing
+
+0:34:17.359,0:34:21.520
+something called simulated annealing so essentially uh
+
+0:34:21.520,0:34:25.040
+if y is discrete variable you kind of perturb it randomly
+
+0:34:25.040,0:34:28.159
+if the energy you get by this perturbation is lower then you keep it
+
+0:34:28.159,0:34:30.480
+if it's higher then you keep it with some probability
+
+0:34:30.480,0:34:34.079
+and then you keep doing this and eventually the energy will go down so
+
+0:34:34.079,0:34:38.000
+this is a non-gradient-based optimization algorithm or gradient-free
+
+0:34:38.000,0:34:42.079
+optimization algorithm if you want which you kind of have to resort to when
+
+0:34:42.079,0:34:45.839
+the space is discrete and you can't use gradient information
+
+0:34:45.839,0:34:50.000
+this technique I just described of kicking a
+
+0:34:50.000,0:34:53.040
+a marble and sort of simulating it rolling down the
+
+0:34:53.040,0:34:57.599
+energy it's called Hamiltonian monte carlo hnc
+
+0:34:57.599,0:35:01.599
+and you might you might see this in other in other contexts
+
+0:35:01.599,0:35:05.359
+so that's another way of generating negative samples yes Hamiltonian monte
+
+0:35:05.359,0:35:07.680
+carlo some people call this hybrid monte carlo
+
+0:35:07.680,0:35:10.160
+sometimes so some of you may have heard of
+
+0:35:12.079,0:35:14.720
+something called restricted boltzmann machine and restricted
+
+0:35:14.720,0:35:18.320
+boltzmann machine is an energy based model in which the energy
+
+0:35:18.320,0:35:21.760
+is very simple um it's written at the bottom here
+
+0:35:21.760,0:35:25.920
+the energy of y and z so y is basically an input data vector and z
+
+0:35:25.920,0:35:30.240
+is uh it's a related variable the energy function is minus
+
+0:35:30.240,0:35:35.359
+z transpose w y where y where where w is a matrix uh not necessarily square
+
+0:35:35.359,0:35:40.400
+because z and y may have different uh uh dimensions
+
+0:35:40.400,0:35:44.480
+and uh generally z and y are both binary variables
+
+0:35:44.480,0:35:50.160
+and so I mean the binary vectors so the components are binary variables
+
+0:35:50.160,0:35:56.480
+and they were kind of somewhat popular in the mid-2000s but you know I'm not
+
+0:35:56.480,0:36:02.720
+spending much time on it here because uh um the the they've kind of fallen out of
+
+0:36:02.720,0:36:06.160
+favor a little bit they're not they're not that popular but just so
+
+0:36:06.160,0:36:11.119
+that gives you some reference of what uh what this means um there's
+
+0:36:11.119,0:36:14.079
+of refinements of contrastive divergence one of them is called persistent
+
+0:36:14.079,0:36:17.680
+contrastive divergence and it consists in using a bunch of
+
+0:36:17.680,0:36:21.760
+particles um and you can remember the position so
+
+0:36:21.760,0:36:26.640
+they have sort of permanent uh persistent positions if you want
+
+0:36:26.640,0:36:30.079
+uh so you throw a bunch of uh marbles in your
+
+0:36:30.079,0:36:35.839
+energy landscape and you keep making you keep making them roll down maybe
+
+0:36:35.839,0:36:40.400
+with a little bit of noise or or kicks and then you keep their
+
+0:36:40.400,0:36:44.320
+position so you don't change the the the position of the marble according
+
+0:36:44.320,0:36:47.599
+to new samples new training samples you just keep the marbles where they are
+
+0:36:47.599,0:36:51.760
+and eventually they'll find low energy places in your
+
+0:36:51.760,0:36:55.200
+in your energy surface and will cause them to be pushed up
+
+0:36:55.200,0:36:58.320
+because because that's what happens during
+
+0:36:58.320,0:37:00.960
+during training but this doesn't scale very well so
+
+0:37:04.640,0:37:09.119
+things like RBMs you know become very very expensive to to train
+
+0:37:09.119,0:37:12.400
+within in high dimension okay so now for
+
+0:37:19.920,0:37:23.119
+regularized latent-variable energy based model which
+
+0:37:23.119,0:37:27.760
+is my current favorite type of model so we we talked about the idea of
+
+0:37:34.320,0:37:37.920
+building a predictive model by having a latent variable right so you have
+
+0:37:37.920,0:37:40.880
+the observed variable x you run it to a predictor it extracts some
+
+0:37:40.880,0:37:44.720
+representation of the observed variables and then that
+
+0:37:44.720,0:37:48.240
+goes into a decoder that produces the prediction but if you want your decoder
+
+0:37:48.240,0:37:50.800
+to be able to make multiple predictions
+
+0:37:50.800,0:37:54.079
+then you feed it with a latent variable and as you vary
+
+0:37:54.079,0:37:57.599
+the value of this latent variable the prediction will vary over a set
+
+0:37:57.599,0:38:01.359
+okay over hopefully the manifold of data of uh
+
+0:38:01.359,0:38:05.839
+in the space of y that are compatible with x
+
+0:38:06.079,0:38:09.520
+so this architecture here is here the the formula for the energy can be
+
+0:38:09.520,0:38:14.160
+written as as on the left here uh c of y
+
+0:38:14.160,0:38:18.160
+and uh you know c is a cost function that compares these two argument so you
+
+0:38:18.160,0:38:22.720
+compare y the data vector with the result of applying the decoder to the
+
+0:38:22.720,0:38:25.200
+output of the predictor that takes into account x
+
+0:38:25.200,0:38:29.119
+and the decoder also takes into account z
+
+0:38:30.880,0:38:37.760
+so here is the problem with this if z is too powerful in other words if z has
+
+0:38:37.760,0:38:42.800
+too much capacity then they're always going to be a z that
+
+0:38:42.800,0:38:46.000
+is going to produce a y bar that's going to be exactly equal to y
+
+0:38:46.000,0:38:50.960
+so remember the uh the inference algorithm here is that you give an x and
+
+0:38:50.960,0:38:54.000
+a y and then you find a z that minimizes c
+
+0:38:54.000,0:38:58.079
+of y y bar right that's how you
+
+0:38:58.079,0:39:03.040
+do inference of the latent variable in an energy-based model right
+
+0:39:03.040,0:39:06.400
+given an x and y find the z that minimizes the energy
+
+0:39:06.400,0:39:11.200
+so if z for example has the same dimension as y
+
+0:39:11.200,0:39:16.160
+and the decoder is powerful enough to represent the identity function
+
+0:39:16.160,0:39:20.640
+then for any y there's always going to be a z that produces y bar that's
+
+0:39:20.640,0:39:24.079
+exactly equal to y okay and if the decoder is the identity
+
+0:39:24.079,0:39:27.920
+function which ignores h see an identity function
+
+0:39:27.920,0:39:32.560
+from z to to uh to y to y bar then you just set
+
+0:39:32.560,0:39:40.079
+z equal to y and the energy is zero and that would be a terrible energy
+
+0:39:40.079,0:39:43.119
+based model because it would not give high energy to stuff
+
+0:39:43.119,0:39:46.480
+outside the manifold of data it gives low energy to everything
+
+0:39:46.480,0:39:52.560
+okay it gives zero energy to everything so the way to prevent the system from
+
+0:39:52.560,0:39:57.440
+giving low energy to points outside the manifold of data
+
+0:39:57.440,0:40:00.400
+is to limit the information capacity of the
+
+0:40:00.400,0:40:03.280
+latent variable z to be more precise if z can only take
+
+0:40:06.880,0:40:13.119
+let's say 10 different values what that means is so you constrain z to
+
+0:40:13.119,0:40:17.040
+only take ten possible different values let's say you make z a
+
+0:40:17.040,0:40:22.480
+a one hot vector of dimension ten like in k-means okay then there's only
+
+0:40:22.480,0:40:29.119
+going to be 10 points in y space that will have zero energy because
+
+0:40:29.119,0:40:33.200
+either y is equal to one of the y bars that is produced from one of those ten
+
+0:40:33.200,0:40:36.800
+z's or it's not if it is then the energy is
+
+0:40:36.800,0:40:40.480
+zero if it's not the energy is gonna have to be larger than zero in
+
+0:40:40.480,0:40:43.359
+fact it's going to grow quadratically as you move away from
+
+0:40:43.359,0:40:47.359
+uh from that z and that's exactly the idea of k-means
+
+0:40:47.359,0:40:51.839
+okay but what if you find other ways to limit the information
+
+0:40:51.839,0:40:57.200
+content of z so this seems like a kind of a small
+
+0:40:57.200,0:41:02.160
+technical sub problem but in my opinion the
+
+0:41:02.160,0:41:05.599
+question of how you limit the information content of a latent variable
+
+0:41:05.599,0:41:10.640
+in a model of this type is the most important question in AI
+
+0:41:10.640,0:41:14.640
+today okay and I'm not kidding
+
+0:41:14.640,0:41:19.680
+I think the the main problem we're facing is is how to do
+
+0:41:19.680,0:41:23.760
+self-supervised learning uh properly and contrastive methods have shown their
+
+0:41:23.760,0:41:27.760
+limits and so we have to find alternatives and alternatives are
+
+0:41:27.760,0:41:32.000
+uh regularized latent-variable models there might be other ideas that nobody has had
+
+0:41:32.000,0:41:34.960
+so far but these are the only two that I know
+
+0:41:34.960,0:41:37.760
+of and then the main technical issue that we need to solve is
+
+0:41:37.760,0:41:41.520
+how do we limit the information content of the latent variable so that we limit
+
+0:41:41.520,0:41:45.040
+the volume of y space that can take low energy
+
+0:41:45.040,0:41:48.720
+and therefore we automatically make the energy outside the
+
+0:41:48.720,0:41:52.319
+the the manifold of data where we train the system to have low energy
+
+0:41:52.319,0:41:56.000
+we automatically make the energy outside uh higher
+
+0:41:56.000,0:41:59.440
+so I'm going to go through a few examples of systems that actually work
+
+0:41:59.440,0:42:02.560
+that uh and things that people have done for
+
+0:42:02.560,0:42:10.240
+you know uh 20 years in some cases um and so so that's the idea here
+
+0:42:10.240,0:42:14.960
+you you um or one of the ideas you add a regularizer
+
+0:42:14.960,0:42:18.800
+in the energy and this regularizer takes low value
+
+0:42:18.800,0:42:22.480
+on a kind of small part of the space of z
+
+0:42:22.480,0:42:25.520
+and so the system will preferentially choose values of z
+
+0:42:25.520,0:42:31.599
+that are within this sort of restricted set where R takes a small value
+
+0:42:31.599,0:42:37.440
+and if z needs to go outside of that set to do a
+
+0:42:37.440,0:42:41.760
+good reconstruction you're paying a price for it in terms of
+
+0:42:41.760,0:42:45.599
+energy okay so
+
+0:42:45.599,0:42:51.119
+the the the volume of uh of z space that is determined by R basically limits
+
+0:42:51.119,0:42:55.920
+the volume of uh space of y that can take low energy
+
+0:42:55.920,0:42:59.760
+and the tradeoff is controlled by uh basically a coefficient lambda that you
+
+0:42:59.760,0:43:04.400
+can uh adjust to uh you know make the
+
+0:43:04.400,0:43:09.200
+the volume of uh y space that take low energy as uh as small as possible or
+
+0:43:09.200,0:43:15.119
+or not that small so here are a few examples of R(z) of r
+
+0:43:15.119,0:43:19.839
+of r of z and some of them are kind of
+
+0:43:19.839,0:43:22.880
+useful because they're differentiable with respect to z and some of them are
+
+0:43:22.880,0:43:26.720
+not so useful because they're not differentiable so you have to look for
+
+0:43:26.720,0:43:31.200
+kind of you know do a discrete search so one is the effective dimension of
+
+0:43:31.200,0:43:36.240
+z so what you can do is you can decide that z a priori has
+
+0:43:36.240,0:43:38.960
+three dimension four dimension five dimension six dimension you train your
+
+0:43:38.960,0:43:42.160
+model for various dimensions of z and there is one set of dimensions for
+
+0:43:42.160,0:43:44.960
+which you know one dimension for which the prediction would be good but at the
+
+0:43:44.960,0:43:48.480
+same time uh the dimension of z would be minimized
+
+0:43:48.480,0:43:52.720
+and what you will have found is basically the lowest uh embedding
+
+0:43:52.720,0:43:57.440
+dimension of your of your space so imagine for example that uh your data
+
+0:43:57.440,0:43:59.599
+set consists of lots and lots of pictures of
+
+0:44:02.079,0:44:04.720
+someone making faces in front of a camera
+
+0:44:04.720,0:44:09.520
+we know that the effective dimension of the manifold of all the faces of a
+
+0:44:09.520,0:44:12.560
+person is something like 60 at least less than
+
+0:44:12.560,0:44:16.400
+100 because it's bounded above by the number of muscles in your face
+
+0:44:16.400,0:44:20.079
+and so there has to be a a z of dimension
+
+0:44:20.079,0:44:25.920
+50 or 60 or something like that such that when you run it through a
+
+0:44:25.920,0:44:31.200
+convolutional net you will generate all possible uh instances of
+
+0:44:31.200,0:44:36.800
+uh of the the face of that person okay that's the the face manifold for
+
+0:44:36.800,0:44:39.760
+that person if you want um so what you can do is this a really
+
+0:44:42.560,0:44:45.760
+super expensive method of kind of trying all different
+
+0:44:45.760,0:44:50.800
+different dimensions of z uh one way to formulate this
+
+0:44:50.800,0:44:55.280
+mathematically is uh to minimize the L0 norm of z
+
+0:44:55.280,0:44:59.200
+so uh it's actually a slightly different thing so
+
+0:44:59.200,0:45:02.720
+what you um what what you can do is you choose a z that's relatively high
+
+0:45:02.720,0:45:05.599
+dimension but for any given sample you minimize
+
+0:45:05.599,0:45:10.720
+the number of components of z that are non-zero okay that's called the
+
+0:45:10.720,0:45:17.119
+l0 norm it's just the account of the number of components that are non-zero
+
+0:45:17.119,0:45:22.640
+and it's very difficult to uh minimize that uh that norm because it's
+
+0:45:22.640,0:45:27.520
+not differentiable it's very discrete so what people use is they use a convex
+
+0:45:27.520,0:45:31.760
+relaxation of that norm called and it's the l1 norm so the l1 norm is
+
+0:45:31.760,0:45:34.079
+the sum of the absolute values or the
+
+0:45:34.079,0:45:39.920
+components of z and that's what you use for r and z the
+
+0:45:39.920,0:45:43.200
+sum of the absolute values of the components of z
+
+0:45:43.200,0:45:48.400
+when you add this to your energy function
+
+0:45:48.400,0:45:51.440
+what the system is trying to do is find a z
+
+0:45:51.440,0:45:57.520
+that reconstructs the the y because it needs to minimize c of y and y bar
+
+0:45:57.520,0:46:01.119
+but also tries to minimize the number of its components that are non-zero because
+
+0:46:01.119,0:46:04.079
+that's the best way to minimize the l1 norm
+
+0:46:04.079,0:46:10.319
+okay and that's called sparse coding and it works
+
+0:46:10.319,0:46:14.800
+really well and I'm going to show you some examples of this
+
+0:46:14.800,0:46:18.319
+before I go there I just want to mention that and we'll talk about this a little
+
+0:46:18.319,0:46:21.760
+more and it's the idea that adding noise to z
+
+0:46:21.760,0:46:26.319
+will also limit the information content of z I'll come
+
+0:46:26.319,0:46:32.079
+back to this in a minute okay so here is the uh idea of
+
+0:46:32.079,0:46:35.760
+of sparse coding so sparse coding is an unconditional version
+
+0:46:35.760,0:46:38.800
+of energy-based model so there's no x there's only a y
+
+0:46:38.800,0:46:44.960
+and a z and the energy function is y minus Wz where W is a so-called
+
+0:46:44.960,0:46:48.400
+dictionary matrix very similar to the prototype matrix in
+
+0:46:48.400,0:46:52.160
+k-means z is a vector generally the dimension of
+
+0:46:52.160,0:46:56.160
+z is larger than y and so you measure the squared distance
+
+0:46:56.160,0:47:00.400
+euclidean distance between y and Wz so basically your decoder here is
+
+0:47:00.400,0:47:05.680
+linear it's just a matrix and then you add a term lambda times the
+
+0:47:05.680,0:47:10.640
+l1 norm of z which is represented by those two bars
+
+0:47:10.640,0:47:14.079
+and that's the energy function for sparse coding okay and you can think of
+
+0:47:14.079,0:47:18.400
+it as a special case of the the system I I showed the
+
+0:47:18.400,0:47:22.640
+architecture i showed previously uh except it's not um conditional
+
+0:47:22.640,0:47:28.880
+there's no x now what does this do um
+
+0:47:28.880,0:47:32.559
+um so Alfredo will tell you that the picture I'm showing here on the left
+
+0:47:32.559,0:47:35.280
+uh is inappropriate because it's actually generated with a slightly
+
+0:47:35.280,0:47:41.040
+different model um but it's uh a good sort of pictorial
+
+0:47:41.040,0:47:45.760
+representation of what uh what sparse coding attempts to do
+
+0:47:45.760,0:47:48.800
+which is to approximate the manifold of data
+
+0:47:48.800,0:47:52.559
+by a piecewise linear approximation essentially
+
+0:47:52.559,0:47:58.160
+so imagine that you have this w matrix okay and someone
+
+0:47:58.160,0:48:02.319
+has given it to you or you've learned it in some way
+
+0:48:02.319,0:48:06.160
+now if you decide a priori that a certain
+
+0:48:06.160,0:48:10.640
+number of components of z are non-zero okay most of the components of z are
+
+0:48:10.640,0:48:13.920
+zero just a small number of components with z are nonzero
+
+0:48:13.920,0:48:18.480
+and you vary the value of those components
+
+0:48:18.800,0:48:22.800
+you know within some range the set of vectors that you're going to generate
+
+0:48:22.800,0:48:25.599
+the set of y bars that you're going to generate
+
+0:48:25.599,0:48:30.800
+are going to be the y bars that are in the linear subspace spanned by the
+
+0:48:30.800,0:48:36.800
+corresponding columns of the W matrix okay for every value of the z
+
+0:48:36.800,0:48:39.520
+coefficients that are nonzero you basically compute a linear
+
+0:48:39.520,0:48:42.880
+combination of the corresponding columns of W
+
+0:48:42.880,0:48:46.079
+and so you're basically moving along a low dimensional
+
+0:48:46.079,0:48:52.160
+linear subspace of of y space so y bar is going to be basically along
+
+0:48:52.160,0:48:56.960
+a low dimensional space a low dimensional linear subspace
+
+0:48:56.960,0:49:01.520
+the dimension of that space will be the number of non-zero components of z
+
+0:49:01.520,0:49:06.559
+okay so for one particular y when you find the z
+
+0:49:06.559,0:49:10.240
+that minimizes the the energy a number of components are
+
+0:49:10.240,0:49:15.040
+going to be nonzero and as you move y slowly those nonzero
+
+0:49:15.040,0:49:18.960
+components are going to change value but you're going to stay on the
+
+0:49:18.960,0:49:23.599
+same linear subspace until y change changes
+
+0:49:23.599,0:49:25.839
+too much and then all of a sudden you need a
+
+0:49:25.839,0:49:30.480
+different set of non-zero z to do a the best reconstruction and now
+
+0:49:30.480,0:49:36.079
+you're switching to a different plane okay because a different set of z now of
+
+0:49:36.079,0:49:42.240
+z components become non-zero um and so now you you move y again and
+
+0:49:42.240,0:49:45.920
+again the coefficients in z keep changing values except for the ones
+
+0:49:45.920,0:49:50.160
+that are zero that stay zero and all of a sudden it switches again it
+
+0:49:50.160,0:49:53.760
+goes to another one so it's it's kind of well symbolized by
+
+0:49:53.760,0:49:56.559
+the the picture on the left where you see that the
+
+0:49:56.559,0:50:00.559
+manifold of data is approximated by basically a bunch of
+
+0:50:00.559,0:50:05.760
+uh linear subspace in in this case lines um the reason why it's difficult to
+
+0:50:05.760,0:50:09.920
+represent the actual sparse coding uh in 2d is because it's going to
+
+0:50:09.920,0:50:13.200
+degenerate in 2d so so one question is how do we train a
+
+0:50:13.200,0:50:15.760
+system like this so to train a system like this
+
+0:50:15.760,0:50:20.079
+we actually uh our loss function is just going to be the average
+
+0:50:20.079,0:50:23.920
+uh energy that our model gives to our training samples
+
+0:50:23.920,0:50:27.040
+so the loss function is just the average energy basically the average f
+
+0:50:27.040,0:50:34.000
+and remember f of y is equal to uh the minimum over z of E of y and z
+
+0:50:34.000,0:50:38.720
+okay so we're going to take the average of f over all our training samples
+
+0:50:38.720,0:50:42.480
+and minimize that average with respect to the parameters
+
+0:50:42.480,0:50:46.960
+of the model and those parameters are the coefficients in the w matrix
+
+0:50:46.960,0:50:51.359
+again it's called the dictionary matrix so how do we do this we take a sample y
+
+0:50:51.359,0:50:55.280
+we find the z that minimizes the energy okay the sum of the two terms that you
+
+0:50:55.280,0:50:59.520
+see here and then we we take one step of gradient
+
+0:50:59.520,0:51:03.040
+descent in W so we compute the gradient of the
+
+0:51:03.040,0:51:06.000
+energy with respect to w which is very simple because it's a quadratic function
+
+0:51:06.000,0:51:10.079
+of W and we take one step of uh of stochastic
+
+0:51:10.079,0:51:14.880
+gradient basically right and now we take the next y and do it
+
+0:51:14.880,0:51:19.119
+again minimize with respect to z and then for that value of z compute the
+
+0:51:19.119,0:51:22.800
+gradient with respect to w and take one step in the negative gradient
+
+0:51:22.800,0:51:26.960
+and you keep doing this now if you just do this it doesn't work
+
+0:51:26.960,0:51:30.640
+it doesn't work because the result is that W
+
+0:51:30.640,0:51:34.480
+keeps will keep getting bigger and bigger and z will keep getting smaller
+
+0:51:34.480,0:51:36.880
+and smaller but the problem will not actually the
+
+0:51:36.880,0:51:38.800
+system will not actually solve the problem
+
+0:51:38.800,0:51:44.400
+so what you need to do is normalize the W matrix so that it cannot grow
+
+0:51:44.400,0:51:48.640
+indefinitely and allow z to shrink correspondingly
+
+0:51:48.640,0:51:52.160
+and the way to do this is that you basically after
+
+0:51:52.160,0:51:57.040
+every update of the W matrix you normalize the sum of the squares
+
+0:51:57.040,0:52:01.200
+of the the terms in a column of in each column of W
+
+0:52:01.200,0:52:06.079
+right so normalize the columns of W after each update
+
+0:52:06.720,0:52:12.079
+and that will prevent the terms in W from blowing up and the terms in z from
+
+0:52:12.079,0:52:15.359
+shrinking and it will force the system to actually
+
+0:52:15.359,0:52:20.160
+find a reasonable matrix W and not get away with just making z
+
+0:52:20.160,0:52:24.800
+shorter okay so that's sparse coding this was uh
+
+0:52:24.800,0:52:28.880
+the learning algorithm for this was invented by
+
+0:52:28.880,0:52:34.559
+two computational neural scientists Bruno Olshausen and David Field in 1997
+
+0:52:34.559,0:52:37.520
+and so that goes back a long time okay so here is the problem with sparse
+
+0:52:37.520,0:52:39.520
+coding the inference algorithm is kind of
+
+0:52:39.520,0:52:45.599
+expensive you oops what you have to do is um
+
+0:52:45.599,0:52:50.319
+you know for for a given y is to kind of minimize the sum of those two terms one
+
+0:52:50.319,0:52:52.079
+of which is l two the other one is at one
+
+0:52:52.079,0:52:55.760
+there's a very large number of papers in applied mathematics
+
+0:52:55.760,0:53:00.400
+that uh explain how to do this efficiently
+
+0:53:00.400,0:53:04.880
+in particular one algorithm to do to do to do so is called ISTA that means
+
+0:53:04.880,0:53:08.559
+iterative shrinkage and thresholding algorithm
+
+0:53:08.559,0:53:14.480
+and I'm going to tell you what ISTA is in just a minute
+
+0:53:14.480,0:53:20.400
+but it basically consists in uh basically alternating uh a sort of
+
+0:53:20.400,0:53:25.839
+minimization with a sp of z with respect to z of the first term
+
+0:53:25.839,0:53:33.280
+and then the second term alternately so here's the kind of abstract form of the
+
+0:53:33.280,0:53:36.720
+of the ISTA algorithm there's a fast version of it called
+
+0:53:36.720,0:53:44.800
+called FISTA and here it is at the um at the bottom
+
+0:53:44.800,0:53:47.680
+um actually I'm realizing that I'm missing the reference for the ISTA
+
+0:53:47.680,0:53:50.880
+algorithm this is not any of the references i'm showing here
+
+0:53:50.880,0:53:55.520
+um first author is Deboulid d-e-b-o-u-l-i-d
+
+0:53:55.520,0:54:00.079
+anyway so here is the algorithm you start with z equals zero
+
+0:54:00.079,0:54:03.440
+and then you apply uh this iteration here which is the
+
+0:54:03.440,0:54:10.559
+the second last formula so in the bracket the
+
+0:54:10.559,0:54:14.079
+the thing that's in the bracket is basically a gradient step in the squared
+
+0:54:14.079,0:54:17.119
+error the square reconstruction error so if you compute the gradient or the
+
+0:54:17.119,0:54:21.200
+square reconstruction error and and you do a gradient step you you
+
+0:54:21.200,0:54:24.800
+basically get this this formula where one over L is the is
+
+0:54:24.800,0:54:29.280
+the is the the gradient uh step size
+
+0:54:29.280,0:54:35.040
+okay um so we basically update z with the
+
+0:54:35.040,0:54:39.599
+negative gradient of the square reconstruction error
+
+0:54:39.599,0:54:43.280
+and then the next operation you do is a shrinkage operation so you take
+
+0:54:43.280,0:54:47.440
+every component of the resulting z vector
+
+0:54:47.440,0:54:51.040
+and you shrink all of them to towards zero so you basically subtract
+
+0:54:51.040,0:54:54.880
+if the component of z is positive you subtract a constant to it
+
+0:54:54.880,0:54:58.640
+from it and if it's negative you add a cons the same constant
+
+0:54:58.640,0:55:02.960
+to it but but if you get too close to zero you just
+
+0:55:02.960,0:55:09.280
+click at zero okay so basically it's a it's a function that um you know
+
+0:55:09.280,0:55:14.880
+is flat around zero and then uh grows like the identity function above a
+
+0:55:14.880,0:55:20.640
+certain threshold and uh and below a certain threshold
+
+0:55:20.640,0:55:25.839
+okay it shrinks towards zero if you keep iterating this algorithm for
+
+0:55:25.839,0:55:31.760
+proper values of L and lambda the
+
+0:55:31.760,0:55:35.040
+z vector will converge to the solution of the
+
+0:55:35.040,0:55:39.200
+energy minimization problem which is the minimum of this
+
+0:55:39.200,0:55:45.760
+energy here e of y z with respect to z okay and that suggests uh so
+
+0:55:45.760,0:55:49.760
+keep this in mind now here is here is an issue this algorithm is
+
+0:55:49.760,0:55:53.119
+kind of expensive uh if you want to run this
+
+0:55:53.119,0:55:57.599
+over uh an image or over you know all patches of an image or something like
+
+0:55:57.599,0:55:59.839
+this you're not going to be able to do this
+
+0:55:59.839,0:56:04.880
+in real time on large images and so here is an idea and the idea is
+
+0:56:04.880,0:56:07.280
+to basically train a neural net to predict
+
+0:56:07.280,0:56:11.200
+what the solution of the energy minimization problem is
+
+0:56:11.200,0:56:14.400
+okay so you see the diagram here on the right
+
+0:56:14.400,0:56:20.720
+where um we train an encoder that takes the the y value for now you
+
+0:56:20.720,0:56:23.839
+can ignore the the piece that depends on x right you
+
+0:56:23.839,0:56:25.599
+have x going through a predictor predicting
+
+0:56:25.599,0:56:29.119
+h and then h feeds into the encoder of the decoder you can ignore this part for
+
+0:56:29.119,0:56:34.079
+now in the unconditional version you just have y that goes to an encoder
+
+0:56:34.079,0:56:38.640
+it produces a prediction for what the optimal value of the z variable is okay
+
+0:56:38.640,0:56:41.280
+called z bar and then the z variable itself goes into
+
+0:56:43.599,0:56:46.640
+the the decoder it goes you know it's being regularized as well and then
+
+0:56:46.640,0:56:51.599
+produces a reconstruction y bar and what you do here is again you find
+
+0:56:51.599,0:56:55.359
+the z value that minimizes uh the energy
+
+0:56:55.359,0:57:00.559
+um but what we're gonna uh but the energy now is uh is still the
+
+0:57:00.559,0:57:04.079
+sum of the two those two terms c of y y bar and r of z
+
+0:57:04.079,0:57:07.920
+but then what we're gonna do is we're gonna train the encoder
+
+0:57:07.920,0:57:15.119
+to predict this optimal value of z obtained through minimization and this
+
+0:57:15.119,0:57:17.440
+encoder is going to be trained by minimizing this uh
+
+0:57:17.440,0:57:20.640
+this term d of z and z bar so basically it views
+
+0:57:20.640,0:57:25.119
+z as a target value and you train it by back prop by
+
+0:57:25.119,0:57:29.760
+you know gradient descent to basically make a prediction that's as close to z
+
+0:57:29.760,0:57:36.400
+as possible okay that's one form of this idea
+
+0:57:37.520,0:57:41.599
+another form of this idea slightly more sophisticated
+
+0:57:41.599,0:57:45.200
+is that when you're doing the minimization with respect to z of the
+
+0:57:45.200,0:57:48.319
+energy with respect to z you take into account the fact that you
+
+0:57:48.319,0:57:52.640
+don't want z to get too far away from z bar so basically
+
+0:57:52.640,0:57:56.720
+your energy function now has three terms it has the reconstruction error it has
+
+0:57:56.720,0:58:00.880
+the regularization but it also has the difference between
+
+0:58:00.880,0:58:04.480
+the uh z bar the prediction from the encoder
+
+0:58:04.480,0:58:07.200
+and the current value of the z variable so the
+
+0:58:07.200,0:58:12.160
+energy function now is is written here E of x y z
+
+0:58:12.160,0:58:18.000
+is equal to the C function that compares y and the output of the
+
+0:58:18.000,0:58:20.960
+decoder applied to apply to z this is the unconditional
+
+0:58:20.960,0:58:24.079
+version here and then you have a second term which is
+
+0:58:24.079,0:58:27.839
+the this D function that sort of measures the distance between z and the
+
+0:58:27.839,0:58:31.520
+encoder applied to y there shouldn't be an x and
+
+0:58:31.520,0:58:37.359
+then you also regularize z okay so basically you're telling the
+
+0:58:37.359,0:58:40.480
+system find a value for the latent variable that reconstructs
+
+0:58:40.480,0:58:48.640
+that is sparse if R if is a is a L1 norm or doesn't isn't too uh
+
+0:58:48.720,0:58:51.599
+doesn't have too much information but also is not too far away from whatever
+
+0:58:51.599,0:58:56.400
+it is that the encoder predicted and a specific idea there is called
+
+0:58:56.400,0:59:00.240
+LISTA which means the Learning ISTA and is to shape the
+
+0:59:00.240,0:59:05.680
+architecture of the autoencoder so that it looks very much like a ISTA algorithm
+
+0:59:05.680,0:59:08.880
+so if we go back to the the ISTA algorithm
+
+0:59:08.880,0:59:15.280
+uh the formula uh the second last formula here um
+
+0:59:15.280,0:59:21.280
+you know looks like uh you know some vector update with a with some matrix so
+
+0:59:21.280,0:59:25.200
+it's like a linear stage of a neural net if you want
+
+0:59:25.200,0:59:28.400
+and then some non-linearity that happens to be a shrinkage which is sort of a
+
+0:59:28.400,0:59:32.640
+double value if you want it's when were you going up uh married with
+
+0:59:32.640,0:59:36.799
+another value going down and so if you look at the diagram of
+
+0:59:36.799,0:59:40.480
+this uh of this whole uh ISTA algorithm it looks like this
+
+0:59:40.480,0:59:45.839
+block diagram here that i've drawn on top you start with y
+
+0:59:45.839,0:59:48.960
+multiplied by some matrix and then shrink
+
+0:59:48.960,0:59:53.440
+the result then it gives you the next z apply some other matrix to it add it to
+
+0:59:53.440,0:59:57.520
+the previous value of z that you had shrink again and then
+
+0:59:57.520,1:00:00.319
+multiply the matrix again add to the previous value you had shrink
+
+1:00:00.319,1:00:05.920
+again et cetera and so you have two matrices here W(e) and S and
+
+1:00:05.920,1:00:09.680
+at the bottom if you define W(e) as 1 over L W(d)
+
+1:00:09.680,1:00:13.680
+and if you define s as the identity minus 1 over L W(d)
+
+1:00:13.680,1:00:17.200
+transpose W(d) where W(d) is the decoding matrix
+
+1:00:17.200,1:00:20.319
+then uh this diagram basically implements
+
+1:00:20.319,1:00:25.839
+uh ISTA okay so the idea that one of my firmware post docs Carl Greger
+
+1:00:25.839,1:00:29.680
+had was to say well why don't we why don't we treat this as a recurrent
+
+1:00:29.680,1:00:33.040
+neural net and why don't we train those matrices w
+
+1:00:33.040,1:00:37.280
+and S so as to give us a good approximation
+
+1:00:37.280,1:00:40.400
+of the optimus pass code as quickly as possible
+
+1:00:40.400,1:00:45.040
+okay so we're basically going to build our encoder network
+
+1:00:45.040,1:00:48.480
+with this architecture that is copied on ISTA
+
+1:00:48.480,1:00:52.160
+and we know for a fact that there is going to be a solution
+
+1:00:52.160,1:00:56.000
+uh where the system basically learns this the value
+
+1:00:56.000,1:01:03.040
+of W(e) and S that correspond to the the the one they should be um but in fact
+
+1:01:03.040,1:01:07.440
+the system learns something else okay so uh this is
+
+1:01:07.440,1:01:10.799
+another representation of it here at the bottom left we have the shrinkage
+
+1:01:10.799,1:01:14.000
+function and then this S matrix and then you add
+
+1:01:14.000,1:01:16.880
+the you know y multiplied by W(e) to the S
+
+1:01:16.880,1:01:19.839
+matrix shrink again et cetera et cetera so that this is the
+
+1:01:19.839,1:01:21.760
+recurrent net we're going to try we're going to train
+
+1:01:21.760,1:01:26.319
+with W(e) and S but the objective of this ISTA is
+
+1:01:26.319,1:01:29.520
+can you repeat what is the objective I think I missed the point
+
+1:01:29.520,1:01:33.680
+so the objective of training this uh encoder
+
+1:01:33.680,1:01:36.960
+okay so the the encoder in this in this diagram on the right here
+
+1:01:36.960,1:01:40.480
+the architecture of the encoder is the one you see at the bottom left
+
+1:01:40.480,1:01:44.880
+okay and the objective that you're training this with
+
+1:01:44.880,1:01:54.240
+is the average of D of z and z bar okay so the procedure is uh
+
+1:01:54.240,1:01:57.359
+in the case where there is no x right but if there is an x doesn't make much
+
+1:01:57.359,1:02:01.839
+difference so take a y for this particular y find the value of
+
+1:02:01.839,1:02:05.440
+z that minimizes the energy and the energy is the sum of
+
+1:02:05.440,1:02:11.200
+three terms C of y y bar R z and d or z z bar okay so find a z
+
+1:02:11.200,1:02:16.240
+that reconstructs um has minimal capacity but also is not
+
+1:02:16.240,1:02:18.799
+too far away from the output of the encoder
+
+1:02:18.799,1:02:22.720
+okay once you have the z compute the gradient
+
+1:02:22.720,1:02:26.559
+of the energy with respect to the weights of the decoder
+
+1:02:26.559,1:02:29.599
+of the encoder and the predictor if you have one
+
+1:02:29.599,1:02:33.440
+by backprop so the interesting thing is that
+
+1:02:33.440,1:02:37.680
+the only gradient you're going to get for the encoder is the gradient of D
+
+1:02:37.680,1:02:42.160
+of z and z bar okay so the encoder is just going to train itself to minimize
+
+1:02:42.160,1:02:44.240
+the z and z bar in other words it's going to
+
+1:02:44.240,1:02:48.640
+train itself to predict z as well as possible the optimal z that you
+
+1:02:48.640,1:02:51.920
+obtain through minimization the decoder is going to
+
+1:02:51.920,1:02:55.520
+train itself to uh of course reconstruct y as well as
+
+1:02:55.520,1:02:59.200
+well as it can with the z that is being given and then
+
+1:02:59.200,1:03:01.520
+if you have a predictor you're going to get gradient to the predictor and it's
+
+1:03:01.520,1:03:05.280
+going to try to kind of produce an h that you know helps as
+
+1:03:05.280,1:03:10.640
+well as possible is that clear? yeah, thanks
+
+1:03:12.640,1:03:17.200
+okay so that's the that's the architecture it's basically just a
+
+1:03:17.200,1:03:23.200
+pretty garden variety recurrent net and this works really well in the sense
+
+1:03:23.200,1:03:28.559
+that as you go through
+
+1:03:28.720,1:03:32.799
+you know the iterations of this uh ista algorithm
+
+1:03:32.799,1:03:38.319
+or this or or through this train neural net that is designed to
+
+1:03:38.480,1:03:44.319
+basically approximate this solution what you do is you um you can train the
+
+1:03:44.319,1:03:47.359
+system for example to produce the best possible solution
+
+1:03:47.359,1:03:52.400
+after three iterations only right so it knows the optimal value because
+
+1:03:52.400,1:03:55.920
+it's been completed with ISTA but then when you train it it it trains
+
+1:03:55.920,1:04:00.720
+itself to produce the best approximation of that value with only three iterations
+
+1:04:00.720,1:04:04.000
+and what we see is that after three iterations it produces a much much
+
+1:04:04.000,1:04:06.319
+better approximation than ISTA we produce in
+
+1:04:10.319,1:04:13.839
+three iterations and so what you see here is the number
+
+1:04:16.400,1:04:21.280
+as a function of number of iterations of either ISTA or this LISTA algorithm is
+
+1:04:21.280,1:04:24.559
+the reconstruction error right so by
+
+1:04:24.559,1:04:28.000
+training an encoder to kind of predict the result of the optimization you
+
+1:04:28.000,1:04:30.240
+actually get better result than if you actually run
+
+1:04:30.240,1:04:32.960
+the optimization for the same number of iterations
+
+1:04:32.960,1:04:37.119
+so the accelerates inference a lot okay so this is what spice coding
+
+1:04:37.119,1:04:41.280
+uh gives you uh with or without an encoder actually
+
+1:04:41.280,1:04:44.720
+uh you get pretty much the same results here when you train on MNIST so
+
+1:04:44.720,1:04:51.359
+these are um basically it's a linear decoder the
+
+1:04:51.359,1:04:56.400
+the code space here the z vector has size 256
+
+1:04:56.400,1:05:00.640
+and so you take this 256 vector multiplied by matrix and
+
+1:05:00.640,1:05:04.480
+and you reconstruct a digit and what you see here are the columns of
+
+1:05:07.359,1:05:11.359
+this matrix represented as images okay so each
+
+1:05:11.359,1:05:15.039
+column has the same dimension as an MNIST digit right
+
+1:05:15.039,1:05:20.480
+uh each column of W and so you can represent each of them as an image
+
+1:05:20.480,1:05:26.160
+and and these are the 256 uh columns of W and what you see is that
+
+1:05:26.160,1:05:30.000
+they basically represent parts of characters like little pieces
+
+1:05:30.000,1:05:33.760
+of strokes and the reason for this is that you can
+
+1:05:33.760,1:05:37.200
+basically reconstruct any character any in this digit
+
+1:05:37.200,1:05:41.280
+by a linear combination of a small number of those strokes
+
+1:05:41.280,1:05:47.280
+okay and so that's kind of beautiful because this system basically
+
+1:05:47.280,1:05:51.839
+finds constitutive parts of objects
+
+1:05:51.839,1:05:54.960
+uh in a completely unsupervised way and that's kind of what you want out of
+
+1:05:54.960,1:05:58.079
+unsupervised running you want sort of you know what other what other
+
+1:05:58.079,1:06:02.799
+components or the parts they can explain what my data looks like
+
+1:06:02.799,1:06:06.400
+um so this works really beautifully for uh for MNIST
+
+1:06:06.400,1:06:12.240
+uh it works quite nicely as well for uh natural image patches there's
+
+1:06:12.240,1:06:14.720
+supposed to be an animation here but you're not seeing it obviously because
+
+1:06:14.720,1:06:18.559
+it's pdf uh the result is this um so the
+
+1:06:18.559,1:06:21.200
+animation shows the learning algorithm taking place
+
+1:06:21.200,1:06:26.319
+so here again these are the the columns of the decoding matrix
+
+1:06:26.319,1:06:30.319
+of a sparse coding system with L1 regularization that has been trained on
+
+1:06:30.319,1:06:33.200
+natural image patches and I said that those natural image
+
+1:06:33.200,1:06:37.200
+patches have been uh whitened which means they've been sort of normalized in
+
+1:06:37.200,1:06:39.839
+some way you know cancel the mean and kind of normalize
+
+1:06:39.839,1:06:45.520
+the variants and you get a nice little
+
+1:06:45.520,1:06:49.839
+what's called Gabor filters so basically you know small edge detectors at various
+
+1:06:49.839,1:06:54.160
+orientations locations and sizes
+
+1:06:54.160,1:06:58.079
+so the reason why this was invented by neuroscientists is that
+
+1:06:58.079,1:07:01.359
+this looks very much like what you observe uh
+
+1:07:01.359,1:07:04.480
+in the primary area of the visual cortex when you
+
+1:07:04.480,1:07:10.240
+um when you poke electrodes in the visual cortex of
+
+1:07:10.240,1:07:15.440
+most animals and you figure out what patterns do they maximally respond to
+
+1:07:15.440,1:07:21.039
+they maximally respond to oriented edges this is also what you observe when you
+
+1:07:21.039,1:07:25.039
+train a convolutional net on imagenet the first layer features
+
+1:07:25.039,1:07:28.720
+look very much like this as well except they're convolutional these ones
+
+1:07:28.720,1:07:32.400
+are not convolutional it's it's trained on uh you know image patches but there
+
+1:07:32.400,1:07:35.359
+is no convolutions here so this is nice because what it tells
+
+1:07:37.119,1:07:39.920
+you is that with a very simple unsupervised learning algorithm we get
+
+1:07:39.920,1:07:44.079
+essentially qualitatively the same features that we would get
+
+1:07:44.079,1:07:47.039
+by you know training a large convolutional net supervised so that
+
+1:07:47.039,1:07:53.280
+gives you a hint so here is the convolutional version
+
+1:07:53.280,1:07:58.319
+so the convolutional version basically says you have an image
+
+1:07:58.640,1:08:02.079
+this is more responsive by the way what you're going to do is going to take
+
+1:08:04.400,1:08:11.839
+feature maps okay let's say here four but
+
+1:08:17.279,1:08:21.359
+it could be more and then you're gonna you're going to convolve each of those
+
+1:08:21.359,1:08:25.440
+feature map with uh with a kernel
+
+1:08:25.440,1:08:29.040
+okay so a feature map is I don't know let's call this
+
+1:08:29.040,1:08:36.640
+zk okay and we have a kernel here um
+
+1:08:36.640,1:08:40.560
+well let's call it Zi because i'm going to use K for the kernel
+
+1:08:40.560,1:08:46.319
+Ki and this is going to be a reconstruction y
+
+1:08:47.440,1:08:51.359
+and our reconstruction is simply going to be
+
+1:08:51.359,1:08:56.159
+the sum over i of Zi convolved
+
+1:09:00.239,1:09:07.359
+with Ki okay so this is different from the original sparse coding where
+
+1:09:07.359,1:09:15.440
+y bar was equal to the sum over columns of a column of
+
+1:09:15.440,1:09:21.520
+a W matrix so um and uh
+
+1:09:28.080,1:09:31.120
+multiplied by a coefficient Zi which is not a scalar
+
+1:09:31.120,1:09:37.199
+right so regular sparse coding um you have a weighted sum of columns
+
+1:09:37.199,1:09:40.960
+where the weights are scalar coefficients of Zi's
+
+1:09:40.960,1:09:44.480
+in convolutional sparse coding it's again a linear operation but
+
+1:09:44.480,1:09:48.480
+now the dictionary matrix is a bunch of convolutional kernels
+
+1:09:48.480,1:09:51.759
+and the latent variable is a bunch of feature maps
+
+1:09:51.759,1:09:55.199
+and you're doing a convolution of each feature map with
+
+1:09:55.199,1:09:59.760
+the each kernel and some of the results this is what you get so so here there
+
+1:10:02.560,1:10:05.440
+are um it's it's one of those system that has a
+
+1:10:05.440,1:10:08.800
+decoder and an encoder the encoder is very simple here it's basically
+
+1:10:08.800,1:10:12.320
+just a essentially a single layer network with a non-linearity and then
+
+1:10:12.320,1:10:14.880
+there is a simple layer after that basically a
+
+1:10:14.880,1:10:17.280
+diagonal layer after that to change the gains
+
+1:10:17.280,1:10:20.960
+but it's very very simple and the filters in the encoders and
+
+1:10:20.960,1:10:24.719
+the encoder and the decoder look very similar so it's basically the encoder is
+
+1:10:24.719,1:10:27.920
+just a convolution then some non-linearity I think it was
+
+1:10:27.920,1:10:32.080
+hyperbolic tangent in that case and then a basically what amounts to a
+
+1:10:32.080,1:10:36.400
+diagonal layer that just changed the scale and
+
+1:10:36.400,1:10:39.679
+then the decoder then there is a sparsity on the
+
+1:10:39.679,1:10:42.400
+constraint on the on the code and then the decoder is just
+
+1:10:42.400,1:10:47.040
+a convolutional linear decoder and the reconstruction is just a square
+
+1:10:47.040,1:10:50.480
+distance so if you impose that there is only one
+
+1:10:50.480,1:10:54.640
+filter the filter looks like the one at the top left is just a center
+
+1:10:54.640,1:10:57.760
+surround type filter if you allow two filters you get kind of
+
+1:10:57.760,1:11:01.280
+two weirdly shaped filters if you let four filters which is the
+
+1:11:01.280,1:11:05.600
+third row you get uh oriented edges horizontal and vertical
+
+1:11:05.600,1:11:09.280
+but you get two two polarities for each of the filters
+
+1:11:09.280,1:11:12.400
+for eight filters you get uh oriented edges at eight eight
+
+1:11:12.400,1:11:16.800
+different orientations 16 filters you get more orientations and
+
+1:11:16.800,1:11:19.679
+you also get center surround and then as you increase the number of
+
+1:11:19.679,1:11:26.159
+filters uh you get sort of more diverse uh filters not just uh
+
+1:11:26.159,1:11:29.679
+edge detectors but also grating detectors at various orientations center
+
+1:11:29.679,1:11:32.960
+surround etc and that's very interesting because
+
+1:11:32.960,1:11:36.880
+this is the kind of stuff you see in the visual cortex so again this is an
+
+1:11:36.880,1:11:40.159
+indication that you can learn really good features
+
+1:11:40.159,1:11:44.080
+in completely unsupervised way now here is the side news if you take those
+
+1:11:44.080,1:11:47.120
+features you plug them into a convolutional net
+
+1:11:47.120,1:11:49.840
+and you you trend that on some tasks you don't
+
+1:11:49.840,1:11:52.239
+necessarily get you know better results than you you
+
+1:11:52.239,1:11:56.320
+train on imagenet from scratch but there are a few instances where this
+
+1:11:58.159,1:12:02.719
+has helped boost the performance particularly in cases where the number
+
+1:12:02.719,1:12:06.000
+of label samples is not that great or the number of categories is small
+
+1:12:06.000,1:12:09.040
+and so by training purely supervised you get degenerate
+
+1:12:09.040,1:12:14.800
+uh uh features basically here's another example here uh same
+
+1:12:14.800,1:12:19.120
+thing um again it's a convolutional space coding
+
+1:12:19.120,1:12:22.320
+here the decoding kernel this is on color images
+
+1:12:22.320,1:12:28.320
+the the decoding kernels are uh nine by nine uh applied convolutionally
+
+1:12:28.320,1:12:31.760
+over an image and what you see on the left here are
+
+1:12:31.760,1:12:37.440
+the the sparse codes here you have um I don't know
+
+1:12:37.440,1:12:42.480
+64 uh feature maps uh and and you can see that the the z
+
+1:12:42.480,1:12:46.080
+vector is extremely sparse right there's only a few components here that are
+
+1:12:46.080,1:12:49.360
+either white or black or non-gray if you want
+
+1:12:49.360,1:12:53.199
+and it's because of because of sparsity okay uh in the last few minutes we'll
+
+1:12:56.719,1:12:59.520
+talk about uh variational autoencoder and I guess
+
+1:12:59.520,1:13:02.840
+you've heard a bit of this from uh tomorrow we're gonna be covering this
+
+1:13:02.840,1:13:06.560
+tomorrow with the bubbles and the code and everything right so
+
+1:13:06.560,1:13:12.480
+tomorrow is going to be one hour of just this. Right so um but here is
+
+1:13:12.480,1:13:16.880
+a preview for um how variational encoders work
+
+1:13:16.880,1:13:19.840
+okay so variational auto-encoder are basically the same architecture as the
+
+1:13:19.840,1:13:24.159
+one I showed previously uh so basically uh auto-encoder
+
+1:13:24.159,1:13:26.800
+ignore the the conditional part the part that's
+
+1:13:26.800,1:13:30.719
+conditioned upon x for now uh that could be a conditional version
+
+1:13:30.719,1:13:33.520
+of the auto-encoder but for now we're just going to have a regular version of the
+
+1:13:33.520,1:13:37.600
+encoder so it's an auto-encoder where uh
+
+1:13:37.600,1:13:40.880
+you take you know you take the variable y you run it to an encoder
+
+1:13:40.880,1:13:44.320
+uh it could be a multi-layer neural net convolutional net whatever you want it
+
+1:13:44.320,1:13:47.760
+it produces a prediction for the sparse code z bar
+
+1:13:47.760,1:13:51.280
+is a term in the energy function that measures the square this
+
+1:13:51.280,1:13:54.880
+the euclidean square euclidean distance between between z the latent variable
+
+1:13:54.880,1:14:00.640
+and z bar and there's also a
+
+1:14:00.640,1:14:03.679
+this is a this another cost function here which is the
+
+1:14:03.679,1:14:08.000
+l2 norm of z bar in fact generally it's more the autonomous z actually that
+
+1:14:08.000,1:14:10.560
+would be more more accurate but it doesn't make much
+
+1:14:10.560,1:14:14.960
+difference and then z goes through a decoder which
+
+1:14:14.960,1:14:18.640
+reconstructs y and that's your reconstruction error
+
+1:14:18.640,1:14:22.640
+okay now the difference with previous so this
+
+1:14:22.640,1:14:26.560
+looks very very similar to the type of autoencoder we just talked about
+
+1:14:26.560,1:14:30.719
+except there is no sparsity here and the reason there is no sparsity is because
+
+1:14:30.719,1:14:34.239
+variational encoders use another way of limiting the information content of the
+
+1:14:34.239,1:14:38.480
+code uh by basically making the code noisy
+
+1:14:38.480,1:14:43.760
+okay so um here is the idea
+
+1:14:43.760,1:14:47.600
+the way you you compute z is not by minimizing
+
+1:14:47.600,1:14:51.520
+the energy function with respect to z but by sampling z
+
+1:14:51.520,1:14:55.199
+randomly according to a distribution whose logarithm
+
+1:14:55.199,1:15:01.520
+is the the the cost that links it to z bar okay so
+
+1:15:01.520,1:15:05.360
+basically the encoder produces a z bar
+
+1:15:05.360,1:15:09.040
+and then there is an energy function that measures the the
+
+1:15:09.040,1:15:13.120
+distance if you want between z and z bar you think of this as the logarithm
+
+1:15:13.120,1:15:18.800
+of a probability distribution so if this distance is a square
+
+1:15:18.800,1:15:20.800
+euclidean distance what that means is that the
+
+1:15:20.800,1:15:24.239
+the distribution of z is going to be a conditional gaussian
+
+1:15:24.239,1:15:29.840
+where the mean is z bar okay so we're going to do is we're going to
+
+1:15:29.840,1:15:34.000
+sample a random value of z according to that distribution basically
+
+1:15:34.000,1:15:38.719
+a gaussian whose mean is z bar okay and that just means adding a bit of
+
+1:15:38.719,1:15:43.679
+gaussian noise to z bar that's what rz is going to be and you
+
+1:15:43.679,1:15:48.080
+run this to the the decoder so when you train a system
+
+1:15:48.080,1:15:53.840
+like this what the system wants to do is basically
+
+1:15:54.320,1:16:00.880
+make the z bar as large as possible make the z bar vectors as large as possible
+
+1:16:00.880,1:16:05.120
+so that the effect of the gaussian noise on z would be as small as possible
+
+1:16:05.120,1:16:08.159
+right relatively speaking if the variance of the
+
+1:16:08.159,1:16:12.480
+of the noise on z is one and you make the z bar vector
+
+1:16:12.480,1:16:18.159
+very very long like uh norm it doesn't uh then the importance of the noise
+
+1:16:18.159,1:16:22.080
+would be 1 % with respect to z okay so if you train
+
+1:16:22.080,1:16:25.679
+an auto encoder like this uh ignoring the fact that you had noise
+
+1:16:25.679,1:16:30.719
+by just back propagation uh what you'll get is uh z bar vectors
+
+1:16:30.719,1:16:33.280
+that get bigger and bigger the weights of the encoder will get bigger and
+
+1:16:33.280,1:16:35.840
+bigger and the z-bar vector will get bigger and
+
+1:16:35.840,1:16:38.159
+bigger so what's the trick in variational
+
+1:16:40.560,1:16:45.199
+autoencoder hold on, question uh quick question, where does this z come
+
+1:16:45.199,1:16:48.239
+from? Is that a latent variable never observed?
+
+1:16:48.239,1:16:51.440
+It's a latent variable that we are sampling and we're not minimizing with
+
+1:16:51.440,1:16:54.719
+respect to it so in previous cases we were minimizing
+
+1:16:54.719,1:16:58.400
+with respect to the z variable right minimizing the energy with respect to
+
+1:16:58.400,1:17:00.560
+the variable finding the z that minimizes
+
+1:17:00.560,1:17:07.280
+the sum of c uh D and R so here we're not minimizing
+
+1:17:07.280,1:17:10.159
+we're just we're sampling we're viewing the energy
+
+1:17:10.159,1:17:13.120
+as a distribution as a log of a distribution
+
+1:17:13.120,1:17:17.600
+and we're sampling z from that distribution. All right so imagine our
+
+1:17:17.600,1:17:23.199
+encoder produces the following points for training samples okay so these are
+
+1:17:23.199,1:17:27.460
+the z vector the z bar vectors produced by the encoder
+
+1:17:27.460,1:17:31.360
+[Music] um you know at some point
+
+1:17:31.360,1:17:38.000
+in training so what the effect of this uh sampling of z
+
+1:17:38.000,1:17:41.679
+is going to do is basically turn every single one of those
+
+1:17:41.679,1:17:50.080
+uh training samples into a fuzzy ball okay because uh we take a sample
+
+1:17:50.080,1:17:53.600
+we add noise to it and so basically we've turned
+
+1:17:53.600,1:17:57.360
+a single code vector into kind of a fuzzy ball
+
+1:17:57.360,1:18:00.800
+now the decoder needs to be able to reconstruct
+
+1:18:00.800,1:18:07.520
+uh the the input from whatever code is being fed and so if two
+
+1:18:07.520,1:18:13.679
+of those fuzzy ball uh intersect then there is some probability
+
+1:18:13.679,1:18:16.960
+for the decoder to get basically make a
+
+1:18:16.960,1:18:21.920
+mistake and confuse the two samples confuse one sample for the other
+
+1:18:21.920,1:18:25.679
+okay so the effect of training the the system if you if you
+
+1:18:25.679,1:18:29.199
+add fuzzy balls you know if you make every one of your code
+
+1:18:29.199,1:18:34.480
+a fuzzy ball is that those fuzzy balls are going to fly away from each other
+
+1:18:35.199,1:18:38.719
+and as I said before this is the same you know I was saying this before in a
+
+1:18:38.719,1:18:41.520
+different way it's going to make the weights of the encoder very large so
+
+1:18:41.520,1:18:45.440
+that the code vectors get very long and basically they get away from
+
+1:18:45.440,1:18:49.920
+from each other and the noise of those fuzzy balls don't matter anymore
+
+1:18:49.920,1:18:52.480
+okay so here if the fuzzy balls don't intersect
+
+1:18:52.480,1:18:56.159
+the system will be able to perfectly reconstruct every sample you throw at it
+
+1:18:56.159,1:18:59.280
+my question it was a couple of slides again but again on the same
+
+1:18:59.280,1:19:03.440
+topic it was a couple of slides ago so when you what exactly do you mean by
+
+1:19:03.440,1:19:07.360
+degenerate features here when you when you said that when you were comparing
+
+1:19:07.360,1:19:11.120
+self supervision and normal super completely supervision
+
+1:19:11.120,1:19:15.360
+I see okay uh that's a good question the what I was saying is
+
+1:19:15.360,1:19:18.800
+it's something I I said before in different turns it's the fact that if
+
+1:19:18.800,1:19:21.040
+you train uh a a classifier let's say
+
+1:19:21.040,1:19:24.719
+a convolutional net uh on a problem that has very few
+
+1:19:24.719,1:19:29.679
+categories let's say face detection you only have two categories the
+
+1:19:29.679,1:19:33.520
+representation of faces you get out of the convolutional net are very degenerate
+
+1:19:33.520,1:19:38.080
+in the sense that they don't represent every image
+
+1:19:38.080,1:19:42.560
+properly right they're going to kind of collapse a lot of different images into
+
+1:19:42.560,1:19:46.159
+sort of a common into identical representations
+
+1:19:46.159,1:19:49.280
+because the only thing the system needs to do is discriminate
+
+1:19:49.280,1:19:53.360
+from faces to you know faces with non-faces and so it
+
+1:19:53.360,1:19:57.760
+doesn't need to really kind of uh produce good representations of of
+
+1:19:57.760,1:20:01.679
+the entire space uh uh it just needs to tell you if it's
+
+1:20:01.679,1:20:05.040
+if it's a face or another face so for example the features you will get for
+
+1:20:05.040,1:20:10.000
+two different faces will probably be fairly identical so
+
+1:20:10.000,1:20:13.199
+so you don't so that's what I mean by degenerate features
+
+1:20:13.199,1:20:17.040
+what you want are features that basically
+
+1:20:17.040,1:20:21.120
+uh feature vectors that are different for different objects regardless of
+
+1:20:21.120,1:20:23.840
+whether you trained them to be different or not so if you
+
+1:20:23.840,1:20:29.120
+train on imagenet for example you have 1000 categories and
+
+1:20:29.120,1:20:31.760
+and so because you have a lot of categories you get features that are
+
+1:20:31.760,1:20:35.760
+fairly diverse and they cover a lot of the space of possible images
+
+1:20:35.760,1:20:39.120
+I mean they're still kind of fairly specialized but they're not completely
+
+1:20:39.120,1:20:42.080
+degenerate because you have many categories
+
+1:20:42.080,1:20:46.560
+and you have a lot of samples the more samples and more categories you have
+
+1:20:46.560,1:20:50.400
+the the better your features are in fact um
+
+1:20:50.400,1:20:53.920
+uh if you if you think about it an auto encoder
+
+1:20:53.920,1:20:57.280
+is a neural net in which every training sample is
+
+1:20:57.280,1:21:01.840
+is its own category right because you're basically telling the
+
+1:21:01.840,1:21:06.239
+system produce a different output for every sample I'll show you
+
+1:21:06.239,1:21:13.040
+so you're basically training a system to represent every object in a different
+
+1:21:13.040,1:21:16.719
+way but it can be degenerated another way
+
+1:21:16.719,1:21:19.600
+because the system can learn the identity function
+
+1:21:19.600,1:21:23.920
+and encode uh anything you want if you think about the Siamese net
+
+1:21:23.920,1:21:29.040
+the metric learning system the contrastive methods MoCo PIRL and
+
+1:21:29.040,1:21:36.400
+uh and SimCLR I was I was telling you about uh it's it's a little
+
+1:21:36.400,1:21:40.639
+bit of the same thing um they they they try to
+
+1:21:40.639,1:21:44.239
+learn non-degenerate features by by telling the system
+
+1:21:44.239,1:21:47.440
+you know here is two objects that I know are the same here are two objects that I
+
+1:21:47.440,1:21:50.320
+know are different and so make sure you produce different
+
+1:21:50.320,1:21:52.480
+feature vectors for objects that I know are
+
+1:21:52.480,1:21:56.800
+are semantically different okay that's kind of a way of
+
+1:21:56.800,1:22:01.520
+uh you know making sure you get you get feature feature vectors representations
+
+1:22:01.520,1:22:05.600
+are different for for things that are actually different
+
+1:22:05.600,1:22:08.320
+um but you don't get this by training a
+
+1:22:08.320,1:22:11.199
+conv net on a two-class problem or a 10-class problem
+
+1:22:11.199,1:22:15.920
+you need as many classes as you can afford
+
+1:22:17.600,1:22:22.560
+so pre-training using self-supervised learning basically
+
+1:22:22.560,1:22:25.600
+helps uh making the feature more more generic
+
+1:22:25.600,1:22:31.120
+and less less degenerate for the problem okay so let's get back to variational
+
+1:22:31.120,1:22:34.639
+twin colors so um so again if you train your auto encoder with
+
+1:22:34.639,1:22:37.280
+those fuzzy balls they're gonna fly away from each other
+
+1:22:37.280,1:22:41.679
+and what you want really is you want those fuzzy balls to basically kind of
+
+1:22:41.679,1:22:45.199
+cluster around some sort of data manifold right so you
+
+1:22:45.199,1:22:48.639
+want to actually keep them as close to each other as possible
+
+1:22:48.639,1:22:53.840
+and how can you do this you can do this by
+
+1:22:54.800,1:23:03.520
+essentially linking all of them to the origin with a spring
+
+1:23:03.520,1:23:09.600
+okay so basically the spring wants to bring all those points towards towards
+
+1:23:09.600,1:23:14.639
+the origin as close to each other to the origin as possible
+
+1:23:14.639,1:23:17.760
+and so in doing so what the system is going to try to do is pack
+
+1:23:17.760,1:23:22.400
+those fuzzy spheres as close to the origin as possible
+
+1:23:22.400,1:23:28.080
+and it's going to make them sort of overlap interpenetrate
+
+1:23:28.080,1:23:32.000
+but of course if they interpenetrate too much
+
+1:23:32.000,1:23:35.520
+if the two spheres for two very different uh samples
+
+1:23:35.520,1:23:40.159
+interpenetrate too much then those two samples are going to be confused
+
+1:23:40.159,1:23:45.360
+by the decoder and the reconstruction energy is going to get large
+
+1:23:45.360,1:23:48.560
+and so what the system ends up doing is only letting
+
+1:23:48.560,1:23:53.600
+two spheres overlap if the two samples are very similar
+
+1:23:53.920,1:23:58.000
+and so basically by doing this the system finds some sort of
+
+1:23:58.000,1:24:02.400
+you know representation of the manifold it puts the
+
+1:24:02.400,1:24:09.040
+the those those code vectors along uh a manifold if there is one
+
+1:24:09.360,1:24:13.520
+and that's the basic idea of uh variational of autoencoder now you can derive this
+
+1:24:13.520,1:24:17.760
+with math and it doesn't make anything much
+
+1:24:17.760,1:24:22.080
+you know easier to understand in fact it's much more abstract
+
+1:24:22.080,1:24:25.280
+but that's basically what it does in the end so there's a bit
+
+1:24:25.280,1:24:31.120
+uh there's a couple more tricks there um in that in that uh
+
+1:24:31.280,1:24:35.360
+in the variational of the autoencoder idea and you'll get some details uh with uh
+
+1:24:35.360,1:24:44.080
+Alfredo tomorrow um you can adapt the uh the size of those fuzzy balls
+
+1:24:44.080,1:24:48.400
+so basically you you can have the encoder compute the optimal size of the
+
+1:24:48.400,1:24:51.520
+balls in each direction and what you have to do is make sure
+
+1:24:53.520,1:24:55.520
+that the balls don't get too small and so
+
+1:24:55.520,1:24:59.600
+you put a penalty function that tries to make the
+
+1:24:59.600,1:25:04.880
+the variance of those balls uh the size in each dimension if you want
+
+1:25:04.880,1:25:09.760
+as close to one as possible they can get a bit smaller they can get larger if
+
+1:25:09.760,1:25:13.360
+they want but there's a cost for making making them
+
+1:25:13.360,1:25:18.719
+different from from one so now the the trick the the problem you
+
+1:25:18.719,1:25:23.760
+have with this is to adjust the relative importance
+
+1:25:23.760,1:25:30.000
+of the of this uh spring uh strength if the spring is too large is
+
+1:25:30.000,1:25:32.719
+the if the spring is too strong then the
+
+1:25:32.719,1:25:35.280
+fuzzy balls are all going to collapse in the center
+
+1:25:35.280,1:25:38.880
+and the system is not going to be able to reconstruct properly
+
+1:25:38.880,1:25:43.679
+if it's too uh weak then the fuzzy balls are going to fly away from each other
+
+1:25:43.679,1:25:45.840
+and the system is going to be able to reconstruct
+
+1:25:45.840,1:25:50.880
+everything and anything and so you have to strike a balance between the two and
+
+1:25:50.880,1:25:52.840
+that's kind of the the difficulty with variational
+
+1:25:52.840,1:25:56.480
+autocoder if you increase the strength of the spring a
+
+1:25:56.480,1:25:59.120
+little too much it's it's a term called KL divergence
+
+1:26:01.040,1:26:05.040
+in the in the in the system it's a KL divergence between
+
+1:26:05.040,1:26:09.280
+the gaussian basically of a gaussian it uh
+
+1:26:09.280,1:26:14.560
+it collapses okay um it you know all the fuzzy balls basically
+
+1:26:14.560,1:26:19.280
+get to the center and the system does not actually model it to that properly
+
+1:26:19.280,1:26:23.760
+I have a question uh about one of the previous lectures actually so
+
+1:26:23.760,1:26:28.560
+is that all right sure um yeah so when you were talking about
+
+1:26:28.560,1:26:32.560
+uh linearizability so generally when you were saying that stacking
+
+1:26:32.560,1:26:36.080
+linear layers one after the other without having non-linearities
+
+1:26:36.080,1:26:39.679
+is basically redundant because we can have one linear layer to do it
+
+1:26:39.679,1:26:45.679
+but I remember that you also mentioned there is one particular reason why you
+
+1:26:45.679,1:26:47.840
+might want to do this where you just stack
+
+1:26:47.840,1:26:51.679
+linear layers after this and you said well there's one reason but
+
+1:26:51.679,1:26:55.120
+you didn't go into that reason so i was wondering if there is anything
+
+1:26:55.120,1:26:59.280
+significant behind that uh so the situation I was describing
+
+1:26:59.280,1:27:04.800
+is that imagine you have uh you know some some big neural net
+
+1:27:04.800,1:27:09.440
+and it produces you know a feature vector of a certain size
+
+1:27:09.440,1:27:13.120
+and then your output is extremely large because
+
+1:27:13.120,1:27:16.639
+maybe you have many many categories maybe you're doing
+
+1:27:16.639,1:27:20.159
+a phonemes classification for a speech recognition system so
+
+1:27:20.159,1:27:26.080
+the number of categories here is uh you know 10 000 or something like that
+
+1:27:27.520,1:27:33.760
+okay I have to draw slowly so if your feature vector here is
+
+1:27:33.760,1:27:40.560
+itself something like like 10 000 the matrix to go from from here to here
+
+1:27:40.560,1:27:43.920
+will be 100 million right and that's probably a bit too much so
+
+1:27:49.440,1:27:53.280
+what people do is they say we're going to factorize
+
+1:27:53.280,1:27:59.199
+that matrix into the product of two skinny matrices
+
+1:27:59.440,1:28:02.560
+where the the middle dimension here is maybe
+
+1:28:02.560,1:28:05.760
+I don't know a thousand well you have you have
+
+1:28:05.760,1:28:08.960
+10k on the input 10k on the output and then the middle one
+
+1:28:08.960,1:28:12.159
+is 1k right so if you don't have the middle one
+
+1:28:12.159,1:28:15.360
+then the number of parameters you have is 10 to the 8.
+
+1:28:15.360,1:28:19.040
+if you do have the middle one is uh is 2 times
+
+1:28:19.040,1:28:24.960
+uh 10 to the you know seven okay so you you get a factor of of
+
+1:28:24.960,1:28:27.679
+10. if you make it 100 then it's you know 10
+
+1:28:27.679,1:28:32.239
+to the 6. so it becomes more manageable so basically you get a low rank
+
+1:28:32.239,1:28:37.120
+factorization so the overall matrices here that you
+
+1:28:37.120,1:28:40.480
+can call W is not going to be the the product of
+
+1:28:40.480,1:28:44.560
+two smaller matrices U and V
+
+1:28:44.560,1:28:48.960
+and because U and V uh the the middle dimension if you want
+
+1:28:48.960,1:28:52.560
+of U and V is smaller say 100 then the rank
+
+1:28:52.560,1:28:56.400
+of the corresponding matrix W would be smaller
+
+1:28:56.400,1:29:00.639
+there are people who do this without actually specifying the dimension
+
+1:29:00.639,1:29:04.320
+of the middle layer by doing what's called a minimization of nuclear norm
+
+1:29:04.320,1:29:08.560
+which is equivalent but uh I don't want to go into this but
+
+1:29:08.560,1:29:11.360
+that would be kind of a situation where you might want to actually
+
+1:29:11.360,1:29:17.760
+decompose a matrix into a product of two matrices to kind of save uh parameters
+
+1:29:17.760,1:29:21.760
+essentially your save computation um there's also another
+
+1:29:21.760,1:29:25.280
+uh interesting phenomenon which is that it turns out that
+
+1:29:25.280,1:29:28.320
+both learning and generalization actually are better
+
+1:29:28.320,1:29:31.679
+uh when you when you do this kind of factorization
+
+1:29:31.679,1:29:36.320
+even though the now the optimization with respect to this matrix becomes
+
+1:29:36.320,1:29:39.920
+non-convex it actually converges faster using
+
+1:29:39.920,1:29:44.800
+stochastic gradient there's a paper by a series of paper by
+
+1:29:44.800,1:29:49.679
+nadav if you're interested in this
+
+1:29:50.239,1:29:53.840
+Nadav Cohen I think he's from 2018
+
+1:29:58.320,1:30:03.520
+he's his co-author with Sanjiv uh Arora
+
+1:30:07.520,1:30:10.320
+from Princeton Nadav was uh a postdoc with Sanjiv Arora
+
+1:30:14.560,1:30:20.480
+and they had a series of papers on this um that explains why uh even linear
+
+1:30:20.480,1:30:23.840
+networks actually converge faster and they use it
+
+1:30:23.840,1:30:27.679
+also to um
+
+1:30:28.719,1:30:32.719
+to basically study the dynamics of learning uh in sort of non-convex
+
+1:30:32.719,1:30:38.400
+optimization as well as the the generalization properties
+
+1:30:38.400,1:30:42.800
+How important is it to have a kind of matching in a variational auto-encoder
+
+1:30:42.800,1:30:46.840
+how important is it to have a matching kind of architecture of an encoder and a
+
+1:30:46.840,1:30:50.400
+decoder there's no reason for the two
+
+1:30:50.400,1:30:55.920
+architectures to match it's very often the case that
+
+1:30:55.920,1:31:01.440
+decoding is much easier than encoding so if you take the example of sparse
+
+1:31:01.440,1:31:07.280
+coding which I talked about um the you know in sparse coding where
+
+1:31:07.280,1:31:10.800
+the encoder is one of those sort of listed type encoder the encoder is
+
+1:31:10.800,1:31:14.840
+actually quite complicated whereas the decoder is linear
+
+1:31:14.840,1:31:18.080
+okay uh this is kind of a special case because
+
+1:31:18.080,1:31:21.120
+the the code is high dimensional and sparse
+
+1:31:21.120,1:31:25.679
+and so high dimensional sparse codes uh you know any function of a
+
+1:31:25.679,1:31:29.440
+dimensional sparse code to any anywhere basically can be
+
+1:31:29.440,1:31:37.360
+is quasi-linear a one way to make a a function uh linear is to basically
+
+1:31:37.360,1:31:40.400
+represent this input variable in a in a high dimensional space using a
+
+1:31:40.400,1:31:44.639
+non-linear transformation we've talked about this we discussed you
+
+1:31:44.639,1:31:48.239
+know what were good features and good features
+
+1:31:48.239,1:31:52.239
+generally consist of sort of expanding the dimension uh of the
+
+1:31:52.239,1:31:56.800
+representation in a non-linear way and making this representation sparse
+
+1:31:56.800,1:32:00.560
+and the reason for this is that now you make your function linear so
+
+1:32:00.560,1:32:04.719
+you could very well have a very complex encoder and a very simple
+
+1:32:04.719,1:32:08.320
+decoder possibly a linear one as long as your
+
+1:32:08.320,1:32:13.199
+code is high dimensional now if you have a low dimensional code
+
+1:32:13.199,1:32:16.239
+so auto-encoder with the middle layer is very narrow
+
+1:32:16.239,1:32:20.159
+where the code layer is very narrow then it could become very complicated to do
+
+1:32:20.159,1:32:23.679
+the decoding it may become a very highly nonlinear
+
+1:32:23.679,1:32:27.760
+function now to do the decoding and so now you may need multiple layers
+
+1:32:27.760,1:32:31.280
+there's no reason again to think that the architecture of the
+
+1:32:31.280,1:32:35.600
+decoder should be similar to the architecture of the encoder
+
+1:32:35.760,1:32:39.040
+now there is you know there might be they might
+
+1:32:39.040,1:32:42.080
+okay that said there might actually be good reason for it
+
+1:32:42.080,1:32:47.280
+okay uh and in fact there are models that uh I haven't talked about
+
+1:32:47.280,1:32:52.080
+because they're not kind of proven but um which are called uh stacked
+
+1:32:52.080,1:32:57.760
+autoencoders where where basically you have this idea so um you essentially
+
+1:32:57.760,1:33:00.000
+have an auto encoder where you have a
+
+1:33:02.800,1:33:06.560
+reconstruction error I'm actually going to erase this and
+
+1:33:06.560,1:33:10.000
+make it look like the this you know the autoencoder that
+
+1:33:10.000,1:33:13.360
+we talked about where there is sort of a cost for making the the latent variable
+
+1:33:13.360,1:33:17.120
+here different from the output of the of the
+
+1:33:17.120,1:33:23.199
+encoder so this is a z bar and this is a z if you want okay
+
+1:33:23.199,1:33:28.880
+now that's auto-encoder drawn in a in a funny way so this is y
+
+1:33:28.880,1:33:31.840
+and this is y bar at the bottom now I can stack
+
+1:33:35.760,1:33:40.960
+another one of those guys on top okay now I'm going to have to call this
+
+1:33:47.199,1:33:51.100
+z1 and I'm going to call this z2
+
+1:33:51.100,1:33:54.489
+[Music] etc
+
+1:34:09.040,1:34:13.600
+okay this I'm going to call y bar and this I'm going to call y
+
+1:34:13.600,1:34:19.840
+now what's interesting about okay I'm going to call the bottom one x
+
+1:34:19.840,1:34:23.040
+now change name now if you took if you look at the
+
+1:34:27.440,1:34:31.280
+you ignore the right part of the system look at the left part
+
+1:34:31.280,1:34:35.760
+you go to y and that looks very much like a like a classical
+
+1:34:35.760,1:34:40.080
+recognizer where x is the input y bar is a prediction for
+
+1:34:40.080,1:34:42.719
+the output and y is the desired output and there's a cost function that
+
+1:34:42.719,1:34:49.040
+measures the difference between the two okay uh the other branch that goes from
+
+1:34:49.040,1:34:52.639
+y to x that's kind of like a decoder where y is
+
+1:34:52.639,1:34:55.360
+the code but then you have codes all the way in
+
+1:34:55.360,1:34:58.639
+the middle because it's kind of a stacked autoencoder right so
+
+1:34:58.639,1:35:02.159
+every pair of layer every pair of encoder decoder is kind of a little auto
+
+1:35:02.159,1:35:04.400
+encoder and you kind of stack them on top of
+
+1:35:04.400,1:35:08.159
+each other and what you'd like is find a way of training the system in
+
+1:35:08.159,1:35:11.119
+such a way that if you don't have a label for samples
+
+1:35:11.119,1:35:15.119
+you don't you don't know why for the for example you just train this
+
+1:35:15.119,1:35:20.239
+as an auto encoder but if you do have a y then you you you
+
+1:35:20.239,1:35:23.840
+clamp uh y to its desired value and then this
+
+1:35:23.840,1:35:28.880
+system becomes now a combination of predictor a recognizer
+
+1:35:28.880,1:35:33.760
+and an autoencoder now there is a slight problem with this
+
+1:35:33.760,1:35:36.800
+picture this a number of different problems the first
+
+1:35:36.800,1:35:39.679
+problem is that if again if z1 for example has enough
+
+1:35:43.199,1:35:46.880
+capacity uh and you only train on unlabeled
+
+1:35:46.880,1:35:51.040
+samples the system is only going to carry the information through z1 and
+
+1:35:51.040,1:35:53.360
+it's going to just completely ignore the top layers
+
+1:35:53.360,1:35:56.880
+because there's not enough capacity in z1 to do the perfect reconstruction
+
+1:35:56.880,1:36:01.760
+so it's going to uh you know just put all the information to z1 and
+
+1:36:01.760,1:36:05.440
+then all the others z2 and y will be constant
+
+1:36:05.440,1:36:09.119
+because the system won't need won't need them so again you will need to
+
+1:36:09.119,1:36:15.040
+regularize to regularize z to prevent it from
+
+1:36:15.040,1:36:18.400
+capturing all the information and same for the other layers perhaps
+
+1:36:22.719,1:36:29.199
+now the other thing is uh would you know do this thing need to be
+
+1:36:29.199,1:36:32.719
+linear non-linear and that depends on the relative size of the
+
+1:36:32.719,1:36:36.960
+various z's so if you go from low dimension to high dimension
+
+1:36:36.960,1:36:40.480
+you need something that's non-linear but if you go from high dimension to low
+
+1:36:43.600,1:36:46.960
+dimension you can probably do it with a linear
+
+1:36:46.960,1:36:50.000
+kind of like sparse coding um and so you will see that the system
+
+1:36:53.920,1:36:58.639
+may have uh you know an alternation
+
+1:36:58.639,1:37:05.440
+of linear and nonlinear stages in sort of opposite phase if you
+
+1:37:05.440,1:37:09.520
+want because you need linear to go from high
+
+1:37:09.520,1:37:13.440
+dimension to low dimension and then nonlinear to go from low
+
+1:37:13.440,1:37:17.520
+dimension to high dimension and then again linear to go back to low
+
+1:37:17.520,1:37:23.119
+dimension it's the opposite the other way around
+
+1:37:23.920,1:37:27.679
+this is you know people have been proposing things like this but not
+
+1:37:27.679,1:37:29.679
+really sort of training them on a large scale
+
+1:37:29.679,1:37:33.040
+so there's a lot of sort of open questions around those things
+
+1:37:33.040,1:37:36.159
+uh one if you're curious one paper that I've
+
+1:37:36.159,1:37:43.040
+I've worked on with my former student uh called uh Jake Zhao
+
+1:37:43.119,1:37:51.119
+um is a system called stacked what where
+
+1:37:51.119,1:37:54.080
+auto encoder and it's a system a bit of this type but
+
+1:37:56.719,1:37:59.840
+there is sort of extra variables kind of going
+
+1:37:59.840,1:38:04.400
+this way which are basically the position of
+
+1:38:04.400,1:38:07.280
+switches in pooling I don't want to go into details but
+
+1:38:07.280,1:38:10.800
+if you look for a paper about stack where auto-encoders you'll find two paper
+
+1:38:10.800,1:38:14.800
+one by Jake and myself and a follower paper by a
+
+1:38:14.800,1:38:20.960
+group from Michigan university of Michigan that
+
+1:38:20.960,1:38:25.040
+basically uh enhanced it and sort of trained them on imagenet and got some
+
+1:38:25.040,1:38:29.119
+decent results so those are kind of architectures you can use to do kind of
+
+1:38:29.119,1:38:33.760
+self-supervised learning just to clarify the parameters for the
+
+1:38:33.760,1:38:37.119
+spring is for the KL divergence term in the loss
+
+1:38:37.119,1:38:40.800
+right yeah so the KL divergence uh term in the
+
+1:38:40.800,1:38:44.159
+in the loss we're gonna see this tomorrow guys so
+
+1:38:44.159,1:38:47.280
+uh we're gonna be going through the equation and all these uh
+
+1:38:47.280,1:38:51.600
+details so it's right I cover this tomorrow so I'll see you tomorrow
+
+1:38:51.600,1:38:55.119
+hopefully with the video as well uh if the
+
+1:38:55.119,1:38:58.800
+bandwidth supports it I will put this like this uh the
+
+1:38:58.800,1:39:03.040
+recording of this uh class online as soon as is actually
+
+1:39:03.040,1:39:06.800
+available to me I will add it to the NYU streaming
+
+1:39:06.800,1:39:11.040
+platform and then you know I will try to clean it
+
+1:39:11.040,1:39:13.600
+up as I can and you know upload it as well
+
+1:39:13.600,1:39:18.400
+on youtube later on all right so thank you again um stay
+
+1:39:18.400,1:39:27.760
+home stay warm and I see you tomorrow stay safe bye stay safe
