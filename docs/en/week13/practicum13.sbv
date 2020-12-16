@@ -1,5481 +1,2741 @@
 0:00:00.320,0:00:03.360
-um yeah so i was saying that i i
-
-0:00:02.399,0:00:06.560
-prepared this
+um yeah so i was saying that i i prepared this
 
 0:00:03.360,0:00:06.560
-lecture from scratch and
-
-0:00:07.200,0:00:12.639
-uh it's been challenging
+lecture from scratch and uh it's been challenging
 
 0:00:10.240,0:00:13.679
-it's the second week i'm not doing
-
-0:00:12.639,0:00:15.440
-anything but
+it's the second week i'm not doing anything but
 
 0:00:13.679,0:00:16.720
-preparing and reading and studying and
-
-0:00:15.440,0:00:19.119
-getting crazy but
+preparing and reading and studying and getting crazy but
 
 0:00:16.720,0:00:21.600
-i think it's a improvement i'm i'm
-
-0:00:19.119,0:00:21.600
-growing
+i think it's a improvement i'm i'm growing
 
 0:00:21.760,0:00:29.199
-okay um
-
-0:00:24.800,0:00:29.199
-ah what do you do research on
+okay um ah what do you do research on
 
 0:00:29.599,0:00:32.960
-how to teach better
-
-0:00:33.040,0:00:36.640
-uh this week i'll be just reading
+how to teach better uh this week i'll be just reading
 
 0:00:35.520,0:00:38.640
-everything i could
-
-0:00:36.640,0:00:40.399
-about this graph neural net graph
+everything i could about this graph neural net graph
 
 0:00:38.640,0:00:44.000
-convolutional networks
-
-0:00:40.399,0:00:47.200
-uh i don't know i read maybe a few
+convolutional networks uh i don't know i read maybe a few
 
 0:00:44.000,0:00:49.760
-tens of publications uh i'm a bit drunk
-
-0:00:47.200,0:00:49.760
-to be honest
+tens of publications uh i'm a bit drunk to be honest
 
 0:00:50.480,0:00:54.480
-okay so so so so what are we talking
-
-0:00:52.960,0:00:56.719
-today about
+okay so so so so what are we talking today about
 
 0:00:54.480,0:00:58.399
-graph convolutional networks exploiting
-
-0:00:56.719,0:01:01.760
-domain sparsity right
+graph convolutional networks exploiting domain sparsity right
 
 0:00:58.399,0:01:04.239
-well like yesterday we saw that
-
-0:01:01.760,0:01:06.880
-also xavier mentioned the three property
+well like yesterday we saw that also xavier mentioned the three property
 
 0:01:04.239,0:01:10.320
-of natural signals that are
-
-0:01:06.880,0:01:12.560
-locality stationarity and
+of natural signals that are locality stationarity and
 
 0:01:10.320,0:01:14.080
-he called it hierarchical well i called
-
-0:01:12.560,0:01:15.759
-compositionality he used the term
+he called it hierarchical well i called compositionality he used the term
 
 0:01:14.080,0:01:17.439
-compositionality for
-
-0:01:15.759,0:01:18.880
-meaning the whole the all three things
+compositionality for meaning the whole the all three things
 
 0:01:17.439,0:01:21.040
-but uh
-
-0:01:18.880,0:01:22.000
-again i guess it's just uh it's just
+but uh again i guess it's just uh it's just
 
 0:01:21.040,0:01:25.200
-jurgen
-
-0:01:22.000,0:01:27.040
-we mean the same thing right um
+jurgen we mean the same thing right um
 
 0:01:25.200,0:01:29.280
-and so what are these graph
-
-0:01:27.040,0:01:32.159
-convolutional net networks are again
+and so what are these graph convolutional net networks are again
 
 0:01:29.280,0:01:34.240
-another type of uh architecture or the
-
-0:01:32.159,0:01:35.600
-another way of exploiting what is the
+another type of uh architecture or the another way of exploiting what is the
 
 0:01:34.240,0:01:38.240
-structure
-
-0:01:35.600,0:01:38.880
-of your data right and so let's uh
+structure of your data right and so let's uh
 
 0:01:38.240,0:01:41.920
-actually
-
-0:01:38.880,0:01:42.479
-get it let's get there from just last
+actually get it let's get there from just last
 
 0:01:41.920,0:01:45.200
-week
-
-0:01:42.479,0:01:45.680
-lesson so last week let's get let's have
+week lesson so last week let's get let's have
 
 0:01:45.200,0:01:48.159
-a
-
-0:01:45.680,0:01:49.200
-quick recap right we talk about
+a quick recap right we talk about
 
 0:01:48.159,0:01:51.920
-self-attention
-
-0:01:49.200,0:01:53.840
-in self-attention we had this set of
+self-attention in self-attention we had this set of
 
 0:01:51.920,0:01:58.159
-axes right
-
-0:01:53.840,0:02:00.320
-so x we can go x1 x2 and so on until xt
+axes right so x we can go x1 x2 and so on until xt
 
 0:01:58.159,0:02:02.320
-and they you can you know stack these
-
-0:02:00.320,0:02:03.840
-x's one after each other you get that
+and they you can you know stack these x's one after each other you get that
 
 0:02:02.320,0:02:07.439
-capital x right
-
-0:02:03.840,0:02:10.720
-matrix uh each small x x
+capital x right matrix uh each small x x
 
 0:02:07.439,0:02:11.280
-is the size of rn and then my hidden
-
-0:02:10.720,0:02:14.480
-layer
+is the size of rn and then my hidden layer
 
 0:02:11.280,0:02:15.760
-for the whatever x i take in
-
-0:02:14.480,0:02:19.360
-consideration
+for the whatever x i take in consideration
 
 0:02:15.760,0:02:22.959
-is going to be this linear
-
-0:02:19.360,0:02:24.560
-linear combination of these vectors in
+is going to be this linear linear combination of these vectors in
 
 0:02:22.959,0:02:27.040
-the set okay
-
-0:02:24.560,0:02:28.560
-and we know it's actually from i think
+the set okay and we know it's actually from i think
 
 0:02:27.040,0:02:31.120
-lab number four
-
-0:02:28.560,0:02:32.480
-that a linear combination of vectors can
+lab number four that a linear combination of vectors can
 
 0:02:31.120,0:02:35.840
-be written as a
-
-0:02:32.480,0:02:36.879
-matrix vector multiplication and so we
+be written as a matrix vector multiplication and so we
 
 0:02:35.840,0:02:39.920
-have here that
-
-0:02:36.879,0:02:41.040
-the h it can be is equal to this capital
+have here that the h it can be is equal to this capital
 
 0:02:39.920,0:02:44.000
-x
-
-0:02:41.040,0:02:45.200
-or times a right so a contains the
+x or times a right so a contains the
 
 0:02:44.000,0:02:48.640
-coefficient
-
-0:02:45.200,0:02:50.640
-that are scaling these vectors okay
+coefficient that are scaling these vectors okay
 
 0:02:48.640,0:02:52.800
-then we had like we were saying that all
-
-0:02:50.640,0:02:55.920
-these coefficients are positive
+then we had like we were saying that all these coefficients are positive
 
 0:02:52.800,0:02:56.879
-uh they have to sum to one and then if
-
-0:02:55.920,0:02:58.720
-only one
+uh they have to sum to one and then if only one
 
 0:02:56.879,0:03:00.480
-is actually one then we have the heart
-
-0:02:58.720,0:03:03.360
-attention okay and this big
+is actually one then we have the heart attention okay and this big
 
 0:03:00.480,0:03:04.879
-x is just this collection of x's okay
-
-0:03:03.360,0:03:07.200
-but then again it's a set
+x is just this collection of x's okay but then again it's a set
 
 0:03:04.879,0:03:10.080
-right a set means it's not a sequence
-
-0:03:07.200,0:03:13.360
-there is no order okay
+right a set means it's not a sequence there is no order okay
 
 0:03:10.080,0:03:14.640
-um so so far you should be familiar
-
-0:03:13.360,0:03:16.319
-right you should be very actually
+um so so far you should be familiar right you should be very actually
 
 0:03:14.640,0:03:16.879
-comfortable with this kind of notation
-
-0:03:16.319,0:03:19.360
-right
+comfortable with this kind of notation right
 
 0:03:16.879,0:03:21.360
-this linear combination of columns it's
-
-0:03:19.360,0:03:24.000
-just a matrix
+this linear combination of columns it's just a matrix
 
 0:03:21.360,0:03:24.640
-multiplication okay so then i was
-
-0:03:24.000,0:03:26.080
-reading
+multiplication okay so then i was reading
 
 0:03:24.640,0:03:27.840
-the literature about this graph
-
-0:03:26.080,0:03:30.480
-convolutional network and i read and i
+the literature about this graph convolutional network and i read and i
 
 0:03:27.840,0:03:30.480
-read them like
-
-0:03:31.440,0:03:38.799
-oh it's actually the same thing
+read them like oh it's actually the same thing
 
 0:03:34.640,0:03:40.640
-what the heck so so so so actually let's
-
-0:03:38.799,0:03:43.519
-get there from this perspective right
+what the heck so so so so actually let's get there from this perspective right
 
 0:03:40.640,0:03:44.480
-it is my perspective again might be not
-
-0:03:43.519,0:03:48.720
-the best but
+it is my perspective again might be not the best but
 
 0:03:44.480,0:03:51.920
-you know you have me so you deal with me
-
-0:03:48.720,0:03:54.000
-so let's start with this gcn
+you know you have me so you deal with me so let's start with this gcn
 
 0:03:51.920,0:03:55.680
-uh graphic ethnographic graph
-
-0:03:54.000,0:03:58.640
-convolutional networks
+uh graphic ethnographic graph convolutional networks
 
 0:03:55.680,0:03:58.959
-so my a which is this vector uh on the
-
-0:03:58.640,0:04:00.480
-left
+so my a which is this vector uh on the left
 
 0:03:58.959,0:04:02.879
-here in the in that in the attention
-
-0:04:00.480,0:04:04.879
-that is containing all the coefficients
+here in the in that in the attention that is containing all the coefficients
 
 0:04:02.879,0:04:06.720
-that are basically weighting these
-
-0:04:04.879,0:04:08.480
-columns
+that are basically weighting these columns
 
 0:04:06.720,0:04:10.239
-in this case is going to be i'm going to
-
-0:04:08.480,0:04:13.040
-call this my
+in this case is going to be i'm going to call this my
 
 0:04:10.239,0:04:14.879
-agency vector okay and what the heck is
-
-0:04:13.040,0:04:17.840
-this agency vector
+agency vector okay and what the heck is this agency vector
 
 0:04:14.879,0:04:18.959
-so we have to start introducing a little
-
-0:04:17.840,0:04:20.959
-bit of notation
+so we have to start introducing a little bit of notation
 
 0:04:18.959,0:04:23.280
-in this case i introduce here my first
-
-0:04:20.959,0:04:26.320
-vertex uh the red one
+in this case i introduce here my first vertex uh the red one
 
 0:04:23.280,0:04:27.120
-which is uh also has you know
-
-0:04:26.320,0:04:30.639
-representing
+which is uh also has you know representing
 
 0:04:27.120,0:04:33.680
-representing my x uh you know my even x
-
-0:04:30.639,0:04:37.040
-input and it's gonna have you know my
+representing my x uh you know my even x input and it's gonna have you know my
 
 0:04:33.680,0:04:37.520
-h uh hidden layer like we were seeing
-
-0:04:37.040,0:04:40.479
-before
+h uh hidden layer like we were seeing before
 
 0:04:37.520,0:04:41.520
-on the on the attention part we had like
-
-0:04:40.479,0:04:45.280
-this generic
+on the on the attention part we had like this generic
 
 0:04:41.520,0:04:47.440
-x and generic h so i'm gonna keep using
-
-0:04:45.280,0:04:50.560
-this kind of generic notation
+x and generic h so i'm gonna keep using this kind of generic notation
 
 0:04:47.440,0:04:51.440
-so i have my generic vertex v where i
-
-0:04:50.560,0:04:54.880
-can have my
+so i have my generic vertex v where i can have my
 
 0:04:51.440,0:04:56.479
-generic x and my generic h okay
-
-0:04:54.880,0:04:58.240
-and then of course you're going to have
+generic x and my generic h okay and then of course you're going to have
 
 0:04:56.479,0:04:59.440
-all the other vertices right which i'm
-
-0:04:58.240,0:05:03.120
-going to be calling them
+all the other vertices right which i'm going to be calling them
 
 0:04:59.440,0:05:04.160
-vj on which you can find the signal
-
-0:05:03.120,0:05:07.759
-which is going to be the
+vj on which you can find the signal which is going to be the
 
 0:05:04.160,0:05:09.280
-xj and the hj okay they hit the
-
-0:05:07.759,0:05:12.880
-representation and the
+xj and the hj okay they hit the representation and the
 
 0:05:09.280,0:05:14.320
-input value for this specific vertex or
-
-0:05:12.880,0:05:16.479
-node
+input value for this specific vertex or node
 
 0:05:14.320,0:05:18.080
-and then what well you have many no you
-
-0:05:16.479,0:05:21.120
-have just the whole
+and then what well you have many no you have just the whole
 
 0:05:18.080,0:05:23.840
-collection of data points
-
-0:05:21.120,0:05:24.560
-but then there is a difference now we
+collection of data points but then there is a difference now we
 
 0:05:23.840,0:05:27.120
-have that
-
-0:05:24.560,0:05:29.520
-these uh nodes these vertices are
+have that these uh nodes these vertices are
 
 0:05:27.120,0:05:32.560
-actually connected
-
-0:05:29.520,0:05:35.360
-and so we draw a set of arrows
+actually connected and so we draw a set of arrows
 
 0:05:32.560,0:05:37.759
-and so right now basically we're going
-
-0:05:35.360,0:05:39.120
-to have that my capital a my my sorry my
+and so right now basically we're going to have that my capital a my my sorry my
 
 0:05:37.759,0:05:42.160
-vector a
-
-0:05:39.120,0:05:44.880
-is going to be having components alpha j
+vector a is going to be having components alpha j
 
 0:05:42.160,0:05:45.919
-which are equal to 1 whenever there is
-
-0:05:44.880,0:05:49.360
-an incoming
+which are equal to 1 whenever there is an incoming
 
 0:05:45.919,0:05:52.800
-arrow from vector v j
-
-0:05:49.360,0:05:54.880
-to myself okay so
+arrow from vector v j to myself okay so
 
 0:05:52.800,0:05:56.960
-if you think about how we were doing
-
-0:05:54.880,0:05:59.919
-this before for the attention
+if you think about how we were doing this before for the attention
 
 0:05:56.960,0:06:02.000
-we were computing a as is of dark max or
-
-0:05:59.919,0:06:05.199
-just the arc max if it's a hard
+we were computing a as is of dark max or just the arc max if it's a hard
 
 0:06:02.000,0:06:06.160
-version of the attention between uh like
-
-0:06:05.199,0:06:08.720
-of my
+version of the attention between uh like of my
 
 0:06:06.160,0:06:09.919
-uh scalar product the scalar product of
-
-0:06:08.720,0:06:12.479
-all those
+uh scalar product the scalar product of all those
 
 0:06:09.919,0:06:14.639
-keys or all those rows times my query
-
-0:06:12.479,0:06:15.440
-right so you had all the keys times the
+keys or all those rows times my query right so you had all the keys times the
 
 0:06:14.639,0:06:17.520
-query
-
-0:06:15.440,0:06:20.880
-and then you had this scores now we're
+query and then you had this scores now we're
 
 0:06:17.520,0:06:22.720
-performing soft arg max or
-
-0:06:20.880,0:06:24.800
-arc max and then you have basically
+performing soft arg max or arc max and then you have basically
 
 0:06:22.720,0:06:28.080
-these values that are
-
-0:06:24.800,0:06:30.240
-telling you who you should look at
+these values that are telling you who you should look at
 
 0:06:28.080,0:06:32.240
-in this case here in the graphical graph
-
-0:06:30.240,0:06:34.479
-convolutional network
+in this case here in the graphical graph convolutional network
 
 0:06:32.240,0:06:35.440
-we have this structure that is given to
-
-0:06:34.479,0:06:38.800
-you
+we have this structure that is given to you
 
 0:06:35.440,0:06:41.120
-already okay and so again this
-
-0:06:38.800,0:06:42.479
-agency vector can be thought again as
+already okay and so again this agency vector can be thought again as
 
 0:06:41.120,0:06:45.520
-this vector with
-
-0:06:42.479,0:06:48.560
-ones corresponding to these
+this vector with ones corresponding to these
 
 0:06:45.520,0:06:49.440
-vertices that are having arrows pointing
-
-0:06:48.560,0:06:52.560
-towards
+vertices that are having arrows pointing towards
 
 0:06:49.440,0:06:54.720
-myself the red guy okay so
-
-0:06:52.560,0:06:55.680
-if you understand this it's finished the
+myself the red guy okay so if you understand this it's finished the
 
 0:06:54.720,0:06:58.560
-lesson is concluded
-
-0:06:55.680,0:06:59.280
-right because exactly everything else
+lesson is concluded right because exactly everything else
 
 0:06:58.560,0:07:02.720
-will follow
-
-0:06:59.280,0:07:06.240
-uh automatically right so
+will follow uh automatically right so
 
 0:07:02.720,0:07:08.880
-d is going to be my one norm which is
-
-0:07:06.240,0:07:09.360
-what the number of ones i have right so
+d is going to be my one norm which is what the number of ones i have right so
 
 0:07:08.880,0:07:11.919
-if
-
-0:07:09.360,0:07:12.400
-in my case here d is going to be two
+if in my case here d is going to be two
 
 0:07:11.919,0:07:14.960
-right
-
-0:07:12.400,0:07:18.080
-what is the size of a in this case in
+right what is the size of a in this case in
 
 0:07:14.960,0:07:18.080
-this case can you tell me
-
-0:07:18.400,0:07:26.400
-if you're following are you following
+this case can you tell me if you're following are you following
 
 0:07:21.840,0:07:29.360
-answer my question are you hearing me
-
-0:07:26.400,0:07:30.000
-oh no no yeah and the number of nodes
+answer my question are you hearing me oh no no yeah and the number of nodes
 
 0:07:29.360,0:07:31.680
-right so the
-
-0:07:30.000,0:07:34.160
-number of nodes in this case is six
+right so the number of nodes in this case is six
 
 0:07:31.680,0:07:35.759
-right and we call this from in this
-
-0:07:34.160,0:07:36.479
-alpha in the surface tension we were
+right and we call this from in this alpha in the surface tension we were
 
 0:07:35.759,0:07:39.759
-calling this
-
-0:07:36.479,0:07:42.080
-lowercase t right and so capita
+calling this lowercase t right and so capita
 
 0:07:39.759,0:07:42.960
-lower lowercase a a vector is going to
-
-0:07:42.080,0:07:46.240
-be of course
+lower lowercase a a vector is going to be of course
 
 0:07:42.960,0:07:48.160
-of size t because you have to multiply t
-
-0:07:46.240,0:07:49.840
-vectors right so you're going to have t
+of size t because you have to multiply t vectors right so you're going to have t
 
 0:07:48.160,0:07:51.680
-nodes of t vectors
-
-0:07:49.840,0:07:53.919
-and therefore you need t coefficients
+nodes of t vectors and therefore you need t coefficients
 
 0:07:51.680,0:07:57.360
-right so of course
-
-0:07:53.919,0:07:59.759
-i think a has size t
+right so of course i think a has size t
 
 0:07:57.360,0:08:00.800
-and d which is the number of ones
-
-0:07:59.759,0:08:04.240
-basically
+and d which is the number of ones basically
 
 0:08:00.800,0:08:05.919
-is going to be the um
-
-0:08:04.240,0:08:08.000
-is going to be basically the degree
+is going to be the um is going to be basically the degree
 
 0:08:05.919,0:08:08.879
-right i think this can be also written
-
-0:08:08.000,0:08:11.520
-as the norm
+right i think this can be also written as the norm
 
 0:08:08.879,0:08:13.840
-zero i think yeah this is just normal
-
-0:08:11.520,0:08:13.840
-zero right
+zero i think yeah this is just normal zero right
 
 0:08:14.080,0:08:20.639
-cool cool all right um what next
-
-0:08:17.840,0:08:21.680
-so in self attention we had that my
+cool cool all right um what next so in self attention we had that my
 
 0:08:20.639,0:08:25.759
-hidden layer
-
-0:08:21.680,0:08:28.720
-was this matrix multiplication
+hidden layer was this matrix multiplication
 
 0:08:25.759,0:08:30.080
-of my x times a right so this means the
-
-0:08:28.720,0:08:32.800
-columns of the x
+of my x times a right so this means the columns of the x
 
 0:08:30.080,0:08:34.880
-are scaled by the factor factors inside
-
-0:08:32.800,0:08:37.919
-a
+are scaled by the factor factors inside a
 
 0:08:34.880,0:08:37.919
-okay first issue
-
-0:08:38.159,0:08:43.279
-so if you have multiple ones this h is
+okay first issue so if you have multiple ones this h is
 
 0:08:41.519,0:08:45.279
-going to be larger for
-
-0:08:43.279,0:08:46.560
-uh vertices that have many incoming
+going to be larger for uh vertices that have many incoming
 
 0:08:45.279,0:08:48.640
-connections right
-
-0:08:46.560,0:08:50.640
-and if he has like let's say just one
+connections right and if he has like let's say just one
 
 0:08:48.640,0:08:52.800
-incoming connection is going to be
-
-0:08:50.640,0:08:54.640
-you know small right so this stuff is
+incoming connection is going to be you know small right so this stuff is
 
 0:08:52.800,0:08:56.560
-proportional to the number of
-
-0:08:54.640,0:08:57.760
-uh incoming connections so how can we
+proportional to the number of uh incoming connections so how can we
 
 0:08:56.560,0:09:00.800
-fix that
-
-0:08:57.760,0:09:03.279
-oh hold on messages incoming messages
+fix that oh hold on messages incoming messages
 
 0:09:00.800,0:09:04.399
-yeah of course you divide by the number
-
-0:09:03.279,0:09:07.120
-of items right
+yeah of course you divide by the number of items right
 
 0:09:04.399,0:09:09.600
-and so we multiply that with by d to the
-
-0:09:07.120,0:09:12.640
-minus one cool cool cool
+and so we multiply that with by d to the minus one cool cool cool
 
 0:09:09.600,0:09:13.200
-um so what next or maybe we want to
-
-0:09:12.640,0:09:15.360
-rotate
+um so what next or maybe we want to rotate
 
 0:09:13.200,0:09:17.040
-things so let's put there a rotating
-
-0:09:15.360,0:09:20.240
-metrics
+things so let's put there a rotating metrics
 
 0:09:17.040,0:09:22.959
-um and then we haven't
-
-0:09:20.240,0:09:25.200
-we haven't considered ourselves right so
+um and then we haven't we haven't considered ourselves right so
 
 0:09:22.959,0:09:26.399
-this is basically considering all the
-
-0:09:25.200,0:09:29.279
-incoming edges
+this is basically considering all the incoming edges
 
 0:09:26.399,0:09:30.959
-but we don't consider ourselves we might
-
-0:09:29.279,0:09:33.519
-want to consider ourselves right
+but we don't consider ourselves we might want to consider ourselves right
 
 0:09:30.959,0:09:35.279
-as there would be a self connection so
-
-0:09:33.519,0:09:37.440
-we can add this another
+as there would be a self connection so we can add this another
 
 0:09:35.279,0:09:40.160
-another guy right in this ul rotated
-
-0:09:37.440,0:09:43.360
-version of the x
+another guy right in this ul rotated version of the x
 
 0:09:40.160,0:09:44.320
-cool uh then just to make the whole
-
-0:09:43.360,0:09:46.320
-thing
+cool uh then just to make the whole thing
 
 0:09:44.320,0:09:48.320
-uh looking like a neural network what do
-
-0:09:46.320,0:09:51.519
-we add
+uh looking like a neural network what do we add
 
 0:09:48.320,0:09:52.560
-yeah you know linear function of course
-
-0:09:51.519,0:09:56.160
-right
+yeah you know linear function of course right
 
 0:09:52.560,0:09:58.160
-relu sigmoid and h whatever okay
-
-0:09:56.160,0:10:00.000
-uh we said that we have like several of
+relu sigmoid and h whatever okay uh we said that we have like several of
 
 0:09:58.160,0:10:01.839
-these vertices right we don't have just
-
-0:10:00.000,0:10:02.800
-one vertex right we don't just have one
+these vertices right we don't have just one vertex right we don't just have one
 
 0:10:01.839,0:10:06.000
-x we have many
-
-0:10:02.800,0:10:09.279
-of these guys right so we had a set of
+x we have many of these guys right so we had a set of
 
 0:10:06.000,0:10:12.640
-vertices or set of inputs right for i
-
-0:10:09.279,0:10:15.040
-that goes from one to t and this leads
+vertices or set of inputs right for i that goes from one to t and this leads
 
 0:10:12.640,0:10:17.040
-therefore to this matrix notation right
-
-0:10:15.040,0:10:20.079
-so you just stack multiple h's
+therefore to this matrix notation right so you just stack multiple h's
 
 0:10:17.040,0:10:22.480
-you get a matrix by stacking multiple
-
-0:10:20.079,0:10:24.000
-x's you know you rotate multiple x's you
+you get a matrix by stacking multiple x's you know you rotate multiple x's you
 
 0:10:22.480,0:10:27.440
-just get the stack
-
-0:10:24.000,0:10:30.720
-and then you sum this to the attention
+just get the stack and then you sum this to the attention
 
 0:10:27.440,0:10:32.320
-where the attention like the agency
-
-0:10:30.720,0:10:32.959
-vector now it's going to be agency
+where the attention like the agency vector now it's going to be agency
 
 0:10:32.320,0:10:35.440
-matrix
-
-0:10:32.959,0:10:36.320
-it's going to be all these columns right
+matrix it's going to be all these columns right
 
 0:10:35.440,0:10:38.640
-uh where
-
-0:10:36.320,0:10:40.240
-they tell you where where are the
+uh where they tell you where where are the
 
 0:10:38.640,0:10:41.440
-incoming connections right those
-
-0:10:40.240,0:10:44.240
-incoming arrows
+incoming connections right those incoming arrows
 
 0:10:41.440,0:10:46.000
-and that d is going to be the uh the
-
-0:10:44.240,0:10:47.760
-inverse of the diagonal
+and that d is going to be the uh the inverse of the diagonal
 
 0:10:46.000,0:10:50.560
-where you have all the degrees on the
-
-0:10:47.760,0:10:54.000
-diagonal okay
+where you have all the degrees on the diagonal okay
 
 0:10:50.560,0:10:57.120
-finish that was it right
-
-0:10:54.000,0:10:58.480
-graph convolutional networks it looks
+finish that was it right graph convolutional networks it looks
 
 0:10:57.120,0:11:01.360
-like attention to me
-
-0:10:58.480,0:11:03.360
-but okay so what do we do today for the
+like attention to me but okay so what do we do today for the
 
 0:11:01.360,0:11:05.519
-lab okay are there questions so far
-
-0:11:03.360,0:11:07.040
-i mean are you with me are you have you
+lab okay are there questions so far i mean are you with me are you have you
 
 0:11:05.519,0:11:08.079
-been following right there is nothing
-
-0:11:07.040,0:11:09.920
-here that we haven't
+been following right there is nothing here that we haven't
 
 0:11:08.079,0:11:11.680
-seen last time basically well
-
-0:11:09.920,0:11:14.880
-non-linearities
+seen last time basically well non-linearities
 
 0:11:11.680,0:11:15.680
-self-connection where do features come
-
-0:11:14.880,0:11:18.800
-in
+self-connection where do features come in
 
 0:11:15.680,0:11:21.040
-isn't x a feature okay x is a feature
-
-0:11:18.800,0:11:24.000
-yes
+isn't x a feature okay x is a feature yes
 
 0:11:21.040,0:11:24.720
-x is a feature and the feature here are
-
-0:11:24.000,0:11:26.560
-so there is
+x is a feature and the feature here are so there is
 
 0:11:24.720,0:11:28.800
-like there is a graph that is telling
-
-0:11:26.560,0:11:31.680
-you which
+like there is a graph that is telling you which
 
 0:11:28.800,0:11:32.079
-vertices are connected and each vertex
-
-0:11:31.680,0:11:34.399
-has
+vertices are connected and each vertex has
 
 0:11:32.079,0:11:35.519
-a x which is the input and then it's
-
-0:11:34.399,0:11:38.720
-going to have a
+a x which is the input and then it's going to have a
 
 0:11:35.519,0:11:40.560
-hidden value right
-
-0:11:38.720,0:11:42.000
-are the previous hidden vectors used to
+hidden value right are the previous hidden vectors used to
 
 0:11:40.560,0:11:45.040
-compute the new one
-
-0:11:42.000,0:11:47.279
-uh are they they are not right here
+compute the new one uh are they they are not right here
 
 0:11:45.040,0:11:48.560
-you can have multiple layers right and
-
-0:11:47.279,0:11:51.760
-so the second layer the
+you can have multiple layers right and so the second layer the
 
 0:11:48.560,0:11:53.920
-h layer next layer is going to be using
-
-0:11:51.760,0:11:55.120
-the hidden layers like the hidden values
+h layer next layer is going to be using the hidden layers like the hidden values
 
 0:11:53.920,0:11:56.480
-of the previous layer right it's going
-
-0:11:55.120,0:11:58.639
-to be just a
+of the previous layer right it's going to be just a
 
 0:11:56.480,0:12:02.000
-normal way like you stack multiple of
-
-0:11:58.639,0:12:02.000
-these blocks right
+normal way like you stack multiple of these blocks right
 
 0:12:02.959,0:12:09.120
-uh the u the u is just the uh
-
-0:12:06.240,0:12:10.399
-a term that allows me to consider also
+uh the u the u is just the uh a term that allows me to consider also
 
 0:12:09.120,0:12:13.760
-my own value
-
-0:12:10.399,0:12:16.399
-x okay so right now a is going to
+my own value x okay so right now a is going to
 
 0:12:13.760,0:12:19.040
-basically give me the
-
-0:12:16.399,0:12:20.000
-average of these columns that are
+basically give me the average of these columns that are
 
 0:12:19.040,0:12:22.880
-incoming
-
-0:12:20.000,0:12:24.079
-and then u allows me to you know perform
+incoming and then u allows me to you know perform
 
 0:12:22.880,0:12:26.240
-a rotation of my
-
-0:12:24.079,0:12:28.320
-own self vector so whenever you have
+a rotation of my own self vector so whenever you have
 
 0:12:26.240,0:12:29.040
-like a graph in this case there are two
-
-0:12:28.320,0:12:31.440
-options
+like a graph in this case there are two options
 
 0:12:29.040,0:12:32.240
-or it's you and you're like the v the
-
-0:12:31.440,0:12:35.120
-red v
+or it's you and you're like the v the red v
 
 0:12:32.240,0:12:35.600
-or is the other which is the vj okay and
-
-0:12:35.120,0:12:37.360
-so
+or is the other which is the vj okay and so
 
 0:12:35.600,0:12:38.639
-here you have two terms one is taking
-
-0:12:37.360,0:12:40.800
-care of the v
+here you have two terms one is taking care of the v
 
 0:12:38.639,0:12:42.959
-red v the other one is taking care of
-
-0:12:40.800,0:12:45.519
-the v j
+red v the other one is taking care of the v j
 
 0:12:42.959,0:12:46.880
-final question the agency matrix does
-
-0:12:45.519,0:12:49.360
-not
+final question the agency matrix does not
 
 0:12:46.880,0:12:51.680
-have self connections the urgency matrix
-
-0:12:49.360,0:12:53.839
-has zeros on the diagonal
+have self connections the urgency matrix has zeros on the diagonal
 
 0:12:51.680,0:12:55.360
-if you want to consider the agency
-
-0:12:53.839,0:12:57.600
-metrics with the
+if you want to consider the agency metrics with the
 
 0:12:55.360,0:12:59.120
-ones on the diagonal you can have like
-
-0:12:57.600,0:13:02.480
-identity plus d a
+ones on the diagonal you can have like identity plus d a
 
 0:12:59.120,0:13:04.959
-right okay
-
-0:13:02.480,0:13:06.079
-so next slide which is going to be the
+right okay so next slide which is going to be the
 
 0:13:04.959,0:13:08.800
-thing that we are implementing
-
-0:13:06.079,0:13:10.800
-today okay otherwise did i miss any
+thing that we are implementing today okay otherwise did i miss any
 
 0:13:08.800,0:13:14.480
-question
-
-0:13:10.800,0:13:14.880
-um so alph is in this a so the diagonal
+question um so alph is in this a so the diagonal
 
 0:13:14.480,0:13:18.160
-is
-
-0:13:14.880,0:13:21.680
-all zeros yeah yeah so agency vectors
+is all zeros yeah yeah so agency vectors
 
 0:13:18.160,0:13:24.560
-the agency vector here has a one only
-
-0:13:21.680,0:13:25.200
-if the vj which is my neighbor is
+the agency vector here has a one only if the vj which is my neighbor is
 
 0:13:24.560,0:13:27.760
-actually
-
-0:13:25.200,0:13:28.399
-connected to me okay and since there is
+actually connected to me okay and since there is
 
 0:13:27.760,0:13:30.800
-no a
-
-0:13:28.399,0:13:31.920
-arrow from myself that goes back into
+no a arrow from myself that goes back into
 
 0:13:30.800,0:13:35.600
-myself
-
-0:13:31.920,0:13:39.680
-there is no one in correspondence to
+myself there is no one in correspondence to
 
 0:13:35.600,0:13:42.480
-my own position so a agency matrix
-
-0:13:39.680,0:13:44.560
-has you know in the diagonal all zeros
+my own position so a agency matrix has you know in the diagonal all zeros
 
 0:13:42.480,0:13:46.160
-and then has ones corresponding to the
-
-0:13:44.560,0:13:48.639
-incoming connections
+and then has ones corresponding to the incoming connections
 
 0:13:46.160,0:13:50.160
-if you have a non-directed graph then
-
-0:13:48.639,0:13:52.399
-you have a symmetric
+if you have a non-directed graph then you have a symmetric
 
 0:13:50.160,0:13:53.760
-matrix because you don't you have you
-
-0:13:52.399,0:13:55.199
-know the same one
+matrix because you don't you have you know the same one
 
 0:13:53.760,0:13:57.440
-for both directions it's going to
-
-0:13:55.199,0:14:01.519
-basically having it's like having a
+for both directions it's going to basically having it's like having a
 
 0:13:57.440,0:14:04.639
-arrow on both direction of the edge okay
-
-0:14:01.519,0:14:07.920
-okay got it thank you sure
+arrow on both direction of the edge okay okay got it thank you sure
 
 0:14:04.639,0:14:11.279
-how is x represented
-
-0:14:07.920,0:14:12.560
-x is a vector which uh refers to a node
+how is x represented x is a vector which uh refers to a node
 
 0:14:11.279,0:14:16.320
-so how do you
-
-0:14:12.560,0:14:19.600
-represent a node using a vector
+so how do you represent a node using a vector
 
 0:14:16.320,0:14:22.880
-how you represent the node uh so x is a
-
-0:14:19.600,0:14:26.399
-vector right of dimension n
+how you represent the node uh so x is a vector right of dimension n
 
 0:14:22.880,0:14:28.320
-and this is your set of vectors right
-
-0:14:26.399,0:14:31.040
-this is your set of inputs
+and this is your set of vectors right this is your set of inputs
 
 0:14:28.320,0:14:31.920
-you have one to t this is from self
-
-0:14:31.040,0:14:34.639
-attention
+you have one to t this is from self attention
 
 0:14:31.920,0:14:35.040
-vector self analysis self attention set
-
-0:14:34.639,0:14:38.320
-right
+vector self analysis self attention set right
 
 0:14:35.040,0:14:41.440
-so this is a set and from this other
-
-0:14:38.320,0:14:45.279
-slide basically you have that only
+so this is a set and from this other slide basically you have that only
 
 0:14:41.440,0:14:46.320
-some of these axes are connected to
-
-0:14:45.279,0:14:49.440
-other axes
+some of these axes are connected to other axes
 
 0:14:46.320,0:14:52.160
-so you have a set of axes
-
-0:14:49.440,0:14:53.519
-and then you're gonna have basically a
+so you have a set of axes and then you're gonna have basically a
 
 0:14:52.160,0:14:56.839
-connectivity
-
-0:14:53.519,0:14:59.839
-you know specified between these
+connectivity you know specified between these
 
 0:14:56.839,0:15:02.639
-vertices so x and h
-
-0:14:59.839,0:15:03.519
-and h next layer and x h next layer and
+vertices so x and h and h next layer and x h next layer and
 
 0:15:02.639,0:15:07.519
-so on
-
-0:15:03.519,0:15:09.120
-are basically values in a set
+so on are basically values in a set
 
 0:15:07.519,0:15:11.440
-but then the point is that these
-
-0:15:09.120,0:15:14.880
-elements in this set are connected
+but then the point is that these elements in this set are connected
 
 0:15:11.440,0:15:17.279
-through these arrows okay
-
-0:15:14.880,0:15:18.639
-and so that that's simply it like there
+through these arrows okay and so that that's simply it like there
 
 0:15:17.279,0:15:21.040
-is no magic here
-
-0:15:18.639,0:15:22.160
-like we were telling you suppose you
+is no magic here like we were telling you suppose you
 
 0:15:21.040,0:15:24.639
-have a graph whose
-
-0:15:22.160,0:15:27.120
-no vote dices are labeled one two three
+have a graph whose no vote dices are labeled one two three
 
 0:15:24.639,0:15:30.720
-four five so how do you
-
-0:15:27.120,0:15:32.480
-convert from label one to x one
+four five so how do you convert from label one to x one
 
 0:15:30.720,0:15:34.800
-but each of these is gonna be just a
-
-0:15:32.480,0:15:37.120
-number right whatever
+but each of these is gonna be just a number right whatever
 
 0:15:34.800,0:15:38.639
-and you're gonna just play with this so
-
-0:15:37.120,0:15:40.160
-you just have to think about
+and you're gonna just play with this so you just have to think about
 
 0:15:38.639,0:15:43.120
-you know this can be thought as a
-
-0:15:40.160,0:15:45.199
-sequence of again words for a sentence
+you know this can be thought as a sequence of again words for a sentence
 
 0:15:43.120,0:15:46.320
-or can be thought as the pixels in an
-
-0:15:45.199,0:15:49.199
-image right
+or can be thought as the pixels in an image right
 
 0:15:46.320,0:15:50.880
-it can be just one linear image you know
-
-0:15:49.199,0:15:52.000
-or you can have you know whatever to a
+it can be just one linear image you know or you can have you know whatever to a
 
 0:15:50.880,0:15:54.720
-normal image
-
-0:15:52.000,0:15:55.759
-so these are just the values the one
+normal image so these are just the values the one
 
 0:15:54.720,0:15:58.880
-that we called
-
-0:15:55.759,0:16:01.120
-uh in the domain in an rc
+that we called uh in the domain in an rc
 
 0:15:58.880,0:16:01.920
-right whenever we are mapping the
-
-0:16:01.120,0:16:05.120
-mapping the
+right whenever we are mapping the mapping the
 
 0:16:01.920,0:16:05.839
-domain capital omega to these image
-
-0:16:05.120,0:16:09.279
-values
+domain capital omega to these image values
 
 0:16:05.839,0:16:12.079
-right so this is simply a set
-
-0:16:09.279,0:16:12.720
-of values and in this case here we just
+right so this is simply a set of values and in this case here we just
 
 0:16:12.079,0:16:16.000
-specify
-
-0:16:12.720,0:16:16.639
-a specific domain which has connections
+specify a specific domain which has connections
 
 0:16:16.000,0:16:20.800
-between
-
-0:16:16.639,0:16:22.320
-vertices simple as that
+between vertices simple as that
 
 0:16:20.800,0:16:24.000
-anyhow so we're gonna be checking the
-
-0:16:22.320,0:16:25.440
-code right now so that you can
+anyhow so we're gonna be checking the code right now so that you can
 
 0:16:24.000,0:16:27.519
-understand everything that is going on
-
-0:16:25.440,0:16:30.720
-okay don't don't don't get too scared
+understand everything that is going on okay don't don't don't get too scared
 
 0:16:27.519,0:16:33.759
-but i don't think there is any more uh
-
-0:16:30.720,0:16:34.959
-craziness going on uh the only craziness
+but i don't think there is any more uh craziness going on uh the only craziness
 
 0:16:33.759,0:16:37.199
-part is gonna be
-
-0:16:34.959,0:16:38.560
-the type of graph convolutional network
+part is gonna be the type of graph convolutional network
 
 0:16:37.199,0:16:39.120
-we are going to be implementing right
-
-0:16:38.560,0:16:41.839
-now
+we are going to be implementing right now
 
 0:16:39.120,0:16:44.160
-and so we're going to be starting we're
-
-0:16:41.839,0:16:45.759
-going to be implementing something cool
+and so we're going to be starting we're going to be implementing something cool
 
 0:16:44.160,0:16:47.839
-because otherwise otherwise would be
-
-0:16:45.759,0:16:51.199
-boring which is the residual
+because otherwise otherwise would be boring which is the residual
 
 0:16:47.839,0:16:53.920
-gated graph convolutional network
-
-0:16:51.199,0:16:56.000
-with a mouthful and of course it's from
+gated graph convolutional network with a mouthful and of course it's from
 
 0:16:53.920,0:16:57.600
-bresson and laurent you can see from the
-
-0:16:56.000,0:17:00.079
-reference below
+bresson and laurent you can see from the reference below
 
 0:16:57.600,0:17:00.959
-so here again we can think about you
-
-0:17:00.079,0:17:04.160
-know our
+so here again we can think about you know our
 
 0:17:00.959,0:17:05.039
-own vertex v the red guy which again has
-
-0:17:04.160,0:17:08.000
-this
+own vertex v the red guy which again has this
 
 0:17:05.039,0:17:08.799
-input feature x and the hidden
-
-0:17:08.000,0:17:11.439
-representation
+input feature x and the hidden representation
 
 0:17:08.799,0:17:12.319
-representation h and then you have the
-
-0:17:11.439,0:17:15.280
-vj now
+representation h and then you have the vj now
 
 0:17:12.319,0:17:15.760
-again with the all representing all the
-
-0:17:15.280,0:17:18.240
-other
+again with the all representing all the other
 
 0:17:15.760,0:17:19.199
-and then you have all these these guys
-
-0:17:18.240,0:17:21.760
-right
+and then you have all these these guys right
 
 0:17:19.199,0:17:22.799
-uh in this specific case actually we are
-
-0:17:21.760,0:17:25.919
-gonna be
+uh in this specific case actually we are gonna be
 
 0:17:22.799,0:17:26.480
-uh naming as well the edges so in this
-
-0:17:25.919,0:17:30.480
-case
+uh naming as well the edges so in this case
 
 0:17:26.480,0:17:34.240
-my edge has also a
-
-0:17:30.480,0:17:36.160
-feature on it okay so in this like graph
+my edge has also a feature on it okay so in this like graph
 
 0:17:34.240,0:17:37.760
-in this residual gated graph
-
-0:17:36.160,0:17:40.559
-convolutional network
+in this residual gated graph convolutional network
 
 0:17:37.760,0:17:41.200
-uh edges also have a representation on
-
-0:17:40.559,0:17:44.400
-them
+uh edges also have a representation on them
 
 0:17:41.200,0:17:44.960
-and so this is called ej okay and so you
-
-0:17:44.400,0:17:47.280
-have
+and so this is called ej okay and so you have
 
 0:17:44.960,0:17:49.039
-all these vertices that were they were
-
-0:17:47.280,0:17:51.039
-white before now they have like
+all these vertices that were they were white before now they have like
 
 0:17:49.039,0:17:53.280
-a color we're going to have an edge
-
-0:17:51.039,0:17:56.240
-representation for the input layer
+a color we're going to have an edge representation for the input layer
 
 0:17:53.280,0:17:57.039
-x and for the hidden layer right so
-
-0:17:56.240,0:18:00.880
-we're going to have
+x and for the hidden layer right so we're going to have
 
 0:17:57.039,0:18:03.360
-e x and then e h
-
-0:18:00.880,0:18:05.360
-so what are the update equations for
+e x and then e h so what are the update equations for
 
 0:18:03.360,0:18:08.720
-this receivable gated
-
-0:18:05.360,0:18:10.000
-graph convolutional network so
+this receivable gated graph convolutional network so
 
 0:18:08.720,0:18:11.760
-since it's a residual we're going to
-
-0:18:10.000,0:18:12.080
-start with our serial connection we have
+since it's a residual we're going to start with our serial connection we have
 
 0:18:11.760,0:18:14.559
-an
-
-0:18:12.080,0:18:15.200
-input x the pink one and then we have
+an input x the pink one and then we have
 
 0:18:14.559,0:18:17.600
-class
-
-0:18:15.200,0:18:19.520
-something right uh something that is
+class something right uh something that is
 
 0:18:17.600,0:18:22.320
-always positive so actually
-
-0:18:19.520,0:18:23.120
-this could diverge and an easy fix for
+always positive so actually this could diverge and an easy fix for
 
 0:18:22.320,0:18:24.880
-this
-
-0:18:23.120,0:18:28.320
-first equation would be actually having
+this first equation would be actually having
 
 0:18:24.880,0:18:30.799
-a additional weight multiplying
-
-0:18:28.320,0:18:31.440
-the parenthesis right anyhow let's go
+a additional weight multiplying the parenthesis right anyhow let's go
 
 0:18:30.799,0:18:35.919
-for
-
-0:18:31.440,0:18:38.559
-this version so we have x plus something
+for this version so we have x plus something
 
 0:18:35.919,0:18:40.080
-for which we take the positive part and
-
-0:18:38.559,0:18:42.880
-inside we're going to have
+for which we take the positive part and inside we're going to have
 
 0:18:40.080,0:18:43.840
-my rotation of the input which is
-
-0:18:42.880,0:18:46.880
-exactly the same
+my rotation of the input which is exactly the same
 
 0:18:43.840,0:18:50.320
-as you were seeing before right so
-
-0:18:46.880,0:18:55.280
-here we have that
+as you were seeing before right so here we have that
 
 0:18:50.320,0:18:58.480
-h equal rotation of the
-
-0:18:55.280,0:19:02.000
-input x right so the same here
+h equal rotation of the input x right so the same here
 
 0:18:58.480,0:19:03.679
-we have that h equal okay there is the
-
-0:19:02.000,0:19:04.640
-received one and then the rotation of
+we have that h equal okay there is the received one and then the rotation of
 
 0:19:03.679,0:19:07.760
-myself
-
-0:19:04.640,0:19:11.679
-and then we have plus
+myself and then we have plus
 
 0:19:07.760,0:19:15.280
-a rotation of the xj the incoming j
-
-0:19:11.679,0:19:18.960
-right this rotation it's also scaled
+a rotation of the xj the incoming j right this rotation it's also scaled
 
 0:19:15.280,0:19:20.000
-by eta and eta is going to be our gate
-
-0:19:18.960,0:19:21.760
-so
+by eta and eta is going to be our gate so
 
 0:19:20.000,0:19:23.760
-now you know why it's called residual
-
-0:19:21.760,0:19:25.200
-gated graph convolutional network
+now you know why it's called residual gated graph convolutional network
 
 0:19:23.760,0:19:28.799
-because we have a gate
-
-0:19:25.200,0:19:29.679
-eta which is based on the representation
+because we have a gate eta which is based on the representation
 
 0:19:28.799,0:19:33.039
-living on the
-
-0:19:29.679,0:19:34.880
-incoming edge ej which is modulating the
+living on the incoming edge ej which is modulating the
 
 0:19:33.039,0:19:38.240
-amplitude of the rotated
-
-0:19:34.880,0:19:40.400
-incoming vertex xj
+amplitude of the rotated incoming vertex xj
 
 0:19:38.240,0:19:41.679
-right and finally we're going to be
-
-0:19:40.400,0:19:44.720
-summing for
+right and finally we're going to be summing for
 
 0:19:41.679,0:19:47.200
-all the edges that are coming towards my
-
-0:19:44.720,0:19:48.640
-own vertex right so for all the edges
+all the edges that are coming towards my own vertex right so for all the edges
 
 0:19:47.200,0:19:51.600
-that are incoming
-
-0:19:48.640,0:19:53.840
-i'm going to be rotating the vertex
+that are incoming i'm going to be rotating the vertex
 
 0:19:51.600,0:19:56.960
-representation of the incoming
-
-0:19:53.840,0:19:58.720
-vertex and i'm gonna be then scaling
+representation of the incoming vertex and i'm gonna be then scaling
 
 0:19:56.960,0:20:00.880
-modulating the amplitude of this
-
-0:19:58.720,0:20:03.600
-incoming rotated vertex
+modulating the amplitude of this incoming rotated vertex
 
 0:20:00.880,0:20:04.080
-with this gate right again this gate
-
-0:20:03.600,0:20:07.360
-it's
+with this gate right again this gate it's
 
 0:20:04.080,0:20:09.440
-a function of the e j so what is e j
-
-0:20:07.360,0:20:10.480
-let's figure out the equation so we have
+a function of the e j so what is e j let's figure out the equation so we have
 
 0:20:09.440,0:20:14.159
-e j
-
-0:20:10.480,0:20:16.400
-is going to be a rotation of my initial
+e j is going to be a rotation of my initial
 
 0:20:14.159,0:20:18.240
-edge representation that is populated
-
-0:20:16.400,0:20:21.760
-with the input data so
+edge representation that is populated with the input data so
 
 0:20:18.240,0:20:25.440
-e x is going to be my input data that is
-
-0:20:21.760,0:20:28.480
-living on the edge and so i rotate that
+e x is going to be my input data that is living on the edge and so i rotate that
 
 0:20:25.440,0:20:32.000
-i sum the rotated representation
-
-0:20:28.480,0:20:34.880
-of my incoming feature x j
+i sum the rotated representation of my incoming feature x j
 
 0:20:32.000,0:20:35.840
-and then i sum as well a rotation of my
-
-0:20:34.880,0:20:38.640
-own
+and then i sum as well a rotation of my own
 
 0:20:35.840,0:20:41.200
-feature e x right x is my own feature i
-
-0:20:38.640,0:20:45.360
-rotate it with the matrix e
+feature e x right x is my own feature i rotate it with the matrix e
 
 0:20:41.200,0:20:47.760
-sweet so this is my e j representation
-
-0:20:45.360,0:20:48.400
-and then eta is going to be the
+sweet so this is my e j representation and then eta is going to be the
 
 0:20:47.760,0:20:51.600
-following
-
-0:20:48.400,0:20:55.600
-so it's a sort of similar
+following so it's a sort of similar
 
 0:20:51.600,0:20:58.960
-like a variant of our soft dark mags
-
-0:20:55.600,0:21:00.840
-where um we have that the numerator at
+like a variant of our soft dark mags where um we have that the numerator at
 
 0:20:58.960,0:21:04.480
-the numerator we have the
-
-0:21:00.840,0:21:06.400
-sigmoid of my ej which is the sum of
+the numerator we have the sigmoid of my ej which is the sum of
 
 0:21:04.480,0:21:08.960
-these three components at the
-
-0:21:06.400,0:21:10.000
-on the bottom which is divided by the
+these three components at the on the bottom which is divided by the
 
 0:21:08.960,0:21:13.039
-summation
-
-0:21:10.000,0:21:16.240
-of all the sigmoids
+summation of all the sigmoids
 
 0:21:13.039,0:21:19.840
-of the incoming edges right
-
-0:21:16.240,0:21:21.440
-so we have a given edge we compute the
+of the incoming edges right so we have a given edge we compute the
 
 0:21:19.840,0:21:23.360
-usually if you have the soft arc max
-
-0:21:21.440,0:21:26.640
-you're going to have the exponential
+usually if you have the soft arc max you're going to have the exponential
 
 0:21:23.360,0:21:27.840
-of the specific value divided by the sum
-
-0:21:26.640,0:21:29.919
-of the exponentials
+of the specific value divided by the sum of the exponentials
 
 0:21:27.840,0:21:31.120
-in this case this gate is given to you
-
-0:21:29.919,0:21:34.159
-by
+in this case this gate is given to you by
 
 0:21:31.120,0:21:37.520
-the sigmoid of the given edge divided by
-
-0:21:34.159,0:21:42.240
-the sum of the all incoming edges
+the sigmoid of the given edge divided by the sum of the all incoming edges
 
 0:21:37.520,0:21:42.240
-right all incoming yeah connections
-
-0:21:42.480,0:21:48.320
-finally we have that the next layer so
+right all incoming yeah connections finally we have that the next layer so
 
 0:21:46.240,0:21:50.480
-for the hidden layer the next layer
-
-0:21:48.320,0:21:52.159
-uh edge representation we're gonna have
+for the hidden layer the next layer uh edge representation we're gonna have
 
 0:21:50.480,0:21:52.559
-a residual connection so it's gonna be
-
-0:21:52.159,0:21:56.400
-my
+a residual connection so it's gonna be my
 
 0:21:52.559,0:21:59.440
-initial value e x plus the
-
-0:21:56.400,0:22:01.679
-positive part of this ej again this
+initial value e x plus the positive part of this ej again this
 
 0:21:59.440,0:22:03.280
-may blow up because you're going to be
-
-0:22:01.679,0:22:06.799
-summing always positive
+may blow up because you're going to be summing always positive
 
 0:22:03.280,0:22:09.600
-terms therefore i would suggest
-
-0:22:06.799,0:22:11.280
-additional weight multiplying these
+terms therefore i would suggest additional weight multiplying these
 
 0:22:09.600,0:22:12.960
-positive parts such that you know you
-
-0:22:11.280,0:22:17.200
-can have even negative
+positive parts such that you know you can have even negative
 
 0:22:12.960,0:22:19.520
-values cool cool so
-
-0:22:17.200,0:22:23.760
-that that's pretty much it right so if
+values cool cool so that that's pretty much it right so if
 
 0:22:19.520,0:22:23.760
-we compare to what we were seeing before
-
-0:22:24.400,0:22:28.480
-before we had that my hidden
+we compare to what we were seeing before before we had that my hidden
 
 0:22:26.799,0:22:31.520
-representation
-
-0:22:28.480,0:22:33.039
-was some non-linear function in this
+representation was some non-linear function in this
 
 0:22:31.520,0:22:36.240
-case we chose the
-
-0:22:33.039,0:22:39.440
-uh the relu the positive part
+case we chose the uh the relu the positive part
 
 0:22:36.240,0:22:43.280
-right so in this case we have f
-
-0:22:39.440,0:22:43.280
-is going to be the positive part here
+right so in this case we have f is going to be the positive part here
 
 0:22:44.240,0:22:52.240
-of my rotated representation of myself
-
-0:22:48.400,0:22:56.080
-plus this term over here which is
+of my rotated representation of myself plus this term over here which is
 
 0:22:52.240,0:22:56.880
-so this exad minus one it means take the
-
-0:22:56.080,0:22:59.840
-average
+so this exad minus one it means take the average
 
 0:22:56.880,0:23:00.240
-of the incoming axis right because a was
-
-0:22:59.840,0:23:03.679
-equal
+of the incoming axis right because a was equal
 
 0:23:00.240,0:23:05.440
-one for the vertexes that are incoming
-
-0:23:03.679,0:23:08.000
-towards my own vertex
+one for the vertexes that are incoming towards my own vertex
 
 0:23:05.440,0:23:10.000
-and then i divide by the d which is the
-
-0:23:08.000,0:23:11.120
-degree which is the number of incoming
+and then i divide by the d which is the degree which is the number of incoming
 
 0:23:10.000,0:23:14.799
-edges right
-
-0:23:11.120,0:23:18.080
-and so i basically sum all these
+edges right and so i basically sum all these
 
 0:23:14.799,0:23:19.600
-incoming values and then i divided by
-
-0:23:18.080,0:23:20.559
-the number of the incoming values so i
+incoming values and then i divided by the number of the incoming values so i
 
 0:23:19.600,0:23:22.960
-compute the mean
-
-0:23:20.559,0:23:24.720
-and then i rotate the mean right the
+compute the mean and then i rotate the mean right the
 
 0:23:22.960,0:23:26.960
-similarly here we're going to do
-
-0:23:24.720,0:23:28.320
-exactly the same thing we have the
+similarly here we're going to do exactly the same thing we have the
 
 0:23:26.960,0:23:31.120
-rotation
-
-0:23:28.320,0:23:32.960
-of all the incoming edges right so these
+rotation of all the incoming edges right so these
 
 0:23:31.120,0:23:36.159
-are all incoming edges
-
-0:23:32.960,0:23:38.720
-and then i sum them but in this case my
+are all incoming edges and then i sum them but in this case my
 
 0:23:36.159,0:23:40.960
-eta is not just a constant that is equal
-
-0:23:38.720,0:23:41.919
-to one over the number of incoming
+eta is not just a constant that is equal to one over the number of incoming
 
 0:23:40.960,0:23:45.279
-connections
-
-0:23:41.919,0:23:48.159
-but is going to be a number
+connections but is going to be a number
 
 0:23:45.279,0:23:49.919
-from zero to one which is weighting my
-
-0:23:48.159,0:23:52.480
-incoming
+from zero to one which is weighting my incoming
 
 0:23:49.919,0:23:52.960
-vertex representation based on what is
-
-0:23:52.480,0:23:57.360
-the
+vertex representation based on what is the
 
 0:23:52.960,0:23:57.360
-representation living on the edge
-
-0:23:57.600,0:24:02.880
-so there are many
+representation living on the edge so there are many
 
 0:24:00.640,0:24:04.320
-colors and numbers and symbols but i
-
-0:24:02.880,0:24:05.600
-don't think it's that different from
+colors and numbers and symbols but i don't think it's that different from
 
 0:24:04.320,0:24:08.080
-what we have seen before
-
-0:24:05.600,0:24:09.600
-the main differences are this gate which
+what we have seen before the main differences are this gate which
 
 0:24:08.080,0:24:12.080
-is no longer
-
-0:24:09.600,0:24:14.080
-a like a constant factor now it's going
+is no longer a like a constant factor now it's going
 
 0:24:12.080,0:24:16.000
-to be function of the representation
-
-0:24:14.080,0:24:17.520
-and then we have this received by
+to be function of the representation and then we have this received by
 
 0:24:16.000,0:24:20.880
-connection again
-
-0:24:17.520,0:24:24.080
-i would say that here is missing a
+connection again i would say that here is missing a
 
 0:24:20.880,0:24:25.919
-additional parameter
-
-0:24:24.080,0:24:28.240
-right here and here i would suggest to
+additional parameter right here and here i would suggest to
 
 0:24:25.919,0:24:29.679
-have an additional an additional matrix
-
-0:24:28.240,0:24:33.039
-multiplying here
+have an additional an additional matrix multiplying here
 
 0:24:29.679,0:24:34.880
-and here such that we can allow for you
-
-0:24:33.039,0:24:36.240
-know positive and negative values
+and here such that we can allow for you know positive and negative values
 
 0:24:34.880,0:24:39.600
-otherwise
-
-0:24:36.240,0:24:42.000
-this representation may blow up now how
+otherwise this representation may blow up now how
 
 0:24:39.600,0:24:45.520
-do we compute the representation for the
-
-0:24:42.000,0:24:49.679
-second hidden layer so we can call x
+do we compute the representation for the second hidden layer so we can call x
 
 0:24:45.520,0:24:52.799
-hl so it's going to be my layer l
-
-0:24:49.679,0:24:56.240
-representation and therefore
+hl so it's going to be my layer l representation and therefore
 
 0:24:52.799,0:24:58.559
-the x j becomes h l j
-
-0:24:56.240,0:25:00.400
-and so all we have to do now is going to
+the x j becomes h l j and so all we have to do now is going to
 
 0:24:58.559,0:25:04.159
-be basically saying that my
-
-0:25:00.400,0:25:08.159
-age at layer l plus 1 is going to be
+be basically saying that my age at layer l plus 1 is going to be
 
 0:25:04.159,0:25:10.960
-this current h right but i prefer to use
-
-0:25:08.159,0:25:13.520
-h and x's in order to remove this
+this current h right but i prefer to use h and x's in order to remove this
 
 0:25:10.960,0:25:13.520
-additional
-
-0:25:13.840,0:25:18.799
-index that may create cows right maybe
+additional index that may create cows right maybe
 
 0:25:17.039,0:25:21.120
-chaotic
-
-0:25:18.799,0:25:22.720
-all right um so i had a question about
+chaotic all right um so i had a question about
 
 0:25:21.120,0:25:25.600
-if um
-
-0:25:22.720,0:25:26.640
-in terms of like maybe a potential
+if um in terms of like maybe a potential
 
 0:25:25.600,0:25:29.840
-example
-
-0:25:26.640,0:25:33.440
-um i'm not clear what it means to have
+example um i'm not clear what it means to have
 
 0:25:29.840,0:25:37.120
-this sort of um gated
-
-0:25:33.440,0:25:40.480
-like recurrent type of
+this sort of um gated like recurrent type of
 
 0:25:37.120,0:25:44.559
-model in the context of graphs
-
-0:25:40.480,0:25:47.039
-like um so what is an example of
+model in the context of graphs like um so what is an example of
 
 0:25:44.559,0:25:49.200
-yeah yeah yeah sure so this gating part
-
-0:25:47.039,0:25:52.400
-here uh the point is that
+yeah yeah yeah sure so this gating part here uh the point is that
 
 0:25:49.200,0:25:54.080
-all these different uh vertices here
-
-0:25:52.400,0:25:56.320
-they don't have ordering right i don't
+all these different uh vertices here they don't have ordering right i don't
 
 0:25:54.080,0:25:58.320
-know which one is v1 v2
-
-0:25:56.320,0:26:00.320
-i mean i know the order but this guy
+know which one is v1 v2 i mean i know the order but this guy
 
 0:25:58.320,0:26:02.640
-here this red vertex
-
-0:26:00.320,0:26:05.200
-doesn't know how many neurons sorry how
+here this red vertex doesn't know how many neurons sorry how
 
 0:26:02.640,0:26:07.520
-many vertices are connected to its own
-
-0:26:05.200,0:26:09.440
-and then it doesn't know how to you know
+many vertices are connected to its own and then it doesn't know how to you know
 
 0:26:07.520,0:26:12.720
-think about them in different ways
-
-0:26:09.440,0:26:15.760
-unless there is some information
+think about them in different ways unless there is some information
 
 0:26:12.720,0:26:18.880
-coming from this edge and so this edge
-
-0:26:15.760,0:26:20.080
-allows me to basically change you know
+coming from this edge and so this edge allows me to basically change you know
 
 0:26:18.880,0:26:24.000
-modulate
-
-0:26:20.080,0:26:27.360
-this incoming incoming message
+modulate this incoming incoming message
 
 0:26:24.000,0:26:30.400
-so this guy here is transiting this x
-
-0:26:27.360,0:26:33.760
-transits down this uh
+so this guy here is transiting this x transits down this uh
 
 0:26:30.400,0:26:36.559
-this line but then it gets modulated
-
-0:26:33.760,0:26:38.080
-by the representation of by this gate
+this line but then it gets modulated by the representation of by this gate
 
 0:26:36.559,0:26:40.480
-which is again based on the
-
-0:26:38.080,0:26:43.120
-representation that lives on that edge
+which is again based on the representation that lives on that edge
 
 0:26:40.480,0:26:46.159
-so the edge has a representation
-
-0:26:43.120,0:26:47.440
-and this eta it gives me a multiplier
+so the edge has a representation and this eta it gives me a multiplier
 
 0:26:46.159,0:26:50.559
-basically a factor that
-
-0:26:47.440,0:26:53.600
-i can use a scalar to multiply
+basically a factor that i can use a scalar to multiply
 
 0:26:50.559,0:26:54.880
-each component of this vector here and
-
-0:26:53.600,0:26:58.320
-so it allows me to
+each component of this vector here and so it allows me to
 
 0:26:54.880,0:27:00.640
-tune you know what kind of part of the
-
-0:26:58.320,0:27:02.080
-vector i might be interested in
+tune you know what kind of part of the vector i might be interested in
 
 0:27:00.640,0:27:03.520
-okay so this is going to be any way
-
-0:27:02.080,0:27:05.120
-trained with backprop so the network
+okay so this is going to be any way trained with backprop so the network
 
 0:27:03.520,0:27:07.919
-will figure out
-
-0:27:05.120,0:27:08.960
-what the heck is interesting what is not
+will figure out what the heck is interesting what is not
 
 0:27:07.919,0:27:11.120
-uh
-
-0:27:08.960,0:27:12.080
-but yeah the rationale here is going to
+uh but yeah the rationale here is going to
 
 0:27:11.120,0:27:13.919
-be basically
-
-0:27:12.080,0:27:15.120
-given that all the vertices look the
+be basically given that all the vertices look the
 
 0:27:13.919,0:27:17.520
-same to me
-
-0:27:15.120,0:27:18.880
-in this case because you know if you if
+same to me in this case because you know if you if
 
 0:27:17.520,0:27:22.080
-you remove this part here
-
-0:27:18.880,0:27:24.080
-you just get the summation of all these
+you remove this part here you just get the summation of all these
 
 0:27:22.080,0:27:25.279
-h's right and this is going to be oh
-
-0:27:24.080,0:27:28.320
-just let's average
+h's right and this is going to be oh just let's average
 
 0:27:25.279,0:27:30.640
-everything well like the thing i told
-
-0:27:28.320,0:27:32.320
-you here right so this is exactly
+everything well like the thing i told you here right so this is exactly
 
 0:27:30.640,0:27:34.480
-what i'm telling you here in this case
-
-0:27:32.320,0:27:36.720
-here you just have a average
+what i'm telling you here in this case here you just have a average
 
 0:27:34.480,0:27:38.080
-all the vertices will average all the
-
-0:27:36.720,0:27:41.360
-representation
+all the vertices will average all the representation
 
 0:27:38.080,0:27:42.640
-on the incoming vertices right and so
-
-0:27:41.360,0:27:44.480
-this is like hey
+on the incoming vertices right and so this is like hey
 
 0:27:42.640,0:27:45.919
-let's blur out everything can't say
-
-0:27:44.480,0:27:48.320
-let's let's
+let's blur out everything can't say let's let's
 
 0:27:45.919,0:27:50.240
-let's throw away all the information in
-
-0:27:48.320,0:27:52.000
-this case instead it's going to be hey
+let's throw away all the information in this case instead it's going to be hey
 
 0:27:50.240,0:27:53.520
-we are not going to be just averaging
-
-0:27:52.000,0:27:55.600
-out all these incoming
+we are not going to be just averaging out all these incoming
 
 0:27:53.520,0:27:56.720
-values but we're going to be weighting
-
-0:27:55.600,0:27:59.039
-them we're going to be
+values but we're going to be weighting them we're going to be
 
 0:27:56.720,0:27:59.919
-modulating them based on what we think
-
-0:27:59.039,0:28:02.799
-it might be
+modulating them based on what we think it might be
 
 0:27:59.919,0:28:03.679
-relevant or might not so that would be
-
-0:28:02.799,0:28:07.360
-and is the
+relevant or might not so that would be and is the
 
 0:28:03.679,0:28:10.000
-um is that superscript l and l plus one
-
-0:28:07.360,0:28:11.120
-for the h's like does that mean that
+um is that superscript l and l plus one for the h's like does that mean that
 
 0:28:10.000,0:28:14.559
-this is a graph
-
-0:28:11.120,0:28:16.000
-structure over time layer layer layer do
+this is a graph structure over time layer layer layer do
 
 0:28:14.559,0:28:19.200
-you have several layers right in this
-
-0:28:16.000,0:28:22.159
-network so h so
+you have several layers right in this network so h so
 
 0:28:19.200,0:28:22.960
-hl with l equals zero is going to be my
-
-0:28:22.159,0:28:25.440
-x
+hl with l equals zero is going to be my x
 
 0:28:22.960,0:28:26.000
-it's it's talking about layers and not
-
-0:28:25.440,0:28:28.240
-like
+it's it's talking about layers and not like
 
 0:28:26.000,0:28:30.080
-time yeah there are several layers right
-
-0:28:28.240,0:28:32.559
-so you have multiple layers
+time yeah there are several layers right so you have multiple layers
 
 0:28:30.080,0:28:34.640
-and all of these layers always leave
-
-0:28:32.559,0:28:38.799
-these layers are still sets right
+and all of these layers always leave these layers are still sets right
 
 0:28:34.640,0:28:38.799
-so as you have like a set of inputs
-
-0:28:39.360,0:28:43.360
-you have a set of inputs then you have a
+so as you have like a set of inputs you have a set of inputs then you have a
 
 0:28:40.960,0:28:44.960
-set so these are my set of inputs right
-
-0:28:43.360,0:28:47.520
-then you are going to have a set of
+set so these are my set of inputs right then you are going to have a set of
 
 0:28:44.960,0:28:49.279
-hidden layers a set of second like
-
-0:28:47.520,0:28:50.480
-hidden layer of the second layer and so
+hidden layers a set of second like hidden layer of the second layer and so
 
 0:28:49.279,0:28:52.960
-like a second
-
-0:28:50.480,0:28:55.279
-hidden layers at the second layer and so
+like a second hidden layers at the second layer and so
 
 0:28:52.960,0:28:55.279
-on right
-
-0:28:55.520,0:28:59.840
-and so but in here we just have sets the
+on right and so but in here we just have sets the
 
 0:28:58.480,0:29:00.799
-only difference is going to be that in
-
-0:28:59.840,0:29:02.559
-this case
+only difference is going to be that in this case
 
 0:29:00.799,0:29:04.640
-there are sets but then there is also
-
-0:29:02.559,0:29:05.440
-connections between these elements in
+there are sets but then there is also connections between these elements in
 
 0:29:04.640,0:29:06.960
-the set
-
-0:29:05.440,0:29:08.559
-okay and that's the only difference we
+the set okay and that's the only difference we
 
 0:29:06.960,0:29:10.080
-have so the only difference between
-
-0:29:08.559,0:29:13.520
-attention and this stuff here
+have so the only difference between attention and this stuff here
 
 0:29:10.080,0:29:17.039
-is that these guys here are given to you
-
-0:29:13.520,0:29:20.159
-by this agency metrics instead of
+is that these guys here are given to you by this agency metrics instead of
 
 0:29:17.039,0:29:22.080
-being computed with uh attention like
-
-0:29:20.159,0:29:23.679
-attending and computing the soft
+being computed with uh attention like attending and computing the soft
 
 0:29:22.080,0:29:26.000
-arguments and so on
-
-0:29:23.679,0:29:27.039
-so this this is my perspective from last
+arguments and so on so this this is my perspective from last
 
 0:29:26.000,0:29:29.039
-week lesson
-
-0:29:27.039,0:29:30.720
-so the only step that is the difference
+week lesson so the only step that is the difference
 
 0:29:29.039,0:29:34.240
-from last week is going to be that
-
-0:29:30.720,0:29:35.600
-this connection are given to you finish
+from last week is going to be that this connection are given to you finish
 
 0:29:34.240,0:29:38.240
-same everything else is going to be
-
-0:29:35.600,0:29:40.640
-basically the same
+same everything else is going to be basically the same
 
 0:29:38.240,0:29:41.919
-all right so time to go to the notebook
-
-0:29:40.640,0:29:43.679
-because it's going to be actually taking
+all right so time to go to the notebook because it's going to be actually taking
 
 0:29:41.919,0:29:46.720
-forever
-
-0:29:43.679,0:29:47.440
-unless there are imminent questions all
+forever unless there are imminent questions all
 
 0:29:46.720,0:29:49.679
-right so
-
-0:29:47.440,0:29:50.720
-this was taken it was uh heavily
+right so this was taken it was uh heavily
 
 0:29:49.679,0:29:53.679
-inspired by the
-
-0:29:50.720,0:29:54.159
-notebook from xavier but i changed
+inspired by the notebook from xavier but i changed
 
 0:29:53.679,0:29:57.360
-everything
-
-0:29:54.159,0:30:00.720
-so yeah i didn't like what he wrote
+everything so yeah i didn't like what he wrote
 
 0:29:57.360,0:30:02.399
-as in now it's in our format
-
-0:30:00.720,0:30:05.279
-or in my format so everything is going
+as in now it's in our format or in my format so everything is going
 
 0:30:02.399,0:30:07.840
-to be familiar uh at least for you
-
-0:30:05.279,0:30:10.480
-when i first read the thing was like
+to be familiar uh at least for you when i first read the thing was like
 
 0:30:07.840,0:30:13.760
-what's going on here
-
-0:30:10.480,0:30:15.520
-uh okay okay so import uh crap
+what's going on here uh okay okay so import uh crap
 
 0:30:13.760,0:30:17.840
-uh the only difference here we have
-
-0:30:15.520,0:30:19.919
-these uh import os
+uh the only difference here we have these uh import os
 
 0:30:17.840,0:30:22.080
-which allow me to set an environment
-
-0:30:19.919,0:30:22.960
-environment variable so this dgl
+which allow me to set an environment environment variable so this dgl
 
 0:30:22.080,0:30:26.240
-backhand
-
-0:30:22.960,0:30:28.240
-set to pi torch allows me to tell dgl to
+backhand set to pi torch allows me to tell dgl to
 
 0:30:26.240,0:30:29.679
-use pytorch what is dgl
-
-0:30:28.240,0:30:31.600
-so actually you have to install
+use pytorch what is dgl so actually you have to install
 
 0:30:29.679,0:30:33.760
-ppinstall dgl it's actually in the
-
-0:30:31.600,0:30:37.440
-environment description
+ppinstall dgl it's actually in the environment description
 
 0:30:33.760,0:30:42.080
-um dji is going to be my library to
-
-0:30:37.440,0:30:44.720
-use convolutional nets on graphs
+um dji is going to be my library to use convolutional nets on graphs
 
 0:30:42.080,0:30:46.960
-very easily so we import this stuff and
-
-0:30:44.720,0:30:48.480
-also we import this network x it allows
+very easily so we import this stuff and also we import this network x it allows
 
 0:30:46.960,0:30:51.679
-me to
-
-0:30:48.480,0:30:52.799
-to print a very pretty uh very pretty
+me to to print a very pretty uh very pretty
 
 0:30:51.679,0:30:55.440
-charts
-
-0:30:52.799,0:30:57.679
-okay i set some default oh you can see
+charts okay i set some default oh you can see
 
 0:30:55.440,0:30:59.600
-now we are using pi torch
-
-0:30:57.679,0:31:01.279
-so first of all we're gonna be showing
+now we are using pi torch so first of all we're gonna be showing
 
 0:30:59.600,0:31:02.559
-seeing these so this is mini graph
-
-0:31:01.279,0:31:05.679
-classification data set
+seeing these so this is mini graph classification data set
 
 0:31:02.559,0:31:09.039
-it's gonna it's called mini gcd
-
-0:31:05.679,0:31:10.080
-this mini gc data set i specify the
+it's gonna it's called mini gcd this mini gc data set i specify the
 
 0:31:09.039,0:31:12.640
-number of graphs
-
-0:31:10.080,0:31:14.559
-the minimum number of values vectors on
+number of graphs the minimum number of values vectors on
 
 0:31:12.640,0:31:18.000
-the maximum number of vectors
-
-0:31:14.559,0:31:20.399
-no vectors uh vertices right and so
+the maximum number of vectors no vectors uh vertices right and so
 
 0:31:18.000,0:31:21.919
-uh here i just call this with the
-
-0:31:20.399,0:31:23.840
-different names they have
+uh here i just call this with the different names they have
 
 0:31:21.919,0:31:25.760
-and then i show you here these different
-
-0:31:23.840,0:31:27.679
-guys okay
+and then i show you here these different guys okay
 
 0:31:25.760,0:31:28.960
-so here you have the first type is going
-
-0:31:27.679,0:31:30.960
-to be the circle type
+so here you have the first type is going to be the circle type
 
 0:31:28.960,0:31:33.279
-so the circle graph where you have each
-
-0:31:30.960,0:31:37.360
-of these are connected to the other one
+so the circle graph where you have each of these are connected to the other one
 
 0:31:33.279,0:31:37.360
-and see again there is double r alright
-
-0:31:37.760,0:31:41.039
-then we have the star graph which is
+and see again there is double r alright then we have the star graph which is
 
 0:31:39.519,0:31:42.720
-basically everyone connected to the
-
-0:31:41.039,0:31:46.159
-first body
+basically everyone connected to the first body
 
 0:31:42.720,0:31:49.279
-then we have the wheel graph okay
-
-0:31:46.159,0:31:51.919
-so you can understand what it means
+then we have the wheel graph okay so you can understand what it means
 
 0:31:49.279,0:31:53.600
-uh then we have the lollipop lollipop
-
-0:31:51.919,0:31:56.559
-lollipop
+uh then we have the lollipop lollipop lollipop
 
 0:31:53.600,0:31:58.480
-no this is it okay never mind uh anyhow
-
-0:31:56.559,0:31:59.840
-so it's a cluster of points connected by
+no this is it okay never mind uh anyhow so it's a cluster of points connected by
 
 0:31:58.480,0:32:02.159
-a string
-
-0:31:59.840,0:32:03.840
-it looks like a kite to me but okay
+a string it looks like a kite to me but okay
 
 0:32:02.159,0:32:05.120
-there is the hypercube which is super
-
-0:32:03.840,0:32:08.720
-cute
+there is the hypercube which is super cute
 
 0:32:05.120,0:32:10.720
-which is this crazy guy here um
-
-0:32:08.720,0:32:12.720
-and then there is this classic green
+which is this crazy guy here um and then there is this classic green
 
 0:32:10.720,0:32:15.840
-right so this can be thought as like
-
-0:32:12.720,0:32:17.600
-an image or whatever right uh
+right so this can be thought as like an image or whatever right uh
 
 0:32:15.840,0:32:19.519
-there is a click which is you know fully
-
-0:32:17.600,0:32:21.760
-connected graph
+there is a click which is you know fully connected graph
 
 0:32:19.519,0:32:23.519
-and then we have this circular ladder
-
-0:32:21.760,0:32:26.480
-and graph so it's a ladder which is
+and then we have this circular ladder and graph so it's a ladder which is
 
 0:32:23.519,0:32:28.000
-closing itself right and so what is
-
-0:32:26.480,0:32:31.279
-going to be our task our task
+closing itself right and so what is going to be our task our task
 
 0:32:28.000,0:32:34.320
-is going to be given a graph structure
-
-0:32:31.279,0:32:34.960
-try to classify as being one or the
+is going to be given a graph structure try to classify as being one or the
 
 0:32:34.320,0:32:37.039
-other right
-
-0:32:34.960,0:32:38.159
-so each of these graphs are going to be
+other right so each of these graphs are going to be
 
 0:32:37.039,0:32:41.360
-basically defined by
-
-0:32:38.159,0:32:43.120
-is this agency matrix and given these
+basically defined by is this agency matrix and given these
 
 0:32:41.360,0:32:45.279
-agency metrics we are going to be
-
-0:32:43.120,0:32:46.640
-basically trying to figure out whether
+agency metrics we are going to be basically trying to figure out whether
 
 0:32:45.279,0:32:49.600
-one graph is
-
-0:32:46.640,0:32:51.120
-uh one type or the other the point is
+one graph is uh one type or the other the point is
 
 0:32:49.600,0:32:53.039
-that this agency matrix
-
-0:32:51.120,0:32:54.559
-is going to be of variable size right
+that this agency matrix is going to be of variable size right
 
 0:32:53.039,0:32:57.039
-because as you
-
-0:32:54.559,0:32:58.240
-have seen this here before right where
+because as you have seen this here before right where
 
 0:32:57.039,0:33:00.640
-is it
-
-0:32:58.240,0:33:02.880
-uh you can give a minimum and a maximum
+is it uh you can give a minimum and a maximum
 
 0:33:00.640,0:33:05.760
-number of nodes and so you can't
-
-0:33:02.880,0:33:08.720
-really do a straightforward
+number of nodes and so you can't really do a straightforward
 
 0:33:05.760,0:33:12.320
-classification right
-
-0:33:08.720,0:33:15.279
-okay cool cool um
+classification right okay cool cool um
 
 0:33:12.320,0:33:15.279
-i didn't say google
-
-0:33:15.360,0:33:19.360
-okay my google is protesting here all
+i didn't say google okay my google is protesting here all
 
 0:33:17.519,0:33:21.200
-right so let's add some signal to the
-
-0:33:19.360,0:33:22.480
-domain right so those are the domain
+right so let's add some signal to the domain right so those are the domain
 
 0:33:21.200,0:33:24.399
-this is where the
-
-0:33:22.480,0:33:26.960
-the information stay right so if you
+this is where the the information stay right so if you
 
 0:33:24.399,0:33:28.880
-have this guy here where is it
-
-0:33:26.960,0:33:30.720
-uh if you had this one no this is the
+have this guy here where is it uh if you had this one no this is the
 
 0:33:28.880,0:33:32.480
-domain and then on top of this you're
-
-0:33:30.720,0:33:33.039
-gonna have the values the colors if you
+domain and then on top of this you're gonna have the values the colors if you
 
 0:33:32.480,0:33:34.640
-have a
-
-0:33:33.039,0:33:36.399
-color image right so these are the
+have a color image right so these are the
 
 0:33:34.640,0:33:37.679
-domains then we're gonna put some signal
-
-0:33:36.399,0:33:39.840
-on top
+domains then we're gonna put some signal on top
 
 0:33:37.679,0:33:41.440
-so in this case let's actually read
-
-0:33:39.840,0:33:44.320
-together we can assign
+so in this case let's actually read together we can assign
 
 0:33:41.440,0:33:45.600
-features to nodes and edges of dgl
-
-0:33:44.320,0:33:47.440
-graphs
+features to nodes and edges of dgl graphs
 
 0:33:45.600,0:33:49.200
-the features are represented as
-
-0:33:47.440,0:33:52.240
-dictionary of of names
+the features are represented as dictionary of of names
 
 0:33:49.200,0:33:56.159
-strings and tensors call
-
-0:33:52.240,0:33:59.519
-fields and data and e n data and e data
+strings and tensors call fields and data and e n data and e data
 
 0:33:56.159,0:34:02.559
-are syntax sugar to access the features
-
-0:33:59.519,0:34:04.240
-data of all nodes and edges so in this
+are syntax sugar to access the features data of all nodes and edges so in this
 
 0:34:02.559,0:34:04.880
-case here i'm going to be just telling
-
-0:34:04.240,0:34:08.879
-that
+case here i'm going to be just telling that
 
 0:34:04.880,0:34:11.839
-each of my node information so my x's
-
-0:34:08.879,0:34:13.200
-are going to be in the degree which is
+each of my node information so my x's are going to be in the degree which is
 
 0:34:11.839,0:34:17.359
-the basically incoming
-
-0:34:13.200,0:34:20.960
-number of vertices i have okay
+the basically incoming number of vertices i have okay
 
 0:34:17.359,0:34:21.599
-so each node each x has its value on the
-
-0:34:20.960,0:34:25.040
-number
+so each node each x has its value on the number
 
 0:34:21.599,0:34:28.399
-of the connected guys
-
-0:34:25.040,0:34:31.440
-each edge instead has the just a num
+of the connected guys each edge instead has the just a num
 
 0:34:28.399,0:34:33.359
-one so each edge has a number one the
-
-0:34:31.440,0:34:35.359
-other one has the number of connected
+one so each edge has a number one the other one has the number of connected
 
 0:34:33.359,0:34:38.560
-guys
-
-0:34:35.359,0:34:39.520
-cool uh so here i just generate my
+guys cool uh so here i just generate my
 
 0:34:38.560,0:34:42.720
-training set and
-
-0:34:39.520,0:34:45.679
-testing set and then i just plot
+training set and testing set and then i just plot
 
 0:34:42.720,0:34:46.879
-these uh to just show you on that these
-
-0:34:45.679,0:34:48.639
-guys have a feature
+these uh to just show you on that these guys have a feature
 
 0:34:46.879,0:34:50.159
-both of them are called called feet
-
-0:34:48.639,0:34:52.240
-right and there is a feet
+both of them are called called feet right and there is a feet
 
 0:34:50.159,0:34:53.359
-not like the foot the feet whatever is
-
-0:34:52.240,0:34:56.159
-pronounced the same
+not like the foot the feet whatever is pronounced the same
 
 0:34:53.359,0:34:56.879
-a feet for the node n and a fit for the
-
-0:34:56.159,0:35:00.560
-e
+a feet for the node n and a fit for the e
 
 0:34:56.879,0:35:02.800
-edge right and so here we go with the
-
-0:35:00.560,0:35:05.839
-equations for the gated
+edge right and so here we go with the equations for the gated
 
 0:35:02.800,0:35:07.680
-graph convolutional networks and again
-
-0:35:05.839,0:35:08.960
-they look terrible because
+graph convolutional networks and again they look terrible because
 
 0:35:07.680,0:35:11.280
-it's a notebook so we're going to be
-
-0:35:08.960,0:35:13.040
-using this one right that are a little
+it's a notebook so we're going to be using this one right that are a little
 
 0:35:11.280,0:35:16.480
-bit prettier
-
-0:35:13.040,0:35:19.760
-all right so before actually reading
+bit prettier all right so before actually reading
 
 0:35:16.480,0:35:23.040
-uh these instructions let's read
-
-0:35:19.760,0:35:26.079
-how the the the main let's read the
+uh these instructions let's read how the the the main let's read the
 
 0:35:23.040,0:35:28.880
-initialization part of this module okay
-
-0:35:26.079,0:35:30.720
-so here we can see that we have a few
+initialization part of this module okay so here we can see that we have a few
 
 0:35:28.880,0:35:34.400
-matrices we have a
-
-0:35:30.720,0:35:35.680
-b c d and e right so we need those
+matrices we have a b c d and e right so we need those
 
 0:35:34.400,0:35:38.079
-matrices
-
-0:35:35.680,0:35:39.680
-and therefore whenever i start my module
+matrices and therefore whenever i start my module
 
 0:35:38.079,0:35:40.800
-which is going to be just a neural
-
-0:35:39.680,0:35:42.960
-network module from
+which is going to be just a neural network module from
 
 0:35:40.800,0:35:44.000
-torch by torch right we're going to be
-
-0:35:42.960,0:35:47.119
-initializing
+torch by torch right we're going to be initializing
 
 0:35:44.000,0:35:50.320
-uh four uh different matrices so
-
-0:35:47.119,0:35:52.320
-a b c and d e are n dot linear so
+uh four uh different matrices so a b c and d e are n dot linear so
 
 0:35:50.320,0:35:54.880
-actually in this case there is also the
-
-0:35:52.320,0:35:55.359
-bias there is not just rotation so these
+actually in this case there is also the bias there is not just rotation so these
 
 0:35:54.880,0:35:59.119
-are
-
-0:35:55.359,0:36:01.680
-a fine transformations right modules um
+are a fine transformations right modules um
 
 0:35:59.119,0:36:02.720
-moreover we have a batch normalization
-
-0:36:01.680,0:36:04.079
-for the
+moreover we have a batch normalization for the
 
 0:36:02.720,0:36:06.800
-hidden representation and basic
-
-0:36:04.079,0:36:10.240
-normalization for the
+hidden representation and basic normalization for the
 
 0:36:06.800,0:36:13.680
-for the edges right uh whenever we do
-
-0:36:10.240,0:36:17.440
-the forward pass we send
+for the edges right uh whenever we do the forward pass we send
 
 0:36:13.680,0:36:19.200
-basically uh the g the graph
-
-0:36:17.440,0:36:21.680
-x capital x is going to be the
+basically uh the g the graph x capital x is going to be the
 
 0:36:19.200,0:36:24.320
-collection of all these
-
-0:36:21.680,0:36:25.760
-vertices right so like we have seen in
+collection of all these vertices right so like we have seen in
 
 0:36:24.320,0:36:28.160
-the attention module
-
-0:36:25.760,0:36:28.960
-in the attention lesson we had that my
+the attention module in the attention lesson we had that my
 
 0:36:28.160,0:36:31.680
-small x
-
-0:36:28.960,0:36:32.079
-uh we can have like a the set of all
+small x uh we can have like a the set of all
 
 0:36:31.680,0:36:35.119
-small
-
-0:36:32.079,0:36:38.079
-x's as represented by the big x right
+small x's as represented by the big x right
 
 0:36:35.119,0:36:39.359
-uh there is no like it's not a syn
-
-0:36:38.079,0:36:42.720
-sequence it's just a way of
+uh there is no like it's not a syn sequence it's just a way of
 
 0:36:39.359,0:36:45.359
-representing a set right so
-
-0:36:42.720,0:36:46.079
-in this case graphs are made of sets of
+representing a set right so in this case graphs are made of sets of
 
 0:36:45.359,0:36:49.040
-vertices
-
-0:36:46.079,0:36:49.839
-but where i can specify the uh
+vertices but where i can specify the uh
 
 0:36:49.040,0:36:52.320
-relationship
-
-0:36:49.839,0:36:52.960
-now between which vertex is connected to
+relationship now between which vertex is connected to
 
 0:36:52.320,0:36:55.920
-which
-
-0:36:52.960,0:36:57.119
-so i have capital x and then capital e x
+which so i have capital x and then capital e x
 
 0:36:55.920,0:36:59.760
-right which is the
-
-0:36:57.119,0:37:00.640
-all those edges so we can have like a
+right which is the all those edges so we can have like a
 
 0:36:59.760,0:37:03.280
-set of
-
-0:37:00.640,0:37:05.359
-uh edges and then we can consider the
+set of uh edges and then we can consider the
 
 0:37:03.280,0:37:06.320
-matrix where i have all these columns
-
-0:37:05.359,0:37:08.400
-right
+matrix where i have all these columns right
 
 0:37:06.320,0:37:11.119
-and so here i'm going to be populating
-
-0:37:08.400,0:37:15.200
-my graph with this representation
+and so here i'm going to be populating my graph with this representation
 
 0:37:11.119,0:37:18.320
-on the g n data i'm going to be
-
-0:37:15.200,0:37:20.560
-defining the variable h which i just
+on the g n data i'm going to be defining the variable h which i just
 
 0:37:18.320,0:37:21.520
-give all my initial representation and
-
-0:37:20.560,0:37:24.800
-then i'm going to have
+give all my initial representation and then i'm going to have
 
 0:37:21.520,0:37:27.200
-ax bx dx and ex
-
-0:37:24.800,0:37:28.160
-which are going to be the matrix
+ax bx dx and ex which are going to be the matrix
 
 0:37:27.200,0:37:29.599
-multiplying
-
-0:37:28.160,0:37:32.800
-all these columns right so you're going
+multiplying all these columns right so you're going
 
 0:37:29.599,0:37:36.400
-to get the rotation of all the columns
-
-0:37:32.800,0:37:38.480
-which are simply obtained by passing the
+to get the rotation of all the columns which are simply obtained by passing the
 
 0:37:36.400,0:37:39.760
-capital x not the collection of all the
-
-0:37:38.480,0:37:43.680
-x's to my
+capital x not the collection of all the x's to my
 
 0:37:39.760,0:37:46.720
-matrix a b d and e okay
-
-0:37:43.680,0:37:48.480
-whereas c c was multiplying
+matrix a b d and e okay whereas c c was multiplying
 
 0:37:46.720,0:37:50.800
-it was rotating just the edge
-
-0:37:48.480,0:37:54.000
-representation right so we have that
+it was rotating just the edge representation right so we have that
 
 0:37:50.800,0:37:54.400
-c is multiplying the edge and then we
-
-0:37:54.000,0:37:57.520
-have
+c is multiplying the edge and then we have
 
 0:37:54.400,0:37:59.040
-this uh function here that is the the
-
-0:37:57.520,0:38:00.000
-new function right we don't know about
+this uh function here that is the the new function right we don't know about
 
 0:37:59.040,0:38:03.359
-this stuff
-
-0:38:00.000,0:38:05.680
-so let's figure out what it is so maybe
+this stuff so let's figure out what it is so maybe
 
 0:38:03.359,0:38:06.720
-now we have to read what's going on here
-
-0:38:05.680,0:38:09.839
-so in dgl
+now we have to read what's going on here so in dgl
 
 0:38:06.720,0:38:13.760
-the message function are expressed as
-
-0:38:09.839,0:38:17.359
-edge udf user define functions
+the message function are expressed as edge udf user define functions
 
 0:38:13.760,0:38:20.640
-edge udf user defined functions take in
-
-0:38:17.359,0:38:24.560
-a single argument edges it has
+edge udf user defined functions take in a single argument edges it has
 
 0:38:20.640,0:38:27.200
-three members source destination
-
-0:38:24.560,0:38:28.000
-and data for accessing source node
+three members source destination and data for accessing source node
 
 0:38:27.200,0:38:30.560
-features
-
-0:38:28.000,0:38:31.599
-destination node features and edge
+features destination node features and edge
 
 0:38:30.560,0:38:34.960
-features right
-
-0:38:31.599,0:38:35.760
-so whenever we have this uh edge here
+features right so whenever we have this uh edge here
 
 0:38:34.960,0:38:38.880
-we're gonna have
-
-0:38:35.760,0:38:42.000
-air presentation living on the edge
+we're gonna have air presentation living on the edge
 
 0:38:38.880,0:38:42.640
-then there is a representation living on
-
-0:38:42.000,0:38:46.079
-the
+then there is a representation living on the
 
 0:38:42.640,0:38:47.920
-source vertex right the incoming vertex
-
-0:38:46.079,0:38:49.280
-i used to call and then we have
+source vertex right the incoming vertex i used to call and then we have
 
 0:38:47.920,0:38:51.760
-ourselves which is the
-
-0:38:49.280,0:38:53.359
-destination vertex right so we have
+ourselves which is the destination vertex right so we have
 
 0:38:51.760,0:38:55.599
-source vertex
-
-0:38:53.359,0:38:56.560
-our edge connecting the source to
+source vertex our edge connecting the source to
 
 0:38:55.599,0:38:58.960
-destination
-
-0:38:56.560,0:38:59.680
-and then we have our own destination
+destination and then we have our own destination
 
 0:38:58.960,0:39:01.599
-vertex
-
-0:38:59.680,0:39:03.119
-right so you have a representation
+vertex right so you have a representation
 
 0:39:01.599,0:39:05.920
-living on the source
-
-0:39:03.119,0:39:06.480
-vertex a representation living on the
+living on the source vertex a representation living on the
 
 0:39:05.920,0:39:08.320
-edge
-
-0:39:06.480,0:39:10.079
-and then a representation living on the
+edge and then a representation living on the
 
 0:39:08.320,0:39:13.040
-destination
-
-0:39:10.079,0:39:14.240
-and those are x axis if they are
+destination and those are x axis if they are
 
 0:39:13.040,0:39:17.200
-associated to the
-
-0:39:14.240,0:39:18.320
-first uh layer of my network right are
+associated to the first uh layer of my network right are
 
 0:39:17.200,0:39:20.800
-gonna be called h
-
-0:39:18.320,0:39:23.040
-if they are associated to the second and
+gonna be called h if they are associated to the second and
 
 0:39:20.800,0:39:25.440
-so on layers of my network right
-
-0:39:23.040,0:39:28.800
-uh so h is my first hidden layer which
+so on layers of my network right uh so h is my first hidden layer which
 
 0:39:25.440,0:39:32.560
-is the second layer of a network right
-
-0:39:28.800,0:39:35.040
-all right so back here uh again so this
+is the second layer of a network right all right so back here uh again so this
 
 0:39:32.560,0:39:36.560
-uh edge you the user defined function
-
-0:39:35.040,0:39:39.920
-have a source
+uh edge you the user defined function have a source
 
 0:39:36.560,0:39:41.440
-that vj destination the just v and the
-
-0:39:39.920,0:39:44.800
-data leaving on the
+that vj destination the just v and the data leaving on the
 
 0:39:41.440,0:39:48.240
-on the edge right all right cool
-
-0:39:44.800,0:39:51.119
-then the reduce function are node
+on the edge right all right cool then the reduce function are node
 
 0:39:48.240,0:39:52.240
-udfs right user defined functions not
-
-0:39:51.119,0:39:54.079
-the udfs
+udfs right user defined functions not the udfs
 
 0:39:52.240,0:39:57.200
-user defined functions have a single
-
-0:39:54.079,0:40:00.320
-argument nodes before you had hedge
+user defined functions have a single argument nodes before you had hedge
 
 0:39:57.200,0:40:02.720
-edges right so the node acts like on a
-
-0:40:00.320,0:40:05.760
-given node right
+edges right so the node acts like on a given node right
 
 0:40:02.720,0:40:09.760
-so which has two members data
-
-0:40:05.760,0:40:12.079
-and mailbox so data contains the node
+so which has two members data and mailbox so data contains the node
 
 0:40:09.760,0:40:15.040
-features and mailbox contains
-
-0:40:12.079,0:40:15.599
-all the incoming messages features
+features and mailbox contains all the incoming messages features
 
 0:40:15.040,0:40:18.960
-stacked
-
-0:40:15.599,0:40:19.680
-along the second dimension okay finally
+stacked along the second dimension okay finally
 
 0:40:18.960,0:40:23.200
-we have that
-
-0:40:19.680,0:40:25.760
-update all which was
+we have that update all which was
 
 0:40:23.200,0:40:27.680
-the function we just seen here the new
-
-0:40:25.760,0:40:31.040
-function
+the function we just seen here the new function
 
 0:40:27.680,0:40:32.240
-update all has two parameters message
-
-0:40:31.040,0:40:35.119
-function and reduce
+update all has two parameters message function and reduce
 
 0:40:32.240,0:40:35.839
-function send messages through all the
-
-0:40:35.119,0:40:39.359
-edges
+function send messages through all the edges
 
 0:40:35.839,0:40:41.760
-and update all nodes optionally apply a
-
-0:40:39.359,0:40:44.000
-function to update the node features
+and update all nodes optionally apply a function to update the node features
 
 0:40:41.760,0:40:45.920
-after receive this is convenient
-
-0:40:44.000,0:40:49.200
-combination for performing
+after receive this is convenient combination for performing
 
 0:40:45.920,0:40:52.480
-send from all the edges the message
-
-0:40:49.200,0:40:54.800
-and then receive for all the nodes
+send from all the edges the message and then receive for all the nodes
 
 0:40:52.480,0:40:55.760
-the radios reduce function right so this
-
-0:40:54.800,0:40:58.000
-is like a
+the radios reduce function right so this is like a
 
 0:40:55.760,0:40:59.359
-condensed version and so let's figure
-
-0:40:58.000,0:41:02.240
-out what are
+condensed version and so let's figure out what are
 
 0:40:59.359,0:41:03.200
-my message function and reduce function
-
-0:41:02.240,0:41:06.079
-right
+my message function and reduce function right
 
 0:41:03.200,0:41:06.480
-so message function we are going to be
-
-0:41:06.079,0:41:09.760
-first
+so message function we are going to be first
 
 0:41:06.480,0:41:12.160
-extracting the bx j
-
-0:41:09.760,0:41:13.520
-so the the edge is going to be
+extracting the bx j so the the edge is going to be
 
 0:41:12.160,0:41:16.400
-connecting
-
-0:41:13.520,0:41:17.839
-my v j to my v and so i'm extracting
+connecting my v j to my v and so i'm extracting
 
 0:41:16.400,0:41:20.960
-here the representation
-
-0:41:17.839,0:41:24.079
-that lives on v j right so my
+here the representation that lives on v j right so my
 
 0:41:20.960,0:41:27.760
-bx j is going to be the
-
-0:41:24.079,0:41:32.720
-bx associated to my vertex j
+bx j is going to be the bx associated to my vertex j
 
 0:41:27.760,0:41:35.839
-right so this guy here b x j
-
-0:41:32.720,0:41:39.359
-cool then i have that my edge
+right so this guy here b x j cool then i have that my edge
 
 0:41:35.839,0:41:40.240
-ej is going to be the summation of the
-
-0:41:39.359,0:41:43.760
-rotated
+ej is going to be the summation of the rotated
 
 0:41:40.240,0:41:47.520
-edge of this edge right
-
-0:41:43.760,0:41:50.560
-the rotated source right
+edge of this edge right the rotated source right
 
 0:41:47.520,0:41:56.319
-and then the destination
-
-0:41:50.560,0:41:58.880
-um vertex right so here you have
+and then the destination um vertex right so here you have
 
 0:41:56.319,0:41:59.680
-so you have the edge representation like
-
-0:41:58.880,0:42:02.800
-c
+so you have the edge representation like c
 
 0:41:59.680,0:42:06.160
-rotation c c rotation of e x
-
-0:42:02.800,0:42:09.280
-right now we have the d of the source so
+rotation c c rotation of e x right now we have the d of the source so
 
 0:42:06.160,0:42:11.599
-d x j and then finally e x
-
-0:42:09.280,0:42:13.280
-for the destination so which is e x
+d x j and then finally e x for the destination so which is e x
 
 0:42:11.599,0:42:16.560
-right
-
-0:42:13.280,0:42:19.760
-cool then i actually store
+right cool then i actually store
 
 0:42:16.560,0:42:21.040
-this ej in this capital e so that we're
-
-0:42:19.760,0:42:22.720
-going to be ending up with all the
+this ej in this capital e so that we're going to be ending up with all the
 
 0:42:21.040,0:42:24.720
-representation for
-
-0:42:22.720,0:42:26.560
-later usage because later we're going to
+representation for later usage because later we're going to
 
 0:42:24.720,0:42:30.079
-be using this ej over here
-
-0:42:26.560,0:42:31.599
-on the bottom right okay so now we have
+be using this ej over here on the bottom right okay so now we have
 
 0:42:30.079,0:42:35.599
-computed the message
-
-0:42:31.599,0:42:38.079
-and therefore so after the message
+computed the message and therefore so after the message
 
 0:42:35.599,0:42:40.319
-um after the message is computed we're
-
-0:42:38.079,0:42:42.560
-gonna be calling the reduce function
+um after the message is computed we're gonna be calling the reduce function
 
 0:42:40.319,0:42:44.560
-and the reduce function finished to
-
-0:42:42.560,0:42:47.839
-compute the update
+and the reduce function finished to compute the update
 
 0:42:44.560,0:42:51.680
-formulas right so we have the ax
-
-0:42:47.839,0:42:53.200
-is going to be the ax for my own data
+formulas right so we have the ax is going to be the ax for my own data
 
 0:42:51.680,0:42:54.720
-right so this ax
-
-0:42:53.200,0:42:57.440
-capital x is going to be all the
+right so this ax capital x is going to be all the
 
 0:42:54.720,0:42:58.400
-vertices and lowercase x is going to be
-
-0:42:57.440,0:43:02.480
-this one right so
+vertices and lowercase x is going to be this one right so
 
 0:42:58.400,0:43:02.800
-lowercase x then i checked my mailbox
-
-0:43:02.480,0:43:06.000
-right
+lowercase x then i checked my mailbox right
 
 0:43:02.800,0:43:09.520
-so the message function sent a message
-
-0:43:06.000,0:43:12.319
-through the uh through the edge and
+so the message function sent a message through the uh through the edge and
 
 0:43:09.520,0:43:13.440
-now at the receiving end we get a
-
-0:43:12.319,0:43:15.920
-message right so
+now at the receiving end we get a message right so
 
 0:43:13.440,0:43:16.800
-we check the mailbox and we receive this
-
-0:43:15.920,0:43:21.520
-bx
+we check the mailbox and we receive this bx
 
 0:43:16.800,0:43:23.920
-j right uh so here we got bxj
-
-0:43:21.520,0:43:25.520
-then i also listen and we have the
+j right uh so here we got bxj then i also listen and we have the
 
 0:43:23.920,0:43:28.240
-representation ej
-
-0:43:25.520,0:43:30.000
-right so that's coming too then i
+representation ej right so that's coming too then i
 
 0:43:28.240,0:43:32.079
-compute the sigmoid here i have the
-
-0:43:30.000,0:43:35.200
-sigmoid for the
+compute the sigmoid here i have the sigmoid for the
 
 0:43:32.079,0:43:38.640
-incoming edge right so the sigmoid
-
-0:43:35.200,0:43:41.119
-of the incoming edge and then
+incoming edge right so the sigmoid of the incoming edge and then
 
 0:43:38.640,0:43:42.319
-all we have to do now is going to be
-
-0:43:41.119,0:43:45.119
-having that my
+all we have to do now is going to be having that my
 
 0:43:42.319,0:43:45.920
-h this is going to be my rotated x right
-
-0:43:45.119,0:43:48.880
-so ax
+h this is going to be my rotated x right so ax
 
 0:43:45.920,0:43:50.800
-is the rotated myself the vertex
-
-0:43:48.880,0:43:54.319
-representation of my own
+is the rotated myself the vertex representation of my own
 
 0:43:50.800,0:43:58.240
-and then i have to sum right
-
-0:43:54.319,0:44:00.400
-over all the incoming edges of my gate
+and then i have to sum right over all the incoming edges of my gate
 
 0:43:58.240,0:44:01.359
-which is multiplying my incoming
-
-0:44:00.400,0:44:03.760
-representation
+which is multiplying my incoming representation
 
 0:44:01.359,0:44:04.960
-incoming rotated representation and then
-
-0:44:03.760,0:44:09.040
-we divide
+incoming rotated representation and then we divide
 
 0:44:04.960,0:44:11.520
-by all those sigmas right
-
-0:44:09.040,0:44:12.240
-all those sigmoids sigmoids which is
+by all those sigmas right all those sigmoids sigmoids which is
 
 0:44:11.520,0:44:16.160
-this one right
-
-0:44:12.240,0:44:18.400
-so we multiply sigma to this bx
+this one right so we multiply sigma to this bx
 
 0:44:16.160,0:44:20.160
-and then we divide by all all of them
-
-0:44:18.400,0:44:21.359
-right by the sum of a lot of them and
+and then we divide by all all of them right by the sum of a lot of them and
 
 0:44:20.160,0:44:24.079
-then we sum
-
-0:44:21.359,0:44:25.119
-uh all these guys right so we have the
+then we sum uh all these guys right so we have the
 
 0:44:24.079,0:44:28.240
-summation
-
-0:44:25.119,0:44:30.880
-of this scaled
+summation of this scaled
 
 0:44:28.240,0:44:31.599
-bj which is then also normalized by the
-
-0:44:30.880,0:44:34.560
-sum
+bj which is then also normalized by the sum
 
 0:44:31.599,0:44:35.359
-of all the sigmas and that's it so we
-
-0:44:34.560,0:44:38.400
-have now
+of all the sigmas and that's it so we have now
 
 0:44:35.359,0:44:38.880
-the lower a h which is gonna be uh
-
-0:44:38.400,0:44:43.440
-written
+the lower a h which is gonna be uh written
 
 0:44:38.880,0:44:46.640
-in the big uh container of x's h's
-
-0:44:43.440,0:44:48.640
-and so that's how we uh
+in the big uh container of x's h's and so that's how we uh
 
 0:44:46.640,0:44:49.760
-write down these three equations right
-
-0:44:48.640,0:44:51.359
-four questions
+write down these three equations right four questions
 
 0:44:49.760,0:44:52.800
-well three right we haven't seen this
-
-0:44:51.359,0:44:56.160
-last one
+well three right we haven't seen this last one
 
 0:44:52.800,0:44:58.720
-so what else so now we can retrieve
-
-0:44:56.160,0:44:59.839
-h right because we have just updated all
+so what else so now we can retrieve h right because we have just updated all
 
 0:44:58.720,0:45:02.560
-the representation
-
-0:44:59.839,0:45:04.079
-which has been computed here and
+the representation which has been computed here and
 
 0:45:02.560,0:45:06.800
-returned there
-
-0:45:04.079,0:45:09.040
-uh then we can also get new the new
+returned there uh then we can also get new the new
 
 0:45:06.800,0:45:11.280
-edges right because we
-
-0:45:09.040,0:45:13.040
-we wrote the edge information here right
+edges right because we we wrote the edge information here right
 
 0:45:11.280,0:45:14.079
-so here we were writing the new edge
-
-0:45:13.040,0:45:17.200
-information
+so here we were writing the new edge information
 
 0:45:14.079,0:45:21.280
-and here we've been writing the new x
-
-0:45:17.200,0:45:23.920
-h information so we retrieve the new h
+and here we've been writing the new x h information so we retrieve the new h
 
 0:45:21.280,0:45:25.040
-and the new e we divide by the square
-
-0:45:23.920,0:45:27.920
-root of the
+and the new e we divide by the square root of the
 
 0:45:25.040,0:45:29.040
-size such that things don't change with
-
-0:45:27.920,0:45:32.160
-the
+size such that things don't change with the
 
 0:45:29.040,0:45:33.680
-size of the um of the
-
-0:45:32.160,0:45:36.240
-of the hidden representation this is
+size of the um of the of the hidden representation this is
 
 0:45:33.680,0:45:39.280
-just you know technicality but it
-
-0:45:36.240,0:45:41.440
-allows you to have like uh a consistent
+just you know technicality but it allows you to have like uh a consistent
 
 0:45:39.280,0:45:43.119
-uh scaling factor like we have seen last
-
-0:45:41.440,0:45:45.760
-week during the
+uh scaling factor like we have seen last week during the
 
 0:45:43.119,0:45:47.200
-uh set to set not the attention we were
-
-0:45:45.760,0:45:48.640
-dividing by the square root of the
+uh set to set not the attention we were dividing by the square root of the
 
 0:45:47.200,0:45:51.839
-dimensions such that the
-
-0:45:48.640,0:45:52.160
-soft arc max was behaving uh similarly
+dimensions such that the soft arc max was behaving uh similarly
 
 0:45:51.839,0:45:55.680
-right
-
-0:45:52.160,0:45:58.560
-regardless of the um of the dimension
+right regardless of the um of the dimension
 
 0:45:55.680,0:46:01.680
-right so we don't change the temperature
-
-0:45:58.560,0:46:02.880
-then we apply a batch normalization such
+right so we don't change the temperature then we apply a batch normalization such
 
 0:46:01.680,0:46:05.440
-that we
-
-0:46:02.880,0:46:06.160
-get nice gradients and doesn't overfit
+that we get nice gradients and doesn't overfit
 
 0:46:05.440,0:46:07.839
-and you know
-
-0:46:06.160,0:46:10.160
-all the nice things that batch normal
+and you know all the nice things that batch normal
 
 0:46:07.839,0:46:13.280
-gives us finally we apply
-
-0:46:10.160,0:46:17.520
-the nonlinearity right the
+gives us finally we apply the nonlinearity right the
 
 0:46:13.280,0:46:20.880
-h the plus so we compute this
-
-0:46:17.520,0:46:24.319
-non-linearity for this one and this one
+h the plus so we compute this non-linearity for this one and this one
 
 0:46:20.880,0:46:27.200
-and then we can write that my new h
-
-0:46:24.319,0:46:29.119
-so the representation for the first
+and then we can write that my new h so the representation for the first
 
 0:46:27.200,0:46:29.920
-hidden layer so my second layer is going
-
-0:46:29.119,0:46:33.040
-to be my
+hidden layer so my second layer is going to be my
 
 0:46:29.920,0:46:36.000
-input x plus h
-
-0:46:33.040,0:46:36.480
-right so we have the input x plus this
+input x plus h right so we have the input x plus this
 
 0:46:36.000,0:46:39.599
-guy
-
-0:46:36.480,0:46:41.200
-here this little positive part
+guy here this little positive part
 
 0:46:39.599,0:46:43.119
-and the same we're going to have the e
-
-0:46:41.200,0:46:44.240
-representation is gonna be my initial
+and the same we're going to have the e representation is gonna be my initial
 
 0:46:43.119,0:46:47.920
-representation
-
-0:46:44.240,0:46:50.560
-plus this new e finish and we return
+representation plus this new e finish and we return
 
 0:46:47.920,0:46:53.760
-h and e uh i have a multiplier
-
-0:46:50.560,0:46:56.960
-perceptron and then here i have this
+h and e uh i have a multiplier perceptron and then here i have this
 
 0:46:53.760,0:47:00.160
-stack of layers so here
-
-0:46:56.960,0:47:02.079
-i just call my gated cn gcn
+stack of layers so here i just call my gated cn gcn
 
 0:47:00.160,0:47:04.560
-and so you can see all these matrices
-
-0:47:02.079,0:47:08.960
-but again we don't care
+and so you can see all these matrices but again we don't care
 
 0:47:04.560,0:47:10.800
-um some stuff for collecting an accuracy
-
-0:47:08.960,0:47:13.280
-computation okay let's test the forward
+um some stuff for collecting an accuracy computation okay let's test the forward
 
 0:47:10.800,0:47:16.000
-pass so how do we test the forward pass
-
-0:47:13.280,0:47:18.240
-here i just define my my data and then i
+pass so how do we test the forward pass here i just define my my data and then i
 
 0:47:16.000,0:47:20.240
-have my batch of x's
-
-0:47:18.240,0:47:22.880
-is going to be the data that leaves on
+have my batch of x's is going to be the data that leaves on
 
 0:47:20.240,0:47:24.640
-the vertices okay so my x
-
-0:47:22.880,0:47:26.480
-is going to be the data that lists on
+the vertices okay so my x is going to be the data that lists on
 
 0:47:24.640,0:47:28.079
-the vertices and my e
-
-0:47:26.480,0:47:30.079
-is going to be the data that lives on
+the vertices and my e is going to be the data that lives on
 
 0:47:28.079,0:47:32.800
-the on the on the edges
-
-0:47:30.079,0:47:33.490
-these are all ones and these are just
+the on the on the edges these are all ones and these are just
 
 0:47:32.800,0:47:35.040
-the degree
-
-0:47:33.490,0:47:37.760
-[Music]
+the degree [Music]
 
 0:47:35.040,0:47:38.559
-so i i'll show you a few a few of these
-
-0:47:37.760,0:47:41.839
-values
+so i i'll show you a few a few of these values
 
 0:47:38.559,0:47:44.720
-yes again that
-
-0:47:41.839,0:47:45.920
-your ease will be quote unquote all once
+yes again that your ease will be quote unquote all once
 
 0:47:44.720,0:47:49.200
-just for the first
-
-0:47:45.920,0:47:52.400
-uh first layer or the first step first
+just for the first uh first layer or the first step first
 
 0:47:49.200,0:47:54.400
-uh sorry what's the word
-
-0:47:52.400,0:47:56.000
-that stack and the rest of them you will
+uh sorry what's the word that stack and the rest of them you will
 
 0:47:54.400,0:47:56.720
-pass the outputs of the previous yeah
-
-0:47:56.000,0:47:58.640
-yeah yeah yeah yeah
+pass the outputs of the previous yeah yeah yeah yeah yeah
 
 0:47:56.720,0:48:00.000
-absolutely yes so these are the input
-
-0:47:58.640,0:48:02.800
-values right so my
+absolutely yes so these are the input values right so my
 
 0:48:00.000,0:48:04.160
-my graph which is the domain has i i put
-
-0:48:02.800,0:48:06.079
-something some signal
+my graph which is the domain has i i put something some signal
 
 0:48:04.160,0:48:07.440
-on at the beginning which is kind of
-
-0:48:06.079,0:48:09.839
-arbitrary right now
+on at the beginning which is kind of arbitrary right now
 
 0:48:07.440,0:48:10.960
-uh for the nodes i put how many input
-
-0:48:09.839,0:48:12.880
-connections i have
+uh for the nodes i put how many input connections i have
 
 0:48:10.960,0:48:15.359
-and for the edges i just put one and
-
-0:48:12.880,0:48:18.559
-then you have several layers of this
+and for the edges i just put one and then you have several layers of this
 
 0:48:15.359,0:48:20.720
-uh graph convolutional net uh like
-
-0:48:18.559,0:48:21.760
-here so you have this gated graph
+uh graph convolutional net uh like here so you have this gated graph
 
 0:48:20.720,0:48:25.359
-convolutional net
-
-0:48:21.760,0:48:27.520
-has a few a few layers right so if you
+convolutional net has a few a few layers right so if you
 
 0:48:25.359,0:48:29.839
-have l which is the number of layers
-
-0:48:27.520,0:48:31.520
-you're gonna have as many uh graph
+have l which is the number of layers you're gonna have as many uh graph
 
 0:48:29.839,0:48:33.280
-convolutional network layers that are
-
-0:48:31.520,0:48:36.480
-the one i showed you before
+convolutional network layers that are the one i showed you before
 
 0:48:33.280,0:48:39.200
-as the numbers you know as as l right
-
-0:48:36.480,0:48:39.760
-and so you you stuck several of these
+as the numbers you know as as l right and so you you stuck several of these
 
 0:48:39.200,0:48:41.440
-layers
-
-0:48:39.760,0:48:43.200
-and at the beginning you have this
+layers and at the beginning you have this
 
 0:48:41.440,0:48:45.680
-degree and all ones and then
-
-0:48:43.200,0:48:47.920
-as you have multiple stacks you start
+degree and all ones and then as you have multiple stacks you start
 
 0:48:45.680,0:48:50.800
-you know having some
-
-0:48:47.920,0:48:53.280
-representation that evolves right makes
+you know having some representation that evolves right makes
 
 0:48:50.800,0:48:53.280
-sense right
-
-0:48:54.160,0:49:00.640
-yes no is would that kind of be like
+sense right yes no is would that kind of be like
 
 0:48:57.839,0:49:01.040
-the value of e would kind of be like the
-
-0:49:00.640,0:49:04.240
-weight
+the value of e would kind of be like the weight
 
 0:49:01.040,0:49:07.440
-of the edge sort of is that
-
-0:49:04.240,0:49:10.480
-right the value on e is the
+of the edge sort of is that right the value on e is the
 
 0:49:07.440,0:49:12.240
-uh representation right so we e has like
-
-0:49:10.480,0:49:15.040
-a
+uh representation right so we e has like a
 
 0:49:12.240,0:49:17.280
-he e here uh okay right now it's just
-
-0:49:15.040,0:49:19.760
-one right but later on in the
+he e here uh okay right now it's just one right but later on in the
 
 0:49:17.280,0:49:20.960
-in the following up layers this is gonna
-
-0:49:19.760,0:49:23.280
-have a vector
+in the following up layers this is gonna have a vector
 
 0:49:20.960,0:49:24.800
-and this vector basically allow you to
-
-0:49:23.280,0:49:28.480
-tune this gate
+and this vector basically allow you to tune this gate
 
 0:49:24.800,0:49:30.960
-for this incoming message
-
-0:49:28.480,0:49:32.800
-let's finish the notebook okay otherwise
+for this incoming message let's finish the notebook okay otherwise
 
 0:49:30.960,0:49:35.839
-we don't finish the notebook and then
-
-0:49:32.800,0:49:36.720
-i can answer every question you have all
+we don't finish the notebook and then i can answer every question you have all
 
 0:49:35.839,0:49:40.880
-right so
-
-0:49:36.720,0:49:42.800
-i show you here um like this dgl graph
+right so i show you here um like this dgl graph
 
 0:49:40.880,0:49:44.720
-which had these features these features
-
-0:49:42.800,0:49:50.000
-are going to be my input
+which had these features these features are going to be my input
 
 0:49:44.720,0:49:52.480
-i have in this case 133 nodes and 739
-
-0:49:50.000,0:49:58.319
-edges how how many are what is the
+i have in this case 133 nodes and 739 edges how how many are what is the
 
 0:49:52.480,0:50:00.880
-maximum number of edges i can have
-
-0:49:58.319,0:50:00.880
-you're following
+maximum number of edges i can have you're following
 
 0:50:01.599,0:50:08.800
-133 square right uh
-
-0:50:05.440,0:50:12.319
-divided by two yeah
+133 square right uh divided by two yeah
 
 0:50:08.800,0:50:15.839
-on the order of 133 square right
-
-0:50:12.319,0:50:19.920
-uh cool all right so let's execute
+on the order of 133 square right uh cool all right so let's execute
 
 0:50:15.839,0:50:20.640
-this one so we see at the beginning the
-
-0:50:19.920,0:50:24.160
-network
+this one so we see at the beginning the network
 
 0:50:20.640,0:50:27.680
-doesn't uh doesn't cannot really
-
-0:50:24.160,0:50:29.040
-classify this uh cannot classify
+doesn't uh doesn't cannot really classify this uh cannot classify
 
 0:50:27.680,0:50:29.839
-correctly and this is just a stupid
-
-0:50:29.040,0:50:31.440
-thing
+correctly and this is just a stupid thing
 
 0:50:29.839,0:50:32.720
-so let's actually train now let's
-
-0:50:31.440,0:50:33.440
-actually figure out how to train this
+so let's actually train now let's actually figure out how to train this
 
 0:50:32.720,0:50:36.079
-network
-
-0:50:33.440,0:50:38.800
-so i have my j my my objective function
+network so i have my j my my objective function
 
 0:50:36.079,0:50:42.400
-which is going to be the cross entropy
-
-0:50:38.800,0:50:44.559
-of the you know the the scores
+which is going to be the cross entropy of the you know the the scores
 
 0:50:42.400,0:50:46.640
-the bad scores and the batch labels
-
-0:50:44.559,0:50:49.119
-right so these are what my network
+the bad scores and the batch labels right so these are what my network
 
 0:50:46.640,0:50:50.240
-uh tells me right this is batch scores
-
-0:50:49.119,0:50:52.079
-the logits
+uh tells me right this is batch scores the logits
 
 0:50:50.240,0:50:53.359
-and then i have the the labels those are
-
-0:50:52.079,0:50:56.160
-the the original
+and then i have the the labels those are the the original
 
 0:50:53.359,0:50:57.440
-the original labels for the for the
-
-0:50:56.160,0:50:59.920
-graphs
+the original labels for the for the graphs
 
 0:50:57.440,0:51:00.480
-and then this is actually it ran fine so
-
-0:50:59.920,0:51:02.559
-we it
+and then this is actually it ran fine so we it
 
 0:51:00.480,0:51:03.599
-everything was working we have the
-
-0:51:02.559,0:51:06.480
-forward pass
+everything was working we have the forward pass
 
 0:51:03.599,0:51:08.079
-you know loss computation zero graph
-
-0:51:06.480,0:51:09.680
-backward optimizer step
+you know loss computation zero graph backward optimizer step
 
 0:51:08.079,0:51:11.920
-and so we define here a training
-
-0:51:09.680,0:51:13.520
-function which is exactly the same as we
+and so we define here a training function which is exactly the same as we
 
 0:51:11.920,0:51:17.280
-have seen all the time
-
-0:51:13.520,0:51:19.839
-let me run this line as well
+have seen all the time let me run this line as well
 
 0:51:17.280,0:51:20.400
-so training function we exactly know
-
-0:51:19.839,0:51:24.000
-everything
+so training function we exactly know everything
 
 0:51:20.400,0:51:24.640
-right so x's are the data the features
-
-0:51:24.000,0:51:26.720
-on the
+right so x's are the data the features on the
 
 0:51:24.640,0:51:28.880
-nodes on the vertices e is going to be
-
-0:51:26.720,0:51:30.880
-the features on the edges
+nodes on the vertices e is going to be the features on the edges
 
 0:51:28.880,0:51:32.960
-the batch scores the logits are
-
-0:51:30.880,0:51:34.880
-basically the output of my model
+the batch scores the logits are basically the output of my model
 
 0:51:32.960,0:51:37.359
-the j the objective function is going to
-
-0:51:34.880,0:51:39.839
-be the cross entropy between the logics
+the j the objective function is going to be the cross entropy between the logics
 
 0:51:37.359,0:51:41.760
-and the targets then you optimize the
-
-0:51:39.839,0:51:44.640
-you you clear up the gradients
+and the targets then you optimize the you you clear up the gradients
 
 0:51:41.760,0:51:46.400
-you compute backwards and then you step
-
-0:51:44.640,0:51:46.960
-right that's those these are the five
+you compute backwards and then you step right that's those these are the five
 
 0:51:46.400,0:51:51.119
-steps
-
-0:51:46.960,0:51:54.240
-one two three four five steps
+steps one two three four five steps
 
 0:51:51.119,0:51:57.200
-finish evaluation the same without the
-
-0:51:54.240,0:51:59.040
-updating of the parameters
+finish evaluation the same without the updating of the parameters
 
 0:51:57.200,0:52:00.640
-so here we just have the training data
-
-0:51:59.040,0:52:04.079
-set and the
+so here we just have the training data set and the
 
 0:52:00.640,0:52:06.400
-testing data set and we can check what's
-
-0:52:04.079,0:52:09.200
-the progress here so far
+testing data set and we can check what's the progress here so far
 
 0:52:06.400,0:52:11.359
-so here i just show you the uh training
-
-0:52:09.200,0:52:19.839
-and the testing accuracy
+so here i just show you the uh training and the testing accuracy
 
 0:52:11.359,0:52:19.839
-oh sorry let's put 40 epochs maybe
-
-0:52:21.920,0:52:25.839
-and so let's see whether it works or not
+oh sorry let's put 40 epochs maybe and so let's see whether it works or not
 
 0:52:26.480,0:52:33.839
-it's getting better
-
-0:52:40.160,0:52:46.880
-and yep accuracy is starts to
+it's getting better and yep accuracy is starts to
 
 0:52:43.680,0:52:51.040
-the accuracy starts to grow test
-
-0:52:46.880,0:52:55.680
-still low okay it's getting up as well
+the accuracy starts to grow test still low okay it's getting up as well
 
 0:52:51.040,0:52:55.680
-yeah there we go convergence yes yes
-
-0:52:56.800,0:53:00.800
-so again all we want to think about
+yeah there we go convergence yes yes so again all we want to think about
 
 0:52:59.040,0:53:02.559
-right uh if you think about from the
-
-0:53:00.800,0:53:04.880
-perspective of the
+right uh if you think about from the perspective of the
 
 0:53:02.559,0:53:06.960
-the attention we have a set of values
-
-0:53:04.880,0:53:07.680
-right and in attention we didn't have
+the attention we have a set of values right and in attention we didn't have
 
 0:53:06.960,0:53:09.440
-any kind of
-
-0:53:07.680,0:53:11.280
-connection between these values it's
+any kind of connection between these values it's
 
 0:53:09.440,0:53:13.760
-just a set everything
-
-0:53:11.280,0:53:14.559
-looks at everyone right so the attention
+just a set everything looks at everyone right so the attention
 
 0:53:13.760,0:53:16.079
-you have to
-
-0:53:14.559,0:53:17.599
-check everything that is going on
+you have to check everything that is going on
 
 0:53:16.079,0:53:20.720
-because you have no idea
-
-0:53:17.599,0:53:23.200
-which one should be uh looking at what
+because you have no idea which one should be uh looking at what
 
 0:53:20.720,0:53:24.160
-in this case we okay that's the main
-
-0:53:23.200,0:53:26.720
-point right
+in this case we okay that's the main point right
 
 0:53:24.160,0:53:27.200
-what did xavier said yesterday the main
-
-0:53:26.720,0:53:30.480
-point
+what did xavier said yesterday the main point
 
 0:53:27.200,0:53:32.319
-is the sparsity in the agency metrics
-
-0:53:30.480,0:53:34.800
-right because the sparsity
+is the sparsity in the agency metrics right because the sparsity
 
 0:53:32.319,0:53:35.599
-gives you structure and structure is the
-
-0:53:34.800,0:53:37.359
-number one
+gives you structure and structure is the number one
 
 0:53:35.599,0:53:39.440
-that are telling you who's connected
-
-0:53:37.359,0:53:40.480
-with whom so if everyone is connected
+that are telling you who's connected with whom so if everyone is connected
 
 0:53:39.440,0:53:43.200
-with everyone
-
-0:53:40.480,0:53:43.599
-you get everything one right everywhere
+with everyone you get everything one right everywhere
 
 0:53:43.200,0:53:46.000
-uh
-
-0:53:43.599,0:53:48.079
-see it's converging here so if you have
+uh see it's converging here so if you have
 
 0:53:46.000,0:53:49.359
-everyone looking at everyone your agency
-
-0:53:48.079,0:53:54.160
-metrics is gonna be just
+everyone looking at everyone your agency metrics is gonna be just
 
 0:53:49.359,0:53:54.160
-a matrix with all ones um
-
-0:53:54.240,0:53:58.480
-if you have you know just a few uh
+a matrix with all ones um if you have you know just a few uh
 
 0:53:56.640,0:54:00.960
-vectors that are connected to each other
-
-0:53:58.480,0:54:02.160
-then you get you know some uh some
+vectors that are connected to each other then you get you know some uh some
 
 0:54:00.960,0:54:05.119
-sporadic
-
-0:54:02.160,0:54:06.559
-ones right so you're gonna get a uh you
+sporadic ones right so you're gonna get a uh you
 
 0:54:05.119,0:54:08.559
-know a sparse matrix
-
-0:54:06.559,0:54:10.079
-okay this stuff was going to 100
+know a sparse matrix okay this stuff was going to 100
 
 0:54:08.559,0:54:12.240
-accuracy before
-
-0:54:10.079,0:54:14.400
-i guess i should set a seed such that i
+accuracy before i guess i should set a seed such that i
 
 0:54:12.240,0:54:17.680
-can show you
-
-0:54:14.400,0:54:19.520
-better better trials um
+can show you better better trials um
 
 0:54:17.680,0:54:21.680
-that was pretty much everything from it
-
-0:54:19.520,0:54:23.520
-so really there is no much
+that was pretty much everything from it so really there is no much
 
 0:54:21.680,0:54:25.200
-big deal i think at least from this
-
-0:54:23.520,0:54:26.880
-first
+big deal i think at least from this first
 
 0:54:25.200,0:54:29.680
-perspective and what i learned in this
-
-0:54:26.880,0:54:32.079
-past week about these networks
+perspective and what i learned in this past week about these networks
 
 0:54:29.680,0:54:33.359
-um are there questions all right i can
-
-0:54:32.079,0:54:34.000
-take questions right now i mean i didn't
+um are there questions all right i can take questions right now i mean i didn't
 
 0:54:33.359,0:54:35.760
-want to
-
-0:54:34.000,0:54:37.599
-to take forever to finish the class
+want to to take forever to finish the class
 
 0:54:35.760,0:54:39.839
-otherwise
-
-0:54:37.599,0:54:41.760
-if people have to leave they can't it's
+otherwise if people have to leave they can't it's
 
 0:54:39.839,0:54:45.119
-also i am nine minutes over so i'm
-
-0:54:41.760,0:54:48.319
-also not on time but you know
+also i am nine minutes over so i'm also not on time but you know
 
 0:54:45.119,0:54:51.440
-better than worse
-
-0:54:48.319,0:54:54.799
-yes so what exactly did we
+better than worse yes so what exactly did we
 
 0:54:51.440,0:54:56.880
-predict here yeah no we had the classes
-
-0:54:54.799,0:54:58.880
-the seven classes of graphs in the
+predict here yeah no we had the classes the seven classes of graphs in the
 
 0:54:56.880,0:55:03.599
-beginning um
-
-0:54:58.880,0:55:03.599
-so so what are the classes
+beginning um so so what are the classes
 
 0:55:04.400,0:55:07.599
-these are the classes and then i'm going
-
-0:55:05.920,0:55:11.200
-to be generating
+these are the classes and then i'm going to be generating
 
 0:55:07.599,0:55:15.200
-down here i'm generating my
-
-0:55:11.200,0:55:15.200
-uh where is the training data set
+down here i'm generating my uh where is the training data set
 
 0:55:15.680,0:55:24.240
-i can't see how long train train train
-
-0:55:20.960,0:55:28.720
-[Music]
+i can't see how long train train train [Music]
 
 0:55:24.240,0:55:32.079
-here so training data set it creates um
-
-0:55:28.720,0:55:35.280
-this data set of 350 graphs
+here so training data set it creates um this data set of 350 graphs
 
 0:55:32.079,0:55:38.319
-that have anything between 10 to 20
-
-0:55:35.280,0:55:41.680
-vertices each and then
+that have anything between 10 to 20 vertices each and then
 
 0:55:38.319,0:55:44.160
-they can be anything uh
-
-0:55:41.680,0:55:44.960
-of those eight classes we have seen
+they can be anything uh of those eight classes we have seen
 
 0:55:44.160,0:55:48.400
-before okay
-
-0:55:44.960,0:55:52.079
-it can be uh anything like let me
+before okay it can be uh anything like let me
 
 0:55:48.400,0:55:55.920
-zoom here so it can be class seven six
-
-0:55:52.079,0:55:58.079
-five four three two and one okay
+zoom here so it can be class seven six five four three two and one okay
 
 0:55:55.920,0:55:59.520
-and zero so you can have any of these
-
-0:55:58.079,0:56:02.400
-one and now
+and zero so you can have any of these one and now
 
 0:55:59.520,0:56:04.319
-now you're asking this this stuff has a
-
-0:56:02.400,0:56:06.079
-variable number of vertices right
+now you're asking this this stuff has a variable number of vertices right
 
 0:56:04.319,0:56:07.359
-and now you're asking your question in
-
-0:56:06.079,0:56:10.079
-your uh
+and now you're asking your question in your uh
 
 0:56:07.359,0:56:11.359
-your network which net which type of
-
-0:56:10.079,0:56:14.960
-graph did i give you
+your network which net which type of graph did i give you
 
 0:56:11.359,0:56:17.760
-right and so our convolutional
-
-0:56:14.960,0:56:19.839
-graph convolutional network tells you
+right and so our convolutional graph convolutional network tells you
 
 0:56:17.760,0:56:22.240
-which type of graph
-
-0:56:19.839,0:56:25.440
-you're looking at right so it's doing
+which type of graph you're looking at right so it's doing
 
 0:56:22.240,0:56:27.119
-basically a classification of your
-
-0:56:25.440,0:56:29.599
-urgency metrics right which is
+basically a classification of your urgency metrics right which is
 
 0:56:27.119,0:56:32.720
-specifying the connectivity
-
-0:56:29.599,0:56:32.720
-of these vertices
+specifying the connectivity of these vertices
 
 0:56:32.880,0:56:37.119
-so about the so the train set is a set
-
-0:56:36.559,0:56:40.160
-of
+so about the so the train set is a set of
 
 0:56:37.119,0:56:43.599
-small graphs right
-
-0:56:40.160,0:56:44.000
-and the batch size there is 50 so that's
+small graphs right and the batch size there is 50 so that's
 
 0:56:43.599,0:56:46.240
-50
-
-0:56:44.000,0:56:47.920
-graphs of varying sizes varying number
+50 graphs of varying sizes varying number
 
 0:56:46.240,0:56:50.319
-of nodes from 10 to 20
-
-0:56:47.920,0:56:51.040
-yes it's not necessary that each batch
+of nodes from 10 to 20 yes it's not necessary that each batch
 
 0:56:50.319,0:56:53.440
-should have
-
-0:56:51.040,0:56:55.359
-graphs with the same number of nodes uh
+should have graphs with the same number of nodes uh
 
 0:56:53.440,0:56:57.359
-that's what's done inside
-
-0:56:55.359,0:56:59.200
-that's what was it was done in terms of
+that's what's done inside that's what was it was done in terms of
 
 0:56:57.359,0:57:02.319
-uh from dgl
-
-0:56:59.200,0:57:05.440
-for for giving you you know uh speed in
+uh from dgl for for giving you you know uh speed in
 
 0:57:02.319,0:57:08.640
-in training right so but that's that's
-
-0:57:05.440,0:57:11.119
-that's that's done uh behind the
+in training right so but that's that's that's that's done uh behind the
 
 0:57:08.640,0:57:13.119
-behind your back right uh it's the same
-
-0:57:11.119,0:57:14.400
-as you when you train for language model
+behind your back right uh it's the same as you when you train for language model
 
 0:57:13.119,0:57:16.240
-right so you want to
-
-0:57:14.400,0:57:17.920
-batch all the sentences with similar
+right so you want to batch all the sentences with similar
 
 0:57:16.240,0:57:20.559
-lengths such that you don't waste
-
-0:57:17.920,0:57:22.000
-computation so it's the similar way in a
+lengths such that you don't waste computation so it's the similar way in a
 
 0:57:20.559,0:57:22.720
-similar way you can do here as well
-
-0:57:22.000,0:57:25.200
-right
+similar way you can do here as well right
 
 0:57:22.720,0:57:26.319
-but what did the what was the dimensions
-
-0:57:25.200,0:57:30.079
-of the output
+but what did the what was the dimensions of the output
 
 0:57:26.319,0:57:33.200
-look like um here
-
-0:57:30.079,0:57:37.119
-so my
+look like um here so my
 
 0:57:33.200,0:57:39.359
-yeah so my here i have an mrp
-
-0:57:37.119,0:57:41.200
-that goes from hidden hidden dimension
+yeah so my here i have an mrp that goes from hidden hidden dimension
 
 0:57:39.359,0:57:43.760
-of the whatever thing
-
-0:57:41.200,0:57:44.720
-to my output dimension so what is the
+of the whatever thing to my output dimension so what is the
 
 0:57:43.760,0:57:47.920
-output dimension
-
-0:57:44.720,0:57:49.119
-let's go figure out out the output
+output dimension let's go figure out out the output
 
 0:57:47.920,0:57:52.160
-dimension number eight
-
-0:57:49.119,0:57:55.119
-right so eight are the possible classes
+dimension number eight right so eight are the possible classes
 
 0:57:52.160,0:57:56.400
-therefore i will give you eight you know
-
-0:57:55.119,0:57:59.680
-eight vector
+therefore i will give you eight you know eight vector
 
 0:57:56.400,0:58:00.799
-a logic of dimension eight uh finally
-
-0:57:59.680,0:58:02.799
-whenever you have this
+a logic of dimension eight uh finally whenever you have this
 
 0:58:00.799,0:58:03.920
-logic of dimension eight so it's just a
-
-0:58:02.799,0:58:07.599
-classifier right
+logic of dimension eight so it's just a classifier right
 
 0:58:03.920,0:58:08.720
-you plug these inside the cross entropy
-
-0:58:07.599,0:58:12.400
-uh
+you plug these inside the cross entropy uh
 
 0:58:08.720,0:58:15.680
-here loss of my logics against my
-
-0:58:12.400,0:58:18.240
-labels and this loss is defined
+here loss of my logics against my labels and this loss is defined
 
 0:58:15.680,0:58:20.079
-down here is my cross entropy which
-
-0:58:18.240,0:58:22.960
-expects logics
+down here is my cross entropy which expects logics
 
 0:58:20.079,0:58:24.400
-and then computes you know the final
-
-0:58:22.960,0:58:27.839
-score
+and then computes you know the final score
 
 0:58:24.400,0:58:31.119
-and then you just run back propagation
-
-0:58:27.839,0:58:34.480
-so did every node
+and then you just run back propagation so did every node
 
 0:58:31.119,0:58:37.760
-have a like a logit
-
-0:58:34.480,0:58:40.240
-um and the label each node
+have a like a logit um and the label each node
 
 0:58:37.760,0:58:42.240
-has the same label which corresponds to
-
-0:58:40.240,0:58:43.760
-the class of the overall graph or is
+has the same label which corresponds to the class of the overall graph or is
 
 0:58:42.240,0:58:47.119
-that not how that works
-
-0:58:43.760,0:58:49.119
-each graph has a
+that not how that works each graph has a
 
 0:58:47.119,0:58:50.480
-vector of logics right so you want to
-
-0:58:49.119,0:58:53.280
-classify
+vector of logics right so you want to classify
 
 0:58:50.480,0:58:54.640
-graphs different graphs so you provide
-
-0:58:53.280,0:58:57.359
-these graphs
+graphs different graphs so you provide these graphs
 
 0:58:54.640,0:58:58.720
-to the network and these graphs have
-
-0:58:57.359,0:59:01.839
-arbitrary structure
+to the network and these graphs have arbitrary structure
 
 0:58:58.720,0:59:02.799
-right they don't have a finite number of
-
-0:59:01.839,0:59:05.520
-vertices
+right they don't have a finite number of vertices
 
 0:59:02.799,0:59:05.920
-so you have you know let's say you have
-
-0:59:05.520,0:59:09.200
-like
+so you have you know let's say you have like
 
 0:59:05.920,0:59:09.599
-10 graphs uh and each of them are like
-
-0:59:09.200,0:59:13.040
-you have
+10 graphs uh and each of them are like you have
 
 0:59:09.599,0:59:16.240
-a graph of size 5 size 10
-
-0:59:13.040,0:59:19.119
-size 15 size 20. so you have sets
+a graph of size 5 size 10 size 15 size 20. so you have sets
 
 0:59:16.240,0:59:20.880
-with different number of vertices and a
-
-0:59:19.119,0:59:22.160
-specific connection between these
+with different number of vertices and a specific connection between these
 
 0:59:20.880,0:59:25.359
-vertices
-
-0:59:22.160,0:59:28.480
-so given these variable length
+vertices so given these variable length
 
 0:59:25.359,0:59:30.079
-sets you have to specif and you specify
-
-0:59:28.480,0:59:31.200
-you you tell the connection between
+sets you have to specif and you specify you you tell the connection between
 
 0:59:30.079,0:59:34.160
-these vertices
-
-0:59:31.200,0:59:35.359
-you ask your network to tell you give me
+these vertices you ask your network to tell you give me
 
 0:59:34.160,0:59:38.000
-a
-
-0:59:35.359,0:59:38.960
-logit vector where you're going to be
+a logit vector where you're going to be
 
 0:59:38.000,0:59:42.160
-showing me
-
-0:59:38.960,0:59:44.240
-basically what graph this belongs to
+showing me basically what graph this belongs to
 
 0:59:42.160,0:59:47.280
-right which family it belongs to
-
-0:59:44.240,0:59:50.079
-so 8 eight are the possibilities you
+right which family it belongs to so 8 eight are the possibilities you
 
 0:59:47.280,0:59:53.040
-have you know circle star blah blah blah
-
-0:59:50.079,0:59:53.920
-each input that input graph will be
+have you know circle star blah blah blah each input that input graph will be
 
 0:59:53.040,0:59:56.160
-mapped
-
-0:59:53.920,0:59:57.440
-towards one specific of this guy right
+mapped towards one specific of this guy right
 
 0:59:56.160,1:00:00.559
-so you just do
-
-0:59:57.440,1:00:01.920
-a classification of the type of graph
+so you just do a classification of the type of graph
 
 1:00:00.559,1:00:04.000
-but the point is that
-
-1:00:01.920,1:00:05.839
-this graph have a variable number of
+but the point is that this graph have a variable number of
 
 1:00:04.000,1:00:09.599
-vertices okay
-
-1:00:05.839,1:00:12.400
-so you have to basically uh uh
+vertices okay so you have to basically uh uh
 
 1:00:09.599,1:00:13.200
-query somehow the the the structure
-
-1:00:12.400,1:00:15.200
-right the
+query somehow the the the structure right the
 
 1:00:13.200,1:00:17.040
-graph convolutional net has to
-
-1:00:15.200,1:00:20.079
-intrinsically
+graph convolutional net has to intrinsically
 
 1:00:17.040,1:00:23.200
-extract what is the typology
-
-1:00:20.079,1:00:26.880
-of connectivity you
+extract what is the typology of connectivity you
 
 1:00:23.200,1:00:30.400
-provide okay
-
-1:00:26.880,1:00:32.000
-cool thank you we are using this example
+provide okay cool thank you we are using this example
 
 1:00:30.400,1:00:32.799
-that was shown was classification of
-
-1:00:32.000,1:00:35.520
-graphs
+that was shown was classification of graphs
 
 1:00:32.799,1:00:37.040
-yeah but also they can be a use care
-
-1:00:35.520,1:00:38.799
-mostly there would be a use case in real
+yeah but also they can be a use care mostly there would be a use case in real
 
 1:00:37.040,1:00:41.040
-world where we have one single
-
-1:00:38.799,1:00:42.319
-graph where each node represents a
+world where we have one single graph where each node represents a
 
 1:00:41.040,1:00:44.240
-particular entity
-
-1:00:42.319,1:00:45.359
-and we need to classify those entities
+particular entity and we need to classify those entities
 
 1:00:44.240,1:00:47.680
-so then how do we
-
-1:00:45.359,1:00:49.440
-do that like take some part of a graph
+so then how do we do that like take some part of a graph
 
 1:00:47.680,1:00:52.640
-and drain the model over that
-
-1:00:49.440,1:00:53.520
-and then redress so so so okay this one
+and drain the model over that and then redress so so so okay this one
 
 1:00:52.640,1:00:55.680
-here you get
-
-1:00:53.520,1:00:57.200
-uh you have like different graphs and
+here you get uh you have like different graphs and
 
 1:00:55.680,1:00:58.720
-then at the end you're gonna be
-
-1:00:57.200,1:01:00.400
-getting them all together right so
+then at the end you're gonna be getting them all together right so
 
 1:00:58.720,1:01:04.319
-whenever you have the
-
-1:01:00.400,1:01:07.680
-uh gated cnn here you at the end
+whenever you have the uh gated cnn here you at the end
 
 1:01:04.319,1:01:10.559
-you you have like forward you get this
-
-1:01:07.680,1:01:11.760
-uh gc this part here right and you have
+you you have like forward you get this uh gc this part here right and you have
 
 1:01:10.559,1:01:15.040
-mean nodes right so
-
-1:01:11.760,1:01:18.480
-dgl y you get the mean of
+mean nodes right so dgl y you get the mean of
 
 1:01:15.040,1:01:22.000
-all the nodes and then you apply the mlp
-
-1:01:18.480,1:01:22.319
-on this mean representation uh this is
+all the nodes and then you apply the mlp on this mean representation uh this is
 
 1:01:22.000,1:01:24.319
-for
-
-1:01:22.319,1:01:25.440
-this classification of the whole graph
+for this classification of the whole graph
 
 1:01:24.319,1:01:27.760
-right
-
-1:01:25.440,1:01:29.520
-uh but then if you'd like to do the
+right uh but then if you'd like to do the
 
 1:01:27.760,1:01:31.920
-other stuff right which is gonna be
-
-1:01:29.520,1:01:33.599
-you you don't have this function right
+other stuff right which is gonna be you you don't have this function right
 
 1:01:31.920,1:01:37.040
-you just don't have this line
-
-1:01:33.599,1:01:39.839
-and you're gonna be applying like a a
+you just don't have this line and you're gonna be applying like a a
 
 1:01:37.040,1:01:42.640
-vector like a logic vector
-
-1:01:39.839,1:01:43.920
-like out of each vector right so each
+vector like a logic vector like out of each vector right so each
 
 1:01:42.640,1:01:47.440
-vertice
-
-1:01:43.920,1:01:50.079
-each vertice you're gonna have a logic
+vertice each vertice you're gonna have a logic
 
 1:01:47.440,1:01:50.720
-a logic for like a vector logic for each
-
-1:01:50.079,1:01:54.079
-vertex
+a logic for like a vector logic for each vertex
 
 1:01:50.720,1:01:56.559
-a vertex vertex right
-
-1:01:54.079,1:01:58.240
-it's called yes yeah okay cool so you
+a vertex vertex right it's called yes yeah okay cool so you
 
 1:01:56.559,1:01:58.640
-have a logic per vertex and then you do
-
-1:01:58.240,1:02:02.319
-the
+have a logic per vertex and then you do the
 
 1:01:58.640,1:02:05.200
-uh training on each of these guys right
-
-1:02:02.319,1:02:05.440
-and so that would be the um for example
+uh training on each of these guys right and so that would be the um for example
 
 1:02:05.200,1:02:09.039
-if
-
-1:02:05.440,1:02:12.640
-there is a if you go to dgl
+if there is a if you go to dgl
 
 1:02:09.039,1:02:14.640
-d dgl.ai
-
-1:02:12.640,1:02:16.799
-this class took really a lot of effort
+d dgl.ai this class took really a lot of effort
 
 1:02:14.640,1:02:20.000
-guys
-
-1:02:16.799,1:02:24.480
-tutorial uh this one
+guys tutorial uh this one
 
 1:02:20.000,1:02:24.480
-tutorial now what is it
-
-1:02:25.599,1:02:28.960
-there is a come on
+tutorial now what is it there is a come on
 
 1:02:29.200,1:02:31.839
-okay here
-
-1:02:32.319,1:02:39.359
-yeah cool so in this case they are doing
+okay here yeah cool so in this case they are doing
 
 1:02:35.920,1:02:41.680
-um they are doing
-
-1:02:39.359,1:02:42.640
-classification of the nodes okay this is
+um they are doing classification of the nodes okay this is
 
 1:02:41.680,1:02:46.319
-the second
-
-1:02:42.640,1:02:49.440
-type of thing so in this case you have a
+the second type of thing so in this case you have a
 
 1:02:46.319,1:02:50.400
-karate karate club i'm not sure if
-
-1:02:49.440,1:02:52.480
-you're familiar
+karate karate club i'm not sure if you're familiar
 
 1:02:50.400,1:02:54.079
-and there is like the instructor number
-
-1:02:52.480,1:02:57.440
-zero and then there is the
+and there is like the instructor number zero and then there is the
 
 1:02:54.079,1:03:00.799
-uh the manager number three 33.
-
-1:02:57.440,1:03:04.799
-and then these edges represent uh
+uh the manager number three 33. and then these edges represent uh
 
 1:03:00.799,1:03:07.440
-what are the um basically the
-
-1:03:04.799,1:03:09.599
-uh interaction outside the club right in
+what are the um basically the uh interaction outside the club right in
 
 1:03:07.440,1:03:10.960
-in real life right so number four
-
-1:03:09.599,1:03:12.880
-you know interacts a lot with the
+in real life right so number four you know interacts a lot with the
 
 1:03:10.960,1:03:15.119
-instructor outside the club
-
-1:03:12.880,1:03:16.400
-and number 26 interacts a lot with
+instructor outside the club and number 26 interacts a lot with
 
 1:03:15.119,1:03:19.200
-number with the
-
-1:03:16.400,1:03:21.680
-manager outside the club so you only
+number with the manager outside the club so you only
 
 1:03:19.200,1:03:24.240
-have two labels you have instructor and
-
-1:03:21.680,1:03:24.960
-manager and now you'd like to get a
+have two labels you have instructor and manager and now you'd like to get a
 
 1:03:24.240,1:03:27.839
-label for
-
-1:03:24.960,1:03:28.880
-all these other nodes all these are the
+label for all these other nodes all these are the
 
 1:03:27.839,1:03:30.799
-vertices
-
-1:03:28.880,1:03:33.039
-so whenever you do the training part
+vertices so whenever you do the training part
 
 1:03:30.799,1:03:35.280
-this is called semi supervised learning
-
-1:03:33.039,1:03:36.480
-because you only have a few labels right
+this is called semi supervised learning because you only have a few labels right
 
 1:03:35.280,1:03:38.240
-so whenever you
-
-1:03:36.480,1:03:40.559
-train this stuff you're going to have
+so whenever you train this stuff you're going to have
 
 1:03:38.240,1:03:42.799
-you know okay you have your comp net not
-
-1:03:40.559,1:03:45.760
-your graph content
+you know okay you have your comp net not your graph content
 
 1:03:42.799,1:03:46.720
-which is outputting a number of classes
-
-1:03:45.760,1:03:49.599
-for each
+which is outputting a number of classes for each
 
 1:03:46.720,1:03:50.720
-vertex right so each vertex has the the
-
-1:03:49.599,1:03:53.440
-full logic
+vertex right so each vertex has the the full logic
 
 1:03:50.720,1:03:53.920
-but then during training you have here
-
-1:03:53.440,1:03:56.400
-that
+but then during training you have here that
 
 1:03:53.920,1:03:57.359
-the the training is going to be the uh
-
-1:03:56.400,1:03:59.440
-you get the logic
+the the training is going to be the uh you get the logic
 
 1:03:57.359,1:04:00.559
-these are logics for every vertex but
-
-1:03:59.440,1:04:02.480
-then when you
+these are logics for every vertex but then when you
 
 1:04:00.559,1:04:04.319
-compute the final loss which is the
-
-1:04:02.480,1:04:08.000
-negative log likelihood
+compute the final loss which is the negative log likelihood
 
 1:04:04.319,1:04:11.039
-you only select the
-
-1:04:08.000,1:04:12.720
-labels that you have which is label for
+you only select the labels that you have which is label for
 
 1:04:11.039,1:04:14.960
-the 33 and the
-
-1:04:12.720,1:04:15.920
-what are the two guys right where so you
+the 33 and the what are the two guys right where so you
 
 1:04:14.960,1:04:19.039
-have 0
-
-1:04:15.920,1:04:20.240
-and 33. these are the only two uh labels
+have 0 and 33. these are the only two uh labels
 
 1:04:19.039,1:04:22.480
-you have
-
-1:04:20.240,1:04:23.599
-and so there is a vector which is called
+you have and so there is a vector which is called
 
 1:04:22.480,1:04:27.200
-0 into 33
-
-1:04:23.599,1:04:29.200
-33 somewhere yeah here this is my label
+0 into 33 33 somewhere yeah here this is my label
 
 1:04:27.200,1:04:32.720
-nodes they are just these two guys
-
-1:04:29.200,1:04:36.640
-and so in my uh training laws here
+nodes they are just these two guys and so in my uh training laws here
 
 1:04:32.720,1:04:38.720
-you only select the two nodes that are
-
-1:04:36.640,1:04:40.480
-that have a label you enforce those
+you only select the two nodes that are that have a label you enforce those
 
 1:04:38.720,1:04:42.799
-variables to be this one right
-
-1:04:40.480,1:04:43.839
-and then you train classical stuff right
+variables to be this one right and then you train classical stuff right
 
 1:04:42.799,1:04:47.359
-of zero grad
-
-1:04:43.839,1:04:48.160
-backprop optimize step and these allow
+of zero grad backprop optimize step and these allow
 
 1:04:47.359,1:04:51.119
-you to
-
-1:04:48.160,1:04:52.400
-basically propagate through out the
+you to basically propagate through out the
 
 1:04:51.119,1:04:54.240
-whole
-
-1:04:52.400,1:04:56.720
-network structure the whole graph
+whole network structure the whole graph
 
 1:04:54.240,1:04:58.880
-structure what is this information that
-
-1:04:56.720,1:05:00.319
-has to come out from the logics of two
+structure what is this information that has to come out from the logics of two
 
 1:04:58.880,1:05:02.079
-specific vertices right
-
-1:05:00.319,1:05:03.680
-so you have several layers stack of
+specific vertices right so you have several layers stack of
 
 1:05:02.079,1:05:07.200
-convolutional
-
-1:05:03.680,1:05:08.160
-graph convolutional nets and then you
+convolutional graph convolutional nets and then you
 
 1:05:07.200,1:05:11.200
-enforce
-
-1:05:08.160,1:05:13.359
-you know those two vertices to output
+enforce you know those two vertices to output
 
 1:05:11.200,1:05:16.079
-that specific label
-
-1:05:13.359,1:05:17.440
-uh and then you backprop and then
+that specific label uh and then you backprop and then
 
 1:05:16.079,1:05:19.680
-basically all this
-
-1:05:17.440,1:05:20.799
-information propagates through network
+basically all this information propagates through network
 
 1:05:19.680,1:05:23.039
-which
-
-1:05:20.799,1:05:24.240
-propagates a kind of representation
+which propagates a kind of representation
 
 1:05:23.039,1:05:27.280
-across this
-
-1:05:24.240,1:05:29.599
-domain and it shows you
+across this domain and it shows you
 
 1:05:27.280,1:05:32.079
-if you do a plotting uh this is at the
-
-1:05:29.599,1:05:36.000
-beginning so this is the representation
+if you do a plotting uh this is at the beginning so this is the representation
 
 1:05:32.079,1:05:38.240
-or of the vertices um without training
-
-1:05:36.000,1:05:39.520
-and then after you train after a few
+or of the vertices um without training and then after you train after a few
 
 1:05:38.240,1:05:42.319
-epochs you can see
-
-1:05:39.520,1:05:42.799
-how this representation gets attracted
+epochs you can see how this representation gets attracted
 
 1:05:42.319,1:05:45.520
-right
-
-1:05:42.799,1:05:46.160
-so 0 and 33 gets pulled away such that
+right so 0 and 33 gets pulled away such that
 
 1:05:45.520,1:05:49.680
-they are
-
-1:05:46.160,1:05:52.720
-linearly classified
+they are linearly classified
 
 1:05:49.680,1:05:54.720
-uh when they are you know easy
-
-1:05:52.720,1:05:55.839
-told apart and then these are basically
+uh when they are you know easy told apart and then these are basically
 
 1:05:54.720,1:05:58.880
-dragging
-
-1:05:55.839,1:06:00.480
-uh vertices close to them based on
+dragging uh vertices close to them based on
 
 1:05:58.880,1:06:02.960
-basically on the number of connections
-
-1:06:00.480,1:06:05.520
-they have sort of right
+basically on the number of connections they have sort of right
 
 1:06:02.960,1:06:06.400
-and that's how you do uh classification
-
-1:06:05.520,1:06:09.280
-on
+and that's how you do uh classification on
 
 1:06:06.400,1:06:10.240
-on vertices rather than classification
-
-1:06:09.280,1:06:12.480
-of
+on vertices rather than classification of
 
 1:06:10.240,1:06:13.680
-graphs right maybe yeah yesterday we
-
-1:06:12.480,1:06:16.400
-didn't quite mention
+graphs right maybe yeah yesterday we didn't quite mention
 
 1:06:13.680,1:06:18.160
-how you apply uh these things but again
-
-1:06:16.400,1:06:21.760
-like xavier like myself
+how you apply uh these things but again like xavier like myself
 
 1:06:18.160,1:06:23.920
-are not maybe too interested in the um
-
-1:06:21.760,1:06:26.880
-application part but perhaps more in the
+are not maybe too interested in the um application part but perhaps more in the
 
 1:06:23.920,1:06:29.039
-in the algorithmic part
-
-1:06:26.880,1:06:30.799
-did i answer your question oh that makes
+in the algorithmic part did i answer your question oh that makes
 
 1:06:29.039,1:06:34.000
-sense yeah okay awesome
-
-1:06:30.799,1:06:36.720
-at least i make sense sometimes
+sense yeah okay awesome at least i make sense sometimes
 
 1:06:34.000,1:06:36.720
-more questions
-
-1:06:37.839,1:06:44.839
-no you're done you're fed up
+more questions no you're done you're fed up
 
 1:06:41.039,1:06:46.640
-everybody else left huh there are 18
-
-1:06:44.839,1:06:48.880
-people
+everybody else left huh there are 18 people
 
 1:06:46.640,1:06:50.079
-yeah dinner i'm hungry my roommate just
-
-1:06:48.880,1:06:54.720
-ate my dinner like
+yeah dinner i'm hungry my roommate just ate my dinner like
 
 1:06:50.079,1:06:58.839
-the hell these two weeks were crazy
-
-1:06:54.720,1:07:02.160
-i really worked a lot all right
+the hell these two weeks were crazy i really worked a lot all right
 
 1:06:58.839,1:07:02.160
-peace bye-bye
-
-1:07:02.319,1:07:08.480
-all right so this was like i think
+peace bye-bye all right so this was like i think
 
 1:07:05.359,1:07:11.920
-one of my most intensive lectures so far
-
-1:07:08.480,1:07:14.880
-um i prepared like in
+one of my most intensive lectures so far um i prepared like in
 
 1:07:11.920,1:07:16.000
-under one week and i think i may have
-
-1:07:14.880,1:07:19.039
-covered
+under one week and i think i may have covered
 
 1:07:16.000,1:07:22.319
-a lot of materials so it's totally
-
-1:07:19.039,1:07:25.200
-reasonable to be like somehow
+a lot of materials so it's totally reasonable to be like somehow
 
 1:07:22.319,1:07:26.559
-overwhelmed at the moment but then how
-
-1:07:25.200,1:07:29.119
-can you actually
+overwhelmed at the moment but then how can you actually
 
 1:07:26.559,1:07:30.559
-squeeze out everything out of this video
-
-1:07:29.119,1:07:33.119
-right so there are a few steps
+squeeze out everything out of this video right so there are a few steps
 
 1:07:30.559,1:07:34.000
-i would highly recommend you to follow
-
-1:07:33.119,1:07:36.640
-starting with
+i would highly recommend you to follow starting with
 
 1:07:34.000,1:07:37.039
-you know comprehensions issues right
-
-1:07:36.640,1:07:39.200
-again
+you know comprehensions issues right again
 
 1:07:37.039,1:07:40.319
-i might have been confusing i have also
-
-1:07:39.200,1:07:42.640
-re-recorded
+i might have been confusing i have also re-recorded
 
 1:07:40.319,1:07:43.359
-a few new chunks because i messed up in
-
-1:07:42.640,1:07:45.760
-class
+a few new chunks because i messed up in class
 
 1:07:43.359,1:07:46.720
-so if you have any question i have not
-
-1:07:45.760,1:07:48.559
-yet addressed
+so if you have any question i have not yet addressed
 
 1:07:46.720,1:07:50.559
-just type it down in the comment section
-
-1:07:48.559,1:07:52.559
-below this video
+just type it down in the comment section below this video
 
 1:07:50.559,1:07:54.480
-moreover if you'd like to follow up with
-
-1:07:52.559,1:07:56.880
-me on the latest news about
+moreover if you'd like to follow up with me on the latest news about
 
 1:07:54.480,1:07:58.160
-teaching and machine learning and very
-
-1:07:56.880,1:08:01.119
-cute and pretty things
+teaching and machine learning and very cute and pretty things
 
 1:07:58.160,1:08:01.599
-just follow me on twitter i will you
-
-1:08:01.119,1:08:05.200
-know
+just follow me on twitter i will you know
 
 1:08:01.599,1:08:08.720
-talk about the latest news over there
-
-1:08:05.200,1:08:09.440
-moreover if you'd like to be always up
+talk about the latest news over there moreover if you'd like to be always up
 
 1:08:08.720,1:08:11.599
-to date with
-
-1:08:09.440,1:08:13.920
-my latest content i would recommend you
+to date with my latest content i would recommend you
 
 1:08:11.599,1:08:16.319
-to subscribe to my channel
-
-1:08:13.920,1:08:18.000
-and click on the notification bell such
+to subscribe to my channel and click on the notification bell such
 
 1:08:16.319,1:08:21.359
-that you don't miss any
-
-1:08:18.000,1:08:23.759
-new video if you like this video
+that you don't miss any new video if you like this video
 
 1:08:21.359,1:08:24.960
-you know don't forget to press the like
-
-1:08:23.759,1:08:28.080
-button
+you know don't forget to press the like button
 
 1:08:24.960,1:08:31.440
-i really appreciate that
-
-1:08:28.080,1:08:34.640
-searching so each of these videos have a
+i really appreciate that searching so each of these videos have a
 
 1:08:31.440,1:08:38.560
-english transcription we have a japanese
-
-1:08:34.640,1:08:40.480
-spanish italian turkish mandarin korean
+english transcription we have a japanese spanish italian turkish mandarin korean
 
 1:08:38.560,1:08:41.920
-translations as well available for you
-
-1:08:40.480,1:08:43.759
-if english is not your
+translations as well available for you if english is not your
 
 1:08:41.920,1:08:45.759
-primary language and again if you'd like
-
-1:08:43.759,1:08:48.640
-to help out in the translation
+primary language and again if you'd like to help out in the translation
 
 1:08:45.759,1:08:51.199
-process please feel free to contact me
-
-1:08:48.640,1:08:53.040
-by email or on twitter moreover
+process please feel free to contact me by email or on twitter moreover
 
 1:08:51.199,1:08:54.400
-you should really really really take the
-
-1:08:53.040,1:08:57.520
-time to go over
+you should really really really take the time to go over
 
 1:08:54.400,1:09:00.319
-the notebook we have covered today
-
-1:08:57.520,1:09:01.920
-uh and check every line of code right so
+the notebook we have covered today uh and check every line of code right so
 
 1:09:00.319,1:09:04.319
-because there are many things
-
-1:09:01.920,1:09:05.600
-i may have you know not have spent
+because there are many things i may have you know not have spent
 
 1:09:04.319,1:09:08.560
-enough time today
-
-1:09:05.600,1:09:09.359
-just for sake of you know keeping this
+enough time today just for sake of you know keeping this
 
 1:09:08.560,1:09:12.880
-video
-
-1:09:09.359,1:09:14.480
-under a within a specific time amount
+video under a within a specific time amount
 
 1:09:12.880,1:09:16.400
-but then you should really go through
-
-1:09:14.480,1:09:17.920
-every line and deeply understand what's
+but then you should really go through every line and deeply understand what's
 
 1:09:16.400,1:09:20.640
-going on and if you find
-
-1:09:17.920,1:09:21.920
-a typo or error a bug like many of you
+going on and if you find a typo or error a bug like many of you
 
 1:09:20.640,1:09:25.040
-have already found
-
-1:09:21.920,1:09:25.600
-do please report it on github and if you
+have already found do please report it on github and if you
 
 1:09:25.040,1:09:27.839
-feel
-
-1:09:25.600,1:09:30.560
-inclined just you can also send a pull
+feel inclined just you can also send a pull
 
 1:09:27.839,1:09:34.319
-request by fixing this error okay
-
-1:09:30.560,1:09:36.560
-that's great because we can you know all
+request by fixing this error okay that's great because we can you know all
 
 1:09:34.319,1:09:38.239
-benefit from your contribution and you
-
-1:09:36.560,1:09:40.799
-also get some value
+benefit from your contribution and you also get some value
 
 1:09:38.239,1:09:42.159
-out of you know getting your hands dirty
-
-1:09:40.799,1:09:44.000
-right with the code
+out of you know getting your hands dirty right with the code
 
 1:09:42.159,1:09:45.679
-and finally you're going to be helping
-
-1:09:44.000,1:09:48.719
-me and the whole machine
+and finally you're going to be helping me and the whole machine
 
 1:09:45.679,1:09:50.480
-deep learning community that are using
-
-1:09:48.719,1:09:52.960
-this material
+deep learning community that are using this material
 
 1:09:50.480,1:09:54.480
-and that was pretty much it thanks again
-
-1:09:52.960,1:09:57.120
-for sticking with me
+and that was pretty much it thanks again for sticking with me
 
 1:09:54.480,1:09:58.719
-and as i've been told to say like share
-
-1:09:57.120,1:10:03.360
-and subscribe
+and as i've been told to say like share and subscribe
 
 1:09:58.719,1:10:03.360
 see you next time bye bye
-
