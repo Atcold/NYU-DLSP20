@@ -43,9 +43,9 @@ source activate pDL
 ```
 
 
-## Startovati Jupyter Notebook ili JupyterLab
+## Pokrenuti Jupyter Notebook ili JupyterLab
 
-Startovati iz terminala:
+Pokrenuti iz terminala:
 
 ```bash
 jupyter lab
