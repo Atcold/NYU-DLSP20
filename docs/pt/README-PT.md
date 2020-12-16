@@ -4,7 +4,7 @@
 
 <!-- This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 -->
-Este repositório de *notebooks* possui um [página web complementar](https://atcold.github.io/pytorch-Deep-Learning/es/), onde todo o material do curso pode ser encontrado em formato textual e em vídeo.
+Este repositório de *notebooks* possui uma [página web complementar](https://atcold.github.io/pytorch-Deep-Learning/es/), onde todo o material do curso pode ser encontrado em formato textual e em vídeo.
 
 <!-- English - Mandarin - Korean - Spanish - Italian - Turkish - Japanese - Arabic - French - Farsi - Russian - Vietnamese - Serbian - Portuguese -->
 [🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) &nbsp; [🇫🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fr/README-FR.md) &nbsp; [🇮🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fa/README-FA.md) &nbsp; [🇷🇺](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ru/README-RU.md) &nbsp; [🇻🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/vi/README-VI.md) &nbsp; [🇷🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/sr/README-SR.md) &nbsp; [🇵🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/pt/README-PT.md)
@@ -16,7 +16,7 @@ Este repositório de *notebooks* possui um [página web complementar](https://at
 <!-- To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
 The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal.
 -->
-Para poder seguir os exercícios, precisa ter um computador com Miniconda (uma versão minimalista do Anaconda) e vários pacotes Python instalados.
+Para poder seguir os exercícios, você precisa ter um computador com Miniconda (uma versão minimalista do Anaconda) e vários pacotes Python instalados.
 As instruções a seguir funcionarão para os usuários de Mac ou Ubuntu Linux. Os usuários Windows precisarão instalar e trabalhar em um terminal [Git BASH](https://gitforwindows.org/).
 
 <!-- Download and install Miniconda
@@ -97,7 +97,7 @@ To see the content appropriately in the classic interface install the following:
 -->
 Utilizamos estilos escuros para *GitHub* e *Jupyter Notebook*.
 Deveria tentar seguir o mesmo padrão, ou ficarão feios.
-JupyterLab tem disponível um tema escuro, sendo que somente precisará instalar alguma coisa adicional se desejar utilizar a interface clássica dos notebooks.
+JupyterLab tem disponível um tema escuro, sendo que você somente precisará instalar alguma coisa adicional se desejar utilizar a interface clássica dos notebooks.
 Para ver o conteúdo adequadamente na interface clássica, instale o seguinte:
 
 <!--  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
