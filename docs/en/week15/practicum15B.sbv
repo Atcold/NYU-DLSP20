@@ -1,0 +1,2396 @@
+0:00:01.920,0:00:08.160
+so we share the screen and i'm opening the chat
+
+0:00:08.160,0:00:12.160
+all right so i have the chat open so you can interact with me
+
+0:00:12.160,0:00:16.480
+and so a small recap from last time last time we've been talking about energy
+
+0:00:16.480,0:00:20.080
+uh and actually we've been talking about inference
+
+0:00:20.080,0:00:24.560
+how to find set how to find y check uh how to compute y
+
+0:00:24.560,0:00:30.080
+f and e okay and so let me just start i guess with the the last slide from
+
+0:00:30.080,0:00:35.120
+last time so we had computed this f infinity uh which is
+
+0:00:35.120,0:00:39.680
+called uh zero temperature limit uh free energy
+
+0:00:39.680,0:00:44.239
+uh as a function of my y and y is going to be a two dimensional
+
+0:00:44.239,0:00:47.360
+vector right so whenever i'm going to be plotting this f
+
+0:00:47.360,0:00:51.520
+infinity of y it's going to be a scalar field means this a height
+
+0:00:51.520,0:00:57.840
+over like a 2d region okay so we saw already this stuff that since
+
+0:00:57.840,0:01:00.800
+it's gonna have different height i'm gonna represent with the
+
+0:01:00.800,0:01:07.760
+color purple the height equals zero and then color equal green for
+
+0:01:07.760,0:01:10.960
+equal one and then everything that is above and beyond
+
+0:01:10.960,0:01:14.799
+the free energy equal tool is going to be in
+
+0:01:14.799,0:01:22.159
+yellow okay and so this is how this stuff looks i
+
+0:01:22.159,0:01:26.240
+would like to remind you that this free energy was the quadratic
+
+0:01:26.240,0:01:31.600
+uh a cliton distance from the model manifold right so all points that are
+
+0:01:31.600,0:01:36.720
+within the um within the model manifold they have zero cost right
+
+0:01:36.720,0:01:40.240
+this is sorry zero energy free energy because again the
+
+0:01:40.240,0:01:44.240
+the distance between them and the manifold is zero so zero squared is zero
+
+0:01:44.240,0:01:47.360
+and then as you move away it's gonna it's gonna increase up
+
+0:01:47.360,0:01:54.159
+uh quadratically so uh so far everything should be uh
+
+0:01:54.159,0:01:58.000
+known understood and you know you you took yeah you had one week to to go over
+
+0:01:58.000,0:02:01.759
+this stuff so i i assume everyone is quite familiar
+
+0:02:01.759,0:02:06.079
+so something that you may notice right now is gonna be in the side
+
+0:02:06.079,0:02:11.039
+of these ellipse you're going to have like a region that is slightly
+
+0:02:11.039,0:02:14.879
+slightly lighter right you can see a lighter degree of
+
+0:02:14.879,0:02:18.879
+purple so what's going on over there so let me show you this
+
+0:02:18.879,0:02:23.440
+uh image here uh with the height you know proportional to the actual
+
+0:02:23.440,0:02:28.160
+height of this um of this free energy okay so i'm gonna
+
+0:02:28.160,0:02:32.319
+change the color map such that uh you can clearly see what's going on
+
+0:02:32.319,0:02:34.720
+and i'm gonna be using this one which is called
+
+0:02:34.720,0:02:40.400
+cold warm so cold means like f infinity equals zero i'm going to be
+
+0:02:40.400,0:02:45.120
+using the blue color for f infinity equal 0.5 i'm gonna be
+
+0:02:45.120,0:02:48.400
+using a gray color and then for everything
+
+0:02:48.400,0:02:55.120
+that is above and beyond f infinity one is going to be in red
+
+0:02:55.120,0:02:59.680
+and so this is going to be um the the image you saw before now that was like
+
+0:02:59.680,0:03:03.120
+simply saw from uh from top here i'm gonna show you the
+
+0:03:03.120,0:03:07.360
+contour so each uh line here they share the same
+
+0:03:07.360,0:03:11.519
+value of the free energy okay so let me spin this little guy so
+
+0:03:11.519,0:03:16.560
+it's that you can see all around as you can tell all the regions like the
+
+0:03:16.560,0:03:20.400
+height around the the the ellipse that is
+
+0:03:20.400,0:03:23.440
+with the the manifold ellipse is gonna have zero energy
+
+0:03:23.440,0:03:27.440
+and as you move away from that you're gonna have like a quadratic thing right
+
+0:03:27.440,0:03:33.519
+so you're gonna have like a parabola uh what you notice is that in the center
+
+0:03:33.519,0:03:36.799
+so on the outside of course is going to be like a parabola but in the center
+
+0:03:36.799,0:03:39.840
+those two things are going to be going up on a peak
+
+0:03:39.840,0:03:46.720
+right and this might or might not be wanted and so the
+
+0:03:46.720,0:03:50.879
+this we're gonna start today lesson by learning how to relax
+
+0:03:50.879,0:03:56.000
+this uh free energy this infinite zero temperature limit free energy
+
+0:03:56.000,0:03:59.599
+to a more you know uh a free energy without
+
+0:03:59.599,0:04:03.920
+local minima such that you know it's a bit more smooth
+
+0:04:03.920,0:04:07.599
+let me take here a cross section of this you know bathtub
+
+0:04:07.599,0:04:10.640
+for y one equals zero so i'm gonna be chaff
+
+0:04:10.640,0:04:15.519
+chopping it in a correspondence of y one equals zero
+
+0:04:15.519,0:04:19.359
+so what we get is going to be the following you're gonna see now
+
+0:04:19.359,0:04:24.080
+that those two branches are gonna be my parabolic branches right
+
+0:04:24.080,0:04:27.520
+so again what is this free energy free energy
+
+0:04:27.520,0:04:31.919
+was the square distance of your given point
+
+0:04:31.919,0:04:35.360
+to the closest point on the manifold right
+
+0:04:35.360,0:04:38.759
+so if you're on the manifold which is like location
+
+0:04:38.759,0:04:43.120
+0.4 for example then the distance between you
+
+0:04:43.120,0:04:47.280
+and the manifold is going to be zero and therefore the square of zero is going to
+
+0:04:47.280,0:04:50.240
+be zero as you move away let's say we move to
+
+0:04:50.240,0:04:55.520
+the right hand side of this 0.4 as you move linearly to the right
+
+0:04:55.520,0:04:57.759
+hand side you're going to be increasing
+
+0:04:57.759,0:05:00.320
+quadratically right that's why we observe
+
+0:05:00.320,0:05:04.320
+this energy free energy going up quadratically
+
+0:05:04.320,0:05:07.919
+similarly what happens on the other side of course
+
+0:05:07.919,0:05:11.919
+the same happens as you move towards the zero right and so as you move towards
+
+0:05:11.919,0:05:16.560
+the zero you're gonna get that you try to climb up that parabola
+
+0:05:16.560,0:05:19.840
+and we have this peak over here and so in the next
+
+0:05:19.840,0:05:24.160
+slide we're gonna be learning how to smooth that peak
+
+0:05:24.160,0:05:27.840
+i'll let you i tell you later why we uh what is very why
+
+0:05:27.840,0:05:31.039
+this is very useful like why we why my why
+
+0:05:31.039,0:05:38.479
+we might want to do so okay so free energy we we know right the the
+
+0:05:38.479,0:05:42.400
+minimum value of the energy e that
+
+0:05:42.400,0:05:47.759
+is spanning across y and z right so you have this energy we saw that uh for
+
+0:05:47.759,0:05:53.600
+a given y we have like an energy over z and then the free energy was the value
+
+0:05:53.600,0:05:58.000
+of the energy correspondent to the location where we have the
+
+0:05:58.000,0:06:00.479
+minimum value right so the minimum value of this
+
+0:06:00.479,0:06:05.759
+e is going to be my free energy now i'm going to be introducing a
+
+0:06:05.759,0:06:12.479
+relaxed version which is going to be this uh purple f so
+
+0:06:12.479,0:06:15.600
+this purple f function parameterized by beta
+
+0:06:15.600,0:06:21.199
+is going to be simply this expression uh what is this beta
+
+0:06:21.199,0:06:26.479
+right so this beta it's in physics it's called the inverse
+
+0:06:26.479,0:06:29.759
+temperature the thermo thermodynamic inverse
+
+0:06:29.759,0:06:34.560
+temperature or the coldness and it's simply one over
+
+0:06:34.560,0:06:40.080
+uh kb which is the boltzmann constant multiplied by the temperature okay
+
+0:06:40.080,0:06:44.720
+so again if t that capital t the temperature is very very very high
+
+0:06:44.720,0:06:48.080
+like it's very warm like you're on the sun beta is gonna be
+
+0:06:48.080,0:06:54.639
+extremely small right it's gonna be zero instead if temperature the temperature
+
+0:06:54.639,0:06:58.400
+is cold like zero kelvin then automatically you're
+
+0:06:58.400,0:07:03.520
+gonna get that beta it's plus infinity right and so
+
+0:07:03.520,0:07:10.240
+now you can understand why i call my f infinity the zero
+
+0:07:10.240,0:07:15.039
+temperature limit free energy so it's zero temperature
+
+0:07:15.039,0:07:18.800
+it's super cold right so capital t is zero meaning beta is
+
+0:07:18.800,0:07:22.080
+plus infinity so again if you have this free energy
+
+0:07:22.080,0:07:25.680
+with so-called free energy the free energy is going to be exactly
+
+0:07:25.680,0:07:30.160
+the minimum otherwise if you relax this constraint as you warm up a little
+
+0:07:30.160,0:07:33.840
+bit this free energy the free energy is going to be a
+
+0:07:33.840,0:07:38.800
+summation of multiple things right so this s here is the s for
+
+0:07:38.800,0:07:43.680
+sum is a summation of all these components here multiplied by the
+
+0:07:43.680,0:07:48.879
+interval cool this symbol over here it's simply the
+
+0:07:48.879,0:07:53.280
+measure of the domain of z so in our case
+
+0:07:53.280,0:07:56.960
+uh z goes from zero to two pi and therefore
+
+0:07:56.960,0:08:00.560
+this item over here it simply means two pi
+
+0:08:00.560,0:08:07.520
+okay all right all right but who who remembers what this kbt is right
+
+0:08:07.520,0:08:11.199
+what is this kbt why are we talking about energies right
+
+0:08:11.199,0:08:14.960
+so again from physics no 101 you might remember that
+
+0:08:14.960,0:08:20.319
+the average translational kinetic energy was the two
+
+0:08:20.319,0:08:25.039
+third kbt no and therefore kbt or two third
+
+0:08:25.039,0:08:29.199
+kbt express the uh kinetic energy right of
+
+0:08:29.199,0:08:33.200
+this let's say gas with all those particles
+
+0:08:33.200,0:08:36.959
+and so the temperature allows you to express
+
+0:08:36.959,0:08:41.360
+uh the energy right so you have temperature and energy are connected
+
+0:08:41.360,0:08:46.720
+um so you can make uh a quick you know check check here and
+
+0:08:46.720,0:08:51.920
+beta since it's going to be the inverse of kbt it's going to be in one over
+
+0:08:51.920,0:08:58.800
+joule right and so here we have these one over joule means that this stuff is
+
+0:08:58.800,0:09:01.839
+joule therefore f is going to be an energy
+
+0:09:01.839,0:09:04.880
+and then inside this exponential we have one over
+
+0:09:04.880,0:09:09.279
+joule times the e which is joule and then if you multiply the two you
+
+0:09:09.279,0:09:12.800
+then the two you know units cancel out so
+
+0:09:12.800,0:09:18.560
+everything works just fine all right all right all right um and
+
+0:09:18.560,0:09:21.760
+also yes the the dimension of z cancel out with
+
+0:09:21.760,0:09:24.080
+this dimension right so everything is just pure
+
+0:09:24.080,0:09:29.040
+uh pure number okay again these are this is not machine learning this is physics
+
+0:09:29.040,0:09:32.320
+just to give you a little bit of you know uh
+
+0:09:32.320,0:09:36.320
+overview about what this stuff where this stuff comes from right so this is
+
+0:09:36.320,0:09:39.839
+just from our friends from the physics department
+
+0:09:39.839,0:09:43.600
+all right all right all right so i want to compute this free energy in this
+
+0:09:43.600,0:09:48.720
+relaxed version of this uh free energy uh since i don't want to
+
+0:09:48.720,0:09:53.360
+compute this integral i may not know how to do that i simply
+
+0:09:53.360,0:09:58.959
+use a simple discretization right and so i replace this latin s with a
+
+0:09:58.959,0:10:02.320
+greek s right and then i replace this latin d
+
+0:10:02.320,0:10:06.800
+with a greek t so everything else is just the same so i go from the
+
+0:10:06.800,0:10:11.680
+time continuous to a discretization very simple discretization it works
+
+0:10:11.680,0:10:15.519
+in our case because z is like one dimension i saw you know everything is
+
+0:10:15.519,0:10:22.160
+pretty easy uh moreover here i will just define and
+
+0:10:22.160,0:10:25.760
+pay attention i am defining right now for this class
+
+0:10:25.760,0:10:32.880
+okay this thing uh has been the soft mean of e so my
+
+0:10:32.880,0:10:39.120
+free energy uh the purple one it's simply the relaxation of the zero
+
+0:10:39.120,0:10:42.079
+temperature limit is going to be simply this soft
+
+0:10:42.079,0:10:45.360
+mean so the zero temperature the super cold one
+
+0:10:45.360,0:10:50.000
+is simply the mean okay am i n min whereas if i
+
+0:10:50.000,0:10:53.120
+compute if i relax if i turn on the temperature
+
+0:10:53.120,0:10:56.640
+like i increase the thermostat i'm gonna have this
+
+0:10:56.640,0:11:02.399
+soft mean which is this log summation of exponential okay and i call
+
+0:11:02.399,0:11:05.920
+this actual soft mean why do i call it actual soft
+
+0:11:05.920,0:11:10.560
+meme because other people uh most of the people outside this class
+
+0:11:10.560,0:11:14.000
+will call this the soft means something else and i will let you
+
+0:11:14.000,0:11:18.480
+know a bit more about these in a few slides okay
+
+0:11:18.480,0:11:25.680
+something that is super interesting is computing the limit of this free energy
+
+0:11:25.680,0:11:31.440
+here for beta that goes to zero so whenever you increase the temperature
+
+0:11:31.440,0:11:35.279
+as the temperature on the sun like it's super warm what is the most
+
+0:11:35.279,0:11:41.920
+relaxed version of this min and so if you do that you're gonna see
+
+0:11:41.920,0:11:46.480
+that this stuff ends up being the average but
+
+0:11:46.480,0:11:50.720
+again this is just you know um it's not relevant it's not too
+
+0:11:50.720,0:11:54.720
+important uh is the derivation just i can show you
+
+0:11:54.720,0:11:56.959
+here and i just show you so you can you have
+
+0:11:56.959,0:12:01.279
+access later uh the limit of this free energy
+
+0:12:01.279,0:12:04.399
+for beta that goes to zero so it's very warm
+
+0:12:04.399,0:12:07.920
+super warm it ends up being simply the average
+
+0:12:07.920,0:12:15.279
+of the energy okay across those heads again not to uh you don't have to get
+
+0:12:15.279,0:12:19.440
+scared about that math all right so let's compute this free
+
+0:12:19.440,0:12:23.040
+energy for the cases we saw before right so we are
+
+0:12:23.040,0:12:25.920
+still doing inference as last time but instead of using the
+
+0:12:25.920,0:12:29.360
+cold inference the cold free energy we're going to use this you know relaxed
+
+0:12:29.360,0:12:34.000
+version for the y equal 23 so if you remember
+
+0:12:34.000,0:12:39.440
+the y equal 23 was this x the green x on the right hand side and
+
+0:12:39.440,0:12:44.800
+then here the free energy was the square of the distance between the blue x and
+
+0:12:44.800,0:12:49.440
+the green x right so the the distance was 0.5 square would would
+
+0:12:49.440,0:12:53.519
+have been 0.25 and that would have been the free energy
+
+0:12:53.519,0:12:57.040
+uh zero temperature zero zero temperature
+
+0:12:57.040,0:13:01.440
+limit free energy but in this case we have now to consider
+
+0:13:01.440,0:13:05.120
+all these contributions and so i'm gonna show you
+
+0:13:05.120,0:13:12.560
+how all those little z dz will contribute to this free energy
+
+0:13:12.560,0:13:19.519
+and so we choose a beta equal 1 and we have now this so given that y
+
+0:13:19.519,0:13:23.760
+prime is going to be this x on the right hand side
+
+0:13:23.760,0:13:31.040
+my free energy now comes from the addition of all these uh terms here the
+
+0:13:31.040,0:13:35.120
+exponential of you know minus the energy of
+
+0:13:35.120,0:13:40.000
+all of this right so all the squares like the exponential of the negative
+
+0:13:40.000,0:13:44.560
+squares right so as you can tell those points that are
+
+0:13:44.560,0:13:48.560
+close to the x will have like a
+
+0:13:48.560,0:13:51.920
+smaller energy and therefore the exponential will be larger
+
+0:13:51.920,0:13:55.920
+and that's why you can see them but for energy that are you know
+
+0:13:55.920,0:14:00.240
+further away that are very high energy you do not do the exponential of main
+
+0:14:00.240,0:14:04.079
+minus and large number you're going to get basically zero so they don't count
+
+0:14:04.079,0:14:09.120
+in this summation in this integral okay first question for people at home
+
+0:14:09.120,0:14:17.600
+to just check if you are following how that where does 0.75 come from
+
+0:14:17.600,0:14:21.120
+so where does this value over here come from
+
+0:14:21.120,0:14:25.279
+and you're supposed to type on the chart such that i can read
+
+0:14:25.279,0:14:29.199
+aloud what you're saying so i'm asking once again
+
+0:14:29.199,0:14:36.240
+where does this value over here 075 come from
+
+0:14:39.440,0:14:45.839
+and someone is to reply contribution to the energy yes yes no
+
+0:14:49.760,0:14:56.399
+the number 075 i i need you to tell me how to compute 0.75 where does that
+
+0:14:56.399,0:15:02.399
+number come from you have all these closest why
+
+0:15:02.399,0:15:05.600
+till then yeah tell me uh how do i how do i compute
+
+0:15:05.600,0:15:08.800
+1 over 2 pi no x okay x minus beta e okay so how much
+
+0:15:15.199,0:15:17.600
+is e e is the square distance right so how
+
+0:15:22.240,0:15:26.639
+much is it how much is okay e is 0 25
+
+0:15:26.639,0:15:34.079
+correct and so e to the minus 0 25 is going to be 0 75
+
+0:15:34.079,0:15:40.160
+correct okay so jc got the right answer
+
+0:15:40.160,0:15:43.839
+good job so great now we know where that number
+
+0:15:43.839,0:15:48.000
+comes from so every time you see this diagram so although it looks very sparse
+
+0:15:48.000,0:15:51.839
+and pretty and whatever you always have to pay attention to the number i put on
+
+0:15:51.839,0:15:54.560
+this on the screen right so those numbers are
+
+0:15:54.560,0:16:00.560
+not random number they are computed by my computer and you always
+
+0:16:00.560,0:16:04.160
+always always have to check on a piece of paper
+
+0:16:04.160,0:16:08.240
+that these numbers make sense because if they don't make sense
+
+0:16:08.240,0:16:11.600
+then you're not understanding what's going on okay so you have to pay
+
+0:16:11.600,0:16:15.600
+attention to the numbers and you know
+
+0:16:15.600,0:16:19.519
+okay i'm a physicist right so you always i always
+
+0:16:19.519,0:16:23.839
+uh have in advance in my mind the answer that my program my
+
+0:16:23.839,0:16:28.000
+network my whatever is supposed to do right if i make an electronic circuit i
+
+0:16:28.000,0:16:31.360
+must understand i must know in advance what is the you
+
+0:16:31.360,0:16:34.720
+know voltage somewhere here and there before i actually measure
+
+0:16:34.720,0:16:39.600
+it otherwise uh you know it don't go much ahead
+
+0:16:39.600,0:16:43.680
+all right all right all right so let's move on and let's now consider
+
+0:16:43.680,0:16:47.519
+instead the case for when i have y y prime
+
+0:16:47.519,0:16:52.240
+equal 10 right so the 10th item so which is the
+
+0:16:52.240,0:16:58.560
+element on the top there so in this case i'm gonna get that all those points here
+
+0:16:58.560,0:17:02.160
+will contribute to the free energy right in this case
+
+0:17:02.160,0:17:09.520
+we're gonna have a number to 0.26 27 okay someone else that is not jesse
+
+0:17:09.520,0:17:15.039
+uh can write on the chat how much where that number comes from so where
+
+0:17:15.039,0:17:18.799
+does 026 come from i think you must have understand
+
+0:17:18.799,0:17:21.439
+understood now e to the minus 1 kind of yes so
+
+0:17:26.559,0:17:31.600
+so the distance here is 1.1 1.1 square is going to be 1.2
+
+0:17:31.600,0:17:36.160
+and then you take e to the minus 1.2 which is 0 26 yeah
+
+0:17:36.160,0:17:39.919
+that's correct all right all right all right okay so
+
+0:17:39.919,0:17:47.840
+next question uh what happens now if my y prime is going to be the origin
+
+0:17:48.480,0:17:53.760
+so what happens if my y prime is the origin for the zero temperature you're
+
+0:17:53.760,0:17:57.280
+going to get the square the distance right from either
+
+0:17:57.280,0:18:03.120
+side in this case what's going to be the main
+
+0:18:03.120,0:18:05.919
+difference if you warm up the temperature right so you're not zero
+
+0:18:05.919,0:18:08.240
+temperature it's not it's not freezing cold we are going to
+
+0:18:08.240,0:18:10.559
+be increasing a little bit the temperature
+
+0:18:10.559,0:18:14.400
+and how is this free energy changing from
+
+0:18:14.400,0:18:19.360
+before anyone can type on the chart it's symmetric yeah that's perfect how
+
+0:18:23.120,0:18:26.320
+do you know you already saw the slides before oh you
+
+0:18:26.320,0:18:31.919
+actually got it right okay i assume you got it right
+
+0:18:32.000,0:18:35.360
+all right okay that's perfect yes it's symmetric right so
+
+0:18:35.360,0:18:42.559
+uh a point now inside oh okay yeah i don't know if it's a he
+
+0:18:42.559,0:18:45.120
+or she but studied physics in the undergrad
+
+0:18:45.120,0:18:49.919
+okay cool all right uh so
+
+0:18:49.919,0:18:54.080
+in this case you have again that all those points on the top on the bottom
+
+0:18:54.080,0:18:58.720
+will contribute to the free energy uh given that i choose that y
+
+0:18:58.720,0:19:04.880
+uh y prime to be in the center okay all right so that's pretty much oh
+
+0:19:04.880,0:19:09.520
+but why we are talking why are we talking about this right so we came here
+
+0:19:09.520,0:19:14.720
+because we had that issue with the picky picky center right i showed you
+
+0:19:14.720,0:19:19.360
+before that spinning bathtub and then the cross-section here that we
+
+0:19:19.360,0:19:23.120
+had this picky thing which was coming from the cold free
+
+0:19:23.120,0:19:26.799
+energy let's let me show you what happens now if i
+
+0:19:26.799,0:19:32.880
+choose the warm free energy right and so if i do that i'm gonna get if i
+
+0:19:32.880,0:19:35.919
+can scroll my screen oh you don't see anything okay let me
+
+0:19:39.679,0:19:43.840
+click click okay all right and so the red one was
+
+0:19:43.840,0:19:47.120
+the super cold the beta is the coldness
+
+0:19:47.120,0:19:51.120
+again so large beta is called and then we
+
+0:19:51.120,0:19:54.880
+reduce the coldness so we increase the temperature and as you can see the
+
+0:19:54.880,0:19:58.720
+the picky part becomes smooth smooth smooth
+
+0:19:58.720,0:20:05.120
+until it becomes oh becomes some a parabola with a single
+
+0:20:05.120,0:20:09.200
+global minima oh
+
+0:20:09.200,0:20:15.039
+this is coming out to be remember what happens if beta goes to zero
+
+0:20:15.039,0:20:21.200
+you get the average right so you actually recover the msc
+
+0:20:21.200,0:20:28.480
+okay i'm just giving like small uh small like information bits
+
+0:20:28.480,0:20:31.919
+pills whatever but again yeah so whenever
+
+0:20:31.919,0:20:35.679
+we increase the temperature you're going to be relaxing until you get just one
+
+0:20:35.679,0:20:38.320
+single minimum and then there are no more latent
+
+0:20:38.320,0:20:43.840
+because we just average out everything without those weights right anyhow
+
+0:20:43.840,0:20:47.440
+uh i i think now if you if you need to implement this stuff
+
+0:20:47.440,0:20:52.000
+in pytorch you're gonna be be getting like quite frustrated because
+
+0:20:52.000,0:20:55.280
+they use different names for the things i just
+
+0:20:55.280,0:20:59.440
+defined and someone say oh you should have used their names no
+
+0:20:59.440,0:21:04.159
+because those are wrong right so i use the correct name so the one that is
+
+0:21:04.159,0:21:07.520
+that makes sense i will try to sell it to you this way
+
+0:21:07.520,0:21:12.159
+so let me explain to you a little bit of you know what is the nomenclature i use
+
+0:21:12.159,0:21:15.440
+uh such that it makes sense at least to me
+
+0:21:15.440,0:21:19.760
+otherwise things don't make sense to me so this is the actual
+
+0:21:19.760,0:21:23.440
+soft max right not the soft max that people talk outside this class this is
+
+0:21:23.440,0:21:27.840
+the actual soft max which is this you know one over betas
+
+0:21:27.840,0:21:31.039
+log of blah blah blah some of the exponentials
+
+0:21:31.039,0:21:38.000
+i just expanded these um the previous uh i just expanded the the one over z
+
+0:21:38.000,0:21:42.480
+i took it out right in the in the logarithm so i just split the two things
+
+0:21:42.480,0:21:46.480
+so how do we implement this stuff in pytorch well you just use this function
+
+0:21:46.480,0:21:52.640
+which is called torch dot log sum x which is this soft max actual softmax
+
+0:21:52.640,0:21:55.600
+right and then plus or minus that additional
+
+0:21:55.600,0:21:58.960
+constant over there right so this is how you want to use how
+
+0:21:58.960,0:22:03.440
+to implement that because you know it's numerically stable
+
+0:22:03.440,0:22:08.320
+moreover if you this is the actual definition of the
+
+0:22:08.320,0:22:12.640
+actual soft min and you can see this is what i wrote
+
+0:22:12.640,0:22:16.240
+before you can think about that it's very
+
+0:22:16.240,0:22:19.360
+similar to the softmax right the actual softmax what's the only
+
+0:22:19.360,0:22:24.240
+difference there are two minuses right and so you can do that you can get get
+
+0:22:24.240,0:22:26.640
+that away with you know you put a minus in front
+
+0:22:26.640,0:22:30.480
+so you cancel the first minus and you put a minus inside so you cancel
+
+0:22:30.480,0:22:34.320
+the other minus and so you know the soft mean is simply
+
+0:22:34.320,0:22:38.400
+uh you can implement it as a soft max with the two minuses okay
+
+0:22:38.400,0:22:42.320
+against actual softmax and then someone of course is going to
+
+0:22:42.320,0:22:46.000
+be asking but what is the softmax we use in class
+
+0:22:46.000,0:22:51.840
+every time so that one is actually the soft arc max right
+
+0:22:51.840,0:22:56.880
+why is that right because a arc max is going to be like a one hot vector
+
+0:22:56.880,0:23:02.799
+and d1 tells you what is the index of the element that has the maximum
+
+0:23:02.799,0:23:06.720
+value right so the max gives you retrieves the
+
+0:23:06.720,0:23:10.240
+maximum value you know and then the arc max is going
+
+0:23:10.240,0:23:14.320
+to tell you where is the index pointing to that maximum value right so
+
+0:23:14.320,0:23:18.000
+this is like a vector with a one hot vector and the other one
+
+0:23:18.000,0:23:21.440
+is a scalar similarly whenever i compute this soft
+
+0:23:21.440,0:23:26.159
+max the softer version of the max now this max is not just the max it's
+
+0:23:26.159,0:23:30.880
+going to be like a summation of this uh the logarithm of the summation of the
+
+0:23:30.880,0:23:34.400
+exponential right which you can change the temperature if
+
+0:23:34.400,0:23:37.200
+you get the temperature super cold you retrieve the max
+
+0:23:37.200,0:23:41.039
+if you warm up the temperature you get something like more
+
+0:23:41.039,0:23:45.039
+like a weighted summation and for the soft dark max
+
+0:23:45.039,0:23:48.960
+which was like the arc max is the one hot if it's super cold
+
+0:23:48.960,0:23:52.080
+it's gonna still be one hot but if you warm up the temperature
+
+0:23:52.080,0:23:55.679
+you're gonna get a distribution probability distribution right
+
+0:23:55.679,0:23:59.200
+so whenever someone says oh the soft max gives you the probability distribution
+
+0:23:59.200,0:24:04.159
+now that's the soft dark mask okay uh arc max being the one hot or the zero
+
+0:24:04.159,0:24:06.720
+temperature limited limit gives you the one hot
+
+0:24:06.720,0:24:10.000
+if you increase the temperature you get a distribution so finally
+
+0:24:10.000,0:24:14.080
+these are the correct names no one is using but me
+
+0:24:14.080,0:24:21.360
+so i hope i didn't create confusion if i did sorry but still this is the
+
+0:24:21.360,0:24:27.840
+correct way of seeing these things okay because it makes sense right so again uh
+
+0:24:27.840,0:24:31.279
+if you have the max if you have a function you want to
+
+0:24:31.279,0:24:34.640
+find the max it's here right if you have this
+
+0:24:34.640,0:24:38.240
+function you want to find the mean you can take the function you flip it
+
+0:24:38.240,0:24:41.039
+you find the max and then you flip it back again you get
+
+0:24:41.039,0:24:43.039
+the mean right so that's what i show you here
+
+0:24:43.039,0:24:46.880
+i show you that soft min is simply the flipped version
+
+0:24:46.880,0:24:54.000
+the negative right of the max with a flipped in argument okay
+
+0:24:54.000,0:24:57.039
+all right all right so enough me talking about
+
+0:24:57.039,0:25:01.520
+mathematics and things i hope it was fine
+
+0:25:01.520,0:25:08.640
+so this was the part uh that was concluding the last lesson
+
+0:25:08.640,0:25:12.880
+right so this is the end of the inference
+
+0:25:12.880,0:25:16.000
+and we figured that there is the free energy
+
+0:25:16.000,0:25:19.679
+there is a very cold one or there is a warm
+
+0:25:19.679,0:25:23.120
+version or there is a very hot version the hot version is going to be the
+
+0:25:23.120,0:25:25.760
+average the warm version is going to be like
+
+0:25:25.760,0:25:30.400
+something you you may like is like this marginalization of the of
+
+0:25:30.400,0:25:33.360
+the latent and then the super cold version the zero
+
+0:25:33.360,0:25:37.200
+temperature limit is going to be this exactly the minimum version minimum
+
+0:25:37.200,0:25:42.480
+value uh what i showed you was the fact that
+
+0:25:42.480,0:25:45.919
+this model is a very poorly trained model
+
+0:25:45.919,0:25:51.760
+because those low energy regions were not you know happening
+
+0:25:51.760,0:25:56.480
+around this training set right so let me show you once again uh the same
+
+0:25:56.480,0:26:00.480
+and the same diagram i showed you at the beginning of today's lesson which
+
+0:26:00.480,0:26:04.320
+is this one over here so here i show you with these white
+
+0:26:04.320,0:26:08.559
+checks a few uh samples uh on the
+
+0:26:08.559,0:26:14.000
+model manifold and then the y's the blue eyes are the training sample but we
+
+0:26:14.000,0:26:17.200
+never use the training sample right i just use the training sample to
+
+0:26:17.200,0:26:21.039
+compute the energy the free energy but we never
+
+0:26:21.039,0:26:24.480
+use them to learn because we didn't talk about learning we talked about
+
+0:26:24.480,0:26:29.120
+inference so far right and so guess what is going to be the next part
+
+0:26:29.120,0:26:34.080
+of today's lesson you guessed it right training so now
+
+0:26:34.080,0:26:38.640
+we're going to be starting uh to learn how to train learn how to
+
+0:26:38.640,0:26:41.440
+learn train train how to learn no learn how to
+
+0:26:41.440,0:26:45.600
+train energy based model okay unless there are
+
+0:26:45.600,0:26:48.960
+questions for me on the chat no questions everything clear meta
+
+0:26:53.039,0:26:57.600
+learning yes no that one is a different subject next
+
+0:26:57.600,0:26:59.919
+time all right okay so i think yeah there is
+
+0:27:02.960,0:27:06.880
+no big deal right so this is just inference we didn't talk about any crazy
+
+0:27:06.880,0:27:09.279
+stuff and we talked in for inference about
+
+0:27:09.279,0:27:12.559
+about the inference the whole last lesson so
+
+0:27:12.559,0:27:17.840
+i guess we can move on move on and start the training
+
+0:27:17.840,0:27:21.279
+finding a well-behaved energy function right
+
+0:27:21.279,0:27:25.200
+what does this mean so this means we have to introduce
+
+0:27:25.200,0:27:30.240
+a loss functional what's a loss functional
+
+0:27:30.240,0:27:35.440
+well it's a metric it's a scalar function
+
+0:27:35.440,0:27:42.000
+that is telling you how good your energy function is right so we have an
+
+0:27:42.000,0:27:45.520
+energy function which is this free energy
+
+0:27:45.520,0:27:49.279
+and then we're going to have a function of my function
+
+0:27:49.279,0:27:53.840
+which is giving me a scalar which is just telling me how good this
+
+0:27:53.840,0:27:59.520
+energy function is right so a loss functional gives me a scalar
+
+0:27:59.520,0:28:03.679
+given that i feed a function
+
+0:28:03.679,0:28:07.679
+and here i just show to you that if i have this curly l
+
+0:28:07.679,0:28:13.600
+as you know the loss functional for the all the whole batch my whole data set i
+
+0:28:13.600,0:28:19.600
+can also express this as the average of these per sample loss functionals
+
+0:28:19.600,0:28:23.919
+okay so i just do the average of those per sample those functions
+
+0:28:23.919,0:28:28.559
+cool so what the heck am i talking about right so i'm just giving you i'm
+
+0:28:28.559,0:28:32.080
+making so much hype but i didn't tell you anything so far
+
+0:28:32.080,0:28:35.120
+and we already know this stuff from you know machine learning and you know
+
+0:28:35.120,0:28:39.360
+previous lessons and so here we go with the first loss function
+
+0:28:39.360,0:28:43.200
+which is the which is the energy loss function
+
+0:28:43.200,0:28:49.360
+so this energy loss functional it's simply the free energy
+
+0:28:49.360,0:28:54.720
+f evaluated in my y where y is the data point on the data
+
+0:28:54.720,0:28:59.840
+set right so whenever whenever we train these
+
+0:28:59.840,0:29:03.200
+models we're going to be minimizing the loss functionalities
+
+0:29:03.200,0:29:08.000
+right the loss function and so in this case the loss functional
+
+0:29:08.000,0:29:14.399
+is actually the free energy at the training point of course right i mean
+
+0:29:14.399,0:29:18.559
+what this energy function has to do with the free energy
+
+0:29:18.559,0:29:22.559
+should be small for data that comes from the training distribution
+
+0:29:22.559,0:29:26.960
+large elsewhere right and so what is the easiest way to do that well of course
+
+0:29:26.960,0:29:31.679
+we're gonna just have the loss functional being the free energy
+
+0:29:31.679,0:29:37.600
+evaluated at the training point so if it's larger than zero then the
+
+0:29:37.600,0:29:41.039
+training of the network you know changing the parameters such that we
+
+0:29:41.039,0:29:45.520
+minimize the loss functional is going to be squeezing down the free
+
+0:29:45.520,0:29:48.640
+energy on those points right so you have the point you
+
+0:29:48.640,0:29:53.679
+have a free energy boom point free energy bomb all right so
+
+0:29:53.679,0:29:58.480
+we just small like clamp like we we are reducing the free energy in
+
+0:29:58.480,0:30:04.000
+correspondence to all these uh whites why is
+
+0:30:04.000,0:30:07.120
+there is a check there is a check because i
+
+0:30:07.120,0:30:10.240
+want to emphasize the fact that we are trying to push down
+
+0:30:10.240,0:30:13.440
+the energy at those locations right so i push down there is the
+
+0:30:13.440,0:30:19.600
+arrow pointing down i push down all right okay i might sound silly but
+
+0:30:19.600,0:30:24.880
+it doesn't matter i like myself silly so instead now we're gonna
+
+0:30:24.880,0:30:28.399
+be introducing these uh contrastive methods what is a
+
+0:30:28.399,0:30:32.080
+contrastive method uh in this case this contrasting method
+
+0:30:32.080,0:30:35.440
+will have a white check which is blue why is blue
+
+0:30:35.440,0:30:38.320
+because it's cold right so we want to try to get low
+
+0:30:38.320,0:30:41.600
+energy again the energy the temperature are connected right
+
+0:30:41.600,0:30:46.320
+so low energy is going to be cold blue and then i have a white hot
+
+0:30:46.320,0:30:51.520
+why is hot why is red why why hot is red i want to increase the energy right
+
+0:30:51.520,0:30:56.720
+that's why there is the the hot pointing upwards and so in this case
+
+0:30:56.720,0:31:04.000
+uh given that m is a positive number the difference f of y hat
+
+0:31:04.000,0:31:10.880
+minus f of y check that the difference it will the network will try to make it
+
+0:31:10.880,0:31:15.360
+larger than m right so for as long as the difference
+
+0:31:15.360,0:31:22.159
+is smaller than m then these you know this value over here will have
+
+0:31:22.159,0:31:25.919
+a positive value whenever f y hat
+
+0:31:25.919,0:31:32.799
+minus f y check will be larger than m then you're gonna have that
+
+0:31:32.799,0:31:36.000
+you know the output of this stuff is gonna be zero
+
+0:31:36.000,0:31:39.360
+okay because there is a a positive part so
+
+0:31:39.360,0:31:42.880
+again this hinge loss will simply try to get
+
+0:31:42.880,0:31:46.720
+that second difference to be larger than the
+
+0:31:46.720,0:31:50.960
+uh the first term the margin in order to have like a smoother version
+
+0:31:53.120,0:31:56.960
+of this margin this is like very binary right if you're
+
+0:31:56.960,0:32:01.279
+lower than the margin you push larger than the margin you stop pushing
+
+0:32:01.279,0:32:07.679
+you can use this other version the the loss log loss functional
+
+0:32:07.679,0:32:13.279
+which is a smooth margin uh you can you can see right whenever you
+
+0:32:13.279,0:32:17.440
+have that inside these in this parenthesis you
+
+0:32:17.440,0:32:20.399
+have a very negative number so if this is very very
+
+0:32:20.399,0:32:23.600
+large and this is zero let's say you're gonna have the x of a
+
+0:32:23.600,0:32:25.919
+very negative number which is roughly zero
+
+0:32:25.919,0:32:29.279
+and i have the log of one which is you know stop pushing
+
+0:32:29.279,0:32:33.600
+there is no more instead if this value here is large
+
+0:32:33.600,0:32:37.600
+and this value is maybe negative or whatever is zero
+
+0:32:37.600,0:32:40.640
+you're gonna have the exponential of this number which is gonna be very large
+
+0:32:40.640,0:32:44.240
+and then you're gonna have the one plus this exponential
+
+0:32:44.240,0:32:48.240
+uh which again the one gets neglected you don't get
+
+0:32:48.240,0:32:51.840
+the log of this x but you're gonna get basically the uh the
+
+0:32:51.840,0:32:57.279
+the loss is gonna be proportional to the energy right if it's very large
+
+0:32:57.279,0:33:03.519
+cool cool but again for our case uh we just have a very tiny one-dimensional
+
+0:33:03.519,0:33:06.399
+latent so we don't need to do this uh this
+
+0:33:06.399,0:33:09.760
+contrastive sampling uh contrastive learning it's necessary
+
+0:33:09.760,0:33:13.440
+whenever you have like a um you know maybe like a high
+
+0:33:13.440,0:33:18.320
+dimensional latent and so on um so let's just
+
+0:33:18.320,0:33:22.559
+you know let's just train this model because i didn't train this model so far
+
+0:33:22.559,0:33:29.519
+with this energy loss functional okay and so i train this model it takes
+
+0:33:29.519,0:33:33.840
+one epoch to converge it's ridiculously fast okay but it's a
+
+0:33:33.840,0:33:38.880
+toy example so you understand that and i'm gonna start by uh showing you
+
+0:33:38.880,0:33:41.600
+the zero temperature limit the super cold
+
+0:33:41.600,0:33:45.200
+free energy okay uh on the left hand side i'm gonna show
+
+0:33:45.200,0:33:48.559
+you the untrained version which is the one we already saw before
+
+0:33:48.559,0:33:54.559
+so in this case for every training point the blue point i have a
+
+0:33:54.559,0:33:57.919
+corresponding x which is the location on the model
+
+0:33:57.919,0:34:04.559
+manifold that is the closest to that training point okay whenever i train
+
+0:34:04.559,0:34:11.200
+i'm gonna be you know uh get a gradient that gradient is gonna be i just i told
+
+0:34:11.200,0:34:13.520
+you before if you if you get the mean you're gonna
+
+0:34:13.520,0:34:17.280
+get one item and then if you do the derivative you're gonna get the
+
+0:34:17.280,0:34:21.040
+argument which is just the one in correspondence to the
+
+0:34:21.040,0:34:25.919
+lowest value and so that one is going to be represented here
+
+0:34:25.919,0:34:31.359
+by uh that arrow over here right so this arrow here
+
+0:34:31.359,0:34:35.440
+is going to be the energy the derivative of the energy
+
+0:34:35.440,0:34:39.599
+which is going to be just the distance like the y minus
+
+0:34:39.599,0:34:43.440
+y check and then that's going to be multiplied by
+
+0:34:43.440,0:34:48.240
+you know the one in corresponding to the location that is closest to uh
+
+0:34:48.240,0:34:54.879
+to our point all right so what this means is that during training
+
+0:34:54.879,0:34:59.040
+whenever we use the ztl the zero temperature limit you're gonna get
+
+0:34:59.040,0:35:02.240
+the location on the manifold that is closest to your training point
+
+0:35:02.240,0:35:05.520
+and then you're gonna get this point to be moving there
+
+0:35:05.520,0:35:08.800
+you have this training point you get this location that is on the manifold
+
+0:35:08.800,0:35:11.200
+closer to this point and then you get a gradient that is
+
+0:35:11.200,0:35:15.119
+making going up here same you have a training point here
+
+0:35:15.119,0:35:19.520
+close this point to the manifold here you get this point a gradient that goes
+
+0:35:19.520,0:35:23.359
+down here okay so this is the training procedure
+
+0:35:23.359,0:35:28.079
+when using this zero temperature limit one epoch later
+
+0:35:28.079,0:35:31.520
+on the right hand side the train version bam
+
+0:35:31.520,0:35:38.720
+all those axes automatically managed to arrive to destination finished
+
+0:35:38.720,0:35:42.400
+so this is like a well-trained model which i'll show you
+
+0:35:42.400,0:35:46.160
+where i show you the energy uh going to zero in
+
+0:35:46.160,0:35:50.880
+in the all around like acro corresponding to all the locations
+
+0:35:50.880,0:35:54.640
+corresponding to my training data set right the training points the
+
+0:35:54.640,0:36:01.359
+the blue points what happens if you have two closest point on a manifold if
+
+0:36:01.359,0:36:08.000
+for example if y is at zero zero um
+
+0:36:09.280,0:36:14.240
+right so in the energy in the in the zero temperature limit you're going to
+
+0:36:14.240,0:36:17.119
+get just one point it's going to be pulled there
+
+0:36:17.119,0:36:22.480
+and this is very prone to overfitting let's say our z is not just one
+
+0:36:22.480,0:36:25.280
+dimensional large it's larger right so instead of
+
+0:36:25.280,0:36:29.599
+having like a ellipse you're gonna have like a potato
+
+0:36:29.599,0:36:33.200
+if you haven't hold on let me finish the answer if you have a potato
+
+0:36:33.200,0:36:37.440
+or potato you're gonna get all these locations on the potato to go
+
+0:36:37.440,0:36:44.000
+to those training points and so if your z is a high dimensional latent variable
+
+0:36:44.000,0:36:47.599
+you end up with a you start with a potato and you end up with a porcupine
+
+0:36:47.599,0:36:51.359
+with all those peaks going uh you know going out and this is basically
+
+0:36:51.359,0:36:53.280
+overfitting you just memorize the training
+
+0:36:53.280,0:36:58.320
+set in our case this doesn't happen because our latent is one dimensional so
+
+0:36:58.320,0:37:04.320
+you can't really pull spikes out of that thing
+
+0:37:05.119,0:37:11.839
+but nevertheless we may want to figure out how to deal with this overfitting
+
+0:37:11.839,0:37:18.240
+uh by using this you know temperature regularization thing right so before i
+
+0:37:18.240,0:37:21.760
+show you there was a peak if there is a zero temperature limit
+
+0:37:21.760,0:37:25.760
+then if you increase the temperature you actually smooth out that peak
+
+0:37:25.760,0:37:30.640
+and so here i'm going to show you uh then i answer the other question
+
+0:37:30.640,0:37:34.079
+actually let me see what happens here how
+
+0:37:34.079,0:37:38.800
+do we update the energy function is it parametrized with uh
+
+0:37:38.800,0:37:42.000
+oh here this is definition from last time
+
+0:37:42.000,0:37:47.440
+right so my energy function is this one right
+
+0:37:47.440,0:37:52.000
+where so my energy function is my model right
+
+0:37:52.000,0:37:56.000
+which is the square difference between the locations and because the laden for
+
+0:37:56.000,0:37:58.640
+the first component and the code of the latent for the second component so this
+
+0:37:58.640,0:38:03.280
+is like this is how e is parametrized right
+
+0:38:03.359,0:38:08.079
+uh does the learning interpolate between the points
+
+0:38:08.079,0:38:11.200
+uh it asked would this algorithm learn the
+
+0:38:11.200,0:38:14.880
+mod the whole ellipse or just the blue points
+
+0:38:14.880,0:38:18.640
+okay so i'm getting there okay is there a visualization
+
+0:38:18.640,0:38:24.240
+for the spikes to talk about when overfitting yeah getting there as well
+
+0:38:24.240,0:38:28.160
+all right so we were telling like we were talking about
+
+0:38:28.160,0:38:32.079
+how we train this energy function right so this energy energy function
+
+0:38:32.079,0:38:35.280
+is going to be this color thing i show you over here
+
+0:38:35.280,0:38:39.280
+and this is you know a different representation it's simply the location
+
+0:38:39.280,0:38:43.680
+of that uh violet ellipse
+
+0:38:43.680,0:38:48.400
+training for the zero temperature zero temperature limit means you take that
+
+0:38:48.400,0:38:51.760
+point of these ellipse you try to pull it up
+
+0:38:51.760,0:38:55.760
+right how you pull it up the only two parameters we had in this
+
+0:38:55.760,0:39:00.240
+model were w1 and w2 which were con controlling the
+
+0:39:00.240,0:39:04.960
+x radius and the y radius right so we had two parameters
+
+0:39:04.960,0:39:08.079
+and with two parameters we try to fit all these
+
+0:39:08.079,0:39:11.440
+y's right and so basically the network will
+
+0:39:11.440,0:39:15.200
+like the the training procedure gradient descent will eventually
+
+0:39:15.200,0:39:19.200
+try to change the size of this ellipse such that it
+
+0:39:19.200,0:39:22.240
+you know expands and they're going to be matching all those
+
+0:39:22.240,0:39:29.040
+uh blue dots okay the spiky thing was i was saying is that
+
+0:39:29.040,0:39:33.200
+if you have a high dimensional z like in this case z is one dimension so
+
+0:39:33.200,0:39:36.960
+you have like one line like that if that is two dimensional
+
+0:39:36.960,0:39:41.119
+it's going to be the whole surface right and so now it's trivial to overfit you
+
+0:39:41.119,0:39:44.160
+can move anywhere in the plane there is no more constraint
+
+0:39:44.160,0:39:47.359
+of living on that line and so we have to see
+
+0:39:47.359,0:39:51.200
+how we can avoid overfitting but in this case it doesn't happen but
+
+0:39:51.200,0:39:54.720
+you know we can see now that by increasing the temperature
+
+0:39:54.720,0:39:59.599
+we no longer pick points individually so we are using this marginalization
+
+0:39:59.599,0:40:06.160
+this vision thingy so on the bottom part is marginalization
+
+0:40:06.160,0:40:11.200
+on the left hand side i show you how the training uh works right
+
+0:40:11.200,0:40:15.440
+so you have that all those locations contribute
+
+0:40:15.440,0:40:21.119
+to these you know the gradient are just the average of those arrows
+
+0:40:21.119,0:40:26.079
+here so given that we pick one y that is this green x
+
+0:40:26.079,0:40:32.960
+over here you get these all these points on this manifold will contribute
+
+0:40:32.960,0:40:37.760
+and will be attracted there here before we have only one point gets pulled up
+
+0:40:37.760,0:40:41.839
+here we have that all these points get pulled up right so it's much harder to
+
+0:40:41.839,0:40:45.280
+overfit something you want to pay attention here
+
+0:40:45.280,0:40:48.960
+is that how do i compute the gradient so the gradient
+
+0:40:48.960,0:40:52.000
+i'm computing the gradient of this soft mean
+
+0:40:52.000,0:40:57.040
+and so automatically we are gonna get a soft argument right so if you have a max
+
+0:40:57.040,0:41:00.560
+you do the gradient you're gonna get the arc max or if you have a mean
+
+0:41:00.560,0:41:04.240
+the gradient is gonna be the argument here we have a soft
+
+0:41:04.240,0:41:08.400
+mean and therefore the gradient is going to be the soft argument
+
+0:41:08.400,0:41:11.920
+multiplied by the the derivative of this energy
+
+0:41:11.920,0:41:15.920
+and which is going to be simply this vector right so the energy is the square
+
+0:41:15.920,0:41:19.520
+distance if you do the derivative you're going to get the vector which are
+
+0:41:19.520,0:41:26.400
+here shown in white and then the height is gonna be uh basically given to you
+
+0:41:26.400,0:41:29.440
+by the you know the the vector multiplied
+
+0:41:29.440,0:41:36.560
+by this soft argument cool wow that's a lot to take i think
+
+0:41:36.560,0:41:39.599
+but it's it's i think it's just great uh
+
+0:41:39.599,0:41:44.240
+finally i train the last one and i'm gonna get something like this on
+
+0:41:44.240,0:41:48.800
+the right hand side okay so before i show you
+
+0:41:48.800,0:41:53.839
+the cross-section for the left-hand side the untrained version i'm going to show
+
+0:41:53.839,0:41:56.800
+you now the cross-section for this train version
+
+0:41:56.800,0:42:01.359
+so the zero temperature limit the super cold one i'm gonna get this red one with
+
+0:42:01.359,0:42:05.280
+a spike and then as you increase the temperature
+
+0:42:05.280,0:42:08.400
+as you reduce this beta we're moving up until
+
+0:42:08.400,0:42:14.400
+you get this you know average version this parabolic uh blue one right
+
+0:42:14.400,0:42:18.800
+okay okay okay and so all of this was about
+
+0:42:18.800,0:42:23.680
+unsupervised learning right so far we only have seen
+
+0:42:23.680,0:42:30.880
+y's where are the x's and so this is like yesterday night i'm
+
+0:42:30.880,0:42:34.560
+like okay maybe i don't talk about supervised learning like i don't
+
+0:42:34.560,0:42:38.000
+how long is going to take me to now train a model with the x's and
+
+0:42:38.000,0:42:42.400
+everything and i don't want to do it but then
+
+0:42:42.400,0:42:45.680
+i just change one line of code and everything just
+
+0:42:45.680,0:42:49.920
+works so everything we have seen so far is exactly the same
+
+0:42:49.920,0:42:53.200
+for the unconditional which is this unsupervised
+
+0:42:53.200,0:42:57.760
+learning way and it's gonna like one line change you're gonna get
+
+0:42:57.760,0:43:00.640
+the supervised like the self-supervised the
+
+0:43:00.640,0:43:03.760
+conditional and so now in the last five minutes
+
+0:43:03.760,0:43:06.880
+we're gonna be talking about the self-supervised learning or the
+
+0:43:06.880,0:43:10.400
+conditional case what does this mean so let's get back to
+
+0:43:10.400,0:43:13.280
+the training data this is my training data right
+
+0:43:13.280,0:43:19.119
+we have we try to learn this horn that is starting with a horizontal mouth
+
+0:43:19.119,0:43:24.240
+like it's like a closed mouth ah like that and then it goes like a very
+
+0:43:24.240,0:43:28.400
+you know tall and narrow and then the profile
+
+0:43:28.400,0:43:31.760
+the envelope is exponential right so here
+
+0:43:31.760,0:43:38.240
+the the the radius goes from beta to alpha and in x
+
+0:43:38.240,0:43:41.839
+in exp like it's multiplied by the exponential of two times the x
+
+0:43:41.839,0:43:45.920
+and the other case the goes from alpha to beta and also it is multiplied by
+
+0:43:45.920,0:43:50.560
+this exponential so let's see if we can learn
+
+0:43:50.560,0:43:54.960
+this stuff and i didn't know if it was easy or hard i thought it was hard
+
+0:43:54.960,0:43:59.119
+it was very easy and so untrained model manifold
+
+0:43:59.119,0:44:03.119
+so let's give it a look how does my model look now
+
+0:44:03.119,0:44:07.359
+so i have a z and since i have control over z i take
+
+0:44:07.359,0:44:12.079
+you know zero to two pi to pi excluded that's why the bracket is flipped
+
+0:44:12.079,0:44:19.359
+with an interval of pi over 24. so i get a line on over there i fit this
+
+0:44:19.359,0:44:22.480
+z on the decoder and then i'm gonna get my y
+
+0:44:22.480,0:44:26.319
+tilde which is gonna be moving uh like going around
+
+0:44:26.319,0:44:32.960
+ellipses because that's how my network is routed inside the decoder right
+
+0:44:32.960,0:44:37.520
+moreover we're gonna have our y's our observer why is observed
+
+0:44:37.520,0:44:41.280
+you can see is observed because there is a shade in that
+
+0:44:41.280,0:44:45.200
+bubble there in the circle and now we have a predictor
+
+0:44:45.200,0:44:48.319
+and the decoder not only takes my latent z
+
+0:44:48.319,0:44:51.760
+but also a predictor and the predictor is fed
+
+0:44:51.760,0:44:56.480
+with my observed x and since again if i have control over z
+
+0:44:56.480,0:45:02.960
+i can simply say it goes from 0 to 1 with 0.02 interval
+
+0:45:02.960,0:45:07.520
+let me show you how my untrained network manifold looks right so this is what
+
+0:45:07.520,0:45:13.599
+this untrained network manifold looks all right so how do i train this well i
+
+0:45:13.599,0:45:19.359
+just do the zero temperature limit uh free energy training so given my
+
+0:45:19.359,0:45:22.640
+horn as before i take one point one y point
+
+0:45:22.640,0:45:25.839
+i find the closest point on my manifold and then
+
+0:45:25.839,0:45:29.440
+i try to pull it up i take this other point i take the closest point
+
+0:45:29.440,0:45:33.280
+and i put it down there i take this point over here i take the closest point
+
+0:45:33.280,0:45:36.000
+and then put it on i take this point over here on the on
+
+0:45:36.000,0:45:39.200
+the horn i take the closest point on the manifold
+
+0:45:39.200,0:45:42.240
+and i pull it down i do that for one epoch
+
+0:45:42.240,0:45:47.119
+only i told you it was very easy to train this model
+
+0:45:47.119,0:45:51.599
+and we get actually i had to define first what is the energy function right
+
+0:45:51.599,0:45:56.240
+so my energy function uh in this case is going to be this e of
+
+0:45:56.240,0:46:01.200
+x y and z where again those two components uh like
+
+0:46:01.200,0:46:05.040
+it's going to be the sum of the square distances
+
+0:46:05.040,0:46:10.560
+but in this case i have f and g right so we have a predictor f
+
+0:46:10.560,0:46:16.800
+which are both of them mapping r to r r2 and then f is going to be a neural net
+
+0:46:16.800,0:46:20.160
+mapping my input x through a linear layer and
+
+0:46:20.160,0:46:23.440
+reload to a eight dimensional hidden layer
+
+0:46:23.440,0:46:26.880
+then i go again through another linear layer and reload another eight
+
+0:46:26.880,0:46:29.680
+dimensional hidden layer and then i have my final
+
+0:46:29.680,0:46:32.880
+linear layer to end up in two dimensions so i have a four layer
+
+0:46:32.880,0:46:38.560
+network input two hidden of size eight and then one output of size two
+
+0:46:38.560,0:46:42.000
+and then my g function is simply what allows me to get
+
+0:46:42.000,0:46:47.839
+this z going in in loops okay and but then the point now is that these
+
+0:46:47.839,0:46:53.359
+two components are going to be scaled by the output of f
+
+0:46:53.359,0:46:58.000
+so this is my model very very tiny very tiny model
+
+0:46:58.000,0:47:01.760
+and i'm going to be training it and then i show you
+
+0:47:01.760,0:47:05.040
+the model manifold so again i take the same
+
+0:47:05.040,0:47:09.040
+discretization for the znx and this is how
+
+0:47:09.040,0:47:16.240
+the training train model manifold looks it's awesome right i think it's just
+
+0:47:16.240,0:47:19.839
+great all right and this one took nothing no
+
+0:47:19.839,0:47:25.359
+time to train so how can we move on how
+
+0:47:25.359,0:47:29.200
+how what do we do next right how do we move forward from here
+
+0:47:29.200,0:47:34.079
+so there are a few more ways to scale this up not to toy example so
+
+0:47:34.079,0:47:37.359
+so far i've been kind of cheating right i've been always
+
+0:47:37.359,0:47:41.520
+uh embedding into d decoder the fact that my
+
+0:47:41.520,0:47:45.359
+z goes around circles but i don't know that
+
+0:47:45.359,0:47:49.920
+right so we don't know that and so we may use something like this
+
+0:47:49.920,0:47:56.559
+in this case my g function takes my f and z
+
+0:47:56.559,0:47:59.839
+and then you know g can be a neural net as well and
+
+0:47:59.839,0:48:02.960
+in this case i have to learn the fact that this stuff
+
+0:48:02.960,0:48:09.920
+moves around circles so i in this case i should be learning this sine and cosine
+
+0:48:09.920,0:48:15.839
+but then how do i know that actually z is one dimensional well i know because
+
+0:48:15.839,0:48:20.559
+i generated my data right so i am the owner of my data generation
+
+0:48:20.559,0:48:25.680
+process so i knew that uh theta was a one-dimensional item so
+
+0:48:25.680,0:48:29.359
+definitely i can just use a latent that is one-dimensional but
+
+0:48:29.359,0:48:33.599
+no one can tell me that for you know natural images or whatever right so
+
+0:48:33.599,0:48:37.760
+that's the other big issue and so how how would we deal with the fact that we
+
+0:48:37.760,0:48:42.240
+don't know what is the correct size of my latent
+
+0:48:42.240,0:48:45.839
+uh because again if you choose a large latent you're going to be
+
+0:48:45.839,0:48:49.839
+very easily overfitting everything and so in this case
+
+0:48:49.839,0:48:53.920
+what changes from the previous slide which is this one is that now z
+
+0:48:53.920,0:49:00.400
+is a vector okay so z is a vector no longer just a single line so actually
+
+0:49:00.400,0:49:03.200
+this should be a vector and this should be like whatever
+
+0:49:03.200,0:49:09.680
+the shape and now my g goes from the dimension of f and you know
+
+0:49:09.680,0:49:11.599
+cartesian product with the dimension of set
+
+0:49:11.599,0:49:18.240
+into r2 now the issue is that we need to regularize
+
+0:49:18.240,0:49:21.920
+this loss functional because otherwise you are going to be drastically over
+
+0:49:21.920,0:49:25.280
+fitting right and so this is what current research
+
+0:49:25.280,0:49:28.880
+with jan uh is now what me and my students are
+
+0:49:28.880,0:49:32.559
+doing with jan we are trying to figure out
+
+0:49:32.559,0:49:37.440
+ways to regularize the latent variable such that we can you know make things
+
+0:49:37.440,0:49:42.480
+actually not simply overfit and that was it
+
+0:49:42.480,0:49:45.680
+that was all i had to tell you about latent variable
+
+0:49:45.680,0:49:51.680
+energy-based models inference training zero temperature limit a bit warmer than
+
+0:49:51.680,0:49:55.680
+free energy uh and then we saw the unconditional
+
+0:49:55.680,0:49:57.920
+case with unsupervised learning and then we
+
+0:49:57.920,0:50:02.640
+have seen the conditional case with the uh self-supervised learning right where
+
+0:50:02.640,0:50:07.280
+we have access to these acts and the code to train
+
+0:50:07.280,0:50:11.760
+these two models uh like the code that i use for training the conditional case
+
+0:50:11.760,0:50:16.480
+it's just the same code as i use for the unsupervised in a supervised case but
+
+0:50:16.480,0:50:20.079
+with one line change so really really it doesn't take much
+
+0:50:20.079,0:50:25.680
+effort to put this together what it took some effort was to draw
+
+0:50:25.680,0:50:30.640
+the slides but again that's just because i like making things pretty
+
+0:50:30.640,0:50:37.119
+and that was it ah thank you for listening questions please
+
+0:50:37.119,0:50:41.520
+go on i mean it's done right class is finished
+
+0:50:41.520,0:50:44.720
+you can ask anything you want are you still awake
+
+0:50:51.280,0:50:55.119
+yes okay someone is awake can you explain the input dimension of
+
+0:50:55.119,0:50:59.200
+g again yes i can explain as much as you want as you want so now it's office
+
+0:50:59.200,0:51:02.880
+hours right you can ask anything you want uh hold on
+
+0:51:02.880,0:51:05.839
+first question so can you explain the input dimension of g
+
+0:51:05.839,0:51:09.680
+uh in this case let me go back to the first case
+
+0:51:09.680,0:51:15.839
+in this case g is 1 because it was fed with z right and then the output was
+
+0:51:15.839,0:51:20.559
+this g1 and g2 which were cosine and sine
+
+0:51:20.559,0:51:24.559
+in the second case g is going to be the input is going to be this
+
+0:51:24.559,0:51:28.160
+f which we don't know exactly the dimension can be anything
+
+0:51:28.160,0:51:33.839
+so the dimension of f and then that given that i know that z is one
+
+0:51:33.839,0:51:37.599
+dimensional finally which is the super you know norm
+
+0:51:37.599,0:51:41.520
+like the actual case that the more realistic
+
+0:51:41.520,0:51:44.640
+case is this one where we don't necessarily
+
+0:51:44.640,0:51:48.079
+know what is the supposed the dimension for the
+
+0:51:48.079,0:51:51.359
+latent and therefore now we're going to use a
+
+0:51:51.359,0:51:54.800
+whatever dimensional variable latent variable but
+
+0:51:54.800,0:51:59.280
+it's going to be necessary to regularize the
+
+0:51:59.280,0:52:04.400
+loss functional otherwise as i was pointing out you can easily overfit
+
+0:52:04.400,0:52:09.920
+by using that zero temperature limit uh nevertheless you can use you can warm
+
+0:52:09.920,0:52:13.599
+up the the temperature and use that as a regularizer of course
+
+0:52:13.599,0:52:18.880
+right did you get it uh yeah
+
+0:52:18.880,0:52:23.200
+so next question how does this look without a latent variable
+
+0:52:23.200,0:52:26.880
+okay without a latent variable it's exactly as turning
+
+0:52:26.880,0:52:33.920
+beta to zero okay so beta to zero you just average
+
+0:52:33.920,0:52:39.680
+over all possible values how does what does happen what what are you
+
+0:52:39.680,0:52:44.319
+going to be ending up having if you start here on the left side and
+
+0:52:44.319,0:52:47.119
+then instead of having all these arrows that
+
+0:52:47.119,0:52:50.400
+are shaped now like that all these arrows will have
+
+0:52:50.400,0:52:54.000
+the same length well actually these points over
+
+0:52:54.000,0:52:56.880
+here will be even longer now because they are further away
+
+0:52:56.880,0:53:03.280
+so these ellipse will be pulled in every direction and the way to
+
+0:53:03.280,0:53:07.200
+minimize this energy is actually to make it collapse in a
+
+0:53:07.200,0:53:12.079
+single point center in zero and so that's the actual
+
+0:53:12.079,0:53:16.160
+it's a very good question right so what is the classical
+
+0:53:16.160,0:53:22.000
+failure mode in you know neural network whenever you have multiple targets
+
+0:53:22.000,0:53:26.880
+associated to the same input you end up predicting the average of all
+
+0:53:26.880,0:53:31.520
+the possible targets in this case the average of all possible
+
+0:53:31.520,0:53:34.640
+targets that are all those points in the ellipse is going to be
+
+0:53:34.640,0:53:39.680
+just the point in the origin which is like the collapse of your model
+
+0:53:39.680,0:53:42.880
+right so that's a very good question and the point is that
+
+0:53:42.880,0:53:49.760
+if you try to learn multi modal output multimodal data set a data with
+
+0:53:49.760,0:53:56.640
+a msc like without latent with zero zero beta infinite temperature you're
+
+0:53:56.640,0:54:00.559
+just you know collapsing uh to the mean
+
+0:54:00.559,0:54:04.000
+the average right m e a and not m i n mean
+
+0:54:04.000,0:54:09.599
+average all right another question uh to be clear at the zero temperature
+
+0:54:09.599,0:54:14.000
+limit the loss is only considering the energy
+
+0:54:14.000,0:54:21.440
+of the nearest point yeah and as we warm it up the loss is using
+
+0:54:21.440,0:54:26.640
+a weighted sum of all points and yes and the weighting weights that you're
+
+0:54:26.640,0:54:30.480
+using for the weight of the sum is the are the weights that are coming
+
+0:54:30.480,0:54:34.559
+from the uh soft argument right if you take the arg
+
+0:54:34.559,0:54:38.400
+softening you have soft mean of the energy right
+
+0:54:38.400,0:54:41.920
+so that's what you get you have the soft mean of the energy
+
+0:54:41.920,0:54:45.280
+right so the f tilde it's soft mean of the energy
+
+0:54:45.280,0:54:49.520
+you take the derivative of the softmin you get the
+
+0:54:49.520,0:54:53.680
+what you get you get the exponential divided by the sum of exponential
+
+0:54:53.680,0:54:56.799
+so that's the soft argument right multiply
+
+0:54:56.799,0:55:03.359
+by e prime what is e prime e was the square distance so if you take
+
+0:55:03.359,0:55:05.599
+the derivative of the square distance you just get
+
+0:55:05.599,0:55:10.079
+the vector which is now multiplied by this soft argument
+
+0:55:10.079,0:55:13.359
+so exactly what you said uh which is very good
+
+0:55:13.359,0:55:18.000
+summary i'm gonna just read it again and i show the other chart
+
+0:55:18.000,0:55:22.720
+so i just read your comment to be clear at the zero temperature
+
+0:55:22.720,0:55:26.799
+limit the loss is only considering the energy of the nearest point
+
+0:55:26.799,0:55:29.839
+the distance the square distance to the closest point yeah
+
+0:55:29.839,0:55:34.160
+and as you warm it up the loss is going to be the weighted sum
+
+0:55:34.160,0:55:42.480
+of not the points right what is sum uh of all those um contributions right
+
+0:55:42.480,0:55:46.319
+the x uh this exponential of the minus beta e
+
+0:55:46.319,0:55:50.319
+right that's what that was written here on the top right
+
+0:55:50.319,0:55:53.760
+so as you warm it up you're going to get this exponential which is the soft mean
+
+0:55:53.760,0:55:56.799
+so soft mean and then if you compute the uh
+
+0:55:56.799,0:56:00.960
+the derivative you're going to get the soft argument multiplied by the
+
+0:56:00.960,0:56:04.400
+derivative of the energy which are the arrows multiplied by the
+
+0:56:04.400,0:56:09.359
+soft argument so cool what happens if we allow z to move
+
+0:56:09.359,0:56:13.839
+freely into the space we're going to basically get a collapsed
+
+0:56:13.839,0:56:17.119
+network this model can simply output zero everywhere
+
+0:56:17.119,0:56:21.520
+and that's where you may need to use the contrastive
+
+0:56:21.520,0:56:26.319
+uh cases right so in that case uh you know a very easy way to get
+
+0:56:26.319,0:56:31.200
+zero energy is gonna be just everything zero right uh but in this in the
+
+0:56:31.200,0:56:35.599
+in this case you can use the contrastive case you can say oh no in this case it
+
+0:56:35.599,0:56:40.720
+should be larger than some margin and so that's how you can deal with this
+
+0:56:40.720,0:56:45.760
+larger than uh like z into d okay so
+
+0:56:45.760,0:56:49.520
+taking beta okay so taking beta uh to zero
+
+0:56:49.520,0:56:53.839
+would defeat the purpose of having a latent variable at all that's exactly
+
+0:56:53.839,0:56:56.720
+yeah and so this is what i kind of briefly
+
+0:56:56.720,0:57:02.400
+show you i didn't talk about but this is like a a quick uh derivation
+
+0:57:02.400,0:57:06.559
+by showing you that if you go beta equals zero like the limit for beta that
+
+0:57:06.559,0:57:10.480
+tends to zero you retrieve the average across all the
+
+0:57:10.480,0:57:14.640
+latent and that's basically the you end up with
+
+0:57:14.640,0:57:18.240
+having msc right you end up throwing away all those kind
+
+0:57:18.240,0:57:23.760
+of uh the goodies right and that was pretty much it
+
+0:57:23.760,0:57:28.480
+how can you get more out of this lesson firstly comprehension
+
+0:57:28.480,0:57:33.119
+if anything was not clear ask me anything in the comment section below
+
+0:57:33.119,0:57:36.640
+if you would like to follow up with the latest news follow me on twitter
+
+0:57:36.640,0:57:42.160
+under the endl alph cnz if you would like to be notified when i
+
+0:57:42.160,0:57:45.680
+upload the latest video don't forget to subscribe to the channel
+
+0:57:45.680,0:57:50.079
+and turn on the notification bell and if you like this video don't forget
+
+0:57:50.079,0:57:54.400
+to put a thumb up this video has a transcript in english
+
+0:57:54.400,0:57:57.359
+and if you would like to contribute to the translation in your language
+
+0:57:57.359,0:58:01.839
+please let me know so here as you can see we have the
+
+0:58:01.839,0:58:07.920
+write up where we can see all these video that has been transcribed here in
+
+0:58:07.920,0:58:13.040
+plain english and then again as i said before if we go
+
+0:58:13.040,0:58:16.240
+back to the homepage we can see here in the english flag and
+
+0:58:16.240,0:58:20.799
+we can select different languages now we have arabic spanish version
+
+0:58:20.799,0:58:24.960
+french italian japanese korean russian turkish and chinese and
+
+0:58:24.960,0:58:28.640
+your language is just waiting for you to be translated in
+
+0:58:28.640,0:58:31.599
+finally do play with notebook and by torch in
+
+0:58:31.599,0:58:35.520
+order to get yourself more acquainted with all these new
+
+0:58:35.520,0:58:38.880
+topics and then if you find any typo or
+
+0:58:38.880,0:58:41.520
+mistakes or anything just please let me know
+
+0:58:41.520,0:58:46.079
+directly on github or if you feel brave enough you can even send a pull request
+
+0:58:46.079,0:58:51.280
+it will be gladly appreciated thank you for listening and don't forget to like
+
+0:58:51.280,0:58:54.240
+share and subscribe bye

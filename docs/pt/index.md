@@ -79,7 +79,7 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/pt/week03/03">③</a></td>
       <td rowspan="2">Aula</td>
-      <td><a href="{{site.baseurl}}/es/week03/03-1">Transformação de parâmetros</a></td>
+      <td><a href="{{site.baseurl}}/pt/week03/03-1">Transformação de parâmetros</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
         <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
@@ -149,18 +149,18 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
     </tr>
 <!-- =============================== SEMANA 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week07/07">⑦</a></td>
+      <td rowspan="3" align="center"><a href="{{site.baseurl}}/pt/week07/07">⑦</a></td>
       <td rowspan="2">Aula</td>
-      <td><a href="en/week07/07-1">Modelos Baseados em Energia</a></td>
+      <td><a href="{{site.baseurl}}/pt/week07/07-1">Modelos Baseados em Energia</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
         <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week07/07-2">SSL, EBM</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/pt/week07/07-2">SSL, EBM</a></td></tr>
     <tr>
       <td rowspan="1">Prática</td>
-      <td><a href="en/week07/07-3">Autocodificadores</a></td>
+      <td><a href="{{site.baseurl}}/pt/week07/07-3">Autocodificadores</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>

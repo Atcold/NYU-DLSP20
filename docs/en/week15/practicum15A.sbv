@@ -1,0 +1,2297 @@
+0:00:02.720,0:00:06.000
+all right all right all right so today we're gonna be talking again
+
+0:00:06.000,0:00:10.240
+about foundations of deep learning that's me alfredo and you can find me on
+
+0:00:10.240,0:00:13.840
+twitter on the handle alfcnz actually if you
+
+0:00:13.840,0:00:17.840
+check twitter you can find some you could find some news about today's
+
+0:00:17.840,0:00:21.359
+lesson since i posted online like yesterday
+
+0:00:21.359,0:00:25.359
+night so the deal is always the same as soon
+
+0:00:25.359,0:00:28.720
+as you don't understand as soon as i don't make sense since i
+
+0:00:28.720,0:00:32.239
+didn't sleep and i've been working on this stuff for the last 30 hours
+
+0:00:32.239,0:00:36.079
+it's very likely i'm not gonna be making much sense at some times
+
+0:00:36.079,0:00:39.520
+so every time something is not clear just stop me
+
+0:00:39.520,0:00:42.559
+ask me anything because again if we keep going
+
+0:00:42.559,0:00:47.360
+and you're not following then we are not going anywhere okay
+
+0:00:53.520,0:00:56.879
+all right so today we're going to be talking about inference
+
+0:00:56.879,0:01:01.120
+for latent variable energy-based models ebns
+
+0:01:01.120,0:01:07.920
+for example the ellipse likewise we have cover only inference only
+
+0:01:07.920,0:01:12.320
+inference in our first lab today we're gonna be only covering
+
+0:01:12.320,0:01:18.080
+inference for energy based models i will not say the word training ever
+
+0:01:18.080,0:01:21.680
+again okay i'll try at least so today we're
+
+0:01:21.680,0:01:25.280
+gonna be talking about inference what is this stuff and where
+
+0:01:25.280,0:01:28.080
+do we start we're going to be starting from our
+
+0:01:28.080,0:01:30.960
+training examples training training samples i said i
+
+0:01:30.960,0:01:34.880
+wasn't going to say this word all right so let's see what kind of data
+
+0:01:34.880,0:01:38.799
+we're going to be working on and why we need these energy based models
+
+0:01:38.799,0:01:45.920
+so we can think about our data why bold y is uh it's been living
+
+0:01:45.920,0:01:52.000
+having two components y one y two y one is gonna be this row one function
+
+0:01:52.000,0:01:55.840
+of x which is going to be my input multiplied
+
+0:01:55.840,0:01:59.920
+by the cosine of theta which is some you know angle we don't
+
+0:01:59.920,0:02:03.040
+know plus some epsilon noise and then row 2
+
+0:02:03.040,0:02:07.680
+is going to be again a function of my input x and then it's multiplied by a
+
+0:02:07.680,0:02:11.360
+sine of this theta we have no axis plus some
+
+0:02:11.360,0:02:18.480
+uh noise epsilon rho is a function that maps the input
+
+0:02:18.480,0:02:22.560
+one dimensional r into a r2 and so it's mapping my
+
+0:02:22.560,0:02:26.480
+x into something that is this alpha x plus beta
+
+0:02:26.480,0:02:29.840
+1 minus x for the first component and the other is beta
+
+0:02:29.840,0:02:36.239
+times x plus alpha multiply 1 minus x and and then everything is multiplied by
+
+0:02:36.239,0:02:41.840
+this exponential of x so alpha and beta
+
+0:02:41.840,0:02:45.760
+are simply 1.5 and 2 so this is simply the
+
+0:02:45.760,0:02:53.760
+equation for a ellipse but then if x goes from zero to one as i show you here
+
+0:02:53.760,0:02:57.840
+you're gonna have that this is gonna be drawing
+
+0:02:57.840,0:03:02.000
+some sort of horn that is exponentially no in the profile
+
+0:03:02.000,0:03:05.280
+and then it starts as like something like this and then eventually
+
+0:03:05.280,0:03:09.440
+like horizontal ellipse and eventually end up as a vertical ellipse
+
+0:03:09.440,0:03:15.840
+okay x here is going to be sample from the uniform distribution
+
+0:03:15.840,0:03:22.640
+similarly theta is also sampled from the uniform distribution from 0 to 2 pi
+
+0:03:22.640,0:03:26.239
+epsilon instead is sampled from a normal distribution
+
+0:03:26.239,0:03:31.680
+with mean 0 and then a standard deviation of 1 over 20.
+
+0:03:31.680,0:03:34.879
+so again as you might have seen from twitter
+
+0:03:34.879,0:03:38.159
+this stuff looks pretty cool and it looks like
+
+0:03:38.159,0:03:42.720
+that but then since we have magic on this side we can do this
+
+0:03:42.720,0:03:47.280
+and so you can see here how we're gonna be having this exponential
+
+0:03:47.280,0:03:53.840
+uh side right this exponential envelope we start with the uh ellipse that is
+
+0:03:53.840,0:03:57.360
+like vertical and then we end up with this horizontal one
+
+0:03:57.360,0:04:04.080
+okay um what we want to pay attention here
+
+0:04:04.080,0:04:10.480
+is that at a given specific location x there is no
+
+0:04:10.480,0:04:16.880
+one y only right so we cannot really train a neural net that is like a
+
+0:04:16.880,0:04:20.799
+vector to vector mapping because there is no vector to map
+
+0:04:20.799,0:04:24.320
+well there is a bunch of vectors right so given one
+
+0:04:24.320,0:04:28.639
+single input x there are many many many possible
+
+0:04:28.639,0:04:32.160
+y's there is like a whole uh ellipse right
+
+0:04:32.160,0:04:38.080
+uh per given x so we can't really use normal uh feed forward neural net to do
+
+0:04:38.080,0:04:41.199
+this uh similarly if we are just talking
+
+0:04:41.199,0:04:45.360
+about y's given one value of y one i cannot even
+
+0:04:45.360,0:04:48.240
+tell what is the other corresponding y two
+
+0:04:48.240,0:04:51.680
+because there are always two almost always two values for
+
+0:04:51.680,0:04:57.120
+y two given one y one right and so using vectors to vectors mapping
+
+0:04:57.120,0:05:00.320
+as we've been learning so far is not quite
+
+0:05:00.320,0:05:04.400
+uh sufficient so today we're going to be figuring out how to use these latent
+
+0:05:04.400,0:05:07.600
+variable energy-based models to deal with this kind of
+
+0:05:07.600,0:05:11.840
+multimodal you know outcome so to make things simple and make my
+
+0:05:15.600,0:05:19.120
+life easier we're gonna do a few simplifications uh
+
+0:05:19.120,0:05:25.360
+the first one i'm gonna be removing the input so there will be no input data
+
+0:05:25.360,0:05:32.560
+my model will not have input data and this is like what anyhow i i fix my
+
+0:05:32.560,0:05:38.320
+x to zero so by fixing the x to zero i'm gonna have that my exponential becomes
+
+0:05:38.320,0:05:42.639
+simply 1. and then basically we turn out having
+
+0:05:42.639,0:05:46.720
+row 1 that becomes 2 right so alpha
+
+0:05:46.720,0:05:50.240
+gets deleted by 0 and then you just have the beta multiplied by
+
+0:05:50.240,0:05:54.080
+a 1 and then row two automatically is gonna get
+
+0:05:54.080,0:06:00.400
+the amplitude of 1.5 right and so my data points y are going to be simply
+
+0:06:00.400,0:06:05.520
+points coming from this twice the cosine of this uniform
+
+0:06:05.520,0:06:09.199
+simply uniformly sample theta and then 1.5
+
+0:06:09.199,0:06:16.720
+sine this uniform theta the collection of all my y's
+
+0:06:16.720,0:06:20.319
+will give me capital y so capital y is going to be the collection of all my
+
+0:06:20.319,0:06:25.600
+sample and here i decided to just use 24 samples so i have 24
+
+0:06:25.600,0:06:28.800
+different samples from the uniform distribution
+
+0:06:28.800,0:06:33.600
+okay and per each of these samples there will be
+
+0:06:33.600,0:06:39.120
+one epsilon for the first component and one epsilon for the second component
+
+0:06:39.120,0:06:44.800
+all right so what we try to do today is going to be to learn well to learn
+
+0:06:44.800,0:06:48.160
+wrong we are not learning anything we um we
+
+0:06:48.160,0:06:52.479
+imagine that someone gave us a already trained already learned
+
+0:06:52.479,0:06:54.319
+network we're going to be learning how to
+
+0:06:54.319,0:07:00.960
+perform inference how we can use a model to figure out if one point it belongs or
+
+0:07:00.960,0:07:04.080
+doesn't belong to what was the training manifold
+
+0:07:04.080,0:07:10.800
+okay so this is my training data these are my ys which are
+
+0:07:10.800,0:07:14.800
+again an ellipse you can see here the major radii radius
+
+0:07:14.800,0:07:18.160
+is two you can see right there are one two
+
+0:07:18.160,0:07:24.400
+three four boxes each box is 0.5 so this radius here is two and then the
+
+0:07:24.400,0:07:29.680
+minor radius is gonna have one two three boxes uh each box is 0.5
+
+0:07:29.680,0:07:36.560
+and so this is the minor radius of 1.5 when you said there's no input just
+
+0:07:36.560,0:07:40.800
+what is theta do you consider that an input or so theta we don't have access
+
+0:07:40.800,0:07:44.879
+to right so theta is something we don't see x
+
+0:07:44.879,0:07:48.720
+could be the input we provide the model to figure out
+
+0:07:48.720,0:07:51.919
+at what location we are at that kind of uh
+
+0:07:51.919,0:07:56.400
+horn allows us to figure out the dimension of those
+
+0:07:56.400,0:08:01.440
+ellipse ellipses but then we theta here is something we don't have access
+
+0:08:01.440,0:08:06.319
+to so theta was is simply a variable which is
+
+0:08:06.319,0:08:10.400
+uh missing which was used for generating our data
+
+0:08:10.400,0:08:13.919
+but we don't have access to so it's a missing variable it's a missing
+
+0:08:13.919,0:08:21.360
+input okay so we don't have access okay all right so let's look at what the
+
+0:08:21.360,0:08:28.479
+model manifold is so in this case i'm gonna have a latent input
+
+0:08:28.479,0:08:33.200
+which is something uh latent mean means it's missing i don't have access to this
+
+0:08:33.200,0:08:36.640
+input still there is some you know potential
+
+0:08:36.640,0:08:39.839
+input you notice here is the same color as
+
+0:08:39.839,0:08:45.120
+that theta right anyhow so i have my z z which is uh
+
+0:08:45.120,0:08:49.040
+i can decide to like take it from zero to two pi
+
+0:08:49.040,0:08:53.440
+uh without the so that square bracket flipped square bracket means
+
+0:08:53.440,0:08:56.800
+i'm considering a vector that goes from 0 to 2 pi
+
+0:08:56.800,0:09:03.440
+with 2 pi excluded with a step you know pi over 24. and so
+
+0:09:03.440,0:09:09.760
+this one basically is like a line where there are many points there are uh 40 48
+
+0:09:09.760,0:09:14.320
+points right from zero to two pi excluded so this
+
+0:09:14.320,0:09:19.839
+latent input goes inside a decoder and then the decoder is going to give me
+
+0:09:19.839,0:09:23.519
+this y tilde and y is bold because again it
+
+0:09:23.519,0:09:27.920
+lives in two dimensions uh more precisely we're gonna have that
+
+0:09:27.920,0:09:32.560
+by varying z over one line y tilde is gonna be
+
+0:09:32.560,0:09:37.760
+varying around a uh ellipse okay
+
+0:09:37.760,0:09:41.760
+on the other side instead we're going to have these bold y which are my
+
+0:09:41.760,0:09:45.920
+observations so how do i know these are observations
+
+0:09:45.920,0:09:49.120
+because it's uh this circle it's shaded whereas
+
+0:09:49.120,0:09:52.160
+those other circles are simply transparent
+
+0:09:52.160,0:09:56.640
+the bottom one is a little bit gray which means i have access to this data
+
+0:09:56.640,0:10:01.760
+okay cool so this is how these points look
+
+0:10:01.760,0:10:05.120
+right the blue points are the one sample from my
+
+0:10:05.120,0:10:07.760
+data generation generated distribution we already
+
+0:10:07.760,0:10:12.399
+sampled them we have 24 and then here i just decided to plot uh
+
+0:10:12.399,0:10:17.760
+48 of these values from like
+
+0:10:17.760,0:10:21.519
+reconstruction of those latent variables right such that i can clearly see
+
+0:10:21.519,0:10:25.519
+what the network thinks uh the the true manifold
+
+0:10:25.519,0:10:30.000
+is okay in the second episode when we are gonna be learning we're
+
+0:10:30.000,0:10:35.600
+gonna be figuring out how to match my internal belief the the violet one
+
+0:10:35.600,0:10:39.760
+with actual the the data we have but we're not going to be seeing that this
+
+0:10:39.760,0:10:42.800
+time this time we already have this model which is
+
+0:10:42.800,0:10:48.160
+pretty bad since it's not already matching the data and still
+
+0:10:48.160,0:10:53.600
+going to be seeing how to use this model so what what determines the shape of the
+
+0:10:53.600,0:10:56.560
+red or orange points is it the alpha and the
+
+0:10:56.560,0:11:00.959
+beta uh alpha and beta are determining the
+
+0:11:00.959,0:11:03.760
+side the the shape of that blue thing right so
+
+0:11:03.760,0:11:07.519
+the overall thing it was that horn uh i showed you before the one that was
+
+0:11:07.519,0:11:12.000
+spinning and then we decided to slice it at a specific value of
+
+0:11:12.000,0:11:15.040
+x right so this is like a cross section which
+
+0:11:15.040,0:11:19.279
+gives us this potato the blue potato on the other side i'm going to be telling
+
+0:11:19.279,0:11:24.959
+you what is inside the decoder we have a internal belief for what the
+
+0:11:24.959,0:11:28.560
+true data manifold is right that's the net network
+
+0:11:28.560,0:11:33.839
+that the model believe about the uh you know the the how the data is
+
+0:11:33.839,0:11:38.800
+supposed to look okay let me let me show you in the next
+
+0:11:38.800,0:11:42.880
+slide a little bit more information so maybe we can get uh
+
+0:11:42.880,0:11:48.959
+you know sync so here we're going to be looking at this energy
+
+0:11:48.959,0:11:52.800
+function so what is this energy function so this
+
+0:11:52.800,0:11:57.760
+energy function it's um something that tells me
+
+0:11:57.760,0:12:04.880
+what is the compatibility between this y tilde and y the blue y right
+
+0:12:04.880,0:12:09.040
+and so basically in this case here measures the distance between
+
+0:12:09.040,0:12:16.079
+my given training sample and my reconstruction my given my best guess
+
+0:12:16.079,0:12:20.880
+about what i think it should be the real data point
+
+0:12:20.880,0:12:24.240
+so let's give more context here right so my
+
+0:12:24.240,0:12:31.440
+energy e function of my y data point and my latent variable z
+
+0:12:31.440,0:12:38.079
+it's gonna be the sum of the square euclidean distances of the two
+
+0:12:38.079,0:12:42.240
+components so we have component one of the y minus
+
+0:12:42.240,0:12:46.160
+component one of this g which is our decoder
+
+0:12:46.160,0:12:50.560
+function of z squared and then we have the other one is going to be y2 minus
+
+0:12:50.560,0:12:54.000
+g2 which is the second component of this output of the decoder
+
+0:12:54.000,0:13:01.279
+squared and this importantly uh happens for every y we pick
+
+0:13:01.279,0:13:07.519
+from capital y so in this case we have 24 different
+
+0:13:07.519,0:13:11.120
+e's right so we can index 24 different e's
+
+0:13:11.120,0:13:18.560
+based on the specific why you pick more about this in the next slide so
+
+0:13:18.560,0:13:22.079
+what is this decoder so this decoder is a little bit
+
+0:13:22.079,0:13:25.920
+cooked as in you know i know what is the data generating
+
+0:13:25.920,0:13:29.839
+uh process so i can put inside the g what is quite
+
+0:13:29.839,0:13:32.880
+uh you know align with what i think you know
+
+0:13:32.880,0:13:39.839
+it's a very good guess about how the output should look uh so my g
+
+0:13:39.839,0:13:43.519
+which is a two component function g one g two
+
+0:13:43.519,0:13:50.160
+maps uh the real line to this r2 and therefore it maps my z into these
+
+0:13:50.160,0:13:54.959
+two components which are going to be w1 cosine cosine of z and then the second
+
+0:13:54.959,0:13:59.760
+component is going to be w2 because the sine of z to notice here
+
+0:13:59.760,0:14:06.720
+the only parameters we have available in this network in this decoder are w1
+
+0:14:06.720,0:14:11.040
+and w2 okay cosine x and sine z
+
+0:14:11.040,0:14:14.880
+sorry cosine z and sine z are you know knowledge a priori you know i know
+
+0:14:14.880,0:14:18.800
+already and i put there my best guess for that
+
+0:14:18.800,0:14:22.800
+and so again this network has two parameters nevertheless
+
+0:14:22.800,0:14:26.480
+with two parameters we can still do many things
+
+0:14:26.480,0:14:33.920
+so again stress once again uh this e happens to exist for any peak
+
+0:14:33.920,0:14:40.560
+of y in this set of all y's so let's put uh this e on on the top
+
+0:14:40.560,0:14:45.440
+here just so i can i can clear the screen below and so
+
+0:14:45.440,0:14:52.959
+now i show you all 24 energies we have how do we
+
+0:14:52.959,0:14:57.600
+how do i get this stuff right so these energies are coming from the fact that i
+
+0:14:57.600,0:15:02.000
+pick a specific y so the first one i pick
+
+0:15:02.000,0:15:05.760
+y prime which is like my peak of y is going to be the first
+
+0:15:05.760,0:15:09.040
+of my training sample and therefore i can call
+
+0:15:09.040,0:15:12.639
+the first energy my e1 right so i can index them
+
+0:15:12.639,0:15:16.240
+right now since i have you know a discrete number of training samples
+
+0:15:16.240,0:15:19.519
+i have a discrete number of energies in this case
+
+0:15:19.519,0:15:23.920
+so this is my e1 and then the last one on the row is going to be in the one
+
+0:15:23.920,0:15:28.000
+associated to the sixth sample of my training sample my training
+
+0:15:28.000,0:15:32.480
+set and therefore i have my e6
+
+0:15:32.480,0:15:35.519
+uh if we go down until the last row we're gonna be
+
+0:15:35.519,0:15:40.959
+seeing uh i'm gonna be picking the 19th sample from my training set and then i'm
+
+0:15:40.959,0:15:46.880
+going to have this e 19 over there and finally if i pick my y prime
+
+0:15:46.880,0:15:50.399
+being the last the 24th example then i'll be
+
+0:15:50.399,0:15:56.560
+ending up with the e24 on the x axis of each of these little cells you're
+
+0:15:56.560,0:16:02.160
+going to be having z so each of these e's know e 1 e 2 e 3
+
+0:16:02.160,0:16:08.800
+e until 24 are functions of my z latent variable which is
+
+0:16:08.800,0:16:14.560
+spanning as we said before zero to two pi in this uh drawing here i
+
+0:16:14.560,0:16:18.880
+just have them separated by uh pi over 12. so i have
+
+0:16:18.880,0:16:23.680
+nice separation for drawing this function
+
+0:16:23.680,0:16:30.240
+so moreover the range of this energy in this case is going to be 0 to 12 and
+
+0:16:30.240,0:16:33.040
+we are we're going to be computing these values in a
+
+0:16:33.040,0:16:36.480
+just in a short moment such that we can better understand
+
+0:16:36.480,0:16:41.519
+what the heck i'm talking about right so again until yesterday i had no clue
+
+0:16:41.519,0:16:47.759
+about what these were okay so i am very new to this topic as well and
+
+0:16:47.759,0:16:51.279
+therefore we are exploring together what is this jungle
+
+0:16:51.279,0:16:55.519
+of very funny weird wiggly functions okay
+
+0:16:55.519,0:16:58.639
+we are gonna start by cherry picking two of them
+
+0:16:58.639,0:17:05.839
+uh for example the e23 the e23 looks pretty you know
+
+0:17:05.839,0:17:12.160
+kind of okay it looks very uh mostly smooth and i think it looks like
+
+0:17:12.160,0:17:14.640
+uh you know even convex in the in the
+
+0:17:14.640,0:17:18.319
+central part and then i'm gonna be of course if i
+
+0:17:18.319,0:17:21.839
+pick the nice one and smooth one i'm gonna be also picking some weird stuff
+
+0:17:21.839,0:17:25.199
+like like the the double wiggly the one which
+
+0:17:25.199,0:17:28.559
+is wiggling yeah but as i said let's start with
+
+0:17:28.559,0:17:33.360
+ease and let's start with the with a simple version okay so far everything is
+
+0:17:33.360,0:17:36.720
+all right no one is writing anything on the chat and
+
+0:17:36.720,0:17:40.559
+you know sean just asked a few questions so so far we are
+
+0:17:40.559,0:17:50.480
+all on board or i lost some of you no yeah so so basically like this square
+
+0:17:50.480,0:17:54.960
+would be y23 and then the x-axis is showing
+
+0:17:54.960,0:17:58.480
+as you vary z you're going to be evaluating this e
+
+0:17:58.480,0:18:03.039
+y 23 and z yeah yeah this is the e23 the the one i
+
+0:18:03.039,0:18:06.080
+show you right now great the lecture's going
+
+0:18:06.080,0:18:09.760
+great i'm understanding as well okay okay that's fantastic
+
+0:18:09.760,0:18:16.080
+okay so let's look at this first example on this kind of u shape so how
+
+0:18:16.080,0:18:19.760
+does this u shape uh arise right
+
+0:18:19.760,0:18:26.320
+and so this is the current configuration we have y prime is going to be the 23rd
+
+0:18:26.320,0:18:31.360
+example from my training set which is refigured here by that
+
+0:18:31.360,0:18:38.320
+green x on the right hand side okay so over here whenever i start
+
+0:18:38.320,0:18:43.840
+my z my z and i start with z equals zero it actually turns out that z zero
+
+0:18:43.840,0:18:47.760
+corresponds to this location over here so if i send
+
+0:18:47.760,0:18:50.400
+z equals zero inside the decoder i'm gonna
+
+0:18:50.400,0:18:55.520
+get a point over here why is that oh because simply the w1
+
+0:18:55.520,0:18:58.880
+we just randomly generated is a negative number
+
+0:18:58.880,0:19:05.440
+and so this uh this size over here from zero like this the point from here to
+
+0:19:05.440,0:19:10.000
+here this is my w1 and instead w2 is going to be a positive
+
+0:19:10.000,0:19:14.000
+number over here so whenever we have z equals 0 you're
+
+0:19:14.000,0:19:17.200
+going to have that the cosine of 0 is going to be equal to 1 so it
+
+0:19:17.200,0:19:21.440
+becomes 1 multiplied by a negative number i go down here and
+
+0:19:21.440,0:19:25.360
+then 0 sine of zero is going to be zero so
+
+0:19:25.360,0:19:28.400
+you're gonna be you're gonna be on the x axis
+
+0:19:28.400,0:19:32.080
+so over here this is gonna be my initial point
+
+0:19:32.080,0:19:35.360
+uh how far is this point from the green x
+
+0:19:35.360,0:19:41.840
+let's count so we have one two boxes three four boxes five six
+
+0:19:41.840,0:19:48.480
+six boxes and seven right so two boxes are one right so seven
+
+0:19:48.480,0:19:51.520
+boxes means we have three and a half right
+
+0:19:51.520,0:19:57.440
+so if i count it correctly one two three three and a half so the distance between
+
+0:19:57.440,0:20:00.720
+this point over here and the green guy over here
+
+0:20:00.720,0:20:04.159
+it's roughly three and a half now if you take three
+
+0:20:04.159,0:20:07.919
+and a half and you square it you get
+
+0:20:07.919,0:20:11.919
+yeah you guess it's right it's 12 right and that's why we get this point over
+
+0:20:11.919,0:20:13.840
+here you don't trust me take out the
+
+0:20:13.840,0:20:17.039
+calculator and check how much is 3.5 squared
+
+0:20:17.039,0:20:23.280
+okay anyhow so that's why we start at this location uh here 12 right
+
+0:20:23.280,0:20:26.480
+as we keep uh increasing z and we go from
+
+0:20:26.480,0:20:30.880
+zero to pi half we end up at this location over here
+
+0:20:30.880,0:20:36.000
+and then as we keep going until pi you're gonna get and ending up in this
+
+0:20:36.000,0:20:40.480
+location over here and as you can tell uh pi
+
+0:20:40.480,0:20:46.640
+you're gonna be at one square away from this green boy and so one square is
+
+0:20:46.640,0:20:52.159
+gonna be 0.5 0.5 square is 0.25
+
+0:20:52.159,0:20:55.840
+and therefore the height of this red curve
+
+0:20:55.840,0:21:02.640
+at this location over here it's 0.25 very close to zero okay and then
+
+0:21:02.640,0:21:06.559
+we still keep cranking up that z and we go to
+
+0:21:06.559,0:21:12.159
+three three half pi and then you keep going up to two pi right and two pi
+
+0:21:12.159,0:21:14.880
+we're gonna be basically getting up to the same location
+
+0:21:14.880,0:21:19.760
+where we started okay and then if you keep going you're gonna repeat this one
+
+0:21:19.760,0:21:23.919
+it's gonna be going up and down up and down up and down all right all
+
+0:21:23.919,0:21:28.159
+right so this looks pretty okay i think no no no crazy stuff but
+
+0:21:28.159,0:21:32.000
+then we saw the other one was kind of wiggly right what happened there so
+
+0:21:32.000,0:21:36.720
+instead of using the y 23 we're going to be using now the y10
+
+0:21:36.720,0:21:40.480
+which is this thing right like a signature like yarn
+
+0:21:40.480,0:21:45.039
+signature all right so what happened here so in this case
+
+0:21:45.039,0:21:48.799
+our y prime which is the peak we have
+
+0:21:48.799,0:21:54.000
+from my possible wise is this guy over here the top
+
+0:21:54.000,0:21:58.080
+x over here and again as i told you before whenever z
+
+0:21:58.080,0:22:01.440
+is equal to 0 we start at this location over here
+
+0:22:01.440,0:22:04.480
+so if you have understood what i'm talking about and now we're going to be
+
+0:22:04.480,0:22:07.760
+doing an exercise such that you answer me
+
+0:22:07.760,0:22:11.679
+can you tell me what is the distance between this location over here
+
+0:22:11.679,0:22:17.120
+and this point over here so question for the people at home
+
+0:22:17.120,0:22:24.840
+can anyone tell me what is the length of this segment i just
+
+0:22:24.840,0:22:31.760
+draw and i'm okay 1.5 times 1.4
+
+0:22:31.760,0:22:37.520
+which is square root of 2. yes so that's correct and if you square it
+
+0:22:37.520,0:22:43.840
+you're gonna have what is going to be 1.5 times 1.5 times 2
+
+0:22:43.840,0:22:49.280
+right i just squared so you said 1.5 times square root of 2. i'm just
+
+0:22:49.280,0:22:50.880
+squaring everything so we're going to get
+
+0:22:50.880,0:22:55.760
+1.5 squared times 2. so 1.5 times 2 it's 3
+
+0:22:55.760,0:23:02.960
+and 3 times 1.4 1.5 is 4.5 right and so we can determine that my initial
+
+0:23:02.960,0:23:05.919
+energy which is the square length of this
+
+0:23:05.919,0:23:10.000
+segment is going to be 4.5 which is exactly what
+
+0:23:10.000,0:23:16.640
+this initial value over here is okay so this point over here
+
+0:23:16.880,0:23:24.720
+it's 4.5 um can you just repeat why you know that
+
+0:23:24.720,0:23:28.159
+z equals zero corresponds to the leftmost point
+
+0:23:28.159,0:23:32.799
+yes so i know that uh this is because i checked the code
+
+0:23:32.799,0:23:40.960
+i know that my w1 it's um it's equal to something uh that is
+
+0:23:40.960,0:23:47.840
+uh minus 1.5 right something like that minus one
+
+0:23:47.840,0:23:51.840
+point five okay and then we have the w tool
+
+0:24:01.039,0:24:04.159
+and i'm drawing with the touchpad so it's crazy
+
+0:24:04.159,0:24:10.880
+uh this is 0.3 0.4 something like that
+
+0:24:11.200,0:24:15.600
+zero point let's say four that looks like a one but okay
+
+0:24:19.520,0:24:22.720
+okay believe me it's a four okay when we go pi
+
+0:24:22.720,0:24:28.720
+half we are roughly uh one unit away from this point so one square is
+
+0:24:28.720,0:24:32.559
+going to be roughly one right i mean some something roughly one
+
+0:24:32.559,0:24:35.600
+square is gonna still be there so this height over here is gonna
+
+0:24:35.600,0:24:39.120
+be one and then we climb up to this location
+
+0:24:39.120,0:24:43.600
+over here uh in this location over here
+
+0:24:43.600,0:24:51.120
+we should basically get the same point over here so then over
+
+0:24:51.120,0:24:54.400
+here we're going to get a similar value a little bit smaller and then we
+
+0:24:54.400,0:24:57.600
+oh what happened here so when we go to three
+
+0:24:57.600,0:25:02.720
+three half pi we actually are at this location over here and we have
+
+0:25:02.720,0:25:06.000
+another minimum right what happened here so basically you had
+
+0:25:06.000,0:25:10.559
+this point is closer to my green guy than
+
+0:25:10.559,0:25:14.320
+a point over here right and so in this case
+
+0:25:14.320,0:25:17.840
+this function here this energy has a local minima
+
+0:25:17.840,0:25:23.520
+which is happening at three three half pi at this location over here
+
+0:25:23.520,0:25:28.000
+all right cool uh let's go back to the arrow
+
+0:25:28.000,0:25:31.440
+okay so now we determine that this height was 4.5
+
+0:25:31.440,0:25:36.000
+this was one and then this something we can figure this is gonna be like two
+
+0:25:36.000,0:25:39.760
+square this is gonna be four okay okay so what happened now oh all this
+
+0:25:43.600,0:25:48.000
+stuff is still here okay clean all right free energy so what
+
+0:25:48.000,0:25:51.840
+is this free energy so we're gonna figure that out right now
+
+0:25:51.840,0:25:56.320
+so the free energy um actually this is the zero temperature
+
+0:25:56.320,0:26:00.400
+limit of the free energy it's going to be simply the mean minimum
+
+0:26:00.400,0:26:04.480
+value of this e function with respect to z
+
+0:26:04.480,0:26:11.200
+so we can compute this z check which is gonna be equal
+
+0:26:11.200,0:26:15.520
+we can define it as being the arc mean of this energy function
+
+0:26:15.520,0:26:21.039
+uh with respect to z why the check well because the check is pointing
+
+0:26:21.039,0:26:26.320
+downwards right so whenever i minimize my energy i found the location that is
+
+0:26:26.320,0:26:29.279
+the lowest one and theref that's why i'm gonna put the
+
+0:26:29.279,0:26:33.840
+check means means that z is the location where the uh
+
+0:26:33.840,0:26:40.880
+the energy is the lowest okay um and how do can we find that set right
+
+0:26:40.880,0:26:44.720
+so if um if z it's basically
+
+0:26:44.720,0:26:48.320
+uh discrete like let's say we have like k means
+
+0:26:48.320,0:26:51.520
+uh we have we can do exhaustive search we can check every z
+
+0:26:51.520,0:26:57.120
+we have otherwise we can use techniques like gradient based
+
+0:26:57.120,0:27:02.080
+techniques such as gradient descent and keep
+
+0:27:02.080,0:27:05.760
+like pay attention i didn't say stochastic gradient descent
+
+0:27:05.760,0:27:09.840
+because here we are not doing any stochastic something right
+
+0:27:09.840,0:27:15.760
+uh e is a function of what we know everything uh when we do stochastic a in
+
+0:27:15.760,0:27:19.760
+the same we are minimizing that loss function which is expressed as an
+
+0:27:19.760,0:27:24.000
+average of those pair sample loss functions right here instead
+
+0:27:24.000,0:27:28.320
+we are minimizing this specific value of e there is no
+
+0:27:28.320,0:27:32.000
+average so it's not stochastic and therefore you're going to be using
+
+0:27:32.000,0:27:35.279
+you can use algorithms such that conjugate gradient
+
+0:27:35.279,0:27:42.480
+line search lbf gs and so on okay so let's look at and let's figure out
+
+0:27:42.480,0:27:45.919
+what is this free energy right how it works so given
+
+0:27:45.919,0:27:51.440
+that we have defined this uh z check this uh free energy
+
+0:27:51.440,0:27:54.960
+the the zero limit for the free energy is going to simply be this
+
+0:27:54.960,0:27:58.000
+energy e computed in the location of my z
+
+0:27:58.000,0:28:05.279
+check so let's visualize here this uh e uh so this
+
+0:28:05.279,0:28:09.760
+e10 all the energy for the sample when i pick the sample pen
+
+0:28:09.760,0:28:17.120
+i initialize my latent variable z tilde the orange one with some volume
+
+0:28:17.120,0:28:20.640
+and then i'm gonna be running a gradient base method for
+
+0:28:20.640,0:28:25.360
+minimization therefore i end up in the blue location which is my z
+
+0:28:25.360,0:28:28.720
+check and it's blue because it's cold so it's like low
+
+0:28:28.720,0:28:32.240
+i usually think about this energy as being like a temperature right
+
+0:28:32.240,0:28:37.360
+i mean if you multiply by the boltzmann boltzmann constant no k
+
+0:28:37.360,0:28:40.880
+kt uh you're gonna get like the some energy right
+
+0:28:40.880,0:28:45.440
+so energy and temperature are very uh very closely related
+
+0:28:45.440,0:28:49.840
+um and so again i use the the blue to show you that is low
+
+0:28:49.840,0:28:55.600
+and cold and so at that location that z check the yeah at that location we
+
+0:28:55.600,0:28:59.520
+reached the minimum of this energy and that is my uh
+
+0:28:59.520,0:29:05.039
+free energy the zero limit for the free energy
+
+0:29:05.200,0:29:10.960
+cool cool cool so so in practice this could depend on the initialization
+
+0:29:10.960,0:29:15.679
+then oh yeah oh yeah so well
+
+0:29:15.679,0:29:20.240
+yeah the initialization uh so your algorithm
+
+0:29:20.240,0:29:25.440
+will screw up depending on the initialization for sure
+
+0:29:25.440,0:29:31.120
+so i can show you later on that lbfgs actually gets the wrong
+
+0:29:31.120,0:29:36.320
+minimum but nevertheless the free energy is the global minimum right
+
+0:29:36.320,0:29:42.000
+so i'm telling you here that the value the minimum value of e is the
+
+0:29:42.000,0:29:44.880
+free energy if we don't get there because we don't
+
+0:29:44.880,0:29:48.720
+know how to get there and then it's a different issue right so it's not
+
+0:29:48.720,0:29:54.399
+dependent on the initialization uh the initialization will make
+
+0:29:54.399,0:29:58.480
+your algorithm more or less likely to converge to the actual
+
+0:29:58.480,0:30:04.880
+correct solution all right so what happens here
+
+0:30:04.880,0:30:10.480
+so in this case here we have uh the blue points are my points from the training
+
+0:30:10.480,0:30:15.200
+distribution the tilde one are you know same poles
+
+0:30:15.200,0:30:22.559
+from my distrib from my model then my y prime is the peak i have
+
+0:30:22.559,0:30:26.799
+chosen right so this is my 10th item in the training set
+
+0:30:26.799,0:30:33.760
+then my z-tilde which is the initialized the value i initialize z with if i send
+
+0:30:33.760,0:30:36.559
+it through the decoder i showed you before it's going
+
+0:30:36.559,0:30:41.760
+to generate this point here this this location over here
+
+0:30:41.760,0:30:46.000
+then i can run some some some minimization algorithm
+
+0:30:46.000,0:30:50.960
+and then you end up in that location the blue location and the blue x
+
+0:30:50.960,0:30:54.399
+is going to be the you know decoded version of the z
+
+0:30:54.399,0:31:01.440
+check which is the closest item to this green boy over here so
+
+0:31:01.440,0:31:05.120
+why are we doing this stuff here how can we use this model what we use
+
+0:31:05.120,0:31:08.960
+can you what can we use this model for so we can think about
+
+0:31:08.960,0:31:13.200
+you know if we have someone has trained this model and has given
+
+0:31:13.200,0:31:20.960
+that to us we can potentially find what is the closest value
+
+0:31:20.960,0:31:26.559
+in our possible you know set of all possible values we can
+
+0:31:26.559,0:31:32.000
+generate which is the closest to your sample but so we can use this
+
+0:31:32.000,0:31:36.799
+for performing denoising for example so if i have an image which is corrupted
+
+0:31:36.799,0:31:41.360
+which is going to be there for far from my manifold the model manifold
+
+0:31:41.360,0:31:45.120
+then i can ask my model hey model can you tell me what
+
+0:31:45.120,0:31:51.919
+is the latent which is gonna give you the uh decoded version the decoded
+
+0:31:51.919,0:31:56.320
+uh item here which is the closest as possible to the
+
+0:31:56.320,0:32:00.480
+uh image i'm looking at and then potentially we could just
+
+0:32:00.480,0:32:04.559
+pick this value over here as you know uh cleaned up version
+
+0:32:04.559,0:32:10.799
+of my uh corrupted input what is the energy uh the free energy
+
+0:32:10.799,0:32:14.559
+the free energy now it's simply the square distance between
+
+0:32:14.559,0:32:18.399
+the green point and the blue x right so if you take this
+
+0:32:18.399,0:32:21.200
+location these two boxes which is basically one
+
+0:32:21.200,0:32:24.559
+one square which is rough again one is going to be
+
+0:32:24.559,0:32:31.279
+the free energy corresponding to this x over here okay so every x every location
+
+0:32:31.279,0:32:35.279
+here in the training manifold will have a
+
+0:32:35.279,0:32:40.240
+free energy which is determining what is the
+
+0:32:40.240,0:32:44.559
+distance to the the what is the closest distance to the manifold
+
+0:32:44.559,0:32:50.799
+okay so you can see in this case that let's say uh our model is well
+
+0:32:50.799,0:32:54.159
+trained we can tell that this location over here
+
+0:32:54.159,0:32:58.000
+has much a much lower free energy than a point
+
+0:32:58.000,0:33:01.600
+over here and so these points could be more likely
+
+0:33:01.600,0:33:05.600
+coming from these you know uh could be compatible
+
+0:33:05.600,0:33:11.200
+with what this model has been trained on or like we show in this case this model
+
+0:33:11.200,0:33:14.880
+is definitely not well trained uh so what do you mean
+
+0:33:14.880,0:33:18.799
+by well trained uh in this case here just for you know
+
+0:33:18.799,0:33:23.440
+pedagogical uh sake i didn't train fully in this
+
+0:33:23.440,0:33:27.440
+model such that there are errors in ideally
+
+0:33:27.440,0:33:33.120
+those purple points should be exactly matching those blue points and that
+
+0:33:33.120,0:33:36.559
+would be you know a well-trained model which is capturing
+
+0:33:36.559,0:33:40.480
+all the dependencies between those y variables and this is
+
+0:33:40.480,0:33:44.799
+again one cross section right of that horn this is a not well
+
+0:33:44.799,0:33:47.679
+trained model which means i stopped training
+
+0:33:47.679,0:33:51.120
+after a few epochs and therefore the model
+
+0:33:51.120,0:33:54.799
+tried to get there but it didn't quite manage to get yet there
+
+0:33:54.799,0:34:00.480
+uh we can think about that or we can think about this is a
+
+0:34:00.480,0:34:05.039
+well-trained model so you actually learn properly and then these points here are
+
+0:34:05.039,0:34:08.879
+much further away so by computing the free energy of these
+
+0:34:08.879,0:34:14.000
+points you can have like a measure of how far they are from the
+
+0:34:14.000,0:34:19.359
+learned distribution okay all right so let's move on and let's
+
+0:34:19.359,0:34:24.320
+look now instead of the the 23rd right and the 23rd u
+
+0:34:24.320,0:34:28.639
+shape and so in this case instead oh it's much easier we just have a global
+
+0:34:28.639,0:34:34.079
+minimum and a global maximum so there is a question if this were
+
+0:34:34.079,0:34:37.200
+for denoising and the model was trained to the point
+
+0:34:37.200,0:34:41.280
+where the t-points were on top of the till points
+
+0:34:41.280,0:34:46.879
+wouldn't it be not do any denoising so i believe that you're saying if the
+
+0:34:48.960,0:34:54.560
+till points are far away from the uh from the from the purple one right so
+
+0:34:54.560,0:34:59.280
+that would mean that the model would would be not well trained right so if we
+
+0:34:59.280,0:35:03.119
+yeah if these blue points were like up here and all of them would have been you
+
+0:35:03.119,0:35:07.520
+know uh closer to some point over over here
+
+0:35:07.520,0:35:11.599
+that means that this model is bad is badly trained right
+
+0:35:11.599,0:35:15.839
+so again today we don't talk about training so this is simply what has been
+
+0:35:15.839,0:35:19.040
+given to us and we just play uh with what we have
+
+0:35:19.040,0:35:23.359
+and try to figure out what this energy and what is free energy
+
+0:35:23.359,0:35:26.720
+mean okay so this is how to use this stuff
+
+0:35:26.720,0:35:31.520
+rather than to learn this stuff learning next time
+
+0:35:31.520,0:35:36.160
+it's enough to understand how to use this trust me
+
+0:35:36.160,0:35:40.000
+all right so let's figure out what's going on with this u
+
+0:35:40.000,0:35:43.119
+shape so the u shape instead comes from this
+
+0:35:43.119,0:35:49.680
+kind of example here so again here we initialize to the location in
+
+0:35:49.680,0:35:55.680
+orange and then by running some you know gradient based method or whatever
+
+0:35:55.680,0:36:00.640
+minimization process we find these blue x which is my z
+
+0:36:00.640,0:36:04.079
+check so we go from the z tilde which is the initialized
+
+0:36:04.079,0:36:08.400
+uh value for my latent to this z check which is the
+
+0:36:08.400,0:36:15.040
+value at which i find the minimum for my uh energy
+
+0:36:15.040,0:36:19.040
+since this is periodic i'm going to show you just on the next repetition so i
+
+0:36:19.040,0:36:25.119
+don't clutter too much the chart and this came from this configuration
+
+0:36:25.119,0:36:28.720
+over here we start with these training points uh
+
+0:36:28.720,0:36:32.480
+these are points from you know i just sampled them from my
+
+0:36:32.480,0:36:36.720
+mother my peak was this green over here
+
+0:36:36.720,0:36:41.200
+and in this case perhaps i can tell that the model
+
+0:36:41.200,0:36:44.560
+we initialized the the latent with the orange
+
+0:36:44.560,0:36:48.480
+and then he actually went a little bit too much i think he didn't choose
+
+0:36:48.480,0:36:54.160
+the exact best right so this is like a bit it overshoot a little bit i think uh
+
+0:36:54.160,0:36:57.280
+anyhow this over free energy of this location
+
+0:36:57.280,0:37:03.359
+here is going to be 0.25 right 0.5 square
+
+0:37:03.520,0:37:07.520
+cool cool cool so what's left to show you
+
+0:37:07.520,0:37:11.040
+well just a few more things but we are almost finished
+
+0:37:11.040,0:37:14.160
+and then i'm looking for all your questions because i
+
+0:37:14.160,0:37:23.839
+i i really i really know you have questions i i have questions
+
+0:37:28.400,0:37:33.280
+so let's in this case compute the free energy
+
+0:37:33.280,0:37:36.640
+for every location i show you in this grid
+
+0:37:36.640,0:37:41.040
+what does computing the free energy for every location means
+
+0:37:41.040,0:37:46.880
+so just for sake of you know clarity i'm gonna just repeat myself uh
+
+0:37:46.880,0:37:51.440
+because i like to listen or to talk right so i i like to talk so
+
+0:37:51.440,0:37:57.599
+uh so let's let's select in in green here let's say i'm picking this
+
+0:37:57.599,0:38:04.079
+sample over here as my first location so given that location there i'm gonna
+
+0:38:04.079,0:38:07.680
+be picking a orange do we have orange there is no
+
+0:38:07.680,0:38:13.920
+orange okay i have to pick red sorry so let's say i initialize
+
+0:38:13.920,0:38:20.880
+my my latent variable such that the g the decoded version of the
+
+0:38:20.880,0:38:24.400
+z tilde is this point over here then we run
+
+0:38:24.400,0:38:30.320
+our minimization process to perform inference right to find out what is that
+
+0:38:30.320,0:38:35.119
+check so whenever we find z check that process is called
+
+0:38:35.119,0:38:40.000
+inference given an energy given a sample
+
+0:38:40.000,0:38:44.320
+y not given a location y i do inference to figure out
+
+0:38:44.320,0:38:49.920
+what was the most likely latent variable missing variable that generated that
+
+0:38:49.920,0:38:54.079
+point over there so inference again means we are doing
+
+0:38:54.079,0:38:58.960
+minimization and therefore we are moving around our
+
+0:38:58.960,0:39:03.440
+model manifold until i get to this location over here
+
+0:39:03.440,0:39:07.119
+what is this location over there this location is the location that is the
+
+0:39:07.119,0:39:11.680
+closest to my uh sample y that i picked
+
+0:39:11.680,0:39:16.720
+therefore what is my free energy so my free energy is going to be simply the
+
+0:39:16.720,0:39:21.200
+square distance from this green guy
+
+0:39:21.200,0:39:24.560
+and the red one right so this segment over here
+
+0:39:24.560,0:39:28.480
+squared is going to be the free energy of this point over here
+
+0:39:28.480,0:39:34.640
+so question from for you how do the free energy of the point on top left
+
+0:39:34.640,0:39:38.210
+compares with the energy of
+
+0:39:38.210,0:39:41.269
+[Music] the point i circle in yellow over here
+
+0:39:46.800,0:39:50.480
+which one is larger which one is smaller and
+
+0:39:50.480,0:39:54.720
+where where is my z check for the second example
+
+0:39:54.720,0:39:59.839
+green is larger yes green is larger because this distance here
+
+0:39:59.839,0:40:07.200
+square it's gonna be much larger than the which distance so similarly
+
+0:40:07.200,0:40:10.960
+if we initialize you know with luck and we run great in
+
+0:40:10.960,0:40:15.520
+the descent like gradient based methods we may end up in a location that is over
+
+0:40:15.520,0:40:19.520
+here and therefore the free energy is going
+
+0:40:19.520,0:40:21.359
+to be the square distance between that point
+
+0:40:21.359,0:40:25.599
+and that point here so definitely this point would be much larger
+
+0:40:25.599,0:40:29.040
+uh the energy free energy with respect to this point
+
+0:40:29.040,0:40:32.880
+so some other question someone can make is gonna be uh
+
+0:40:32.880,0:40:38.960
+how far is the green point from my distribution right how how far is the
+
+0:40:38.960,0:40:42.000
+green point from my learned distribution and the learn
+
+0:40:42.000,0:40:46.720
+distribution here is represented by the those blue points right so you can tell
+
+0:40:46.720,0:40:50.400
+that that point in the top left it's it's going to have a higher energy
+
+0:40:50.400,0:40:55.200
+so it's further away it's less compatible with you know
+
+0:40:55.200,0:41:00.480
+uh with respect to the other guy right all right so we are almost almost done
+
+0:41:00.480,0:41:06.160
+here so let's to make like some exercise
+
+0:41:06.160,0:41:10.400
+pay attention to those five values right so i'm picking that
+
+0:41:10.400,0:41:14.319
+uh row there just below the x axis and i'm picking the first
+
+0:41:14.319,0:41:19.680
+and then the fourth uh and so on right example and so i'm going to be plotting
+
+0:41:19.680,0:41:23.520
+now these energy functions they look pretty
+
+0:41:23.520,0:41:26.960
+much like this so for the
+
+0:41:26.960,0:41:33.520
+blue one as you can expect we extend up to 20 and then we go
+
+0:41:33.520,0:41:38.720
+down to 2.5 roughly 20 is going to be in this location like the distance between
+
+0:41:38.720,0:41:40.960
+this point and this further point away here
+
+0:41:40.960,0:41:44.800
+squared and then instead 2.5 square is going to be
+
+0:41:44.800,0:41:49.599
+you know this distance here square similarly you're gonna have you know an
+
+0:41:49.599,0:41:55.520
+energy function for the red one for the purple green and orange
+
+0:41:55.520,0:41:59.599
+then given that i compute all these values for the energy
+
+0:41:59.599,0:42:03.760
+i can now compute what is the free energy so the free energy
+
+0:42:03.760,0:42:07.280
+instead of being a function is going to be a
+
+0:42:07.280,0:42:12.480
+value when i pick a specific location right so it's no longer a function of
+
+0:42:12.480,0:42:15.200
+the latent whenever we compute the free energy
+
+0:42:15.200,0:42:21.040
+the latent disappears and i get that z check which is the optimal
+
+0:42:21.040,0:42:26.000
+latent on the latent that is the most likely giving me uh
+
+0:42:26.000,0:42:32.079
+that that point so here we have that the z check for the blue curve happens over
+
+0:42:32.079,0:42:36.400
+here similarly the z check for the orange green and purple and red
+
+0:42:36.400,0:42:39.920
+are happening in these locations uh there
+
+0:42:39.920,0:42:44.480
+for sure we could have ended up caught in this local minimum right that
+
+0:42:44.480,0:42:47.920
+definitely could be a pitfall of you know
+
+0:42:47.920,0:42:56.720
+of using some gradient-based methods so question now for the audience
+
+0:42:56.720,0:43:04.319
+i'm removing everything what is f infinity so how many dimensions does
+
+0:43:04.319,0:43:08.000
+this stuff okay can someone remind me this right so can
+
+0:43:08.000,0:43:10.640
+someone tell me what is the domain and the image
+
+0:43:10.640,0:43:15.359
+of these function on the chart where does f infinity live
+
+0:43:17.800,0:43:24.640
+[Music] anyone run sir is anyone listening
+
+0:43:25.280,0:43:31.680
+hello okay so y is uh on r24 yeah but that's
+
+0:43:31.680,0:43:38.079
+uh there is just an r i don't know what just r means um
+
+0:43:38.079,0:43:44.880
+the capital y is 20 capital y has 24 items each item in
+
+0:43:44.880,0:43:47.920
+capital y are two dimensional right so y is a
+
+0:43:47.920,0:43:52.160
+matrix but i'm not asking the capital y i'm asking capital f
+
+0:43:52.160,0:43:57.599
+infinity right so capital f infinity is uh someone mentioned here it's
+
+0:43:57.599,0:44:01.920
+definitely a real value uh in our case is actually positively
+
+0:44:01.920,0:44:05.359
+non-negatively value right because it's a it's a square
+
+0:44:05.359,0:44:08.880
+sum of squares and the domain instead what is the
+
+0:44:08.880,0:44:12.160
+domain of capital f the domain is going to be the uh the
+
+0:44:19.280,0:44:26.160
+basically the where y uh the bold y belongs to no so the ball y
+
+0:44:26.160,0:44:30.960
+it's a vector in two dimensions so that's gonna be r two right so again
+
+0:44:30.960,0:44:33.520
+these f are scalar values so i'm gonna be
+
+0:44:33.520,0:44:36.560
+representing the different intensities of this
+
+0:44:36.560,0:44:43.040
+scalar value with this color bar here i will represent in a violet very dark
+
+0:44:43.040,0:44:46.720
+maybe not even able to see in this free energy
+
+0:44:46.720,0:44:52.160
+uh equals zero then in aqua i'm gonna be representing this zero
+
+0:44:52.160,0:44:56.880
+temperature limit uh free energy for uh equal one and then
+
+0:44:56.880,0:45:00.079
+everything that is above and beyond the value two
+
+0:45:00.079,0:45:06.560
+is going to be yellow and so this is how that grid looks
+
+0:45:06.560,0:45:12.319
+okay so each location in that grid here and i show you before and those green
+
+0:45:12.319,0:45:17.119
+points have a free energy which is here represented by
+
+0:45:17.119,0:45:19.839
+this color in this location over here in the bottom
+
+0:45:19.839,0:45:24.480
+side you can see it's yellow which means it has a free energy which
+
+0:45:24.480,0:45:29.280
+is equal or larger than 2. moreover
+
+0:45:29.280,0:45:34.319
+those arrows are pointing are the gradient right so these are
+
+0:45:34.319,0:45:39.920
+pointing in the direction of maximum uh ascend as we move closer
+
+0:45:39.920,0:45:43.440
+to the uh this region here you're gonna get
+
+0:45:43.440,0:45:47.200
+finally you're gonna see some colors and here you can tell the free energy is
+
+0:45:47.200,0:45:51.599
+getting lower lower lower until we hit the location where this
+
+0:45:51.599,0:45:55.280
+reconstruction happen which is the location the region where
+
+0:45:55.280,0:46:01.760
+my free energy is zero when we train this modern we try to get
+
+0:46:01.760,0:46:08.400
+this zero energy level to be matching the location of these blue points of
+
+0:46:08.400,0:46:11.280
+course as you can tell this model is very
+
+0:46:11.280,0:46:16.000
+poorly trained and therefore this energy surface is not
+
+0:46:16.000,0:46:20.640
+well matching my training point it's getting close but it's not yet there
+
+0:46:20.640,0:46:24.640
+so next time we're gonna see how to stretch this energy
+
+0:46:24.640,0:46:32.240
+such that it's gonna be you know nicely fitting on these blue points okay
+
+0:46:32.240,0:46:37.119
+uh why is the energy surface single value
+
+0:46:37.119,0:46:43.280
+so the energy surface which is the value of f infinity right
+
+0:46:43.280,0:46:47.119
+and f infinity is the minimum of my energy so
+
+0:46:47.119,0:46:54.800
+energy the capital e it's a function over all possible latent but then
+
+0:46:54.800,0:46:59.440
+given that we have this function we're going to find what is the minimum value
+
+0:46:59.440,0:47:03.119
+minimum value that this energy can take that minimum value
+
+0:47:03.119,0:47:10.560
+is the uh zero temperature limit of the free energy which is this f
+
+0:47:10.560,0:47:16.880
+infinity okay and so e y z is a function of y and z
+
+0:47:16.880,0:47:21.200
+but then whenever we take out the z with the minimization
+
+0:47:21.200,0:47:25.359
+we get this f which is going to be a function
+
+0:47:25.359,0:47:31.760
+of y right so every time i move across the y space here we have y1 and y2 the
+
+0:47:31.760,0:47:34.960
+two components you're gonna have that f will have you
+
+0:47:34.960,0:47:38.440
+know larger than two larger than two blah blah blah then
+
+0:47:38.440,0:47:42.400
+1.75 1.50 and so on lower values until we get
+
+0:47:42.400,0:47:46.160
+f roughly zero and then actually it increases a little bit
+
+0:47:46.160,0:47:50.480
+so maybe next time i also gonna show you this chart uh in a 3d version also
+
+0:47:50.480,0:47:54.720
+rotating i didn't have time to do that um
+
+0:47:54.720,0:47:57.839
+did i answer your question is it clear why this
+
+0:47:57.839,0:48:02.559
+energy function is single value like as in a scalar value right you mean single
+
+0:48:02.559,0:48:05.200
+value am i understanding the question
+
+0:48:05.200,0:48:07.839
+correctly but we have 24 y's so the
+
+0:48:11.520,0:48:18.000
+capital the y's are these blue points right now my y's i'm using
+
+0:48:18.000,0:48:24.160
+are this one so they're not 24 there are so if you count from here let me go a
+
+0:48:24.160,0:48:29.119
+bit larger i can see so here we have blah blah blah 12
+
+0:48:29.119,0:48:35.839
+and 12 here plus one we have 25 and then here we had eight
+
+0:48:35.839,0:48:41.280
+and eight sixteen plus one seventeen so right now we have 17 times 25
+
+0:48:41.280,0:48:46.839
+i don't know how much it is someone can compute okay google how much is 17 times
+
+0:48:46.839,0:48:53.960
+25 okay she's not listening oh 120
+
+0:48:53.960,0:49:00.400
+425 uh there you go so right now we have 425
+
+0:49:00.400,0:49:08.079
+points right so we have 424 24 425 energy functions
+
+0:49:08.079,0:49:13.200
+of which function of y so given that i pick a y i have an energy
+
+0:49:13.200,0:49:16.960
+function those are functions in z given that you pick the minimum value of
+
+0:49:16.960,0:49:19.839
+this energy function that's going to be your free energy
+
+0:49:19.839,0:49:24.720
+for a specific y so you remove that latent variable so we have
+
+0:49:24.720,0:49:31.040
+an internal possible way of spending our uh manifold right so you want to think
+
+0:49:31.040,0:49:35.280
+about this as you know you have like uh your potato in your
+
+0:49:35.280,0:49:38.079
+model like your model thinks about the data is
+
+0:49:38.079,0:49:41.680
+distributed as this kind of shape and then
+
+0:49:41.680,0:49:46.319
+your latent variable allows you to go all around this potato
+
+0:49:46.319,0:49:49.760
+so right now if you add if you ask me oh is this
+
+0:49:49.760,0:49:54.480
+point here on your manifold or not so if this point is on my manifold
+
+0:49:54.480,0:49:58.400
+i know that by going around my manifold and find out if
+
+0:49:58.400,0:50:05.280
+oh i get there right and so if the free energy of that point is zero
+
+0:50:05.280,0:50:09.280
+therefore it means that that point you are asking me about
+
+0:50:09.280,0:50:12.800
+leaves on the manifold that the model has learned
+
+0:50:12.800,0:50:16.720
+if your free energy is not zero then it's gonna be simply
+
+0:50:16.720,0:50:20.720
+equal to the quadratic uh euclidean distance
+
+0:50:20.720,0:50:24.240
+from that location from your point and my
+
+0:50:24.240,0:50:33.680
+manifold right did i answer the question yeah okay uh more questions for me
+
+0:50:33.680,0:50:40.160
+oh was everything clear i i this stuff i really just digested it uh like in the
+
+0:50:40.160,0:50:43.119
+past 30 hours so again i might not have done
+
+0:50:43.119,0:50:48.880
+a very good job let's see how do we choose a function to
+
+0:50:48.880,0:50:52.640
+represent the data manifold in this case it seemed like we chose a
+
+0:50:56.000,0:51:02.400
+ellipse based on the data but how about other scenarios yeah definitely uh
+
+0:51:02.400,0:51:05.680
+there is a lot of you know research going in uh
+
+0:51:05.680,0:51:10.160
+architectures right network architectures so
+
+0:51:10.160,0:51:14.319
+but again uh right now yeah we we chose that
+
+0:51:14.319,0:51:18.559
+next time i'm gonna be trying to learn the level of compatibility
+
+0:51:18.559,0:51:22.559
+like i'm gonna try to learn this energy for the x y
+
+0:51:22.559,0:51:27.599
+z the the triple right and so we're gonna be just using neural nets
+
+0:51:27.599,0:51:31.599
+right even the sine and cosine you can somehow approximate them with a
+
+0:51:31.599,0:51:34.319
+few layers right so instead of having these
+
+0:51:34.319,0:51:40.720
+uh z function uh the g function over here instead of having this very
+
+0:51:40.720,0:51:43.440
+simple thing we can think about having you know a few
+
+0:51:43.440,0:51:47.920
+layers of a neural net right so you can still use a few layers of a
+
+0:51:47.920,0:51:51.280
+neural net but you're not going to be using the
+
+0:51:51.280,0:51:54.559
+neural net to do vector vector mapping you're going to be using
+
+0:51:54.559,0:51:59.599
+a neural net to do a bunch of vectors to scalars right
+
+0:51:59.599,0:52:02.960
+so bunch of vectors to scalars is going to be this
+
+0:52:02.960,0:52:06.800
+energy-based you know way of thinking about things
+
+0:52:06.800,0:52:10.960
+uh because again how do you let's say you want to translate
+
+0:52:10.960,0:52:13.280
+something from one language to another language right
+
+0:52:13.280,0:52:16.559
+so i have one sentence but i may translate that sentence
+
+0:52:16.559,0:52:20.240
+in different ways in another language right so how do you train this you
+
+0:52:20.240,0:52:24.079
+cannot really say i do soft marks because first of all
+
+0:52:24.079,0:52:29.520
+there is an infinite number of sentences so you can't do that
+
+0:52:29.520,0:52:33.280
+but then there might be even multiple sentences that are correctly associated
+
+0:52:33.280,0:52:37.839
+to your first sentence so this energy based model allow you to
+
+0:52:37.839,0:52:41.680
+end up with a score scoring mechanism which is this
+
+0:52:41.680,0:52:46.720
+energy which is telling you how compatible are
+
+0:52:46.720,0:52:50.880
+points right so here x y and z are all interchangeable
+
+0:52:50.880,0:52:54.079
+given one i can find the other right so if i have the energy
+
+0:52:54.079,0:52:58.559
+if my model learned the energy i can find x given y
+
+0:52:58.559,0:53:01.920
+i can find y given z i can find z given x i can find
+
+0:53:01.920,0:53:06.240
+all kind of combination those x y z i don't even have to write them x y and z
+
+0:53:06.240,0:53:08.480
+i can just write all the components right and then i can
+
+0:53:08.480,0:53:12.640
+as long as my model learns that right it learns all the
+
+0:53:12.640,0:53:16.480
+uh how do you call them um interactions that
+
+0:53:16.480,0:53:21.760
+exist in my data that's why uh jan likes them so much and they're super powerful
+
+0:53:21.760,0:53:26.000
+because they don't make too many assumptions i think
+
+0:53:26.160,0:53:32.880
+uh did i okay i answer your question uh we are over time so i think
+
+0:53:32.880,0:53:38.079
+this lesson was kind of fine i don't know you had to tell me
+
+0:53:38.079,0:53:42.640
+because i really don't know i hope you like this yeah that was great
+
+0:53:42.640,0:53:47.040
+okay because people are very quiet today i wanted to make also a
+
+0:53:47.040,0:53:49.599
+notebook but then the notebook is really ugly
+
+0:53:49.599,0:53:52.720
+because i use the notebook to make very pretty
+
+0:53:52.720,0:53:56.640
+visualization but the code is really ugly maybe next time
+
+0:53:56.640,0:54:00.000
+i can share with you a cleanup version of the notebook for
+
+0:54:00.000,0:54:03.440
+pedagogical purpose right and especially going to be
+
+0:54:03.440,0:54:07.599
+showing you this network which doesn't have an input doesn't have a forward
+
+0:54:07.599,0:54:10.720
+function which is so funny uh and then we're
+
+0:54:10.720,0:54:14.559
+gonna be learning perhaps what is the free energy without this
+
+0:54:14.559,0:54:18.880
+beta that goes to um to infinity and we're gonna be
+
+0:54:18.880,0:54:21.760
+learning how to do learning okay so today again we just
+
+0:54:21.760,0:54:25.359
+learned so let me get to the beginning so we can end up
+
+0:54:25.359,0:54:29.760
+here so today we talk about inference okay
+
+0:54:29.760,0:54:33.440
+we do inference by doing minimization of an energy function
+
+0:54:33.440,0:54:36.559
+learning is something we're going to be talking about next time they don't they
+
+0:54:36.559,0:54:39.280
+don't they don't have anything to share well
+
+0:54:39.280,0:54:43.520
+it's two different topics right next time the other one and then the
+
+0:54:43.520,0:54:45.760
+other part so it was inference for latent
+
+0:54:45.760,0:54:49.119
+variable energy based model which allow you to capture
+
+0:54:49.119,0:54:53.040
+this multi multi modality of you know multi
+
+0:54:53.040,0:54:58.000
+multi modality of coexistence of things right you can you don't have simply
+
+0:54:58.000,0:55:01.760
+vector to vector you have one too many options right and then we
+
+0:55:01.760,0:55:06.400
+talk about uh we talk about this stuff here now
+
+0:55:06.400,0:55:12.799
+and how we can possibly try to learn this combination of x y uh x y
+
+0:55:12.799,0:55:18.000
+combination right uh so there's a question so minimizing
+
+0:55:18.000,0:55:24.480
+energy regarding to train manifold basically means denoising
+
+0:55:24.480,0:55:29.760
+uh i think you can think about that as yeah in that way
+
+0:55:29.760,0:55:35.040
+so the real manifold okay depends which one is the real
+
+0:55:35.040,0:55:40.079
+manifold right so if the model has learned the the real manifold then
+
+0:55:40.079,0:55:44.240
+you know by minimizing the energy you can find what is the denoised
+
+0:55:44.240,0:55:48.000
+version of your input another option you have to denoise this
+
+0:55:48.000,0:55:50.079
+stuff is going to be if you find yourself here
+
+0:55:50.079,0:55:53.280
+you can compute this energy you can follow the gradient and then here you
+
+0:55:53.280,0:55:56.960
+can recompute the energy you can still go and follow the energy
+
+0:55:56.960,0:56:01.119
+the gradient so you can end up boom down on the manifold right so you can
+
+0:56:01.119,0:56:06.079
+make little steps so you can just go uh you know you can find out where to go
+
+0:56:06.079,0:56:10.640
+or you can use the uh you know the z check
+
+0:56:10.640,0:56:15.520
+to find out what is the uh best approximation of your point over here
+
+0:56:15.520,0:56:17.839
+right okay all right so that was it um thank
+
+0:56:21.280,0:56:23.520
+you for listening you have a nice evening
+
+0:56:23.520,0:56:27.200
+i see on friday i feel free to ask jan questions about this
+
+0:56:27.200,0:56:30.640
+uh this this practicum he he was you know
+
+0:56:30.640,0:56:34.400
+helping a lot as well right have a good night
+
+0:56:34.400,0:56:36.880
+bye bye so how can you get more out of this
+
+0:56:39.680,0:56:44.400
+lesson today comprehension if something was not yet
+
+0:56:44.400,0:56:47.760
+clear you should really ask me uh anything in
+
+0:56:47.760,0:56:51.440
+the comment section below okay i will answer every comment that you
+
+0:56:51.440,0:56:55.520
+write over there news if you would like to keep up with
+
+0:56:55.520,0:56:57.440
+everything i post online you should check
+
+0:56:57.440,0:57:03.839
+my twitter account under alph cnz if you also would like youtube to notify
+
+0:57:03.839,0:57:08.160
+about you the latest videos i upload then press that
+
+0:57:08.160,0:57:11.119
+subscribe button and turn on the notification bell
+
+0:57:11.119,0:57:15.280
+such that you're not going to be missing any content if you like this video
+
+0:57:15.280,0:57:22.720
+put a like on it it means a lot to me searching we have a companion website
+
+0:57:22.720,0:57:26.000
+where you can find each and every video transcribed
+
+0:57:26.000,0:57:29.839
+by students that volunteered for example here
+
+0:57:29.839,0:57:35.839
+you can see this lesson transcribed as you can tell the titles are links
+
+0:57:35.839,0:57:38.880
+which are redirecting you to the correct section
+
+0:57:38.880,0:57:43.599
+in the video so here we have this lesson transcribed
+
+0:57:43.599,0:57:49.359
+to you in english moreover not only english is available as you can
+
+0:57:49.359,0:57:55.040
+tell here there is the english flag you can go up on top for
+
+0:57:55.040,0:57:59.680
+example and i show you the home page here you can find that
+
+0:57:59.680,0:58:03.040
+many languages are available arabic spanish version
+
+0:58:03.040,0:58:06.240
+french italian japanese korean russian turkish
+
+0:58:06.240,0:58:10.400
+and chinese and more are coming if you would like to contribute and add your
+
+0:58:10.400,0:58:13.520
+own language don't hesitate to contact me on twitter
+
+0:58:13.520,0:58:17.839
+or by email this is the language part moreover it
+
+0:58:17.839,0:58:21.599
+really really helps if you implement things that we cover in
+
+0:58:21.599,0:58:24.960
+class with file torch and you know a notebook
+
+0:58:24.960,0:58:28.640
+perhaps in some patient today class didn't have
+
+0:58:28.640,0:58:32.480
+a companion notebook but nevertheless i would really
+
+0:58:32.480,0:58:36.559
+recommend you to try to put together a few trials
+
+0:58:36.559,0:58:40.400
+yourself such that you can test your knowledge
+
+0:58:40.400,0:58:44.240
+finally if you find any bug in the previous notebooks
+
+0:58:44.240,0:58:47.839
+in the website anywhere you're really encouraged to
+
+0:58:47.839,0:58:51.359
+point them out on github or if you find yourself inclined
+
+0:58:51.359,0:58:55.680
+you can also send a pull request such that you can be an official contributor
+
+0:58:55.680,0:59:00.240
+to this project and don't forget to like share and
+
+0:59:00.240,0:59:04.240
+subscribe bye bye
