@@ -79,7 +79,7 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/pt/week03/03">③</a></td>
       <td rowspan="2">Aula</td>
-      <td><a href="{{site.baseurl}}/es/week03/03-1">Transformação de parametros</a></td>
+      <td><a href="{{site.baseurl}}/es/week03/03-1">Transformação de parâmetros</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
         <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
@@ -149,20 +149,22 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
     </tr>
 <!-- =============================== SEMANA 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="{{site.baseurl}}/pt/week07/07"></a>⑦</td>
+      <td rowspan="3" align="center"><a href="en/week07/07">⑦</a></td>
       <td rowspan="2">Aula</td>
-      <td><a href="{{site.baseurl}}/pt/week07/07-1"></a>-</td>
+      <td><a href="en/week07/07-1">Modelos Baseados em Energia</a></td>
       <td rowspan="2">
-        <a href=""></a>
+        <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
+        <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/pt/week07/07-2"></a>SSL, EBM</td></tr>
+    <tr><td><a href="en/week07/07-2">SSL, EBM</a></td></tr>
     <tr>
       <td rowspan="1">Prática</td>
-      <td><a href="{{site.baseurl}}/pt/week07/07-3">Autoencoders</a></td>
+      <td><a href="en/week07/07-3">Autocodificadores</a></td>
       <td>
-        <a href="https://drive.google.com/file/d/1FEleglSDblyrSpHdGhaDydEQI36Rq5uB/">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
+        <a href="https://youtu.be/bggWQ14DD9M">🎥</a>
       </td>
     </tr>
 <!-- =============================== SEMANA 8 ================================ -->
@@ -251,13 +253,13 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/pt/week12/12">⑫</a></td>
       <td rowspan="2">Aula</td>
-      <td><a href="{{site.baseurl}}/pt/week12/12-1">DL para NLP I</a></td>
+      <td><a href="{{site.baseurl}}/pt/week12/12-1">DL para PLN I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
         <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/pt/week12/12-2">DL for PNL II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/pt/week12/12-2">DL para PLN II</a></td></tr>
     <tr>
       <td rowspan="1">Prática</td>
       <td><a href="{{site.baseurl}}/pt/week12/12-3">Atenção & transformador</a></td>
@@ -331,10 +333,10 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
 
 ## Pessoas
 
-| Cargo | Foto | Contacto | Acerca de |
+| Cargo | Foto | Contato | Sobre |
 |:-----|:-----:|:--------|:------|
 |Instrutor|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor em CS<br> na NYU e ganhador <br>do Prêmio Turing|
-|Instrutor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Prof. Asist. em CS na NYU|
-|Asistente|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|estudante de doutorado em CS na NYU|
-|Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|estudante de doutorado em CS na NYU|
+|Instrutor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Professor Assistente em Ciência da Computação na NYU|
+|Asistente|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
+|Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
 
