@@ -16,11 +16,7 @@ Este repositório de *notebooks* possui uma [página web complementar](https://a
 <!-- To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
 The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal.
 -->
-<<<<<<< HEAD
-Para poder seguir os exercícios, você precisa ter um computador com Miniconda (uma versão minimalista do Anaconda) e vários pacotes Python instalados.
-=======
 Para poder seguir os exercícios, precisa ter um computador com Miniconda (uma versão minimalista do Anaconda) e vários pacotes Python instalados.
->>>>>>> [pt] Begin translation to Portuguese (#542)
 As instruções a seguir funcionarão para os usuários de Mac ou Ubuntu Linux. Os usuários Windows precisarão instalar e trabalhar em um terminal [Git BASH](https://gitforwindows.org/).
 
 <!-- Download and install Miniconda
@@ -101,11 +97,7 @@ To see the content appropriately in the classic interface install the following:
 -->
 Utilizamos estilos escuros para *GitHub* e *Jupyter Notebook*.
 Deveria tentar seguir o mesmo padrão, ou ficarão feios.
-<<<<<<< HEAD
-JupyterLab tem disponível um tema escuro, sendo que você somente precisará instalar alguma coisa adicional se desejar utilizar a interface clássica dos notebooks.
-=======
 JupyterLab tem disponível um tema escuro, sendo que somente precisará instalar alguma coisa adicional se desejar utilizar a interface clássica dos notebooks.
->>>>>>> [pt] Begin translation to Portuguese (#542)
 Para ver o conteúdo adequadamente na interface clássica, instale o seguinte:
 
 <!--  - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
