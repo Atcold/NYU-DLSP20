@@ -22,6 +22,7 @@ To Install simply type this command in terminal:
    
 or you can download the suitable version through website:
 
+
 ```bash
  https://docs.conda.io/en/latest/miniconda.html
 ```
