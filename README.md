@@ -7,9 +7,9 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 
 
 
-COMPLETE TUTORIAL
+## COMPLETE TUTORIAL
 
-## Installing Miniconda3
+# Installing Miniconda3
 
 ### Download it
 
@@ -46,7 +46,7 @@ source ~/.bashrc
 ```
    
 
-## Download Course from github
+# Download Course from github
 
 Download with git clone and Open New Terminal and apply the following command:
 
@@ -58,7 +58,7 @@ Download with git clone and Open New Terminal and apply the following command:
 
 
 
-## Install Pytorch using conda
+# Install Pytorch using conda
 
 Pytorch is installed inside Conda Environment 
 
@@ -97,11 +97,11 @@ If you dont give this command you may encounter Error “ conda: command not fou
 You will notice that in terminal user@machine will become (environment)
 user@machine
 
-## Install Pytorch in this environment
+### Install Pytorch in this environment
 
    conda install pytorch torchvision cpuonly -c pytorch
 
-## Install Jupyter Notebook using conda
+# Install Jupyter Notebook using conda
 
 ```bash
  conda install jupyter
