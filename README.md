@@ -62,6 +62,7 @@ Download with git clone and Open New Terminal and apply the following command:
 
 Pytorch is installed inside Conda Environment 
 
+
 ### Give path to the conda
 
  
@@ -114,9 +115,8 @@ user@machine
 conda list
 ```
    
- 
+you will find the jupyter, pytorch, ipython  etc in the list shown
 
-you will find the jupyter, pytorch, ipython etc etc in the list shown
 ### Run Jupyter Notebook
 
 With in the same terminal where environment is activated run the following command:
