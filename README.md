@@ -6,66 +6,146 @@ This notebook repository now has a [companion website](https://atcold.github.io/
 [🇬🇧](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/README.md) &nbsp; [🇨🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/zh/README-ZH.md) &nbsp; [🇰🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ko/README-KO.md) &nbsp; [🇪🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/es/README-ES.md) &nbsp; [🇮🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/it/README-IT.md) &nbsp; [🇹🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/tr/README-TR.md) &nbsp; [🇯🇵](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ja/README-JA.md) &nbsp; [🇸🇦](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ar/README-AR.md) &nbsp; [🇫🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fr/README-FR.md) &nbsp; [🇮🇷](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/fa/README-FA.md) &nbsp; [🇷🇺](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/ru/README-RU.md) &nbsp; [🇻🇳](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/vi/README-VI.md) &nbsp; [🇷🇸](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/sr/README-SR.md) &nbsp; [🇵🇹](https://github.com/Atcold/pytorch-Deep-Learning/blob/master/docs/pt/README-PT.md)
 
 
-# Getting started
-
-To be able to follow the exercises, you are going to need a laptop with Miniconda (a minimal version of Anaconda) and several Python packages installed.
-The following instruction would work as is for Mac or Ubuntu Linux users, Windows users would need to install and work in the [Git BASH](https://gitforwindows.org/) terminal.
+# pytorch-Deep-Learning
 
 
-## Download and install Miniconda
+COMPLETE TUTORIAL
 
-Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+## Installing Miniconda3
+
+### Download it
+
+To Install simply type this command in terminal:
 
 ```bash
-wget <http:// link to miniconda>
-sh <miniconda*.sh>
+ curl -O https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+```
+
+   
+or you can download the suitable version through website:
+
+```bash
+ https://docs.conda.io/en/latest/miniconda.html
+```
+   
+
+### Install
+
+Using Terminal navigate to the directory and Install the miniconda3 bash Miniconda3-latest-Linux-x86_64.sh (Verify the name of .sh file)
+
+You do not want to automatically activate the conda environment, so apply this command:
+
+```bash
+conda config --set auto_activate_base false
+```
+
+   
+
+### Source it
+
+```bash
+source ~/.bashrc
+```
+   
+
+## Download Course from github
+
+Download with git clone and Open New Terminal and apply the following command:
+
+```bash
+   git clone https://github.com/Atcold/pytorch-Deep-Learning
+
+   cd pytorch-Deep-Learning
 ```
 
 
-## Check-out the git repository with the exercise
 
-Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
+## Install Pytorch using conda
+
+Pytorch is installed inside Conda Environment 
+
+### Give path to the conda
+
+ 
+```bash
+export PATH="parent_path/miniconda3/bin:$PATH"
+
+```
+
+If you dont give this command you may encounter Error “ conda: command not found”
+
+### Create Conda Environment
+ 
+```bash
+ conda env create -f environment.yml
+
+```
+
+   
+### Check available environment
 
 ```bash
-git clone https://github.com/Atcold/pytorch-Deep-Learning
+ conda env list
+```
+
+   
+### Activate the environment
+
+```bash
+  conda activate
+```
+  
+
+You will notice that in terminal user@machine will become (environment)
+user@machine
+
+## Install Pytorch in this environment
+
+   conda install pytorch torchvision cpuonly -c pytorch
+
+## Install Jupyter Notebook using conda
+
+```bash
+ conda install jupyter
+```
+  
+
+### Check what features are installed in coda
+
+```bash
+conda list
+```
+   
+ 
+
+you will find the jupyter, pytorch, ipython etc etc in the list shown
+### Run Jupyter Notebook
+
+With in the same terminal where environment is activated run the following command:
+
+```bash
+   jupyter notebook
+
+```
+
+### Close Jupyter Notebook
+
+```bash
+    Ctrl+C
+```
+  
+
+### Deactivate Conda Environment
+
+
+```bash
+   conda deactivate 
 ```
 
 
-## Create isolated Miniconda environment
-
-Change directory (`cd`) into the course folder, then type:
-
-```bash
-# cd pytorch-Deep-Learning
-conda env create -f environment.yml
-source activate pDL
-```
 
 
-## Start Jupyter Notebook or JupyterLab
-
-Start from terminal as usual:
-
-```bash
-jupyter lab
-```
-
-Or, for the classic interface:
-
-```bash
-jupyter notebook
-```
 
 
-## Notebooks visualisation
 
-*Jupyter Notebooks* are used throughout these lectures for interactive data exploration and visualisation.
 
-We use dark styles for both *GitHub* and *Jupyter Notebook*.
-You should try to do the same, or they will look ugly.
-JupyterLab has a built-in selectable dark theme, so you only need to install something if you want to use the classic notebook interface.
-To see the content appropriately in the classic interface install the following:
-
- - [*Jupyter Notebook* dark theme](https://userstyles.org/styles/153443/jupyter-notebook-dark);
- - [*GitHub* dark theme](https://userstyles.org/styles/37035/github-dark) and comment out the `invert #fff to #181818` code block.
