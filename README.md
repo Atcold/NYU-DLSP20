@@ -67,7 +67,7 @@ Pytorch is installed inside Conda Environment
 
  
 ```bash
-export PATH="parent_path/miniconda3/bin:$PATH"
+ export PATH="parent_path/miniconda3/bin:$PATH"
 
 ```
 
