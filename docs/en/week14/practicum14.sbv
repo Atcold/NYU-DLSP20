@@ -1,0 +1,2837 @@
+0:00:00.320,0:00:07.759
+so today last lesson um yeah i'm smiling but i'm sad uh
+
+0:00:07.759,0:00:12.559
+i wanted to talk about energy-based models and how to train them
+
+0:00:12.559,0:00:16.080
+but i think i need to prepare like for a month before that
+
+0:00:16.080,0:00:20.640
+so actually uh if you are still interested in this summer you will be
+
+0:00:20.640,0:00:24.720
+able to get a tutorial on energy-based models uh
+
+0:00:24.720,0:00:28.880
+we are writing a paper with jan together and so we actually i'm
+
+0:00:28.880,0:00:32.559
+planning to get this paper written as like part it's going to be math and then
+
+0:00:32.559,0:00:35.040
+part is going to be actually the implementation
+
+0:00:35.040,0:00:41.840
+such that you can actually execute uh the paper basically and you can get you
+
+0:00:41.840,0:00:44.399
+know a better understanding of what's going
+
+0:00:44.399,0:00:50.480
+on um yeah so yeah that's gonna come out maybe
+
+0:00:50.480,0:00:54.480
+in a month uh we we i have to do pretty a pretty good
+
+0:00:54.480,0:00:59.440
+job there um so and maybe uh if the
+
+0:00:59.440,0:01:02.960
+maybe we can even have a additional class later on
+
+0:01:02.960,0:01:06.799
+if you're interested and you know i'm always here uh
+
+0:01:06.799,0:01:11.280
+up for uh teaching you so again if you're interested in this energy-based
+
+0:01:11.280,0:01:14.400
+model later on like outside the course and whatever we
+
+0:01:14.400,0:01:18.640
+can again meet and uh record and and pretend it's
+
+0:01:18.640,0:01:22.560
+actually one more class okay so yeah i i didn't
+
+0:01:22.560,0:01:26.560
+manage to do it for today so today we're going to be covering um
+
+0:01:26.560,0:01:31.520
+if i get to finish two topics um we never
+
+0:01:31.520,0:01:36.960
+talked about them uh too much before uh because they are more machine learning
+
+0:01:36.960,0:01:41.119
+related but nevertheless we care also in deep learning and the
+
+0:01:41.119,0:01:45.360
+topic of today is regularization overfitting and
+
+0:01:45.360,0:01:50.479
+regularization let me start sharing the screen so again this is my
+
+0:01:50.479,0:01:56.000
+as usual perspective of the topic uh it's not usually the
+
+0:01:56.000,0:02:00.320
+mainstream but you know it's what you get since it's my
+
+0:02:00.320,0:02:04.079
+view and i'm your educator your instructor today
+
+0:02:04.079,0:02:08.879
+so overfitting and regularization connection between them right so
+
+0:02:08.879,0:02:12.160
+those are two different topics those are two different things but they are of
+
+0:02:12.160,0:02:16.480
+course connected so i start with this drawing
+
+0:02:16.480,0:02:19.360
+here uh someone told me it's not intuitive
+
+0:02:19.360,0:02:23.760
+but again for me so there you get it
+
+0:02:23.760,0:02:30.000
+uh here i'm showing you in the uh with the pink box the data complexity
+
+0:02:30.000,0:02:35.200
+okay so those dots are sampled from my
+
+0:02:35.200,0:02:38.879
+samples from from my training data set and
+
+0:02:38.879,0:02:42.800
+then i tried to fit their three different models okay
+
+0:02:42.800,0:02:50.160
+so in the first case that is basically the model complexity is below
+
+0:02:50.160,0:02:54.480
+is under is you know it's smaller than the data
+
+0:02:54.480,0:02:57.599
+complexity and therefore you have some phenomenon
+
+0:02:57.599,0:03:00.239
+called under fitting right because you try to fit
+
+0:03:00.239,0:03:06.480
+uh what looks like a parabola with a straight line and therefore you're
+
+0:03:06.480,0:03:09.920
+not you're not going you're not doing a good job right
+
+0:03:09.920,0:03:14.239
+then what happened next here we actually have the right fitting
+
+0:03:14.239,0:03:17.599
+in this case the model complexity matches
+
+0:03:17.599,0:03:22.560
+the data complexity right um and so in this case what's the difference with
+
+0:03:22.560,0:03:27.280
+the previous case uh in this case you have zero error right
+
+0:03:27.280,0:03:31.280
+so your your model exactly matches the training
+
+0:03:31.280,0:03:36.239
+points those points finally we have overfitting where
+
+0:03:36.239,0:03:39.920
+the model complexity is actually
+
+0:03:39.920,0:03:44.799
+greater than the data complexity in this case
+
+0:03:44.799,0:03:51.519
+the model doesn't choose a parabola because why question for your
+
+0:03:51.519,0:03:58.239
+audience live my own live audience why is this model like
+
+0:03:58.239,0:04:03.040
+wiggly in this case why is not a parabola
+
+0:04:03.040,0:04:06.720
+and you're supposed to type in the chat because otherwise
+
+0:04:06.720,0:04:10.080
+i don't know if you're following so my question is in
+
+0:04:10.080,0:04:15.280
+the last case my data my model complexity is superior than the
+
+0:04:15.280,0:04:21.120
+it's larger than the data complexity and although those points look like they
+
+0:04:21.120,0:04:26.320
+belong to a parabola my model decides to get that spiky guy
+
+0:04:26.320,0:04:30.479
+like spiky peak on the left and you know some weird stuff
+
+0:04:30.479,0:04:37.440
+model doesn't learn but memorizes um overfitting but sure sure it's written
+
+0:04:37.440,0:04:41.600
+they're overfitting but why if those points are coming from a
+
+0:04:41.600,0:04:45.600
+parabola i would expect even a very larger model
+
+0:04:45.600,0:04:48.720
+would make like a very nice parabola right
+
+0:04:48.720,0:04:52.240
+you're privately writing to me don't private
+
+0:04:52.240,0:04:59.600
+private right um so if
+
+0:04:59.600,0:05:04.000
+and this is a big if right if my points my training points come from
+
+0:05:04.000,0:05:09.520
+an actual parabola even the overfitting model would be making a perfect parabola
+
+0:05:09.520,0:05:12.720
+the point here is that there is some noise
+
+0:05:12.720,0:05:17.680
+right there is always some noise and therefore the model that perfectly
+
+0:05:17.680,0:05:23.280
+goes through every training point will be like that it's going to be like
+
+0:05:23.280,0:05:26.960
+crazy because all those points don't exactly live on
+
+0:05:26.960,0:05:31.360
+the parabola but they are slightly offset and in order to be
+
+0:05:31.360,0:05:34.960
+perfectly uh going through them you're gonna have
+
+0:05:34.960,0:05:37.120
+you know the mother is gonna have to try to
+
+0:05:37.120,0:05:40.960
+come up with some funky function okay does it make sense
+
+0:05:40.960,0:05:47.120
+so the point is that without noise this would be just a perfect parabola
+
+0:05:47.120,0:05:53.840
+so someone would say okay maybe we should use the right fitting right
+
+0:05:54.080,0:05:57.759
+in machine learning maybe we are doing deep learning
+
+0:05:57.759,0:06:01.840
+and it's not quite the case right fitting
+
+0:06:01.840,0:06:05.199
+it's it's definitely not the case actually our models
+
+0:06:05.199,0:06:10.960
+are so so so so powerful that they even managed to learn noise like there
+
+0:06:10.960,0:06:14.319
+was a paper there where they were showing that you can
+
+0:06:14.319,0:06:18.720
+label imagenet with random labels you can get a network
+
+0:06:18.720,0:06:21.759
+to you know perfectly memorize every label
+
+0:06:21.759,0:06:25.039
+uh for each of these samples so you can
+
+0:06:25.039,0:06:28.080
+clearly tell that these the models we are using
+
+0:06:28.080,0:06:32.080
+are absolutely over parameterized and therefore means that
+
+0:06:32.080,0:06:38.720
+you have way more power than the uh you know then then it's necessary
+
+0:06:38.720,0:06:44.080
+in order to learn the structure of the data nevertheless
+
+0:06:44.080,0:06:50.560
+we actually need that hmm so let's figure out what's going on okay
+
+0:06:50.560,0:06:52.960
+um oh actually maybe you know the answer
+
+0:06:54.639,0:06:58.960
+right so what is the point why do we want to go in very very high
+
+0:06:58.960,0:07:03.840
+dimensional space i told you a few times right because
+
+0:07:03.840,0:07:06.479
+who answers come on it's the last class answer me
+
+0:07:12.000,0:07:15.199
+why do we want to go in very to expand the
+
+0:07:15.199,0:07:19.039
+the data distribution yeah optimization is easier yeah fantastic
+
+0:07:19.039,0:07:23.199
+that's the point right whenever we go in a hype over parameterized space
+
+0:07:23.199,0:07:27.280
+everything is very easy to move around right and therefore we always
+
+0:07:27.280,0:07:30.319
+would like to put ourselves in the overfitting
+
+0:07:30.319,0:07:35.120
+scenarios with our networks because it's the training is going to be easier
+
+0:07:35.120,0:07:38.960
+nevertheless what's the problem now well the problem is they
+
+0:07:38.960,0:07:42.800
+they're going to be like they wiggle like crazy
+
+0:07:42.800,0:07:48.400
+um another another thing um so this is point number one point number
+
+0:07:48.400,0:07:52.400
+two why would you think you actually
+
+0:07:52.400,0:07:59.840
+have to overfit when writing your script
+
+0:08:01.199,0:08:05.840
+second question i know interactive question today
+
+0:08:05.840,0:08:13.840
+actually sure there is some trend you can model okay maybe
+
+0:08:13.840,0:08:17.919
+maybe it's in the right direction but it's too complicated as an answer
+
+0:08:17.919,0:08:23.199
+um so are you experts you're a network trainer you should be
+
+0:08:23.199,0:08:28.560
+right because you've been following these lessons for a bit but um
+
+0:08:28.560,0:08:32.479
+at the beginning okay try to answer this question
+
+0:08:32.479,0:08:36.159
+so why would you like to overfit i even tell you one one bit more i would
+
+0:08:39.760,0:08:43.039
+always i do always start training my network on
+
+0:08:43.039,0:08:45.680
+one batch if the model has capabilities so this is
+
+0:08:49.519,0:08:54.399
+the number one rule to debug machine learning code okay
+
+0:08:54.399,0:08:57.920
+you would like to see whether you [ __ ] up in your
+
+0:08:57.920,0:09:03.440
+model creation okay so first thing you can just get a batch of the correct
+
+0:09:03.440,0:09:07.120
+size uh even with random noise right even you
+
+0:09:07.120,0:09:10.080
+know torch dot trend something with random
+
+0:09:10.080,0:09:13.440
+labels and then you would like to go over a few
+
+0:09:13.440,0:09:17.120
+epochs with one batch with random crap which could be the
+
+0:09:17.120,0:09:21.680
+first batch of your data set or whatever just to prove that your model can learn
+
+0:09:21.680,0:09:25.279
+okay you can easily make some tiny mistakes
+
+0:09:25.279,0:09:28.080
+uh like i made a few times like doing the
+
+0:09:28.080,0:09:34.560
+zero zero grad uh after the backward
+
+0:09:35.279,0:09:39.200
+yeah i know it happens and nothing happens nothing learns okay so you
+
+0:09:39.200,0:09:43.440
+always want to see that your model model can learn right
+
+0:09:43.440,0:09:46.000
+then if you can memorize yeah fantastic we are
+
+0:09:46.000,0:09:50.880
+going to be now learning how to uh improve performance of a model that
+
+0:09:50.880,0:09:54.640
+memorizes uh its own data okay so two reasons
+
+0:09:54.640,0:09:57.120
+right first one we said over parameterize
+
+0:09:57.120,0:10:01.920
+uh models are easy to train because the landscape is much smoother
+
+0:10:01.920,0:10:06.720
+us and you know if you have a over parameterized model you're gonna
+
+0:10:06.720,0:10:10.000
+have you can uh ideally start with different
+
+0:10:10.000,0:10:14.240
+initializations so you get initial points in the parameter space and then
+
+0:10:14.240,0:10:17.120
+whenever you train these different models all of them will
+
+0:10:17.120,0:10:21.760
+converge to a different position because you can
+
+0:10:21.760,0:10:28.000
+think about like a same model you can permute all the weights you're gonna get
+
+0:10:28.000,0:10:30.000
+i mean you permeate the weights per layer
+
+0:10:30.000,0:10:35.279
+you can still get the same uh model at the end so they are comparable in
+
+0:10:35.279,0:10:40.000
+terms of the function approximator you are building nevertheless in the
+
+0:10:40.000,0:10:42.800
+parameter space they are not the same right so in the function
+
+0:10:42.800,0:10:46.880
+space they are exactly equivalent models in the parameter space they are
+
+0:10:46.880,0:10:51.760
+absolutely different models nevertheless they will converge to
+
+0:10:51.760,0:10:55.440
+equivalently equivalent models as in they will
+
+0:10:55.440,0:11:01.760
+perform equivalently equivalently good right are you following right am i
+
+0:11:01.760,0:11:06.880
+talking about weird stuff today but uh i guess this counts a bit also from
+
+0:11:06.880,0:11:10.160
+joanne's class where we talk about parameter space and
+
+0:11:10.160,0:11:13.120
+functional uh functional space it's so so cool in
+
+0:11:13.120,0:11:17.600
+that class i think next year i will try to put it online as well okay
+
+0:11:17.600,0:11:19.680
+okay so first point over pardon me over
+
+0:11:19.680,0:11:24.079
+parameterization helps with training second point or over parameterization
+
+0:11:24.079,0:11:28.320
+helps you with math debugging can you repeat the point
+
+0:11:28.320,0:11:33.680
+about function and parameter space yeah so if you have a neural net and you
+
+0:11:33.680,0:11:38.320
+permute the rows in your matrices right and then you
+
+0:11:38.320,0:11:42.399
+permute the uh the column of the
+
+0:11:42.399,0:11:47.600
+uh the next layer you can basically you know you can reorganize the weight
+
+0:11:47.600,0:11:49.839
+so you can get always the same performance right
+
+0:11:49.839,0:11:53.200
+so if you have the first matrix you have first element of the hidden layer equal
+
+0:11:53.200,0:11:55.920
+some number let's say the hidden layer has size of
+
+0:11:55.920,0:11:59.200
+two right so you have a matrix with two rows
+
+0:11:59.200,0:12:03.600
+and so you can swap the the rows you're gonna get a hidden layer that is flipped
+
+0:12:03.600,0:12:07.120
+and then the last the next next weight matrix
+
+0:12:07.120,0:12:13.839
+you can flip the um columns i guess uh and you would get
+
+0:12:13.839,0:12:19.519
+exactly the same network the same you would sorry you would get exactly
+
+0:12:19.519,0:12:22.560
+the same function it's gonna give you exactly the same
+
+0:12:22.560,0:12:26.399
+number as an output although the parameters the the
+
+0:12:26.399,0:12:29.440
+parameters are actually different right because you swap them so
+
+0:12:29.440,0:12:36.240
+the same parameter w11 is going to be w21 right so they are
+
+0:12:36.240,0:12:39.200
+different so in the parameter space these are different models so there are
+
+0:12:39.200,0:12:42.560
+one point is here in the parameter space another point is here
+
+0:12:42.560,0:12:46.880
+nevertheless the mapping from the parameter space to the functional space
+
+0:12:46.880,0:12:50.639
+both of them both these two initial those two configuration
+
+0:12:50.639,0:12:54.079
+will map to the same function right because the
+
+0:12:54.079,0:12:58.079
+function connects the input to the output and they're going to be the same
+
+0:12:58.079,0:13:01.200
+even if you do this permutation of the rows and then and
+
+0:13:01.200,0:13:08.800
+of the columns right makes sense so if if we
+
+0:13:08.800,0:13:12.560
+if the space of parameters if the space for parameter space is very
+
+0:13:14.880,0:13:20.320
+big for a given data set can we say that the model is very uncertain about
+
+0:13:20.320,0:13:23.360
+its prediction okay we are going to be talking about uncertainty in a bit so
+
+0:13:23.360,0:13:27.839
+i'll address that in a bit all right so we always start with the
+
+0:13:27.839,0:13:31.600
+third uh column here with overfitting uh i
+
+0:13:31.600,0:13:35.920
+always want to have a model that is over parameterized because it's easy to learn
+
+0:13:35.920,0:13:39.120
+and also it's going to be powerful in terms
+
+0:13:39.120,0:13:42.240
+in the sense that it's going to be learning more than what we
+
+0:13:42.240,0:13:47.600
+expect um and so how do we deal with these overfitting
+
+0:13:47.600,0:13:51.199
+how do we improve now the validation or tasting
+
+0:13:51.199,0:13:55.120
+performances right so we we said that overfitting means uh we
+
+0:13:55.120,0:13:57.839
+didn't say we're gonna see that next slide but
+
+0:13:57.839,0:14:01.040
+here we see how to fight this kind of you know overfitting
+
+0:14:01.040,0:14:04.560
+so we start from the right hand side where we introduce
+
+0:14:04.560,0:14:08.320
+this weak regularizer so there is no regularization
+
+0:14:08.320,0:14:12.399
+therefore the last plot the sixth plot here
+
+0:14:12.399,0:14:18.560
+is the same as my third plot okay then i keep uh adding some
+
+0:14:18.560,0:14:23.360
+medium regularizer and so i i like to think about this as you know
+
+0:14:23.360,0:14:29.120
+smoothing edges right so my square gets around edges
+
+0:14:29.120,0:14:34.399
+and you can tell now that this second plot here is different from my second
+
+0:14:34.399,0:14:39.279
+window here right so the the medium regularization is different from
+
+0:14:39.279,0:14:43.199
+this just right fitting as you can see there are some you know
+
+0:14:43.199,0:14:48.079
+corners here finally if you crank up this medicine
+
+0:14:48.079,0:14:50.480
+this kind of you know it's like a drug you you're
+
+0:14:50.480,0:14:55.519
+drugging you're hitting you're poisoning your model for to restrict the
+
+0:14:55.519,0:14:59.199
+it's it's power then you get like a very strong regularizer
+
+0:14:59.199,0:15:02.720
+which gives you the the circular one that's this this is my
+
+0:15:02.720,0:15:06.480
+mental image anyhow we we gave you i think i give you my
+
+0:15:06.480,0:15:10.000
+uh the big picture first and then let's go on with the actual
+
+0:15:10.000,0:15:13.920
+definitions right um so there are a few definitions here
+
+0:15:13.920,0:15:18.079
+they are not quite equivalent but in deep learning that's what we use
+
+0:15:18.079,0:15:24.160
+so here we go so the regularization adds prior knowledge to a model a prior
+
+0:15:24.160,0:15:27.120
+distribution is specified for the parameters
+
+0:15:27.120,0:15:34.000
+so we expect these parameters to be coming from a specific distribution from
+
+0:15:34.000,0:15:39.040
+a specific generation generating process okay
+
+0:15:39.040,0:15:43.759
+and then whenever we actually think about regularization we can think about
+
+0:15:43.759,0:15:49.120
+you know uh strongly assuming that these parameters should be
+
+0:15:49.120,0:15:54.560
+um coming from this specific process that generates them okay so this
+
+0:15:54.560,0:15:58.639
+is talking about parameter space then we can also talk about the
+
+0:15:58.639,0:16:02.240
+functional space in this case we can be it can be seen a
+
+0:16:02.240,0:16:08.000
+regularization is a restriction of the set of possible learnable
+
+0:16:08.000,0:16:11.920
+functions okay so these are again two perspective one is on the weights
+
+0:16:11.920,0:16:15.199
+where how are supposed to be what kind of
+
+0:16:15.199,0:16:18.720
+weights what kind of animals what kind of objects
+
+0:16:18.720,0:16:23.680
+these weights are like they should be somehow over some specific shape
+
+0:16:23.680,0:16:27.759
+uh length or whatever structure there is there is some structure that
+
+0:16:27.759,0:16:32.959
+i assume uh in advance that's the prior this means before in
+
+0:16:32.959,0:16:36.240
+latin and in others in another case instead if you
+
+0:16:36.240,0:16:39.920
+have all possible function you'd like to find a restriction of
+
+0:16:39.920,0:16:45.279
+those possible functions such that they are not too
+
+0:16:45.279,0:16:48.399
+uh crazy okay they are not too extreme as in
+
+0:16:48.399,0:16:54.480
+the way they behave ah there's a question but in that image the
+
+0:16:54.480,0:16:58.959
+square is still in the circle uh
+
+0:16:58.959,0:17:05.760
+yeah i'm getting back oh oh i see so maybe the circle should
+
+0:17:05.760,0:17:09.520
+have been smaller than the square okay
+
+0:17:09.520,0:17:16.400
+right good point um okay cool cool finally that's the last definition of
+
+0:17:16.400,0:17:20.480
+regularization which is the real real deep learning part which is the
+
+0:17:20.480,0:17:25.520
+following which is yeah kind of not it's like you know
+
+0:17:25.520,0:17:30.880
+as a stretch okay my google thinks i'm talking
+
+0:17:30.880,0:17:34.160
+italian what the heck okay regularization is any modification
+
+0:17:38.880,0:17:44.640
+we make to a learning algorithm that is intended to reduce its generalization
+
+0:17:44.640,0:17:48.000
+error but not its training error okay so this is actually
+
+0:17:48.000,0:17:53.280
+a stretch because it's no longer talking about prior knowledge and
+
+0:17:53.280,0:17:57.360
+functional space but actually modification to learning
+
+0:17:57.360,0:18:01.520
+algorithms so this is like moving towards maybe programming you
+
+0:18:01.520,0:18:06.000
+know so parameters function then it's like
+
+0:18:06.000,0:18:10.160
+algorithmic implementation right so these are really three different
+
+0:18:10.160,0:18:16.400
+perspective of the same thing cool so first let's start with
+
+0:18:16.400,0:18:19.919
+regularizing regularizing techniques a few examples
+
+0:18:19.919,0:18:24.400
+so first actually i start with xavier initialization i told you before that we
+
+0:18:24.400,0:18:29.919
+can think about these parameters as coming from some generation generating
+
+0:18:29.919,0:18:32.960
+process right so whenever you initialize a network you
+
+0:18:32.960,0:18:37.600
+can choose to to you can choose to select one uh
+
+0:18:37.600,0:18:44.799
+regular um one prior right so these are this is defining where your um
+
+0:18:44.799,0:18:48.400
+your your weights are coming from so in this case we can choose xavier normal
+
+0:18:48.400,0:18:55.039
+which is a initialization technique and this assumes this kind of gaussian
+
+0:18:55.039,0:18:58.960
+gaussian distribution right so you have the weight space by weight values and
+
+0:18:58.960,0:19:02.240
+you know the most of them will be peaked towards the zero and then you have some
+
+0:19:02.240,0:19:07.280
+kind of um some some kind of
+
+0:19:07.280,0:19:12.320
+standard deviation that is based on the size of the input and output
+
+0:19:12.320,0:19:16.400
+size of that specific layer and so from here we can
+
+0:19:16.400,0:19:20.720
+start introducing the weight decay weight decay is the first regularization
+
+0:19:20.720,0:19:23.840
+technique that is widespread in machine learning
+
+0:19:23.840,0:19:27.280
+not be not maybe too much in neural nets
+
+0:19:27.280,0:19:31.200
+still relevant so weight decay uh you can find it in
+
+0:19:31.200,0:19:35.440
+directly inside the optim package like you it's a flag in
+
+0:19:35.440,0:19:38.320
+the the different in the different optimizer
+
+0:19:38.320,0:19:41.919
+is also called l2 regularization ridge regression or
+
+0:19:41.919,0:19:44.799
+gaussian prior which basically tells you that things
+
+0:19:44.799,0:19:48.799
+come from this gaussian process or gaussian you know distribution
+
+0:19:48.799,0:19:53.200
+generating distribution nevertheless we call it weight decay so
+
+0:19:53.200,0:19:57.840
+why do we call it weight decay uh so this is first thing that you know
+
+0:19:57.840,0:19:59.679
+if you train neural net you're going to call
+
+0:19:59.679,0:20:05.600
+weight decay not the other things so we can start with this j train that's
+
+0:20:05.600,0:20:10.559
+our objective which is acting upon the parameters and
+
+0:20:10.559,0:20:14.080
+which is equal the old training the the one without the
+
+0:20:14.080,0:20:20.240
+regularization plus a penalty term like um like
+
+0:20:20.240,0:20:23.440
+the following so we have the the square norm
+
+0:20:23.440,0:20:27.679
+the square two norm right of these parameters
+
+0:20:27.679,0:20:30.880
+and so if you uh make the if you compute the
+
+0:20:30.880,0:20:34.320
+the gradient of course you're gonna get just the
+
+0:20:34.320,0:20:39.760
+uh lambda theta right because the two comes down simplifies you get that guy
+
+0:20:39.760,0:20:43.200
+so if you think about this um second equation
+
+0:20:43.200,0:20:50.799
+what you see you say that the theta gets previous theta minus you know the
+
+0:20:50.799,0:20:57.600
+the minus step so like minus a step towards uh the gradient
+
+0:20:57.600,0:20:59.679
+some a step towards the opposite direction of
+
+0:20:59.679,0:21:03.360
+the gradient such that you can go down the hill right in your training
+
+0:21:03.360,0:21:09.039
+laws minus some eta lambda which is a
+
+0:21:09.039,0:21:12.960
+a scalar multiplying by theta right and that means that it's
+
+0:21:15.360,0:21:17.679
+going to be you know the first part there is you all go
+
+0:21:17.679,0:21:21.840
+down the hill whereas the other one tells you
+
+0:21:21.840,0:21:27.760
+and go also towards where zero right and so how does this how does
+
+0:21:27.760,0:21:31.679
+this look so this looks like this right in every
+
+0:21:31.679,0:21:35.600
+point so consider we are already trained and the
+
+0:21:35.600,0:21:39.280
+training loss is zero and we just consider the second term
+
+0:21:39.280,0:21:44.320
+right so let's consider we already finished training so
+
+0:21:44.320,0:21:49.919
+there is no there is not this term we just have theta
+
+0:21:49.919,0:21:56.640
+minus eta lambda theta what does it mean so if there is no uh at the first term
+
+0:21:56.640,0:22:00.240
+here in any point you are so in theta you're
+
+0:22:00.240,0:22:04.640
+going to be subtracting some multiplier some scalar you know i
+
+0:22:04.640,0:22:08.400
+told you scalar a scalar is what scales right
+
+0:22:08.400,0:22:14.400
+so this scalar scales this vector probably by a factor that is slower than
+
+0:22:14.400,0:22:18.559
+one and so if you're here this one is going to take you down on
+
+0:22:18.559,0:22:21.520
+the point that is connecting your head of the
+
+0:22:21.520,0:22:27.840
+theta towards zero right or this point here
+
+0:22:27.840,0:22:31.600
+this is theta and then it takes you down to zero okay
+
+0:22:31.600,0:22:35.760
+so if you don't have this term here and you perform a few steps
+
+0:22:35.760,0:22:39.039
+in this uh you know in this parameter update
+
+0:22:39.039,0:22:43.120
+you're gonna get that the vector field that you know results
+
+0:22:43.120,0:22:47.200
+is something that attracts you towards zero and that's why it's called weight
+
+0:22:47.200,0:22:54.720
+decay right so if you let it go this stuff too it's gonna decay to zero
+
+0:22:54.720,0:22:57.919
+makes sense right so these are very cute drawings
+
+0:22:57.919,0:23:04.159
+i think cool so okay now you know about weight decay a
+
+0:23:04.159,0:23:08.960
+weight decay is also we can think about this as adding a
+
+0:23:08.960,0:23:11.679
+constraint over the length of a vector so the
+
+0:23:11.679,0:23:17.039
+length of a vector is the you know the the the euclidean norm
+
+0:23:17.039,0:23:21.600
+and so here we basically try to reduce the length of this vector
+
+0:23:21.600,0:23:26.080
+so weight decay is a way to reduce the length
+
+0:23:26.080,0:23:33.840
+okay so l1 what is this l1 so l1 can also be
+
+0:23:33.840,0:23:39.120
+used as a flag in the optimizer in torch it's also called lasso which is least
+
+0:23:39.120,0:23:46.400
+absolute shrinking selector operator wow yeah statisticians whatever
+
+0:23:46.400,0:23:52.400
+it's also called a laplacian prior because it comes from a laplacian
+
+0:23:52.400,0:23:58.159
+probability distribution and then also it can be called as a
+
+0:23:58.159,0:24:02.720
+sparsity prior why is that so this is this is pretty interesting so here in
+
+0:24:02.720,0:24:06.960
+the bottom part you can see there is the dashed line uh
+
+0:24:06.960,0:24:10.799
+represent my gaussian prior right and then here i
+
+0:24:10.799,0:24:14.320
+just show you the laplace what's the difference with laplace laplace is the
+
+0:24:14.320,0:24:17.120
+same as gaussian so you have the exponential
+
+0:24:17.120,0:24:20.799
+but instead of having the quadratic square norm you have the
+
+0:24:20.799,0:24:27.200
+uh one norm okay and so the the whereas the the the
+
+0:24:27.200,0:24:31.039
+you know whereas the quadratic is very shallow like it's very flat
+
+0:24:31.039,0:24:36.720
+towards zero the the l1 is like a it's a spiky right so that's why if you
+
+0:24:36.720,0:24:39.679
+get the exponential you get like you get a spike this is
+
+0:24:39.679,0:24:42.720
+minus the the absolute value right so you get a
+
+0:24:42.720,0:24:47.279
+spike for the laplacian or you get like a smooth for this square
+
+0:24:47.279,0:24:50.000
+because you have the parabola right which is smooth on the
+
+0:24:50.000,0:24:55.360
+bottom part okay so the point is that there is much
+
+0:24:55.360,0:24:59.440
+more mass now in this region than
+
+0:24:59.440,0:25:04.320
+it was before right so this is pretty this is like a spike there is much more
+
+0:25:04.320,0:25:08.080
+probability that you get something towards zero nevertheless maybe this is
+
+0:25:08.080,0:25:10.640
+not too clear as an explanation so i show you
+
+0:25:10.640,0:25:16.080
+the second diagram so in this case my training loss instead of being the
+
+0:25:16.080,0:25:18.960
+all train loss i'm going to be summing lambda
+
+0:25:18.960,0:25:24.640
+the norm 1 of my theta okay therefore if you compute the gradient of
+
+0:25:24.640,0:25:30.559
+the l1 what do you get l one is going to be
+
+0:25:30.559,0:25:33.679
+just one right if you're positive or it's going to be
+
+0:25:33.679,0:25:38.320
+minus one in the sine function yeah exactly
+
+0:25:38.320,0:25:42.880
+so you get it it lambda sine function and so let's now think
+
+0:25:42.880,0:25:47.039
+the same way what happens uh if you already finished training you don't have
+
+0:25:47.039,0:25:54.880
+this term over here and you just get theta minus eta lambda sine theta
+
+0:25:55.039,0:26:02.559
+so if you are on the on the x axis you know the the y
+
+0:26:02.559,0:26:07.120
+is completely doesn't have is is already zero so you're going to get some
+
+0:26:07.120,0:26:10.480
+arrows bringing you in right so if you're on the axis you're gonna get
+
+0:26:10.480,0:26:14.559
+exactly as l2 you're gonna go towards zero
+
+0:26:14.559,0:26:18.320
+now what happened if you're in first quadrant
+
+0:26:18.320,0:26:24.799
+so in the first quadrant you get a sign in both direction right scale by the
+
+0:26:24.799,0:26:30.240
+scalar factor there and so it's going to be pointing down
+
+0:26:30.240,0:26:38.080
+deeply so here i show you the uh the the gray arrows here
+
+0:26:38.080,0:26:41.679
+they're showing you the l2 regularization which are taking you
+
+0:26:41.679,0:26:47.600
+from the initial point towards zero is proportional to this vector that is
+
+0:26:47.600,0:26:52.159
+here whereas the l1 which is going to be in a
+
+0:26:52.159,0:26:57.520
+different color and color green the l1 instead
+
+0:26:57.520,0:27:03.679
+starting from here it takes you down 40 degrees here and then what happened
+
+0:27:03.679,0:27:07.200
+here well you just kill the y component right
+
+0:27:07.200,0:27:12.159
+and so the l1 uh better feel
+
+0:27:12.159,0:27:17.760
+it will quickly kill components that are close to the axis
+
+0:27:17.760,0:27:20.559
+right so if you're kind of close to the axis this one bomb
+
+0:27:20.559,0:27:24.000
+takes you down to the axis in a view in a
+
+0:27:24.000,0:27:28.240
+few steps right and then if you still apply this one you're going to go down
+
+0:27:28.240,0:27:31.760
+the axis here right so this one allow you to
+
+0:27:31.760,0:27:36.080
+quickly go down here and then if you still apply you can shrink the length
+
+0:27:36.080,0:27:39.840
+but the point is that you're not looking at the
+
+0:27:39.840,0:27:46.720
+length shrinking as in the in in the l2 right so l2 was just
+
+0:27:46.720,0:27:50.320
+shrinking the length of the vector in the l1 instead you actually gonna
+
+0:27:54.399,0:27:58.159
+kill the components that are kind of cl
+
+0:27:58.159,0:28:04.240
+near the axis okay so i think you can clearly now understand how this
+
+0:28:04.240,0:28:08.320
+works right so uh and this actually is quite relevant
+
+0:28:08.320,0:28:13.840
+for training let's say you know our regularized
+
+0:28:13.840,0:28:17.039
+regularized latent variable models because you can you know you can think
+
+0:28:17.039,0:28:20.799
+about you know a very quick way to regularize this this
+
+0:28:20.799,0:28:24.559
+latent virus is going to be just killing some of these components such
+
+0:28:24.559,0:28:29.279
+that only the information is going to be restricted in a few of these
+
+0:28:29.279,0:28:33.600
+values okay you like this stuff you like the drawings
+
+0:28:33.600,0:28:41.039
+no they're cute i think okay uh okay drop out right so we we talk i
+
+0:28:41.039,0:28:44.240
+think about dropout a few times but i never show you
+
+0:28:44.240,0:28:48.000
+the animation so boom okay so dropout what does this
+
+0:28:51.520,0:28:55.360
+dropout do so i can show you my ninja skills in
+
+0:28:55.360,0:28:59.600
+powerpoint and we have an infinite loop animation
+
+0:28:59.600,0:29:04.080
+so the input in the pink is provided to the network
+
+0:29:04.080,0:29:07.600
+uh and then you have that these hidden layers hidden
+
+0:29:07.600,0:29:13.760
+neurons are sometimes set to zero in this case is you have a dropping rate
+
+0:29:13.760,0:29:17.440
+of 0.5 so half of the neurons are gonna be turned
+
+0:29:17.440,0:29:22.640
+to zero on uh randomly during the training
+
+0:29:22.640,0:29:26.080
+and so what happens here is that there is
+
+0:29:26.080,0:29:29.679
+no more path between the input and the output
+
+0:29:29.679,0:29:36.480
+that is uh you know there is no learning of a singular path for input to
+
+0:29:36.480,0:29:39.679
+output so every time if you want to try to
+
+0:29:39.679,0:29:43.520
+memorize one specific input you can't because every
+
+0:29:43.520,0:29:49.279
+time you get a different network and so again this basically tell you
+
+0:29:49.279,0:29:56.799
+uh oh scarf okay so what happens here is that again
+
+0:29:56.799,0:30:00.880
+before if we have like a fully connected network like this
+
+0:30:00.880,0:30:04.799
+you can think about oh i won't like to memorize this
+
+0:30:04.799,0:30:10.720
+neuron uh going this path and then here right so you can try to
+
+0:30:10.720,0:30:15.600
+memorize uh some specific you know sample you get
+
+0:30:15.600,0:30:19.760
+you can memorize a specific sample in this case but again if you have the net
+
+0:30:19.760,0:30:23.279
+product that is taking off neurons sometimes sometimes
+
+0:30:23.279,0:30:26.399
+this neuron here on the left hand side doesn't exist
+
+0:30:26.399,0:30:32.480
+right and so if this one doesn't exist
+
+0:30:32.480,0:30:37.520
+then you cannot memorize a specific path moreover you can think about this
+
+0:30:37.520,0:30:42.880
+dropout as training a infinitely infinite
+
+0:30:42.880,0:30:49.440
+number of networks that are different right because every time you you drop
+
+0:30:49.440,0:30:52.559
+some neurons you basically get a new network
+
+0:30:52.559,0:30:57.039
+uh they all share the initial kind of starting position with the initial
+
+0:30:57.039,0:31:00.960
+weights but then at the end whenever you use it
+
+0:31:00.960,0:31:05.279
+i inference usually you turn off this dropout
+
+0:31:05.279,0:31:09.440
+and then you have to scale the the weights right because otherwise you get
+
+0:31:09.440,0:31:14.559
+a network that is you know blowing you up this is because if you
+
+0:31:14.559,0:31:19.120
+have half of the neurons off you know the other neurons are doing
+
+0:31:19.120,0:31:23.600
+the half of the neurons are doing the whole job and if you turn everyone
+
+0:31:23.600,0:31:26.159
+on you're going to have twice as many more
+
+0:31:26.159,0:31:32.720
+uh values so so you can do two things or when you actually use dropout you
+
+0:31:32.720,0:31:37.440
+crank up you multiply by by let's say one over uh the dropping
+
+0:31:37.440,0:31:43.840
+rate so if you have dropping rate of 0.5 you can multiply by two such that
+
+0:31:43.840,0:31:46.880
+uh your neurons are twice as powerful right
+
+0:31:46.880,0:31:53.200
+twice is more powerful uh than one minus 0.5 right one divided one
+
+0:31:53.200,0:31:57.840
+minus 4.5 so if you have a dropping rate of 0.1
+
+0:31:57.840,0:32:02.080
+uh means you have 90 of your neurons there
+
+0:32:02.080,0:32:05.360
+and so your neuron should be one over 0.9
+
+0:32:05.360,0:32:11.200
+stronger right um to be to have like the same kind of
+
+0:32:11.200,0:32:15.440
+power right in terms of values anyhow so you can
+
+0:32:15.440,0:32:19.840
+think about uh drop dropout as having these multiple
+
+0:32:19.840,0:32:23.919
+networks during training but then whenever you use them at
+
+0:32:23.919,0:32:28.080
+inference you turn off this dropout module and you basically average out all
+
+0:32:28.080,0:32:31.360
+these performance of the singular network and
+
+0:32:31.360,0:32:34.799
+these allow you to get you know a much better
+
+0:32:34.799,0:32:38.640
+reduction of the noise uh which was introduced
+
+0:32:38.640,0:32:42.320
+like that was arised by the the training procedure
+
+0:32:42.320,0:32:45.760
+because again if you have you know multiple experts you take the average of
+
+0:32:45.760,0:32:48.000
+multiple experts you're going to get a better
+
+0:32:48.000,0:32:53.120
+um answer because it's going to be removing that kind of variability in the
+
+0:32:53.120,0:32:59.600
+specific answer right but perhaps we should keep in mind this
+
+0:32:59.600,0:33:03.360
+variability of the answers okay because it can turn out quite
+
+0:33:03.360,0:33:08.559
+interesting anyhow so dropout is amazing way to
+
+0:33:08.559,0:33:11.840
+basically have an automatic model averaging
+
+0:33:11.840,0:33:18.240
+modeling assembling performance cool cool cool uh is dropout a good
+
+0:33:18.240,0:33:21.200
+technique only for classification task or also
+
+0:33:21.200,0:33:27.760
+for other tasks as well like metric learning and coding learning
+
+0:33:27.760,0:33:32.640
+i would say that dropout gives you a much more robust
+
+0:33:33.360,0:33:38.000
+network a much more robust prediction regardless of the task it doesn't it
+
+0:33:38.000,0:33:44.000
+doesn't restrict to classification you basically train uh multiple networks
+
+0:33:44.000,0:33:49.600
+of reduced size right and then you average out this reduced size network
+
+0:33:49.600,0:33:52.799
+so although at the end you're going to have a large network this large network
+
+0:33:52.799,0:33:58.080
+is just the average of small networks performance
+
+0:33:58.080,0:34:03.600
+so and also if you think in this way the small network can no longer overfit
+
+0:34:03.600,0:34:06.960
+right because they are no longer that over parameterized
+
+0:34:06.960,0:34:10.879
+perhaps right and so dropout allows you allows you to
+
+0:34:10.879,0:34:15.359
+fight overfitting with several by different you know
+
+0:34:15.359,0:34:20.960
+mechanisms finally you can think uh if you apply
+
+0:34:20.960,0:34:25.040
+let's think about like uh applying dropout to the input
+
+0:34:25.040,0:34:30.240
+this is kind of uh sort of like uh denoising out encoder no i mean you
+
+0:34:30.240,0:34:33.919
+perturb the input right in in this case and then you force
+
+0:34:33.919,0:34:39.119
+still the output to be the same so if you think about that you are going
+
+0:34:39.119,0:34:42.720
+to be insensitive to some small variations of
+
+0:34:42.720,0:34:47.200
+the input uh which are gonna make your network
+
+0:34:47.200,0:34:50.879
+more robust right or the same as i was as i wrote you in
+
+0:34:50.879,0:34:54.560
+the midterm uh how can you get a input that is you
+
+0:34:54.560,0:34:58.320
+know annoying you can find some noise in the input
+
+0:34:58.320,0:35:03.359
+which is going to be increasing your uh your loss right so
+
+0:35:03.359,0:35:07.599
+you can do some kind of adversarial generation of noise and then you try to
+
+0:35:07.599,0:35:13.040
+you train your network on these um handcrafted samples which were
+
+0:35:13.040,0:35:17.760
+um corrected were like perturbed in order to
+
+0:35:17.760,0:35:21.680
+increase your your training loss right okay so i gave you like
+
+0:35:21.680,0:35:27.119
+four different reasons why to use dropout but then i don't use dropout
+
+0:35:27.119,0:35:31.520
+some not that often i actually do use it for a different reason which i'm going
+
+0:35:31.520,0:35:38.240
+to be coming to that in a bit um okay so early stopping so this is
+
+0:35:38.240,0:35:42.160
+much one of the most basic techniques uh if
+
+0:35:42.160,0:35:45.359
+you're training your model and your validation
+
+0:35:45.359,0:35:48.880
+loss starts starts increasing
+
+0:35:48.880,0:35:54.320
+then you stop there okay such that you get the lowest validation
+
+0:35:54.320,0:35:57.440
+score and which tells you okay you're not yet
+
+0:35:57.440,0:36:02.400
+overfitting uh and that basically doesn't let your
+
+0:36:02.400,0:36:04.880
+weights grow too much right so instead of
+
+0:36:04.880,0:36:08.640
+getting the l2 which is trying not to get those weights to get
+
+0:36:08.640,0:36:13.680
+too lengthy too long too long you just stop whenever they are
+
+0:36:13.680,0:36:16.960
+not yet that long right uh fighting overfitting so these are
+
+0:36:20.079,0:36:25.520
+techniques that end up regularizing our parameters our models but
+
+0:36:25.520,0:36:29.760
+but they are not they are not regularizers okay so this is important
+
+0:36:29.760,0:36:33.920
+these are not regularizer although they do regularize
+
+0:36:33.920,0:36:39.280
+the uh network okay as long as you keep this in mind we
+
+0:36:39.280,0:36:43.680
+can also see these uh other options but they are
+
+0:36:43.680,0:36:46.880
+not regularizing techniques right they do
+
+0:36:46.880,0:36:50.240
+act as a regularizer though first one batch
+
+0:36:50.240,0:36:53.440
+normalization okay so we talked about this several
+
+0:36:53.440,0:36:56.880
+times we don't know quite how it works too
+
+0:36:56.880,0:37:00.320
+well there is an article on a blog post that
+
+0:37:00.320,0:37:03.599
+is explaining this i we put the link in the optimization
+
+0:37:03.599,0:37:06.880
+lecture check it out i think it's like lecture
+
+0:37:06.880,0:37:11.359
+seven of some blog post i really can't remember anyhow
+
+0:37:11.359,0:37:14.720
+so the point is that you reset the the mu then the mean and
+
+0:37:14.720,0:37:18.079
+the sigma the the sigma square the variance
+
+0:37:18.079,0:37:24.720
+at each layer and these allow you to
+
+0:37:24.720,0:37:29.520
+okay when you reset the mean and the sigma this is based on the specific
+
+0:37:29.520,0:37:33.599
+batch you have right because you compute the mean and the sigma square
+
+0:37:33.599,0:37:38.800
+over the specific batch but then if you actually sample uniformly from your
+
+0:37:38.800,0:37:44.960
+training data set you will never have two identical batches right so every
+
+0:37:44.960,0:37:50.000
+batch will have a different configuration of samples therefore if
+
+0:37:50.000,0:37:53.520
+you compute the mean and the standard deviation they will always
+
+0:37:53.520,0:37:56.880
+be different right and therefore again i said five
+
+0:37:56.880,0:37:59.680
+times therefore you are going to be applying a different
+
+0:37:59.680,0:38:04.880
+correction per batch and the model will never see twice the
+
+0:38:04.880,0:38:10.560
+same input right because they are altered based on where they happen to
+
+0:38:10.560,0:38:18.000
+uh appear in your training uh procedure so because you never
+
+0:38:18.000,0:38:23.680
+showed the same uh same input twice and this is so cool uh i really like it
+
+0:38:23.680,0:38:27.040
+and that's all you need usually most of the time to train your network
+
+0:38:27.040,0:38:32.960
+don't drop out and this technique also speeds up your
+
+0:38:32.960,0:38:36.480
+training like crazy before batch norm was introduced
+
+0:38:36.480,0:38:40.880
+it was taking me i think one week to train uh
+
+0:38:40.880,0:38:46.160
+on imagenet i think at least if it was if it wasn't a month it was
+
+0:38:46.160,0:38:50.400
+terrible i think but again that's like eight years ago uh
+
+0:38:50.400,0:38:54.160
+yeah it was terrible training on imagenet uh with batch normalization i
+
+0:38:54.160,0:38:59.280
+think you can train in one day so that's ridiculous do you mean robust in
+
+0:38:59.280,0:39:04.000
+terms of adversarial learning as well i don't understand why we don't see the
+
+0:39:04.000,0:39:09.359
+same sample twice um i'm saying robust here
+
+0:39:09.359,0:39:15.920
+as in uh you're providing different inputs every time because and so the
+
+0:39:15.920,0:39:19.119
+network gets a better coverage what is the training
+
+0:39:19.119,0:39:22.560
+manifold uh you don't see the same input twice
+
+0:39:22.560,0:39:27.200
+because the same input based on how it appears in the in the
+
+0:39:27.200,0:39:32.000
+batch so if you appears you have you know input 42
+
+0:39:32.000,0:39:35.760
+and this input 42 happens in a given batch
+
+0:39:35.760,0:39:39.119
+you subtract the mean of the batch and divide by the standard deviation
+
+0:39:39.119,0:39:43.280
+and you get the the new you know value right within the network
+
+0:39:43.280,0:39:46.880
+but then if that input 42 happens in a different batch
+
+0:39:46.880,0:39:51.040
+then the mean of the different batch is gonna be a different mean
+
+0:39:51.040,0:39:54.480
+and therefore you're gonna get a slightly different
+
+0:39:54.480,0:39:58.560
+input every time so you never actually observe the same input because they
+
+0:39:58.560,0:40:02.800
+happen to be packed in a different batch and therefore the statistics of that
+
+0:40:02.800,0:40:06.720
+specific patch will be just specific to that batch and
+
+0:40:06.720,0:40:10.160
+you know it's going to change every time you're going to have a different batch
+
+0:40:10.160,0:40:13.440
+so same input get a different [Music]
+
+0:40:13.440,0:40:18.000
+correction let's say this way if it appears in a different batch so it
+
+0:40:18.000,0:40:21.839
+you never see the same input twice so this technique is all i use usually for
+
+0:40:21.839,0:40:27.440
+training my network um and it works but again recently i've
+
+0:40:27.440,0:40:31.440
+been using dropout for a different reason so we're gonna be
+
+0:40:31.440,0:40:38.160
+um okay we are gonna see this in a few minutes uh
+
+0:40:38.160,0:40:43.040
+more data of course just providing more data you're gonna find all over fitting
+
+0:40:43.040,0:40:47.520
+but then you know ding ding ding okay
+
+0:40:47.520,0:40:52.079
+uh finally data augmentation so data augmentation is also a very valid
+
+0:40:52.079,0:40:55.680
+technique in order to you know prove provide some kind of
+
+0:40:55.680,0:41:00.960
+uh deformed version of the input if you're talking about images we have
+
+0:41:00.960,0:41:07.440
+center crop color jitter different crops transformations like i find random
+
+0:41:07.440,0:41:11.200
+transformations crops random rotation horizontal flip
+
+0:41:11.200,0:41:16.560
+right if you see myself like that and you flip my face i'm still me kind of
+
+0:41:16.560,0:41:23.440
+right so uh if it's upside down well maybe not quite uh nevertheless you can
+
+0:41:23.440,0:41:28.160
+see that if you provide some alterations that are
+
+0:41:28.160,0:41:31.680
+perturbation that you are if you like to be insensitive against
+
+0:41:31.680,0:41:35.359
+then you can improve your performance of the network which is going to be
+
+0:41:35.359,0:41:38.160
+learning how to be insensitive to this kind of
+
+0:41:38.160,0:41:43.599
+uh you know variations okay okay okay so quickly quickly
+
+0:41:43.599,0:41:47.359
+quickly oh okay transfer learning we already know about transfer learning
+
+0:41:47.359,0:41:50.160
+i think but again so you get your network you already trained on a
+
+0:41:50.160,0:41:53.599
+specific task you just leave the first classifier there
+
+0:41:53.599,0:41:57.839
+you move everything you plug a new a new classifier or
+
+0:41:57.839,0:42:01.280
+whatever and then if you have you know a few data
+
+0:42:01.280,0:42:04.400
+with a similar kind of training distribution
+
+0:42:04.400,0:42:07.680
+you just do transfer learning which is again
+
+0:42:07.680,0:42:14.960
+training just the final classifier uh if you have lots of data
+
+0:42:14.960,0:42:18.720
+you should fine-tune because you would like to
+
+0:42:18.720,0:42:22.400
+also improve this uh the performance of the
+
+0:42:22.400,0:42:26.960
+like you would like also to tweak the uh feature extractor the blue
+
+0:42:26.960,0:42:31.520
+the blue layers and the colors are flipped here damn the hidden layer
+
+0:42:31.520,0:42:35.680
+should have been green and the output blue okay
+
+0:42:35.680,0:42:39.359
+few data and different from training or you want to do early
+
+0:42:39.359,0:42:42.839
+uh transfer learning which means you know you start
+
+0:42:42.839,0:42:49.760
+changing um also you know a little bit of the the of the other
+
+0:42:49.760,0:42:53.280
+layers as well not all of them and then
+
+0:42:53.280,0:42:56.800
+yeah you want to remove a few more layers actually yeah oh
+
+0:42:56.800,0:43:00.079
+my bad so you would like to remove a few of those uh
+
+0:43:00.079,0:43:05.359
+final hidden layers because they are kind of already specialized
+
+0:43:05.359,0:43:09.520
+so you want to retrain the base features extractor here
+
+0:43:09.520,0:43:12.640
+and if you have lots of data which are different from the training the
+
+0:43:12.640,0:43:20.240
+distribution just train okay um okay also you can use different
+
+0:43:20.240,0:43:24.000
+learnings learning rate for different layers right
+
+0:43:24.000,0:43:28.000
+to improve performance so maybe you um
+
+0:43:28.000,0:43:34.400
+you'd like to change um yeah so you you can you can see that usually
+
+0:43:34.400,0:43:38.160
+these final layers are the ones that are changing uh quicker because they are
+
+0:43:38.160,0:43:42.480
+close to the uh to the loss but then again if you use
+
+0:43:42.480,0:43:45.839
+uh batch norm all these layers are kind of training the same
+
+0:43:45.839,0:43:50.079
+speed otherwise again you can see whether you want to change learning rate
+
+0:43:50.079,0:43:54.560
+maybe change these guys slower or not did you say is
+
+0:43:54.560,0:43:56.960
+the difference between transfer learning and fine
+
+0:43:56.960,0:44:01.920
+tuning uh transfer learning i just train define a classifier
+
+0:44:01.920,0:44:05.200
+because i don't have if you have few data you don't have
+
+0:44:05.200,0:44:09.040
+enough you know you don't want to overfit so you
+
+0:44:09.040,0:44:12.640
+if you have a few data you want to just reuse the whole
+
+0:44:12.640,0:44:16.880
+network from the previous task and you just train the final classifier
+
+0:44:16.880,0:44:21.119
+if you have lots of data then you can actually even um
+
+0:44:21.119,0:44:25.040
+try to have like some changes you can also you know you can start
+
+0:44:25.040,0:44:29.040
+you have a uh lower learning rate you also change for
+
+0:44:29.040,0:44:34.640
+this feature extractor if they are similarly transfer learning you freeze
+
+0:44:34.640,0:44:38.640
+the the base network yeah i would say the transfer
+
+0:44:38.640,0:44:41.760
+learning you just freeze the the blue guy and you just
+
+0:44:41.760,0:44:46.640
+train the orange in uh fine tuning you actually tune
+
+0:44:46.640,0:44:51.520
+all the other parameters as well maybe with smaller learning rate
+
+0:44:51.520,0:44:55.760
+this is the number 12 notebook here i'm classifying the
+
+0:44:55.760,0:45:01.200
+sentiment of these reviews on the imdb data set all right and so i'd like to
+
+0:45:01.200,0:45:04.079
+compare different regularization techniques
+
+0:45:04.079,0:45:09.920
+so i'm just keeping everything because i just like to show you the final result
+
+0:45:09.920,0:45:14.880
+let me see where is the optimizer so you can toggle different things at
+
+0:45:14.880,0:45:18.319
+the beginning we have no weight decay nothing right so we
+
+0:45:18.319,0:45:22.560
+train with this regularizer let's check what is the model so the
+
+0:45:22.560,0:45:28.480
+model is just a feed forward neural net which is fifo on neural net we have some
+
+0:45:28.480,0:45:32.480
+embeddings a linear a linear and then my forward is going to be
+
+0:45:32.480,0:45:37.680
+getting my embeddings sending to the forward the fully connected relo
+
+0:45:37.680,0:45:41.839
+uh and then you know you get the output from this so second fully connected and
+
+0:45:41.839,0:45:44.800
+i'm outputting a sigmoid because i'm just doing
+
+0:45:44.800,0:45:49.200
+um i think a two-class classification problem so we'd like to figure out if
+
+0:45:49.200,0:45:52.880
+it's a positive review or a negative review
+
+0:45:52.880,0:46:00.400
+um and so this is the initial training and we got you know
+
+0:46:00.400,0:46:05.680
+the validation curve climbs up as crazy whereas the training curve goes down to
+
+0:46:05.680,0:46:09.599
+zero and so here you can see uh the
+
+0:46:09.599,0:46:15.520
+validation accuracy which goes up to 64 more or less so and here we just
+
+0:46:15.520,0:46:19.599
+store the weight of the network
+
+0:46:19.599,0:46:23.440
+for when there is no kind of regularization okay
+
+0:46:23.440,0:46:28.160
+then first thing i'd like to do is going to be trying to do the
+
+0:46:28.160,0:46:34.800
+weight l1 the l1 regularization so let's see how to do that
+
+0:46:35.520,0:46:42.079
+so l1 regularization okay toggle this one to do
+
+0:46:42.079,0:46:45.520
+l1 regularization so here i'm extracting the
+
+0:46:45.520,0:46:49.040
+model parameters and then i'm going to be adding
+
+0:46:49.040,0:46:53.839
+some term to the to the loss okay so the loss is going to
+
+0:46:53.839,0:46:59.680
+be some part of this uh like i'm gonna sum the the one norm
+
+0:46:59.680,0:47:06.319
+of the fc1 to the loss okay because there is no other way to do this
+
+0:47:06.319,0:47:14.880
+in a pi torch for the moment okay so let me re-initialize the network
+
+0:47:14.880,0:47:21.510
+so i start here [Music]
+
+0:47:22.079,0:47:25.760
+i get [Music]
+
+0:47:25.760,0:47:31.680
+this one and then i start training here so this guy is training uh how many
+
+0:47:31.680,0:47:36.000
+iterations let's check 10 epochs okay one two three
+
+0:47:36.000,0:47:39.760
+four five six all right so before we were checking
+
+0:47:39.760,0:47:46.160
+we can go down here we had the validation accuracy was around 64.
+
+0:47:46.160,0:47:52.000
+and now we have validation accuracy went to 66 right so we actually have
+
+0:47:52.000,0:47:56.240
+improved the performance by getting these guys
+
+0:47:56.240,0:48:03.119
+uh to be oh it's getting down down
+
+0:48:03.119,0:48:09.920
+oh back up 67 looks good 68 okay it's finished so i can show you in
+
+0:48:09.920,0:48:14.079
+this case what happened with l1 oh it's not yet finished okay it's
+
+0:48:14.079,0:48:17.760
+taking forever okay while this is training okay okay
+
+0:48:17.760,0:48:20.640
+i'm gonna show you the the output of this guy and then i'm gonna be
+
+0:48:20.640,0:48:26.640
+showing just briefly the uh second usage of the dropout should we
+
+0:48:26.640,0:48:31.680
+stop this guy 69 so you can see now here we are at 69
+
+0:48:31.680,0:48:36.640
+in validation at 30 right okay cool and here you can see both the
+
+0:48:36.640,0:48:40.319
+training and the validation they are both losses they go down and
+
+0:48:40.319,0:48:46.480
+then here i show you the validation which went up to 67 and 68 okay
+
+0:48:46.480,0:48:50.319
+and so here i just show i gonna be storing these weights
+
+0:48:50.319,0:48:53.280
+for the l1 so here i just store this l1 over here
+
+0:48:56.800,0:49:01.040
+okay i'm gonna go back here
+
+0:49:01.040,0:49:08.400
+uh we are gonna be undoing this one right because we don't
+
+0:49:08.400,0:49:13.040
+want uh l1 we're gonna be choosing now a l2 regularizer
+
+0:49:13.040,0:49:18.880
+right so i can toggle this one and toggle this on alright so now we
+
+0:49:18.880,0:49:23.920
+have a weight decay of this value
+
+0:49:24.240,0:49:30.720
+model i execute this one and i execute these guys all right
+
+0:49:30.720,0:49:33.760
+so while the l2 is training i'll just show you
+
+0:49:33.760,0:49:37.520
+a quick uh overview about bayesian neural nets
+
+0:49:37.520,0:49:43.520
+so estimating a predictive distribution so why to care about uncertainty many
+
+0:49:43.520,0:49:46.400
+reasons uh if you have a cat declassifier and
+
+0:49:46.400,0:49:49.839
+you show a hippopotamus the network is going to tell you oh this
+
+0:49:49.839,0:49:53.920
+is a dog no it doesn't know i cannot tell you oh
+
+0:49:53.920,0:49:57.920
+this is not of any of the above right you can think about oh let's make a
+
+0:49:57.920,0:50:01.920
+third category but then how can you show you how can
+
+0:50:01.920,0:50:05.599
+you show the network not a cat and not a dog uh it doesn't
+
+0:50:05.599,0:50:10.000
+quite work like that so you can't really find i mean cat is
+
+0:50:10.000,0:50:13.599
+an object dog is a object not a cat or not a dog
+
+0:50:13.599,0:50:16.319
+is not an object so you can't really train your network
+
+0:50:16.319,0:50:22.319
+to say everything else um reliability on steering control let's
+
+0:50:22.319,0:50:25.200
+say you're training your car to steer right and left
+
+0:50:25.200,0:50:28.960
+and then your car say steer to the right okay hold on
+
+0:50:28.960,0:50:35.839
+how certain are you about this action is it is it gonna kill me right
+
+0:50:35.839,0:50:39.359
+uh physics simulator prediction if you know about
+
+0:50:39.359,0:50:42.400
+physics or physicists they always want to know
+
+0:50:42.400,0:50:46.400
+how certain you are about your value right so measurements
+
+0:50:46.400,0:50:49.920
+uh in physics always have you know you have the value plus minus the
+
+0:50:49.920,0:50:52.800
+uncertainty so you know your network should be able
+
+0:50:52.800,0:50:58.000
+to tell you as well how certain uh some number or what is the
+
+0:50:58.000,0:51:02.480
+in the confidence interval for a specific prediction
+
+0:51:02.480,0:51:06.720
+moreover you can think to use this for minimizing action randomness when
+
+0:51:06.720,0:51:10.400
+connected to a reward what the heck does this mean
+
+0:51:10.400,0:51:13.839
+so if there is some uncertainty with some
+
+0:51:13.839,0:51:17.839
+associated some to some actions you can actually exploit that
+
+0:51:17.839,0:51:24.480
+and train your model to minimize that uncertainty and this is so cool because
+
+0:51:24.480,0:51:27.520
+we use something similar in my in our
+
+0:51:27.520,0:51:32.480
+project right so dropout i told you about before uh so
+
+0:51:32.480,0:51:36.559
+how this neural network dropout works i just gonna be quickly going through
+
+0:51:36.559,0:51:42.800
+this i multiply my input and my hidden layer with these random
+
+0:51:42.800,0:51:47.440
+zero one masks okay and you can have the activation function to
+
+0:51:49.520,0:51:52.720
+be some non-linearity and then here you have this bernoulli
+
+0:51:52.720,0:51:56.000
+with the probability of one minus the dropping out
+
+0:51:56.000,0:52:00.319
+rate so this the dropping out rate and then you want to scale
+
+0:52:00.319,0:52:04.800
+the delta such that you know you resize the amplitude
+
+0:52:04.800,0:52:09.200
+of those weights the training has just finished so i'm gonna be
+
+0:52:09.200,0:52:12.240
+switching that i'm sorry for the context switching
+
+0:52:12.240,0:52:18.000
+oh okay good call all right uh calculate the variance yes someone was
+
+0:52:18.000,0:52:22.000
+saying calculate the variance i know i'm switching i'm sorry it's the last lesson
+
+0:52:22.000,0:52:28.559
+i'm making a mess okay so this is train and we got 64 uh
+
+0:52:28.559,0:52:32.720
+which is so these are also going both down
+
+0:52:32.720,0:52:38.000
+this is both the the l2 regularization and before we were getting to 68 with
+
+0:52:38.000,0:52:42.640
+the l1 here we get something else maybe
+
+0:52:42.640,0:52:46.079
+oh you can see it's still climbing right so maybe i just stopped too early
+
+0:52:46.079,0:52:50.960
+so if you keep training you're gonna get a better performance
+
+0:52:50.960,0:52:54.640
+it's it's monotonic non-decreasing right so i think
+
+0:52:54.640,0:52:59.760
+kind of so i think you can squeeze more and here i'm gonna be saving
+
+0:52:59.760,0:53:05.839
+these weights in these l2 weights okay so i saved that and the last one
+
+0:53:05.839,0:53:08.720
+then i sh then it's gonna be exactly the dropout
+
+0:53:08.720,0:53:13.200
+right so go back here uh we turn off
+
+0:53:13.200,0:53:19.599
+the l2 so we turn off this guy we turn back the
+
+0:53:19.599,0:53:22.400
+simple one but then we have to go back in this
+
+0:53:22.400,0:53:29.599
+network we would like to turn on the dropout rate
+
+0:53:29.599,0:53:34.800
+true there you go boom boom boom okay is it training yeah it's training
+
+0:53:38.480,0:53:43.040
+all right cool cool cool back to the presentation
+
+0:53:43.040,0:53:50.559
+i i know i'm sorry i'm going over time what a bad teacher
+
+0:53:51.200,0:53:54.800
+okay so this is actually what we are doing the dropout part right
+
+0:53:54.800,0:53:58.000
+okay cool cool all right so this is my dropout
+
+0:53:58.000,0:54:01.520
+and i mean i mean i am basically multiplying these inputs and hidden
+
+0:54:01.520,0:54:06.400
+layers with masks here you just have like a network which
+
+0:54:06.400,0:54:08.880
+is trying is trying to train that you know uh
+
+0:54:08.880,0:54:12.880
+prediction uh that is weakly prediction is like a co2
+
+0:54:12.880,0:54:17.440
+concentration level uh if you use a gaussian kernel with a
+
+0:54:17.440,0:54:20.800
+square exponential kernel you can get you know
+
+0:54:20.800,0:54:24.240
+after the dashed line the network say that you
+
+0:54:24.240,0:54:28.640
+know the the model says i have no clue so i give you my prediction which is
+
+0:54:28.640,0:54:31.280
+zero but then this is my confidence level
+
+0:54:31.280,0:54:34.400
+can we do something similar with neural nets yes we can
+
+0:54:34.400,0:54:38.799
+so this is a uh uncertainty estimation we're using the
+
+0:54:38.799,0:54:42.319
+reload non-linearity in the network and this is instead
+
+0:54:42.319,0:54:48.400
+using tanh which is is actually nothing um if i'd like to do a binary
+
+0:54:48.400,0:54:52.880
+classification in the first case are gonna be my logic
+
+0:54:52.880,0:54:56.720
+uh on this section -3 to 2.5 is the
+
+0:54:56.720,0:55:01.119
+training training training interval and then
+
+0:55:01.119,0:55:06.000
+if i show you if i show my network uh if i ask oh what is the prediction for
+
+0:55:06.000,0:55:09.839
+x hat no x star if i don't use any uncertainty
+
+0:55:09.839,0:55:13.040
+estimation you're gonna get a very high value
+
+0:55:13.040,0:55:16.319
+right which is corresponding to oh this is uh
+
+0:55:16.319,0:55:20.000
+one so this is my one class if i just use the the
+
+0:55:20.000,0:55:24.799
+white big thick line instead if you use this uncertainty estimation
+
+0:55:24.799,0:55:28.960
+you get this network to get those logics here with it kind of
+
+0:55:28.960,0:55:34.799
+you know blur foggy shadow and therefore if you apply
+
+0:55:34.799,0:55:39.119
+the sigmoid you get basically that to flip down from zero to one right
+
+0:55:39.119,0:55:43.680
+so you no longer say it's one you can say
+
+0:55:43.680,0:55:48.000
+it's one with some specific probability right
+
+0:55:48.000,0:55:53.440
+um and here i'm showing you a network that is trying to it was trained on
+
+0:55:53.440,0:55:56.079
+ammunite and then you provide a one that is you
+
+0:55:56.079,0:55:59.839
+know tilting and then you can see that it begins with
+
+0:55:59.839,0:56:03.760
+having a high value for the logits for the purple for
+
+0:56:03.760,0:56:06.400
+the for the one and then as you move across
+
+0:56:06.400,0:56:08.960
+it becomes like a five and then becomes a seven
+
+0:56:08.960,0:56:12.240
+because it looks like some part of the one
+
+0:56:12.240,0:56:16.240
+like some part of the seven right and these are the output
+
+0:56:16.240,0:56:22.799
+after the uh soft arc max so you see that uh you know after you tilt they get
+
+0:56:22.799,0:56:26.640
+very blur and very spread around so how can we
+
+0:56:26.640,0:56:30.079
+have something like that and this is the other notebook
+
+0:56:30.079,0:56:36.799
+so we are done here with the regularization let me give you the final
+
+0:56:36.799,0:56:40.799
+thing so here we can see with the dropout you always have the validation
+
+0:56:40.799,0:56:43.680
+and train curves they are one on the other and
+
+0:56:43.680,0:56:47.760
+then this was the l2 regularization i can execute this
+
+0:56:47.760,0:56:50.480
+other one which shows you also that this is keep
+
+0:56:50.480,0:56:53.760
+increasing right so although the model is over parameterized we are not
+
+0:56:53.760,0:56:58.640
+overfitting which was the case uh at the beginning finally here let's
+
+0:56:58.640,0:57:02.640
+store these weights in the dropout version
+
+0:57:02.640,0:57:08.480
+okay so i save all of them uh and so i can start showing you a few
+
+0:57:08.480,0:57:12.480
+things um for example this one
+
+0:57:12.480,0:57:19.040
+let's see if it works boom so here you can see that the red
+
+0:57:19.040,0:57:23.119
+are the l1 and the red one are basically all
+
+0:57:23.119,0:57:26.400
+in the center bam and all the other reds are
+
+0:57:26.400,0:57:30.240
+to zero right so n1 i just show you the histogram of the weights
+
+0:57:30.240,0:57:34.079
+when i train the network with the l1 regularizer you get all of these are
+
+0:57:34.079,0:57:38.720
+here in the purple case you actually have
+
+0:57:38.720,0:57:42.240
+it looks like it's higher i'm not entirely sure
+
+0:57:42.240,0:57:49.680
+why you have a higher peak at zero in l2 but then the purple one have some values
+
+0:57:49.680,0:57:53.440
+as well here in the tails whereas if there is no regularization
+
+0:57:53.440,0:57:56.480
+you get something that is you know resembling a much
+
+0:57:56.480,0:58:02.640
+spread a much spread gaussian right so you get values that
+
+0:58:02.640,0:58:07.040
+are much much more much larger okay instead the l1
+
+0:58:07.040,0:58:10.240
+should be all towards you know very very short
+
+0:58:10.240,0:58:14.400
+again i'm not sure why this purple is taller than the the red here i think
+
+0:58:14.400,0:58:19.520
+it's an issue so this i i show you the the the weights
+
+0:58:19.520,0:58:26.799
+we can show lastly last individual one l1 so l1 all are here
+
+0:58:26.799,0:58:29.760
+and this is these are instead the one with nothing
+
+0:58:31.440,0:58:36.880
+right so these are the one without the regularization
+
+0:58:36.880,0:58:41.839
+and these are the one with the l1 regularization
+
+0:58:41.839,0:58:46.540
+we can also have more bins to have i bet a better understanding of what's going
+
+0:58:46.540,0:58:50.000
+[Music] on
+
+0:58:50.000,0:58:56.559
+okay see boom fantastic right i can show you also the weights
+
+0:58:56.559,0:59:02.079
+l2 l2 l2 and l1 oh you can tell no what's the
+
+0:59:04.559,0:59:07.839
+difference but again there are a hundred thousand a
+
+0:59:07.839,0:59:11.280
+hundred thousand uh not entirely sure but in the point the
+
+0:59:15.839,0:59:19.040
+point is that in the l1 in the l1 you have so many more weights
+
+0:59:19.040,0:59:25.760
+a cluster at the zero but there are a few larger weights
+
+0:59:25.760,0:59:28.960
+in the l2 you have all the weights are pretty
+
+0:59:28.960,0:59:32.559
+small can you see right there is no large weights
+
+0:59:32.559,0:59:36.160
+so l1 doesn't shrink the weight l1 just get them
+
+0:59:36.160,0:59:39.760
+towards zero okay that's why you had this big guy here
+
+0:59:39.760,0:59:48.720
+boom okay um finally i know i'm over time
+
+0:59:48.720,0:59:57.520
+the last notebook which is the one that is computing the uncertainty
+
+0:59:57.520,1:00:05.839
+uh through user usage of the dropout right so kernel execute all
+
+1:00:06.160,1:00:09.760
+uh where is it run all [Music]
+
+1:00:09.760,1:00:13.200
+so what are we doing here how do we compute the uncertainty
+
+1:00:13.200,1:00:17.520
+in the previous uh in the in the in the previous
+
+1:00:17.520,1:00:22.000
+uh in the previous lesson right in the slides i just showed you
+
+1:00:22.000,1:00:25.440
+so here we have some points i try to fit them
+
+1:00:25.440,1:00:28.960
+with my network and you get something like this
+
+1:00:28.960,1:00:32.640
+can you tell me what network i used what is the
+
+1:00:32.640,1:00:37.599
+uh where is the chat can you tell what is the
+
+1:00:37.680,1:00:41.680
+non-linearity i used you should know right
+
+1:00:41.680,1:00:44.799
+you don't answer answer okay um and so here yeah
+
+1:00:49.040,1:00:55.119
+and then here i show you how this uncertainty looks okay so what is
+
+1:00:55.119,1:00:58.240
+this this i'm using the uh the network with
+
+1:00:58.240,1:01:03.280
+the dropout and then i actually don't use the evaluation mode i just use the
+
+1:01:03.280,1:01:06.079
+training mode such that the dropout is still on and
+
+1:01:06.079,1:01:10.319
+then i compute the variance of the predictions of the network by
+
+1:01:10.319,1:01:14.480
+sending multiple times the data through okay so here you have
+
+1:01:14.480,1:01:18.000
+range in hundred you know i just provide 100
+
+1:01:18.000,1:01:22.160
+times my data inside the network okay so this
+
+1:01:22.160,1:01:26.319
+is a network with the relu let me show you how a network with it
+
+1:01:26.319,1:01:31.040
+hyperbolic dungeon works so oh yeah
+
+1:01:31.040,1:01:36.559
+let me kill this one so here i create the network
+
+1:01:37.680,1:01:41.040
+and this is the network train with the hyperbolic tangent
+
+1:01:41.040,1:01:44.720
+such it's much nicer right and then i show you
+
+1:01:44.720,1:01:48.079
+the network is in train mode right but then i i feed
+
+1:01:48.079,1:01:51.359
+several times i feed 100 times my data points
+
+1:01:51.359,1:01:56.000
+inside and then i evaluate the mean you can see now
+
+1:01:56.000,1:02:01.119
+that the network mean the network outputs a uncertainty which is constant
+
+1:02:01.119,1:02:06.960
+even if you move outside this interval which was the region where the
+
+1:02:06.960,1:02:10.000
+training data were coming so you can see now that
+
+1:02:10.000,1:02:12.880
+these uncertainty estimation are a bit you know funky
+
+1:02:12.880,1:02:17.119
+as in different activation functions give you different kind of estimation
+
+1:02:17.119,1:02:22.559
+they are not even calibrated nevertheless you have the uncertainty
+
+1:02:22.559,1:02:26.240
+close to the data points it's very very very tiny right so you
+
+1:02:26.240,1:02:31.039
+can tell how far you are from the training region and we use this
+
+1:02:31.039,1:02:35.520
+this trick here this this this part in order to
+
+1:02:35.520,1:02:39.039
+so again this variance here is like it's a it's a
+
+1:02:39.039,1:02:42.799
+differentiable function and so you can run gradient descent
+
+1:02:42.799,1:02:46.000
+right in this in order to minimize the variance
+
+1:02:46.000,1:02:49.920
+and this would allow you to move towards the region
+
+1:02:49.920,1:02:53.839
+where the uh where the uh data points where
+
+1:02:53.839,1:02:58.079
+basically the the training region this this is what we use for the
+
+1:02:58.079,1:03:02.319
+our policy right in our uh driving scenario
+
+1:03:02.319,1:03:08.079
+so oh that was it right uh we reached the end
+
+1:03:08.079,1:03:13.440
+of the class the end of the semester uh it was such a great honor to be
+
+1:03:13.440,1:03:18.880
+your teacher for this semester i screw up a little bit maybe halfway
+
+1:03:18.880,1:03:22.720
+through thank you for you know helping me
+
+1:03:22.720,1:03:27.280
+getting back uh on my feet uh
+
+1:03:27.280,1:03:30.400
+if you need anything right really anything just let me know i
+
+1:03:30.400,1:03:34.720
+i'm always open to discuss and help out and
+
+1:03:34.720,1:03:38.319
+explain and again as i told you before we can even think
+
+1:03:38.319,1:03:42.240
+to have one more extra lesson in a month time if you want
+
+1:03:42.240,1:03:49.520
+the same way zoom and whatever uh we about the energy based models um
+
+1:03:49.520,1:03:53.440
+again if you have any question about all any of the lessons you can
+
+1:03:53.440,1:03:57.520
+write on youtube in the comments below i will answer
+
+1:03:57.520,1:04:01.200
+if you have like specific uh if you are interested in making
+
+1:04:01.200,1:04:04.640
+drawings and visualization uh you can always
+
+1:04:04.640,1:04:08.079
+actually should talk to me because i'm actually uh
+
+1:04:08.079,1:04:12.079
+creating a group for visualizing machine learning stuff
+
+1:04:12.079,1:04:18.960
+um and we have the website we have plenty of things to do english has to be
+
+1:04:18.960,1:04:24.319
+fixed in many of the uh in many of the of the of the
+
+1:04:24.319,1:04:29.039
+contributions some math is broken and you know there is plenty of
+
+1:04:29.039,1:04:33.680
+things uh open source things to do if you are
+
+1:04:33.680,1:04:37.200
+inclined if you are interested and and yeah i think pretty much that's it
+
+1:04:41.440,1:04:47.039
+um i i'll see you next monday right again you should submit the three video
+
+1:04:47.039,1:04:51.039
+presentation i made a um i made a tutorial about how to make a
+
+1:04:51.039,1:04:56.079
+presentation if you like how i teach and you may want to hear my opinion about
+
+1:04:56.079,1:05:01.839
+how you should present your work uh it's on again on youtube
+
+1:05:01.839,1:05:09.039
+and yeah i think that's it all right so again thank you so much and
+
+1:05:09.039,1:05:13.920
+i can't wait to see all your results for the
+
+1:05:13.920,1:05:17.440
+for for the project um [Music]
+
+1:05:17.440,1:05:25.680
+see you on monday good luck bye about the class ah [ __ ] there was one
+
+1:05:25.680,1:05:28.319
+more notebook damn okay
+
+1:05:32.160,1:05:36.640
+okay let me ah okay i can't go over i'm too late right in the extra and there is
+
+1:05:36.640,1:05:41.200
+one more notebook i wanted to talk about which is the
+
+1:05:41.200,1:05:47.839
+so this is the projection notebook yeah okay so
+
+1:05:48.240,1:05:52.799
+ah okay maybe we can do an extra lesson with the projection uh and i talk about
+
+1:05:52.799,1:05:57.039
+this next week up to you guys more questions i know i
+
+1:05:57.039,1:06:01.839
+it's late and uh there was this notebook it's
+
+1:06:04.160,1:06:08.319
+okay yeah you know i want to be teaching more
+
+1:06:09.280,1:06:14.079
+okay no no question there is a question google uses
+
+1:06:14.079,1:06:17.680
+visor to select either parameters for its neural for
+
+1:06:17.680,1:06:22.480
+its networks those tend to be either random search or gaussian process for
+
+1:06:22.480,1:06:27.920
+hyper parameter optimize exactly uh yeah but i haven't worked like i
+
+1:06:27.920,1:06:32.720
+haven't tried them out so i can't really give you a opinion so i
+
+1:06:32.720,1:06:36.319
+i know they exist but i'm not i don't exactly know everything yet
+
+1:06:41.839,1:06:48.720
+okay uh i think that's it right okay so see you monday thanks yeah
+
+1:06:48.720,1:06:53.839
+of course boy post a lasagna oh i put the i put the lemon
+
+1:06:53.839,1:06:57.280
+cake right keep the teaching going yeah
+
+1:06:57.280,1:07:01.359
+that's for sure i think we are there jan is teaching
+
+1:07:01.359,1:07:06.079
+also in the in the fall actually jan and jung are pairing up
+
+1:07:06.079,1:07:10.000
+and they are teaching in the fall and i will be also teaching the labs
+
+1:07:10.000,1:07:14.079
+but i don't know we haven't yet discussed the content
+
+1:07:14.079,1:07:18.319
+i'm like oh boy more teaching but it's fun
+
+1:07:18.319,1:07:24.880
+but okay bye
+
+1:07:26.030,1:07:31.039
+[Music] okay so i think
+
+1:07:31.039,1:07:36.000
+that was it for today unless there are some questions for me
+
+1:07:36.000,1:07:39.520
+for jan uh i know you send me emails i have
+
+1:07:39.520,1:07:43.119
+a few i think a few hundred emails from you
+
+1:07:43.119,1:07:49.440
+i will answer uh i will answer don't worry uh don't don't
+
+1:07:49.440,1:07:52.319
+don't worry too much we can figure out what's happening right don't don't freak
+
+1:07:52.319,1:07:55.359
+out as i told you before we can have an
+
+1:07:55.359,1:07:59.760
+extra lesson in one month for the energy based models uh whenever
+
+1:07:59.760,1:08:03.520
+i'm done preparing it uh again this is like up to
+
+1:08:03.520,1:08:06.319
+you voluntary it's not it's completely off
+
+1:08:06.319,1:08:10.000
+class right it's like i was thinking that it makes sense since
+
+1:08:10.000,1:08:13.280
+someone asked to create like a lab for the energy based
+
+1:08:13.280,1:08:18.880
+model and i said yes well i i always keep my word so uh i didn't
+
+1:08:18.880,1:08:24.080
+manage to do it on time but you know i will do i will work for this
+
+1:08:24.080,1:08:27.520
+um questions nope all right so it was has been an
+
+1:08:30.319,1:08:35.279
+honor uh seriously i i loved being uh been teaching
+
+1:08:35.279,1:08:38.480
+to you this semester uh you had so many questions and
+
+1:08:38.480,1:08:41.920
+especially when we switched to this online format
+
+1:08:41.920,1:08:47.600
+i think i personally loved it right so at least in my opinion before we had jan
+
+1:08:47.600,1:08:53.440
+lecturing and maybe you are a bit shy uh i'm not shy i mean i i don't care
+
+1:08:53.440,1:08:58.239
+so i i think this format where you write questions and i just read out whatever
+
+1:08:58.239,1:09:02.640
+uh it's in your mind uh it really worked well in terms of
+
+1:09:02.640,1:09:06.159
+you know figuring out what are those aspects that are at least
+
+1:09:06.159,1:09:12.560
+a little bit uh harder to uh to to to to catch right uh because again we
+
+1:09:12.560,1:09:16.080
+we may not be able to figure out what is the part that is
+
+1:09:16.080,1:09:21.520
+less um less clear maybe because we've been talking about
+
+1:09:21.520,1:09:25.359
+these things for a while now so again i think if you write those
+
+1:09:25.359,1:09:28.480
+questions i read them and we have like a speaker we have like
+
+1:09:28.480,1:09:32.799
+some kind of conversation presentation it's much more effective in
+
+1:09:32.799,1:09:37.359
+terms of content and delivery right yeah i want
+
+1:09:37.359,1:09:40.719
+to echo what alfredo said it was a it was a pleasure teaching the class as
+
+1:09:40.719,1:09:46.880
+well you know despite the circumstances and uh um you know i'm very thankful to
+
+1:09:46.880,1:09:49.759
+alfredo i think you know he's putting his heart into
+
+1:09:49.759,1:09:55.280
+this as you can tell and um and and
+
+1:09:55.280,1:10:00.840
+you know i'm i'm i'm really i'm really thankful for for him to do all this job
+
+1:10:00.840,1:10:05.600
+um because i think it uh it makes a huge difference in terms of the
+
+1:10:05.600,1:10:10.320
+uh usefulness of the class and um so thank you alfredo
+
+1:10:10.320,1:10:14.159
+thank you and jacquin right justin made the whole the challenge
+
+1:10:14.159,1:10:17.280
+actually did a huge amount oh my god this last month
+
+1:10:17.280,1:10:21.040
+that's the biggest competition possible to put together the data
+
+1:10:21.040,1:10:26.400
+the basic code the data loader uh this was i mean he worked on this for
+
+1:10:26.400,1:10:29.679
+you know a lot for the last few months and and then you
+
+1:10:29.679,1:10:32.960
+know gathering gathering all the other results so thank
+
+1:10:32.960,1:10:36.159
+you yeah i think it's been two months now
+
+1:10:36.159,1:10:40.560
+he's been working on this stuff all right guys
+
+1:10:40.560,1:10:44.080
+thank you you always get me uh you know just tweet me
+
+1:10:44.080,1:10:49.760
+i answer every time uh uh anything you need you know you can find me my door
+
+1:10:49.760,1:10:54.880
+is always open uh or in the office or here on on zoom right so
+
+1:10:54.880,1:10:59.920
+as alfredo said this this project uh we have this uh autonomous driving project
+
+1:10:59.920,1:11:05.600
+and uh you know uh we need all the help we can get with this so if you
+
+1:11:05.600,1:11:09.199
+are in some of the top teams and you are interested in participating uh
+
+1:11:09.199,1:11:12.640
+get in touch with alfredo and you know you could
+
+1:11:12.640,1:11:17.040
+work on this during the summer or or perhaps beyond
+
+1:11:17.040,1:11:20.880
+all right all right um goodbye guys all right okay bye bye guys
