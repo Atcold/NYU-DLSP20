@@ -260,16 +260,16 @@ translator: Mingyang Zhao
     <tr>
       <td rowspan="3" align="center"><a href="en/week12/12">⑫</a></td>
       <td rowspan="2">Lecture</td>
-      <td><a href="en/week12/12-1">DL for NLP I</a></td>
+      <td><a href="zh/week12/12-1">DL for NLP I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
         <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week12/12-2">DL for NLP II</a></td></tr>
+    <tr><td><a href="zh/week12/12-2">DL for NLP II</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week12/12-3">Attention & transformer</a></td>
+      <td><a href="zh/week12/12-3">Attention & transformer</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
@@ -278,18 +278,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 13 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="3" align="center"><a href="zh/week13/13">⑬</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week13/13-1">图形卷积网络 I</a></td>
+      <td><a href="zh/week13/13-1">图形卷积网络 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
         <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week13/13-2">图形卷积网络 II</a></td></tr>
+    <tr><td><a href="zh/week13/13-2">图形卷积网络 II</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week13/13-3">图形卷积网络 III</a></td>
+      <td><a href="zh/week13/13-3">图形卷积网络 III</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
@@ -298,18 +298,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 14 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
+      <td rowspan="3" align="center"><a href="zh/week14/14">⑭</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week14/14-1">用于结构化预测的深度学习</a></td>
+      <td><a href="zh/week14/14-1">用于结构化预测的深度学习</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
         <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week14/14-2">图形能量基礎方式</a></td></tr>
+    <tr><td><a href="zh/week14/14-2">图形能量基礎方式</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week14/14-3">正则化和贝叶斯</a></td>
+      <td><a href="zh/week14/14-3">正则化和贝叶斯</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
@@ -320,16 +320,16 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 15 =============================== -->
     <tr>
-      <td rowspan="2" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2" align="center"><a href="zh/week15/15">⑮</a></td>
       <td rowspan="2">动手做</td>
-      <td><a href="en/week15/15-1">潜在变量基于能量的模型（EBM）的推论</a></td>
+      <td><a href="zh/week15/15-1">潜在变量基于能量的模型（EBM）的推论</a></td>
       <td rowspan="1">
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
         <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
       </td>
     </tr>
     <tr>
-      <td><a href="en/week15/15-2">训练潜在变量能量基础模型（EBM）</a></td>
+      <td><a href="zh/week15/15-2">训练潜在变量能量基础模型（EBM）</a></td>
       <td rowspan="1">
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
         <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
