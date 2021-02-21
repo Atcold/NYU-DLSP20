@@ -114,9 +114,9 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="zh/week05/05">⑤</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week05/05-1">优化工具 I</a></td>
+      <td><a href="zh/week05/05-1">优化工具 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
         <a href="https://youtu.be/--NZb480zlg">🎥</a>
