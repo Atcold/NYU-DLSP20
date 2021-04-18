@@ -12,4 +12,4 @@ RUN conda env create -f /tmp/environment.yml
 ENV PATH /opt/conda/envs/pDL/bin:$PATH
 RUN echo "source activate pDL" >> ~/.bashrc
 
-CMD ["/bin/bahs /tmp/start_notebook.sh"]
+CMD ["/bin/bash"]
