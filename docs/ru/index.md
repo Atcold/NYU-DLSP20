@@ -13,14 +13,14 @@ lang: ru
 <!-- | INSTRUCTORS | Yann LeCun & Alfredo Canziani |
 | LECTURES    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | PRACTICA    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
+| FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | MATERIAL    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) | -->
 
 | ПРЕПОДАВАТЕЛИ | Yann LeCun & Alfredo Canziani |
-| ЛЕКЦИИ    | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| ЛЕКЦИИ        | Mondays 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | ПРАКТИКУМЫ    | Tuesdays 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| [PIAZZA](https://piazza.com/nyu/spring2020/dsga1008/home)      | Access code: `DLSP20` |
-| МАТЕРИАЛЫ    | [Google Drive](https://bitly.com/DLSP20), [Рабочие тетради](https://github.com/Atcold/pytorch-Deep-Learning) |
+| ФОРУМ         | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| МАТЕРИАЛЫ     | [Google Drive](https://bitly.com/DLSP20), [Рабочие тетради](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 <!-- ## Description -->
@@ -325,6 +325,23 @@ lang: ru
         <a href="https://youtu.be/DL7iew823c0">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="{{site.baseurl}}/ru/week15/15">⑮</a></td>
+      <td rowspan="2">Практикум</td>
+      <td><a href="{{site.baseurl}}/ru/week15/15-1">Вывод для энергетических моделей со скрытыми переменными</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="{{site.baseurl}}/ru/week15/15-2">Обучение энергетических моделей со скрытыми переменными</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -333,7 +350,7 @@ lang: ru
 
 | Должность | Фото | Контакт | О себе |
 |:-----|:-----:|:--------|:------|
-|Преподаватель|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>и лауреат Премии Тьюринга|
+|Преподаватель|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>и лауреат Премии Тьюринга|
 |Преподаватель|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
 |Ассистент|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
 |Веб-разработчик|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
