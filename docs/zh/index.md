@@ -114,18 +114,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 5 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week05/05">⑤</a></td>
+      <td rowspan="3" align="center"><a href="zh/week05/05">⑤</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week05/05-1">优化工具 I</a></td>
+      <td><a href="zh/week05/05-1">优化工具 I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1pwlGN6hDFfEYQqBqcMjWbe4yfBDTxsab">🖥️</a>
         <a href="https://youtu.be/--NZb480zlg">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week05/05-2">优化方法 II</a></td></tr>
+    <tr><td><a href="zh/week05/05-2">优化方法 II</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week05/05-3">了解卷积和自动微分引擎</a></td>
+      <td><a href="zh/week05/05-3">了解卷积和自动微分引擎</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/03-autograd_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/extra/b-custom_grads.ipynb">📓</a>
@@ -134,19 +134,19 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 6 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week06/06">⑥</a></td>
+      <td rowspan="3" align="center"><a href="zh/week06/06">⑥</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week06/06-1">卷积神经网络的用途</a></td>
+      <td><a href="zh/week06/06-1">卷积神经网络的用途</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1opT7lV0IRYJegtZjuHsKhlsM5L7GpGL1">🖥️</a>
         <a href="https://drive.google.com/open?id=1sdeVBC3nuh5Zkm2sqzdScEicRvLc_v-F">🖥️</a>
         <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week06/06-2">循环神经网路和注意力</a></td></tr>
+    <tr><td><a href="zh/week06/06-2">循环神经网路和注意力</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week06/06-3">训练循环神经网路</a></td>
+      <td><a href="zh/week06/06-3">训练循环神经网路</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
@@ -156,18 +156,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 7 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week07/07">⑦</a></td>
+      <td rowspan="3" align="center"><a href="zh/week07/07">⑦</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week07/07-1">能量基础模型</a></td>
+      <td><a href="zh/week07/07-1">能量基础模型</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1z8Dz1YtkOEJpU-gh5RIjORs3GGqkYJQa">🖥️</a>
         <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week07/07-2">自我监督学习(SSL)﹑能量基础模型(EBM)</a></td></tr>
+    <tr><td><a href="zh/week07/07-2">自我监督学习(SSL)﹑能量基础模型(EBM)</a></td></tr>
     <tr>
       <td rowspan="1">Practicum</td>
-      <td><a href="en/week07/07-3">自动编码器</a></td>
+      <td><a href="zh/week07/07-3">自动编码器</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/10-autoencoder.ipynb">📓</a>
@@ -176,18 +176,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 8 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week08/08">⑧</a></td>
+      <td rowspan="3" align="center"><a href="zh/week08/08">⑧</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week08/08-1">对比法</a></td>
+      <td><a href="zh/week08/08-1">对比法</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1Zo_PyBEO6aNt0GV74kj8MQL7kfHdIHYO">🖥️</a>
         <a href="https://youtu.be/ZaVP2SY23nc">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week08/08-2">对潜在进行正则化</a></td></tr>
+    <tr><td><a href="zh/week08/08-2">对潜在进行正则化</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week08/08-3">训练变分自编码器</a></td>
+      <td><a href="zh/week08/08-3">训练变分自编码器</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/11-VAE.ipynb">📓</a>
@@ -196,18 +196,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 9 ================================ -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week09/09">⑨</a></td>
+      <td rowspan="3" align="center"><a href="zh/week09/09">⑨</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week09/09-1">稀疏性</a></td>
+      <td><a href="zh/week09/09-1">稀疏性</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1wJRzhjSqlrSqEpX4Omagb_gdIkQ5f-6K">🖥️</a>
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week09/09-2">世界模型﹑对抗性生成网络(GANs)</a></td></tr>
+    <tr><td><a href="zh/week09/09-2">世界模型﹑对抗性生成网络(GANs)</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week09/09-3">训练对抗性生成网络(GANs)</a></td>
+      <td><a href="zh/week09/09-3">训练对抗性生成网络(GANs)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
@@ -216,18 +216,18 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 10 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week10/10">⑩</a></td>
+      <td rowspan="3" align="center"><a href="zh/week10/10">⑩</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week10/10-1">CV自我监督学习一</a></td>
+      <td><a href="zh/week10/10-1">CV自我监督学习一</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=16lsnDN2HIBTcRucbVKY5B_U16c0tNQhR">🖥️</a>
         <a href="https://youtu.be/0KeR6i1_56g">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week10/10-2">CV自我监督学习二</a></td></tr>
+    <tr><td><a href="zh/week10/10-2">CV自我监督学习二</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week10/10-3">有预测性的控制</a></td>
+      <td><a href="zh/week10/10-3">有预测性的控制</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/09%20-%20Controller%20learning.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/14-truck_backer-upper.ipynb">📓</a>
@@ -236,9 +236,9 @@ translator: Mingyang Zhao
     </tr>
 <!-- =============================== WEEK 11 =============================== -->
     <tr>
-      <td rowspan="3" align="center"><a href="en/week11/11">⑪</a></td>
+      <td rowspan="3" align="center"><a href="zh/week11/11">⑪</a></td>
       <td rowspan="2">讲座</td>
-      <td><a href="en/week11/11-1">激活值</a></td>
+      <td><a href="zh/week11/11-1">激活值</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1AzFVLG7D4NK6ugh60f0cJQGYF5OL2sUB">🖥️</a>
         <a href="https://drive.google.com/file/d/1rkiZy0vjZqE2w7baVWvxwfAGae0Eh1Wm">🖥️</a>
@@ -246,16 +246,96 @@ translator: Mingyang Zhao
         <a href="https://youtu.be/bj1fh3BvqSU">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week11/11-2">损失</a></td></tr>
+    <tr><td><a href="zh/week11/11-2">损失</a></td></tr>
     <tr>
       <td rowspan="1">动手做</td>
-      <td><a href="en/week11/11-3">不确定性下的预测和策略学习(PPUU)</a></td>
+      <td><a href="zh/week11/11-3">不确定性下的预测和策略学习(PPUU)</a></td>
       <td>
         <a href="http://bit.ly/PPUU-slides">🖥️</a>
         <a href="http://bit.ly/PPUU-code">📓</a>
         <a href="https://youtu.be/VcrCr-KNBHc">🎥</a>
       </td>
     </tr>
+    <!-- =============================== WEEK 12 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="zh/week12/12">⑫</a></td>
+      <td rowspan="2">Lecture</td>
+      <td><a href="zh/week12/12-1">DL for NLP I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
+        <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="zh/week12/12-2">DL for NLP II</a></td></tr>
+    <tr>
+      <td rowspan="1">Practicum</td>
+      <td><a href="zh/week12/12-3">Attention & transformer</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/10%20-%20Attention%20%26%20transformer.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/15-transformer.ipynb">📓</a>
+        <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 13 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="zh/week13/13">⑬</a></td>
+      <td rowspan="2">讲座</td>
+      <td><a href="zh/week13/13-1">图形卷积网络 I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
+        <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="zh/week13/13-2">图形卷积网络 II</a></td></tr>
+    <tr>
+      <td rowspan="1">动手做</td>
+      <td><a href="zh/week13/13-3">图形卷积网络 III</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
+        <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 14 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="zh/week14/14">⑭</a></td>
+      <td rowspan="2">讲座</td>
+      <td><a href="zh/week14/14-1">用于结构化预测的深度学习</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
+        <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="zh/week14/14-2">图形能量基礎方式</a></td></tr>
+    <tr>
+      <td rowspan="1">动手做</td>
+      <td><a href="zh/week14/14-3">正则化和贝叶斯</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/08%20-%20Bayesian%20NN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/13-bayesian_nn.ipynb">📓</a>
+        <a href="https://youtu.be/DL7iew823c0">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="zh/week15/15">⑮</a></td>
+      <td rowspan="2">动手做</td>
+      <td><a href="zh/week15/15-1">潜在变量基于能量的模型（EBM）的推论</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="zh/week15/15-2">训练潜在变量能量基础模型（EBM）</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
+    
   </tbody>
 </table>
 
