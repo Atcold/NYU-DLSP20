@@ -12,6 +12,7 @@ lang: hu
 | ELŐADÁS    | Hétfő 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | GYAKORLAT    | Kedd 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | FÓRUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| DISCORD     | [NYU DL](https://discord.gg/CthuqsX8Pb) |
 | TANANYAG    | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
