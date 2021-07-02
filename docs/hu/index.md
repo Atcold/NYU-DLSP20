@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Deep Learning
+title: Mély Tanulás
 author: Alfredo Canziani
 lang-ref: home
 lang: hu
