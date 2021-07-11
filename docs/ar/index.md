@@ -10,21 +10,21 @@ translator: Anass Elhoud
 
 **DS-GA 1008 · ربيع 2020 · [مركز جامعة نيويورك لعلم البيانات](http://cds.nyu.edu/)**
 
-| المدرسين               | Yann LeCun & Alfredo Canziani |
-| المحاضرات    | كل إثنين 16:55 – 18:35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| التدريب   | كل ثلثاء 19:10 – 20:00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
-| منتدى                  | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
-| المواد    | [          جوجل درايف](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
+| المدرسين               | Yann LeCun و Alfredo Canziani |
+| المحاضرات    | كل إثنين 16:55 – 18:35، [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| التدريب   | كل ثلاثاء 19:10 – 20:00، [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
+| المنتدى                  | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| المواد    | [Google Drive](https://bitly.com/DLSP20)، [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
 ## وصف عام
 
-تتعلق هذه الدورة بأحدث التقنيات في التعلم العميق والتعلم التمثيلي ، مع التركيز على التعلم العميق الموجه وغير الموجه ، وطرق التضمين ، والتعلم المتري ، والشبكات الالتفافية والمتكررة ، مع تطبيقات للرؤية الحاسوبية (Computer Vision) ، وفهم اللغة الطبيعية ، والتعرف على الكلام. المتطلبات الأساسية تشمل:
+تتمحور هذه الدورة عن أحدث التقنيات في التعلم العميق والتعلم التمثيلي، مع التركيز على التعلم العميق بإشراف وبدون إشراف، طرق التضمين، والتعلم المتري، والشبكات الالتفافية والتكرارية، مع تطبيقات في مجال الرؤية الحاسوبية (Computer Vision)، وفهم اللغة الطبيعية، والتعرف على الكلام. المتطلبات الأساسية تشمل:
  [DS-GA 1001 مقدمة لعلم البيانات](https://cds.nyu.edu/academics/ms-curriculum/) أو دورة تعلم الآلة على مستوى الدراسات العليا.
 
 ## المحاضرات
 
-**عنوان تفسيري**: 🖥 slides, 📓 Jupyter notebook, 🎥 فيديو يوتيوب.
+**عنوان تفسيري**: 🖥 الشرائح، 📓 Jupyter notebook، 🎥 فيديو يوتيوب.
 
 <table>
 <!-- =============================== HEADER ================================ -->
@@ -50,7 +50,7 @@ translator: Anass Elhoud
     <tr><td><a href="en/week01/01-2">التطور والتعلم العميق</a></td></tr>
     <tr>
       <td rowspan="1">تطبيق عملي</td>
-      <td><a href="en/week01/01-3"> الشبكات العصبية (NN, Neural nets)</a></td>
+      <td><a href="en/week01/01-3"> الشبكات العصبية (NN، Neural nets)</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/01-tensor_tutorial.ipynb">📓</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/02-space_stretching.ipynb">📓</a>
@@ -61,7 +61,7 @@ translator: Anass Elhoud
     <tr>
       <td rowspan="3" align="center"><a href="en/week02/02">②</a></td>
       <td rowspan="2">محاضرة</td>
-      <td><a href="en/week02/02-1">إنحدار تدريجي عشوائي والانتشار الخلفي</a></td>
+      <td><a href="en/week02/02-1">الانحدار التدريجي العشوائي والانتشار الخلفي</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=1w2jV_BT2hWzfOKBR02x_rB4-dfVUI6SR">🖥️</a>
         <a href="https://www.youtube.com/watch?v=d9vdh3b787Y">🎥</a>
@@ -139,10 +139,10 @@ translator: Anass Elhoud
         <a href="https://youtu.be/ycbMGyCPzvE">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week06/06-2">الشبكات العصبية المتكررة واهتماماتها</a></td></tr>
+    <tr><td><a href="en/week06/06-2">الشبكات العصبية التكرارية واهتماماتها</a></td></tr>
     <tr>
       <td rowspan="1">تطبيق عملي</td>
-      <td><a href="en/week06/06-3">تطبيق حول الشبكات العصبية المتكررة</a></td>
+      <td><a href="en/week06/06-3">تطبيق حول الشبكات العصبية التكرارية</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/04%20-%20RNN.pdf">🖥️</a>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/08-seq_classification.ipynb">📓</a>
@@ -160,7 +160,7 @@ translator: Anass Elhoud
         <a href="https://youtu.be/tVwV14YkbYs">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week07/07-2">SSL, EBM</a></td></tr>
+    <tr><td><a href="en/week07/07-2">SSL، EBM</a></td></tr>
     <tr>
       <td rowspan="1">تطبيق عملي</td>
       <td><a href="en/week07/07-3">المشفرات التلقائية</a></td>
@@ -200,10 +200,10 @@ translator: Anass Elhoud
         <a href="https://youtu.be/Pgct8PKV7iw">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="en/week09/09-2">الشبكات الخصومية التوليدية GANs</a></td></tr>
+    <tr><td><a href="en/week09/09-2">شبكات الخصومية التوليدية GANs</a></td></tr>
     <tr>
       <td rowspan="1">تطبيق عملي</td>
-      <td><a href="en/week09/09-3">  تدريب حول الشبكات الخصومية التوليدية</a></td>
+      <td><a href="en/week09/09-3">  تدريب حول شبكات الخصومية التوليدية</a></td>
       <td>
         <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/05%20-%20Generative%20models.pdf">🖥️</a>
         <a href="https://github.com/pytorch/examples/tree/master/dcgan">📓</a>
@@ -272,6 +272,65 @@ translator: Anass Elhoud
         <a href="https://youtu.be/f01J0Dri-6k">🎥</a>
       </td>
     </tr>
+<!-- =============================== WEEK 13 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week13/13">⑬</a></td>
+      <td rowspan="2">محاضرة</td>
+      <td><a href="en/week13/13-1">GCNs I</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1oq-nZE2bEiQjqBlmk5_N_rFC8LQY0jQr/">🖥️</a>
+        <a href="https://youtu.be/Iiv9R6BjxHM">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week13/13-2">GCNs II</a></td></tr>
+    <tr>
+      <td rowspan="1">تطبيق عملي</td>
+      <td><a href="en/week13/13-3">GCNs III</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/11%20-%20GCN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/16-gated_GCN.ipynb">📓</a>
+        <a href="https://youtu.be/2aKXWqkbpWg">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 14 =============================== -->
+    <tr>
+      <td rowspan="3" align="center"><a href="en/week14/14">⑭</a></td>
+      <td rowspan="2">محاضرة</td>
+      <td><a href="en/week14/14-1">التنبؤ المنظم</a></td>
+      <td rowspan="2">
+        <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
+        <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
+      </td>
+    </tr>
+    <tr><td><a href="en/week14/14-2">طرق رسومية</a></td></tr>
+    <tr>
+      <td rowspan="1">تطبيق عملي</td>
+      <td><a href="en/week14/14-3">التنظيم والبايزية</a></td>
+      <td>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/07%20-%20Regularisation.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/12-regularization.ipynb">📓</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/08%20-%20Bayesian%20NN.pdf">🖥️</a>
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/13-bayesian_nn.ipynb">📓</a>
+        <a href="https://youtu.be/DL7iew823c0">🎥</a>
+      </td>
+    </tr>
+<!-- =============================== WEEK 15 =============================== -->
+    <tr>
+      <td rowspan="2" align="center"><a href="en/week15/15">⑮</a></td>
+      <td rowspan="2">تطبيق عملي</td>
+      <td><a href="en/week15/15-1">الاستدلال عن المتغير الكامن EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/sbhr2wjU1-I">🎥</a>
+      </td>
+    </tr>
+    <tr>
+      <td><a href="en/week15/15-2">تدريب المتغير الكامن EBMs</a></td>
+      <td rowspan="1">
+        <a href="https://github.com/Atcold/pytorch-Deep-Learning/blob/master/slides/12%20-%20EBM.pdf">🖥️</a>
+        <a href="https://youtu.be/XLSb1Cs1Jao">🎥</a>
+      </td>
+    </tr>
   </tbody>
 </table>
 
@@ -284,9 +343,11 @@ translator: Anass Elhoud
 |مدرس|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|أستاذ مساعد في علوم الكمبيوتر بجامعة نيويورك|
 |مساعد|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|طالب دكتوراه في علوم الكمبيوتر بجامعة نيويورك|
 |مشرف الموقع|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|طالب دكتوراه في علوم الكمبيوتر بجامعة نيويورك|
-|ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
+
+<!-- |ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Serkan Karakulak <br>sk7685@nyu.edu|
 |ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Raghav Jajodia <br>rj1408@nyu.edu|
 |ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Priyank Pathak <br>pp1953@nyu.edu|
 |ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Chiao-Hsun Wang <br>chw371@nyu.edu|
 |ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Pedro Vidal<br>pmh314@nyu.edu|
-|ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu|
+|ممهد|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">|Bixing Yan <br>by783@nyu.edu| -->
+
