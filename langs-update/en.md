@@ -4,71 +4,102 @@
     - [x] 01-1.md
     - [x] 01-2.md
     - [x] 01-3.md
+    - [x] lecture01.sbv
+    - [x] practicum01.sbv
 - [x] week02
     - [x] 02.md
     - [x] 02-1.md
     - [x] 02-2.md
     - [x] 02-3.md
+    - [x] lecture02.sbv
+    - [x] practicum02.sbv
 - [x] week03
     - [x] 03.md
     - [x] 03-1.md
     - [x] 03-2.md
     - [x] 03-3.md
+    - [x] lecture03.sbv
+    - [x] practicum03.sbv
 - [x] week04
     - [x] 04.md
     - [x] 04-1.md
+    - [x] practicum04.sbv
 - [x] week05
     - [x] 05.md
     - [x] 05-1.md
     - [x] 05-2.md
     - [x] 05-3.md
+    - [x] lecture05.sbv
+    - [x] practicum05.sbv
 - [x] week06
     - [x] 06.md
     - [x] 06-1.md
     - [x] 06-2.md
     - [x] 06-3.md
+    - [x] lecture06.sbv
+    - [x] practicum06.sbv
 - [x] week07
     - [x] 07.md
     - [x] 07-1.md
     - [x] 07-2.md
     - [x] 07-3.md
+    - [x] lecture07.sbv
+    - [x] practicum07.sbv
 - [x] week08
     - [x] 08.md
     - [x] 08-1.md
     - [x] 08-2.md
     - [x] 08-3.md
+    - [x] lecture08.sbv
+    - [x] practicum08.sbv
 - [x] week09
     - [x] 09.md
     - [x] 09-1.md
     - [x] 09-2.md
     - [x] 09-3.md
+    - [x] lecture09.sbv
+    - [x] practicum09.sbv
 - [x] week10
     - [x] 10.md
     - [x] 10-1.md
     - [x] 10-2.md
     - [x] 10-3.md
+    - [x] lecture10.sbv
+    - [x] practicum10.sbv
 - [x] week11
     - [x] 11.md
     - [x] 11-1.md
     - [x] 11-2.md
     - [x] 11-3.md
+    - [x] lecture11.sbv
+    - [x] practicum11.sbv
 - [x] week12
     - [x] 12.md
     - [x] 12-1.md
     - [x] 12-2.md
     - [x] 12-3.md
+    - [x] lecture12.sbv
+    - [x] practicum12.sbv
 - [x] week13
     - [x] 13.md
     - [x] 13-1.md
     - [x] 13-2.md
     - [x] 13-3.md
+    - [x] lecture13.sbv
+    - [x] practicum13.sbv
 - [x] week14
     - [x] 14.md
     - [x] 14-1.md
     - [x] 14-2.md
     - [x] 14-3.md
+    - [x] lecture14.sbv
+    - [x] practicum14.sbv
 - [x] week15
     - [x] 15.md
     - [x] 15-1.md
     - [x] 15-2.md
+    - [x] lecture15.sbv
+    - [x] practicum15.sbv
 - [x] about.md
+- [x] index.md
+- [x] README.md

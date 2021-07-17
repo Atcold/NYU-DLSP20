@@ -4,71 +4,102 @@
     - [ ] 01-1.md
     - [ ] 01-2.md
     - [ ] 01-3.md
+    - [ ] lecture01.sbv
+    - [ ] practicum01.sbv
 - [ ] week02
     - [ ] 02.md
     - [ ] 02-1.md
     - [x] 02-2.md
     - [ ] 02-3.md
+    - [x] lecture02.sbv
+    - [ ] practicum02.sbv
 - [ ] week03
     - [ ] 03.md
     - [ ] 03-1.md
     - [ ] 03-2.md
     - [x] 03-3.md
-- [x] week04
+    - [ ] lecture03.sbv
+    - [ ] practicum03.sbv
+- [ ] week04
     - [x] 04.md
     - [x] 04-1.md
+    - [ ] practicum04.sbv
 - [ ] week05
     - [ ] 05.md
     - [ ] 05-1.md
     - [ ] 05-2.md
     - [ ] 05-3.md
+    - [ ] lecture05.sbv
+    - [ ] practicum05.sbv
 - [ ] week06
     - [x] 06.md
     - [x] 06-1.md
     - [x] 06-2.md
     - [ ] 06-3.md
+    - [ ] lecture06.sbv
+    - [ ] practicum06.sbv
 - [ ] week07
     - [ ] 07.md
     - [ ] 07-1.md
     - [ ] 07-2.md
     - [ ] 07-3.md
+    - [ ] lecture07.sbv
+    - [ ] practicum07.sbv
 - [ ] week08
     - [ ] 08.md
     - [ ] 08-1.md
     - [ ] 08-2.md
     - [ ] 08-3.md
+    - [ ] lecture08.sbv
+    - [ ] practicum08.sbv
 - [ ] week09
     - [x] 09.md
     - [x] 09-1.md
     - [ ] 09-2.md
     - [ ] 09-3.md
+    - [ ] lecture09.sbv
+    - [ ] practicum09.sbv
 - [ ] week10
     - [ ] 10.md
     - [ ] 10-1.md
     - [ ] 10-2.md
     - [ ] 10-3.md
+    - [ ] lecture10.sbv
+    - [ ] practicum10.sbv
 - [ ] week11
     - [ ] 11.md
     - [ ] 11-1.md
     - [ ] 11-2.md
     - [ ] 11-3.md
+    - [ ] lecture11.sbv
+    - [ ] practicum11.sbv
 - [ ] week12
     - [x] 12.md
     - [x] 12-1.md
     - [x] 12-2.md
     - [ ] 12-3.md
+    - [ ] lecture12.sbv
+    - [ ] practicum12.sbv
 - [ ] week13
     - [x] 13.md
     - [x] 13-1.md
     - [ ] 13-2.md
     - [ ] 13-3.md
+    - [ ] lecture13.sbv
+    - [ ] practicum13.sbv
 - [ ] week14
     - [x] 14.md
     - [x] 14-1.md
     - [x] 14-2.md
     - [x] 14-3.md
+    - [ ] lecture14.sbv
+    - [ ] practicum14.sbv
 - [ ] week15
     - [ ] 15.md
     - [ ] 15-1.md
     - [ ] 15-2.md
+    - [ ] lecture15.sbv
+    - [ ] practicum15.sbv
 - [ ] about.md
+- [x] index.md
+- [x] README-FA.md
