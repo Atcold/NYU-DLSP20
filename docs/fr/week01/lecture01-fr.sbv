@@ -1,0 +1,3648 @@
+0:00:00.030,0:00:01.170
+OK, donc tout d'abord
+
+0:00:01.170,0:00:06.029
+j'ai un terrible aveu à vous faire. En fait, ce n'est pas moi qui dirige ce cours, mais ces deux personnes :
+
+0:00:06.700,0:00:12.120
+Alfredo Canziani et Mark Goldstein, dont les noms sont ici [montre leurs noms sur la diapositive]. Ce sont les TA [Professeurs Assistants] et
+
+0:00:13.480,0:00:15.780
+vous leur parlerez beaucoup plus souvent qu'à moi.
+
+0:00:16.990,0:00:21.299
+C'est la première chose. L'autre confession que je dois faire est que si vous avez des questions sur ce cours,
+
+0:00:21.609,0:00:26.249
+ne les posez pas à la fin de ce celui-ci car je dois courir juste après pour prendre un avion.
+
+0:00:27.039,0:00:30.039
+Cela peut attendre la semaine prochaine.
+
+0:00:30.880,0:00:33.660
+Ok, alors commençons tout de suite.
+
+0:00:34.200,0:00:38.790
+Quelques informations de base sur le cours. Il y a un site web comme vous pouvez le voir.
+
+0:00:39.340,0:00:43.799
+Je ferai tout mon possible pour mettre le PDF des diapositives sur le site web.
+
+0:00:43.960,0:00:47.550
+Probablement juste avant la conférence, probablement quelques minutes avant la conférence, en général.
+
+0:00:48.640,0:00:53.250
+Mais il devrait être là au moment où vous arrivez en classe, ou au moins au moment où j'arrive en classe.
+
+0:00:55.930,0:01:00.959
+Il y aura neuf conférences que je vais donner, le lundi soir.
+
+0:01:01.359,0:01:04.618
+Une session pratique est également organisée tous les mardis soir
+
+0:01:05.500,0:01:07.500
+avec Alfredo et Mark.
+
+0:01:07.869,0:01:11.159
+Ils aborderont les questions pratiques,
+
+0:01:11.890,0:01:16.199
+vous rafraîchirons la mémoire sur les mathématiques qui sont
+
+0:01:16.200,0:01:24.000
+nécessaires à ce cours, ainsi que les concepts de base. Aussi quelques tutoriels sur la façon d'utiliser PyTorch et divers autres outils.
+
+0:01:24.000,0:01:29.219
+Et il y aura trois [4 en réalité] conférences animées par des invités. Les noms des conférenciers ne sont pas encore définitifs.
+
+0:01:29.740,0:01:32.460
+Mais ce sera sur des sujets comme le traitement du langage naturel,
+
+0:01:33.740,0:01:38.070
+la vision par ordinateur, l'apprentissage autosupervisé, des choses comme ça.
+
+0:01:41.020,0:01:45.780
+Il va y avoir un examen de mi-parcours, ou du moins nous pensons qu'il y en aura un.
+
+0:01:48.070,0:01:52.379
+Et cela va prendre une de ces sessions, vers le mois de mars.
+
+0:01:53.860,0:01:57.719
+L'évaluation se fera à mi-parcours et sur un projet final.
+
+0:01:58.869,0:02:01.499
+Vous pouvez former des groupes de deux.
+
+0:02:02.350,0:02:04.350
+Avons-nous dit deux ou trois, ou seulement deux ?
+
+0:02:07.660,0:02:09.660
+Nous n'avons pas encore décidé, nous verrons.
+
+0:02:10.869,0:02:16.919
+Le projet portera probablement sur une combinaison d'apprentissage autosupervisé et de conduite autonome. Nous sommes
+
+0:02:17.530,0:02:23.000
+en train de discuter avec diverses personnes pour obtenir des données et des choses comme ça.
+
+0:02:23.350,0:02:29.729
+Ok, laissez-moi vous parler un peu de cette première conférence. Elle va être une sorte d'introduction générale sur
+
+0:02:29.730,0:02:32.610
+ce qu'est réellement l’apprentissage profond. Sur ce qu’il peut faire et ce qu'il ne peut pas faire.
+
+0:02:32.610,0:02:35.839
+Cela servira donc d'introduction à l'ensemble du cours.
+
+0:02:35.840,0:02:39.600
+Donc, nous allons parcourir l'ensemble du cours, mais en des termes,
+
+0:02:39.600,0:02:42.729
+très superficiels, pour que vous obteniez une sorte
+
+0:02:42.730,0:02:48.719
+d'idée générale de tous les sujets dont nous parlerons. Et chaque fois que je parlerai d'un sujet particulier
+
+0:02:48.720,0:02:53.020
+vous verrez où il s'insère dans cette grande photo.
+
+0:02:53.020,0:02:55.020
+Mais avant cela...
+
+0:02:55.330,0:02:58.330
+Donc il y a une condition préalable pour le cours qui est que
+
+0:02:58.330,0:03:06.000
+vous devez être un peu familier avec l'apprentissage machine ou au moins avoir des connaissances de base des concepts de l'apprentissage machine.
+
+0:03:06.000,0:03:10.830
+Qui ici a joué avec PyTorch, TensorFlow, a entraîné un réseau neuronal ?
+
+0:03:12.880,0:03:20.639
+Ok. Qui n'a pas fait cela ? Ne soyez pas timide. Ok donc la majorité l'a fait.
+
+0:03:22.080,0:03:25.080
+Ce qui est une bonne chose.
+
+0:03:25.270,0:03:30.059
+Mais je ne vais pas supposer que vous savez tout à ce sujet. En particulier, je ne vais pas supposer que vous en savez beaucoup,
+
+0:03:31.810,0:03:38.699
+sur les techniques profondes sous-jacentes. Ok, voici donc le plan du cours 
+
+0:03:39.360,0:03:43.080
+et en fonction de ce que vous me dites je peux ajuster en allant
+
+0:03:43.080,0:03:49.230
+plus vite sur certaines parties qui vous semblent trop évidentes car vous avez déjà joué avec cela, ou d'autres choses.
+
+0:03:52.930,0:03:58.000
+Donc, introduction à l’apprentissage supervisé, réseaux de neurones, apprentissage profond. C'est ce dont je vais parler aujourd'hui.
+
+0:03:58.000,0:04:03.239
+Ce que l'apprentissage profond peut faire, ce qu'il ne peut pas faire, quelles sont les bonnes caractéristiques. L'apprentissage profond consiste à apprendre des représentations.
+
+0:04:03.400,0:04:05.019
+C'est de cela que je vais parler.
+
+0:04:05.019,0:04:10.229
+La semaine prochaine sera consacrée à la rétropropagation et aux composants architecturaux de base. Des choses comme
+
+0:04:10.810,0:04:16.500
+le fait que vous construisez des réseaux neuronaux à partir de modules que vous connectez les uns aux autres. Puis, vous calculez des gradients automatiquement par
+
+0:04:16.959,0:04:20.969
+différenciation. Et puis les différents types d'architectures, les fonctions de perte,
+
+0:04:21.609,0:04:26.489
+les fonctions d'activation, les différents modules. Des astuces comme le partage et la fixation des poids,
+
+0:04:27.370,0:04:29.370
+les interactions multiplicatives,
+
+0:04:30.389,0:04:33.389
+l’attention, des choses comme ça.
+
+0:04:33.939,0:04:39.419
+Et puis, en particulier les macro architectures, comme le mélange d'experts, les réseaux siamois, les hyper-réseaux, etc.
+
+0:04:40.150,0:04:45.719
+Nous allons donc nous y plonger assez rapidement et c'est approprié si vous avez déjà joué avec certaines de ces choses.
+
+0:04:46.930,0:04:52.259
+Il y aura une ou deux conférences - je n'ai pas encore tout à fait décidé - sur les réseaux convolutifs [ConvNets dans la suite] et leurs applications.
+
+0:04:53.949,0:04:56.938
+L'une d’elles pourrait être donnée par un invité.
+
+0:04:59.289,0:05:06.119
+Puis, plus spécifiquement, sur les architectures d'apprentissage profond qui sont utiles dans des cas particuliers.
+
+0:05:06.120,0:05:12.819
+Des choses comme les réseaux de neurones récurrents avec rétropropagation dans le temps, c'est-à-dire la façon dont on entraîne les réseaux neuronaux récurrents [RNNs]
+
+0:05:13.000,0:05:17.529
+Et en quelque sorte des applications des RNNS à
+
+0:05:18.159,0:05:24.119
+des choses comme le contrôle, la production de séries temporelles et des choses comme ça.
+
+0:05:25.219,0:05:30.219
+Puis des choses comme la combinaison de la récurrence et des systèmes de portes.
+
+0:05:30.219,0:05:34.588
+Des interactions multiplicatives comme les GRUs et les LSTMs.
+
+0:05:35.469,0:05:39.749
+Et puis des choses qui utilisent vraiment les interactions multiplicatives comme
+
+0:05:41.229,0:05:46.889
+base de leur architecture comme les réseaux mémoire, les transformers, les adaptateurs, etc. qui sont 
+
+0:05:47.649,0:05:50.759
+des architectures très récentes qui sont devenues extrêmement populaires dans des domaines comme le NLP et 
+
+0:05:51.490,0:05:58.529
+d'autres domaines. Et nous aborderons un peu les réseaux de neurones pour graphes [GNNs]. Je ne vais pas beaucoup en parler car il y a un autre
+
+0:05:59.529,0:06:03.479
+cours que vous pouvez prendre par Joan Bruna où il passe beaucoup de temps sur ces GNNs.
+
+0:06:06.759,0:06:14.549
+Ensuite nous parlerons de la manière dont nous faisons fonctionner ces systèmes d'apprentissage profond. Des diverses astuces pour les faire fonctionner.
+
+0:06:15.849,0:06:21.299
+Une sorte de compréhension des types d'optimisation qui ont lieu dans les réseaux neuronaux. 
+
+0:06:24.169,0:06:33.718
+L'apprentissage concerne toujours, presque toujours, l'optimisation. Et l'apprentissage profond concerne presque toujours l'optimisation basée sur les gradients.
+
+0:06:34.689,0:06:40.389
+Et il existe certaines règles sur l'optimisation dans les cas convexes qui sont bien comprises.
+
+0:06:40.389,0:06:43.328
+Mais ils ne sont pas bien compris lorsque l’entraînement est stochastique,
+
+0:06:43.329,0:06:47.109
+ce qui est le cas pour la plupart des systèmes d'apprentissage profond. Et ils ne sont pas très bien compris
+
+0:06:47.179,0:06:52.018
+aussi en apprentissage profond, car la fonction de coût n'est pas n'est pas convexe.
+
+0:06:52.689,0:06:59.109
+Il y a des minima locaux, des points selle et d'autres choses de ce genre. Il est donc important de comprendre la géométrie de la fonction objectif.
+
+0:06:59.889,0:07:01.889
+Je dis qu'il est important de comprendre mais
+
+0:07:02.629,0:07:05.708
+le grand secret ici, c'est que personne ne comprend vraiment. Donc...
+
+0:07:06.349,0:07:08.979
+il est important de comprendre que personne ne comprend.
+
+0:07:12.439,0:07:14.678
+Mais il y a quelques astuces qui ont
+
+0:07:15.409,0:07:20.528
+de l'intuition et un peu d'analyse théorique et
+
+0:07:20.959,0:07:24.069
+recherche empirique. Des choses comme des astuces d'initialisation,
+
+0:07:25.159,0:07:28.419
+des astuces de normalisation, et des astuces de régularisation comme le dropout.
+
+0:07:29.209,0:07:33.009
+Le découpage des notes est plutôt destiné à l'optimisation. Des choses comme le momentum,
+
+0:07:34.279,0:07:40.920
+SGD moyennée, les différentes méthodes de mise en parallèle de la SGD [descente de gradient stochastique].
+
+0:07:40.920,0:07:47.498
+Beaucoup d'entre eux ne fonctionnent pas. Et quelque chose d'un peu exotique appelé « target prop » et la formulation lagrangienne de la rétropropagation.
+
+0:07:47.959,0:07:52.179
+Ensuite, je passerai à mon sujet préféré, à savoir les modèles à base d'énergie. C'est donc une sorte de
+
+0:07:52.789,0:07:59.049
+formulation générale d'un grand nombre d'approches différentes, en quelque sorte, de l'apprentissage. Qu'elles soient supervisées, non supervisées, autosupervisées.
+
+0:07:59.809,0:08:03.249
+Et impliquent des choses comme l’inférence.
+
+0:08:04.039,0:08:12.969
+Par exemple, rechercher la valeur de variables dont personne ne vous dit la valeur, mais que votre processus/système est censé déduire.
+
+0:08:13.399,0:08:19.149
+On pourrait donc considérer cela comme une sorte de façon d’implémenter le raisonnement avec les réseaux neuronaux.
+
+0:08:19.229,0:08:23.289
+On peut considérer le raisonnement dans les réseaux neuronaux comme un processus par lequel on a
+
+0:08:23.449,0:08:28.959
+une fonction énergie qui est optimisée par rapport à certaines variables. Et la valeur que vous obtenez grâce à cette optimisation
+
+0:08:30.019,0:08:34.448
+est la valeur de ces variables que vous essayiez de trouver.
+
+0:08:34.969,0:08:40.208
+Il existe une sorte d'opinion commune selon laquelle un réseau neuronal n'est qu'une fonction qui calcule sa sortie en fonction de son
+
+0:08:40.209,0:08:42.909
+entrée. Il suffit donc de passer par le réseau neuronal pour obtenir une sortie.
+
+0:08:43.000,0:08:45.429
+Mais c'est une approche assez restrictive d’une
+
+0:08:45.769,0:08:49.749
+forme d'inférence au sens que vous ne pouvez produire qu'une seule sortie pour une entrée donnée.
+
+0:08:50.720,0:08:55.720
+Mais très souvent, il y a plusieurs réponses possibles à une entrée donnée. Et donc, comment faire pour
+
+0:08:56.480,0:09:03.579
+représenter des problèmes de ce type où il y a plusieurs réponses possibles, à une entrée donnée ? Et l'une des réponses à cette question est la suivante :
+
+0:09:04.220,0:09:11.529
+vous faites de ces réponses les minima de certaines fonctions énergie, et votre algorithme d'inférence va trouver les valeurs de ces
+
+0:09:12.290,0:09:20.740
+variables qui minimisent cette fonction objectif. Et il peut y avoir plusieurs minima. Cela signifie donc que votre modèle peut produire plusieurs sorties pour une entrée donnée.
+
+0:09:20.990,0:09:25.898
+Donc, les modèles à base d’énergie, sont une sorte de façon de faire. Un cas particulier de ces modèles à base d’énergie sont
+
+0:09:26.000,0:09:29.800
+les modèles probabilistes : comme les méthodes bayésiennes, les modèles graphiques,
+
+0:09:30.610,0:09:38.380
+les réseaux bayésiens et d’autres choses de ce genre. Les méthodes à base d’énergie sont un peu plus générales. Donc un peu moins spécifiques.
+
+0:09:39.000,0:09:44.019
+Les cas particuliers de ça comprennent donc des choses comme ce que l'on appelait autrefois la prédiction de structure.
+
+0:09:45.709,0:09:51.129
+Il y a beaucoup d'applications de cela dans ce que l'on appelle l'apprentissage autosupervisé. Et ce sera le sujet des prochaines conférences.
+
+0:09:52.490,0:09:57.370
+L'apprentissage autosupervisé est un sujet de recherche très actif aujourd'hui.
+
+0:09:57.740,0:10:01.269
+Et probablement quelque chose qui va devenir vraiment dominant à l'avenir. C'est déjà le cas  
+
+0:10:01.360,0:10:08.619
+en l'espace d'un an. Il est devenu dominant dans le traitement du langage naturel. Et, au cours des derniers mois, en trois mois seulement,
+
+0:10:09.320,0:10:12.849
+quelques articles montrent que les méthodes d'apprentissage autosupervisé
+
+0:10:13.430,0:10:17.079
+fonctionnent aussi très bien dans des domaines comme la vision par ordinateur.
+
+0:10:17.899,0:10:21.880
+Je pense que l'apprentissage autosupervisé va s'imposer dans le monde
+
+0:10:21.920,0:10:25.089
+dans les prochaines années. Je pense donc qu'il est utile d'en entendre parler dans cette classe.
+
+0:10:25.240,0:10:10:31.299
+Les choses comme, je ne vais pas faire de liste exhaustive, mais il y a
+
+0:10:31.730,0:10:35.289
+des choses dont vous avez peut-être entendu parler : comme les auto-encodeurs variationnels, les auto-encodeurs débruiteurs,
+
+0:10:36.410,0:10:38.410
+BERT, qui fait parti
+
+0:10:39.199,0:10:44.919
+des architectures de transformers entraînées pour le traitement du langage naturel. Elles sont entraînées avec un apprentissage autosupervisé et constituent un cas particulier des auto-encodeur débruiteurs.
+
+0:10:45.170,0:10:49.810
+Donc, beaucoup de ces choses dont vous avez peut-être entendu parler sans vous rendre compte qu'ils étaient tous, en quelque sorte
+
+0:10:49.880,0:10:56.169
+compris dans le contexte des approches à base d’énergie. Et cela inclut également les réseaux génératifs antagonistes [GANs en anglais],
+
+0:10:56.170,0:10:58.170
+dont je suis sûr que beaucoup d'entre vous ont entendu parler.
+
+0:11:00.150,0:11:02.389
+Et puis il y a l'apprentissage autosupervisé et au-delà.
+
+0:11:04.200,0:11:08.689
+Alors, comment faire pour que les machines deviennent vraiment intelligentes ? Elles ne sont pas super intelligentes.
+
+0:11:08.690,0:11:11.779
+Elles ne sont pas très intelligentes en ce moment. Elles peuvent très bien résoudre des problèmes très étroits,
+
+0:11:12.150,0:11:18.679
+parfois avec des performances surhumaines. Mais aucune machine n'a de bon sens. Et les machines les plus intelligentes que nous ayons
+
+0:11:20.250,0:11:27.799
+ont probablement moins de bon sens qu'un chat domestique. Donc comment arriver à une intelligence au niveau du chat d'abord, et ensuite peut-être à une intelligence au niveau de l'homme ?
+
+0:11:29.339,0:11:32.689
+Je ne prétends pas avoir la réponse, mais j'ai, quelques
+
+0:11:32.690,0:11:36.650
+idées intéressantes à évoquer dans le contexte de l'apprentissage autosupervisé.
+
+0:11:38.279,0:11:43.999
+J'ai quelques applications. Des questions ? C'est donc le plan du cours. Il pourrait changer, de façon dynamique.
+
+0:11:45.660,0:11:47.660
+Mais, au moins, c'est l'intention. Des questions ?
+
+0:11:52.260,0:11:54.260
+...Ok...
+
+0:11:57.220,0:12:00.540
+[Etudiant : Aurons-nous aussi des devoirs dans le cours ?] Oui, oui, il y a des devoirs.
+
+0:12:00.540,0:12:15.100
+[Alfredo inaudible]
+
+0:12:15.320,0:12:20.700
+Donc pour ceux d'entre vous qui n'ont pas entendu Alfredo, car ne parlait pas très fort,
+
+0:12:21.860,0:12:25.899
+le projet final sera en fait une compétition entre les équipes.
+
+0:12:26.860,0:12:29.480
+Il va donc y avoir un classement et tout le reste.
+
+0:12:29.660,0:12:35.220
+Et, en préparation de cela, les missions seront essentiellement
+
+0:12:35.320,0:12:39.100
+de s'entraîner, se familiariser avec toutes les techniques dont vous auriez besoin pour
+
+0:12:39.340,0:12:43.740
+l'apprentissage profond en général, pour le projet final en particulier.
+
+0:12:45.000,0:12:48.880
+[Alfredo : Aussi pour l’examen de mi-parcours.]
+
+0:12:48.880,0:12:53.000
+Exact, également pour l’examen de mi-parcours, évidemment.
+
+0:12:53.000,0:12:57.100
+Ok, donc la plupart d'entre vous savent probablement déjà…
+
+0:12:57.740,0:13:03.280
+Cela va probablement être ennuyeux pour certains d'entre vous qui ont déjà joué avec ces choses mais commençons par les bases.
+
+0:13:03.460,0:13:08.380
+L'apprentissage profond est inspiré par ce que les gens ont observé sur le cerveau, mais l'inspiration n'est qu'une inspiration.
+
+0:13:08.380,0:13:10.870
+La tentative n’est pas de copier le cerveau car
+
+0:13:11.180,0:13:15.849
+il y a beaucoup de détails sur le cerveau qui ne sont pas pertinents, et dont on ne sait pas s'ils le sont réellement pour l'intelligence humaine.
+
+0:13:15.850,0:13:19.820
+L'inspiration se situe donc en quelque sorte au niveau conceptuel.
+
+0:13:19.820,0:13:24.000
+C'est un peu comme les avions inspirés par les oiseaux.
+
+0:13:24.000,0:13:30.430
+Les principes de base du vol des oiseaux et des avions sont essentiellement les mêmes, mais les détails sont extrêmement différents.
+
+0:13:30.530,0:13:38.420
+Ils ont tous deux des ailes. Ils génèrent tous deux de la portance en se propulsant dans l'air, mais, comme vous le savez, les avions n'ont pas de plumes et ne battent pas des ailes.
+
+0:13:38.780,0:13:43.920
+C'est donc un peu la même idée. Et l'histoire de tout cela remonte à un domaine
+
+0:13:44.120,0:13:48.480
+qui a en quelque sorte presque disparu, ou, du moins, a changé de nom. Appelé maintenant cybernétique.
+
+0:13:48.860,0:13:52.120
+Si vous voulez un spécialiste de l'histoire de la cybernétique, il est assis juste là :
+
+0:13:52.120,0:13:55.660
+Joe Lemelin.
+
+0:13:55.670,0:13:57.230
+Peux-tu lever la main ?
+
+0:13:57.230,0:14:03.699
+Donc, Joe est en fait un philosophe. Et il s'intéresse à l'histoire de l'IA. Il a d'ailleurs un séminaire sur ce sujet.
+
+0:14:04.640,0:14:07.100
+Dans quel département se trouve-t-elle ?
+
+0:14:07.120,0:14:08.720
+[Joe : Médias, culture et communication].
+
+0:14:08.720,0:14:12.260
+Médias, culture et communication. Donc, pas CS [Computer Science].
+
+0:14:12.860,0:14:17.220
+Il sait tout sur l'histoire de la cybernétique. Cela a donc commencé dans les années 40 avec
+
+0:14:17.220,0:14:22.740
+deux messieurs : McCulloch et Pitts. Leur photo se trouve en haut à droite.
+
+0:14:23.500,0:14:25.500
+Et ils ont eu l'idée que...
+
+0:14:25.700,0:14:29.440
+A l'époque, les gens s'intéressaient à la logique, mais
+
+0:14:29.580,0:14:32.440
+la neuroscience était une sorte de domaine naissant.
+
+0:14:32.580,0:14:39.440
+Ils ont eu l'idée que si les neurones sont en gros des unités de seuil qui sont allumées ou éteintes,
+
+0:14:39.890,0:14:45.429
+en les connectant entre eux, vous pouvez construire des circuits booléens et faire des inférences logiques avec les neurones.
+
+0:14:45.430,0:14:53.520
+Ce qu’ils disent : le cerveau est en gros une machine d'inférence logique car les neurones sont binaires.
+
+0:14:53.780,0:14:56.340
+L'idée était donc qu'un neurone
+
+0:14:56.740,0:15:01.260
+calcule une somme pondérée de ses entrées et compare ensuite la somme pondérée à un seuil. Il s’allume
+
+0:15:01.440,0:15:04.480
+si elle est au-dessus du seuil, s'éteint si elle est en dessous.
+
+0:15:05.210,0:15:09.160
+C'est une sorte de vue simplifiée du fonctionnement des vrais neurones, une vue très très simplifiée.
+
+0:15:09.530,0:15:13.119
+Ce modèle a perduré pendant des décennies.
+
+0:15:15.380,0:15:17.380
+Près de quatre décennies.
+
+0:15:19.720,0:15:22.960
+En fait, quatre décennies complètes.
+
+0:15:22.970,0:15:27.120
+Puis il y a eu, presque simultanément, Donald Hebb qui a eu l'idée que les
+
+0:15:28.160,0:15:31.190
+neurones dans le cerveau… C'est une vieille idée que
+
+0:15:31.190,0:15:37.900
+le cerveau apprend en modifiant la force des connexions entre les neurones que l'on appelle les synapses. Et c’est sur cette idée
+
+0:15:37.900,0:15:43.540
+que se base de ce qu'on appelle aujourd'hui l'apprentissage hébbique. C'est-à-dire que si deux neurones fonctionnent ensemble, alors la connexion 
+
+0:15:43.880,0:15:48.780
+qui les relie augmente. Et s'ils ne fonctionnent pas ensemble, peut-être que cela diminue.
+
+0:15:50.020,0:15:54.500
+Ce n'est pas une idée d'algorithme d'apprentissage, mais c'est une sorte de première idée, peut-être.
+
+0:15:55.640,0:16:00.879
+Et puis la cybernétique a été proposée par cet homme, Norbert Wiener, qui est ici. [En bas à droite]
+
+0:16:01.760,0:16:06.280
+C'est l'idée que si vous avez des systèmes qui ont des capteurs
+
+0:16:07.010,0:16:13.569
+et des actionneurs, alors vous pouvez avoir des boucles de rétroaction et des systèmes d'autorégulation.
+
+0:16:13.569,0:16:19.460
+Quelle est la théorie derrière tout cela ? Vous savez, nous tenons cela pour acquis maintenant. Mais l'idée que…
+
+0:16:19.820,0:16:21.820
+vous avez des choses, comme un genre de…
+
+0:16:22.280,0:16:27.369
+Par exemple : pour conduire une voiture, vous tournez le volant et
+
+0:16:28.340,0:16:34.809
+il y a ce qu'on appelle un régulateur PID qui fait tourner le volant proportionnellement à la façon dont vous tournez le volant.
+
+0:16:36.140,0:16:37.650
+C'est un mécanisme de retour d'information
+
+0:16:37.650,0:16:41.509
+qui mesure essentiellement la position du volant, mesure la position de
+
+0:16:41.580,0:16:45.980
+la roue de la voiture. Et, ensuite, s'il y a une différence entre les deux, il corrige les roues de la voiture de sorte qu’elle
+
+0:16:45.980,0:16:48.829
+correspondent à l’orientation du volant. C'est un mécanisme de rétroaction.
+
+0:16:49.470,0:16:56.480
+C'est de ce travail que vient la stabilité et les règles de base.
+
+0:16:57.660,0:17:03.469
+Cela a conduit un homme du nom de Frank Rosenblatt à imaginer
+
+0:17:04.320,0:17:10.219
+des algorithmes d'apprentissage qui ont modifié les poids de réseaux neuronaux très simples. Et ce que vous voyez ici en bas
+
+0:17:11.760,0:17:16.760
+les deux images ici [en bas à gauche] : voici Frank Rosenblatt, et voici le Perceptron. C'était un
+
+0:17:17.579,0:17:20.629
+ordinateur analogue physique. Ce n'était pas un programme Python à trois lignes,
+
+0:17:20.630,0:17:23.600
+comme c’est le cas maintenant.
+
+0:17:24.000,0:17:28.190
+C'était une machine gigantesque avec des fils et
+
+0:17:28.890,0:17:31.579
+des capteurs optiques pour pouvoir lui montrer des images. C'était en une très basse résolution.
+
+0:17:32.760,0:17:35.690
+Et puis il y a eu
+
+0:17:35.690,0:17:41.629
+des neurones qui pouvaient calculer une somme pondérée, et les poids pouvaient être adaptés. Les poids étaient des potentiomètres.
+
+0:17:42.480,0:17:45.740
+Les potentiomètres étaient équipés de moteurs qui pouvaient tourner pour l'algorithme d'apprentissage.
+
+0:17:45.740,0:17:50.839
+C'était donc électromécanique. Et ce qu'il tient ici dans sa main est un module de huit poids
+
+0:17:51.480,0:17:56.990
+(vous pouvez les compter), avec ces potentiomètres. Des potentiomètres motorisés.
+
+0:18:02.680,0:18:06.710
+Donc c'était un peu d'histoire sur l'origine des réseaux neuronaux.
+
+0:18:07.000,0:18:14.929
+Un autre élément intéressant de l'histoire est que toute cette idée d’essayer de construire des machines intelligentes en simulant des réseaux de neurones
+
+0:18:15.720,0:18:19.220
+est née dans les années 40, a pris un peu d'essor à la fin des années 50, 
+
+0:18:19.530,0:18:23.540
+et est complètement morte dans les années 60, à la fin des années 60.
+
+0:18:24.000,0:18:28.820
+Quand les gens ont réalisé qu'avec le type d'algorithmes et d'architectures d'apprentissage que les gens proposaient à l'époque
+
+0:18:29.640,0:18:34.910
+vous ne pouviez pas faire grand-chose. Vous pouviez faire une reconnaissance de formes très simple, mais pas grand-chose d’autre.
+
+0:18:36.690,0:18:38.690
+Ainsi, entre
+
+0:18:38.820,0:18:40.820
+1969
+
+0:18:41.040,0:18:43.040
+ou 1968, et
+
+0:18:43.470,0:18:45.589
+1984, je dirais,
+
+0:18:46.410,0:18:48.410
+personne dans le monde ne travaillait sur
+
+0:18:49.100,0:18:50.580
+les réseaux de neurones
+
+0:18:50.580,0:18:56.449
+à l'exception de quelques chercheurs isolés, principalement au Japon. Le Japon possède son
+
+0:18:57.299,0:19:03.019
+écosystème relativement isolé pour le financement de la recherche. Les gens n'y suivent pas
+
+0:19:04.289,0:19:11.269
+« la mode », si vous voulez. Et puis le domaine a repris son envol en 1985, en gros, avec
+
+0:19:12.660,0:19:15.229
+l'émergence de la rétropropagation. La rétropropagation est un
+
+0:19:15.870,0:19:19.729
+algorithme permettant d'entraîner des réseaux neuronaux multicouches, comme beaucoup d'entre vous le savent.
+
+0:19:20.549,0:19:24.139
+Dans les années 60, les gens cherchaient quelque chose comme ça et ne le trouvaient pas.
+
+0:19:24.140,0:19:27.379
+Et la raison pour laquelle ils ne l'ont pas trouvé est qu'ils avaient les mauvais neurones.
+
+0:19:28.049,0:19:29.760
+Ils utilisaient les neurones
+
+0:19:29.760,0:19:31.789
+de McCulloch-Pitts qui sont binaires.
+
+0:19:32.820,0:19:38.240
+La façon de faire fonctionner la rétropropagation est d'utiliser une fonction d'activation qui est continue,
+
+0:19:39.179,0:19:41.179
+différenciable, ou du moins, continue.
+
+0:19:42.200,0:19:46.400
+Et les gens n'avaient tout simplement pas
+
+0:19:46.620,0:19:52.600
+l'idée d'utiliser des neurones continus. Et donc, ils ne pensaient pas que l'on pouvait entraîner ces systèmes avec
+
+0:19:53.549,0:19:55.549
+la descente de gradient, car les choses n'étaient pas différenciables.
+
+0:19:56.309,0:20:01.099
+Il y a une autre raison à cela, c'est que si vous avez un réseau de neurones binaires,
+
+0:20:01.799,0:20:05.959
+vous n'avez jamais besoin de calculer les multiplications. Vous n'avez jamais besoin de multiplier deux nombres.
+
+0:20:05.960,0:20:10.640
+Il suffit d'ajouter des chiffres. Si votre neurone est actif, vous n'avez qu'à ajouter le poids à la somme pondérée.
+
+0:20:11.250,0:20:13.250
+S’il est inactif, vous ne faites rien.
+
+0:20:13.260,0:20:14.900
+Si vous avez des neurones continus,
+
+0:20:14.900,0:20:19.280
+vous devez multiplier l'activation d'un neurone par un poids pour obtenir une contribution à la somme pondérée.
+
+0:20:19.380,0:20:24.349
+Il s'avère qu'avant les années 1980, la multiplication de deux nombres, en particulier les nombres à virgule flottante, sur
+
+0:20:24.690,0:20:31.610
+tout ordinateur non extrêmement cher était extrêmement lent. Et donc, il y avait une incitation à ne pas utiliser des
+
+0:20:32.429,0:20:34.429
+neurones continus pour cette raison.
+
+0:20:34.770,0:20:40.219
+La raison pour laquelle la rétropropagation n'est pas apparue avant le milieu des années 80, c'est car c'est à cette époque que
+
+0:20:40.860,0:20:44.299
+les ordinateurs sont devenus assez rapides pour faire des multiplications en virgule flottante, à peu près.
+
+0:20:45.870,0:20:50.569
+Rétrospectivement, c'est à peu près ce qui s'est passé.
+
+0:20:52.669,0:20:56.719
+Il y a eu une vague d'intérêt pour les réseaux neuronaux entre 1985 et
+
+0:20:57.750,0:21:01.939
+1995. Cela a donc duré environ 10 ans. En 1995, le domaine est à nouveau mort. Les gens en apprentissage machine
+
+0:21:02.840,0:21:04.850
+ont fondamentalement abandonné l'idée d'utiliser des réseaux neuronaux.
+
+0:21:05.549,0:21:08.059
+Pour des raisons que je ne vais pas aborder maintenant.
+
+0:21:08.700,0:21:10.590
+Et cela a duré jusqu'à ce qu’à
+
+0:21:10.590,0:21:17.360
+la fin des années 2000, début 2010. Lorsque vers 2009/2010, les gens ont réalisé que vous pouviez utiliser
+
+0:21:17.700,0:21:20.500
+des réseaux neuronaux multicouches, entraînés via rétropropagation,
+
+0:21:20.520,0:21:27.109
+et obtenir une amélioration de la reconnaissance vocale. Cela n'a pas commencé avec ImageNet. Elle a commencé avec la reconnaissance vocale, vers 2010.
+
+0:21:28.590,0:21:31.610
+Et dans les 18 mois suivant la publication des premiers articles lié à ce sujet,
+
+0:21:33.150,0:21:38.150
+tous les grands acteurs de la reconnaissance vocale avaient déployé des systèmes commerciaux de reconnaissance vocale qui utilisent
+
+0:21:38.730,0:21:45.559
+les réseaux neuronaux. Donc, si vous avez un téléphone Android et que vous utilisez des fonctions de reconnaissance vocale de celui-ci,
+
+0:21:45.900,0:21:47.820
+vers 2012,
+
+0:21:47.820,0:21:50.480
+cela utilisaient des réseaux de neurones. C'était probablement le premier déploiement vraiment, vraiment large
+
+0:21:51.750,0:21:54.650
+des formes modernes d'apprentissage profond, si vous voulez. 
+
+0:21:55.409,0:22:02.779
+Puis, fin 2012 / début 2013, la même chose s'est produite dans le domaine de la vision par ordinateur, où la communauté de la vision par ordinateur a réalisé
+
+0:22:03.539,0:22:08.389
+que l'apprentissage profond, les ConvNets en particulier, fonctionnent beaucoup mieux que ce qu'ils utilisaient auparavant.
+
+0:22:08.640,0:22:12.530
+Et a donc commencé à utiliser les ConvNets et a pratiquement abandonné toutes les techniques précédentes.
+
+0:22:12.780,0:22:18.319
+Cela a donc créé une deuxième révolution, maintenant dans la vision par ordinateur. Et puis trois ans plus tard, vers 2016 environ,
+
+0:22:19.200,0:22:25.939
+la même chose s'est produite dans le traitement du langage naturel : dans la traduction des langues, et des choses comme ça. 2015/16.
+
+0:22:28.380,0:22:32.270
+Et, maintenant, nous allons voir - ce n'est pas encore arrivé - mais nous allons voir la même révolution se produire
+
+0:22:33.299,0:22:38.479
+dans des domaines comme la robotique, le contrôle et tout un tas d’autres domaines d'application.
+
+0:22:40.650,0:22:42.650
+Mais laissez-m’en venir au fait.
+
+0:22:44.520,0:22:47.989
+Donc, vous savez tous ce qu'est l'apprentissage supervisé, j'en suis sûr.
+
+0:22:48.960,0:22:53.960
+Et c'est ce qui est utilisé dans la grande majorité :
+
+0:22:54.600,0:22:56.600
+90 % des cas environ.
+
+0:22:56.760,0:23:03.469
+Les applications de l'apprentissage profond utilisent l'apprentissage supervisé comme une sorte de chose principale. L'apprentissage supervisé est donc le processus par lequel
+
+0:23:04.049,0:23:07.219
+vous collectez un tas de paires d'entrées et de sorties
+
+0:23:07.799,0:23:13.549
+d'exemples. Disons, d'images avec une catégorie si vous voulez faire de la reconnaissance d'images. Ou bien un tas de
+
+0:23:14.070,0:23:16.070
+clips audio avec leur transcription
+
+0:23:16.720,0:23:21.030
+textuelle, un ensemble de textes dans une langue avec la transcription dans une autre langue, etc.
+
+0:23:22.360,0:23:29.099
+Et vous donnez un exemple à la machine. Elle produit une sortie. Si elle est correcte
+
+0:23:29.100,0:23:32.400
+vous ne faites rien, ou vous ne faites pas grand-chose. Si elle est incorrecte
+
+0:23:32.400,0:23:35.910
+vous modifiez les paramètres de la machine. Considérez cela comme un
+
+0:23:36.000,0:23:38.580
+une fonction quelconque.
+
+0:23:39.100,0:23:43.980
+Et vous modifiez les paramètres de cette fonction de manière à ce que la sortie se rapproche de ce que vous souhaitez.
+
+0:23:44.290,0:23:47.249
+C'est en termes non techniques ce qu'est l'apprentissage supervisé.
+
+0:23:49.750,0:23:53.280
+Montrer une photo de voiture, si le système ne dit pas « voiture », modifier les
+
+0:23:54.100,0:23:57.630
+paramètres. Les paramètres du réseau neuronal seront les poids,
+
+0:23:58.390,0:24:02.640
+qui calculent les sommes pondérées dans ces neurones simulés.
+
+0:24:03.490,0:24:07.169
+Tournez les boutons pour que la sortie se rapproche de celle que vous voulez.
+
+0:24:07.840,0:24:12.840
+L'astuce des réseaux neuronaux est la suivante : comment déterminer dans quelle direction et dans quelle mesure il faut régler les boutons pour que la sortie
+
+0:24:12.840,0:24:14.840
+se rapproche de celui que vous souhaitez ?
+
+0:24:15.640,0:24:20.939
+C'est l'objet du calcul du gradient et de la rétropropagation. Mais avant d'en arriver là,
+
+0:24:22.179,0:24:28.529
+un peu d'histoire encore. Il y a donc eu une pléthore de modèles de base pour la
+
+0:24:29.500,0:24:33.689
+classification. Partant du Perceptron, il y a eu un autre modèle concurrent appelé Adaline,
+
+0:24:33.690,0:24:39.210
+qui se trouve en haut, juste ici. Ils sont basés sur le même type d'architecture de base : calculer la somme pondérée des entrées
+
+0:24:39.730,0:24:41.730
+par rapport à un seuil. Si elle est supérieure au seuil,
+
+0:24:42.429,0:24:44.489
+allumez. Si elle est en dessous du seuil, éteignez.
+
+0:24:45.490,0:24:50.910
+Ce que vous voyez, l'Adaline ici, la chose que Bernie Widrow est en train de modifier est en fait un
+
+0:24:51.850,0:24:53.770
+ordinateur physique analogue à nouveau.
+
+0:24:53.770,0:24:59.249
+C'est donc comme le Perceptron. Il était beaucoup plus petit, à bien des égards.
+
+0:24:59.860,0:25:05.819
+La raison pour laquelle je vous en parle est que le Perception était en fait un réseau neuronal à deux couches, dans lequel
+
+0:25:05.820,0:25:07.820
+la deuxième couche était entraînable
+
+0:25:08.860,0:25:14.729
+avec des poids adaptatifs. Mais la première couche était fixe. En fait, la plupart du temps avec la plupart des expériences, elle était
+
+0:25:15.340,0:25:18.720
+déterminée au hasard. Vous voulez, par exemple, relier aléatoirement
+
+0:25:19.360,0:25:21.360
+les pixels d’entrée d'une image dans
+
+0:25:22.000,0:25:25.709
+des neurones de seuil avec des poids aléatoires, en gros.
+
+0:25:27.360,0:25:31.169
+C'est ce qu'ils ont appelé la couche associative. Et c’est
+
+0:25:31.980,0:25:38.730
+devenu la base pour la conception d'un système de reconnaissance de formes pour les quatre décennies suivantes.
+
+0:25:41.110,0:25:43.110
+Je veux dire quatre décennies.
+
+0:25:44.080,0:25:46.110
+Oui, à peu près.
+
+0:25:49.269,0:25:51.868
+Ce modèle est donc un modèle qui vous permet d'apporter une entrée,
+
+0:25:52.299,0:25:56.008
+vous le passez dans un extracteur de caractéristiques qui est censé extraire les
+
+0:25:56.740,0:26:00.059
+les caractéristiques de l’entrée qui seront utiles pour la tâche.
+
+0:26:01.210,0:26:05.189
+Vous voulez reconnaître un visage ? Pouvez-vous détecter un œil ? Comment détecter un œil ?
+
+0:26:05.190,0:26:07.190
+Il y a probablement un cercle noir quelque part.
+
+0:26:07.539,0:26:09.539
+Des choses comme ça, non ? Vous voulez
+
+0:26:10.360,0:26:15.389
+reconnaître une voiture. Eh bien, ce sont des choses un peu sombres, rondes, etc.
+
+0:26:17.230,0:26:21.869
+Donc, le problème ici…. Donc, ce que cet extracteur de caractéristiques produit est un vecteur de
+
+0:26:22.659,0:26:26.309
+caractéristiques, qui sont des choses qui peuvent être des chiffres, qui peuvent être activées ou désactivées.
+
+0:26:26.320,0:26:32.879
+C'est juste une liste de nombres, un vecteur. Et vous allez donner ce vecteur pour entraîner un classificateur. Dans le cas de
+
+0:26:33.610,0:26:38.429
+Perceptron ou un simple réseau de neurones, ce sera juste le système qui calculera une somme pondérée et la comparera à un seuil.
+
+0:26:41.499,0:26:48.269
+Le problème est que vous devez concevoir l'extracteur de caractéristiques. Ainsi, toute la littérature sur la reconnaissance des formes,
+
+0:26:48.789,0:26:50.789
+la reconnaissance statistique des modèles au moins,
+
+0:26:51.100,0:26:56.069
+et une grande partie de la vision par ordinateur (du moins la partie de la vision par ordinateur qui s'intéresse à la reconnaissance) était axée sur
+
+0:26:56.559,0:27:02.038
+cette partie : l'extracteur de caractéristiques. Comment concevoir un extracteur de caractéristiques pour un problème particulier ? Par exemple vous voulez faire,
+
+0:27:02.039,0:27:05.849
+je ne sais pas… de la reconnaissance de caractères de l’Hangeul [alphabet coréen]. Quelles sont les
+
+0:27:06.519,0:27:11.489
+des fonctions permettant de reconnaître l’Hangeul ? Et comment les extraire en utilisant toutes sortes d'astuces algorithmiques ?
+
+0:27:12.009,0:27:15.839
+Comment prétraiter les images ? Comment normaliser leur taille ? Vous savez, des choses comme ça.
+
+0:27:16.019,0:27:18.809
+Comment les squelettiser ? Comment les segmenter à partir de leur environnement ?
+
+0:27:18.879,0:27:24.179
+Donc toute la littérature a été consacrée à cet extracteur de caractéristiques, très peu au classificateur pouvant être entraîné.
+
+0:27:31.309,0:27:36.849
+Et ce que l'apprentissage profond a apporté, c'est cette idée qu'au lieu d'avoir ce genre de processus en deux étapes
+
+0:27:37.640,0:27:40.629
+pour la reconnaissance des formes, où une étape est construite à la main,
+
+0:27:41.510,0:27:44.739
+où la représentation de l'entrée est le résultat d’un
+
+0:27:45.500,0:27:48.159
+un programme élaboré à la main, essentiellement.
+
+0:27:48.830,0:27:51.549
+L'idée de l'apprentissage profond est que vous apprenez la tâche entière de bout en bout.
+
+0:27:52.400,0:27:54.400
+Donc en gros, vous construisez votre
+
+0:27:55.340,0:27:58.299
+système de reconnaissance des formes, ou tout ce que vous voulez faire
+
+0:27:59.409,0:28:03.000
+comme une cascade ou une séquence de modules.
+
+0:28:03.000,0:28:05.859
+Tous ces modules ont des paramètres réglables.
+
+0:28:07.250,0:28:09.880
+Tous présentent une sorte de non-linéarité.
+
+0:28:11.390,0:28:15.249
+Et puis vous en empilez plusieurs couches, c'est pourquoi on appelle cela l'apprentissage profond.
+
+0:28:15.280,0:28:20.349
+La seule raison du mot « profond » dans l'apprentissage profond est donc le fait qu'il existe de multiples couches. Il n'y a rien de plus à cela.
+
+0:28:20.720,0:28:26.530
+Et puis vous entraînez le tout de bout en bout. La complication ici, bien sûr, se pose sur
+
+0:28:27.919,0:28:32.319
+les paramètres qui se trouvent dans la première case. Comment savez-vous la manière de les régler pour que la sortie
+
+0:28:32.320,0:28:34.809
+se rapproche du résultat que vous souhaitez ?
+
+0:28:36.140,0:28:38.439
+C'est ce que la rétropropagation fait pour vous.
+
+0:28:39.409,0:28:42.579
+Pourquoi tous ces modules doivent-ils être
+
+0:28:43.340,0:28:49.390
+non linéaires ? C'est car, si vous avez deux modules successifs, et qu'ils sont tous deux linéaires, vous pouvez les réduire en un seul linéaire.
+
+0:28:50.270,0:28:53.210
+Le produit de deux fonctions linéaires
+
+0:28:53.210,0:28:59.350
+ou la composition de deux fonctions linéaires est une fonction linéaire. Prenez un vecteur, multipliez-le par une matrice, puis multipliez-le par une seconde matrice.
+
+0:28:59.659,0:29:05.049
+C'est comme si vous aviez précalculé le produit de ces deux matrices, puis multiplié le vecteur d'entrée par cette
+
+0:29:06.919,0:29:10.839
+matrice composite. Il est donc inutile d'avoir plusieurs couches si ces couches sont linéaires.
+
+0:29:11.960,0:29:15.819
+C’est en fait un point, mais c'est un point mineur.
+
+0:29:19.250,0:29:23.049
+Donc, puisqu'elles doivent être non linéaires, quelle est l’architecture 
+
+0:29:24.620,0:29:27.939
+multicouche la plus simple que vous pouvez imaginer ayant
+
+0:29:29.270,0:29:34.989
+des paramètres que vous pouvez régler (des choses comme les poids) et est non linéaire ?
+
+0:29:38.140,0:29:40.500
+Vous vous rendez vite compte que
+
+0:29:41.690,0:29:43.690
+ça doit ressembler à quelque chose comme ça.
+
+0:29:44.670,0:29:52.209
+Donc prenez une entrée, elle peut être représentée sous forme de vecteur. Une image n'est qu'une liste de chiffres.
+
+0:29:52.580,0:29:55.060
+Voyez-le comme un vecteur, ignorez le fait que c'est une image pour l'instant.
+
+0:29:55.940,0:30:02.379
+Un bout de son, quel que soit ce que vos capteurs ou votre ensemble de données vous donnent, c’est un vecteur.
+
+0:30:03.380,0:30:08.089
+Multipliez ce vecteur par une matrice. Les coefficients de cette matrice sont les paramètres ajustables.
+
+0:30:08.990,0:30:13.150
+Puis prenez le vecteur résultant car quand vous multipliez une matrice par un vecteur, vous obtenez un vecteur.
+
+0:30:15.440,0:30:20.089
+Faites passer chaque composante de ce vecteur par une fonction non linéaire.
+
+0:30:21.100,0:30:26.140
+Et si vous voulez avoir la fonction non linéaire la plus simple possible, utilisez quelque chose comme
+
+0:30:26.360,0:30:32.620
+ce qui est montré en haut [ReLU(x) = max(x, 0)], que les gens appellent ReLU en réseaux de neurones. Les gens en ingénierie appellent cela rectification demi-onde.
+
+0:30:33.680,0:30:35.680
+En mathématiques, les gens appellent ça la partie positive.
+
+0:30:37.040,0:30:39.040
+Peu importe comment vous voulez l'appeler.
+
+0:30:40.520,0:30:46.420
+Donc, appliquez cette fonction non linéaire à chaque composante du vecteur qui résulte de la multiplication du vecteur d'entrée par la matrice.
+
+0:30:47.870,0:30:54.579
+Vous obtenez un nouveau vecteur, qui contient beaucoup de zéros, car chaque fois que la somme pondérée était inférieure à zéro,
+
+0:30:55.340,0:31:01.900
+la sortie est nulle, si vous passez par la ReLU. Puis répétez le processus. Prenez ce vecteur, multipliez-le par une matrice de poids,
+
+0:31:01.560,0:31:12.449
+faites passer le résultat par une non-linéarité composante par composante, prenez le résultat et multipliez le par une matrice. Faites passer le résultat à travers les non-linéarités.
+
+0:31:12.560,0:31:15.600
+C'est un réseau neuronal de base.
+
+0:31:15.780,0:31:21.340
+Pourquoi appelle-t-on cela un réseau de neurones ? Car lorsque vous prenez un vecteur et que vous multipliez
+
+0:31:21.340,0:31:27.230
+un vecteur par une matrice, pour calculer chaque composante de la
+
+0:31:27.230,0:31:31.540
+sortie, vous calculez en fait une somme pondérée des composantes de l'entrée
+
+0:31:32.030,0:31:37.810
+par une ligne correspondante dans la matrice. Donc ce petit symbole ici, il y a un tas de
+
+0:31:38.500,0:31:41.500
+composantes du vecteur
+
+0:31:41.690,0:31:43.690
+entrant dans cette couche. 
+
+0:31:44.060,0:31:50.139
+Vous prenez une ligne de la matrice, vous calculez une somme pondérée de ces valeurs où les poids sont les valeurs
+
+0:31:51.029,0:31:53.749
+dans la ligne de cette matrice, et cela vous donne une
+
+0:31:54.419,0:31:59.589
+somme pondérée. Et vous faites cela pour chaque ligne, ce qui vous donne le résultat.
+
+0:31:59.750,0:32:05.839
+Le nombre d'unités après la multiplication par une matrice va être égal au nombre de lignes de votre matrice.
+
+0:32:06.929,0:32:10.939
+Et le nombre de colonnes de la matrice doit bien sûr être égal à la taille de l'entrée.
+
+0:32:16.830,0:32:20.539
+Donc l'apprentissage supervisé, en termes un peu plus formels que celui que j'ai montré plus tôt,
+
+0:32:21.630,0:32:25.760
+est l'idée par laquelle vous allez comparer les sorties que le système produit.
+
+0:32:26.490,0:32:32.539
+Donc, vous montrez une entrée, vous passez par le réseau neural, vous obtenez une sortie. Vous allez comparer cette sortie avec une sortie cible.
+
+0:32:33.510,0:32:35.510
+Et vous allez avoir une fonction objectif,
+
+0:32:36.090,0:32:40.819
+un module de perte, qui calcule une distance, une divergence,
+
+0:32:41.970,0:32:43.970
+une pénalité, peu importe comment vous voulez l'appeler.
+
+0:32:44.450,0:32:47.990
+Une divergence. Il y a plusieurs noms pour cela.
+
+0:32:50.490,0:32:52.939
+Puis vous allez calculer la moyenne de cela.
+
+0:32:53.130,0:32:56.719
+Le résultat de cette fonction de coût est donc un scalaire.
+
+0:32:56.720,0:33:01.669
+Il calcule la distance, par exemple la distance euclidienne, entre un vecteur cible et le vecteur que
+
+0:33:02.429,0:33:06.168
+le réseau neuronal produit, que le système d'apprentissage profond produit.
+
+0:33:07.950,0:33:12.289
+Et vous pouvez ensuite calculer la moyenne de cette fonction de coût, qui n'est qu'un scalaire.
+
+0:33:12.929,0:33:15.288
+Vous allez faire la moyenne sur un jeu d'entraînement.
+
+0:33:15.289,0:33:19.879
+Un jeu d'entraînement est composé d'un ensemble de paires d'entrées et de sorties. Calculez la moyenne de ces paires sur le jeu d'entraînement.
+
+0:33:20.279,0:33:25.639
+La fonction que vous voulez minimiser par rapport aux paramètres du système (les boutons tournables) est cette moyenne.
+
+0:33:26.340,0:33:31.669
+Donc, vous voulez trouver la valeur des paramètres qui minimise l'erreur moyenne entre les
+
+0:33:32.220,0:33:37.929
+sorties que vous souhaitez et celles que vous obtenez, en faisant la moyenne sur un jeu d'échantillons d'entraînement.
+
+0:33:49.180,0:33:55.080
+Je suis sûr que la grande majorité des gens ici, ont au moins une compréhension intuitive de ce qu'est la descente de gradient.
+
+0:33:55.270,0:33:58.889
+Donc, en gros, la façon de minimiser cela est de calculer le gradient.
+
+0:33:58.890,0:34:04.100
+C'est comme si vous étiez dans une montagne, vous êtes perdu dans la montagne
+
+0:34:04.150,0:34:06.239
+(c'est une montagne très lisse), mais
+
+0:34:07.900,0:34:12.269
+il y a du brouillard et il fait nuit. Et vous voulez aller au village dans la vallée.
+
+0:34:12.300,0:34:15.719
+Donc, la meilleure chose à faire est de
+
+0:34:16.480,0:34:21.870
+vous regardez autour et vous voyez quel est le chemin qui descend. Et vous faites un pas dans la direction de la descente la plus raide.
+
+0:34:22.570,0:34:29.820
+Donc, cette recherche de la direction qui descend : cela s'appelle « calculer un gradient » ou, techniquement, un gradient négatif.
+
+0:34:30.760,0:34:34.920
+Vous faites un pas en arrière. C'est faire un pas vers le bas dans la
+
+0:34:36.220,0:34:39.540
+direction du gradient négatif. Et si vous continuez ainsi et que vos pas sont assez petits,
+
+0:34:40.600,0:34:45.179
+suffisamment petit pour que lorsque vous faites un pas vous ne sautiez pas de l'autre côté de la montagne, alors
+
+0:34:46.540,0:34:49.019
+vous allez finir par converger vers la vallée.
+
+0:34:49.660,0:34:56.699
+Si la vallée est convexe. S'il n'y a pas, en quelque sorte, de lacs de montagne au milieu où
+
+0:34:56.700,0:34:58.700
+il y a une sorte de minimum,
+
+0:34:58.990,0:35:03.550
+où vous pourriez vous retrouver coincé avec la vallée pouvant être plus basse, mais vous ne la voyez pas.
+
+0:35:03.580,0:35:09.569
+C'est pourquoi la convexité est important en tant que concept.
+
+0:35:12.880,0:35:18.419
+Mais voici un autre concept, celui du gradient stochastique, dont je suis sûr que beaucoup d'entre vous ont déjà entendu parler.
+
+0:35:18.420,0:35:25.890
+J'y reviendrai plus en détails. La fonction objectif que vous calculez est une moyenne sur de nombreux échantillons.
+
+0:35:27.220,0:35:29.939
+Vous pouvez calculer la fonction objectif
+
+0:35:31.150,0:35:36.900
+sur le jeu d’entraînement en faisant la moyenne des valeurs de ce jeu.
+
+0:35:37.540,0:35:40.979
+Mais il s'avère qu'il est plus efficace de ne prélever qu'un seul échantillon ou un petit groupe d'échantillons,
+
+0:35:41.800,0:35:43.390
+calculer l'erreur de
+
+0:35:43.390,0:35:49.109
+cet échantillon, puis calculer le gradient de cette erreur par rapport aux paramètres et faire un pas.
+
+0:35:49.840,0:35:51.340
+Un petit pas.
+
+0:35:51.340,0:35:52.810
+Ensuite, un nouveau
+
+0:35:52.810,0:35:56.610
+échantillon arrive, vous allez recevoir une autre valeur pour l'erreur
+
+0:35:56.610,0:36:02.509
+et une autre valeur pour le gradient, qui peut être dans une direction différente car il s'agit d'un échantillon différent.
+
+0:36:03.420,0:36:05.190
+Et faites un pas dans cette direction.
+
+0:36:05.190,0:36:08.540
+Et si vous continuez à faire cela, vous allez baisser
+
+0:36:09.840,0:36:15.289
+le coût de la surface, mais de manière un peu bruyante. Il y aura beaucoup de fluctuations.
+
+0:36:16.020,0:36:21.469
+Ce qui est montré ici en est un exemple. Il s'agit d'un gradient stochastique appliqué à un problème très simple à deux dimensions
+
+0:36:21.470,0:36:23.470
+où vous n'avez que deux poids.
+
+0:36:23.550,0:36:27.590
+Cela semble un peu semi-périodique car les exemples sont toujours présentés dans le même ordre,
+
+0:36:27.590,0:36:32.419
+ce qui n'est pas ce que vous êtes censé faire avec le gradient stochastique. Mais comme vous pouvez le voir, le chemin est vraiment erratique.
+
+0:36:32.670,0:36:35.000
+Pourquoi les gens utilisent-ils cela ? Il y a plusieurs raisons.
+
+0:36:35.060,0:36:41.509
+L'une des raisons est que, empiriquement, elle converge beaucoup, beaucoup plus rapidement. En particulier si vous avez un très grand jeu d'entraînement.
+
+0:36:42.660,0:36:45.680
+Et l'autre raison est qu'en fin de compte, on obtient une meilleure généralisation.
+
+0:36:45.680,0:36:49.280
+Ainsi, si vous mesurez la performance du système sur un ensemble distinct… 
+
+0:36:49.280,0:36:53.449
+Je suppose que vous connaissez tous les concepts de jeu d'entraînement, jeu de test et jeu de validation.
+
+0:36:54.570,0:36:58.189
+Donc si vous testez les performances du système sur un ensemble différent, vous obtenez généralement de meilleurs résultats de
+
+0:36:58.380,0:37:03.439
+généralisation si vous utilisez le gradient stochastique que si vous utilisez réellement la descente de gradient « réelle ».
+
+0:37:05.300,0:37:07.300
+Le problème, c'est que... oui ?
+
+0:37:07.300,0:37:15.420
+[question inaudible d'un étudiant]
+
+0:37:15.540,0:37:16.770
+Non.
+
+0:37:16.770,0:37:19.880
+C'est pire. Donc, calculer le gradient sur le jeu de données entier…
+
+0:37:20.430,0:37:23.750
+Il est possible de le calculer. Je veux dire que vous pouvez le faire. 
+
+0:37:23.760,0:37:26.360
+C'est pas plus cher que...
+
+0:37:28.740,0:37:31.000
+...vous savez... [commentaire inaudible d'un étudiant]
+
+0:37:31.020,0:37:32.850
+Ce sera moins bruyant mais plus lent.
+
+0:37:32.850,0:37:36.949
+Laissez-moi vous dire pourquoi : c'est un sujet dont nous allons reparler lorsque nous parlerons d'optimisation.
+
+0:37:37.320,0:37:41.630
+Mais disons que je vous donne un jeu d'entraînement avec un million d'échantillons. En fait, c'est
+
+0:37:41.850,0:37:49.669
+100 répétitions du même échantillon d'entraînement avec 10.000 échantillons. Donc mon échantillon réel est de 10 000 échantillons d'entraînement.
+
+0:37:50.520,0:37:55.470
+Je le répète 100 fois et j’affirme que je l'ai brouillé.
+
+0:37:55.470,0:38:00.500
+Je vous dis voici mon jeu d'entraînement avec un million d'échantillons d'entraînement.
+
+0:38:01.260,0:38:03.290
+Donc, si vous faites un gradient complet, vous allez
+
+0:38:04.470,0:38:08.780
+calculer les mêmes valeurs une centaine de fois. Vous allez dépenser cent fois plus de travail que nécessaire.
+
+0:38:09.000,0:38:11.759
+Sans le savoir.
+
+0:38:11.759,0:38:18.409
+Donc cela ne fonctionne qu'à cause de la répétition. Mais cela fonctionne aussi dans des situations plus normales d'apprentissage machine où vous avez
+
+0:38:18.410,0:38:21.238
+des échantillons qui ont beaucoup de redondance en eux,
+
+0:38:21.239,0:38:25.220
+comme de très nombreux échantillons qui sont très similaires les uns aux autres, etc.
+
+0:38:25.229,0:38:30.739
+Donc, s'il y a une quelconque cohérence… si votre système est capable de généraliser,
+
+0:38:31.079,0:38:34.458
+alors cela signifie que le gradient stochastique sera plus efficace car
+
+0:38:34.650,0:38:38.539
+si vous n'avez pas de gradient stochastique, vous ne pourrez pas profiter de cette redondance.
+
+0:38:40.829,0:38:43.728
+C'est donc un cas où le bruit est bon pour vous.
+
+0:38:47.699,0:38:52.159
+Ne faites pas attention à la formule. N'ayez pas peur, car nous allons y revenir plus en détail.
+
+0:38:52.789,0:38:56.059
+Mais pourquoi la rétropropagation est-elle appelée rétropropagation ?
+
+0:38:56.849,0:38:58.849
+Là encore, c'est très informel.
+
+0:38:59.329,0:39:04.728
+Il s'agit en gros d'une application pratique de la règle de la chaîne. Vous pouvez donc penser à
+
+0:39:05.309,0:39:10.669
+un réseau de neurones du type de ceux que je vous ai montrés plus tôt, sous la forme d'un tas de modules empilés les uns sur les autres.
+
+0:39:11.339,0:39:13.968
+Et on peut considérer cela comme des compositions de fonctions.
+
+0:39:14.910,0:39:20.389
+Et vous connaissez tous la règle de base du calcul. Comment calculer la dérivée d'une fonction
+
+0:39:21.059,0:39:22.920
+composée avec une autre fonction ?
+
+0:39:22.920,0:39:27.709
+La dérivée de F composée avec G est la
+
+0:39:28.319,0:39:32.208
+dérivée de F au point G de X,
+
+0:39:32.459,0:39:36.800
+multipliée par la dérivée de G au point X. Vous obtenez donc le produit des deux dérivées.
+
+0:39:36.800,0:39:42.498
+C'est donc la même chose, sauf que les fonctions, au lieu d'être des fonctions scalaires sont des fonctions de vecteurs.
+
+0:39:42.499,0:39:46.429
+Elles prennent des vecteurs en entrée et les vecteurs précédents en sortie. Plus généralement, elles
+
+0:39:46.430,0:39:50.629
+prennent des tableaux multidimensionnels en entrée et des tableaux multidimensionnels en sortie, mais cela n'a pas d'importance.
+
+0:39:52.440,0:39:58.670
+Fondamentalement, quelle est la généralisation de cette règle de la chaîne
+dans le cas 
+
+0:39:58.880,0:40:04.400
+des modules fonctionnels qui ont de multiples entrées, de multiples sorties que vous pouvez considérer comme des fonctions ?
+
+0:40:06.420,0:40:11.599
+En gros, c'est la même règle si vous les appliquez, en quelque sorte, aveuglément, c'est la même règle que celle que vous appliquez,
+
+0:40:12.000,0:40:14.449
+pour les produits dérivés ordinaires.
+
+0:40:15.150,0:40:17.150
+Sauf qu'ici, vous devez utiliser des dérivées partielles.
+
+0:40:20.630,0:40:24.520
+Ce que vous voyez en fin de compte, c'est que si vous voulez calculer la dérivée de
+
+0:40:25.369,0:40:27.909
+la différence entre la sortie que vous souhaitez et la sortie que vous obtenez,
+
+0:40:27.910,0:40:32.530
+qui est la valeur de votre fonction objectif, par rapport à toute variable à l'intérieur du réseau,
+
+0:40:32.960,0:40:37.900
+alors il faut en quelque sorte propager en arrière les dérivées et multiplier les choses en cours de route.
+
+0:40:37.970,0:40:41.560
+Nous serons beaucoup plus formels à ce sujet la semaine prochaine. Pour l'instant,
+
+0:40:42.320,0:40:46.449
+vous savez juste pourquoi on appelle ça la rétropropagation : parce qu'elle s'applique à plusieurs couches.
+
+0:40:53.960,0:40:59.230
+Donc l'image que j'ai montrée plus tôt de ce réseau de neurones
+
+0:41:00.440,0:41:04.179
+est bien, mais que faire si l'entrée est en fait une image ?
+
+0:41:04.180,0:41:11.139
+Une image, même de faible résolution, est généralement de quelques centaines de pixels de côté.
+
+0:41:12.290,0:41:14.290
+Disons donc
+
+0:41:15.470,0:41:21.909
+256 x 256, pour prendre un exemple aléatoire. Une image de voiture : 256 x 256. Donc, il y a
+
+0:41:23.390,0:41:30.369
+65 536 pixels, multipliés par 3, car vous avez des composantes Rouge, Vert et Bleu. Vous avez trois valeurs pour chaque pixel. Et donc
+
+0:41:30.890,0:41:33.369
+c'est environ 200 000 valeurs.
+
+0:41:33.980,0:41:37.659
+Donc votre vecteur ici est un vecteur avec 200 000 composantes.
+
+0:41:40.580,0:41:47.379
+Si vous avez une matrice qui va multiplier ce vecteur, cette matrice va devoir avoir 200 000 lignes…
+
+0:41:48.520,0:41:50.600
+Colonnes, désolé.
+
+0:41:50.619,0:41:53.829
+Et en fonction du nombre d'unités que vous avez ici dans la première couche,
+
+0:41:54.260,0:41:59.080
+il y en aura 200 000 fois un grand nombre. C'est une matrice énorme.
+
+0:41:59.080,0:42:02.999
+Même si c'est 200 000 par 100 000. Donc, avez une
+
+0:42:03.260,0:42:05.260
+compression dans la première couche,
+
+0:42:06.350,0:42:12.759
+C’est déjà une très grande matrice : des milliards.
+
+0:42:16.250,0:42:19.090
+Il n'est donc pas vraiment pratique de considérer cela comme une
+
+0:42:19.160,0:42:23.200
+matrice complète. Ce que vous devez faire si vous voulez traiter des choses comme les images, c'est
+
+0:42:23.840,0:42:32.009
+faire des hypothèses sur la structure de cette matrice afin que ce ne soit pas une matrice complète qui relie tout à tout.
+
+0:42:32.000,0:42:35.450
+Cela ne serait pas pratique.
+
+0:42:35.450,0:42:41.020
+Au moins pour de nombreuses applications pratiques. C'est donc là que l'inspiration du cerveau revient.
+
+0:42:41.020,0:42:43.910
+Il y a eu des travaux devenus
+
+0:42:43.910,0:42:48.670
+classiques en neuroscience dans les années 1960 par les messieurs en haut :
+
+0:42:49.280,0:42:53.709
+Hubel et Wiesel. Ils ont d'ailleurs reçu un prix Nobel pour cela dans les années 70,
+
+0:42:53.710,0:42:58.900
+pour leur travail de la fin des années 50 et du début des années 60. Et ce qu'ils ont fait, c'est qu'ils ont enfoncé une électrode dans
+
+0:42:59.000,0:43:01.270
+le cortex visuel de divers animaux :  des chats,
+
+0:43:01.940,0:43:03.320
+des singes,
+
+0:43:03.320,0:43:05.240
+des souris, peu importe.
+
+0:43:05.240,0:43:07.300
+Je pense qu'ils aiment beaucoup les chats.
+
+0:43:08.530,0:43:11.510
+Et ils ont essayé de comprendre
+
+0:43:11.510,0:43:14.770
+ce que faisaient les neurones du cortex visuel.
+
+0:43:15.830,0:43:17.830
+Et ce qu'ils ont découvert, c'est que...
+
+0:43:18.500,0:43:25.120
+Donc, tout d'abord, ici c'est un cerveau humain mais, je veux dire, ce diagramme date de bien plus tard. Mais pour tous les mammifères
+
+0:43:27.470,0:43:31.929
+le système visuel est organisé de manière similaire. Vous avez des signaux qui arrivent à vos yeux,
+
+0:43:32.690,0:43:39.999
+en frappant votre rétine. Vous avez quelques couches de neurones dans votre rétine devant vos photorécepteurs qui, prétraitent le
+
+0:43:40.250,0:43:43.270
+signal. Ils le compriment en quelque sorte, car vous ne pouvez pas avoir…
+
+0:43:44.330,0:43:48.610
+L'œil humain c’est quelque chose comme cent millions de pixels.
+
+0:43:49.280,0:43:52.090
+C'est donc comme une caméra de cent millions de pixels, une caméra mégapixel.
+
+0:43:52.640,0:43:56.859
+Mais le problème est que vous ne pouvez pas avoir cent millions de fibres qui sortent de vos yeux, car sinon
+
+0:43:56.930,0:43:59.050
+votre nerf optique serait aussi grand. Et vous
+
+0:43:59.990,0:44:01.990
+ne serait pas capable de bouger les yeux.
+
+0:44:02.020,0:44:06.880
+Les neurones situés devant votre rétine font donc une compression.
+
+0:44:07.640,0:44:13.509
+Ils ne font pas de compression JPEG, mais ils font de la compression. Pour que le signal puisse être compressé à un million de fibres.
+
+0:44:13.510,0:44:15.969
+Vous avez un million de fibres qui sortent de chacun de vos yeux. Et
+
+0:44:17.420,0:44:24.940
+faisant que votre nerf optique est grand comme ça. Ce qui signifie que vous pouvez transmettre le signal et tourner les yeux.
+
+0:44:26.630,0:44:30.999
+C'est en fait une erreur que l'évolution a faite pour les vertébrés.
+
+0:44:33.350,0:44:38.019
+Les invertébrés ne sont pas comme ça. En fait, les invertébrés… Donc c'est une grosse erreur car
+
+0:44:38.810,0:44:40.220
+les fils
+
+0:44:40.220,0:44:43.120
+recueillant les informations sur votre rétine…
+
+0:44:45.560,0:44:51.039
+car les neurones qui traitent le signal devant votre rétine, les fils doivent en quelque sorte
+
+0:44:52.700,0:44:56.050
+être en face de votre rétine et donc bloquent une partie de la vue.
+
+0:44:56.270,0:44:59.199
+Puis ils doivent faire un trou dans la rétine pour aller au cerveau.
+
+0:44:59.660,0:45:04.780
+Il y a donc un point aveugle dans votre champ visuel, car c'est là que votre nerf optique perce la rétine.
+
+0:45:07.070,0:45:08.380
+C'est donc un peu ridicule
+
+0:45:08.380,0:45:12.189
+si vous avez une caméra comme celle-ci pour que les fils sortent par devant et ensuite,
+
+0:45:12.290,0:45:17.979
+creuser un trou dans votre capteur pour récupérer les fils. C'est bien mieux si les fils sortent par derrière, non ?
+
+0:45:18.100,0:45:22.519
+Et les vertébrés se sont trompés. Les invertébrés ont raison.
+
+0:45:23.630,0:45:28.509
+Comme le calamar et la pieuvre qui ont des fils qui sortent par derrière. Ils sont beaucoup plus chanceux.
+
+0:45:30.890,0:45:32.890
+Mais peu importe.
+
+0:45:33.620,0:45:41.079
+Donc le signal va de vos yeux à un petit morceau de cerveau appelé noyau géniculé latéral,
+
+0:45:41.080,0:45:44.199
+qui est sous votre cerveau, comme à la base de celui-ci.
+
+0:45:44.750,0:45:46.750
+Il fait un peu de
+
+0:45:46.760,0:45:48.820
+normalisation des contrastes. Nous allons en parler
+
+0:45:49.730,0:45:51.730
+dans quelques conférences.
+
+0:45:53.000,0:45:59.470
+Puis cela va à l'arrière de votre cerveau où se trouve la principale zone du cortex visuel appelée v1.
+
+0:45:59.960,0:46:06.520
+Chez l'homme, on l'appelle V1. Et il y a quelque chose qu'on appelle la hiérarchie ventrale : V1, V2, V4 (IT),
+
+0:46:06.770,0:46:11.020
+qui est un ensemble de zones du cerveau allant de l'arrière vers le côté. Et
+
+0:46:11.930,0:46:17.260
+dans le cortex inféro-temporel juste ici, c'est là que les catégories d'objets sont représentées.
+
+0:46:17.260,0:46:19.989
+Donc, quand vous vous promenez et que vous voyez votre grand-mère,
+
+0:46:19.990,0:46:24.429
+vous avez un tas de neurones qui représentent votre grand-mère dans ce domaine. Et peu importe
+
+0:46:25.040,0:46:27.040
+ce que porte votre grand-mère,
+
+0:46:27.740,0:46:33.280
+dans quelle position elle se trouve, s'il y a une occlusion ou autre, ces neurones vont se déclencher si vous voyez votre grand-mère.
+
+0:46:37.550,0:46:39.550
+Donc, le genre de choses au niveau des catégories.
+
+0:46:39.800,0:46:45.699
+Et ces choses ont été découvertes par des expériences sur des patients qui ont dû avoir le crâne ouvert pendant quelques semaines,
+
+0:46:46.610,0:46:51.880
+où les gens avaient des électrodes et ont leur faisaient regarder des films. Et on réalise que cela s'allume si
+
+0:46:52.070,0:46:55.750
+Jennifer Aniston est sur le film. Et cela ne s'allume que pour Jennifer Aniston.
+
+0:47:04.740,0:47:12.849
+Donc avec l'idée que d'une certaine manière le contexte visuel peut faire de la reconnaissance de formes et semble avoir cette sorte de structure hiérarchique,
+
+0:47:13.880,0:47:15.880
+structure multicouche.
+
+0:47:15.920,0:47:19.309
+Il y a aussi l'idée que le processus visuel
+
+0:47:19.370,0:47:26.920
+est essentiellement un processus « feed-forward ». Donc le processus par lequel vous reconnaissez un objet quotidien est très rapide. Il prend environ 100 millisecondes.
+
+0:47:26.920,0:47:32.139
+Le signal a à peine le temps de passer de votre rétine au cortex infero-temporel.
+
+0:47:32.140,0:47:36.220
+Il y a un délai d’environ quelques millisecondes par neurone que vous devez traverser.
+
+0:47:36.290,0:47:41.860
+100 millisecondes. A peine le temps, pour quelques décharges électriques de parcourir l'ensemble du système.
+
+0:47:41.860,0:47:48.460
+Il n'y a donc pas de temps pour des connexions récurrentes, etc. Cela ne veut pas dire qu'il n'y a pas de connexions récurrentes.
+
+0:47:48.460,0:47:50.460
+Il y en a des tonnes, mais d'une manière ou d'une autre
+
+0:47:50.960,0:47:52.960
+la reconnaissance rapide se fait sans eux.
+
+0:47:53.630,0:47:57.549
+C'est ce qu'on appelle la voie ventrale de feed-forward. Et
+
+0:47:58.490,0:48:03.579
+ce monsieur ici, Kunihiko Fukushima, a eu l'idée de s'inspirer de
+
+0:48:05.210,0:48:11.470
+Hubel et Wiesel dans les années 70, et a en quelque sorte construit un modèle de réseau neuronal sur ordinateur. Et a eu cette idée,
+
+0:48:13.250,0:48:14.440
+qu’il y avait d'abord des couches.
+
+0:48:14.440,0:48:21.519
+Mais aussi l'idée que Hubel et Wiesel ont découverte, est que les neurones individuels ne réagissent qu'à une petite partie du champ visuel.
+
+0:48:22.100,0:48:24.100
+Ils ont donc introduit des électrodes dans
+
+0:48:24.500,0:48:28.359
+les neurones de V1 et ont réalisé que ce neurone de V1 ne réagit qu'à
+
+0:48:30.140,0:48:34.000
+des motifs qui apparaissent dans une très petite zone du champ visuel.
+
+0:48:35.780,0:48:40.780
+Puis le neurone qui se trouve à côté réagira à une autre zone qui est à côté de la première.
+
+0:48:40.780,0:48:43.269
+Les neurones semblent donc être organisés de manière rétinotopique,
+
+0:48:43.270,0:48:48.190
+ce qui signifie que les neurones voisins réagissent aux régions voisines dans le champ visuel.
+
+0:48:48.560,0:48:54.100
+Ils ont aussi réalisé que le groupe de neurones qui réagissent tous à la même zone dans le champ visuel, et qui semblent
+
+0:48:54.170,0:48:58.750
+s'allumer pour les bords à une orientation particulière… Donc un neurone s'activera si
+
+0:48:59.300,0:49:04.210
+son champ de réception a un bord, un bord vertical, puis celui qui est à côté si
+
+0:49:04.430,0:49:09.590
+le bord est un peu incliné, puis celui d'à côté si le bord est un peu tourné, etc.
+
+0:49:09.590,0:49:11.679
+Ils avaient donc cette photo de
+
+0:49:12.000,0:49:14.630
+V1 comme en tant que la
+
+0:49:14.630,0:49:17.890
+sélectivité de l'orientation. Donc les neurones regardent un champ local
+
+0:49:18.000,0:49:24.999
+et réagissent ensuite aux orientations. Et les groupes de neurones qui réagissent à de multiples orientations sont reproduits sur l'ensemble du champ visuel.
+
+0:49:25.430,0:49:30.159
+Alors Fukushima, a dit : « Pourquoi ne pas construire un réseau neuronal qui fasse ça ? Je ne vais pas 
+
+0:49:30.680,0:49:34.450
+insister sur le fait que mon système extrait des caractéristiques orientées
+
+0:49:34.970,0:49:37.629
+mais je vais utiliser une sorte d'algorithme d'apprentissage non supervisé 
+
+0:49:38.480,0:49:39.340
+pour l'entraîner. »
+
+0:49:39.340,0:49:44.769
+Il n'entraînait donc pas son système de bout en bout. Il l'entraînait couche par couche, de manière non supervisée
+
+0:49:45.230,0:49:47.230
+dont je ne vais pas entrer dans les détails.
+
+0:49:48.050,0:49:50.649
+Et puis il a utilisé un autre concept.
+
+0:49:51.350,0:49:55.449
+Celui selon lequel les neurones étaient répliqués dans le champ visuel, et
+
+0:49:55.820,0:49:59.949
+il a ensuite utilisé un concept de Hubel et Wiesel appelé cellules complexes.
+
+0:50:00.110,0:50:08.000
+Les cellules complexes sont des unités qui regroupent les activités d'un groupe de cellules simples, qui sont des
+
+0:50:08.000,0:50:11.959
+unités d'orientation-sélection.
+
+0:50:12.380,0:50:14.380
+Et il les met de telle manière que si
+
+0:50:15.109,0:50:18.459
+une orientation, si un bord orienté est un peu déplacé,
+
+0:50:19.310,0:50:22.359
+cela activera différentes cellules simples, mais la cellule complexe
+
+0:50:23.180,0:50:27.669
+puisqu'intègre les sorties de toutes ces cellules simples, restera activée
+
+0:50:28.160,0:50:31.540
+jusqu'à ce que le bord se déplace au-delà de son champ réceptif.
+
+0:50:32.180,0:50:36.159
+Ces cellules complexes créent donc un peu d'invariance au décalage dans la représentation.
+
+0:50:36.160,0:50:41.290
+Vous pouvez déplacer un peu un bord, et cela ne changera pas l'activité d'une de ces cellules complexes.
+
+0:50:42.480,0:50:49.810
+Donc, c'est ce que nous appelons maintenant « convolution » et « pooling » dans le contexte des réseaux convolutifs.
+
+0:50:50.840,0:50:52.840
+Et c'est essentiellement ce qui
+
+0:50:54.000,0:50:59.139
+m'a amené au milieu ou à la fin des années 80 à mettre au point des réseaux convolutifs. Ils sont donc essentiellement
+
+0:51:00.920,0:51:07.210
+des réseaux où les connexions sont locales. Elles sont répliquées le long du champ visuel
+
+0:51:08.150,0:51:11.150
+et vous intercalez
+
+0:51:13.000,0:51:21.230
+des couches de détection de caractéristiques qui détectent ces caractéristiques locales avec une opération de pooling. Nous en reparlerons longuement dans trois semaines.
+
+0:51:21.230,0:51:23.510
+Je ne vais donc pas entrer dans les détails.
+
+0:51:24.480,0:51:29.719
+Mais cela reprend cette idée de Hubel et Wiesel et Fukushima que…
+
+0:51:31.830,0:51:33.830
+si je peux avoir mon pointeur…
+
+0:51:34.080,0:51:41.940
+que, fondamentalement, chaque neurone d'une couche calcule une somme pondérée d'une petite zone de l'entrée, et
+
+0:51:43.350,0:51:45.350
+la somme pondérée utilise ces poids.
+
+0:51:45.570,0:51:50.000
+Mais ces poids sont répliqués à travers. Donc chaque neurone d'une couche utilise le même
+
+0:51:50.610,0:51:53.870
+ensemble de poids. C'est donc l'idée de la liaison des poids ou du partage des poids.
+
+0:51:57.690,0:52:01.669
+En utilisant la rétropropagation, nous avons donc pu entraîner des réseaux neuronaux comme celui-ci à reconnaître
+
+0:52:02.370,0:52:05.089
+des chiffres manuscrits. Cela remonte à la fin des années 80 et au début des années 90.
+
+0:52:09.000,0:52:14.099
+Et c'est moi quand j'avais à peu près votre âge, peut-être un peu plus. J'ai environ trente ans.
+
+0:52:14.100,0:52:16.100
+Dans cette vidéo.
+
+0:52:16.230,0:52:20.000
+Et c'est mon numéro de téléphone lorsque je travaillais à Bell Labs.
+
+0:52:20.280,0:52:21.050
+Ça ne marche plus.
+
+0:52:21.050,0:52:28.189
+C'est un numéro du New Jersey. Et j'ai appuyé sur une touche, et il y a ce réseau qui tourne sur le PC 386 avec une carte accélératrice spéciale
+
+0:52:28.830,0:52:34.220
+reconnaissant ces caractères. Fonctionnant avec un réseau neuronal très similaire à celui dont je viens de vous montrer l'animation.
+
+0:52:34.920,0:52:36.920
+Et la chose pouvait
+
+0:52:37.000,0:52:40.429
+reconnaître des caractères de n'importe quel style.
+
+0:52:43.000,0:52:46.040
+Y compris des styles très étranges,
+
+0:52:47.340,0:52:49.340
+y compris des styles encore plus étranges.
+
+0:52:51.210,0:52:55.909
+Et donc, c'était un peu nouveau à l'époque, car c'était à l'époque où
+
+0:52:56.850,0:52:59.990
+la reconnaissance de caractères, ou la reconnaissance de formes en général,
+
+0:52:59.990,0:53:01.260
+étaient toujours sur le modèle de :
+
+0:53:01.260,0:53:03.889
+on extrait des caractéristiques et on entraîne un classificateur par-dessus.
+
+0:53:04.020,0:53:07.339
+Et cela pouvait apprendre la tâche entière de bout en bout.
+
+0:53:08.040,0:53:15.129
+Les premières couches de ce réseau de neurones jouent le rôle d'un extracteur de caractéristiques mais entraîné à partir de données.
+
+0:53:15.129,0:53:17.929
+La raison pour laquelle nous avons utilisé la reconnaissance de caractères est que 
+
+0:53:18.210,0:53:20.210
+c'était la seule chose pour laquelle nous disposions de données.
+
+0:53:20.250,0:53:24.500
+Les seules tâches pour lesquelles il y avait suffisamment de données étaient soit la reconnaissance de caractères, soit la reconnaissance vocale.
+
+0:53:24.810,0:53:29.040
+Les expériences de reconnaissance vocale ont été quelque peu réussies mais pas autant.
+
+0:53:29.970,0:53:31.970
+Assez rapidement, nous avons réalisé que nous pouvions utiliser ces
+
+0:53:32.760,0:53:35.719
+réseaux convolutifs, pas seulement pour reconnaître des caractères individuels,
+
+0:53:35.720,0:53:42.199
+mais pour reconnaître des groupes de caractères. Donc plusieurs caractères en même temps. Et c'est à cause de cette nature convolutionnelle du réseau,
+
+0:53:42.200,0:53:45.500
+sur lequel je reviendrai dans trois conférences,
+
+0:53:45.630,0:53:50.869
+que ces systèmes peuvent être appliqués à une image de grande taille et 
+
+0:53:51.270,0:53:54.050
+s'allument chaque fois qu'ils voient dans leur
+
+0:53:56.220,0:54:00.020
+champ de vision une forme qu'ils peuvent reconnaître.
+
+0:54:02.000,0:54:07.760
+Donc, en gros, si vous avez une grande image, vous entraînez un réseau convolutif qui a une petite fenêtre d'entrée, et vous le glissez
+
+0:54:07.760,0:54:11.659
+sur l'ensemble de l'image, et chaque fois qu’il s'allume, cela signifie que
+
+0:54:12.690,0:54:14.690
+l'objet pour lequel vous avez entraîné le réseau à détecter, a été détecté.
+
+0:54:15.360,0:54:19.190
+Le système est donc capable d'effectuer une segmentation et une reconnaissance simultanées.
+
+0:54:19.190,0:54:21.200
+A l'époque, avant cela,
+
+0:54:21.480,0:54:29.089
+les personnes en reconnaissance de formes disposaient d'un programme explicite qui séparerait les objets individuels de leur fond et les uns des autres. Puis envoyait chaque
+
+0:54:29.160,0:54:32.240
+objet individuel, caractère par exemple, à un reconnaisseur.
+
+0:54:33.540,0:54:35.989
+Mais avec cela, vous pouvez faire les deux en même temps.
+
+0:54:35.989,0:54:38.860
+Vous n'avez pas à vous en inquiéter. Vous n'avez pas besoin de mettre en place un programme spécial pour cela.
+
+0:54:42.420,0:54:48.260
+Cela peut donc s'appliquer en particulier aux images naturelles pour des choses comme la détection faciale, la détection des piétons, etc. 
+
+0:54:48.260,0:54:50.440
+Même chose, entraîner un
+
+0:54:51.600,0:54:53.220
+réseau convolutif à
+
+0:54:53.220,0:54:58.879
+distinguer entre une image où vous avez un visage et une image où vous n'en avez pas. Entraîner cela sur plusieurs milliers d'exemples, et
+
+0:54:59.370,0:55:02.839
+puis prenez cette fenêtre, passez la sur une image : à chaque fois qu'elle s'allume
+
+0:55:02.840,0:55:05.780
+il y a un visage. Bien sûr, le visage peut être plus grand que la fenêtre
+
+0:55:05.780,0:55:11.329
+donc vous sous-échantillonnez l'image : vous la rendez plus petite et vous passez votre réseau. Puis vous la rendez à nouveau plus petite, passez votre réseau
+
+0:55:11.330,0:55:13.880
+à nouveau. Vous pouvez donc désormais détecter les visages quelle que soit leur taille.
+
+0:55:18.590,0:55:26.300
+Vous pouvez notamment l'utiliser pour piloter des robots. Ce sont donc des choses qui ont été faites avant que l’apprentissage profond ne devienne populaire.
+
+0:55:27.990,0:55:31.579
+Il s'agit d'un exemple où le réseau ici est un réseau convolutif.
+
+0:55:31.580,0:55:35.559
+C’est appliqué à l'image provenant d'une caméra, d'un robot en marche.
+
+0:55:36.260,0:55:38.030
+Et il essaie de classer
+
+0:55:38.030,0:55:42.540
+chaque fenêtre d'une petite fenêtre, de 40 par 40 pixels environ, ou moins,
+
+0:55:43.060,0:55:48.540
+pour savoir si le pixel central de cette fenêtre est au sol ou s'il constitue un obstacle.
+
+0:55:48.550,0:55:51.639
+Ainsi, tout ce qu'il classe comme étant sur le sol est vert.
+
+0:55:51.740,0:55:57.399
+Tout ce qu'il comme étant un obstacle est rouge ou violet si c'est au pied de l'obstacle.
+
+0:55:57.710,0:56:02.290
+Et puis vous pouvez en faire correspondre cela à une carte, que vous voyez ici en haut.
+
+0:56:03.080,0:56:06.789
+Ensuite, planifiez cette carte pour atteindre un objectif particulier, puis utilisez-la pour naviguer.
+
+0:56:09.380,0:56:11.980
+Ici il s’agit de deux anciens doctorants.
+
+0:56:13.520,0:56:18.850
+Raia Hadsell à droite, Pierre Sermanet à gauche, qui embêtent ce pauvre robot.
+
+0:56:20.480,0:56:25.659
+Ils sont assez confiants dans le fait que le robot ne leur cassera pas les jambes, puisqu'ils ont écrit le code et l'ont entraîné.
+
+0:56:28.250,0:56:32.469
+Pierre Sermanet est chercheur chez Google Brain en Californie et travaille sur la robotique.
+
+0:56:33.200,0:56:36.820
+Raia Hadsell est à la tête de la recherche en robotique,
+
+0:56:37.460,0:56:40.600
+directeur de la recherche en robotique chez DeepMind. Ils ont bien réussi.
+
+0:56:40.500,0:56:45.550
+Une idée similaire peut donc être utilisée pour ce que l'on appelle la segmentation sémantique.
+
+0:56:45.550,0:56:50.889
+La segmentation sémantique est donc l'idée que vous pouvez avec ce genre d'approche à fenêtre coulissante,
+
+0:56:51.980,0:56:57.550
+entraîner un réseau convolutif à classer le pixel central en utilisant une fenêtre comme contexte.
+
+0:56:58.340,0:57:00.729
+Mais ici, il n'est pas seulement entraîné à classer
+
+0:57:01.730,0:57:05.469
+les obstacles des non-obstacles. Il est entraîné à classer quelque chose comme 30 catégories.
+
+0:57:06.650,0:57:11.889
+C’est Washington Place, je crois. C'est le parc de Washington Square.
+
+0:57:13.010,0:57:17.469
+Il connaît les routes, les gens, les plantes et
+
+0:57:18.140,0:57:24.220
+les arbres, et tout ce qu'il veut. Mais il trouve un désert au milieu du parc de Washington Square, qui n'en est pas un…
+
+0:57:26.119,0:57:28.299
+Il n'y a pas de plage à ma connaissance…
+
+0:57:29.840,0:57:32.949
+Ce n'est donc pas parfait. Mais à l'époque, il était à la pointe de la technologie. C'était le meilleur
+
+0:57:33.740,0:57:36.280
+système qui permettait de faire ce genre de segmentation sémantique.
+
+0:57:36.920,0:57:42.490
+À l'époque, je courais partout en donnant des conférences, comme pour essayer d'évangéliser les gens sur l'apprentissage profond. C'était vers 2010.
+
+0:57:42.950,0:57:45.649
+C'est donc avant la révolution de l'apprentissage profond, si vous voulez.
+
+0:57:48.900,0:57:51.680
+Et une personne, un professeur venant
+
+0:57:54.150,0:58:00.259
+d’Israël était assis dans une de mes conférences. Et c'est un théoricien. Mais il était en fait un peu subjugué par les
+
+0:58:00.900,0:58:03.259
+applications potentielles de tout ça. Et il était sur le point de
+
+0:58:03.690,0:58:07.609
+prendre un congé sabbatique et travailler pour une société appelée Mobileye, qui était une start-up en Israël à l'époque
+
+0:58:08.640,0:58:15.799
+travaillant sur la conduite autonome. Et donc, quelques mois après avoir entendu mon discours, il a commencé à travailler chez Mobileye.
+
+0:58:15.799,0:58:19.248
+Il a dit aux gens de Mobileye : « Vous devriez essayer ces trucs qu’on appelle ConvNet,
+
+0:58:19.249,0:58:25.919
+cela fonctionne vraiment bien ». Et les ingénieurs ont répondu : « Non, nous ne croyons pas en ces choses-là. Nous avons notre propre méthode. »
+
+0:58:26.069,0:58:30.139
+Il l'a donc implémenté et l'a essayé lui-même. Il a battu
+
+0:58:30.749,0:58:32.749
+tous les repères qu'ils avaient.
+
+0:58:32.789,0:58:35.689
+Et tout d'un coup, toute l'entreprise est passée aux ConvNets.
+
+0:58:36.719,0:58:39.649
+Et ils ont été la première entreprise à proposer un
+
+0:58:40.619,0:58:47.088
+système de vision pour les voitures qui peut maintenir une voiture sur une autoroute, et peut s’arrêter s'il y a un piéton ou
+
+0:58:47.000,0:58:49.920
+un cycliste qui traverse.
+
+0:58:49.920,0:58:53.539
+J'y reviendrai dans une minute. Ils utilisaient en gros cette technique.
+
+0:58:54.420,0:58:57.739
+Segmentation sémantique. Très similaire à celle que j'ai montrée pour le robot auparavant.
+
+0:58:59.640,0:59:04.519
+Ce n’était pas Clément [Farabet], c'était Shai Shalev-Schwartz.
+
+0:59:07.009,0:59:12.619
+Vous devez aussi être conscient du fait que dans les années 80, les gens étaient vraiment intéressés par l'utilisation
+
+0:59:13.049,0:59:16.218
+de types de matériel spéciaux qui pourraient faire fonctionner les réseaux neuronaux très rapidement.
+
+0:59:16.380,0:59:21.680
+Et ce sont là quelques exemples de puces de réseau qui ont été réellement implémentées. J'ai eu à faire avec certaines d'entre elles.
+
+0:59:21.680,0:59:27.169
+Elles ont été mises en œuvre par des personnes travaillant dans le même groupe que moi, au Bell Labs dans le New Jersey.
+
+0:59:28.680,0:59:32.849
+C'était donc un sujet brûlant dans les années 1980. Et puis bien sûr la perte d’intérêt
+
+0:59:32.849,0:59:39.018
+pour les réseaux neuronaux au milieu des années 90, les gens n'y travaillaient plus, jusqu'à il y a quelques années. Aujourd'hui,
+
+0:59:39.959,0:59:46.039
+le sujet le plus brûlant en matière de conception de puces dans l'industrie des puces est celui des accélérateurs de réseaux neuronaux.
+
+0:59:46.559,0:59:48.559
+Vous allez à n'importe quelle conférence portant sur
+
+0:59:49.199,0:59:51.199
+l’architecture informatique,
+
+0:59:52.049,0:59:59.149
+les puces, comme l'ISSCC, qui est le grand type de conférence sur les circuits semi-conducteurs, la moitié des discussions portent sur
+
+1:00:00.009,1:00:02.009
+les accélérateurs de réseaux neuronaux.
+
+1:00:03.700,1:00:05.700
+Et j'ai travaillé sur certaines de ces choses.
+
+1:00:08.190,1:00:12.869
+Donc il s'est passé quelque chose, comme je vous l'ai dit, vers 2010, 13, 15
+
+1:00:13.269,1:00:20.099
+dans la reconnaissance vocale, la reconnaissance d'images, le traitement du langage naturel, et cela continue. Nous sommes en plein milieu pour d'autres sujets.
+
+1:00:23.200,1:00:28.349
+Et ce qui s'est passé et je suis vraiment triste de dire que cela n'est pas arrivé dans mon laboratoire, mais…
+
+1:00:29.560,1:00:31.359
+mais avec nos amis…
+
+1:00:31.360,1:00:37.200
+nous avons commencé… avec Yoshua Bengio et Geoffrey Hinton au début des années 2000, nous savions
+
+1:00:37.740,1:00:41.000
+que l'apprentissage profond fonctionnait vraiment bien et nous
+
+1:00:41.000,1:00:45.960
+savions que toute la communauté faisait une erreur en écartant les réseaux neuronaux et l'apprentissage profond.
+
+1:00:46.240,1:00:51.869
+Nous n’utilisions pas encore le terme d'apprentissage profond. Nous l'avons inventé quelques années plus tard. Vers 2003 ou 2004,
+
+1:00:51.869,1:00:56.500
+nous avons commencé une sorte de conspiration, si vous voulez. Nous nous sommes réunis et nous avons dit que nous allions essayer
+
+1:00:57.000,1:01:03.420
+de battre certains records sur certains jeu de données, inventer de nouveaux algorithmes qui nous permettront d'entraîner de très grands réseaux neuronaux.
+
+1:01:03.420,1:01:07.880
+Cela permettra de collecter de très grands ensembles de données et montrer au monde que ces choses fonctionnent vraiment,
+
+1:01:08.140,1:01:10.140
+car personne n'y croyait vraiment.
+
+1:01:12.339,1:01:17.939
+Cela a vraiment réussi au-delà de nos rêves les plus fous. En particulier, en 2012
+
+1:01:18.160,1:01:23.160
+Geoffrey Hinton avait un étudiant, Alex Krizhevsky, qui a passé beaucoup de temps à implémenter un
+
+1:01:23.160,1:01:25.269
+réseau convolutif sur
+
+1:01:25.269,1:01:29.939
+des GPUs, qui étaient en quelque sorte nouveaux à l'époque. Ils n'étaient pas entièrement nouveaux mais ils commençaient à devenir vraiment
+
+1:01:30.460,1:01:32.319
+très performants.
+
+1:01:32.319,1:01:35.579
+Il était donc très doué pour pirater cela et
+
+1:01:36.910,1:01:44.039
+ils ont pu ensuite entraîner des réseaux neuronaux beaucoup plus grands, des ConvNets que personne pouvait faire auparavant.
+
+1:01:44.890,1:01:46.890
+Et donc ils l'ont utilisé 
+
+1:01:47.039,1:01:52.839
+pour l'entraîner sur le jeu de données ImageNet. L'ensemble de données ImageNet est un ensemble de photos naturelles.
+
+1:01:56.259,1:01:58.469
+Et le système est censé reconnaître
+
+1:01:59.650,1:02:01.920
+les principaux objets de la photo parmi
+
+1:02:02.000,1:02:06.450
+1 000 catégories différentes. Et la série d'entraînement comptait 1,3 million d'échantillons.
+
+1:02:07.000,1:02:09.500
+Ce qui est assez important.
+
+1:02:09.640,1:02:12.450
+Ils ont donc construit ce ConvNet de grande taille,
+
+1:02:13.329,1:02:14.779
+et très profond
+
+1:02:14.779,1:02:19.869
+à peu près sur le même modèle que celui que nous avions avant, implémenter sur des GPU, et l’ont fait tourner
+
+1:02:20.509,1:02:23.559
+quelques semaines. Et avec cela, ils ont battu
+
+1:02:24.589,1:02:26.589
+la performance des meilleurs systèmes concurrents
+
+1:02:27.380,1:02:33.789
+avec une marge importante. Voici donc le taux d'erreur sur ImageNet remontant jusqu'en 2010. Donc, 2010
+
+1:02:33.789,1:02:35.829
+il y avait environ 28% d'erreurs dans le top 5.
+
+1:02:35.829,1:02:42.669
+En gros, vous obtenez une erreur si la bonne catégorie n'est pas dans le top 5 des 1 000. C'est donc une sorte de
+
+1:02:43.000,1:02:46.390
+mesure de l'erreur.
+
+1:02:47.119,1:02:52.298
+2011, l’erreur était de 25,8%, le système qui a pu le faire était en fait très, très grand.
+
+1:02:53.029,1:02:58.748
+C'était une sorte de ConvNet mais il n'était pas entraîné. Je veux dire que seule la dernière couche était entraînée.
+
+1:03:03.000,1:03:08.768
+Et puis Geoff et son équipe l'ont ramené à 16,4%, et ça a été un
+
+1:03:10.219,1:03:15.999
+moment décisif pour la communauté de la vision par ordinateur. Beaucoup de gens ont dit : « Bon maintenant nous savons que ce truc fonctionne »
+
+1:03:18.140,1:03:20.979
+Et toute la communauté a changé d’avis, passant de
+
+1:03:22.640,1:03:28.629
+« on refuse tous les papiers contenant des réseaux de neurones en 2011 et 2012 »
+
+1:03:29.269,1:03:34.149
+à « en 2016 on refuse tous les papiers qui n'ont pas de réseau convolutif ».
+
+1:03:35.000,1:03:41.078
+Donc maintenant, c'est la nouvelle religion. Vous ne pouvez pas avoir un papier dans une conférence sur la vision par ordinateur si vous n'utilisez pas les ConvNets d'une manière ou d'une autre.
+
+1:03:42.469,1:03:48.698
+Et le taux d'erreur a baissé très rapidement. Les gens ont trouvé toutes sortes d'astuces architecturales vraiment mignonnes
+
+1:03:50.209,1:03:56.649
+qui ont permis à ces choses de mieux fonctionner. Et ce que vous pouvez voir, c'est qu'il y a eu une inflation du nombre de couches.
+
+1:03:56.959,1:04:02.919
+Mes réseaux convolutifs des années 90 comportaient environ 7 couches, de même pour ceux du début des années 2000. Et puis
+
+1:04:03.229,1:04:05.859
+AlexNet en avait, je ne sais pas, 12.
+
+1:04:06.949,1:04:10.569
+Puis VGG l'année suivante, après cela avait 19.
+
+1:04:11.509,1:04:17.619
+GoogLeNet en avait je ne sais combien, car il est difficile de savoir comment on compte. Et maintenant, le cheval de bataille de
+
+1:04:18.650,1:04:20.650
+la reconnaissance des objets, le standard,
+
+1:04:20.989,1:04:23.529
+le « backbone » [colonne vertébrale] comme on les appelle, comporte 50 couches.
+
+1:04:24.500,1:04:26.500
+Cela s'appelle ResNet-50.
+
+1:04:26.940,1:04:29.960
+Mais certains réseaux ont une centaine de couches.
+
+1:04:29.970,1:04:33.649
+Il y a quelques années, Alfredo a mis au point ce tableau qui montre…
+
+1:04:35.490,1:04:40.879
+où chacun de ces cercles est une architecture de réseau particulière. 
+
+1:04:41.850,1:04:46.219
+Et l'axe des x est le nombre de milliards d'opérations que vous devez effectuer pour calculer le résultat.
+
+1:04:46.950,1:04:49.460
+Ces choses ont vraiment des milliards de connexions.
+
+1:04:50.760,1:04:56.570
+L'axe des y est la précision top-1 sur ImageNet. Ce n'est donc pas la même mesure de performance que celle que je vous ai montrée précédemment.
+
+1:04:56.600,1:05:01.900
+Les meilleurs systèmes se situent autour de 84 aujourd'hui [c’est-à-dire début 2020. On est à 90 début 2021]
+
+1:05:01.920,1:05:07.310
+Et la taille du cercle est l'occupation de la mémoire, donc le
+
+1:05:08.070,1:05:09.810
+nombre de
+
+1:05:09.810,1:05:11.810
+millions
+
+1:05:12.930,1:05:18.080
+de flottants que vous devez stocker pour mémoriser les valeurs des poids. Maintenant, les gens sont très malins pour comprimer ces choses,
+
+1:05:18.080,1:05:19.710
+les quantifier, et
+
+1:05:19.710,1:05:27.500
+des équipes entières de Google, Facebook et d'autres équipes ne travaillent qu'à l'optimisation de ces réseaux et à la compression de ces choses
+
+1:05:27.500,1:05:29.999
+pour qu'ils puissent tourner rapidement.
+
+1:05:30.150,1:05:32.150
+Car,
+
+1:05:32.160,1:05:34.020
+pour vous donner juste une
+
+1:05:34.020,1:05:35.610
+idée approximative,
+
+1:05:35.610,1:05:37.610
+le nombre de fois
+
+1:05:37.680,1:05:42.740
+que Facebook, par exemple, fait tourner un ConvNet sur ses serveurs. Chaque jour, il y en a des dizaines de milliards.
+
+1:05:44.220,1:05:50.179
+Il y a donc une énorme incitation à optimiser la quantité de calculs nécessaires pour cela.
+
+1:05:55.110,1:05:57.110
+Alors une...
+
+1:05:58.920,1:06:00.920
+une des raisons pour lesquelles
+
+1:06:01.890,1:06:03.870
+les ConvNets connaissent un tel succès
+
+1:06:03.870,1:06:08.299
+est qu'ils exploitent une propriété des données naturelles, à savoir la compositionnalité.
+
+1:06:10.000,1:06:14.160
+Donc la compositionnalité est la
+
+1:06:14.160,1:06:16.160
+propriété par laquelle
+
+1:06:16.470,1:06:18.470
+une scène est composée d'objets.
+
+1:06:18.750,1:06:20.750
+Les objets sont composés de parties.
+
+1:06:20.790,1:06:26.810
+Les parties sont composées de sous-parties. Les sous-parties sont en fait des combinaisons de motifs. Et les motifs sont des combinaisons de
+
+1:06:28.500,1:06:30.500
+contours ou de bords,
+
+1:06:30.600,1:06:32.600
+ou des textures.
+
+1:06:33.330,1:06:39.159
+Et ce ne sont que des combinaisons de pixels. Donc il y a cette hiérarchie compositionnelle qui,
+
+1:06:40.220,1:06:42.399
+vous savez, des combinaisons particulières 
+
+1:06:43.190,1:06:45.669
+d’objets à un niveau de la hiérarchie
+
+1:06:46.730,1:06:47.900
+forment
+
+1:06:47.900,1:06:48.999
+des objets à la couche suivante.
+
+1:06:48.999,1:06:55.599
+Et donc, si vous imitez cette hiérarchie de composition dans l'architecture du réseau, et que vous lui laissez apprendre les
+
+1:06:56.150,1:06:58.150
+combinaisons de caractéristiques à une couche qui,
+
+1:06:58.700,1:07:05.649
+forment les caractéristiques de la couche suivante, vous faites de l'apprentissage profond.
+
+1:07:06.739,1:07:12.309
+Apprendre à représenter le monde et à exploiter la structure du monde. Le fait qu’il
+
+1:07:13.369,1:07:16.209
+y a de l'organisation dans le monde car le monde est compositionnel.
+
+1:07:19.819,1:07:23.619
+Un statisticien du nom de Stuart Geman, qui travaille à l'université de Brown, a déclaré…
+
+1:07:25.009,1:07:29.529
+Il a en quelque sorte joué sur la célèbre citation d'Einstein qui a dit :
+
+1:07:31.009,1:07:34.988
+« La chose la plus incompréhensible du monde est que le monde est compréhensible. »
+
+1:07:35.930,1:07:39.999
+Avec toutes les choses compliquées dans le monde… le monde pourrait être extrêmement compliqué,
+
+1:07:39.999,1:07:42.699
+si compliqué que nous n'avons aucun moyen de le comprendre.
+
+1:07:42.829,1:07:46.479
+Et cela ressemble à une conspiration que nous sommes capables de comprendre au moins une partie du monde.
+
+1:07:47.900,1:07:54.039
+Et donc, la version de Stuart Geman est : « le monde est compositionnel… ou il y a un Dieu ».
+
+1:07:58.999,1:08:00.999
+Car vous avez besoin de choses 
+
+1:08:02.150,1:08:04.690
+surnaturelles pour pouvoir comprendre si le monde n'est pas compositionnel.
+
+1:08:06.019,1:08:11.498
+Cela a donc conduit à des progrès incroyables dans des domaines comme la vision par ordinateur, comme
+
+1:08:12.079,1:08:18.068
+être capable d'identifier, de détecter les gens, de générer des masques pour chaque objet.
+
+1:08:20.119,1:08:25.539
+Des masques précis et même de déterminer la pose. Et de faire cela en temps réel sur un téléphone.
+
+1:08:25.540,1:08:30.580
+Je veux dire que les progrès ont été tout simplement incroyables, et la plupart de ces choses sont basées sur
+
+1:08:31.190,1:08:33.549
+deux familles d'architectures de base.
+
+1:08:33.669,1:08:38.469
+En quelque sorte la détection/reconnaissance d'objets en une passe,
+
+1:08:39.350,1:08:43.149
+les architectures appelées RetinaNet, présentent un réseau de caractéristiques pyramidal. Il existe plusieurs noms pour ce réseau.
+
+1:08:43.150,1:08:48.460
+Ou U-Net. Puis un autre type appelé Mark-RCNN, tous deux provenant en fait de Facebook.
+
+1:08:50.080,1:08:56.849
+Ou alors les personnes qui en sont à l'origine sont maintenant à Facebook : elles l'ont parfois inventé avant de venir à Facebook.
+
+1:08:59.020,1:09:04.859
+Mais ces choses fonctionnent vraiment bien, elles peuvent faire des choses comme : détecter des objets qui sont partiellement occultés, et,
+
+1:09:05.770,1:09:12.659
+dessiner un masque de chaque objet. En gros, il s'agit d'un réseau neuronal, d'un réseau convolutif où l'entrée est une image.
+
+1:09:13.509,1:09:20.060
+Mais la sortie est aussi une image. En fait, le résultat est un ensemble d'images, une par catégorie. Et pour chaque catégorie
+
+1:09:20.060,1:09:22.199
+cela produit le masque de l'objet de cette catégorie.
+
+1:09:23.980,1:09:27.810
+Ces choses peuvent aussi faire ce qu'on appelle de la segmentation d’instance. Donc si vous avez tout un tas de moutons,
+
+1:09:27.820,1:09:31.678
+cela peut vous dire que cette région n'est pas seulement composée de moutons
+
+1:09:31.679,1:09:37.799
+mais aussi de moutons individuels et les différencie. Il compte bien les moutons et s'endort.
+
+1:09:40.569,1:09:43.169
+C'est ce qu'il faut faire pour s'endormir on compte les moutons, non ?
+
+1:09:49.000,1:09:51.159
+Et le truc cool dans
+
+1:09:51.159,1:09:57.089
+l'apprentissage profond est qu'une grande partie de la communauté a adopté le concept selon lequel la recherche doit être ouverte.
+
+1:09:57.250,1:10:00.869
+Donc beaucoup de choses dont nous allons parler
+
+1:10:01.420,1:10:03.420
+dans ce cours est
+
+1:10:05.230,1:10:07.230
+n'est pas seulement publié, mais est
+
+1:10:07.810,1:10:12.869
+publié avec un code. Ce n'est pas seulement du code, ce sont en fait des modèles pré-entraînés que vous pouvez simplement télécharger et exécuter.
+
+1:10:13.810,1:10:16.139
+Tout est en open source. Tout est libre d'utilisation.
+
+1:10:16.750,1:10:18.460
+Donc, c'est
+
+1:10:18.460,1:10:22.799
+vraiment nouveau. Je veux dire que les gens n'avaient pas l'habitude de faire de la recherche de cette façon, en particulier dans l'industrie.
+
+1:10:23.110,1:10:26.339
+Mais même dans le milieu universitaire, les gens n'avaient pas l'habitude de distribuer leur code.
+
+1:10:27.460,1:10:29.460
+Mais l'apprentissage profond a 
+
+1:10:29.830,1:10:34.199
+d'une certaine manière, poussé les gens à être plus ouverts sur la recherche.
+
+1:10:34.780,1:10:38.759
+Il y a donc beaucoup d'applications de tout cela, comme je l'ai dit, comme les voitures qui se conduisent seules.
+
+1:10:38.760,1:10:44.940
+C'est en fait une vidéo de Mobileye, et Mobileye a été précurseur dans ce domaine en utilisant des ConvNets pour la conduite autonome.
+
+1:10:45.460,1:10:47.219
+Au point qu'en 2015
+
+1:10:47.219,1:10:52.769
+ils étaient parvenus à placer un ConvNet sur la puce qu'ils avaient conçue dans un autre but. Et ils ont vendu,
+
+1:10:52.960,1:10:56.189
+accordé une licence à Tesla pour cette technologie. Donc les premières Tesla autopilotées,
+
+1:10:56.739,1:11:00.149
+pas vraiment autopilotées, mais qui ont une assistance à la conduite
+
+1:11:00.150,1:11:05.600
+Permettant de rester sur leur voie sur l'autoroute et changer de voie, utilisaient ce système Mobileye.
+
+1:11:05.690,1:11:11.379
+Et c'est, c'est plutôt cool. C'est donc un réseau convolutif. C'est une petite puce qui est
+
+1:11:11.380,1:11:14.560
+juste derrière. Elle regarde par la vitre et dans le
+
+1:11:15.770,1:11:17.770
+rétroviseur.
+
+1:11:18.350,1:11:22.779
+Depuis lors, il y a quatre ou cinq ans, ce type de technologie a été
+
+1:11:23.900,1:11:26.440
+très largement déployés par de nombreuses entreprises différentes.
+
+1:11:26.840,1:11:32.110
+Mobileye a été racheté par Intel, qui détient 70 ou 80 % du marché de ces systèmes de vision.
+
+1:11:32.110,1:11:34.110
+Mais il y a beaucoup 
+
+1:11:35.060,1:11:37.899
+d’entreprises dont les constructeurs automobiles
+
+1:11:38.449,1:11:41.139
+qui utilisent ces choses.
+
+1:11:41.150,1:11:49.359
+Dans certains pays européens, chaque voiture qui sort, même les voitures bas de gamme, est équipée de systèmes de vision basé sur un ConvNet. Ils appellent cela
+
+1:11:50.810,1:11:56.289
+système de freinage d'urgence avancé ou système de freinage d'urgence automatisé. 
+
+1:11:56.960,1:11:58.100
+L’AEBS [automated emergency braking system].
+
+1:11:58.100,1:12:00.279
+est déployé dans toutes les voitures en France, par exemple.
+
+1:12:00.949,1:12:02.949
+Il réduit les collisions de 40%.
+
+1:12:04.400,1:12:08.770
+Toutes les voitures ne sont donc pas encore équipées car les gens gardent leur voiture longtemps.
+
+1:12:10.760,1:12:13.060
+Mais cela signifie que ça sauve des vies.
+
+1:12:14.989,1:12:17.709
+C'est donc une application très positive de l'apprentissage profond.
+
+1:12:21.020,1:12:24.699
+Une autre grande catégorie d'applications est, bien sûr, l'imagerie médicale.
+
+1:12:24.699,1:12:29.709
+C'est probablement le sujet le plus brûlant en radiologie de nos jours : comment utiliser
+
+1:12:30.000,1:12:34.300
+l’IA, c’est-à-dire les réseaux convolutifs,
+
+1:12:34.310,1:12:40.629
+pour la radiologie. Cette image est extraite d'un document rédigé par certains de nos collègues ici à la NYU,
+
+1:12:41.300,1:12:49.270
+où ils ont analysé les images IRM. Les ConvNets présentent donc un grand avantage : ils n'ont pas besoin de regarder l'écran pour
+
+1:12:50.120,1:12:52.120
+regarder une IRM. En particulier
+
+1:12:53.179,1:12:56.679
+pour pouvoir regarder un IRM, ils n'ont pas besoin de le découper en images 2D.
+
+1:12:56.679,1:12:59.139
+Ils peuvent regarder l'ensemble du volume en 3D. Il s'agit 
+
+1:13:00.110,1:13:01.969
+d’une propriété que cette chose
+
+1:13:01.969,1:13:06.969
+utilise. Il s'agit d'un ConvNet 3D qui examine le volume entier d'une image IRM et
+
+1:13:07.489,1:13:09.100
+puis produit..
+
+1:13:09.100,1:13:14.499
+(utilise une technique très similaire à la segmentation sémantique que je montrais avant). Et il produit,
+
+1:13:14.980,1:13:17.529
+il active l'image de sortie partout où il y a….
+
+1:13:18.410,1:13:21.249
+Vous savez, ici un os du fémur, mais ça pourrait être...
+
+1:13:22.310,1:13:24.310
+C'est donc le genre de résultat que cela produit.
+
+1:13:25.040,1:13:29.470
+Il fonctionne mieux en 3D qu'en tranches 2D. Il peut également s'activer lorsqu'il détecte une
+
+1:13:31.580,1:13:33.580
+tumeur maligne dans
+
+1:13:34.640,1:13:36.640
+les mammographies. C'est en 2D, pas en 3D.
+
+1:13:37.850,1:13:42.249
+Et il y a divers autres projets d'imagerie médicale qui circulent.
+
+1:13:47.720,1:13:53.559
+Il y a beaucoup d'applications en science et en physique, en bio-informatique, etc. sur lesquelles nous reviendrons.
+
+1:14:00.410,1:14:05.229
+Il y a donc un tas de mystères dans l'apprentissage profond. Ce ne sont pas des mystères complets car les gens ont une certaine compréhension de tout cela,
+
+1:14:05.230,1:14:08.560
+mais ce sont des mystères dans le sens où nous n'avons pas une belle théorie pour tout.
+
+1:14:11.750,1:14:13.750
+Pourquoi fonctionnent-ils si bien ?
+
+1:14:15.890,1:14:16.870
+Une grande question
+
+1:14:16.870,1:14:21.789
+que les théoriciens me posaient il y a de nombreuses années, lorsque j'essayais de convaincre le monde que l’apprentissage profond était une bonne idée,
+
+1:14:21.950,1:14:25.239
+était : on peut approximer n'importe quelle fonction avec seulement deux couches,
+
+1:14:25.239,1:14:27.759
+pourquoi en faut-il plus ? Et j'y reviendrai dans une minute.
+
+1:14:29.420,1:14:31.160
+Qu'est-ce que les réseaux convolutifs ont de si particulier ?
+
+1:14:31.160,1:14:38.859
+J'ai parlé de la composition des images naturelles, ou des données naturelles en général. Cela vaut aussi pour la parole et les valeurs des signaux, les signaux naturels.
+
+1:14:40.340,1:14:42.790
+Mais cela semble un peu artificiel.
+
+1:14:45.260,1:14:51.100
+Comment pouvons-nous entraîner le système, malgré le fait que la fonction objectif que nous minimisons est très peu convexe. Nous avons peut-être
+
+1:14:51.100,1:14:52.070
+beaucoup de minima locaux.
+
+1:14:52.070,1:14:54.190
+C'était une grande critique que les gens 
+
+1:14:54.350,1:14:59.890
+faisaient aux réseaux neuronaux, des gens qui n'avaient jamais joué avec. Disons, par exemple
+
+1:14:59.890,1:15:03.099
+« Vous n'avez aucune garantie que votre algorithme convergera. C’est trop,
+
+1:15:03.980,1:15:07.980
+trop effrayant. Je ne vais pas l'utiliser. »
+
+1:15:10.730,1:15:13.569
+La dernière est : « pourquoi est-ce que
+
+1:15:14.450,1:15:19.029
+la façon dont nous entraînons les réseaux neuronaux casse tout ce que tous les manuels de statistiques vous disent ? »
+
+1:15:19.700,1:15:22.239
+Tous les manuels de statistiques vous le disent,
+
+1:15:22.940,1:15:25.509
+si vous avez n points de données, vous ne devriez pas avoir plus de n paramètres,
+
+1:15:25.500,1:15:28.540
+car vous allez sur-entraîner énormément.
+
+1:15:29.310,1:15:32.660
+Vous pourriez régulariser.  Si vous êtes bayésien, vous pourriez passer par un a priori.
+
+1:15:33.390,1:15:34.950
+Mais...
+
+1:15:34.950,1:15:36.950
+(ce qui est équivalent)
+
+1:15:37.410,1:15:40.910
+Mais quelle garantie avez-vous ?
+
+1:15:41.000,1:15:49.220
+Et les réseaux de neurones sont sauvagement surparamétrés. Nous entraînons régulièrement des réseaux neuronaux avec des centaines de millions de paramètres. Ils sont utilisés en production.
+
+1:15:49.680,1:15:52.789
+Et le nombre d'échantillons d'entraînement est loin d'être suffisant. Comment cela fonctionne-t-il ?
+
+1:15:53.760,1:15:55.760
+Mais ça marche !
+
+1:15:59.489,1:16:02.809
+Donc avec l'apprentissage profond aujourd'hui nous pouvons : 
+
+1:16:03.720,1:16:08.449
+avoir des voitures plus sûres, avoir de meilleures analyses médicales, des systèmes d'analyse d'images médicales,
+
+1:16:09.210,1:16:12.830
+avoir une assez bonne traduction, loin d'être parfaite mais utile,
+
+1:16:13.470,1:16:15.470
+des chatbots stupides,
+
+1:16:16.440,1:16:19.339
+une très bonne recherche d'informations et un très bon filtrage.
+
+1:16:19.890,1:16:25.489
+De nos jours, Google et Facebook sont entièrement construits autour de l'apprentissage profond. Si on leur enlève l'apprentissage profond, ils s'effritent.
+
+1:16:27.200,1:16:34.489
+Beaucoup d'applications dans la gestion et la production de l'énergie, et toutes sortes de choses : la fabrication, la protection de l'environnement.
+
+1:16:34.710,1:16:38.149
+Mais nous n'avons pas de machines vraiment intelligentes. Nous n'avons pas de machines dotées de bon sens. Nous n'avons pas
+
+1:16:39.300,1:16:41.300
+d'assistants personnels intelligents. Nous n'avons pas,
+
+1:16:43.170,1:16:45.739
+de chatbots intelligents. Nous n'avons pas de robots domestiques.
+
+1:16:45.739,1:16:50.149
+Je veux dire, il y a beaucoup de choses que nous ne savons pas faire. C'est pourquoi nous faisons toujours des recherches.
+
+1:16:51.989,1:16:55.789
+L'apprentissage profond est vraiment l'apprentissage des représentations.
+
+1:16:57.180,1:17:03.109
+Mais nous devrions vraiment savoir à l'avance ce que sont les représentations. J'ai donc parlé du modèle traditionnel de reconnaissance des formes.
+
+1:17:04.770,1:17:06.770
+Mais...
+
+1:17:07.380,1:17:09.380
+la représentation, c'est vraiment..
+
+1:17:09.720,1:17:15.679
+vous savez, vous avez vos données brutes et vous voulez les transformer en une forme qui soit utile d'une manière ou d'une autre.
+
+1:17:17.370,1:17:20.839
+Idéalement, vous aimeriez les transformer en une forme utile, quel que soit ce que vous voulez en faire.
+
+1:17:22.530,1:17:26.810
+"Utile" d'une manière générale. Et ce que cela signifie n'est pas tout à fait clair.
+
+1:17:28.860,1:17:34.190
+Mais, au moins, vous voulez en faire une représentation qui soit utile pour la tâche que vous envisagez.
+
+1:17:38.719,1:17:42.558
+Et il y a eu beaucoup d'idées au cours des décennies qui ont suivi,
+
+1:17:44.099,1:17:51.799
+des moyens généraux de prétraiter les données naturelles de manière à en produire de bonnes représentations.
+
+1:17:54.300,1:17:57.559
+Je ne vais pas passer en revue les détails de cette liste.
+
+1:17:58.979,1:18:05.059
+Mais les choses comme compter l'espace, faire une projection aléatoire. Donc la projection aléatoire est en fait, en quelque sorte,
+
+1:18:06.329,1:18:08.329
+comme un monstre qui
+
+1:18:09.840,1:18:14.329
+revient périodiquement, comme tous les cinq ans. Et il faut lui donner un coup sur la tête à chaque fois qu'il apparaît.
+
+1:18:15.030,1:18:21.079
+C'était l'idée derrière le Perceptron. La première couche d'un perceptron est donc une couche de projection aléatoire.
+
+1:18:21.079,1:18:24.558
+Qu'est-ce que cela signifie ? Une projection aléatoire est une matrice aléatoire,
+
+1:18:25.769,1:18:29.209
+qui a une dimension de sortie plus petite que la dimension d'entrée,
+
+1:18:30.809,1:18:37.099
+avec une sorte de non-linéarité à la fin. Pensez donc à un réseau de neurones à une seule couche avec des non-linéarités, mais les poids sont aléatoires.
+
+1:18:38.010,1:18:40.010
+Vous pouvez donc considérer cela comme
+
+1:18:40.199,1:18:42.199
+des projections aléatoires.
+
+1:18:43.019,1:18:47.119
+Et beaucoup de gens redécouvrent périodiquement cette roue,
+
+1:18:47.760,1:18:50.659
+en prétendant que c'est génial car vous n'avez pas à entraîner à plusieurs niveaux.
+
+1:18:50.659,1:18:54.288
+Tout a commencé avec le Perceptron, et puis 
+
+1:18:54.289,1:18:59.539
+c’est revenu dans les années 60, puis c’est revenu dans les années 80, puis à nouveau.
+
+1:18:59.539,1:19:04.849
+Et maintenant, encore. Il y a toute une communauté, surtout en Asie. Ils appellent
+
+1:19:05.849,1:19:11.689
+des réseaux neuronaux à deux couches dont la première couche est aléatoire : « machines d'apprentissage extrême ».
+
+1:19:12.239,1:19:15.379
+C'est ridicule, mais ça existe.
+
+1:19:17.760,1:19:20.960
+Ils ne sont pas "extrêmes". Enfin ils sont extrêmement stupides, mais… vous savez…
+
+1:19:27.630,1:19:30.049
+Je parlais donc de la composition du monde.
+
+1:19:30.780,1:19:37.909
+Des pixels de bords, en passant par le texton, les motifs, les parties, les objets. Dans un texte, vous avez des caractères, des mots, des groupes de mots, des clauses, des phrases, des histoires.
+
+1:19:38.010,1:19:40.400
+Pour la parole, c'est la même chose, vous avez des échantillons individuels.
+
+1:19:41.099,1:19:43.099
+Vous avez des
+
+1:19:44.519,1:19:47.748
+bandes spectrales, de sons, de phonèmes, de mots, etc.
+
+1:19:49.710,1:19:51.710
+Vous avez toujours ce genre de hiérarchie.
+
+1:19:52.110,1:19:57.499
+Voici de nombreuses tentatives pour écarter l'idée même d'un apprentissage profond.
+
+1:19:58.050,1:20:00.979
+Première chose. Ce sont des choses que j'ai entendues pendant des décennies…
+
+1:20:01.770,1:20:05.570
+De la part de théoriciens pour la plupart, mais aussi de beaucoup de gens. Et il faut les connaître car
+
+1:20:05.910,1:20:08.869
+ils vont revenir dans cinq ans quand les gens diront : « Oh, l'apprentissage profond, ça craint ».
+
+1:20:10.350,1:20:12.800
+Pourquoi ne pas utiliser des machines à vecteurs de support (SVM) ? 
+
+1:20:13.350,1:20:17.149
+Voici les machines à vecteurs de supports en haut à gauche. La machine à vecteurs de supports est une…
+
+1:20:17.610,1:20:21.679
+Je suis sûr que beaucoup d'entre vous ont entendu parler des machines à noyaux et des machines à vecteurs de support.
+
+1:20:22.320,1:20:24.320
+Qui sait ce que c'est ?
+
+1:20:25.140,1:20:31.399
+Je veux dire, même si c'est une idée approximative de ce que c'est. Ok, quelques mains. Qui n'a aucune idée de ce qu'est une machine à vecteurs-supports ?
+
+1:20:32.070,1:20:34.399
+Ne soyez pas timide. Je veux dire que c'est bon si vous ne savez pas.
+
+1:20:35.250,1:20:38.149
+Ok, la plupart des gens n'ont pas levé la main pour l'un ou l'autre. 
+
+1:20:38.149,1:20:42.580
+[Alfredo : Mains en l'air, s'il vous plaît, qui connaît les machines à vecteurs de support.] 
+
+1:20:42.780,1:20:50.500
+Allez, ok cool, d'accord. Qui n'a aucune idée de ce que c'est ? Ne soyez pas timide, c'est bon. [Alfredo : inaudible]
+
+1:20:52.320,1:20:54.320
+Très bien.
+
+1:20:55.800,1:21:00.169
+Voici donc la machine à vecteurs de support. C’est un réseau de neurones à deux couches.
+
+1:21:00.170,1:21:04.100
+Ce n'est pas vraiment un réseau de neurones, les gens n'aiment pas quand il est formulé de cette façon, mais on peut vraiment y penser de cette façon.
+
+1:21:04.100,1:21:06.100
+C'est un réseau de neurones à deux couches,
+
+1:21:06.210,1:21:09.950
+où la première couche, qui est symbolisée par cette fonction K ici.
+
+1:21:10.830,1:21:16.550
+Chaque unité de la première couche compare le vecteur d'entrée X à l'un des échantillons d'entraînement Xⁱ. 
+
+1:21:16.560,1:21:19.850
+Vous prenez vos échantillons d'entraînement, disons que vous en avez un millier…
+
+1:21:20.160,1:21:22.789
+Vous avez donc mille Xⁱ, de i = 1 à 1 000,
+
+1:21:23.190,1:21:26.360
+et vous avez une fonction K qui va comparer X et Xⁱ. 
+
+1:21:26.520,1:21:31.490
+Un bon exemple de fonction pour comparer les deux est de prendre le produit scalaire entre X et Xⁱ, et de passer le résultat
+
+1:21:31.490,1:21:32.790
+à travers,
+
+1:21:32.790,1:21:37.399
+exponentielle moins carré ou quelque chose comme ça. Donc vous obtenez une réponse
+
+1:21:38.220,1:21:39.300
+gaussienne,
+
+1:21:39.300,1:21:42.800
+en fonction de la distance entre X et Xⁱ.
+
+1:21:42.800,1:21:45.559
+C'est donc une façon de comparer deux vecteurs, peu importe ce que c'est.
+
+1:21:48.000,1:21:54.019
+Puis vous prenez les scores obtenus grâce à cette fonction K qui compare les données d'entrée à chaque échantillon et
+
+1:21:54.690,1:21:58.490
+vous en calculez une somme pondérée. Et ce que vous allez apprendre, ce sont les poids, les alphas.
+
+1:21:59.580,1:22:04.399
+Il s'agit donc d'un réseau neuronal à deux couches dans lequel la deuxième couche peut être entraînée et la première couche est fixée.
+
+1:22:05.120,1:22:09.649
+Mais d'une certaine manière, on peut considérer que la première couche est entraînée de manière non supervisée, car elle utilise les données
+
+1:22:09.930,1:22:13.430
+de l'ensemble d'entraînement, cela n'utilise que les X pas les Y.
+
+1:22:14.010,1:22:18.349
+Cela utilise les données de la manière la plus stupide que vous puissiez imaginer, à savoir que vous stockez tous les X et
+
+1:22:18.810,1:22:22.610
+utilisez chaque X comme poids d'un neurone, si vous voulez.
+
+1:22:26.670,1:22:32.180
+C'est ce qu'est une machine à vecteurs de support. Vous pouvez écrire un livre de mille pages sur les jolies mathématiques
+
+1:22:32.850,1:22:38.030
+derrière cela. Mais en fin de compte, il s'agit d'un réseau neuronal à deux couches, dont la première est entraînée d'une
+
+1:22:38.250,1:22:41.600
+façon très stupide et non supervisée et la deuxième couche n'est qu'un classifieur linéaire.
+
+1:22:44.370,1:22:50.720
+Il s'agit donc d'un appariement de patrons glorifié, car cela compare le vecteur d'entrée à tous les échantillons d'entraînement. 
+
+1:22:51.360,1:22:54.499
+Et donc, ça ne marche pas si vous voulez faire de
+
+1:22:54.500,1:22:58.580
+la vision par ordinateur avec des images brutes. Si X est une image et
+
+1:22:59.070,1:23:01.789
+les Xⁱ sont un million d'images provenant d'ImageNet,
+
+1:23:02.100,1:23:06.860
+tout d'abord pour chaque image, il faut la comparer à un million d'images,
+
+1:23:07.260,1:23:09.829
+ou peut-être un peu moins si vous êtes intelligent, et comment vous entraînez.
+
+1:23:11.670,1:23:16.640
+Cela va être très couteux et le genre de comparaison que vous faites est en gros
+
+1:23:19.170,1:23:23.270
+ce qui résout le problème. La somme pondérée que vous obtiendrez à la fin est vraiment la cerise sur le gâteau.
+
+1:23:24.960,1:23:26.960
+J'utilise trop souvent cette analogie.
+
+1:23:28.400,1:23:35.120
+Vous pouvez avoir des théorèmes qui montrent que vous pouvez approximer n'importe quelle fonction, aussi près que vous le souhaitez, en
+
+1:23:35.250,1:23:37.250
+ajustement
+
+1:23:37.260,1:23:39.260
+la fonction K et les alphas. 
+
+1:23:39.840,1:23:43.099
+Et donc, si vous deviez parler à un théoricien, il vous dirait : « pourquoi avez-vous besoin d'un apprentissage profond ?
+
+1:23:43.100,1:23:46.399
+Je peux approximer n'importe quelle fonction que je veux avec une machine à noyau. »
+
+1:23:50.130,1:23:55.820
+Le nombre de termes dans cette somme peut être très important et personne ne vous dit quelle fonction du noyau vous pouvez utiliser. Et donc,
+
+1:23:57.300,1:23:59.300
+cela ne résout pas le problème.
+
+1:24:01.110,1:24:07.309
+Vous pouvez utiliser un réseau de neurones à deux couches. C'est en haut, juste ici. La première couche est une fonction non linéaire
+
+1:24:07.310,1:24:13.820
+F appliquée au produit d'une matrice W⁰ par le vecteur d'entrée, puis la deuxième couche multipliée par la deuxième matrice et ensuite
+
+1:24:14.040,1:24:16.040
+la fait passer par une autre non-linéarité.
+
+1:24:16.710,1:24:22.970
+Il s'agit donc d'une composition de deux opérations linéaires et non linéaires. Encore une fois, vous pouvez montrer que dans certaines conditions
+
+1:24:22.970,1:24:25.819
+vous pouvez approximer n'importe quelle fonction que vous voulez avec quelque chose comme ça.
+
+1:24:27.420,1:24:31.320
+Étant donné que vous disposez d'un assez grand vecteur au milieu.
+
+1:24:31.320,1:24:35.090
+Donc la dimension de ce qui sort de la première couche, si elle est assez élevée,
+
+1:24:36.690,1:24:41.660
+potentiellement infinie, vous pouvez approcher n'importe quelle fonction aussi près que vous le souhaitez, en faisant passer cette couche à l'infini.
+
+1:24:42.170,1:24:49.250
+Encore une fois, vous parlez aux théoriciens et ils vous disent : « pourquoi avez-vous besoin de couches ? Je peux faire une approximation de tout ce que je veux avec deux couches »
+
+1:24:50.490,1:24:52.490
+Mais il y a un argument, qui est
+
+1:24:53.160,1:24:55.789
+le coût. Faire en deux couches est très coûteux.
+
+1:24:59.640,1:25:01.640
+Et...
+
+1:25:03.390,1:25:07.189
+Pour certains d'entre vous, cela peut sembler familier. Pour la plupart d'entre vous, probablement pas.
+
+1:25:09.060,1:25:11.779
+Disons que je veux concevoir un circuit logique.
+
+1:25:12.030,1:25:19.220
+Donc, quand vous concevez des circuits logiques, vous avez des portes AND et des portes OR ou des portes NAND.
+
+1:25:19.220,1:25:21.740
+On peut tout faire avec des NAND : des AND négatifs. 
+
+1:25:24.090,1:25:25.110
+Et si vous…
+
+1:25:25.110,1:25:30.020
+Vous pouvez montrer que toute fonction booléenne peut s'écrire comme un tas de OR sur un tas de, un tas...
+
+1:25:30.020,1:25:35.029
+un tas de AND et puis un OR au-dessus. C'est ce qu'on appelle la forme normale disjointe (DNF).
+
+1:25:36.150,1:25:38.839
+Ainsi, toute fonction peut être écrite en deux couches.
+
+1:25:40.110,1:25:45.230
+Le problème est que pour la plupart des fonctions, le nombre de termes dont vous avez besoin au milieu est exponentiel dans la taille de l'entrée.
+
+1:25:46.530,1:25:48.270
+Donc par exemple,
+
+1:25:48.270,1:25:54.649
+si je vous donne N bits, et vous demande de construire un circuit qui me dit si le nombre de bits qui sont
+
+1:25:54.960,1:25:56.960
+dans la chaîne d’entrée est
+
+1:25:57.000,1:25:59.190
+pair ou impair.
+
+1:25:59.190,1:26:01.790
+C'est une simple fonction booléenne : 1 ou 0 sur la sortie.
+
+1:26:03.360,1:26:05.990
+Le nombre de portes dont vous avez besoin est essentiellement exponentiel,
+
+1:26:06.500,1:26:08.990
+au milieu. Si vous le faites en deux couches.
+
+1:26:09.570,1:26:11.570
+Si vous vous autorisez à le faire en
+
+1:26:12.210,1:26:14.720
+log(N) couches, où N est le nombre de bits d'entrée,
+
+1:26:16.000,1:26:22.160
+alors c'est linéaire. Donc vous passez d'une complexité exponentielle à une complexité linéaire si vous vous permettez d'utiliser plusieurs couches.
+
+1:26:23.070,1:26:25.070
+C'est comme si, vous savez, quand vous écrivez un programme…
+
+1:26:27.440,1:26:28.880
+Je vais vous dire
+
+1:26:28.880,1:26:31.000
+d'écrire le programme de manière à ce qu’il
+
+1:26:31.790,1:26:38.950
+n'y a que deux étapes séquentielles qui sont nécessaires pour l’exécuter. Donc, en gros, votre programme comporte deux instructions séquentielles.
+
+1:26:42.110,1:26:45.100
+Vous pouvez exécuter autant d'instructions que vous voulez dans votre programme
+
+1:26:45.100,1:26:50.109
+mais elles doivent fonctionner en parallèle, pour la plupart. Et vous n'avez droit qu'à deux étapes séquentielles.
+
+1:26:52.160,1:26:54.160
+Ok.
+
+1:26:54.170,1:26:59.234
+Et le type d'instructions auxquelles vous avez accès sont des choses comme des combinaisons linéaires, des non-linéarités…
+
+1:26:59.234,1:27:01.630
+des choses simples. Pas des sous-programmes entiers.
+
+1:27:04.070,1:27:06.070
+Pour la plupart
+
+1:27:08.600,1:27:10.520
+des problèmes,
+
+1:27:10.520,1:27:13.749
+le nombre de valeurs intermédiaires que vous allez devoir calculer dans un premier temps
+
+1:27:14.690,1:27:16.989
+va être exponentielle dans la taille de l'entrée.
+
+1:27:19.880,1:27:25.210
+Il n'y a qu'un nombre infime de problèmes pour lesquels vous allez pouvoir vous en tirer avec un nombre non exponentiel de minterms.
+
+1:27:25.489,1:27:31.059
+Mais si vous permettez à votre programme d'exécuter plusieurs étapes de manière séquentielle, alors tout d'un coup, 
+
+1:27:31.060,1:27:33.700
+cela peut être beaucoup plus simple. Il sera plus lent, mais
+
+1:27:35.270,1:27:37.569
+il faudra beaucoup moins de mémoire. 
+
+1:27:38.420,1:27:40.420
+Il prendre beaucoup moins de ressources.
+
+1:27:40.790,1:27:47.589
+Les concepteurs de circuits informatiques le savent. Vous pouvez concevoir, par exemple, un circuit qui ajoute deux nombres binaires.
+
+1:27:47.780,1:27:49.780
+Et il y a une façon très simple de le faire.
+
+1:27:49.780,1:27:54.009
+Vous prenez d'abord les deux premiers bits, vous les ajoutez, puis vous propagez le report au
+
+1:27:54.380,1:27:56.060
+deuxième bit, la deuxième paire de bits,
+
+1:27:56.060,1:28:00.039
+en tenant compte du report cela vous donne le deuxième élément du résultat
+
+1:28:00.380,1:28:02.710
+et puis propager le report, et ensuite vous faites cela séquentiellement.
+
+1:28:02.710,1:28:06.339
+Le problème est donc que cela prend un temps proportionnel à la taille
+
+1:28:07.250,1:28:10.959
+des nombres que vous essayez d'ajouter. Donc, les concepteurs de circuits
+
+1:28:11.989,1:28:13.280
+ont un moyen de,
+
+1:28:13.280,1:28:15.850
+précalculer le report, c'est ce qu'on appelle « carry-lookahead ».
+
+1:28:16.060,1:28:20.680
+De sorte que le nombre d'étapes nécessaires pour faire une addition n’est pas N, c'est beaucoup moins que cela.
+
+1:28:21.650,1:28:26.319
+Mais cela, c'est au prix d'une augmentation énorme de la
+
+1:28:27.320,1:28:31.630
+complexité du circuit. Le nombre, comme la surface qu'il occupe sur la puce.
+
+1:28:35.900,1:28:40.210
+Donc cet échange entre le temps et l'espace, ou, entre la profondeur
+
+1:28:42.200,1:28:45.550
+et le temps est connu.
+
+1:28:46.940,1:28:48.940
+Alors, qu'est-ce que l'on appelle la profondeur
+
+1:28:49.610,1:28:52.960
+des modèles ? Un réseau de neurones à deux couches, dont l'une est cachée,
+
+1:28:52.960,1:28:57.369
+je n'appelle pas cela « profond » même si techniquement il utilise la rétropropagation. Mais ça n'apprend pas vraiment
+
+1:28:58.850,1:29:00.850
+des représentations complexes.
+
+1:29:01.640,1:29:06.340
+Il y a donc cette idée de hiérarchie dans l'apprentissage profond. Les SVMs ne sont certainement pas profondes.
+
+1:29:07.520,1:29:11.529
+A moins que vous n'appreniez les noyaux compliqués, mais alors ce ne sont plus ceux de la SVM.
+
+1:29:14.930,1:29:17.079
+Quelles sont donc les bonnes caractéristiques ? Que sont les bonnes représentations ?
+
+1:29:20.540,1:29:26.049
+Voici un exemple qui me plaît. Il y a ce qu'on appelle l'hypothèse de la surface, et c'est le fait que
+
+1:29:26.780,1:29:28.400
+des données naturelles…
+
+1:29:28.400,1:29:30.400
+Donc, si je prends une photo de cette pièce
+
+1:29:30.950,1:29:32.810
+avec un appareil
+
+1:29:32.810,1:29:38.049
+avec une résolution de 1 000 par 1 000 pixels. Cela fait 1 million de pixels à 3 millions de valeurs.
+
+1:29:42.560,1:29:47.369
+On peut considérer ça comme un vecteur avec 3 millions de composantes.
+
+1:29:47.750,1:29:53.739
+Parmi tous les vecteurs possibles avec 3 millions de composantes, combien d'entre eux correspondent à ce que nous appellerions des images naturelles ?
+
+1:29:54.050,1:29:56.770
+Nous pouvons dire, lorsque nous voyons une image, si elle est naturelle ou non.
+
+1:29:58.220,1:30:03.520
+Nous avons un modèle dans notre système visuel qui nous dit que cela ressemble à une image réelle.
+
+1:30:04.430,1:30:07.300
+Et nous pouvons dire quand ce n'est pas le cas. Donc le nombre de
+
+1:30:08.000,1:30:11.409
+combinaisons de pixels qui sont en fait des choses que nous 
+
+1:30:11.410,1:30:14.980
+considérons comme des images naturelles est un minuscule, minuscule,
+
+1:30:14.980,1:30:21.759
+minuscule, minuscule sous-ensemble de l'ensemble de toutes les images possibles. Il existe bien d'autres façons de combiner des pixels aléatoires dans
+
+1:30:22.160,1:30:26.860
+des images absurdes pour les transformer en des choses qui ressemblent à des images naturelles.
+
+1:30:27.290,1:30:30.159
+L'hypothèse de surface est donc que l'ensemble
+
+1:30:30.710,1:30:31.970
+des choses qui,
+
+1:30:31.970,1:30:35.409
+nous semblent naturels, vivent dans une
+
+1:30:36.020,1:30:38.020
+surface de l’espace ambiant
+
+1:30:38.930,1:30:40.130
+en grandes dimensions.
+
+1:30:40.130,1:30:43.810
+Un bon exemple pour s'en convaincre : imaginez
+
+1:30:43.810,1:30:48.909
+que je prends beaucoup de photos d'une personne qui fait des grimaces. La personne se trouve devant un fond blanc.
+
+1:30:49.550,1:30:51.550
+Ses cheveux ne bougent pas.
+
+1:30:51.560,1:30:55.539
+Et elle bouge sa tête et fait des grimaces, etc.
+
+1:30:57.980,1:31:03.700
+L'ensemble de toutes les images de cette personne - donc je prends une longue vidéo de cette personne - l'ensemble de toutes les images de cette personne 
+
+1:31:04.400,1:31:06.969
+vit dans une surface de faible dimension.
+
+1:31:07.820,1:31:11.139
+J'ai donc une question à vous poser : quelle est la dimension de cette surface ?
+
+1:31:14.780,1:31:18.369
+Quelle que soit l'ampleur. N'importe laquelle, oui ?
+
+1:31:18.369,1:31:20.369
+[Commentaire inaudible d'un étudiant].
+
+1:31:20.930,1:31:23.229
+Oui, vous avez probablement déjà entendu mon discours, mais... [Etudiant : Qu'est-ce que la personne a dit ?]
+
+1:31:25.850,1:31:27.850
+Comment ? [Etudiant : Qu'a-t-elle dit ?]
+
+1:31:28.100,1:31:33.999
+Donc pour ceux qui n'ont pas entendu, vous avez une chance, une autre chance d'obtenir une réponse.
+
+1:31:36.710,1:31:38.710
+Ok une supposition ?
+
+1:31:41.600,1:31:48.550
+Non ? Ne soyez pas timide. Je veux des propositions multiples.
+
+1:31:55.230,1:32:01.669
+N'importe qui. Vous pouvez regarder votre ordinateur portable, mais, vous savez, je peux vous montrer du doigt ou quelque chose comme ça.
+
+1:32:05.310,1:32:07.310
+Ok une idée ?
+
+1:32:09.810,1:32:11.810
+Oui.
+
+1:32:11.940,1:32:13.940
+Aucune idée ?
+
+1:32:14.520,1:32:17.120
+Vous, une idée ?  Vous avez peut-être entendu ce qu'il a dit. [Commentaire inaudible d'un étudiant.]
+
+1:32:19.500,1:32:22.860
+Linéaire, qu'est-ce que cela signifie ? [Commentaire inaudible d'un étudiant.]
+
+1:32:23.060,1:32:25.060
+C'est un espace 1D.
+
+1:32:26.490,1:32:28.939
+Un sous-espace unidimensionnel.
+
+1:32:30.240,1:32:32.240
+Une autre proposition ?
+
+1:32:37.740,1:32:39.740
+Une idée ?
+
+1:32:41.560,1:32:49.020
+Les images que je prends sont d'un million de pixels. Donc l'espace ambiant est de 3 millions de dimensions.
+
+1:32:52.440,1:32:55.180
+[Commentaire inaudible d'un étudiant]
+
+1:32:55.400,1:32:57.400
+Ils ne changent pas, non.
+
+1:32:58.130,1:33:03.940
+Et la personne peut bouger la tête, se retourner, des choses comme ça. Mais pas vraiment bouger tout le corps.
+
+1:33:03.940,1:33:06.700
+Je veux dire que vous ne voyez que le visage et c’est surtout centré.
+
+1:33:09.380,1:33:11.380
+[Étudiant : 1 000]
+
+1:33:11.420,1:33:15.860
+1 000, ok. Pourquoi ?
+
+1:33:16.500,1:33:23.100
+[Commentaire inaudible d'un étudiant].
+
+1:33:23.260,1:33:24.820
+Oui, c'est une bonne supposition.
+
+1:33:25.860,1:33:27.860
+Au moins la logique.
+
+1:33:27.860,1:33:29.310
+[Commentaire inaudible d'un étudiant].
+
+1:33:29.310,1:33:31.480
+Répétez. [Étudiant : la surface de la personne]. 
+
+1:33:31.580,1:33:35.000
+La surface de la personne. Exact. Elle est donc délimitée par le nombre de pixels
+
+1:33:35.640,1:33:38.209
+occupé par la personne. C'est certain. C'est une limite supérieure.
+
+1:33:39.000,1:33:41.000
+Oui.
+
+1:33:41.160,1:33:46.729
+Ces pixels, bien sûr, ne vont pas prendre toutes les valeurs possibles. Une autre idée ?
+
+1:33:49.740,1:33:52.249
+Donc, en gros
+
+1:33:54.410,1:33:57.799
+la dimension, comme vous l'avez dit,
+
+1:33:58.890,1:34:02.390
+est limitée par le nombre de muscles du visage de la personne.
+
+1:34:03.030,1:34:05.030
+Le nombre de degrés de liberté
+
+1:34:05.700,1:34:07.700
+que vous observez chez cette personne
+
+1:34:08.790,1:34:10.910
+est le nombre de muscles de leur visage.
+
+1:34:11.610,1:34:14.960
+Le nombre de muscles mobiles indépendamment.
+
+1:34:14.960,1:34:20.330
+Il y a donc 3 degrés de liberté dus au fait que vous pouvez incliner votre tête de telle, telle ou telle façon.
+
+1:34:20.670,1:34:22.670
+C'est 3, juste là.
+
+1:34:24.300,1:34:32.090
+Ensuite, il y a la translation, par ici, par là. Peut-être par ici et par là, peut-être vers le haut ou vers le bas. Ça fait 6.
+
+1:34:32.700,1:34:35.809
+Et puis le nombre de muscles de votre visage, c'est ça. Pour que vous puissiez
+
+1:34:36.480,1:34:38.480
+sourire. Faire la moue.
+
+1:34:39.090,1:34:44.720
+Vous pouvez faire toutes sortes de choses. Et vous pouvez le faire de manière indépendante comme fermer un œil.
+
+1:34:46.050,1:34:48.890
+On peut sourire dans un sens…
+
+1:34:48.890,1:34:54.049
+Donc le nombre de muscles indépendants, il ne faut pas compter la langue car il y a des tonnes de muscles dans la langue,
+
+1:34:56.700,1:34:58.700
+est d’environ 50.
+
+1:34:59.130,1:35:01.050
+Peut-être un peu plus.
+
+1:35:02.220,1:35:05.990
+Quoi qu'il en soit, c'est moins de 100. Donc la surface,
+
+1:35:07.050,1:35:11.900
+localement, si vous voulez paramétrer la surface occupée par toutes ces images - passer d'une image à l'autre -, il faut
+
+1:35:12.510,1:35:14.510
+une surface avec moins de 100
+
+1:35:15.390,1:35:20.209
+paramètres qui déterminent la position d'un point sur cette surface. Bien sûr, c'est une surface non linéaire.
+
+1:35:21.150,1:35:25.220
+Ce n'est pas comme ce bel espace de Calabi-Yau ici
+
+1:35:26.340,1:35:28.340
+mais c'est une surface néanmoins.
+
+1:35:30.900,1:35:33.260
+La réponse était dans la diapositive.
+
+1:35:35.300,1:35:42.400
+Vous aimeriez donc disposer d'un extracteur de caractéristiques idéal pour pouvoir démêler les facteurs explicatifs de la variation de ce que vous observez.
+
+1:35:42.620,1:35:45.759
+Donc les différents aspects de mon visage.
+
+1:35:45.760,1:35:51.400
+Il n'y a pas que mes muscles et ma tête qui bougent, chacun d'entre eux est un facteur de variation indépendant.
+
+1:35:51.400,1:35:53.400
+Je peux aussi enlever mes lunettes.
+
+1:35:53.600,1:35:59.439
+L'éclairage pourrait changer. C'est un autre ensemble de variables.
+
+1:36:00.170,1:36:05.920
+Et ce que vous voudriez, c'est une représentation qui, en gros, représente individuellement chacun de ces facteurs de variation.
+
+1:36:06.590,1:36:10.600
+Donc, s'il y a un critère à satisfaire dans l'apprentissage de bonnes représentations
+
+1:36:11.300,1:36:17.230
+c'est cela : trouver des facteurs explicatifs indépendants de la variation des données que vous examinez.
+
+1:36:18.140,1:36:21.640
+Et le fait est que personne n'a la moindre idée de la manière de procéder.
+
+1:36:23.239,1:36:26.049
+Mais ce serait le but ultime de
+
+1:36:29.360,1:36:31.360
+l'apprentissage de la représentation.
+
+1:36:32.000,1:36:34.000
+Et nous sommes en fait à la fin.
+
+1:36:35.929,1:36:38.679
+Je répondrai à deux questions, s'il y en a.
+
+1:36:44.100,1:36:46.100
+Oui.
+
+1:36:46.320,1:36:52.140
+[Question inaudible d'un étudiant.]
+
+1:36:52.480,1:37:00.180
+Ok la question est donc la suivante : existe-t-il une sorte de prétraitement comme l'ACP qui permettra de trouver ces vecteurs ? Oui l'ACP en trouvera
+
+1:37:00.730,1:37:05.580
+si la surface est linéaire. Donc, si vous supposez que la surface
+
+1:37:06.190,1:37:09.330
+occupée par tous ces exemples ou visages est un plan,
+
+1:37:11.290,1:37:17.749
+alors l'ACP trouvera la dimension de ce plan [ACP = analyse en composantes principales].
+
+1:37:18.520,1:37:23.310
+Mais, non, ce n'est pas linéaire, malheureusement. Laissez-moi...
+
+1:37:26.980,1:37:28.980
+Oui, laissez-moi vous donner un exemple.
+
+1:37:29.980,1:37:32.819
+Si vous nous prenez, moi et mon fils aîné qui me ressemble, et
+
+1:37:34.390,1:37:37.289
+vous nous placez dans la même position en faisant le même visage,
+
+1:37:37.810,1:37:41.069
+la distance entre nos images sera relativement faible, même si nous ne sommes pas la même personne.
+
+1:37:41.470,1:37:44.339
+Maintenant, si vous prenez mon visage et mon visage modifié par
+
+1:37:45.250,1:37:46.870
+20 pixels,
+
+1:37:46.870,1:37:52.079
+il y a plus de distance entre moi et moi déplacé qu'entre moi et mon fils.
+
+1:37:55.140,1:37:58.140
+Donc Ce que cela signifie, c'est que
+
+1:37:58.900,1:38:02.069
+la surface de mon visage est une surface compliquée dans cet espace.
+
+1:38:02.110,1:38:05.009
+Mon fils est une surface légèrement différente qui ne recoupe pas la mienne.
+
+1:38:06.460,1:38:11.520
+Pourtant, ces deux surfaces sont très proches l'une de l'autre, sont plus proches l'une de l'autre que
+
+1:38:12.130,1:38:18.779
+deux échantillons de ma surface et deux échantillons de la sienne. Donc, en gros, l'ACP ne vous dira rien.
+
+1:38:20.590,1:38:25.140
+Une autre raison pour laquelle cette surface n'est pas un plan.
+
+1:38:26.620,1:38:28.020
+Vous me regardez en ce moment.
+
+1:38:28.020,1:38:35.100
+Imaginez maintenant la surface qui est une surface linéaire, une surface unidimensionnelle de moi où je tourne la tête à 360 degrés.
+
+1:38:38.110,1:38:42.150
+Cette surface est topologiquement identique à un cercle. Ce n'est pas plat.
+
+1:38:45.070,1:38:48.390
+Cela ne peut pas être mis en ligne. Donc l'ACP ne va pas trouver.
+
+1:38:51.630,1:38:54.720
+Ok je dois y aller. Merci ! A la semaine prochaine.
