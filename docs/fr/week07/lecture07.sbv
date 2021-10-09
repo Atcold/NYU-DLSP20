@@ -1,0 +1,3423 @@
+0:00:00.909,0:00:08.279
+Nous allons parler des modèles à base d’énergie [abrégé en EBM pour « energy-based models »]. Il s’agit essentiellement d’un cadre à travers lequel nous pouvons exprimer
+
+0:00:08.280,0:00:10.179
+beaucoup d’algorithmes d’apprentissage différents.
+
+0:00:10.179,0:00:14.039
+Pas ceux qui sont un peu simples comme nous l’avons vu avec l’apprentissage supervisé,
+
+0:00:15.219,0:00:17.219
+mais des choses qui sont un peu plus
+
+0:00:17.619,0:00:24.869
+sophistiquées. Cela englobe en quelque sorte beaucoup de méthodes probabilistes. C’est, je trouve, un peu plus simple à comprendre que
+
+0:00:25.420,0:00:28.920
+les méthodes probabilistes. Les méthodes probabilistes sont vraiment une sorte de
+
+0:00:29.679,0:00:33.238
+cas particulier des modèles à base d’énergie. 
+
+0:00:34.120,0:00:36.120
+Et je pense que c’est
+
+0:00:36.340,0:00:42.540
+un peu informel. C’est une sorte « d’éclairant » dans le sens où il explique beaucoup de choses qui semblent très différentes,
+
+0:00:42.850,0:00:46.289
+quand vous n’obtenez pas une vue unificatrice des choses.
+
+0:00:48.430,0:00:52.139
+Donc, je vais d’abord aborder les applications tout aussi bien pour
+
+0:00:53.379,0:01:00.299
+l’apprentissage supervisé, l’apprentissage non supervisé ou ce que nous appelons l’apprentissage auto-supervisé.
+
+0:01:01.420,0:01:03.039
+Et
+
+0:01:03.039,0:01:05.039
+c’est essentiellement…
+
+0:01:05.470,0:01:07.470
+Nous allons
+
+0:01:08.500,0:01:11.639
+parler de modèles qui observent un ensemble de variables X et
+
+0:01:13.150,0:01:15.689
+nous demandons au modèle de prédire un ensemble de variables Y
+
+0:01:16.390,0:01:22.500
+Je ne précise pas que X est une image ou quoi que ce soit et Y est une variable discrète comme
+
+0:01:22.930,0:01:29.220
+pour la classification. Y pourrait être comme une vidéo entière et X pourrait être une vidéo entière. 
+Ou X pourrait être
+
+0:01:29.710,0:01:32.339
+une image et Y un morceau de texte qui la décrit.
+
+0:01:32.920,0:01:36.600
+Ou bien X pourrait être une phrase dans une langue et Y une phrase dans une autre langue.
+
+0:01:36.990,0:01:41.549
+X pourrait être un texte entier et Y pourrait être une version simplifiée de ce texte, un résumé.
+
+0:01:42.070,0:01:44.070
+Donc, cela pourrait vraiment être n’importe quoi.
+
+0:01:44.740,0:01:46.740
+Je ne précise donc pas
+
+0:01:46.840,0:01:48.840
+nécessairement ici.
+
+0:01:50.259,0:01:54.659
+Cela vient du fait que ces deux problèmes sont une sorte de modèle feed-forward.
+
+0:01:55.899,0:01:58.649
+Qu’il s’agisse de réseaux neuronaux ou autre chose n’a pas d’importance.
+
+0:02:01.479,0:02:08.068
+Un modèle classique procède en faisant un nombre fixe fini de
+
+0:02:09.610,0:02:15.119
+Calculs pour produire une sortie. Si vous avez un réseau multicouche, vous savez qu’il y a un nombre fixe de couches.
+
+0:02:15.120,0:02:18.720
+Même si vous avez un réseau récurrent il y a une sorte de limite à combien de fois vous pouvez le dérouler.
+
+0:02:19.540,0:02:23.940
+Donc il y a en gros une quantité fixe de calcul.
+
+0:02:25.450,0:02:31.500
+Mais il y a deux problèmes pour lesquelles ce n’est pas tout à fait approprié. 
+
+0:02:31.659,0:02:38.339
+La première situation est lorsque la computation de la sortie nécessite un calcul plus complexe que les seules sommes pondérées des poids et
+
+0:02:38.980,0:02:41.280
+les non-linéarités dans un nombre fini.
+
+0:02:43.690,0:02:45.690
+Lorsque l’inférence est complexe.
+
+0:02:46.629,0:02:52.919
+La deuxième situation est lorsque nous essayons d’entraîner la machine à produire non pas une seule sortie, mais un ensemble possible de sorties.
+
+0:02:53.920,0:02:58.049
+Donc, dans le cas de la classification, nous entraînons en fait une machine à produire plusieurs sorties.
+
+0:02:58.049,0:03:03.689
+Nous l’entraînons à produire un score distinct pour toutes les catégories possibles que nous avons dans notre système.
+
+0:03:04.120,0:03:10.019
+Idéalement, le système produirait le meilleur score pour la bonne classe et des
+
+0:03:10.019,0:03:13.199
+scores infinitésimaux pour les autres.
+
+0:03:13.199,0:03:17.069
+Dans la pratique, quand nous donnons la sortie d’un réseau neuronal à un softmax,
+
+0:03:17.069,0:03:20.789
+il produit des scores et nous choisissons juste celui qui est élevé.
+
+0:03:21.700,0:03:23.680
+Mais en gros ce que nous disons
+
+0:03:23.680,0:03:27.810
+à la machine de faire est de produire un score pour chaque catégorie et puis nous allons choisir le meilleur.
+
+0:03:29.980,0:03:32.700
+Maintenant, ce n’est pas possible lorsque la sortie est
+
+0:03:33.579,0:03:36.299
+continue et de grande dimension. Donc, la sortie est
+
+0:03:37.510,0:03:43.769
+disons une image. Nous n’avons pas de softmax sur les images. Nous n’avons pas de moyen de
+
+0:03:44.500,0:03:50.639
+lister toutes les images possibles et puis normaliser une distribution sur elles car c’est un espace continu et de grande dimension.
+
+0:03:50.919,0:03:54.809
+Même s’il s’agissait d’un espace continu à faible dimension, ce ne serait pas possible. Nous devrions
+
+0:03:55.359,0:04:01.019
+découper l’espace continu en des bacs discrets et ensuite faire un softmax sur cela. Mais cela ne fonctionne pas très bien.
+
+0:04:01.780,0:04:05.819
+Cela ne fonctionne qu’en petite dimension, en faible dimension.
+
+0:04:05.819,0:04:09.448
+Donc, quand nous avons un espace continu et de grande dimension, nous ne pouvons pas faire de softmax.
+
+0:04:09.449,0:04:12.389
+Nous ne pouvons pas demander au système de nous donner un score pour toutes les sorties possibles.
+
+0:04:14.169,0:04:20.009
+De même, même si c’est discret, mais potentiellement infini. Donc des choses comme le texte, le texte est compositionnel,
+
+0:04:21.430,0:04:23.430
+et il y a un très très grand nombre de
+
+0:04:24.639,0:04:30.188
+texte possible d’une longueur donnée. Nous ne pouvons pas simplement faire un softmax sur tous les textes possibles. Même problème.
+
+0:04:30.319,0:04:36.369
+Alors, comment représenter une distribution ou un tas de partitions de tous les textes possibles sous une forme compacte ?
+
+0:04:37.909,0:04:44.799
+C’est là que les modèles à base d’énergie entrent en action. La solution que les
+
+0:04:46.909,0:04:48.909
+modèles à base d’énergie nous donnent,
+
+0:04:49.430,0:04:52.539
+est l’idée que nous allons utiliser une fonction implicite. En d’autres termes
+
+0:04:53.150,0:04:56.109
+nous n’allons pas demander à notre système de produire un y.
+
+0:04:56.719,0:05:03.399
+Nous allons juste lui demander de nous dire si un x et un y particulier sont compatibles entre eux. 
+
+0:05:04.279,0:05:06.759
+Par exemple, ce texte est-il une bonne traduction de ce texte ?
+
+0:05:07.580,0:05:12.550
+Ok, ça a l’air un peu faible, non ? Parce que comment allons-nous trouver
+
+0:05:13.789,0:05:16.449
+ce texte que notre machine compare ? Mais
+
+0:05:17.689,0:05:20.679
+tenons ça un peu.
+
+0:05:21.259,0:05:23.029
+Ok, donc
+
+0:05:23.029,0:05:31.329
+nous avons une fonction F(x,y). Elle prend un x et un y et nous dit si ces deux valeurs sont compatibles entre elles ou non.
+
+0:05:32.180,0:05:38.019
+Ok, y  est-il une bonne étiquette pour l’image x ? Est-ce que y est une bonne
+
+0:05:38.870,0:05:44.979
+version en grande résolution de cette image en basse résolution ? Est-ce que y est une bonne traduction de cette phrase en allemand ?
+
+0:05:46.099,0:05:48.099
+Etc.
+
+0:05:51.000,0:05:55.389
+Et donc la procédure d’inférence va pour un x donné,
+
+0:05:55.520,0:05:59.889
+trouver un y qui produit une faible valeur, pour laquelle F(x,y) produit une faible valeur [d’énergie].
+
+0:06:00.169,0:06:05.769
+En d’autres termes, trouver un y qui est compatible avec x. Ok. Donc, en cherchant sur tous les y possibles,
+
+0:06:06.830,0:06:10.839
+pour une valeur de y qui produit une faible valeur pour F(x,y).
+
+0:06:12.050,0:06:14.710
+Ok, donc c’est l’idée d’influencer par
+
+0:06:15.349,0:06:17.349
+minimiser certaines fonctions, et
+
+0:06:17.449,0:06:23.829
+à peu près tous les modèles probabilistes, non probabilistes, tous ce à quoi les gens ont pensé, vont marcher de cette façon.
+
+0:06:23.830,0:06:25.830
+Je veux dire sauf…
+
+0:06:27.110,0:06:29.650
+Même la classification, la classification multi-classes avec des réseaux neuronaux ou quoi que ce soit,
+
+0:06:30.620,0:06:32.620
+implicitement fonctionnent par minimisation de l’énergie.
+
+0:06:33.050,0:06:40.160
+En trouvant essentiellement la classe qui a le meilleur score que vous pouvez représenter comme l’énergie la plus faible.
+
+0:06:44.699,0:06:49.309
+Donc, en gros, nous allons essayer de trouver une sortie qui satisfait un tas de contraintes et
+
+0:06:49.560,0:06:53.630
+ces contraintes sont implémentées par cette fonction F(x,y).
+
+0:06:54.360,0:06:59.870
+Si vous avez entendu parler de modèles de graphes, de réseaux bayésiens, vous savez tout cela… ou même
+
+0:07:00.540,0:07:08.179
+en IA classique, en problèmes SAT, ils peuvent essentiellement tous être formulés en ces termes. Comme la recherche de la valeur d’un ensemble de variables qui
+
+0:07:08.180,0:07:10.250
+minimise certaines fonctions qui mesurent leur compatibilité.
+
+0:07:14.520,0:07:18.380
+Donc, nous ne parlons pas d’apprendre en ce moment. Nous parlons juste d’inférence.
+
+0:07:18.840,0:07:24.350
+Nous supposons que cette fonction F(x,y) vous est donnée. On va parler de la façon dont on l’apprendra un peu plus tard. 
+
+0:07:26.940,0:07:32.779
+Donc, la fonction énergie n’est pas ce que nous minimisons pendant l’apprentissage. C’est ce que nous minimisons pendant l’inférence.
+
+0:07:33.450,0:07:35.450
+Donc, l’inférence est le calcul de y à partir de x.
+
+0:07:38.000,0:07:41.149
+Donc, cette fonction d’énergie est basée sur un scalaire.
+
+0:07:41.550,0:07:47.090
+Elle prend des valeurs basses lorsque y est compatible avec les valeurs x, et des plus élevées lorsque y n’est pas compatible avec x.
+
+0:07:47.729,0:07:52.969
+Donc, vous souhaitez que cette fonction ait une forme, de telle sorte que pour un x donné,
+
+0:07:54.000,0:07:57.349
+toutes les valeurs de y qui sont compatibles avec ce x aient une énergie faible.
+
+0:07:57.510,0:08:01.010
+Et toutes les valeurs qui ne sont pas compatibles avec celle donnée x ont une énergie plus élevée. 
+
+0:08:02.130,0:08:05.029
+C’est tout ce dont vous avez besoin. Car la procédure d’inférence
+
+0:08:05.849,0:08:08.209
+va trouver le y vérifiant
+
+0:08:09.330,0:08:10.410
+que..
+
+0:08:10.410,0:08:13.910
+écrit ici…  qui est la valeur de y qui minimise F(x,y).
+
+0:08:14.000,0:08:18.000
+Ce ne sera pas la valeur, ça va être une valeur car il pourrait y avoir plusieurs valeurs.
+
+0:08:18.389,0:08:24.288
+Ok, et votre algorithme d’inférence pourrait effectivement passer par plusieurs valeurs ou examiner plusieurs valeurs avant de vous en
+
+0:08:25.139,0:08:27.139
+donner une ou plusieurs.
+
+0:08:30.389,0:08:34.278
+Ok, prenons un exemple très simple de variable scalaire
+
+0:08:34.860,0:08:38.779
+en une dimension.  Donc x ici une valeur
+
+0:08:39.450,0:08:41.509
+réelle et y est une valeur réelle.
+
+0:08:42.479,0:08:45.348
+Les points bleus sont des points de données. Ok, donc
+
+0:08:48.150,0:08:51.860
+si vous voulez capturer la dépendance entre x et y
+
+0:08:52.350,0:08:57.860
+dans les données, vous souhaitez une fonction énergie qui a soit cette forme ou cette forme ou une autre forme.
+
+0:08:58.050,0:08:59.520
+En tout cas
+
+0:08:59.520,0:09:00.510
+une forme qui
+
+0:09:00.510,0:09:06.110
+de telle sorte que si vous prenez une valeur particulière de x la valeur de y qui a une valeur faible est près 
+
+0:09:06.110,0:09:08.110
+des points bleus qui sont les points des données.
+
+0:09:08.880,0:09:12.710
+Ok, donc une fonction comme celle-ci capture la dépendance entre x et y.
+
+0:09:14.280,0:09:16.230
+Maintenant, pour faire l’inférence
+
+0:09:16.230,0:09:20.509
+quel est le meilleur y pour un x donné si vous avez une fonction comme celle-ci ? Vous pouvez utiliser la descente de gradient.
+
+0:09:20.510,0:09:22.790
+Donc, si je vous donne un x pour comprendre
+
+0:09:22.790,0:09:29.029
+quelle est la meilleure valeur de y qui correspond à ce x, vous pouvez commencer à partir d’un y aléatoire, puis faire une descente de gradient
+
+0:09:29.370,0:09:35.030
+pour trouver le minimum de la fonction et vous tomberez dans la vallée bleue ici. Peut-être un peu plus difficile pour celui-ci.
+
+0:09:35.880,0:09:42.950
+Mais du point de vue de la caractérisation la dépendance entre ces deux variables, ces deux fonctions sont à peu près aussi bonnes
+
+0:09:43.290,0:09:45.290
+l’une que l’autre.  [Question d’un étudiant]
+
+0:09:50.640,0:09:52.640
+J’y viens. 
+
+0:09:57.450,0:10:01.009
+Le cas quand y est discret, est le cas facile.
+
+0:10:01.010,0:10:06.530
+Nous avons déjà parlé de cela et je vais en quelque sorte reformuler cela en termes d’énergie en seulement quelques minutes.
+
+0:10:08.490,0:10:10.520
+Ok, donc 
+
+0:10:12.390,0:10:17.119
+un modèle feed-forward est une fonction explicite qui calcule la prédiction y à partir de x.
+
+0:10:17.130,0:10:22.429
+Mais il ne peut faire qu’une seule prédiction. Nous pouvons tricher dans le cas d’une variable discrète en
+
+0:10:22.980,0:10:25.789
+sortant plusieurs sorties qui correspondent à un score pour chaque
+
+0:10:26.790,0:10:29.599
+classification possible.
+
+0:10:30.000,0:10:35.510
+Mais vous ne pouvez pas utiliser ce truc pour des valeurs continues à grande dimension ou des valeurs compositionnelles comme je l’ai dit plus tôt.
+
+0:10:36.990,0:10:39.470
+Donc, un modèle basé sur l’énergie est vraiment une fonction implicite.
+
+0:10:40.230,0:10:45.200
+Alors rappelez-vous, dans le calcul pour une fonction implicite de l’équation d’un cercle
+
+0:10:46.140,0:10:51.410
+en fonction de x et y. Vous ne pouvez pas écrire y en fonction de x, mais vous écrivez une équation qui dit
+
+0:10:52.560,0:10:55.940
+x carré plus y carré égal à 1. Ce qui vous donne le cercle unité.
+
+0:10:57.120,0:11:04.530
+Ok, donc x carré plus y carré moins 1 est une fonction implicite.
+
+0:11:04.900,0:11:08.759
+Et lorsque vous la résolvez, égale à zéro, vous obtenez le cercle.
+
+0:11:13.960,0:11:21.660
+Voici donc un autre exemple. Ici encore des valeurs scalaires pour x et y et les points noirs sont des points de données.
+
+0:11:23.230,0:11:25.500
+Donc, pour les trois valeurs de x
+
+0:11:26.200,0:11:30.270
+indiquées par les barres verticales rouges, il y a de multiples valeurs de y qui sont
+
+0:11:30.820,0:11:34.379
+compatibles. Certaines d’entre elles sont en fait une sorte de continuum de valeurs.
+
+0:11:38.620,0:11:42.929
+Donc, nous aimerions que notre fonction énergie soit quelque chose qui ressemble à ceci.
+
+0:11:43.810,0:11:49.470
+J’ai en quelque sorte dessiné un genre d’ensembles de niveau de cette
+
+0:11:50.230,0:11:54.510
+de cette fonction énergie. Donc, cela prend une faible énergie sur les points de données et une énergie plus élevée à l’extérieur.
+
+0:11:55.060,0:11:57.479
+C’est une sorte de version un peu plus compliquée
+
+0:11:58.120,0:12:02.370
+des modèles 3D que j’ai montré plus tôt.
+
+0:12:06.550,0:12:09.630
+La question est de savoir comment entraîner le système afin qu’il
+
+0:12:10.030,0:12:15.209
+s’adapte, de sorte que la fonction énergie qu’il calcule a réellement une bonne forme.
+
+0:12:19.690,0:12:23.130
+C’est facile quand y est continu, F
+
+0:12:24.550,0:12:28.470
+est lisse et différentiable, donc nous pouvons utiliser des algorithmes d’inférence basés sur le gradient.
+
+0:12:28.470,0:12:31.829
+Donc, si nous avons une fonction comme celle-ci et je vous donne un point (x,y), vous pouvez
+
+0:12:32.110,0:12:37.380
+via la descente de gradient, trouver le point sur la variété des données qui est le plus proche de lui ou quelque chose de similaire à ça.
+
+0:12:37.380,0:12:40.499
+Si je vous donne une valeur pour x, vous pouvez
+
+0:12:40.960,0:12:46.769
+chercher par descente de gradient le long de la direction de y qui le minimise. C’est l’algorithme d’inférence.
+
+0:12:49.570,0:12:54.150
+Donc un algorithme est vraiment une prescription, puis l’algorithme est la façon dont vous faites cette minimisation.
+
+0:12:54.970,0:12:56.970
+Pour cela, il y a toutes sortes de méthodes différentes.
+
+0:12:57.820,0:12:59.820
+Les méthodes basées sur le gradient sont l’une d’entre elles.
+
+0:13:00.580,0:13:04.530
+Il existe toutes sortes de méthodes qui sont dans le cas où F est
+
+0:13:05.200,0:13:08.400
+compliquée. Il ne peut ne pas être possible de
+
+0:13:09.100,0:13:10.540
+de s’appuyer sur
+
+0:13:10.540,0:13:14.009
+les méthodes de recherche, donc vous pouvez avoir à utiliser d’autres astuces.
+
+0:13:16.310,0:13:18.310
+Dans la plupart des cas c’est simplifié.
+
+0:13:20.270,0:13:26.590
+Juste un aparté pour ceux d’entre vous qui savent ce que les modèles de graphes sont. Un modèle de graphe est essentiellement un modèle basé sur l’énergie
+
+0:13:27.890,0:13:32.799
+où la fonction énergie se décompose sous forme de somme de termes énergétiques. 
+
+0:13:33.170,0:13:38.080
+Chaque terme énergétique prend en compte un sous-ensemble des variables auxquelles vous avez affaire.
+
+0:13:39.050,0:13:41.000
+Ainsi,
+
+0:13:41.000,0:13:43.000
+il y aura une sorte de collection de F et
+
+0:13:43.280,0:13:48.609
+certains F prennent un sous-ensemble de y. Certains autres prennent un sous-ensemble de x et y, etc.
+
+0:13:48.610,0:13:52.180
+Et si elles sont organisées sous une forme particulière, alors il y a des
+
+0:13:53.330,0:13:58.239
+algorithmes d’inférence pour trouver le minimum de la somme de ces termes par rapport à la variable qui vous intéresse.
+
+0:13:59.060,0:14:01.040
+Inférer.
+
+0:14:01.040,0:14:02.600
+C’est donc ce que
+
+0:14:02.600,0:14:07.510
+la propagation de la croyance et tous ces algorithmes font dans les modèles de graphes.
+
+0:14:07.510,0:14:10.569
+C’est un aparté. Si vous ne savez pas de quoi je parle cela n’a pas d’importance.
+
+0:14:19.520,0:14:25.569
+Donc, comme je l’ai dit les situations où vous pourriez vouloir utiliser cela est quand l’influence est en gros
+
+0:14:26.810,0:14:29.799
+plus complexe et juste propager à travers quelques couches de réseau neuronal.
+
+0:14:30.589,0:14:32.589
+Lorsque la sortie est de grande dimension et
+
+0:14:33.110,0:14:37.870
+a une structure comme une séquence, ou une image, ou une séquence d’images qui est une vidéo…
+
+0:14:38.630,0:14:43.869
+quand la sortie a une structure compositionnelle, que ce soit du texte, des séquences d’action, des choses comme ça…
+
+0:14:45.260,0:14:51.969
+ou quand la sortie devrait résulter d’une sorte de longue chaîne de raisonnement…
+
+0:14:51.970,0:14:57.880
+Je peux juste calculer la sortie dont vous avez besoin pour résoudre un problème de satisfaction sous contrainte pour produire essentiellement la sortie ou
+
+0:15:00.140,0:15:02.619
+faire une sorte de longues chaînes de raisonnement.
+
+0:15:09.300,0:15:15.689
+Ok, il y a un type particulier de modèles à base d’énergie, qui commencent à devenir intéressants.
+
+0:15:15.780,0:15:17.620
+Il s’agit des modèles à base d’énergie qui impliquent des variables latentes [LV-EBMs]
+
+0:15:24.010,0:15:29.999
+Ainsi, un modèle à base d’énergie qui dépend d’une variable latente, 
+
+0:15:30.280,0:15:34.559
+ne dépend pas seulement de la variable que vous observez x et de la variable que vous voulez prédire y,
+
+0:15:34.560,0:15:38.220
+mais aussi d’une certaine variable supplémentaire z dont personne ne vous dit la valeur.
+
+0:15:42.000,0:15:44.400
+Et la façon dont vous utilisez cette
+
+0:15:44.440,0:15:48.780
+variable latente est que vous construisez votre modèle de telle manière que
+
+0:15:49.000,0:15:54.300
+la variable latente…  si vous utilisez une valeur de cette variable latente, le problème d’inférence devient
+
+0:15:55.390,0:15:56.620
+plus facile.
+
+0:15:56.620,0:16:03.270
+Donc, disons que vous voulez faire de la reconnaissance d’écriture. J’aime cet exemple, dont je vous ai déjà parlé.
+
+0:16:03.850,0:16:05.850
+Si vous savez quels sont les caractères,
+
+0:16:06.010,0:16:08.189
+lire ce mot devient beaucoup plus facile.
+
+0:16:11.310,0:16:15.330
+Le principal problème ici dans la lecture de ce mot n’est pas seulement de lire les caractères individuels
+
+0:16:15.330,0:16:20.129
+mais de comprendre ce que sont les caractères. Comme où est-ce qu’un caractère se termine, où l’autre commence.
+
+0:16:20.650,0:16:23.730
+Si je vous le disais, il vous serait beaucoup plus facile pour vous de lire
+
+0:16:24.730,0:16:26.730
+ce mot.
+
+0:16:28.150,0:16:31.139
+Donc si vous lisez cette
+
+0:16:32.470,0:16:36.329
+séquence de caractères ici en anglais si vous comprenez l’anglais, vous pouvez probablement l’analyser.
+
+0:16:36.330,0:16:41.129
+Vous pouvez probablement comprendre où les limites des mots sont car vous avez ce genre de connaissances de haut niveau de
+
+0:16:41.130,0:16:43.130
+ce que les mots sont en anglais.
+
+0:16:43.450,0:16:47.160
+Si je fais la même chose en français, vous n’avez aucune idée où sont les limites des mots.
+
+0:16:48.130,0:16:50.130
+A moins que vous ne parliez français.
+
+0:16:56.520,0:16:59.329
+Les limites des mots dans ce cas et les
+
+0:17:00.090,0:17:02.090
+limites des caractères au-dessus
+
+0:17:02.280,0:17:04.280
+seraient utiles pour
+
+0:17:04.290,0:17:07.129
+résoudre le problème. Il vous permettrait par exemple de
+
+0:17:08.880,0:17:14.030
+de faire de la reconnaissance de caractères, de caractère individuels, appliquées à chaque caractère, mais vous ne savez pas où ils sont.
+
+0:17:14.030,0:17:16.040
+Alors, comment résoudre ce problème ?
+
+0:17:19.110,0:17:26.510
+En utilisant une variable latente utile. Si je vous dis…
+
+0:17:29.010,0:17:32.599
+Donc, pour la reconnaissance vocale le problème est que
+
+0:17:33.660,0:17:38.209
+vous ne savez pas où sont les limites entre les mots, vous ne savez pas où sont les limites entre les phonèmes.
+
+0:17:38.400,0:17:41.269
+La parole ressemble beaucoup à ce texte continu,
+
+0:17:42.030,0:17:43.380
+discours continu.
+
+0:17:43.380,0:17:49.249
+Nous pouvons analyser les mots car nous savons où sont les mots, nous comprenons la langue. Mais si quelqu’un d’autre parle une langue que
+
+0:17:49.250,0:17:52.910
+vous ne comprenez pas, vous avez qu’une idée très faible d’où sont les limites.
+
+0:17:55.110,0:17:58.969
+La plupart du temps, vous ne pouvez pas dans les langues où il n’y a pas d'accent tonique
+
+0:17:59.000,0:18:01.550
+En anglais, c’est un peu facile car il y a
+
+0:18:01.590,0:18:04.940
+l'accent tonique sur le mot, donc si vous pouvez comprendre où l'accent tonique est
+
+0:18:04.940,0:18:08.809
+vous pouvez probablement comprendre plus ou moins où les limites du mot sont. En français il n’y a pas d'accent tonique.
+
+0:18:08.810,0:18:11.570
+Vous avez aucun moyen de comprendre.
+
+0:18:13.230,0:18:16.339
+« Je peux dire une longue phrase en français, vous n’avez aucune idée, où sont les frontières entre les mots »
+
+0:18:17.580,0:18:21.379
+Ok, c’est une sorte de chaîne continue de
+
+0:18:21.930,0:18:26.839
+phonèmes et il est très difficile de dire où les limites des mots sont à moins que vous connaissez la langue.
+
+0:18:27.870,0:18:29.870
+Donc, ce serait une variable latente utile à avoir.
+
+0:18:29.880,0:18:34.369
+Si quelqu’un vous dit où sont les limites alors vous seriez en mesure de réaliser
+
+0:18:35.070,0:18:39.080
+la tâche. C’est ainsi que vous utiliseriez des variables latentes.
+
+0:18:40.500,0:18:44.989
+Cette façon d’utiliser des variables latentes est utilisée depuis des décennies
+
+0:18:45.540,0:18:47.540
+dans le contexte de la reconnaissance vocale,
+
+0:18:47.580,0:18:49.580
+dans le contexte du
+
+0:18:49.740,0:18:56.000
+traitement du langage naturel, dans le contexte de la reconnaissance des caractères comme je l’ai dit : OCR [sigle anglais désignant la reconnaissance de caractères].
+
+0:18:56.280,0:18:59.839
+Et dans un certain nombre d’autres applications différentes.
+
+0:19:02.130,0:19:04.130
+En particulier ceux qui impliquent des séquences.
+
+0:19:06.530,0:19:10.089
+Mais aussi dans la vision par ordinateur, donc des choses comme.
+
+0:19:12.110,0:19:14.110
+Si vous voulez
+
+0:19:16.429,0:19:21.039
+détecter où se trouve une personne, mais vous ne savez pas comment cette personne 
+
+0:19:23.210,0:19:25.660
+est habillée ou dans quelle
+
+0:19:26.240,0:19:28.240
+position est cette personne, des choses comme ça.
+
+0:19:28.240,0:19:32.229
+Des variables peuvent vous aider à résoudre cette tâche.
+
+0:19:32.960,0:19:35.079
+Bien que de nos jours la vision fonctionne.
+
+0:19:42.000,0:19:47.050
+Donc si vous avez un modèle à variable latente, c’est voilà comment faire l’inférence.
+
+0:19:47.750,0:19:52.390
+Donc, vous avez une nouvelle fonction énergie. Elle s’appelle E pas F. E(x,y,z)
+
+0:19:52.910,0:19:59.829
+et pour faire l’inférence, vous minimisez simultanément ce qui concerne z et y. Ok, donc vous demandez au système :
+
+0:20:00.260,0:20:06.129
+donne-moi la combinaison de variables y et z qui minimisent cette fonction énergie. En fait, je ne me soucie pas des valeurs de z.
+
+0:20:06.130,0:20:09.819
+Je ne me soucie que de la valeur de y, mais je dois faire cette minimisation de manière simultanée.
+
+0:20:15.710,0:20:18.010
+Je vais vous donner quelques exemples plus concrets un peu plus tard.
+
+0:20:22.100,0:20:24.100
+En fait, c’est l’équivalent de
+
+0:20:24.650,0:20:27.309
+définir une nouvelle fonction énergie F,
+
+0:20:27.500,0:20:33.160
+que j’appelle F∞ ici qui ne dépend que de x et y. F∞(x,y) est le min sur z de
+
+0:20:33.350,0:20:35.920
+de E(x,y,z). Vous prenez une
+
+0:20:36.350,0:20:40.569
+fonction de (x,y,z), vous trouvez le minimum de cette fonction sur z. z est maintenant éliminé.
+
+0:20:40.790,0:20:44.979
+Vous obtenez une fonction de x et y. Dans la pratique, vous ne faites jamais cela.
+
+0:20:44.980,0:20:48.219
+Dans la pratique, vous minimisez z et y simultanément
+
+0:20:49.309,0:20:52.309
+car nous ne savons pas comment représenter la fonction.
+
+0:20:54.440,0:21:02.410
+Mais il y a une alternative à cela, qui est de définir F. Ici j’écris Fβ ou F
+
+0:21:03.920,0:21:06.639
+index β de (x,y).
+
+0:21:07.400,0:21:09.400
+Comme – 1/β,
+
+0:21:09.860,0:21:13.300
+log, somme ou intégrale sur z de exp(-βE(x,y,z)).
+
+0:21:14.660,0:21:16.660
+Maintenant, un peu de
+
+0:21:19.070,0:21:22.850
+calcul. Vous verrez que si vous faites tendre β vers l’infini,
+
+0:21:24.029,0:21:25.980
+ce genre de
+
+0:21:25.980,0:21:29.299
+Fβ converge vers F∞. C’est pourquoi je l’ai appelé F∞.
+
+0:21:29.330,0:21:35.000
+Et je suis allé sur cet exercice un peu plus tôt. [La vidéo a été coupée avant cette phrase, difficile de saisir le contexte pour la traduction].
+
+0:21:35.669,0:21:37.788
+Dans cette intégrale sur z,
+
+0:21:38.490,0:21:39.860
+si β est très grand,
+
+0:21:39.860,0:21:45.679
+le seul terme qui va avoir de l’importance est le terme E(x,y,z) qui a la valeur la plus basse.
+
+0:21:45.960,0:21:48.230
+Celui qui a la
+
+0:21:48.929,0:21:51.288
+valeur la plus basse sur toutes les valeurs possibles de z.
+
+0:21:51.570,0:21:54.500
+Toutes les autres vont être beaucoup plus grandes car β est très très grand.
+
+0:21:54.500,0:21:58.069
+Et donc la valeur dans l’exponentielle ne va pas vraiment compter.
+
+0:21:58.220,0:22:01.669
+Ce qui va compter est la valeur la plus basse.
+
+0:22:02.850,0:22:07.279
+Donc si vous n’avez qu’un seul terme là-dedans, qui est E(x,y,z)
+
+0:22:08.039,0:22:13.579
+pour la valeur de z qui produit la plus petite valeur puis le log annule
+
+0:22:14.220,0:22:18.139
+l’exponentielle et le -1/β annule le -β et vous vous retrouvez avec juste
+
+0:22:18.659,0:22:22.398
+min sur z de E(x,y,z). Ok, donc c’est la limite
+
+0:22:23.669,0:22:25.669
+que vous voyez ci-dessus.
+
+0:22:27.990,0:22:32.599
+Donc, si je définis F(x,y) de cette façon et encore…
+
+0:22:34.590,0:22:40.579
+Ensuite, en revenant au problème précédent de simplement minimiser F(x,y) en y pour faire l’inférence.
+
+0:22:44.100,0:22:46.100
+Ok, donc
+
+0:22:46.409,0:22:48.709
+avoir un modèle à variable latente ne fait pas beaucoup de différence.
+
+0:22:48.710,0:22:52.669
+Vous avez une minimisation supplémentaire par rapport à la variable latente à faire.
+
+0:22:56.100,0:22:58.100
+Il y a donc un grand avantage à
+
+0:22:58.860,0:23:00.840
+permettre des variables latentes,
+
+0:23:00.840,0:23:02.730
+qui est que,
+
+0:23:02.730,0:23:05.689
+en variant la variable latente sur un ensemble, je
+
+0:23:06.419,0:23:11.809
+peut faire varier la sortie, la prédiction du système,  sur un ensemble.
+
+0:23:12.029,0:23:16.369
+Il y a une architecture particulière ici où x va dans
+
+0:23:17.370,0:23:23.689
+ce que j’appellerai un prédicteur, qui est une sorte de réseau neuronal. Il produit une certaine représentation des caractéristiques x et
+
+0:23:24.629,0:23:31.789
+puis x et z la variable latente vont dans ce que j’appelle ici un décodeur qui produit une prédiction y̅.
+
+0:23:32.460,0:23:36.949
+Ok, c’est une prédiction pour la variable y. C’est celle que nous voulons prédire.
+
+0:23:37.620,0:23:42.200
+Notre fonction énergie ici compare juste y̅ et y. C’est tout simplement la distance entre les deux.
+
+0:23:42.420,0:23:46.039
+Ok, vous connaissez ce genre de diagramme. Nous en avons parlé plus tôt.
+
+0:23:46.920,0:23:54.170
+Donc, si je choisis de faire varier z sur un ensemble, disons le carré en 2 dimensions ici symbolisé par ce diagramme
+
+0:23:55.770,0:23:57.090
+gris,
+
+0:23:57.090,0:24:02.420
+la prédiction y̅  va varier aussi sur un ensemble dans ce cas ici une sorte de ruban.
+
+0:24:02.640,0:24:04.640
+Ruban 2D.
+
+0:24:04.860,0:24:07.370
+Et ce que cela me permet de faire est en gros
+
+0:24:07.920,0:24:15.259
+avoir une machine qui peut produire plusieurs sorties. En faisant varier la variable latente, je peux avoir cette machine qui produit plusieurs sorties.
+
+0:24:15.260,0:24:16.950
+Pas seulement une.
+
+0:24:16.950,0:24:18.950
+C’est d’une importance cruciale.
+
+0:24:25.320,0:24:28.249
+Disons que vous essayez de faire une prédiction vidéo.
+
+0:24:29.970,0:24:31.920
+Il y a donc
+
+0:24:31.920,0:24:37.759
+de nombreuses raisons pour lesquelles vous pourriez vouloir faire la prédiction vidéo. Une bonne raison est de construire une très bonne compression vidéo.
+
+0:24:37.980,0:24:40.819
+Un système de compression par exemple. Une autre bonne raison est
+
+0:24:41.490,0:24:44.839
+que la vidéo que vous essayez de prédire est la vidéo que vous regardez
+
+0:24:45.240,0:24:49.729
+à travers votre pare-brise lorsque vous conduisez une voiture et vous souhaitez être en mesure de prédire ce que les voitures autour de vous vont faire.
+
+0:24:49.730,0:24:51.730
+C’est ce sur quoi Alfredo travaille.
+
+0:24:54.330,0:24:57.680
+Il est très utile de pouvoir prédire ce qui va se passer avant que cela ne se produise.
+
+0:24:57.860,0:25:00.829
+En fait, c’est un peu l’essence de l’intelligence : la capacité de prédire.
+
+0:25:01.740,0:25:04.000
+Vous me regardez en ce moment.
+
+0:25:04.000,0:25:06.000
+Juste une minute.
+
+0:25:06.000,0:25:09.000
+Vous me regardez en ce moment. Je parle.
+
+0:25:09.000,0:25:13.909
+Vous avez une idée du mot qui va sortir de ma bouche dans quelques secondes.
+
+0:25:13.909,0:25:16.310
+Vous avez une idée du geste que je vais faire.
+
+0:25:16.590,0:25:20.420
+Vous avez une idée de la direction dans laquelle je vais m’orienter, mais pas une idée précise.
+
+0:25:20.520,0:25:25.550
+Donc, si vous entraînez votre propre réseau neuronal pour faire une seule prédiction sur ce à quoi je vais ressembler dans
+
+0:25:26.220,0:25:28.220
+deux secondes à partir de maintenant,
+
+0:25:28.350,0:25:30.350
+il n’y a aucun moyen que vous puissiez faire une prédiction précise.
+
+0:25:30.690,0:25:35.720
+Si vous entraînez avec les moindres carrés… Ok, si vous entraînez un ConvNet ou quelque chose à prédire
+
+0:25:36.480,0:25:38.480
+la vue de moi avec les moindres carrés,
+
+0:25:39.060,0:25:44.569
+le mieux que le système peut faire est de produire une image floue de moi car il ne sait pas si je vais me déplacer à gauche ou à droite.
+
+0:25:44.570,0:25:47.060
+Il ne sait pas si mes mains vont être comme ça ou comme ça.
+
+0:25:47.520,0:25:51.709
+Donc ça va produire la moyenne de tous les résultats possibles et ça va être une image floue.
+
+0:25:53.490,0:26:00.979
+Ok, il est donc très important que votre prédicteur quel qu’il soit, doit être en mesure de faire face à l’incertitude et être en mesure de faire plusieurs prédictions.
+
+0:26:01.080,0:26:05.810
+La façon de paramétrer l’ensemble de prédictions passe par une variable latente. 
+
+0:26:06.510,0:26:10.040
+Je ne parle pas encore de distributions ou de modélisation probabiliste.
+
+0:26:11.670,0:26:15.319
+C’est bien avant, bien avant qu’on en parle. Question ici. [Etudiant]
+
+0:26:17.910,0:26:19.910
+Répétez. [Il répète]
+
+0:26:21.060,0:26:28.549
+z n’est pas un paramètre ce n’est pas un poids. C’est une valeur qui change pour chaque échantillon.
+
+0:26:30.150,0:26:32.040
+Donc, en gros,
+
+0:26:32.040,0:26:35.449
+pendant l’entraînement, nous n’avons pas encore parlé de l’entraînement, mais pendant l’entraînement
+
+0:26:36.000,0:26:39.199
+je vous donne un x et un y, vous trouvez un z qui minimise
+
+0:26:39.780,0:26:43.129
+la fonction énergie avec les valeurs actuelles des paramètres
+
+0:26:43.650,0:26:45.330
+de ces réseaux neuronaux.
+
+0:26:45.330,0:26:49.220
+Ok, c’est la meilleure estimation de ce qu’est la valeur de z.
+
+0:26:52.000,0:26:56.990
+Et alors vous donnez cela à une fonction de perte que vous allez minimiser sur les paramètres du réseau.
+
+0:26:56.990,0:26:59.030
+La fonction de perte n’est pas nécessairement la moyenne.
+
+0:26:59.549,0:27:01.759
+Pas nécessairement l’énergie. Cela pourrait être autre chose.
+
+0:27:02.909,0:27:05.209
+OK. En fait, la plupart du temps c’est autre chose.
+
+0:27:06.539,0:27:13.309
+Donc, en ce sens, vous apprenez z, vous inferez z. Ok, vous ne voulez pas utiliser le terme « apprendre » car apprendre signifie que
+
+0:27:14.130,0:27:19.999
+vous avez une valeur de la variable que vous apprenez pour un ensemble d’entraînement. 
+
+0:27:20.549,0:27:25.489
+Ici pour z, vous avez une valeur différente pour chaque échantillon de votre jeu de d’entraînement ou chaque échantillon de votre jeu de test d’ailleurs.
+
+0:27:26.130,0:27:29.719
+Ok, donc ils ne sont pas appris en ce sens. Ils sont déduits.
+
+0:27:36.929,0:27:38.989
+Un autre exemple de cela est
+
+0:27:41.789,0:27:43.710
+la traduction.
+
+0:27:43.710,0:27:51.110
+Donc la traduction est un gros problème, la traduction linguistique, car il n’y a pas de traduction correcte unique d’un morceau de texte,
+
+0:27:51.510,0:27:54.199
+d’une langue à l’autre. Habituellement, il y a
+
+0:27:54.929,0:27:57.288
+beaucoup de façons différentes d’exprimer la même idée.
+
+0:28:00.059,0:28:02.809
+Pourquoi choisiriez-vous l’une par rapport l’autre ?
+
+0:28:03.750,0:28:08.059
+Cela serait agréable s’il y avait un moyen de paramétriser toutes les traductions possibles.
+
+0:28:08.429,0:28:11.418
+qu’un système puisse produire qui correspondrait à un texte donné.
+
+0:28:12.360,0:28:17.510
+Disons de l’allemand que vous voulez traduire en anglais. Il pourrait y avoir plusieurs traductions en anglais qui sont toutes correctes et
+
+0:28:18.030,0:28:22.489
+en variant une variable latente, vous pouvez varier la traduction qui est produite.
+
+0:28:25.049,0:28:28.849
+Ok, alors maintenant connectons ça à la modélisation probabiliste.
+
+0:28:30.900,0:28:37.939
+Il y a un moyen de transformer les énergies, que vous pouvez assimiler à une sorte de scores négatifs si vous voulez.
+
+0:28:39.450,0:28:41.450
+Car une énergie faible est bonne et une énergie élevée est mauvaise.
+
+0:28:43.080,0:28:45.380
+Pour transformer les énergies en probabilités et
+
+0:28:46.169,0:28:48.919
+la façon de le faire, nous avons parlé de cela déjà un peu,
+
+0:28:49.910,0:28:51.950
+est d’utiliser ce qu’on appelle une distribution de Gibbs-Boltzmann.
+
+0:28:53.460,0:28:59.809
+La forme de cela remonte à la physique statistique classique du XIXe siècle.
+
+0:29:02.280,0:29:04.280
+P(y|x) est :
+
+0:29:05.610,0:29:08.360
+exponentielle de -β  où β est une constante,
+
+0:29:09.780,0:29:13.849
+l’énergie de x et y. Et puis vous voulez… ici cela transforme
+
+0:29:14.190,0:29:19.039
+toutes ces énergies en chiffres positifs. Nous prenons l’exponentielle d’un nombre, donc cela le rend positif.
+
+0:29:19.260,0:29:25.040
+Le signe moins est là pour transformer l’énergie faible en probabilités élevées et vice versa. Ok.
+
+0:29:26.580,0:29:32.869
+Et j’utilise cette convention car c’est ce que les physiciens utilisent depuis pour le siècle dernier,
+
+0:29:34.470,0:29:36.470
+plus d’un siècle et demi.
+
+0:29:38.000,0:29:42.710
+En prenant exponentielle, vous transformez les énergies en nombres positifs et
+
+0:29:43.110,0:29:50.210
+puis vous normaliser. Donc, vous normalisez de telle sorte que le P(y|x) est une distribution correctement normalisée sur y. 
+
+0:29:51.060,0:29:57.049
+Pour en faire une distribution correcte, une distribution normalisée de y, vous divisez par l’intégrale, ou la somme si y est discret,
+
+0:29:57.450,0:30:02.000
+sur y de exp(-β F(x,y)), qui est la même chose que pour le numérateur.
+
+0:30:02.850,0:30:04.770
+Sauf que vous
+
+0:30:04.770,0:30:06.770
+intégrez sur toutes les valeurs possibles de y.
+
+0:30:08.400,0:30:12.440
+Maintenant si vous calculez l’intégrale de ceci, 
+
+0:30:12.570,0:30:18.000
+c’est égal à 1 car évidemment vous obtenez l’intégrale sur le dessus, l’intégrale sur le dessous, qui est une constante et vous obtenez 1.
+
+0:30:18.090,0:30:19.920
+Ok, cela
+
+0:30:19.920,0:30:23.509
+confirme que cela satisfait les
+
+0:30:24.330,0:30:29.269
+axiomes des distributions de probabilité qui sont que les nombres soient positifs et s’intègrent à 1.
+
+0:30:33.750,0:30:38.420
+Il y a beaucoup de façons de transformer un tas de fonction qui
+
+0:30:38.730,0:30:41.150
+intègrent à 1, une fonction positive qui s’intègre à 1.
+
+0:30:41.970,0:30:46.130
+Celle-là a des propriétés intéressantes que je ne vais pas détailler, mais
+
+0:30:47.730,0:30:50.660
+correspondant à la distribution dite d’entropie maximale.
+
+0:30:53.400,0:30:55.400
+Le paramètre β est en quelque sorte arbitraire.
+
+0:30:55.690,0:31:00.450
+C’est la façon dont vous calibrez vos probabilités en fonction de vos énergies, de sorte que
+
+0:31:01.030,0:31:06.660
+plus β est grand, plus votre probabilité sera binaire pour une fonction énergie donnée.
+
+0:31:08.710,0:31:12.270
+Si β est très très grand, c’est
+
+0:31:13.180,0:31:14.860
+essentiellement juste E(x,y)
+
+0:31:14.860,0:31:20.640
+pour le y qui produit la plus faible énergie qui aura une forte probabilité. Tout le reste aura une probabilité très faible.
+
+0:31:20.980,0:31:26.159
+Pour un petit β, vous obtenez une sorte de distribution plus lisse.
+
+0:31:28.390,0:31:32.099
+En physique β s’apparente à une température inverse.
+
+0:31:33.310,0:31:36.900
+Donc β qui tend vers l’infini est égale à une température de zéro.
+
+0:31:44.860,0:31:47.219
+Ok, un peu de maths. Ce n’est pas si effrayant.
+
+0:31:49.990,0:31:54.990
+Pour vous montrer d’où vient la formule de Fβ dont j’ai parlé plus tôt.
+
+0:31:58.870,0:32:04.109
+Donc, détaillons ceci lentement.
+
+0:32:07.090,0:32:10.199
+La probabilité jointe de P(y,z|x).
+
+0:32:10.990,0:32:12.990
+J’applique la même formule de la
+
+0:32:13.120,0:32:15.040
+distribution de Gibbs-Boltzmann
+
+0:32:15.040,0:32:19.320
+que je l’ai utilisé précédemment, sauf que maintenant c’est une distribution conjointe sur
+
+0:32:19.870,0:32:23.729
+y,z au lieu d’une distribution sur y. C’est pour un modèle à variable latente.
+
+0:32:25.330,0:32:29.819
+Donc, c’est exp(-β E(x,y,z)), puis je dois normaliser. 
+
+0:32:30.430,0:32:35.130
+Je dois intégrer dans le dénominateur sur y et z afin d’avoir une distribution normalisée
+
+0:32:36.130,0:32:37.810
+sur domaine joint de y et z.
+
+0:32:37.810,0:32:41.279
+Ok, donc c’est la formule en haut à gauche.
+
+0:32:44.140,0:32:48.299
+Je peux marginaliser donc si j’intègre P(y,z|x),
+
+0:32:48.940,0:32:55.380
+j’intègre cela sur z, j’obtiens juste P(y). C’est la formule de marginalisation qui est en haut à droite. 
+
+0:32:58.420,0:33:03.600
+Donc maintenant, si j’écris P(y|x), c’est tout simplement l’intégrale sur z de ce qui est en haut à gauche.
+
+0:33:03.940,0:33:05.940
+Ok, qui est écrit
+
+0:33:06.269,0:33:12.628
+dans la deuxième ligne. Donc en haut nous avons intégrale sur z, exp(-β E(x,y,z)). 
+
+0:33:13.389,0:33:17.608
+Et en bas, intégrale sur y intégrale sur z exp(-β E(x,y,z)).
+
+0:33:18.789,0:33:22.439
+Maintenant, je vais faire quelque chose de très sournois et stupide.
+
+0:33:23.379,0:33:26.639
+C’est que je vais prendre le log de cette formule et
+
+0:33:27.639,0:33:34.348
+multiplier par moins 1/β, puis multiplier par  β, puis prendre l’exponentielle. Toutes ces choses s’annulent.
+
+0:33:34.349,0:33:40.649
+Le log annule l’exponentielle, le moins 1/ β annule le -β. Ok ? Donc je n’ai rien fait.
+
+0:33:40.929,0:33:48.639
+[Il répète ce qu’il vient de dire].
+
+0:33:48.639,0:33:51.459
+Je n’ai rien fait car tout s’annule.
+
+0:33:51.459,0:33:53.459
+Je fais la même chose en bas.
+
+0:33:55.749,0:33:58.228
+Et ce que je vois maintenant, c’est que la chose dans la parenthèse
+
+0:34:00.070,0:34:01.019
+est la formule
+
+0:34:01.019,0:34:05.098
+que j’ai écrit précédemment. Fβ(x,y) égale -1/β, log
+
+0:34:05.349,0:34:09.929
+somme sur z, intégrale sur z de exp(-βE(x,y,z)). 
+
+0:34:10.329,0:34:14.339
+Je peux écrire cette formule horriblement compliquée ici comme
+
+0:34:15.220,0:34:21.209
+exp(-β Fβ(x,y) ) divisée par intégrale sur y d’exp(-β Fβ(x,y)).
+
+0:34:22.510,0:34:27.329
+Qu’est-ce que ça veut dire ? Cela signifie que si vous avez un modèle à variable latente et vous voulez
+
+0:34:28.720,0:34:35.010
+éliminer la variable latente z d’une manière probabilistiquement correcte, vous redéfinissez juste 
+
+0:34:36.190,0:34:38.190
+l’énergie F
+
+0:34:38.740,0:34:40.389
+comme cela. 
+
+0:34:43.059,0:34:45.059
+En fonction de E(x,y,z).
+
+0:34:45.369,0:34:47.369
+Vous avez terminé.
+
+0:34:47.470,0:34:51.959
+Le « vous avez terminé » est un peu un raccourci car informatiquement
+
+0:34:52.539,0:34:58.919
+cela peut être très difficile. Peut-être intraitable. En fait, dans la plupart des cas, c’est probablement insoluble.
+
+0:35:00.000,0:35:06.220
+[Remarque d’un étudiant]. Il me manque un moins dans le dénominateur, vous avez raison [formule toute à droite dans la deuxième ligne].
+
+0:35:15.020,0:35:17.020
+Ok, donc le but
+
+0:35:17.089,0:35:21.159
+des dernières diapositives étaient de dire : si vous avez une variable latente que vous minimisez
+
+0:35:21.980,0:35:27.969
+à l’intérieur de votre modèle, ou si vous avez une variable latente que vous voulez marginaliser sur ce que vous faites en définissant cette nouvelle
+
+0:35:29.390,0:35:31.809
+cette fonction énergie F de cette façon
+
+0:35:34.130,0:35:36.400
+avec la minimisation correspondant à la
+
+0:35:38.089,0:35:42.189
+limite de β→∞ de cette formule, cela peut être fait. [Question d’un étudiant]
+
+0:35:58.520,0:36:05.379
+Je veux juste obtenir une substitution dans la deuxième ligne. Les deux derniers termes dans la deuxième ligne de la parenthèse
+
+0:36:06.079,0:36:10.329
+sont remplacés par Fβ(x,y) car je viens de définir Fβ(x,y) de cette façon.
+
+0:36:11.150,0:36:13.150
+Ok, alors définissez-le de cette façon.
+
+0:36:15.260,0:36:17.089
+Si je définis
+
+0:36:17.089,0:36:24.189
+F(x,y) de cette façon, P(y|x) est juste une application de la formule Gibbs-Boltzmann. 
+
+0:36:26.210,0:36:30.549
+z a été un peu marginalisé implicitement à l’intérieur de cela, ok ?
+
+0:36:30.680,0:36:34.059
+Donc les physiciens appellent cela une énergie libre [« free » en anglais] d’ailleurs, c’est pourquoi je l’appelle F.
+
+0:36:34.910,0:36:37.270
+Donc E pour énergie et F pour énergie libre. [Question d’un étudiant]
+
+0:36:54.550,0:37:01.469
+La différence est… dans les modèles probabilistes, vous n’avez pas le choix de
+
+0:37:03.340,0:37:05.340
+la fonction objectif que vous allez minimiser.
+
+0:37:06.370,0:37:09.059
+Vous devez rester fidèle au cadre
+
+0:37:10.300,0:37:15.660
+probabiliste dans un sens que chaque objet que vous manipulez doit être une distribution normalisée,
+
+0:37:16.570,0:37:19.140
+que vous pouvez approximer en utilisant des méthodes variationelles ou quoi que ce soit.
+
+0:37:20.020,0:37:26.370
+Ici, en fin de compte ce que vous voulez faire avec ces modèles est de prendre des décisions et
+
+0:37:27.610,0:37:31.199
+si vous construisez un système qui conduit une voiture et
+
+0:37:31.960,0:37:33.960
+le système vous dit :
+
+0:37:35.020,0:37:38.790
+«  j’ai besoin de tourner à gauche avec probabilité 0,8 ou tourner à droite avec probabilité 0,2 »
+
+0:37:39.610,0:37:41.610
+vous allez tourner à gauche.
+
+0:37:42.040,0:37:43.690
+Le fait que
+
+0:37:43.690,0:37:50.190
+les probabilités valent 0,2 et 0,8 n’a pas d’importance. Ce que vous voulez, c’est prendre la décision qui est la meilleure.
+
+0:37:50.500,0:37:53.999
+Car vous devez prendre une décision. Vous êtes obligé de prendre une décision.
+
+0:37:54.010,0:37:59.669
+Donc, si vous voulez un système qui…  donc les probabilités sont complètement inutiles si vous voulez prendre des décisions.
+
+0:38:00.310,0:38:07.080
+Si vous voulez combiner la sortie d’un système automatisé avec un autre, par exemple un humain ou
+
+0:38:07.690,0:38:11.429
+un autre système avec ces systèmes n’ayant pas été entraînés ensemble
+
+0:38:11.430,0:38:12.840
+mais séparément,
+
+0:38:12.840,0:38:17.489
+alors ce que vous voulez c’est de calibrer le score afin que vous puissiez combiner les scores des deux systèmes pour prendre une bonne décision.
+
+0:38:18.190,0:38:21.990
+Il n’y a qu’une seule façon de calibrer les scores et c’est de les transformer en probabilités. 
+
+0:38:22.090,0:38:24.840
+Toutes les autres façons sont inférieures ou équivalentes. 
+
+0:38:26.650,0:38:29.429
+Mais si vous entraînez le système de bout en bout pour prendre des décisions alors
+
+0:38:31.390,0:38:33.390
+alors…
+
+0:38:35.050,0:38:41.610
+quel que soit la fonction de score que vous utilisez, c’est bon tant qu’elle donne le meilleur score de décision, la meilleure décision.
+
+0:38:44.410,0:38:45.580
+Cela vous donne
+
+0:38:45.580,0:38:51.090
+beaucoup plus de choix dans la façon dont vous gérez le modèle, beaucoup plus de choix dans la façon d’entraîner, quelle fonction objective utiliser.
+
+0:38:51.400,0:38:53.140
+En gros si vous
+
+0:38:53.140,0:38:56.309
+insistez pour que votre modèle soit probabiliste, vous devez faire le maximum de vraisemblance.
+
+0:38:56.920,0:39:03.450
+Donc, vous devez essentiellement entraîner votre modèle de telle sorte que la probabilité qu’il donne aux données que vous observez est maximale. Ok ?
+
+0:39:05.350,0:39:07.350
+Le problème est que
+
+0:39:07.870,0:39:10.620
+cela ne peut être prouvé que dans le cas où votre modèle est correct.
+
+0:39:10.620,0:39:14.069
+Et votre modèle n’est jamais correct au sens, vous savez, 
+
+0:39:14.070,0:39:18.360
+de cette citation célèbre par le statisticien célèbre qui dit :
+
+0:39:18.970,0:39:20.970
+« Tous les modèles sont faux, mais certains sont utiles ».
+
+0:39:21.940,0:39:26.610
+Ainsi, les modèles probabilistes particulièrement ceux dans des espaces de dimensions élevées et les modèles probabilistes
+
+0:39:26.830,0:39:30.929
+dans des situations combinatoires comme les textes et des choses comme ça sont tous des modèles approximatifs.
+
+0:39:31.930,0:39:38.220
+Ils ont tous tort d’une certaine façon. Et si vous essayez de les normaliser, vous les rendez davantage faux. Donc, vous feriez mieux de
+
+0:39:39.220,0:39:43.080
+ne pas les normaliser. Il y a un autre point qui est en fait plus important.
+
+0:39:48.790,0:39:51.120
+Je reviens à ce petit diagramme que j’avais…
+
+0:39:53.650,0:39:55.650
+Celui-là.
+
+0:39:55.810,0:39:57.700
+Donc
+
+0:39:57.700,0:40:02.850
+ceci est censé être une fonction énergie qui capture la dépendance entre x et y. C’est comme un
+
+0:40:03.460,0:40:05.460
+chaîne de montagnes si vous voulez.
+
+0:40:06.540,0:40:12.360
+Les vallées sont là où se trouvent les points noirs. Ce sont les points de données et il y a une sorte de montagnes tout autour.
+
+0:40:13.780,0:40:15.929
+Maintenant, si vous entraînez un modèle probabiliste avec cela…
+
+0:40:16.780,0:40:22.560
+Imaginez que les points sont en fait sur une variété infiniment mince.
+
+0:40:23.170,0:40:28.500
+Ok, donc la distribution des données pour les points noirs est en fait 
+
+0:40:29.530,0:40:33.989
+juste une ligne. C’est une ligne, deux lignes, trois lignes. Mais ce sont des lignes.
+
+0:40:34.090,0:40:36.659
+Ils n’ont pas de largeur si vous voulez.
+
+0:40:37.030,0:40:38.910
+Donc, si vous entraînez un modèle probabiliste sur cela,
+
+0:40:38.910,0:40:43.830
+votre modèle probabiliste devrait vous donner votre modèle de densité, qui devrait vous dire quand vous êtes sur cette variété.
+
+0:40:44.950,0:40:49.470
+Les sorties doivent être infinies. La densité est infinie.
+
+0:40:50.410,0:40:52.470
+Tout epsilon en dehors devrait être 0.
+
+0:40:54.160,0:41:00.510
+Ok, ce serait la bonne distribution du modèle. Une plaque mince.
+
+0:41:04.880,0:41:10.549
+Non seulement la sortie doit être infinie, mais l’intégrale de celui-ci devrait valoir 1. C’est très difficile à mettre en œuvre sur ordinateur.
+
+0:41:11.190,0:41:13.399
+C’est en gros impossible car…
+
+0:41:14.010,0:41:17.330
+Disons que vous voulez calculer cette fonction à travers une sorte de réseau neuronal.
+
+0:41:17.850,0:41:20.150
+Votre réseau neuronal devra avoir des poids infinis.
+
+0:41:20.520,0:41:26.240
+Des poids infinis qui sont calibrés de telle sorte que l’intégrale de la sortie de ce système sur l’ensemble du domaine est 1.
+
+0:41:27.150,0:41:35.029
+C’est en gros impossible. Vous ne pouvez pas avoir un modèle probabiliste précis et correct pour ces données particulières.
+
+0:41:35.610,0:41:37.610
+C’est impossible.
+
+0:41:39.540,0:41:45.920
+C’est ce que nous voulons que le maximum de vraisemblance produise. Il n’y a pas d’ordinateur dans le monde qui peut calculer cela.
+
+0:41:49.350,0:41:56.269
+Donc, en fait, ce n’est même pas intéressant. Parce que, imaginez que vous ayez un modèle de densité parfait pour la densité que je viens de
+
+0:41:57.150,0:42:01.400
+mentionner, qui est une plaque mince dans cet espace x,y.
+
+0:42:05.730,0:42:08.929
+Vous ne pouvez pas faire d’inférence si je vous donne un
+
+0:42:10.590,0:42:15.590
+valeur de x et je vous demande quelle est la meilleure valeur de y. Vous ne seriez pas en mesure de la trouver.
+
+0:42:18.120,0:42:20.990
+Car toutes les valeurs de y, sauf un ensemble de
+
+0:42:22.170,0:42:27.109
+probabilité nulle dont vous connaissez quelques valeurs.
+
+0:42:28.260,0:42:31.460
+Par exemple pour cette valeur de x il y a 3 valeurs qui sont possibles.
+
+0:42:32.460,0:42:34.460
+Ok, il y en a à l’infini maintenant.
+
+0:42:34.920,0:42:39.499
+Et donc vous ne pourrez pas les trouver. Il n’y a pas d’algorithme d’inférence qui vous permettra de les trouver.
+
+0:42:43.650,0:42:48.049
+Car ce ne sont que des fonctions. Comment les trouvez-vous ?
+
+0:42:49.410,0:42:53.450
+La seule façon que vous pouvez utiliser pour les trouver est si vous faites votre
+
+0:42:54.840,0:42:56.580
+fonction de contraste
+
+0:42:56.580,0:43:01.009
+lisse et différentiable. Vous pouvez commencer à partir de n’importe quel point et par descente de gradient,
+
+0:43:01.010,0:43:03.440
+vous pouvez trouver un bon rapport qualité/prix pour y pour n’importe quelle valeur de x.
+
+0:43:04.650,0:43:10.190
+Mais ce n’est pas vraiment un bon modèle probabiliste de la distribution. Si la distribution est du type que j’ai mentionné.
+
+0:43:11.010,0:43:13.010
+Donc voici un cas où
+
+0:43:14.100,0:43:15.150
+insister
+
+0:43:15.150,0:43:20.439
+pour avoir un bon modèle probabiliste est en fait mauvais. Ok, le maximum de vraisemblance craint.
+
+0:43:20.930,0:43:24.940
+Donc, si vous êtes un vrai Bayésien vous dites : « oh, mais vous pouvez corriger cela par un
+
+0:43:25.910,0:43:31.600
+fort a priori où le l’a priori dit que votre fonction de densité doit être lisse ». 
+
+0:43:33.650,0:43:35.770
+Vous pouvez voir cela comme un a priori.
+
+0:43:36.410,0:43:44.109
+Mais tout ce que vous faites de ces termes bayésiens, c’est prendre le logarithme de ceux-ci, oublier la normalisation et obtenir des modèles à base d’énergie. 
+
+0:43:44.990,0:43:49.540
+Donc des modèles à base d’énergie qui ont un régulateur qui est additif à votre fonction énergie 
+
+0:43:50.630,0:43:58.300
+sont complètement équivalents aux modèles bayésiens où la probabilité est exponentielle de l’énergie et maintenant vous obtenez exponentielle
+
+0:43:59.869,0:44:03.159
+un terme dans l’énergie fois un terme de régularisation exponentiel.
+
+0:44:03.310,0:44:10.689
+Et donc c’est égal à l’énergie exponentielle plus régulariseur. Et si vous retirez l’exponentielle, vous avez un modèle à base d’énergie avec un régulateur additif.
+
+0:44:13.160,0:44:17.950
+Donc, il y a une sorte de correspondance entre les méthodes probabilistes et bayésiennes.
+
+0:44:18.680,0:44:23.080
+Mais insistez sur le fait que vous faire le maximum de vraisemblance est parfois mauvais pour vous en particulier dans
+
+0:44:23.660,0:44:28.930
+des espaces dimensionnels élevés ou des espaces combinatoires où votre modèle probabiliste est très erroné.
+
+0:44:29.060,0:44:35.769
+C’est pas mal dans les distributions discrètes. C'est ok. Mais dans ce cas, c’est vraiment mal.
+
+0:44:41.000,0:44:43.000
+Et tous les modèles sont faux.
+
+0:44:44.480,0:44:49.840
+Donc, il y a une forme d’apprentissage sur lequel je reviendrais plusieurs fois
+
+0:44:51.200,0:44:52.760
+dans les conférences futures, qui est
+
+0:44:52.760,0:44:55.570
+appelé apprentissage autosupervisé. Il inclut
+
+0:44:56.540,0:45:01.119
+l’apprentissage supervisé, mais aussi un peu ce que les gens appelaient l’apprentissage non supervisé,
+
+0:45:01.850,0:45:07.509
+et beaucoup de choses. Je pense vraiment que l’avenir de l’apprentissage automatique est dans l’apprentissage autosupervisé. 
+
+0:45:09.140,0:45:17.140
+Au cours de la dernière année et demie, il y a eu d’énormes progrès en NLP en raison de systèmes comme BERT.
+
+0:45:18.710,0:45:24.820
+Ces systèmes sont entraînés à l’aide de l’apprentissage autosupervisé, une forme particulière d’apprentissage autosupervisé appelé autoencodeur débruiteur dont nous allons parler.
+
+0:45:26.630,0:45:33.040
+Il y a aussi eu beaucoup de progrès au cours des trois derniers mois dans l’utilisation de l’apprentissage autosupervisé pour entraîner des
+
+0:45:34.010,0:45:36.010
+systèmes de vision pour apprendre les caractéristiques
+
+0:45:36.080,0:45:38.080
+à l’aide de
+
+0:45:38.270,0:45:40.989
+tâches de prétexte autosupervisées.
+
+0:45:43.760,0:45:49.479
+Le but de l’apprentissage autosupervisé est d’entraîner un système pour apprendre de bonnes représentations de l’entrée.
+
+0:45:50.150,0:45:56.440
+Afin que vous puissiez ensuite utiliser ces représentations comme entrée dans une tâche supervisée ou une tâche d’apprentissage de renforcement ou quoi que ce soit.
+
+0:45:58.490,0:46:03.909
+Il y a beaucoup plus d’informations que le système peut utiliser dans le contexte de l’apprentissage autosupervisé.
+
+0:46:04.000,0:46:06.940
+Donc permettez-moi d‘en parler.
+
+0:46:07.760,0:46:10.869
+Donc l’apprentissage autosupervisé est quand quelqu’un vous donne un morceau de données et
+
+0:46:12.110,0:46:18.010
+vous allez entraîner un système pour prédire un morceau de ces données étant donné un autre morceau de ces données.
+
+0:46:19.670,0:46:22.359
+Ok, donc par exemple je vous donne un morceau de vidéo et
+
+0:46:23.270,0:46:25.010
+je vous demande
+
+0:46:25.010,0:46:30.309
+d’utiliser la première moitié de la vidéo et entraîner un modèle pour prédire la deuxième moitié de cette vidéo.
+
+0:46:33.140,0:46:40.839
+Pourquoi cela est-il bon dans le contexte des caractéristiques d’apprentissage pour les systèmes de vision par exemple ?
+
+0:46:45.740,0:46:50.500
+Si je m’entraîne à prédire à quoi ressemblera le monde, à ce dont je pense que cette pièce
+
+0:46:50.870,0:46:53.440
+ressemblera si je déplace ma tête un peu vers la gauche…
+
+0:46:56.150,0:46:58.150
+La meilleure explication de
+
+0:46:58.700,0:47:01.030
+comment la vue change, est que chaque
+
+0:47:01.940,0:47:05.109
+point dans l’espace a une profondeur, a une distance de mes yeux.
+
+0:47:07.370,0:47:09.370
+Ok.
+
+0:47:09.980,0:47:10.720
+En fait
+
+0:47:10.720,0:47:15.639
+si je fais une sorte d’inférence que chaque point a une distance de mes yeux alors je peux très simplement expliquer
+
+0:47:15.740,0:47:21.369
+comment le monde change quand je bouge car les choses qui sont plus proches peuvent avoir produits plus de mouvement que les choses qui sont loin.
+
+0:47:21.530,0:47:23.679
+Vous obtenez ce genre de perspective,
+
+0:47:24.710,0:47:26.710
+Distorsion.
+
+0:47:27.650,0:47:29.650
+Et donc
+
+0:47:32.609,0:47:38.869
+il y a cette idée que si j’entraîne un système pour prédire ce qui à quoi ça ressembler si je déplace une caméra,
+
+0:47:39.089,0:47:43.399
+le système en apprendra implicitement sur la profondeur. Vous n’aurez pas à
+
+0:47:44.010,0:47:49.069
+l’entraîner à prédire la profondeur de manière supervisée. Il devra
+
+0:47:49.740,0:47:51.000
+en quelque sorte
+
+0:47:51.000,0:47:54.469
+découvrir qu’il y a de la profondeur si il veut faire une bonne prédiction.
+
+0:47:58.859,0:48:04.399
+Ce qui signifie que vous n’avez pas à câbler dans le système que le monde est en trois dimensions. Il va apprendre cela en quelques minutes en prédisant simplement
+
+0:48:05.369,0:48:08.449
+comment cette vue du monde change en déplaçant la caméra.
+
+0:48:09.210,0:48:13.579
+Maintenant, une fois que le système a compris que chaque point a une profondeur dans le monde
+
+0:48:15.960,0:48:20.510
+puis la notion qu’il y a des objets distincts qui sont en face de l’arrière-plan
+
+0:48:21.809,0:48:24.199
+apparaît immédiatement car les objets sont des choses qui se déplacent
+
+0:48:25.650,0:48:27.650
+différemment des choses qui sont derrière.
+
+0:48:30.210,0:48:34.339
+Ok, il y a quelque chose qui apparaît immédiatement qui est le fait que
+
+0:48:37.109,0:48:41.479
+les objets qui ne sont pas visibles, cachés par un autre, sont toujours là.
+
+0:48:42.480,0:48:44.929
+Vous ne les voyez pas car ils sont derrière, mais
+
+0:48:46.859,0:48:51.499
+ce concept que les objets existent encore quand vous ne les voyez pas, il n’est pas tout à fait évident.
+
+0:48:52.769,0:48:59.508
+Vous savez, les bébés apprennent ça très tôt, mais on ne sait pas exactement quand, car nous ne pouvons pas mesurer quand ils sont très petits.
+
+0:49:01.079,0:49:03.079
+Mais ils apprennent probablement cela très rapidement.
+
+0:49:06.329,0:49:09.679
+Une fois que vous avez identifié ce concept d’objets, peut-être
+
+0:49:10.859,0:49:16.068
+vous comprendrez que beaucoup d’objets dans le monde ne bougent pas spontanément.
+
+0:49:17.279,0:49:23.929
+Donc il y a des objets inanimés. Et puis il y a des objets dont les trajectoires ne sont pas tout à fait prévisibles. Et ce sont des objets animés.
+
+0:49:26.220,0:49:31.789
+Ou d’autres types d’objets que vous connaissez se déplacent de manière pas tout à fait prévisible comme 
+
+0:49:31.789,0:49:35.089
+les vagues sur l’eau, mais elles ne sont pas animés.
+
+0:49:35.609,0:49:38.149
+Ou les feuilles d’un arbre.
+
+0:49:39.900,0:49:42.799
+Et puis après un certain temps, vous vous rendez compte aussi que
+
+0:49:44.430,0:49:45.930
+des objets
+
+0:49:45.930,0:49:47.930
+ont des trajectoires prévisibles
+
+0:49:48.360,0:49:51.110
+qui ne flottent pas dans l’air. S’ils ne sont pas tenus, ils tomberont.
+
+0:49:52.260,0:49:59.120
+Ok, vous pouvez commencer à apprendre une physique intuitive sur la gravité, l’inertie. Les bébés apprennent cela vers l’âge de neuf mois.
+
+0:50:00.210,0:50:02.449
+Donc ce n’est pas quelque chose que vous avez à la naissance. Vous apprenez ce concept à
+
+0:50:03.210,0:50:08.269
+environ neuf mois, pas avant cet âge.
+
+0:50:13.830,0:50:17.480
+Donc, la motivation pour l’apprentissage autosupervisé et c’est l’une des raisons
+
+0:50:17.480,0:50:23.959
+pour laquelle je pense qu’il s’agit vraiment l’avenir de l’apprentissage automatique et certainement l’avenir de l’IA, est le fait 
+
+0:50:25.200,0:50:31.730
+que les animaux et les humains semblent apprendre une énorme quantité de connaissances de fond sur le monde juste par l’observation en s’entraînant essentiellement à prédire.
+
+0:50:33.540,0:50:38.749
+Donc, une grande question dans l’IA, en fait la question sur laquelle je travaille presque exclusivement est la façon dont pouvons-nous faire cela.
+
+0:50:39.420,0:50:42.859
+Ok, nous n’avons pas trouvé de réponse complète.
+
+0:50:45.270,0:50:47.270
+Pas encore.
+
+0:50:47.610,0:50:50.509
+Donc je vous donne un bout de données. C’est une vidéo. 
+
+0:50:51.240,0:50:54.770
+La machine a un bout de vidéo qu’elle voit, et un bout qu’elle ne voit pas.
+
+0:50:55.440,0:51:00.679
+Elle va essayer de prédire le bout qu’elle ne voit pas à partir du bout qu’elle voit.
+
+0:51:00.680,0:51:03.229
+Prédire les futures images d’une vidéo
+
+0:51:03.990,0:51:05.990
+Prédire les
+
+0:51:06.150,0:51:10.309
+mots manquants dans une phrase. Donc, je vous donne une phrase dans laquelle je masque certains des mots 
+
+0:51:12.000,0:51:14.809
+et le système s’entraîne à prédire les mots manquants.
+
+0:51:15.960, 0:51:24.019
+Ou je vous montre un groupe d’images issues d’une vidéo et je cache certaines d’entre elles. 
+
+0:51:24.570,0:51:29.360
+Vous savez prédire la moitié manquante de la moitié droite. En ce moment vous ne voyez pas mon côté droit
+
+0:51:29.360,0:51:30.890
+mais même si vous n’avez jamais vu mon côté gauche,
+
+0:51:30.890,0:51:35.180
+vous pourriez plus ou moins prédire à quoi je ressemble de l’autre côté. La plupart des gens sont plus ou moins symétriques.
+
+0:51:39.480,0:51:41.480
+Sauf les personnages effrayants d’Hollywood.
+
+0:51:44.420,0:51:51.520
+Un cas où l’apprentissage auto-supervisé a incroyablement réussi et qui s’est produit au cours de la dernière année et demie est 
+
+0:51:53.900,0:51:55.900
+lié au texte.
+
+0:51:57.650,0:52:02.740
+Ainsi, les textes utilisent un type particulier d’apprentissage autosupervisé appelé auto-encodeur débruiteur. Vous prenez un morceau de texte.
+
+0:52:04.460,0:52:08.889
+Vous supprimez certains des mots généralement 10, 15, 20% des mots.
+
+0:52:10.220,0:52:13.839
+Vous remplacez les jetons correspondant à ces mots par un vide.
+
+0:52:14.599,0:52:17.798
+Puis vous entraîner un réseau neuronal géant pour prédire les mots qui manquent.
+
+0:52:19.460,0:52:25.029
+Le système ne peut pas faire une prédiction exacte des mots qui manquent.
+
+0:52:25.030,0:52:29.679
+Vous l’entraîner donc comme un classificateur en produisant un grand softmax pour chaque mot
+
+0:52:30.170,0:52:33.339
+qui correspond à une distribution de probabilité sur les mots.
+
+0:52:38.930,0:52:41.500
+Une fois que vous avez entraîné ce système,
+
+0:52:42.319,0:52:48.129
+vous coupez la dernière couche et vous utilisez l’avant-dernière couche comme représentation de tout texte que vous donnez au modèle.
+
+0:52:49.730,0:52:56.109
+Il y a une architecture particulière fonctionnant bien, mais je ne la détaille pas maintenant. 
+
+0:52:57.859,0:53:01.808
+Il s’agit des Transformers dont nous avons parlé un peu la semaine dernière [voir cours de la semaine 6].
+
+0:53:02.839,0:53:05.949
+Cette tâche très simple de remplir les blancs,
+
+0:53:06.140,0:53:09.670
+prendre une phrase, supprimer certains des mots, entraîner le système pour prédire les mots qui manquent
+
+0:53:13.430,0:53:15.430
+fonctionne étonnamment bien !
+
+0:53:15.450,0:53:23.500
+Les systèmes de NLP qui ont les meilleures performances sur les repères sont essentiellement pré-entraînés en utilisant une méthode comme celle-ci.
+
+0:53:23.839,0:53:26.409
+Ce qui est cool concernant ce sujet est que
+
+0:53:26.410,0:53:31.030
+vous avez autant de texte que vous voulez sur le web pour pré-entraîner ces systèmes. Vous n’avez pas besoin d’étiqueter quoi que ce soit.
+
+0:53:31.030,0:53:36.280
+C’est est très bon marché de ce point de vue. C’est cependant cher en termes de calcul car ces réseaux sont énormes
+
+0:53:36.280,0:53:38.280
+mais ils fonctionnent vraiment bien.
+
+0:53:39.440,0:53:43.030
+Donc, immédiatement les gens ont essayé de reproduire ce succès
+
+0:53:44.420,0:53:48.280
+Pour une application aux images.  Prendre une image,
+
+0:53:49.609,0:53:53.409
+bloquer quelques morceaux de celle-ci, puis entraîner des
+
+0:53:54.710,0:53:59.480
+ConvNets ou autre afin de prédire les bouts manquants dans l’image.
+
+0:54:00.990,0:54:03.679
+Les résultats ont été extrêmement décevants.
+
+0:54:05.430,0:54:07.430
+Cela ne fonctionne pas vraiment.
+
+0:54:07.829,0:54:13.879
+Je veux dire qu’il fonctionne bien dans le sens que les images sont complétées avec des sortes de choses qui ont du sens.
+
+0:54:13.920,0:54:15.920
+Mais si vous utilisez la représentation interne,
+
+0:54:16.440,0:54:18.440
+apprendre de cette façon, 
+
+0:54:18.690,0:54:25.369
+en tant qu’entrée dans un système de vision par ordinateur, vous ne pouvez pas battre un système de vision par ordinateur qui a été pré-entraîné supervisé sur le site ImageNet
+
+0:54:26.369,0:54:33.319
+[Note n’engageant que le traducteur : depuis l’enregistrement de ce cours, quelques progrès ont été fait dans ce domaine]
+
+0:54:34.109,0:54:36.348
+Donc pourquoi cela fonctionne-t-il pour le NLP ?
+
+0:54:36.349,0:54:39.979
+Et que cela ne fonctionne pas pour les images ? La différence est que NLP est discret,
+
+0:54:41.430,0:54:44.839
+alors que les images sont continues. Les gens essaient aussi de le faire pour la vidéo.
+
+0:54:44.839,0:54:49.759
+Donc, la même idée que BERT. Remplacer les mots par des images vidéo.
+
+0:54:50.369,0:54:52.369
+Donc donner une grande vidéo à un
+
+0:54:53.190,0:54:55.190
+système semblable à un transformer ou quelque chose de similaire.
+
+0:54:56.550,0:54:59.149
+Retirez certaines images ou des blocs d’images, puis entraînez le système
+
+0:55:00.060,0:55:02.060
+à prédire les images manquantes.
+
+0:55:02.400,0:55:04.670
+Et les caractéristiques que vous obtenez ne sont pas si grandes.
+
+0:55:07.950,0:55:15.619
+Donc, la différence est que cela semble fonctionner dans le monde discret, mais pas fonctionner dans le monde continu.
+
+0:55:19.770,0:55:27.439
+La raison est que dans le monde discret, nous savons comment représenter l’incertitude par un grand vecteur softmax.
+
+0:55:28.230,0:55:30.230
+Dans les espaces continus, nous ne savons pas.
+
+0:55:31.890,0:55:36.079
+Donc, si je veux entraîner un système pour faire de la prédiction de vidéo, 
+
+0:55:38.160,0:55:43.069
+je ne sais pas comment représenter une distribution de probabilité sur plusieurs images vidéo.
+
+0:55:49.930,0:55:52.569
+Voici une autre raison pour laquelle nous pourrions vouloir
+
+0:55:54.109,0:55:58.808
+utiliser l’apprentissage autosupervisé et faire face à l’incertitude. Encore une fois, c’est ce sur quoi Alfredo travaille.
+
+0:56:00.589,0:56:01.760
+[inaudible]
+
+0:56:01.760,0:56:03.440
+C’est le fait que
+
+0:56:03.440,0:56:08.589
+nous aimerions que nos machines soient en mesure de raisonner sur le monde, de prédire ce qui va se passer.
+
+0:56:08.589,0:56:10.589
+Je vous ai dit un exemple où
+
+0:56:11.089,0:56:13.568
+pour être en mesure de construire une machine qui conduit une voiture ,
+
+0:56:13.670,0:56:16.960
+c’est probablement une bonne idée d’être en mesure de prédire ce que les voitures autour de vous vont faire.
+
+0:56:17.839,0:56:19.609
+Être capable de prédire
+
+0:56:19.609,0:56:21.729
+ce que votre voiture va faire. 
+
+0:56:23.049,0:56:23.470
+Si vous conduisez
+
+0:56:23.470,0:56:25.470
+près d’une falaise et vous tournez le volant vers la droite,
+
+0:56:25.609,0:56:29.348
+vous voulez prédire à l’avance que votre voiture va tomber de la ravin.    
+
+0:56:29.720,0:56:31.720
+Si vous pouvez prédire ça, vous n’allez pas le faire.
+
+0:56:32.390,0:56:35.260
+Ok, donc si vous avez un bon modèle prédictif du monde
+
+0:56:35.779,0:56:40.209
+le système prédira le prochain état du monde en fonction de l’état actuel du monde et de l’action que vous prendrez.
+
+0:56:42.260,0:56:45.189
+Alors vous pouvez agir intelligemment.
+
+0:56:46.940,0:56:48.940
+Ok.
+
+0:56:49.700,0:56:51.700
+Vous avez besoin d’autres composants pour agir intelligemment
+
+0:56:53.690,0:56:55.690
+mais j’y reviendrai.
+
+0:56:56.450,0:57:00.490
+Mais encore une fois, cette capacité à prédire est l’essence de l’intelligence.
+
+0:57:01.010,0:57:02.319
+Le fait que
+
+0:57:02.319,0:57:08.919
+certains animaux sont intelligents, c’est parce qu’ils ont un bien meilleur modèle du monde et, par conséquent, sont plus aptes
+
+0:57:09.890,0:57:13.029
+à agir sur ce monde pour obtenir le résultat qu’ils veulent.
+
+0:57:16.339,0:57:21.489
+Donc, le problème avec le monde est que le monde n’est pas déterministe ou peut-être qu’il est déterministe
+
+0:57:21.490,0:57:27.279
+mais nous ne pouvons pas prédire exactement ce qui va se passer. Donc, le fait qu’il soit déterministe ou non n’est pas pertinent.
+
+0:57:29.059,0:57:32.649
+Ou bien les ordinateurs ont une capacité limitée et nous ne pouvons pas
+
+0:57:33.470,0:57:35.859
+exactement prédire ce qui va se passer.
+
+0:57:36.470,0:57:40.750
+Nous devons donc être en mesure d’entraîner notre système, d’entraîner nos cerveaux, d’entraîner notre
+
+0:57:41.059,0:57:44.048
+systèmes d’IA à prévoir en présence d’incertitudes. 
+
+0:57:44.900,0:57:46.900
+Et c’est le
+
+0:57:47.630,0:57:52.329
+problème le plus difficile que nous devons résoudre aujourd’hui pour faire des progrès significatifs en IA.
+
+0:57:52.609,0:57:55.838
+Comment entraîner le système à faire des prédictions dimensionnelles élevées
+
+0:57:56.420,0:57:58.480
+dans l’incertitude et faire face à cette incertitude.
+
+0:58:00.990,0:58:08.240
+Comme je l’ai dit avant, les modèles probabilistes sont en gros sans espoir.
+
+0:58:14.340,0:58:16.969
+Ok, prenons donc un exemple avec la prédiction vidéo.
+
+0:58:18.420,0:58:23.749
+Voici quatre images. Quelle est la continuité de ces images ? Il est donc difficile de voir que la petite fille est sur le point de
+
+0:58:25.350,0:58:27.650
+souffler sur son gâteau d’anniversaire.
+
+0:58:29.490,0:58:31.050
+Et si vous entraînez un
+
+0:58:31.050,0:58:37.190
+réseau neuronal avec les moindres carrés pour faire des prédictions, via un entraînement sur des milliers de vidéos de ce type, si ce n’est des millions,
+
+0:58:37.410,0:58:39.410
+c’est le genre de prédiction que vous obtenez.
+
+0:58:39.930,0:58:43.369
+Très flou. Pourquoi ? Le système ne peut pas prédire exactement ce qui va se passer.
+
+0:58:43.370,0:58:48.170
+Il prédit la moyenne sur tous les futurs possibles, qui est la meilleure façon de minimiser l’erreur des moindres carrés.
+
+0:58:49.050,0:58:50.850
+Ok. Et si
+
+0:58:50.850,0:58:52.850
+vous voulez une sorte de version du modèle de cela,
+
+0:58:53.640,0:58:55.910
+disons que l’ensemble de votre jeu d’entraînement se compose de
+
+0:58:56.490,0:59:03.290
+quelqu’un mettant un stylo sur la table et le laisse tomber. La personne met toujours le stylo exactement au même endroit,
+
+0:59:04.110,0:59:05.790
+de la même façon.
+
+0:59:05.790,0:59:10.459
+À chaque fois que vous faites l’expérience le stylo tombe dans une direction différente.
+
+0:59:11.670,0:59:14.690
+En gros x est le même pour chaque échantillon d’entraînement,
+
+0:59:14.850,0:59:19.459
+mais y est différent car le stylo peut tomber dans n’importe quelle direction probablement avec une distribution uniforme.
+
+0:59:20.460,0:59:22.460
+Donc si vous entraînez un réseau neuronal à
+
+0:59:22.800,0:59:28.039
+prédire les moindres carrés, vous obtiendrez la moyenne de toutes les prédictions possibles, qui est un stylo transparent.
+
+0:59:29.520,0:59:32.749
+Tout autour du cercle. Ce qui n’est pas une bonne prédiction.
+
+0:59:35.430,0:59:37.430
+C’est pourquoi vous avez besoin de modèles à variable latente.
+
+0:59:38.640,0:59:42.109
+Ok, donc si vous faites une prédiction
+
+0:59:44.130,0:59:48.709
+avec un système mais vous avez des variables latentes qui indiquent ce que vous ne savez pas sur le monde.
+
+0:59:49.410,0:59:50.610
+Donc
+
+0:59:50.610,0:59:52.700
+x est ce que vous savez sur le monde, c’est
+
+0:59:53.910,0:59:56.420
+segment initial de la vidéo de quelqu’un mettant un stylo.
+
+0:59:59.250,1:00:02.360
+Quand la personne lève le doigt, le stylo tombe, mais vous ne savez pas dans quelle direction.
+
+1:00:03.390,1:00:05.900
+Donc ce que vous voulez, c’est que le système vous dise est…
+
+1:00:06.450,1:00:09.859
+le prédicteur ici qui va de x à h, h devrait être une
+
+1:00:10.050,1:00:15.820
+représentation qui vous dit que le stylo va être sur la table, mais je ne peux pas vous dire dans quelle direction. 
+
+1:00:16.369,1:00:20.829
+Puis z aura la variable complémentaire : voici la direction dans laquelle le stylo est effectivement tombé.
+
+1:00:21.619,1:00:26.559
+Puis la combinaison de ces deux éléments d’information, les choses que vous pouvez extraire de l’observation et les trucs que vous ne pouvez pas,
+
+1:00:26.560,1:00:28.840
+vous donne la prédiction y̅,
+
+1:00:29.990,1:00:33.250
+qui, espérons-le, est proche de ce qui se passe réellement.
+
+1:00:35.570,1:00:38.320
+Ok, donc la façon dont vous utilisez
+
+1:00:40.310,1:00:42.969
+quelque chose comme ça. Vous ne l’utilisez pas
+
+1:00:45.050,1:00:48.849
+si vous voulez l’utiliser pour évaluer un scénario particulier.
+
+1:00:49.910,1:00:52.599
+Vous lui donnez x, vous lui donnez y.
+
+1:00:53.330,1:00:58.629
+Ensuite, vous lui demandez : quelle est la valeur de la variable z qui minimise l’erreur de prédiction dans mon modèle ?
+
+1:01:01.700,1:01:08.980
+Ensuite, l’erreur de prédiction qui en résulte est l’énergie et c’est de cette façon que votre modèle estime le taux de compatibilité entre x et y. 
+
+1:01:14.119,1:01:19.669
+Si vous voulez prédire y, ce que vous avez à faire, c’est observer x et puis vous
+
+1:01:20.339,1:01:24.439
+imaginez une valeur de y dans un certain domaine et cela produit le y̅.
+
+1:01:25.680,1:01:30.049
+Puis imaginez une autre valeur de z et qui produira un autre y̅.
+
+1:01:30.779,1:01:35.779
+Vous pouvez produire tout un ensemble de y̅, en tirant une plusieurs valeurs de z dans leur ensemble
+
+1:01:36.390,1:01:38.390
+ou dans la distribution.
+
+1:01:39.749,1:01:41.749
+Oui ? [Question d’un étudiant]
+
+1:01:52.740,1:01:58.429
+Si ce que vous prévoyez sont les images futures et ce que vous observez est l’image passée ou actuelle, 
+
+1:01:59.759,1:02:03.439
+comme augmenter les images passés que vous regardez ? [Etudiant : oui]
+
+1:02:04.259,1:02:08.029
+Un peu, mais après un certain temps les choses vont se produire et cela n’en dépendra plus. 
+
+1:02:08.029,1:02:11.899
+Je veux dire que l’information sur ce qui va se passer à l’avenir n’est pas vraiment présent
+
+1:02:13.019,1:02:16.279
+dans les images passés. [Question d’un étudiant]
+
+1:02:31.499,1:02:33.559
+Dans ce cas particulier, les
+
+1:02:35.009,1:02:41.959
+variables sont nécessaires pour faire une bonne prédiction, mais l’information n’est pas présente dans x.
+
+1:02:43.499,1:02:45.499
+Ok, donc la question était
+
+1:02:46.200,1:02:51.019
+quel est le rôle de z ? Comme, vous savez qu’il ne met pas en œuvre une contrainte entre x et y ou autre chose.
+
+1:02:51.599,1:02:55.488
+Dans cet exemple particulier ici que j’ai montré la variable latente…
+
+1:02:55.670,1:02:59.089
+J’ai montré plusieurs exemples. Un exemple que j’ai montré est la reconnaissance de caractère.
+
+1:02:59.339,1:03:04.909
+Si vous savez où les caractères sont alors la tâche de reconnaître les caractères est plus facile et donc en faisant l’inférence sur l’endroit où
+
+1:03:04.910,1:03:06.599
+les caractères sont
+
+1:03:06.599,1:03:12.649
+vous savez comment aider votre système. Vous construisez le système de telle sorte qu’il puisse utiliser cela.
+
+1:03:13.619,1:03:15.798
+Dans ce cas particulier ici, c’est différent. 
+
+1:03:15.799,1:03:20.179
+Ici, le rôle de la variable latente est de paramétriser essentiellement l’ensemble des sorties possibles qui peuvent se produire.
+
+1:03:21.960,1:03:24.439
+En fin de compte ce que vous voulez c’est z que contienne
+
+1:03:26.500,1:03:31.109
+les informations sur y qui ne sont pas présentes dans x.
+
+1:03:32.440,1:03:34.270
+Ok, donc
+
+1:03:34.270,1:03:37.979
+les informations sur où je vais aller ensuite. Est-ce que je vais me déplacer à gauche ou à droite ?
+
+1:03:39.099,1:03:44.549
+Ce n’est pas présent dans tout ce que vous pouvez observer en ce moment. C’est à l’intérieur de mon cerveau que
+
+1:03:45.220,1:03:47.220
+vous pouvez le dire. [Remarque d’un étudiant]
+
+1:03:48.940,1:03:50.940
+Oui. 
+
+1:03:52.180,1:03:55.980
+Ici, je ne suppose rien d’autre que vous savez
+
+1:03:56.740,1:03:59.369
+Pred(x) est un grand réseau neuronal et 
+
+1:04:00.400,1:04:02.400
+Dec(z,h) est un grand réseau neuronal.
+
+1:04:18.120,1:04:20.120
+Ok.
+
+1:04:22.920,1:04:24.570
+Ici
+
+1:04:24.570,1:04:27.559
+c’est une sorte d’exemple d’une visualisation d’un
+
+1:04:28.350,1:04:30.090
+paysage énergétique,
+
+1:04:30.090,1:04:34.279
+où nous avons entraîné un réseau neuronal pour calculer une fonction énergie.
+
+1:04:35.430,1:04:37.790
+Ici, ce n’est pas un réseau neuronal. C’est une chose très simple en fait.
+
+1:04:39.870,1:04:45.679
+Pour capturer la dépendance entre deux variables x et y, et les points de données sont le long de cette petite spirale ici.
+
+1:04:45.680,1:04:51.860
+Donc les points de données sont une sorte d’échantillon uniformément le long de cette spirale et puis nous entraînons un système pour donner peu d’énergie à
+
+1:04:52.800,1:04:55.519
+ces points et plus d’énergie à tout le reste.
+
+1:05:02.730,1:05:04.730
+Maintenant, ces deux formes. 
+
+1:05:05.520,1:05:13.100
+C’est une sorte de conditionnel, mais vous pourriez appeler ça modèle conditionnel à base d’énergie, où il y a deux ensembles de variables x et y.
+
+1:05:14.310,1:05:21.979
+Vous essayez de prédire y à partir de x. Mais il y a aussi une autre forme de modèle basé sur l’énergie, qui sont inconditionnels. Il n’y a qu’un y, pas de x !
+
+1:05:22.620,1:05:29.689
+Ok, donc vous essayez de prédire les dépendances mutuelles entre les différentes composantes de y, la distribution sur y si vous voulez.
+
+1:05:31.290,1:05:38.929
+Mais il n’y a pas de x ! Ok donc c’est quelque chose que vous ne voulez pas utiliser si vous voulez, faire de la génération d’image inconditionnellement.
+
+1:05:42.900,1:05:44.900
+Ou vous voulez juste
+
+1:05:45.180,1:05:48.169
+modéliser les dépendances mutuelles entre les choses, mais vous ne savez pas qui,
+
+1:05:48.720,1:05:52.970
+vous ne savez pas à tout moment si vous allez être en mesure d’observer y1 ou y2 ou aucun d’entre eux.
+
+1:05:55.920,1:05:57.920
+Le calcul est le même vraiment.
+
+1:06:05.869,1:06:09.608
+Comment allons-nous entraîner ces modèles à base d’énergie ? C’est vraiment là que les choses deviennent intéressantes.
+
+1:06:11.510,1:06:13.510
+C’est la question de l’entraînement.
+
+1:06:13.550,1:06:17.679
+Donc, l’entraînement devrait faire quelque chose comme l’animation au sommet ici.
+
+1:06:17.680,1:06:23.889
+Cela devrait façonner la fonction énergie car notre machine calcule la fonction énergie de x et y.
+
+1:06:24.140,1:06:29.440
+Cela devrait façonner la fonction énergie de telle sorte que les points de données ont moins d’énergie que tout le reste.
+
+1:06:31.160,1:06:33.700
+Car c’est comme ça que l’inférence va fonctionner.
+
+1:06:36.170,1:06:42.490
+Si la valeur correcte de y a moins d’énergie que les valeurs incorrectes de y, alors notre algorithme d’inférence qui trouve la
+
+1:06:42.680,1:06:45.129
+valeur de y qui produit la plus faible énergie va fonctionner.
+
+1:06:45.890,1:06:49.210
+Ok, donc nous avons besoin de façonner la fonction énergie de sorte qu’il donne une faible énergie aux
+
+1:06:50.060,1:06:54.039
+bons y pour un x donné et une grande énergie aux mauvais y pour un x donné. [Question d’un étudiant].
+
+1:07:02.630,1:07:07.150
+Cela va de n’importe quel domaine que vous voulez à l’échelle. [L’étudiant poursuit]
+
+1:07:27.140,1:07:30.519
+Pas nécessairement. Ce modèle est en fait un modèle à variable latente.
+
+1:07:32.839,1:07:38.679
+En fait, la plupart d’entre vous sont probablement très familiers avec le modèle qui est utilisé ici. Il s’agit des k-means.
+
+1:07:41.509,1:07:44.079
+Alors, comment est-ce produit ?
+
+1:07:47.539,1:07:54.879
+Ok, laissez-moi répondre à ça un peu plus art. Mais c’est la variété d’énergie des k-moyens,
+
+1:07:57.769,1:07:59.769
+qui est un modèle à variable latente.
+
+1:08:02.119,1:08:06.068
+Gardons la variable latente de côté pendant une minute. 
+
+1:08:06.069,1:08:11.199
+Pensez à cela comme si vous avez une énergie F(x,y) et le fait qu’il peut y avoir
+
+1:08:12.710,1:08:16.089
+une variable latente sous-jacente pour l’instant est un peu hors de propos.
+
+1:08:17.420,1:08:23.199
+Ok, il y a deux classes de méthodes pour entraîner des modèles à base d’énergie. Encore une fois les méthodes probabilistes sont des
+
+1:08:24.139,1:08:26.139
+des cas spéciaux.
+
+1:08:26.960,1:08:30.879
+Une classe est appelée méthodes contrastives. Cette idée est très naturelle.
+
+1:08:32.239,1:08:36.579
+Prenez votre échantillon d’entraînement x[i], y[i] et
+
+1:08:37.520,1:08:40.929
+modifier les paramètres de la fonction énergie de sorte que son énergie diminue. Ok.
+
+1:08:42.589,1:08:44.589
+Assez facile.
+
+1:08:45.109,1:08:46.819
+Inversement,
+
+1:08:46.819,1:08:52.479
+prenez d’autres points en dehors de la variété des données. Alors ayez un processus par lequel vous choisissez
+
+1:08:53.569,1:08:58.028
+pour un x donné, vous choisissez un mauvais y et puis pousser ce gars vers le haut.
+
+1:08:59.839,1:09:03.999
+Ok, si vous continuez à faire cela avec la fonction de perte qui prend en compte
+
+1:09:04.790,1:09:06.999
+ces différentes énergies
+
+1:09:08.000,1:09:11.379
+alors la fonction énergie va prendre une forme telle que le
+
+1:09:12.109,1:09:14.528
+y correct aura moins d’énergie que les mauvais y.
+
+1:09:15.350,1:09:19.089
+Ok, continuez à pousser vers le bas sur les bonnes valeurs de y. Continuer à pousser vers le haut sur les mauvaises valeurs de y.
+
+1:09:22.279,1:09:28.988
+Donc, ça s’appelle méthodes contrastives et elles diffèrent toutes par la façon dont vous choisissez les y que vous poussez vers le haut.
+
+1:09:30.859,1:09:33.609
+Elles diffèrent toutes par la fonction de perte que vous utilisez pour
+
+1:09:35.049,1:09:37.439
+faire cela en poussant vers le haut et en poussant vers le bas.
+
+1:09:38.859,1:09:43.408
+Il y a une deuxième catégorie de méthodes et je les appelle méthodes architecturales.
+
+1:09:45.279,1:09:52.589
+Dans ce cas, vous construisez la fonction énergie F(x,y) de sorte que le volume des régions à faible consommation d’énergie est limité ou
+
+1:09:52.900,1:09:55.109
+est minimisé par la régularisation.
+
+1:09:56.139,1:09:58.139
+Donc, vous construisez un modèle de telle manière que
+
+1:09:58.659,1:10:02.459
+tout ce que vous poussez vers le bas sur l’énergie des points de données
+
+1:10:03.940,1:10:05.469
+le reste.
+
+1:10:05.469,1:10:09.448
+Augmente plus ou moins automatiquement car le volume de choses qui peuvent prendre une faible énergie est limité
+
+1:10:10.150,1:10:12.150
+ou minimisé
+
+1:10:12.190,1:10:14.190
+grâce à une certaine régularisation.
+
+1:10:14.619,1:10:18.058
+Ok. Ce sont des concepts très généraux. 
+
+1:10:19.570,1:10:21.570
+Oui ? [Question d’un étudiant]
+
+1:10:27.159,1:10:29.999
+C’est un ensemble de techniques, mais il y en a beaucoup. [L’étudiant poursuit].
+
+1:10:38.139,1:10:40.030
+Il y a un ensemble de méthodes,
+
+1:10:40.030,1:10:41.110
+Comme le « score matching »
+
+1:10:41.110,1:10:44.190
+par exemple, qui dit que le gradient de l’énergie
+
+1:10:44.500,1:10:48.959
+autour des échantillons doit être nul et la dérivée seconde doit être aussi grande que possible,
+
+1:10:48.960,1:10:52.649
+la trace de la Hessienne devrait être grande. Et donc en gros vous dites…
+
+1:10:53.230,1:10:57.779
+vous faites de tous les points de données un minimum de l’énergie 
+
+1:10:58.599,1:11:05.609
+en s’assurant que l’énergie se recroqueville autour d’un échantillon d’entraînement. C’est très très difficile à appliquer dans la pratique car vous devez calculer le
+
+1:11:06.340,1:11:10.469
+gradient en respectant le gaspillage de la trace de la Hessienne de la fonction énergie en respectant les entrées.
+
+1:11:10.469,1:11:12.749
+C’est un enfer complet.  [Question d‘un étudiant]
+
+1:11:16.090,1:11:20.429
+Pour les modèles simples PyTorch peut le faire. Comme pour les modèles linéaires.
+
+1:11:22.329,1:11:25.859
+Mais c’est l’enfer. Je resterais loin de ça.
+
+1:11:28.659,1:11:30.519
+Ok.
+
+1:11:30.519,1:11:32.519
+Donc
+
+1:11:32.889,1:11:35.189
+il y a un certain nombre de stratégies différentes ici.
+
+1:11:35.190,1:11:36.119
+Ici sept stratégies
+
+1:11:36.119,1:11:38.429
+mais je peux les réorganiser en deux catégories :
+
+1:11:38.920,1:11:44.009
+les méthodes contrastives et des méthodes architecturales et il y a en quelque sorte trois sous-catégories
+
+1:11:44.010,1:11:47.070
+pour les contrastives et quatre sous-catégories pour les architecturales.
+
+1:11:47.860,1:11:53.409
+Il y a ici quelques noms d’algorithmes ici que vous pourriez connaître et d’autres non, ce qui est normal.
+
+1:11:54.320,1:11:56.799
+Je vais essayer de développer certains d’entre eux.
+
+1:12:01.310,1:12:03.310
+Maintenant, ce que je dois faire [Quelqu’un parle. Je ne sais pas si c’est une question]
+
+1:12:11.719,1:12:13.719
+C’est ce qu’on appelle le « score matching ». 
+
+1:12:20.869,1:12:22.869
+Ok, attendez-moi une seconde. [Problème technique pour les 40 prochaines secondes]
+
+1:13:01.250,1:13:06.879
+Donc C1, sous-catégorie contrastive 1. Elle abaisse l’énergie des points de données et augmente partout ailleurs.
+
+1:13:08.810,1:13:11.019
+C’est ce que le maximum de vraisemblance fait.
+
+1:13:11.630,1:13:17.920
+Le maximum de vraisemblance abaisse l’énergie des points de données à moins l’infini et augmente l’énergie d’autres points à plus l’infini.
+
+1:13:18.110,1:13:21.580
+C’est le problème dont nous parlions tout à l’heure.
+
+1:13:23.929,1:13:25.929
+Voici ce qui se passe.
+
+1:13:26.630,1:13:28.630
+Donc, vous avez
+
+1:13:29.000,1:13:32.290
+la distribution de Gibbs-Boltzmann qui donne la probabilité de
+
+1:13:33.020,1:13:34.699
+y sachant x
+
+1:13:34.699,1:13:36.699
+pour un point de données particulier y[i]
+
+1:13:37.250,1:13:42.069
+x[i]. Cela vous donne la probabilité que votre modèle donne à cette valeur particulière de y[i] pour un x[i] donné.
+
+1:13:43.010,1:13:49.179
+Exponentielle de -βE divisée par exponentielle de -βE, intégrée sur tous les y.
+
+1:13:49.850,1:13:54.609
+Donc si vous voulez maximiser… disons que vous avez un tas de points de données et
+
+1: 13:55.000,1:14:02.080
+Vous voulez maximiser, donc ici ne pas écrire x car il n’a pas d’importance et vous
+
+1:14:02.780,1:14:06.850
+vous voulez maximiser la probabilité que votre modèle donne à cette valeur particulière de y.
+
+1:14:08.630,1:14:10.630
+Vous voulez que
+
+1:14:12.469,1:14:19.089
+l’énergie de ce y soit petite, ce qui signifie que vous voulez que exp(-βE) soit grande.
+
+1:14:20.719,1:14:24.698
+Et vous voulez que les choses en bas soit aussi petit que possible. 
+
+1:14:26.449,1:14:32.829
+Donc, au lieu de maximiser P de Y, nous allons minimiser moins log P de Y. Ok. Donc moins log P de Y…
+
+1:14:33.739,1:14:38.529
+Si je prends le log de ce ratio, je vais obtenir la différence de ces deux termes.
+
+1:14:39.500,1:14:41.500
+Le log de la différence, vous savez, la
+
+1:14:41.880,1:14:43.880
+différence des logs de ces deux termes.
+
+1:14:44.050,1:14:46.290
+Le log du rapport est la différence des log. 
+
+1:14:46.389,1:14:53.999
+Donc, j’obtiens log exp(-βE(y)), et puis je suppose que j’ai -log 
+
+1:14:56.139,1:14:58.409
+intégrale sur y, exp(-βE(y)).
+
+1:15:02.170,1:15:04.710
+Je prends le
+
+1:15:05.530,1:15:08.759
+négatif car je veux minimiser. Ok, donc
+
+1:15:09.400,1:15:14.370
+probabilité du log négatif est ce que je veux minimiser et j’obtiens la fonction de perte ici en bas.
+
+1:15:14.370,1:15:19.079
+J’ai tout divisé par β qui ne fait aucune différence en ce qui concerne le minimum
+
+1:15:19.870,1:15:25.949
+Ok, donc pour passer de la formule en haut à la formule en bas, vous prenez moins log de la formule du haut et vous divisez par β.
+
+1:15:28.389,1:15:33.029
+Donc maintenant, cela nous donne une fonction de perte et cette fonction de perte où nous minimisons
+
+1:15:33.310,1:15:36.719
+dit : mettre l’énergie du point de données y aussi bas que possible
+
+1:15:37.300,1:15:39.300
+énergie de y doit être petit.
+
+1:15:40.960,1:15:48.449
+Et mettre le deuxième terme aussi petit que possible ce qui signifie mettre les énergies qui sont à l’intérieur de cette exponentielle moins,
+
+1:15:49.030,1:15:51.030
+aussi grandes que possibles.
+
+1:15:54.400,1:15:59.370
+Donc, le deuxième terme va augmenter l’énergie de chaque point, y compris les point de données.
+
+1:16:02.889,1:16:07.769
+Maintenant, si je calcule le gradient de cette fonction objectif…  Donc c’est l’approche probabiliste, d’accord. Le maximum de vraisemblance.
+
+1:16:08.830,1:16:13.979
+Si je calcule le gradient de cette fonction objectif, j’obtienne le gradient de l’énergie au point de données y.
+
+1:16:15.010,1:16:17.010
+Ok.
+
+1:16:19.300,1:16:21.810
+moins cette formule ici qui est la valeur attendue
+
+1:16:23.889,1:16:27.899
+sur y de la probabilité que mon modèle donne à y qui est donné par la
+
+1:16:28.870,1:16:30.870
+distribution de Gibbs-Boltzmann et
+
+1:16:31.360,1:16:36.029
+qui est utilisée comme un coefficient pour donner un poids au gradient de la fonction énergie à cet endroit.
+
+1:16:36.639,1:16:41.909
+ Donc, cette intégrale ici, le deuxième terme, est essentiellement une valeur attendue du gradient.
+
+1:16:43.420,1:16:45.779
+Je calcule le gradient pour la fonction énergie à chaque point.
+
+1:16:46.659,1:16:51.659
+ Je donne un poids à chaque point par la probabilité que le modèle donne à ce y particulier et je calcule
+
+1:16:52.600,1:16:58.439
+cette somme pondérée. Si y est discret, c’est une somme discrète. Si y est continu, c’est une intégrale. 
+
+1:17:04.120,1:17:07.979
+Donc, le premier terme… Si je l’utilise dans un algorithme
+
+1:17:08.770,1:17:10.480
+de gradient stochastique,
+
+1:17:10.480,1:17:14.850
+le premier terme va essayer de rendre l’énergie de mon point de données aussi petit que possible et
+
+1:17:15.430,1:17:19.889
+le deuxième va augmenter l’énergie de chaque point, chaque y.
+
+1:17:20.950,1:17:25.800
+Le problème est : est-ce que je peux calculer ça ? Puis-je calculer cette intégrale ? 
+
+1:17:27.340,1:17:32.999
+Un tas considérable de publications dans la modélisation probabiliste ont à voir avec la façon dont vous
+
+1:17:33.730,1:17:36.300
+calculez ceci, estimer ceci, ou approximez ceci.
+
+1:17:37.030,1:17:41.340
+Car cette intégrale dans les cas intéressants est insoluble.
+
+1:17:44.020,1:17:49.410
+Si y est un espace d’images, je ne peux pas calculer une intégrale sur toutes les images possibles.
+
+1:17:50.110,1:17:51.850
+Il n’y a aucun moyen.
+
+1:17:51.850,1:17:55.680
+Sauf si la fonction énergie ou le gradient de la fonction énergie est très très simple.
+
+1:17:56.860,1:18:01.949
+Ok, la plupart du temps ce n’est pas si simple si vous voulez un modèle complexe pour capturer la dépendance du monde.
+
+1:18:01.950,1:18:05.610
+Ce n’est pas si simple. Ça va être un gros réseau neuronal. Donc, cette intégrale va être complètement
+
+1:18:06.280,1:18:08.280
+insoluble.
+
+1:18:11.620,1:18:17.579
+Il y a un peu de salut dans le fait qu’il s’agit d’une valeur attendue. Donc pour calculer une approximation sur une valeur attendue,
+
+1:18:17.950,1:18:21.809
+vous pouvez calculer une moyenne d’un nombre fini d’échantillons. Donc, si j’échantillonne
+
+1:18:23.380,1:18:24.990
+les y de cette distribution,
+
+1:18:24.990,1:18:30.959
+qui est la distribution que mon modèle donne à y, et je calcule la moyenne du gradient sur ces échantillons.
+
+1:18:30.960,1:18:34.680
+J’ai une approximation de cela. Ça s’appelle les méthodes de Monte Carlo.
+
+1:18:36.250,1:18:38.490
+Ok, ça s’appelle une approximation de Monte Carlo.
+
+1:18:39.790,1:18:42.269
+Inventé par les physiciens quand ils essayaient de construire une bombe atomique
+
+1:18:44.770,1:18:46.770
+dans les années 40.
+
+1:18:47.500,1:18:49.500
+Il existe d’autres méthodes basées sur des
+
+1:18:49.840,1:18:52.889
+méthodes de variation donc je ne sais pas vraiment comment calculer P.
+
+1:18:52.890,1:18:58.860
+Je ne peux pas calculer cette intégrale. Mais disons que je remplace P par une autre distribution Q pour laquelle je ne peux pas calculer cette moyenne.
+
+1:18:58.860,1:19:00.860
+Disons gaussienne ou quelque chose comme ça.
+
+1:19:01.240,1:19:07.919
+Puis j’essaie de faire Q aussi près de P que possible. C’est ce qu’on appelle des méthodes de variation. Ok. Vous avez probablement entendu ce terme plusieurs fois.
+
+1:19:09.980,1:19:12.310
+C’est l’idée de base des méthodes de variation. Vous approximez
+
+1:19:12.980,1:19:20.410
+une attente sur une distribution en remplaçant la distribution par quelque chose que vous pouvez réellement calculer. Et vous essayez de rendre cette distribution calculable
+
+1:19:21.050,1:19:23.590
+aussi proche que possible de la distribution réelle,
+
+1:19:24.260,1:19:26.709
+en utilisant certaine mesure de divergence, KL [Kullback-Leibler] divergence.
+
+1:19:30.350,1:19:37.209
+Bien.  Voici les k-means. Ainsi, vous pouvez imaginer les k-means comme un modèle à base d’énergie. Vous pouvez les interpréter
+
+1:19:37.210,1:19:39.210
+en termes de modèle à base d’énergie.
+
+1:19:43.520,1:19:45.939
+Est-ce que tout le monde sait ce que sont que les k-means ou
+
+1:19:47.060,1:19:49.149
+avez-vous oublié ce que c’est ? Ok.
+
+1:19:50.270,1:19:53.260
+Donc k-means est cet algorithme de clustering très simple,
+
+1:19:54.350,1:19:57.039
+où la fonction énergie…  si vous n’avez jamais entendu parler des k-means,
+
+1:19:57.040,1:20:01.060
+c’est une façon de les expliquer. La fonction énergie est écrite en haut ici.
+
+1:20:01.150,1:20:08.300
+E(y,z) est y moins Wz, où W est une matrice et z est un ensemble de vecteurs « one-hot ».
+
+1:20:08.450,1:20:16.179
+C’est-à-dire que z est une variable discrète avec K valeurs possibles et c’est un vecteur bidimensionnel K avec un composant égal à 1 et tous les
+
+1:20:16.180,1:20:23.559
+d’autres valant 0. Ok, donc vous multipliez z par la matrice W. 
+
+1:20:25.790,1:20:29.740
+Avec ce produit, vous obtenez l’une des colonnes de W.
+
+1:20:30.500,1:20:34.630
+Ok, la colonne de W qui est multipliée par le composant de z qui est égal à 1
+
+1:20:34.810,1:20:39.939
+se reproduit et tout le reste est parti. Ce produit
+
+1:20:40.490,1:20:42.470
+sélectionne une colonne à partir de W.
+
+1:20:42.470,1:20:44.470
+Les colonnes de W sont appelées prototypes.
+
+1:20:45.710,1:20:47.890
+Et si je vous donne un y,
+
+1:20:48.440,1:20:53.470
+la façon dont vous faites l’inférence, est de comprendre quel z, lequel des vecteurs possibles K de z,
+
+1:20:54.470,1:20:59.709
+minimise l’erreur de reconstruction, minimise la distance au carrée entre la colonne correspondante de
+
+1:21:00.410,1:21:03.459
+W et le point de données que je regarde.
+
+1:21:04.250,1:21:06.310
+L’énergie est juste la distance au carrée entre les deux.
+
+1:21:08.150,1:21:14.110
+Ok maintenant la fonction énergie que vous voyez ici, représentée dans ce graphique.
+
+1:21:16.850,1:21:18.850
+Oups
+
+1:21:19.350,1:21:21.350
+Ici.
+
+1:21:21.960,1:21:26.629
+Ce que vous voyez ici sont des sortes de « blobs » noirs, correspondant à
+
+1:21:29.340,1:21:32.779
+des puits quadratiques autour de chacun des prototypes de W.
+
+1:21:32.969,1:21:37.459
+Donc, le système ici a été entraîné et remplace les colonnes de W le long
+
+1:21:38.130,1:21:43.969
+de la variété d’échantillons d’entraînement, qui est cette spirale. C’est là que tous les échantillons d’entraînement sont sélectionnés.
+
+1:21:44.909,1:21:50.539
+La façon dont cela est entraîné est très simple. Vous minimisez la moyenne attendue
+
+1:21:51.449,1:21:53.040
+de l’énergie
+
+1:21:53.040,1:21:56.629
+sur un ensemble d’entraînement. Donc, en gros, je vous donne un y,
+
+1:21:58.620,1:22:04.249
+y est un échantillon d’entraînement. Vous trouvez le z qui minimise l’énergie afin que vous trouviez le prototype qui est le plus proche de
+
+1:22:04.860,1:22:07.520
+y, la colonne de W qui est la plus proche de y.
+
+1:22:08.699,1:22:12.859
+Ensuite, vous faites une étape de descente de gradient. Donc, vous déplacez ce vecteur près de y.
+
+1:22:14.040,1:22:16.310
+Plus près de y. Puis vous prenez un autre y.
+
+1:22:18.659,1:22:20.040
+Sélectionnez la
+
+1:22:20.040,1:22:25.069
+colonne de W qui est la plus proche de lui et déplacer cette colonne un peu plus près de y. Puis vous continuez à faire cela.
+
+1:22:25.620,1:22:33.019
+Ce n’est pas exactement l’algorithme k-means. C’est une sorte de forme de gradient stochastique de l’algorithme k-means. Le véritable algorithme k-means fait
+
+1:22:34.560,1:22:36.560
+une sorte 
+
+1:22:36.630,1:22:42.589
+de descente coordonnée si vous voulez. Donc, il passe d’abord par l’ensemble d’entraînement et détermine pour chaque point de données,
+
+1:22:42.840,1:22:44.960
+quelle colonne de W est la plus proche.
+
+1:22:47.190,1:22:49.190
+Puis après que vous avez fait cela, vous
+
+1:22:49.380,1:22:57.080
+calculez chaque point de données, chaque colonne de W, comme la moyenne de tous les points de données auxquels elle est associée et
+
+1:22:57.840,1:23:01.549
+ça va un peu plus vite. Si vous le faites de cette façon par opposition au gradient stochastique.
+
+1:23:04.020,1:23:09.439
+Mais le résultat est le même. En fin de compte, vous minimisez la moyenne de l’énergie sur l’ensemble d’entraînement.
+
+1:23:11.730,1:23:16.850
+Ok, donc c’est un exemple. Il y avait une question au sujet d’une variable latente plus tôt. C’est un exemple d’un modèle variable latent.
+
+1:23:16.860,1:23:19.699
+Très simple où le décodeur est linéaire. Il n’y a pas de
+
+1:23:20.219,1:23:24.049
+dépendance sur x et ce que vous essayez juste de faire est de modéliser la distribution sur y.
+
+1:23:24.090,1:23:28.909
+Ici y est bidimensionnel et vous essayez juste de dire si je sais une valeur de y…
+
+1:23:29.269,1:23:33.079
+Si je sais y1, pouvez-vous me dire quelque chose sur la valeur de y2 ?
+
+1:23:33.209,1:23:35.358
+Et une fois que vous avez cette fonction énergie, vous le pouvez.
+
+1:23:36.479,1:23:39.168
+Je vous donne y1. Vous pouvez prédire quelle devrait être la valeur de y2.
+
+1:23:40.799,1:23:45.979
+Je vous donne un point aléatoire. Vous pouvez me dire quel est le point le plus proche sur la variété de données en recherchant simplement le
+
+1:23:46.709,1:23:48.709
+prototype le plus proche.
+
+1:23:48.809,1:23:50.809
+Ok.
+
+1:23:52.109,1:23:55.789
+Donc k-means que je viens d’expliquer ici appartient à la famille des
+
+1:23:56.969,1:24:01.308
+méthodes architecturales. Ce n’est pas une méthode contrastive comme vous pouvez l’observer.
+
+1:24:02.399,1:24:05.989
+Je n’ai pas augmenté l’énergie de quoi que ce soit. Je diminue juste l’énergie des choses.
+
+1:24:07.499,1:24:11.929
+K-means est construit de telle sorte qu’il n’y a que des points K dans l’espace qui peuvent avoir
+
+1:24:12.179,1:24:14.298
+zéro énergie et tout le reste aura plus d’énergie.
+
+1:24:16.229,1:24:18.378
+Ok, c’est juste conçu de cette façon.
+
+1:24:18.959,1:24:20.959
+Donc, c’est architectural en ce sens.
+
+1:24:21.119,1:24:27.498
+Une fois que j’ai décidé sur K, ai limité le volume d’espace dans y qui peut prendre une énergie basse car il
+
+1:24:27.869,1:24:30.168
+n’y a que des points K qui peuvent avoir zéro énergie.
+
+1:24:32.909,1:24:36.048
+Tout le reste grandit quadratiquement quand je m’éloigne d’eux.
+
+1:24:38.069,1:24:45.919
+Il y a un tas d’autres méthodes. Ce sont mes méthodes préférées, je pense qu’à terme tout le monde va utiliser des méthodes architecturales.
+
+1:24:47.459,1:24:50.628
+Mais en ce moment les choses qui fonctionnent en images
+
+1:24:52.499,1:24:54.499
+sont les contrastives.
+
+1:24:54.899,1:24:58.939
+Ok, donc des méthodes contrastives.
+
+1:25:02.549,1:25:04.549
+J’ai des points de données
+
+1:25:09.299,1:25:14.389
+et actuellement mon modèle calcule une fonction énergie, 
+
+1:25:16.350,1:25:18.350
+qui ressemble à ceci disons.
+
+1:25:19.020,1:25:22.939
+Donc, je dessine les contours des coûts
+
+1:25:24.210,1:25:27.859
+égaux Ok. C’est comme une carte topographique.
+
+1:25:29.820,1:25:33.469
+Donc, évidemment, ce modèle est mauvais car il donne peu d’énergie à ces points ici.
+
+1:25:34.440,1:25:37.730
+Ces points ont une faible énergie et ils ne devraient pas. 
+
+1:25:39.690,1:25:42.500
+Et puis ces points ont une grande énergie et ils ne devraient pas.
+
+1:25:44.699,1:25:46.699
+Qu’est-ce que je dois faire ?
+
+1:25:47.670,1:25:54.469
+Donc, évidemment, si je prends un échantillon d’entraînement ici et
+
+1:25:57.480,1:26:02.000
+je change les paramètres de F(x,y) de sorte que l’énergie baisse, cela va vraiment se déplacer.
+
+1:26:03.090,1:26:06.830
+La fonction d’avoir une sorte de valeurs inférieures dans cette région.
+
+1:26:08.460,1:26:13.669
+Mais ce n’est peut-être pas suffisant car il se pourrait que ma fonction énergie soit paramétrisée de telle manière qu’elle
+
+1:26:13.920,1:26:15.920
+pourrait être zéro partout.
+
+1:26:16.890,1:26:19.129
+Donc, j’ai besoin d’augmenter explicitement sur d’autres endroits.
+
+1:26:22.020,1:26:29.089
+Donc, un bon endroit pour augmenter serait ces endroits rouges ici. Ce sont des endroits pour lesquelles mon modèle donne une énergie faible
+
+1:26:30.360,1:26:32.750
+mais ne devrait pas.
+
+1:26:34.110,1:26:36.739
+Ok, alors disons
+
+1:26:40.080,1:26:42.080
+que c’est mon échantillon d’entraînement maintenant.
+
+1:26:43.500,1:26:46.489
+Ok, le gros point noir ici c’est mon échantillon d’entraînement.
+
+1:26:47.370,1:26:52.849
+Une façon dont je peux entraîner un système contrastif est dire que je vais pousser vers le bas l’énergie de ce point,
+
+1:26:53.790,1:26:55.790
+et je vais
+
+1:26:56.160,1:26:58.160
+perturber ce point un peu.
+
+1:26:59.670,1:27:06.140
+En le corrompant d’une certaine façon en lui ajoutant du bruit. Puis pousser vers le haut l’énergie d’un point qui est à proximité.
+
+1:27:07.560,1:27:09.560
+Ok, et je vais le faire plusieurs fois.
+
+1:27:14.050,1:27:16.050
+Donc, si je fais cela suffisamment de fois,
+
+1:27:17.540,1:27:24.729
+la fonction énergie va se recroqueviller autour de chaque échantillon car je modifie un échantillon et je pousse vers le haut ,
+
+1:27:24.730,1:27:27.220
+je le corromps un peu et je pousse sur l’énergie de cette
+
+1:27:27.740,1:27:29.740
+échantillon corrompu, de cet échantillon contrasté.
+
+1:27:31.280,1:27:35.920
+Donc, finalement, l’énergie va prendre la bonne place. Quelque chose d’un peu plus intelligent.
+
+1:27:36.890,1:27:38.890
+Au lieu de perturber aléatoirement
+
+1:27:39.440,1:27:44.799
+cet échantillon d’entraînement avec une certaine perturbation autour de lui, je vais
+
+1:27:45.470,1:27:47.470
+utiliser la descente de gradient
+
+1:27:48.860,1:27:50.860
+pour de descendre dans la variété de l’énergie.
+
+1:27:54.500,1:27:57.640
+Et puis je vais obtenir ce point et le pousser vers le haut.
+
+1:28:00.230,1:28:04.390
+Ok, c’est plus logique car je vais pour la jugulaire ici [pas compris le sens de la phrase].
+
+1:28:05.900,1:28:13.900
+Le système trouve le point, pour lequel il donne une faible énergie et il pousse vers le haut.
+
+1:28:16.760,1:28:19.989
+D’accord, donc la procédure est :  voici un échantillon d’entraînement.
+
+1:28:23.570,1:28:30.640
+Déplacez-vous vers le bas dans la variété de l’énergie, vous trouverez une valeur de y qui a moins d’énergie que celle d’où vous êtes parti.
+
+1:28:31.880,1:28:35.620
+Et alors poussez cet échantillon contrasté vers le haut.
+
+1:28:36.260,1:28:38.889
+Poussez vers le bas sur l’échantillon d’origine, poussez vers le haut sur ce nouvel échantillon que vous venez d’obtenir.
+
+1:28:39.770,1:28:44.379
+Maintenant, cela pourrait être coûteux et votre fonction énergie peut être compliquée peut avoir des minima locaux.
+
+1:28:45.050,1:28:47.590
+Voici une autre technique. L’autre technique est :
+
+1:28:48.950,1:28:50.950
+commencez à partir du même échantillon d’entraînement et
+
+1:28:51.950,1:28:55.359
+imaginez que cette variété est comme
+
+1:28:57.950,1:28:59.950
+une chaîne de montagnes lisse.
+
+1:29:01.070,1:29:05.049
+Puis donnez un coup au hasard.
+
+1:29:06.530,1:29:08.710
+Considérez-ça comme une bille.
+
+1:29:08.710,1:29:14.919
+Vous allez donner un coup aléatoire dans une direction aléatoire et vous allez simuler cela comme une bille roulant vers le bas de cette
+
+1:29:15.500,1:29:18.879
+variété d’énergie. Donc, disons que je vais le donner un coup dans cette direction.
+
+1:29:19.190,1:29:22.450
+Cela va aller dans cette direction pendant un certain temps et puis descendre dans l’énergie.
+
+1:29:23.330,1:29:25.330
+Après un certain temps, stoppez.
+
+1:29:26.640,1:29:28.890
+Vous obtenez un point à la fin de cette trajectoire. Poussez-le vers le haut.
+
+1:29:30.640,1:29:36.180
+Ok, donc je fais cela de façon très informelle, mais en fait il y a beaucoup de dépendances liées à la façon dont vous faites cela ici.
+
+1:29:36.180,1:29:38.180
+J’explique les principes de fonctionnement de ces méthodes,
+
+1:29:38.890,1:29:40.890
+mais en fait,
+
+1:29:41.710,1:29:45.840
+si vous êtes intéressé par la modélisation probabiliste et ce qui vous intéresse est de faire le maximum de vraisemblance,
+
+1:29:46.900,1:29:48.990
+ce que vous devez faire est
+
+1:29:49.240,1:29:55.439
+de produire des échantillons en fonction de la probabilité que votre modèle donne aux échantillons et il y a des façons d’exécuter ces algorithmes.
+
+1:29:56.020,1:30:00.959
+De telle sorte que le rapport de la probabilité avec laquelle vous allez choisir deux échantillons
+
+1:30:02.230,1:30:07.919
+correspond au rapport de leurs probabilités données par le modèle. C’est tout ce dont vous avez besoin. Et c’est
+
+1:30:10.150,1:30:13.230
+essentiellement fait par, vous savez, les détails de la façon dont vous
+
+1:30:14.080,1:30:17.700
+implémentez ce genre de trajectoires essentiellement. Comme le bruit que vous avez utilisé.
+
+1:30:18.940,1:30:22.140
+Ok, alors laissez-moi vous donner des noms. 
+
+1:30:23.770,1:30:29.850
+Le bruit aléatoire correspond à un algorithme appelé auto-encodeur débruiteur
+
+1:30:34.570,1:30:37.679
+Alfredo va vous en dire plus à ce sujet.
+
+1:30:39.910,1:30:41.999
+La descente de gradient et les versions
+
+1:30:43.690,1:30:45.690
+des coups aléatoires,
+
+1:30:48.490,1:30:50.490
+c’est ce qu’on appelle
+
+1:30:52.660,1:30:55.050
+divergences contrastives. Et leur forme pour…
+
+1:30:58.150,1:31:00.150
+Et si vous faites une
+
+1:31:00.280,1:31:05.610
+recherche à travers l’espace par sorte de perturbation aléatoire, d’essayer de trouver un espace à faible énergie avec le bruit…
+
+1:31:06.610,1:31:08.610
+C’est un cas particulier des
+
+1:31:11.080,1:31:13.080
+méthodes de Monte Carlo.
+
+1:31:15.970,1:31:23.849
+Et si c’est une trajectoire continue ou.., pas une continue, mais si c’est une trajectoire, pouvant être discrète, cela s’appelle méthodes de Monte Carlo par chaînes de Markov. 
+
+1:31:27.550,1:31:29.550
+Ou MCMC [acronyme anglais également utilisé en français].
+
+1:31:32.000,1:31:37.929
+Si c’est dans un espace continu où vous utilisez ce genre de bille roulante avec une méthode de coup aléatoire,
+
+1:31:40.159,1:31:42.549
+c’est ce qu’on appelle « Hamiltonian Monte Carlo » : HMC.
+
+1:31:47.810,1:31:51.039
+Il y a une question ? Non, d’accord.
+
+1:31:57.230,1:32:01.839
+Permettez-moi de parler de l’auto-encodeur débruiteur [souvent abrégé en DAE de l’anglais « denoising auto-encoder »].
+
+1:32:04.340,1:32:07.900
+Alors, qu’est-ce que le DAE ? C’est un type particulier de modèle à base d’énergie
+
+1:32:08.540,1:32:12.040
+où vous commencez avec un y.  Vous avez seulement y.
+
+1:32:17.780,1:32:21.550
+Donc, vous commencez avec un y
+
+1:32:25.520,1:32:27.520
+Vous le corrompez.
+
+1:32:28.550,1:32:30.550
+C’est le
+
+1:32:30.889,1:32:33.879
+petit diagramme que j’ai montré plus tôt. Vous corrompez cet échantillon.
+
+1:32:34.880,1:32:36.020
+Ok.
+
+1:32:36.020,1:32:38.859
+Vous obtenez un autre échantillon que je ne vais pas appeler.
+
+1:32:41.659,1:32:43.639
+Vous passez cela à travers
+
+1:32:43.639,1:32:47.289
+un encodeur qui est un réseau neuronal et un décodeur
+
+1:32:47.960,1:32:50.080
+qui est un autre réseau neuronal.
+
+1:32:51.530,1:32:57.190
+Ensuite, vous comparez la sortie, qui est une reconstruction pour y, avec y
+
+1:33:02.060,1:33:07.629
+C’est juste dans la forme classique, c’est la distance au carrée entre y et y̅.
+
+1:33:10.730,1:33:13.209
+Ok, et vous voyez ici dans le
+
+1:33:13.909,1:33:19.329
+réseau sur la gauche, que c’est juste un réseau neuronal que vous entraînez. La corruption est construite à la main. Ok, ce n’est pas entraîné.
+
+1:33:23.179,1:33:25.179
+Qu’est-ce que ça fait pour vous ?
+
+1:33:27.920,1:33:35.409
+Cela pousse l’énergie des points corrompus. Ok, donc ici l’énergie est…
+
+1:33:38.599,1:33:44.079
+C’est ainsi que vous entraînez le système, mais le système réel n’a pas la corruption. Vous lui donnez un y. 
+
+1:33:44.989,1:33:46.989
+Vous le passez à travers l’encodeur et
+
+1:33:47.719,1:33:49.719
+le décodeur
+
+1:33:50.030,1:33:53.139
+et mesurer l’erreur de reconstruction.
+
+1:33:55.520,1:33:59.049
+Ok, donc c’est exactement le même diagramme
+
+1:34:00.409,1:34:03.279
+sauf pas de corruption. Donc, la corruption est pour l’entraînement.
+
+1:34:06.590,1:34:09.009
+Et c’est ainsi que vous l’utilisez.
+
+1:34:11.599,1:34:17.409
+Qu’est-ce que ça fait pour vous ? Vous avez un espace de y. Vous avez des points de données.
+
+1:34:21.380,1:34:24.339
+Prenez un point y et corrompez-le.
+
+1:34:28.549,1:34:35.528
+Ok, et maintenant vous entraînez ce réseau neuronal, cet encodeur / décodeur pour reconstruire essentiellement ce point corrompu….
+
+1:34:38.689,1:34:45.128
+du point corrompu pour produire le point d’origine, le point d’entraînement d’origine.
+
+1:34:45.129,1:34:49.028
+Donc, la fonction du réseau neuronal va cartographier.
+
+1:34:51.529,1:34:56.169
+Elle va cartographier ce point à ce point, ok.
+
+1:34:58.909,1:35:02.018
+Que cela signifie ? Cela signifie que lorsque vous branchez un
+
+1:35:02.569,1:35:07.028
+vecteur ici y et vous le faites pour chaque échantillon d’entraînement et un grand nombre de corruptions.
+
+1:35:08.059,1:35:13.389
+Ce que cela signifie, c’est que lorsque vous branchez un point y ici sur l’entrée et
+
+1:35:13.939,1:35:16.298
+vous mesurez son énergie qui est une erreur de reconstruction,
+
+1:35:17.569,1:35:24.039
+ce point…  si c’est sur la variété de données, cela va être reconstruit comme lui-même.
+
+1:35:24.829,1:35:27.998
+Par conséquent, son énergie ici, qui est une erreur de reconstruction sera zéro.
+
+1:35:29.419,1:35:34.209
+Ok, si c’est entraîné correctement. Alors que si vous mettez sur l’entrée d’un
+
+1:35:35.629,1:35:40.929
+point qui est en dehors de la variété, il va être reconstruit comme
+
+1:35:43.129,1:35:45.669
+le point le plus proche sur la variété car il a été entraîné pour le faire.
+
+1:35:47.719,1:35:51.068
+Par conséquent, l’erreur de reconstruction ici sera cette distance.
+
+1:35:53.389,1:36:00.728
+Ok, ce que cela signifie, c’est maintenant que l’énergie calculée par cet auto-encodeur débruiteur,
+
+1:36:04.699,1:36:10.688
+se développe quadratiquement dès lors que vous vous éloignez de la multiple de données si la chose est correctement entraîné.
+
+1:36:14.749,1:36:17.079
+C’est donc un exemple de méthodes contrastives.
+
+1:36:18.979,1:36:20.979
+Car vous
+
+1:36:21.409,1:36:25.929
+vous dites sur la variété les choses devraient être zéro. L’énergie de reconstruction doit être nulle.
+
+1:36:26.569,1:36:30.278
+En dehors de la variété, l’énergie de reconstruction doit être la distance au constructeur.
+
+1:36:31.369,1:36:33.369
+Ok.
+
+1:36:33.889,1:36:35.889
+C’est BERT. BERT est entraîné de cette façon.
+
+1:36:36.540,1:36:41.749
+Sauf que l’espace est discret, combinatoire, car c’est du texte et
+
+1:36:42.780,1:36:46.400
+la technique de corruption consiste à masquer une partie des
+
+1:36:47.219,1:36:49.050
+des mots.
+
+1:36:49.050,1:36:52.130
+Puis la reconstruction consiste à prédire les mots qui manquent.
+
+1:36:52.380,1:36:55.549
+Vous pouvez toujours copier les mots qui ne manquent pas de sorte que vous n’avez pas besoin de le faire.
+
+1:36:56.790,1:36:58.790
+Ok, donc c’est un cas spécial
+
+1:36:59.909,1:37:04.969
+d’auto-encodeur débruiteur. BERT est en fait appelé un auto-encodeur masqué car le type de
+
+1:37:05.610,1:37:07.909
+corruption que vous faites consiste à masquer des morceaux de l’entrée.
+
+1:37:11.730,1:37:17.119
+Ok. Fin du temps. Nous parlerons davantage ces techniques la prochaine fois.
