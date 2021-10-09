@@ -1,0 +1,4784 @@
+0:00:00.080,0:00:06.500								                                                         
+Alors bienvenue à tous à cette conférence sur les réseaux de neurones convolutifs pour les graphes.
+
+0:00:06.500,0:00:10.080
+Voici les grandes lignes de la conférence.
+
+0:00:10.080,0:00:17.840
+Donc je vais d'abord aborder rapidement l'architecture les ConvNets traditionnels.
+
+0:00:17.840,0:00:22.480
+Puis j’introduirai les graphes et rappellerai
+
+0:00:22.480,0:00:28.880
+des définitions des convolutions pour les étendre aux graphes.
+
+0:00:28.880,0:00:33.040
+Puis je présenterai deux classes de ConvNets pour graphe.
+
+0:00:33.040,0:00:38.719
+La première est ce que j'appelle les ConvNets spectraux pour graphe et la seconde les ConvNets spatiaux pour graphe.
+
+0:00:38.720,0:00:45.840
+Nous parlerons un peu d’analyse comparative des réseaux de neurones pour graphes et enfin je conclurai.
+
+0:00:47.360,0:00:51.120
+Ok donc commençons par le ConvNet traditionnel.
+
+0:00:51.120,0:00:57.500
+Nous savons tous que les ConvNets sont une percée dans le domaine de la vision par ordinateur.
+
+0:00:57.500,0:01:03.000
+Pour la tâche de classification au concours Imagenet, lorsque les ConvNets ont été utilisé,
+
+0:01:03.000,0:01:07.439
+ils ont diminué d'un facteur deux l'erreur de la classification.
+
+0:01:07.439,0:01:11.200
+C'était en 2012 et c'était essentiellement la fin
+
+0:01:11.200,0:01:17.759
+des caractéristiques créées manuellement. Nous changeons de paradigme et passons à des caractéristiques apprises par la machine.
+
+0:01:17.759,0:01:20.640
+Et maintenant, pour cette tâche très spécifique, nous
+
+0:01:20.640,0:01:25.680
+savons tous que nous allons vers des performances surhumaines.
+
+0:01:25.680,0:01:29.840
+Les ConvNets sont aussi une percée dans le domaine de la parole
+
+0:01:29.840,0:01:33.360
+et du traitement du langage naturel. Donc sur Facebook quand vous voulez traduire
+
+0:01:33.360,0:01:38.000
+vous utilisez aussi des ConvNets. Donc les ConvNets sont une architecture 
+
+0:01:38.000,0:01:42.640
+puissante pour résoudre des problèmes d'apprentissage en grandes dimensions.
+
+0:01:42.640,0:01:46.000
+Nous connaissions tous la malédiction de la dimensionnalité.
+
+0:01:46.000,0:01:52.560
+Si vous avez une image, disons 1 000 par 1 000 pixels, alors vous avez
+
+0:01:52.560,0:01:56.799
+1 millions de variables. L’image peut être considérée comme un point dans un espace d'un million
+
+0:01:56.799,0:02:00.320
+dimensions. Et pour chaque dimension si vous échantillonnez
+
+0:02:00.320,0:02:04.880
+en utilisant 10 échantillons alors vous avez
+
+0:02:04.880,0:02:08.560
+10 à la puissance 1 million d'images possibles. Ces espaces sont donc
+
+0:02:08.560,0:02:11.520
+vraiment énormes. Et, bien sûr, c'est la question de savoir comment
+
+0:02:11.520,0:02:14.640
+trouvez-vous l'aiguille de l'information dans cette grande botte de foin.
+
+0:02:14.640,0:02:18.879
+Donc les ConvNets sont vraiment puissants pour extraire
+
+0:02:18.879,0:02:22.800
+cette information, la meilleure représentation possible
+
+0:02:22.800,0:02:28.080
+de vos données d'image pour résoudre le problème.
+
+0:02:28.080,0:02:32.959
+Bien sûr, nous ne savons pas encore tout sur les ConvNets.
+
+0:02:32.959,0:02:43.440
+Donc c'est une sorte de miracle qu’ils fonctionnent aussi bien et c'est aussi très excitant car
+
+0:02:43.440,0:02:49.840
+cela a ouvert de nombreux domaines de recherche pour mieux comprendre et développer de nouvelles architectures.
+
+0:02:49.840,0:02:54.080
+Donc quand vous utilisez des ConvNets, vous faites une hypothèse.
+
+0:02:54.080,0:02:57.040
+L'hypothèse principale que vous utilisez est
+
+0:02:57.040,0:03:02.640
+que vos données (images, vidéos, discours) reposent sur une composition.
+
+0:03:02.640,0:03:05.840
+Cela signifie formées de motifs qui sont locaux.
+
+0:03:05.840,0:03:10.319
+Donc ceci est la contribution de Hubel et Wiesel.
+
+0:03:10.319,0:03:14.159
+Si vous êtes à cette couche pour ce neurone, ce neurone va être connecté à
+
+0:03:14.159,0:03:18.400
+quelques neurones dans la couche précédente et pas à tous les neurones.
+
+0:03:18.400,0:03:23.599
+Donc c’est l’hypothèse de champ récepteur local. Puis vous avez aussi la
+
+0:03:23.599,0:03:27.040
+propriété de la stationnarité. Donc, fondamentalement, vous avez
+
+0:03:27.040,0:03:31.200
+des motifs qui sont similaires et qui sont
+
+0:03:31.200,0:03:34.640
+partagés dans votre domaine d'image.
+
+0:03:34.640,0:03:39.200
+Comme les patchs jaunes et les patchs bleus. Donc ils sont tous
+
+0:03:39.200,0:03:43.599
+similaires les uns les autres. La dernière propriété est la hiérarchie.
+
+0:03:43.599,0:03:48.000
+Donc l'hypothèse que vos données sont hiérarchisées au sens que
+
+0:03:48.000,0:03:51.200
+vos caractéristiques de bas niveau vont être
+
+0:03:51.200,0:03:55.000
+combinées ensemble pour former des caractéristiques de niveau moyen.
+
+0:03:55.000,0:03:58.480
+Puis ces caractéristiques de niveau moyen vont-elles aussi être
+
+0:03:58.480,0:04:02.159
+combinées les unes aux autres pour former des caractéristiques 
+
+0:04:02.159,0:04:08.720
+de plus en plus abstraites. Donc tous les ConvNets fonctionnent de la même manière.
+
+0:04:08.720,0:04:11.760
+La première partie de l'architecture consiste à extraire
+
+0:04:11.760,0:04:15.000
+ces caractéristiques de composition. Puis la deuxième partie consiste à résoudre
+
+0:04:15.000,0:04:19.359
+une tâche spécifique comme la classification, la recommandation, etc… 
+
+0:04:19.359,0:04:23.000
+Et c'est ce que nous appelons les systèmes de bout en bout.
+
+0:04:23.000,0:04:31.100
+La première partie est d'apprendre les caractéristiques et la deuxième est de résoudre votre tâche.
+
+0:04:31.120,0:04:37.440
+Voyons plus précisément ce qu'est le domaine des données.
+
+0:04:37.440,0:04:43.680
+Donc si vous avez des images, des volumes ou des vidéos, par exemple vous
+
+0:04:43.680,0:04:46.320
+pouvez voir cette image et si vous zoomez dessus,
+
+0:04:46.320,0:04:50.320
+ce que vous avez est une grille 2D.
+
+0:04:50.320,0:04:55.199
+C'est la structure du domaine de cette image.
+
+0:04:55.199,0:04:58.720
+Et en haut de cette grille vous avez quelques caractéristiques.
+
+0:04:58.720,0:05:02.000
+Ainsi, par exemple, dans le cas d'une image en couleur, vous aurez
+
+0:05:02.000,0:05:05.600
+trois caractéristiques qui sont le rouge, le vert et le bleu.
+
+0:05:05.600,0:05:12.560
+Maintenant si je regarde le traitement du langage naturel comme des
+
+0:05:12.560,0:05:16.479
+phrases, vous aurez une séquence de mots.
+
+0:05:16.479,0:05:19.520
+En gros, vous pouvez voir ça comme une grille 1D
+
+0:05:19.520,0:05:24.320
+et en haut de cette grille, pour chaque nœud de la grille, vous aurez un mot.
+
+0:05:24.320,0:05:27.520
+Donc un mot puisse être représenté juste par
+
+0:05:27.520,0:05:31.520
+un nombre entier par exemple. C’est identique pour la parole.
+
+0:05:31.520,0:05:35.680
+Donc ce que vous voyez ici, c’est la variation de la pression de l'air.
+
+0:05:35.680,0:05:40.080
+Et c'est la même chose. C'est comme si vous aviez une grille 1D
+
+0:05:40.080,0:05:44.080
+et chacun pour chaque nœud de la grille vous avez
+
+0:05:44.080,0:05:48.560
+la valeur de la pression de l'air qui est un nombre réel.
+
+0:05:48.560,0:05:54.000
+Donc, je pense qu'il est clair que nous utilisons des grilles tout le temps et
+
+0:05:54.000,0:05:57.520
+les grilles sont des structures régulières très fortes.
+
+0:05:57.520,0:06:01.759
+Et pour ces structures, c'est bien car
+
+0:06:01.759,0:06:06.960
+nous pouvons mathématiquement définir les opérations comme
+
+0:06:06.960,0:06:12.080
+la convolution et le pooling. Et aussi, en pratique, c’est très rapide.
+
+0:06:12.080,0:06:16.800
+Donc tout est bon. Maintenant regardons 
+
+0:06:16.800,0:06:20.560
+de nouvelles données, comme par exemple les réseaux sociaux.
+
+0:06:20.560,0:06:24.000
+Donc vous voulez faire votre tâche, par exemple faire de la
+
+0:06:24.000,0:06:28.000
+publicité ou de la recommandation.
+
+0:06:28.000,0:06:30.800
+Pour les réseaux sociaux, ça va être clair mais
+
+0:06:30.800,0:06:34.319
+je vais vous montrer que si vous prenez deux notes, par exemple
+
+0:06:34.319,0:06:38.720
+vous avez disons cet utilisateur i et cet utilisateur j,
+
+0:06:38.720,0:06:42.160
+et pour tous les autres vous voyez que ce n'est pas une grille.
+
+0:06:42.160,0:06:46.160
+Donc la connexion par paire entre tous les utilisateurs ne
+
+0:06:46.160,0:06:50.720
+forme pas une grille. C’est un motif de connexions très particulier
+
+0:06:50.720,0:06:56.080
+et il s'agit en gros d'un graphe. Comment définissez-vous votre graphe ?
+
+0:06:56.080,0:06:58.720
+Vous voyez la connexion entre les utilisateurs.
+
+0:06:58.720,0:07:03.520
+Donc si utilisateur i et utilisateur j sont amis vous allez avoir une connexion et
+
+0:07:03.520,0:07:06.880
+pour cela, vous allez utiliser ce que nous appelons une matrice d’adjacence
+
+0:07:06.880,0:07:13.039
+qui va juste enregistrer toutes les connexions ou non-connexions entre
+
+0:07:13.039,0:07:17.360
+les nœuds dans votre dans vos réseaux sociaux.
+
+0:07:17.360,0:07:20.400
+Et sur le haut de votre réseau, pour chaque utilisateur vous
+
+0:07:20.400,0:07:23.280
+aurez des caractéristiques. Par exemple vous avez des
+
+0:07:23.280,0:07:30.800
+messages, des images, des vidéos donc cela forme certaines caractéristiques dans un espace dimensionnel d.
+
+0:07:28.800,0:07:39.039
+En neurosciences, dans l'analyse du cerveau… Par exemple, nous sommes vraiment intéressés par comprendre
+
+0:07:39.039,0:07:44.960
+la relation fondamentale entre la structure et la fonction du cerveau.
+
+0:07:44.960,0:07:48.720
+Donc elles sont vraiment connectées entre elles et c'est
+
+0:07:48.720,0:07:51.919
+fondamental de comprendre ça. Nous voulons aussi, par exemple, prévoir
+
+0:07:51.919,0:07:55.680
+une maladie neurodégénérative, différents stades de cette maladie.
+
+0:07:55.680,0:07:59.599
+Donc c'est très important. Pour cela nous devons comprendre le cerveau.
+
+0:07:59.599,0:08:06.879
+Si vous regardez le cerveau, il est composé de ce que nous appelons régions d'intérêts.
+
+0:08:06.879,0:08:10.400
+Si vous prenez une région d'intérêt, 
+
+0:08:10.400,0:08:13.759
+cette région n'est pas connectée à toutes les autres régions du cerveau.
+
+0:08:13.759,0:08:16.400
+Elles ne sont connectées qu'à quelques autres régions.
+
+0:08:16.400,0:08:20.000
+Et encore une fois, vous ne voyez que cela n’a rien à voir avec une grille.
+
+0:08:20.000,0:08:25.520
+Donc ces connexions spatiales entre différentes régions du
+
+0:08:25.520,0:08:29.120
+cerveau peuvent être mesurées par le signal de l'IRM.
+
+0:08:29.120,0:08:32.800
+Et vous avez également une matrice d’adjacence
+
+0:08:32.800,0:08:37.599
+entre la région i et la région j. Et ici vous avez une force de connexion
+
+0:08:37.599,0:08:41.200
+qui dépend du nombre de connexions, du nombre de fibres dont vous disposez
+
+0:08:41.200,0:08:47.040
+pour relier les régions i et j. Et ensuite sur le haut de ce graphe…
+
+0:08:47.040,0:08:50.959
+donc si vous regardez la région i, vous aurez des activations,
+
+0:08:50.959,0:08:54.880
+des activations fonctionnelles qui sont en gros une série temporelle 
+
+0:08:54.880,0:08:58.080
+que vous pouvez voir ici. Et nous pouvons également enregistrer
+
+0:08:58.080,0:09:02.640
+l'activation du cerveau par une IRM fonctionnelle.
+
+0:09:02.959,0:09:07.279
+Le dernier exemple que je veux vous montrer est celui de la chimie quantique.
+
+0:09:07.279,0:09:10.880
+Donc, par exemple, la tâche consisterait à concevoir
+
+0:09:10.880,0:09:16.480
+de nouvelles molécules pour les médicaments et les matériaux. Donc vous voyez à nouveau que les connexions
+
+0:09:16.480,0:09:19.040
+entre les atomes n'ont rien à voir avec une grille.
+
+0:09:19.040,0:09:23.519
+Cela dépend vraiment de la façon dont vous allez vous connecter
+
+0:09:23.519,0:09:27.279
+vos atomes et vous aurez alors des molécules.
+
+0:09:27.279,0:09:31.279
+Donc la connexion entre les atomes sont appelés liaisons
+
+0:09:31.279,0:09:36.000
+et vous avez différents types de liaisons. Elles peuvent être un
+
+0:09:36.000,0:09:40.480
+simple, double, aromatique. Et vous avez aussi différentes caractéristiques
+
+0:09:40.480,0:09:44.540
+comme l'énergie et de nombreuses autres caractéristiques que vous pouvez utiliser en chimie.
+
+0:09:44.540,0:09:48.720
+Pour les nœuds du graphe, il s’agit des atomes
+
+0:09:48.720,0:09:52.480
+et là encore, vous pouvez avoir des caractéristiques différentes comme le
+
+0:09:52.480,0:09:56.240
+type d'atome. Si c'est de l’hydrogène, de l’azote, etc…
+
+0:09:56.240,0:09:58.480
+Vous avez aussi les coordonnées 3D,
+
+0:09:58.480,0:10:01.680
+Vous avez la charge et ainsi de suite. Vous pouvez avoir
+
+0:10:01.680,0:10:05.000
+plusieurs caractéristiques. 
+
+0:10:05.000,0:10:11.760
+Cette liste n’est pas exhaustive. Pour vous donner un exemple
+
+0:10:11.760,0:10:17.360
+de domaines de graphes, pour vous avez les graphes en infographie
+
+0:10:17.360,0:10:21.600
+avec des maillages 3D. Vous voulez peut-être aussi analyser
+
+0:10:21.600,0:10:28.320
+un réseau de transport et la densité des voitures ou des traines, etc…
+
+0:10:28.320,0:10:32.079
+Vous avez aussi vous des réseaux de régulation des gènes.
+
+0:10:32.079,0:10:36.880
+Vous avez des graphes de connaissances, les relations entre les mots,
+
+0:10:36.880,0:10:41.200
+les produits utilisateurs quand vous voulez faire des recommandations.
+
+0:10:41.200,0:10:44.640
+Vous avez la compréhension de scène pour donner plus de bon sens à votre machine
+
+0:10:44.640,0:10:48.079
+de vision par ordinateur. Vous voulez donc comprendre la relation entre 
+
+0:10:48.079,0:10:51.519
+vos objets. Vous avez également, par exemple,
+
+0:10:51.519,0:10:55.839
+si vous voulez détecter des particules physiques de haute énergie.
+
+0:10:55.839,0:11:00.800
+Donc vous avez des capteurs et ceux-ci ne sont pas structurés comme une grille.
+
+0:11:00.800,0:11:03.519
+Donc pour tout cela, vous voyez qu'il y a un
+
+0:11:03.519,0:11:06.959
+dénominateur qui est en gros vous pouvez représenter
+
+0:11:06.959,0:11:11.680
+tous ces problèmes sous forme d’un graphe.
+
+0:11:11.680,0:11:17.760
+Et ceci est le paramétrage commun.
+
+0:11:17.760,0:11:23.040
+Je dirais le paramétrage mathématique commun pour tous ces problèmes.
+
+0:11:23.040,0:11:28.360
+Donc les graphes, appelons les G, sont définis par trois entités.
+
+0:11:28.360,0:11:33.440
+La première entité est l'ensemble des sommets [V pour « vertices »]
+
+0:11:33.440,0:11:37.839
+Vous allez généralement indexer l'ensemble des sommets de 1 à n.
+
+0:11:37.839,0:11:41.519
+n est le nombre de nœuds dans votre graphe.
+
+0:11:41.519,0:11:45.120
+Donc par exemple ce sera l'index 1, 2, 3
+
+0:11:45.120,0:11:50.639
+et ainsi de suite. Puis vous aurez de l'ensemble des arêtes [E pour « edges »]
+
+0:11:50.639,0:11:55.120
+Elles sont les connexions entre les nœuds.
+
+0:11:55.120,0:11:59.959
+Et enfin vous aurez la matrice d’adjacence [A] 
+
+0:11:59.959,0:12:05.600
+qui vous donne la force de la connexion de votre arête.
+
+0:12:05.600,0:12:12.240
+Puis vous avez des caractéristiques de graphe. Par exemple pour chaque hi ou hj
+
+0:12:12.240,0:12:16.000
+vous avez quelques caractéristiques de nœud.
+
+0:12:16.000,0:12:20.800
+C’est essentiellement un vecteur de dimensionnalité dv.
+
+0:12:20.800,0:12:29.120
+De même, vous pouvez avoir des caractéristiques d’arête qui est un vecteur
+
+0:12:29.760,0:12:33.120
+de dimensionnalité de. Par exemple pour les molécules
+
+0:12:33.120,0:12:38.720
+la caractéristique de nœud peut être le type d'atome et la caractéristique d’arête peut être le
+
+0:12:38.720,0:12:43.040
+type de liaison. Enfin vous pouvez aussi avoir des caractéristiques
+
+0:12:43.040,0:12:46.920
+de graphe. Pour tout le graphe, vous pouvez avoir certaines caractéristiques.
+
+0:12:46.920,0:12:52.999
+Donc, encore une fois, c'est un vecteur de dimensionnalité dg.
+
+0:12:52.999,0:12:59.040
+Et dans le cas de la chimie cela peut être l'énergie de la molécule.
+
+0:12:59.040,0:13:06.399
+Donc c'est je dirais la définition générale des graphes.
+
+0:13:06.399,0:13:10.959
+Maintenant ce que je vais faire c'est que je vais parler des convolutions
+
+0:13:10.959,0:13:16.000
+et de la question de savoir comment les étendre aux graphes.
+
+0:13:17.440,0:13:22.720
+D'abord laissez-moi vous rappeler la manière classique d'utiliser les couches de convolution
+
+0:13:22.720,0:13:28.320
+pour les grilles lorsque nous utilisons des ConvNets pour la vision par ordinateur.
+
+0:13:28.320,0:13:35.680
+Disons que j'ai cette image et ou peut-être que c'est une 
+
+0:13:35.680,0:13:41.600
+caractéristique cachée à la couche l. Et je vais faire la convolution avec
+
+0:13:41.600,0:13:45.519
+un motif/noyau
+
+0:13:45.519,0:13:48.880
+que, bien sûr, j'apprendrai par rétropropagation. 
+
+0:13:48.880,0:13:53.279
+Et puis j’aurai une activation. Ok donc ce sont les caractéristiques de
+
+0:13:53.279,0:13:56.880
+la couche suivante. Pour vous donner peut-être une certaine dimension
+
+0:13:56.880,0:14:00.160
+par exemple, n1 et n2 seront le nombre de pixels
+
+0:14:00.160,0:14:04.399
+dans les directions x et y, et d est la dimensionnalité
+
+0:14:04.399,0:14:08.959
+de chaque pixel. Donc si c'est une image en couleur, la dimensionnalité est
+
+0:14:08.959,0:14:11.079
+de trois pour les trois couleurs.
+
+0:14:11.079,0:14:14.880
+Et si c’est une caractéristique intermédiaire cachée peut-être que vous
+
+0:14:14.880,0:14:19.760
+avez 100 dimensions. Pour le noyau, en général, vous en prenez des petits
+
+0:14:19.760,0:14:24.720
+car vous voulez le champ de réception local. Donc cela pourrait être
+
+0:14:24.720,0:14:29.519
+un noyau de pixels 3 par 3 ou 5 par 5.
+
+0:14:29.519,0:14:33.120
+Bien sûr, vous avez d car vous devez respecter la
+
+0:14:33.120,0:14:38.079
+dimensionnalité de votre caractéristique d’entrée.
+
+0:14:39.040,0:14:43.199
+Peut-être pour celui-ci… Donc vous voyez que vous allez convoluer cette
+
+0:14:43.199,0:14:48.920
+image avec cette caractéristique qui est orientée dans cette direction.
+
+0:14:48.920,0:14:55.160
+Donc vous allez en gros identifier les lignes dans cette direction de l'image.
+
+0:14:55.160,0:14:59.839
+Ce n'était donc qu'un exemple. [Alfredo : et nous utilisons le rembourrage pour avoir
+
+0:14:59.839,0:15:06.950
+la même dimensionnalité en entrée] Oui absolument. Avec le rembourrage vous ne réduisez pas la taille de votre image.
+
+0:15:06.959,0:15:13.120
+Ok donc comment définir mathématiquement une convolution ?
+
+0:15:13.120,0:15:18.399
+La première définition est de voir la convolution comme un
+
+0:15:18.399,0:15:22.160
+appariement de patrons [résumer en TM par la suite pour « template matching »]
+
+0:15:22.160,0:15:28.079
+Donc voici la définition mathématique d'une convolution.
+
+0:15:28.079,0:15:31.360
+Donc ce que vous allez faire c'est que
+
+0:15:31.360,0:15:35.040
+vous allez prendre votre patron, vous allez prendre votre image
+
+0:15:35.040,0:15:41.920
+et ensuite vous allez additionner sur l'indice dans l'ensemble
+
+0:15:41.920,0:15:48.880
+du domaine de l’image Ω de wj.  Et c’est un produit
+
+0:15:48.880,0:15:53.120
+entre le vecteur wj et le vecteur hi-j.
+
+0:15:53.120,0:15:56.320
+Donc c'est la pure définition de la convolution
+
+0:15:56.320,0:16:00.480
+et ce que nous faisons habituellement dans un système de vision par ordinateur, c'est que nous ne prenons pas le moins
+
+0:16:00.480,0:16:08.260
+mais un plus. Car quand nous faisons cela, nous avons la définition de la corrélation. et c'est ce que  parce que
+
+0:16:08.320,0:16:11.120
+Et c’est alors exactement le TM.
+
+0:16:11.120,0:16:16.639
+Donc cela ne change rien si vous faites i-j ou i+j
+
+0:16:16.639,0:16:20.639
+dans le sens de l'apprentissage, car la seule chose que vous faites est de retourner
+
+0:16:20.639,0:16:24.079
+de haut en bas et de gauche à droite votre noyau.
+
+0:16:24.079,0:16:28.000
+Et quand vous apprenez, cela ne change rien au fond.
+
+0:16:28.000,0:16:32.000
+Mais c'est la définition de la corrélation donc c'est vraiment un TM.
+
+0:16:32.000,0:16:36.000
+Puis je vais prendre pour la notation ij.
+
+0:16:36.000,0:16:43.279
+Et quelque chose de très important que vous avez ici est que vous quand nous faisons des couches
+
+0:16:43.279,0:16:47.600
+De convolution, nous utilisons le noyau avec un support compact. 
+
+0:16:47.600,0:16:53.199
+Comme 3 par 3. C'est un très petit support. Quand nous faisons cela, nous ne faisons pas la somme sur
+
+0:16:53.199,0:16:57.250
+le domaine entier de l'image. Nous faisons juste la somme sur le
+
+0:16:57.250,0:17:01.440
+voisinage du nœud i. Et c'est très important.
+
+0:17:01.440,0:17:07.120
+C'est très important car soudain la somme n'est pas sur le pixel entier, c'est juste dans le voisinage.
+
+0:17:07.120,0:17:12.400
+Et la complexité de faire la convolution est
+
+0:17:12.400,0:17:19.079
+en fait de l'ordre du nombre de nœuds, donc du nombre de pixels de votre image.
+
+0:17:19.070,0:17:24.319
+La complexité est assez facile à calculer. Donc ce que vous allez faire c'est que
+
+0:17:24.319,0:17:28.500
+vous allez prendre votre motif et le faire coulisser.
+
+0:17:28.500,0:17:32.640
+Donc il y a n coulissements car n nombre d’endroits.
+
+0:17:32.640,0:17:36.640
+Puis vous allez faire un produit scalaire de 3 par 3 éléments,
+
+0:17:36.640,0:17:44.000
+et faire un produit de vecteurs de dimensionnalité d.
+
+0:17:44.000,0:17:48.720
+Vous voyez que la complexité de cette opération est
+
+0:17:48.720,0:17:51.840
+n fois 3 fois 3 fois d. Donc la complexité est n.
+
+0:17:51.840,0:17:55.120
+Et tout ceci peut être fait en parallèle si vous avez un GPU.
+
+0:17:55.120,0:17:59.039
+Le calcul que vous faites dans cet endroit est indépendant
+
+0:17:59.039,0:18:01.440
+du calcul que vous faites dans cet endroit.
+
+0:18:01.440,0:18:08.400
+Donc tout est de complexité linéaire.
+
+0:18:08.400,0:18:12.240
+Donc finalement si vous voulez faire la convolution avec le TM. 
+
+0:18:12.240,0:18:17.440
+vous allez juste calculer ces produits scalaires entre votre patron
+
+0:18:17.440,0:18:25.120
+et votre patch d’image.
+
+0:18:25.120,0:18:28.880
+Donc quelque chose qui est très important à voir
+
+0:18:28.880,0:18:34.559
+dans le cas où le graphe est une grille… Donc c’est pour une convolution standard
+
+0:18:34.559,0:18:38.240
+en vision par ordinateur. Si vous regardez votre
+
+0:18:38.240,0:18:42.880
+patron qui est ici, vous voyez que je vais donner
+
+0:18:42.880,0:18:48.720
+certains nœuds ordonnés : j1, j2, j3 et ainsi de suite jusqu'à j9
+
+0:18:48.720,0:18:52.160
+et cet ordre est en fait très important.
+
+0:18:52.160,0:19:03.600
+Par exemple le nœud j3 sera toujours positionné au même endroit.
+
+0:19:03.600,0:19:08.160
+Donc il sera toujours en haut à droite du motif.
+
+0:19:08.160,0:19:11.440
+C'est donc très important.
+
+0:19:11.440,0:19:15.200
+Pourquoi est-ce très important ? Laissez-moi passer à la diapositive suivante.
+
+0:19:15.200,0:19:19.360
+Pourquoi est-ce très important ? Quand je vais faire la convolution
+
+0:19:19.360,0:19:22.640
+le TM, je prends mon motif et je
+
+0:19:22.640,0:19:26.480
+fais coulisser sur mon domaine d'image.
+
+0:19:26.480,0:19:30.000
+Donc peut-être ici et puis je le mets ici.
+
+0:19:30.000,0:19:33.600
+Ceci est la position i, position i prime que je mets ici
+
+0:19:33.600,0:19:37.120
+Donc quand je vais faire le TM entre
+
+0:19:37.120,0:19:41.039
+le noyau et l'image, ce que je vais faire c'est que pour
+
+0:19:41.039,0:19:46.799
+cet index j3, c’est que je fais correspondre toujours
+
+0:19:46.799,0:19:51.440
+l'information dans l'image à cet index ici.
+
+0:19:51.440,0:19:56.880
+Donc c'est très important. Quand vous avez une grille l’ordre des nœuds,
+
+0:19:56.880,0:20:00.720
+le positionnement des nœuds est toujours le même quelle que soit la position
+
+0:20:00.720,0:20:03.200
+dans votre image. Donc quand vous faites le TM
+
+0:20:03.200,0:20:06.880
+entre l'index j3 et cet index ici dans l'image,
+
+0:20:06.880,0:20:11.919
+vous comparez toujours la même information. Vous comparez toujours la caractéristique située
+
+0:20:11.919,0:20:15.120
+dans le coin supérieur droit de votre motif et le
+
+0:20:15.120,0:20:20.480
+le coin supérieur du patch de votre image patch.
+
+0:20:20.480,0:20:24.720
+Et donc ces scores de correspondance sont pour la même information.
+
+0:20:24.720,0:20:30.880
+C'est donc très important. Voyons maintenant ce qui se passe pour les graphes.
+
+0:20:32.559,0:20:36.960
+Donc la question est de savoir si nous pouvons étendre cette définition aux graphes.
+
+0:20:36.960,0:20:40.080
+Et il y a deux problèmes principaux.
+
+0:20:40.080,0:20:44.480
+Le premier est en gros que sur un graphe vous n'avez pas
+
+0:20:44.480,0:20:52.080
+pas d’ordre dans vos nœuds. Donc sur le graphe vous n’avez
+
+0:20:52.080,0:20:55.919
+pas de position donnée pour vos nœuds. Donc disons par exemple
+
+0:20:55.919,0:21:02.320
+que j’ai ce patron de graphe. Donc il y a 4 noeuds avec
+
+0:21:02.320,0:21:07.760
+cette connexion et j'ai ce sommet ici.
+
+0:21:07.760,0:21:10.640
+Pour ce sommet, je ne sais rien de la position.
+
+0:21:10.640,0:21:14.240
+La seule chose que je connais, c'est l'index. Donc peut-être que c'est
+
+0:21:14.240,0:21:17.760
+l'indice numéro 3 pour celui-ci. Et ensuite si je veux
+
+0:21:17.760,0:21:20.799
+utiliser la définition du TM,
+
+0:21:20.799,0:21:27.039
+je dois faire correspondre cet index  avec d'autres index
+
+0:21:27.039,0:21:30.559
+dans le domaine du graphe. Donc c'est mon graphe et disons que c'est pour
+
+0:21:30.559,0:21:33.760
+le nœud i et voici les voisins du nœud i.
+
+0:21:33.760,0:21:37.600
+Donc pour ce voisin, il s'agit du même indice j3 mais ici,
+
+0:21:37.600,0:21:42.720
+comment puis-je faire correspondre cette information avec cette
+
+0:21:42.720,0:21:46.900
+information quand je ne sais pas si elles correspondent ensemble.
+
+0:21:46.900,0:21:50.000
+Car sur le graphe vous n'avez pas aucun ordre
+
+0:21:50.000,0:21:54.640
+dans vos nœuds. Vous ne savez pas si ce nœud est 
+
+0:21:54.640,0:21:58.559
+en haut à droite du coin de toute information. Vous ne savez pas ça.
+
+0:21:58.559,0:22:03.280
+Donc sur le graphe vous n'avez aucune notion d’où est le haut, où est le bas, 
+
+0:22:03.280,0:22:07.440
+où est la droite, où est la gauche. Donc quand vous faites cette correspondance
+
+0:22:07.440,0:22:13.120
+entre ce vecteur de caractéristique et ce vecteur de caractéristique
+
+0:22:13.120,0:22:16.720
+cela n'a généralement pas de sens.
+
+0:22:16.720,0:22:20.159
+Vous ne savez pas ce que vous comparez.
+
+0:22:20.159,0:22:23.440
+Encore une fois, l'indice est complètement arbitraire.
+
+0:22:23.440,0:22:26.480
+Donc vous pouvez avoir la valeur 3 ici, mais cela peut être ici
+
+0:22:26.480,0:22:30.080
+la valeur numéro 2 ou la valeur numéro 12.
+
+0:22:30.080,0:22:34.880
+Vous ne connaissez aucune bonne information.
+
+0:22:34.880,0:22:39.280
+Donc en gros car vous n'avez pas d'ordre pour vos nœuds dans les graphes,
+
+0:22:39.280,0:22:42.559
+vous ne pouvez pas utiliser la définition du TM,
+
+0:22:42.559,0:22:47.900
+Vous ne pouvez pas utiliser cela directement. Nous devons faire quelque chose d’autre.
+
+0:22:49.840,0:22:53.360
+Le deuxième problème avec le TM pour les graphes
+
+0:22:53.360,0:22:58.480
+est ce qui se passe si le nombre de nœuds dans votre patron
+
+0:22:58.480,0:23:02.080
+ne correspond pas au nombre de nœuds dans votre graphe.
+
+0:23:02.080,0:23:05.840
+Donc par exemple ici j'ai 4 nœuds.
+
+0:23:05.840,0:23:10.400
+Je peux peut-être trouver un moyen de comparer
+
+0:23:10.400,0:23:14.000
+les deux ensembles de nœuds mais ici j'ai 7 nœuds.
+
+0:23:14.000,0:23:18.559
+Alors comment je vais comparer 7 nœuds à 4 nœuds ?
+
+0:23:18.559,0:23:23.840
+Donc c'est aussi un problème ouvert. Donc la première définition 
+
+0:23:24.640,0:23:30.240
+mathématique consistait à utiliser le TM pour définir la convolution.
+
+0:23:30.240,0:23:34.640
+La deuxième définition consiste à utiliser le théorème de la convolution.
+
+0:23:34.640,0:23:39.360
+Donc le théorème de convolution basé de Fourier est en gros la
+
+0:23:39.360,0:23:42.240
+transformation de Fourier de la convolution de deux fonctions.
+
+0:23:42.240,0:23:46.919
+C’est le produit élément par élément de la transformation de Fourier. C’est ce que vous voyez ici.
+
+0:23:46.919,0:23:50.159
+Donc la transformée de Fourier [TF dans la suite] de la convolution de
+
+0:23:50.159,0:23:54.640
+la fonction w et la fonction h est la TF de w
+
+0:23:54.640,0:23:58.159
+multipliée élément par élément par la TF de h.
+
+0:23:58.159,0:24:02.559
+Si vous faites l'inverse de la TF, vous retournez à votre convolution.
+
+0:24:02.559,0:24:06.080
+Donc c’est joli, nous avons une très belle formule pour
+
+0:24:06.080,0:24:10.159
+faire la convolution de w et h. Mais la chose est dans le cas général
+
+0:24:10.159,0:24:14.880
+faire la transformation de Fourier est de complexité n².
+
+0:24:14.880,0:24:18.799
+Nous y reviendrons. Cependant si votre domaine,
+
+0:24:18.799,0:24:23.520
+comme la grille d'image, a une structure très particulière
+
+0:24:23.520,0:24:27.520
+alors vous pouvez réduire la complexité à n log n  en utilisant 
+
+0:24:27.520,0:24:31.520
+la « fast Fourier transform ». Donc la question est :
+
+0:24:31.520,0:24:38.159
+pouvons-nous étendre cette définition du théorème de convolution aux graphes N
+
+0:24:38.159,0:24:41.840
+La question est donc de savoir comment redéfinir une TF
+
+0:24:41.840,0:24:47.039
+pour les graphes. Et le truc, est de savoir comment faire ça vite.
+
+0:24:47.039,0:24:51.520
+Souvenez-vous que dans le cas du TM
+
+0:24:51.520,0:24:54.880
+nous avons une complexité linéaire. Donc comment
+
+0:24:54.880,0:24:58.000
+avoir une convolution spectrale rapide en temps linéaire
+
+0:24:58.000,0:25:01.120
+pour les noyaux compacts ? C'est donc la question qui se pose.
+
+0:25:01.120,0:25:04.559
+Donc nous allons en gros utiliser ces deux définitions
+
+0:25:04.559,0:25:11.520
+de la convolution pour concevoir deux classes de réseau neuronal de graphes.
+
+0:25:11.520,0:25:15.520
+Le TM est pour les graphes convolutifs spatiaux.
+
+0:25:15.520,0:25:19.600
+Et le théorème de la convolution, je vais l'utiliser pour les graphes convolutifs spectraux.
+
+0:25:19.600,0:25:24.960
+Et c’est donc la prochaine partie dont je vais parler maintenant.
+
+0:25:24.960,0:25:36.799
+Donc parlons de comment nous faisons la convolution spectrale. Donc voici un livre que j'aime beaucoup.
+
+0:25:42.400,0:25:47.000
+C’est le livre de Fan Chung portant sur la théorie spectrale des graphes. 
+
+0:25:47.000,0:25:51.919
+Il y a donc de belles choses comme l'analyse harmonique, la théorie des graphes, des problèmes 
+
+0:25:51.919,0:25:56.400
+combinatoires et l'optimisation. Donc je recommande vraiment de lire
+
+0:25:56.400,0:26:02.000
+le livre si vous voulez en connaître davantage à propos de ces questions.
+
+0:26:02.000,0:26:07.039
+Donc comment faire une convolution spectrale ? Nous allons utiliser quatre étapes.
+
+0:26:07.039,0:26:11.120
+La première étape consistera à définir les graphes laplaciens.
+
+0:26:11.120,0:26:14.880
+La deuxième étape consistera à définir les fonctions de Fourier
+
+0:26:14.880,0:26:17.919
+Puis nous ferons une TF poussée et éventuellement
+
+0:26:17.919,0:26:21.919
+le théorème de convolution.
+
+0:26:21.919,0:26:25.000
+Donc quel est un graphe laplacien ?
+
+0:26:25.000,0:26:29.600
+C'est l'opérateur principal de la théorie des graphes spectraux.
+
+0:26:29.600,0:26:33.760
+Donc pour définir un graphe, nous avons un ensemble de sommets
+
+0:26:33.760,0:26:36.880
+un ensemble d’arêtes, puis nous avons la matrice d’adjacence.
+
+0:26:36.880,0:26:40.799
+Donc si le graphe a n sommets, la matrice d’adjacence
+
+0:26:40.799,0:26:45.919
+est une matrice n par n. Nous définissons alors simplement le
+
+0:26:45.919,0:26:49.919
+laplacien qui est aussi une matrice n par n comme étant :
+
+0:26:49.919,0:26:53.760
+l'identité moins la matrice d’adjacence. 
+
+0:26:53.760,0:27:00.159
+Et nous normalisons la matrice d’adjacence en utilisant
+
+0:27:00.159,0:27:05.520
+le degré de chaque nœud. Donc D est essentiellement une matrice diagonale.
+
+0:27:05.520,0:27:09.360
+Et chaque élément de la diagonale est le degré du nœud.
+
+0:27:09.360,0:27:12.080
+Et cela s'appelle le laplacien normalisé.
+
+0:27:12.080,0:27:15.760
+Je dirais que c'est par défaut
+
+0:27:15.760,0:27:21.679
+la définition du laplacien que nous utilisons pour les graphes.
+
+0:27:21.679,0:27:25.520
+Donc nous pouvons interpréter cet opérateur.
+
+0:27:25.520,0:27:31.360
+[Alfredo : il y a une question. Le A est cette matrice avec en gros des
+
+0:27:31.360,0:27:37.600
+zéros et le 1 représente la connexion entre les arêtes]
+0:27:37.620,0:27:42.799
+Oui. Pour Facebook par exemple, je dirais que c'est exactement la définition.
+
+0:27:42.799,0:27:48.000
+Si un nœud i, un utilisateur i, est un ami d'un utilisateur j alors
+
+0:27:48.000,0:27:52.080
+la valeur de la matrice d’adjacence Aij est 1.
+
+0:27:52.080,0:27:56.080
+Et si deux utilisateurs ne sont pas amis
+
+0:27:56.080,0:28:00.240
+alors vous avez 0. Mais parfois vous avez une valeur réelle pour A.
+
+0:28:00.240,0:28:05.279
+Par exemple pour le graphe de connectivité du cerveau
+
+0:28:05.279,0:28:10.399
+la valeur de Aij est le degré de connexion entre deux régions.
+
+0:28:10.399,0:28:15.360
+En gros, nous disons que c’est le nombre de fibres qui connectent la
+
+0:28:15.360,0:28:19.760
+région i et la région j. Donc cela peut être binaire, mais aussi une valeur continue.
+
+0:28:19.760,0:28:23.200
+[Alfredo : et elle est également symétrique ? Si ce n'est pas
+
+0:28:23.200,0:28:27.000
+un graphe orienté sinon… ] Oui.
+
+0:28:27.000,0:28:32.080
+Habituellement c’est symétrique vous voulez la symétrie pour des
+
+0:28:32.080,0:28:36.320
+raisons mathématiques. Mais vous en avez peut-être d'autres…
+
+0:28:36.320,0:28:39.760
+Ici c'est le laplacien normalisé mais si vous avez une marche aléatoire
+
+0:28:39.760,0:28:43.039
+laplacienne alors c'est non symétrique.
+
+0:28:43.039,0:28:46.480
+Donc c'est une définition différente du laplacien.
+
+0:28:46.480,0:28:49.919
+Dans le cas du laplacien, c'est très intéressant. Dans le cadre continu
+
+0:28:49.919,0:28:54.250
+vous n'avez qu'une seule définition pour le laplacien. C’est l’opérateur de Laplace-Beltrami. 
+
+0:28:54.250,0:28:59.279
+Dans le cadre discret vous avez plusieurs définitions. Vous pouvez faire votre propre définition du laplacien
+
+0:28:59.279,0:29:02.500
+en fonction des hypothèses que vous allez utiliser.
+
+0:29:02.500,0:29:07.760
+[Alfredo : je comprends, merci] Nous pouvons interpréter le laplacien.
+
+0:29:07.760,0:29:13.899
+Le laplacien n'est rien d'autre qu'une mesure de lissage d'une fonction sur un graphe.
+
+0:29:13.899,0:29:18.080
+Donc ce n'est rien d'autre que… Vous voyez ici que je fais le laplacien
+
+0:29:18.080,0:29:22.000
+que j’applique à une fonction h sur le graphe.
+
+0:29:22.000,0:29:26.000
+Et je regarde ce qui s'est passé au sommet i. Si je développe
+
+0:29:26.000,0:29:30.399
+cette définition, j’ai la valeur de hi moins
+
+0:29:30.399,0:29:36.080
+la valeur moyenne du voisinage. Donc en gros, si votre signal est lisse,
+
+0:29:36.080,0:29:41.039
+s’il ne varie pas beaucoup, alors cette différence sera très faible.
+
+0:29:41.039,0:29:46.999
+Mais si votre signal varie beaucoup, oscille beaucoup, alors la différence sera très élevée.
+
+0:29:46.999,0:29:55.240
+Donc le laplacien n'est rien d'autre qu'une mesure du lissage de la fonction sur un graphe.
+
+0:30:00.000,0:30:04.880
+Définissons maintenant les fonctions de Fourier. Donc prenons la
+
+0:30:04.880,0:30:09.279
+matrice laplacienne et faisons un peu d'algèbre linéaire.
+
+0:30:09.279,0:30:12.559
+Faisons une décomposition en valeur propre du graphe laplacien.
+
+0:30:12.559,0:30:15.760
+Donc quand vous effectuez une décomposition en valeur propre,
+
+0:30:15.760,0:30:19.279
+vous allez factoriser votre matrice laplacienne
+
+0:30:19.279,0:30:23.039
+en trois matrices. Donc vous avez ϕ transposée
+
+0:30:23.039,0:30:30.000
+λ et ϕ. Cette matrice ϕ de taille n par n
+
+0:30:30.000,0:30:35.0000
+a les vecteurs propres du laplacien pour chaque colonne.
+
+0:30:35.000,0:30:40.960
+Et ces vecteurs on les appelle fonctions de Fourier. Les fameuses fonctions de Fourier.
+
+0:30:40.960,0:30:44.000
+Et bien sûr, c'est une base orthonormée.
+
+0:30:44.000,0:30:49.039
+Donc quand vous faites le produit entre deux bases, vous aurez 1.
+
+0:30:49.039,0:30:52.799
+Elles sont identiques. Et vous obtenez 0 si elles sont orthogonales.
+
+0:30:52.799,0:30:59.120
+Elles sont différentes. C'est aussi une matrice inversible.
+
+0:30:59.120,0:31:05.279
+Donc cette matrice, c'est la matrice diagonale des valeurs
+
+0:31:05.279,0:31:09.279
+propres de la laplacienne. Donc de λ1 à λn.
+
+0:31:09.279,0:31:12.559
+Et nous savons que pour le laplacien normalisé,
+
+0:31:12.559,0:31:16.080
+ces valeurs sont bornées entre 0 et 2.
+
+0:31:16.080,0:31:19.840
+Donc c'est la valeur maximale que vous pouvez obtenir.
+
+0:31:19.840,0:31:23.500	
+Les valeurs propres de la laplacienne sont connues sous le nom de spectre
+
+0:31:23.500,0:31:27.200
+du graphe. Donc si vous prenez un graphe ici, vous avez 27
+
+0:31:27.200,0:31:32.080
+nœuds, si je calcule les valeurs propres de la laplacienne et les affiche,
+
+0:31:32.080,0:31:36.320
+j'ai une signature du graphe qui est appelée le spectre du graphe.
+
+0:31:36.320,0:31:39.840
+Il est différent pour chaque graphe.
+
+0:31:39.840,0:31:47.360
+Donc j’ai dit que je fais une décomposition en valeurs propres. Si vous prenez votre
+
+0:31:47.360,0:31:50.880
+matrice laplacienne et appliquez à un vecteur
+
+0:31:50.880,0:31:57.200
+ϕk, alors vous obtenez la valeur propre λk fois le même
+
+0:31:57.200,0:32:00.399
+vecteur ϕk. Donc c’est la définition
+
+0:32:00.399,0:32:05.679
+de la décomposition en valeurs propres. Vous voyez que
+
+0:32:05.679,0:32:08.720
+des fonctions de Fourier ne sont rien d'autre que
+
+0:32:08.720,0:32:15.840
+les vecteurs propres de la laplacienne. Laissez-moi illustrer ces
+
+0:32:20.240,0:32:24.880
+fonctions de Fourier. Donc en faites nous les savons déjà.
+
+0:32:24.880,0:32:28.480
+Si vous prenez une grille 1D et vous
+
+0:32:28.480,0:32:32.480
+calculez les fonctions de Fourier vous obtenez ϕ0.
+
+0:32:32.480,0:32:38.960
+Puis vous avez ϕ1 qui est celui-ci et qui est lisse.
+
+0:32:38.960,0:32:42.320
+ϕ2 qui est un peu moins lisse et ϕ3
+
+0:32:42.320,0:32:46.880
+et ainsi de suite. C'est bien connu : c'est les fonctions cosinus
+
+0:32:46.880,0:32:50.999
+et sinus. Nous utilisons ça pour la compression d’images.
+
+0:32:50.999,0:32:54.320
+Donc si nous prenons une image et nous la projetons
+
+0:32:54.320,0:32:58.480
+sur les fonctions de Fourier, la transformation va être éparse.
+
+0:32:58.480,0:33:02.250
+Vous ne gardez que le plus grand coefficient
+
+0:33:02.250,0:33:08.000
+et vous pouvez faire de la compression. Donc c'est quelque chose que nous utilisons depuis longtemps.
+
+0:33:08.080,0:33:12.880
+Pour le domaine du graphe c’est assez intéressant. Vous voyez donc qu'il s'agit d'un graphe
+
+0:33:12.880,0:33:17.880
+et je calcule ici les 4 premières fonctions de Fourier du graphe.
+
+0:33:17.8800,0:33:21.919
+Donc vous voyez que pour ϕ1, vous avez encore
+
+0:33:21.919,0:33:24.159
+des oscillations entre les valeurs positives et négatives.
+
+0:33:24.159,0:33:28.880
+Les mêmes valeurs positives et négatives. Et ici aussi.
+
+0:33:28.880,0:33:32.880
+Ce qui est intéressant, c'est que cette oscillation
+
+0:33:32.880,0:33:36.640
+dépend de la topologie du graphe.
+
+0:33:36.640,0:33:42.480
+Donc c’est lié à la géométrie du graphe comme les communautés, les hubs, etc…
+
+0:33:42.480,0:33:47.840
+Par exemple si vous voulez saisir k communautés sur un graphe,
+
+0:33:47.840,0:33:53.000
+un très bon algorithme consiste à appliquer les k-means sur les k premières
+
+0:33:53.000,0:33:58.240
+fonctions de Fourier. Si vous faites cela, vous avez quelque chose que nous appelons la théorie spectrale des graphes.
+
+0:33:58.240,0:34:01.840
+Et c'est une immense littérature.
+
+0:34:01.840,0:34:07.039
+Si vous voulez en savoir plus, il y a un très beau tutoriel réalisé par Von Luxburg
+
+0:34:07.039,0:34:13.359
+sur le regroupement des spectrographes et l'utilisation de toutes ces notions de fonctions de Fourier.
+
+0:34:13.359,0:34:23.040
+Ok maintenant laissez-moi vous présenter une TF. Donc pour cela je vais
+
+0:34:23.040,0:34:26.560
+parler des séries de Fourier. Ce n’est rien d’autre que
+
+0:34:26.560,0:34:30.320
+prendre une fonction h définie sur votre graphe
+
+0:34:30.320,0:34:34.480
+et puis décomposer cette fonction en utilisant les fonctions de Fourier.
+
+0:34:34.480,0:34:38.399
+Donc je prends ma fonction h, je la projette
+
+0:34:38.399,0:34:44.960
+sur chaque fonction de Fourier ϕk et j’ai
+
+0:34:44.960,0:34:48.639
+ce coefficient de cette série de Fourier. C’est un scalaire.
+
+0:34:48.639,0:34:52.399
+Multiplié par ma fonction ϕk de
+
+0:34:52.399,0:34:59.040
+taille n par 1. Et en faisant cela, 
+
+0:34:59.040,0:35:02.160
+en projetant simplement ma fonction sur les fonctions de Fourier,
+
+0:35:02.160,0:35:06.000
+me donne la TF. Donc la TF
+
+0:35:06.000,0:35:09.680
+c'est juste le coefficient de la série de Fourier, rien d'autre.
+
+0:35:09.680,0:35:18.119
+Donc h est essentiellement une combinaison linéaire de la TF fois les fonctions de Fourier.
+
+0:35:18.120,0:35:22.880
+Et je peux réécrire tout en représentation matricielle
+
+0:35:22.880,0:35:27.440
+et ces types qui font le ϕ
+
+0:35:27.440,0:35:32.560
+fois la TF, c'est en fait l'inverse de la TF.
+
+0:35:32.560,0:35:39.280
+Donc laissez-moi résumer ça. Si je projette h sur les fonctions de Fourier
+
+0:35:39.280,0:35:42.880
+je vais avoir la TF. Donc je prends
+
+0:35:42.880,0:35:48.079
+la matrice des fonctions de Fourier et multiplie par h. Donc c’est n par n,
+
+0:35:48.079,0:35:51.359
+c'est n par 1,  donc c'est n par 1.
+
+0:35:51.359,0:35:58.160
+Maintenant si je fais une TF inverse de la
+
+0:35:58.160,0:36:02.560
+TF… Ok donc j'aurais ϕ de
+
+0:36:02.560,0:36:05.920
+TF de h. Et ce type est ici.
+
+0:36:05.920,0:36:13.040
+Donc je viens de mettre ϕ transposé h. Et nous savons que la base
+
+0:36:13.040,0:36:17.280
+est orthonormée, donc ce type est en fait une matrice d'identité.
+
+0:36:17.280,0:36:22.079
+Donc c'est la matrice d'identité, donc je reviens à h.
+
+0:36:22.079,0:36:29.040
+Donc la TF inverse de la TF est h.
+
+0:36:29.040,0:36:32.480
+Evidemment. Donc une chose que vous pouvez observer est que
+
+0:36:32.480,0:36:36.160
+la TF et la TF inverse
+
+0:36:36.160,0:36:39.599
+peuvent se faire en une seule ligne de code. Vous prenez juste
+
+0:36:39.599,0:36:43.520
+votre vecteur h, vous multipliez par cette matrice et c'est tout.
+
+0:36:43.520,0:36:47.680
+Et de même pour faire la TF inverse. Vous prenez votre signal
+
+0:36:47.680,0:36:52.800
+et multipliez par cette matrice. Il s'agit donc simplement d'opérations linéaires.
+
+0:36:52.800,0:36:56.240
+Juste multiplier une matrice par un vecteur. Voilà comment on fait une
+
+0:36:56.240,0:37:02.400
+TF et une la TF inverse sur les graphes.
+
+0:37:03.520,0:37:07.200
+Ok, maintenant faisons le théorème de la convolution.
+
+0:37:07.200,0:37:11.280
+Le théorème de convolution… la TF…
+
+0:37:11.280,0:37:20.020
+La TF de la convolution est le produit par élément de la TF de chaque signal.
+
+0:37:20.079,0:37:27.119
+Donc disons que j'ai une w convolution h.
+
+0:37:27.119,0:37:30.400
+D'abord je vais faire la TF de w.
+
+0:37:30.400,0:37:33.520
+Ce sera un vecteur de taille n par 1.
+
+0:37:33.520,0:37:37.839
+Puis, je vais multiplier par élément par un autre vecteur qui est la 
+
+0:37:37.839,0:37:40.720
+TF de h. Donc nous obtenez la
+
+0:37:40.720,0:37:45.000
+transformée en faisant simplement ϕ transposé w et ϕ transposé h.
+
+0:37:45.000,0:37:47.839
+Puis je fais la transposé de Fourier inverse
+
+0:37:47.839,0:37:52.320
+pour revenir au domaine spatial. Donc je multiplie juste par la matrice ϕ.
+
+0:37:52.320,0:37:55.920
+n par n. Donc c’est ce que j'écris ici.
+
+0:37:55.920,0:38:01.440
+J'ai ϕ, j'ai ŵ qui est une TF et j'ai ça.
+
+0:38:01.440,0:38:03.839
+Je vais changer ceci.
+
+0:38:03.839,0:38:08.400
+Je change en cette ligne. Qu’est-ce que cette ligne ? [Etudiant : ne devrait-il pas y avoir ϕ transposée
+
+0:38:08.400,0:38:11.359
+avant ŵ ?] Pardon ?
+
+0:38:15.359,0:38:20.480
+[L’étudiant répète]. Non. La TF inverse est ϕ.
+
+0:38:20.480,0:38:23.760
+Donc vous faites ϕ et vous multipliez par la
+
+0:38:23.760,0:38:26.480
+TF qui est ϕ transpose w
+
+0:38:26.480,0:38:31.520
+que j'appelle ŵ. Je vais m'en servir beaucoup.
+
+0:38:31.520,0:38:34.900
+Je vais revenir sur ce sujet. Et puis ici vous avez 
+
+0:38:34.900,0:38:39.250
+TF de h qui est juste ϕ transpose h, qui est ici.
+
+0:38:39.250,0:38:44.640
+Donc ce type, est en fait ce qu'on appelle la fonction spectrale.
+
+0:38:44.640,0:38:49.280
+Le filtre spectral. Donc ce type est
+
+0:38:49.280,0:38:53.359
+un vecteur de n par 1. Et je l’écris ici.
+
+0:38:53.359,0:38:56.640
+Donc vous voyez que c'est un vecteur de n éléments.
+
+0:38:56.640,0:39:03.000
+Et il s'agit en fait la fonction spectrale qui est évaluée
+
+0:39:03.000,0:39:09.920
+à la valeur propre λ1 qui est ici. Donc c’est ce
+
+0:39:09.920,0:39:14.160
+point ici. Puis vous avez un ŵ
+
+0:39:14.160,0:39:18.960
+à λ2 qui est cette valeur ici. Et ainsi de suite.
+
+0:39:18.960,0:39:22.400
+Puis je vais réécrire ça. Je vais mettre ça
+
+0:39:22.400,0:39:25.520
+dans une diagonale. Donc je vais faire la diagonale de
+
+0:39:25.520,0:39:29.119
+ce vecteur, ce qui permet de créer une matrice de la taille
+
+0:39:29.119,0:39:33.280
+n par n. Et je remets ce type ici.
+
+0:39:33.280,0:39:38.160
+Je vais donc changer la multiplication par élément de ce vecteur n par 1
+
+0:39:38.160,0:39:41.359
+et ce vecteur n par 1, la multiplication
+
+0:39:41.359,0:39:44.640
+matricielle. Et ce sera la même chose.
+
+0:39:44.640,0:39:47.119
+C’est une matrice diagonale qui contient ce type,
+
+0:39:47.119,0:39:52.000
+multipliée par ce vecteur. Donc c’est deux lignes sont les mêmes.
+
+0:39:52.000,0:39:55.800
+Je fais ça car je veux me débarrasser de la parenthèse.
+
+0:39:55.800,0:39:58.160
+Donc je n'ai plus la parenthèse.
+
+0:39:58.160,0:40:02.240
+J'ai juste la multiplication de matrices.
+
+0:40:02.240,0:40:08.960
+Ok. C’est ce que j’ai. Puis je vais faire quelque chose.
+
+0:40:08.960,0:40:11.520
+Quand vous appliquez une fonction
+
+0:40:11.520,0:40:15.359
+sur les valeurs propres, si vous avez une base orthogonale, alors
+
+0:40:15.359,0:40:18.720
+vous pouvez mettre ça à l'intérieur. C’est ce que je fais ici.
+
+0:40:18.720,0:40:24.480
+Je mets ϕ et ϕ transposé à l'intérieur. Et ce type est précisément la définition du laplacien.
+
+0:40:24.480,0:40:29.880
+Quand je fais la décomposition en valeurs propres,
+
+0:40:29.880,0:40:33.599
+c’est ϕ λ ϕ transposé.
+
+0:40:33.599,0:40:39.440
+Ce que j'ai, c'est essentiellement la fonction spectrale
+
+0:40:39.440,0:40:43.960
+que j'ai appliqué à l’opérateur laplacien.
+
+0:40:43.960,0:40:47.000
+Et c'est une matrice n par n. 
+
+0:40:47.000,0:40:51.440
+Et appliqué au vecteur n par 1. A la fin j’obtiens
+
+0:40:51.440,0:40:57.359
+un vecteur n par 1. Donc vous voyez que si vous voulez… Ok donc c'est important maintenant.
+
+0:40:57.359,0:41:02.000
+Si vous voulez faire une convolution de deux fonctions sur le graphe w et h,
+
+0:41:02.000,0:41:04.960
+ce que vous allez faire, c'est que vous
+
+0:41:04.960,0:41:09.680
+vous allez prendre la fonction spectrale de w, vous allez l'appliquer
+
+0:41:09.680,0:41:12.079
+au laplacien et puis vous
+
+0:41:12.079,0:41:19.960
+multipliez par h. C'est la définition de la convolution spectrale.
+
+0:41:20.040,0:41:25.440
+Et le truc c'est que c’est très à faire en pratique. Pourquoi ?
+
+0:41:25.440,0:41:31.680
+Car la matrice ϕ est une matrice complète. Elle contient
+
+0:41:31.680,0:41:37.440
+les n fonctions de Fourier qui ne sont pas nulles. Donc c'est une
+
+0:41:37.440,0:41:40.880
+matrice dense. Et la complexité est de n².
+
+0:41:40.880,0:41:46.160
+Et vous n'avez pas de FFT car vous n’en avez pas pour de graphe général.
+
+0:41:46.200,0:41:50.880
+Donc c'est beaucoup. Pourquoi beaucoup ? Car souvenez-vous que
+
+0:41:50.880,0:41:54.160
+n est le nombre de nœuds dans votre domaine.
+
+0:41:54.160,0:41:58.800
+Donc si vous avez un grand graphe, par exemple le web,
+
+0:41:58.800,0:42:05.040
+celui-ci a des milliards de nœuds. n égal à des milliards.
+
+0:42:05.040,0:42:08.319
+Donc vous devez faire des milliards au carré, ce qui est un calcul
+
+0:42:08.319,0:42:12.000
+énorme. Vous ne pouvez pas vraiment le faire.
+
+0:42:12.000,0:42:16.000
+[Alfredo : puis-je résumer ? Donc h est une fonction définie sur chaque
+
+0:42:16.000,0:42:21.200
+sommet de votre graphe. Et w est comme un noyau ? Ou…]
+
+0:42:21.200,0:42:26.800
+w est une fonction comme ceci.
+
+0:42:26.800,0:42:34.240
+w est une fonction spectrale. ŵ est la fonction spectrale. Donc 
+
+0:42:34.240,0:42:37.920
+vous travaillez dans l'espace de fréquences avec ça.
+
+0:42:37.920,0:42:41.440
+Il s'agit d'une fonction spectrale. Donc par exemple
+
+0:42:41.440,0:42:45.200
+si vous connaissez un peu le traitement de l'image et vous voulez faire
+
+0:42:45.200,0:42:49.440
+du débruitage d'image. Si vous voulez faire du débruitage d'image ce que
+
+0:42:49.440,0:42:53.359
+vous savez est que le bruit est généralement dans la
+
+0:42:53.359,0:42:57.359
+partie en hautes fréquences de votre image, de votre signal.
+
+0:42:57.359,0:43:00.400
+Ce que vous pouvez faire c’est concevoir un filtre spectral
+
+0:43:00.400,0:43:04.640
+qui va être de 0 pour les hautes fréquences. Et vous allez
+
+0:43:04.640,0:43:07.040
+préserver les basses fréquences pour préserver
+
+0:43:07.040,0:43:11.040
+votre géométrie. Donc c'est juste faire du filtrage
+
+0:43:11.040,0:43:15.520
+des fréquences contenues dans votre signal.
+
+0:43:15.520,0:43:19.040
+[Alfredo : ok mais le w sans le chapeau est toujours un petit gars,
+
+0:43:19.040,0:43:23.440
+un petit filtre] Exactement, w sans chapeau
+
+0:43:23.440,0:43:26.280
+est le filtre spatial. [Oui le petit]
+
+0:43:26.280,0:43:30.319
+Exactement. Si vous aviez une grille, w serait
+
+0:43:30.319,0:43:34.720
+un patch trois par trois par exemple.
+
+0:43:34.720,0:43:41.359
+[Alfredo : je vois ok, merci]
+
+0:43:41.359,0:43:46.000
+Donc dans le contexte du graphe… Donc c'est
+
+0:43:46.000,0:43:50.880
+une petite propriété à savoir : vous n'avez pas d’invariance au décalage..
+
+0:43:50.880,0:43:54.640
+Donc si vous avez une grille et utilisez
+
+0:43:54.640,0:43:59.680
+le théorème de convolution pour déplacer votre fonction,
+
+0:43:59.680,0:44:03.440
+par exemple la fonction est une gaussienne ici, sur la grille,
+
+0:44:03.440,0:44:06.440
+vous n’allez pas changer la forme de votre fonction.
+
+0:44:06.440,0:44:10.240
+Mais sur un graphe car vous avez structure irrégulière
+
+0:44:10.240,0:44:14.240
+si vous vous déplacez votre gaussienne, vous aurez différentes formes.
+
+0:44:14.240,0:44:17.520
+Donc c'est quelque chose que vous perdez quand passez
+
+0:44:17.520,0:44:22.319
+aux graphes. Mais en pratique, cela n'a absolument aucun effet. Donc ce n'est pas
+
+0:44:22.319,0:44:25.119
+vraiment important. C'est juste une propriété mathématique que vous perdez
+
+0:44:25.119,0:44:30.480
+quand vous passez aux graphes. [Alfredo : il y a une autre question
+
+0:44:30.480,0:44:34.400
+j'ai reçue ici, alors pouvez-vous nous rappeler ce qu'est
+
+0:44:34.400,0:44:37.599
+en fait, l'objectif global ici. Quel est le but de la définition de ces
+
+0:44:37.599,0:44:41.760
+convolutions ou la correspondance spectrale sur ces graphes. Je pense
+
+0:44:41.760,0:44:45.760
+peut-être que c’est bien si on peut rappeler ça à tout le monde]
+
+0:44:45.760,0:44:49.680
+Oui, donc l'objectif de la conférence
+
+0:44:49.680,0:44:55.920
+est de définir un réseau convolutif pour les graphes.
+
+0:44:55.920,0:45:02.480
+Je dois donc redéfinir une convolution dans le cas des graphes. Et il y a deux
+
+0:45:02.480,0:45:06.319
+moyens de définir les convolutions. Vous pouvez faire une convolution avec 
+
+0:45:06.319,0:45:11.520
+le TM ou vous via une théorie spectrale des graphes.
+
+0:45:11.520,0:45:17.119
+Donc ce que je fais ici, c'est redéfinir la convolution dans le cas de
+
+0:45:17.119,0:45:20.640
+la théorie spectrale. Et je vais utiliser cette définition
+
+0:45:20.640,0:45:26.400
+de convolution pour définir les réseaux convolutifs pour les graphes. Mon objectif est donc
+
+0:45:26.400,0:45:28.640
+juste de définir la convolution dans le cas des graphes.
+
+0:45:28.640,0:45:37.120
+Je peux donc je concevoir un réseau convolutif pour graphe [GCNs dans la suite]. [Alfredo : ça me paraît bien].
+
+0:45:37.200,0:45:44.800
+Ok, la première partie était la définition d’une convolution spectrale. Maintenant je vais utiliser
+
+0:45:44.640,0:45:49.440
+cela pour définir le GCN. Donc le premier modèle
+
+0:45:53.280,0:45:56.560
+que j'appelle GCN spectral de base a été introduit
+
+0:45:56.560,0:46:00.640
+par Yann Le Cun et ses collaborateurs :
+
+0:46:00.640,0:46:06.960
+Joan Bruna, Wojciech Zaremba, Arthur Szlam en 2014 pour
+
+0:46:06.960,0:46:12.160
+la première conférence de ICLR. Et ce qu'ils ont fait
+
+0:46:12.160,0:46:15.520
+c'est l’idée simple de faire :
+
+0:46:15.520,0:46:20.319
+Ok, définissons une couche de convolution spectrale pour graphe.
+
+0:46:20.319,0:46:24.319
+Nous savons ce qu'est une couche de convolution standard.
+
+0:46:24.319,0:46:28.240
+C'est l'activation à la couche suivante, l+1,
+
+0:46:28.240,0:46:33.359
+ceci est votre activation non linéaire donc par exemple ReLU,
+
+0:46:33.359,0:46:36.800
+puis je vais faire le filtre spatial.
+
+0:46:36.800,0:46:40.560
+Le patron wl convolution par hl. Donc c'est
+
+0:46:40.560,0:46:43.920
+dans le domaine spacial, le domaine du graphe.
+
+0:46:43.920,0:46:47.359
+Puis je vais faire ça. Rappelez-vous ce que je viens de définir.
+
+0:46:47.359,0:46:51.520
+Donc faire cette convolution dans le domaine spectral c'est juste faire ça.
+
+0:46:51.520,0:46:57.119
+Donc voici le filtre spectral appliqué au laplacien puis vous
+
+0:46:57.119,0:47:01.000
+multipliez par hl. Donc ce type est…
+
+0:47:01.000,0:47:05.359
+Je peux décomposer ce type. Je vais avoir la matrice 
+
+0:47:05.359,0:47:09.280
+de Fourier multipliée par la fonction spectrale que j'applique à la
+
+0:47:09.280,0:47:15.160
+la valeur propre, ϕ transpose hl.
+
+0:47:15.160,0:47:20.480
+Et c’est mon filtre spectral. Je ne travaille pas directement ici.
+
+0:47:20.480,0:47:25.119
+Je travaille directement là. Et ici la chose que je vais
+
+0:47:25.119,0:47:28.319
+apprendre c’est cette fonction
+
+0:47:28.319,0:47:32.319
+ŵ(λ1). Donc je vais apprendre
+
+0:47:32.319,0:47:36.640
+le filtre spectral et je vais l'apprendre par rétropropagation.
+
+0:47:36.640,0:47:43.839
+Donc je n'ai pas besoin de créer manuellement le filtre spectral.
+
+0:47:43.839,0:47:47.040
+Je n'ai pas besoin de faire cela. C’est appris par rétropropagation.
+
+0:47:47.040,0:47:51.440
+Donc c'était vraiment une excellente idée de faire ça. Et c'était la
+
+0:47:51.440,0:47:54.800
+première technique spectrale. Mais elle présente certaines limites.
+
+0:47:54.800,0:47:58.480
+La première est que vous n'avez aucune garantie de localisation spatiale
+
+0:47:58.480,0:48:02.400
+de filtres. Donc souvenez-vous que nous voulons le
+
+0:48:02.400,0:48:07.040
+champ réceptif local car c'est une très bonne propriété
+
+0:48:07.040,0:48:11.839
+pour pouvoir extraire des motifs/des caractéristiques
+
+0:48:11.839,0:48:16.000
+multi-échelle provenant de votre signal. Donc vous n'ayez pas
+
+0:48:16.000,0:48:19.119
+cette garantie. La deuxième chose est combien
+
+0:48:19.119,0:48:24.720
+de paramètres avez-vous besoin pour apprendre ? Vous devez apprendre n paramètres.
+
+0:48:24.720,0:48:28.000
+Vous devez apprendre de ŵ(λ1)
+
+0:48:28.000,0:48:31.200
+à ŵ(λn). Donc c'est n paramètres.
+
+0:48:31.200,0:48:37.000
+Si le graphe est grand comme le web ou Facebook,
+
+0:48:37.000,0:48:43.000
+alors cela va représenter des milliards de paramètres à apprendre et ce, pour chaque couche.
+
+0:48:43..00,0:48:48.079
+Donc c’est vraiment énorme. Et, là encore, la complexité de l'apprentissage est n carré
+
+0:48:48.079,0:48:54.960
+car votre ϕ est une matrice dense. Donc nous devons améliorer ça.
+
+0:48:54.960,0:48:59.920
+Donc Yann et ses collaborateurs ont amélioré
+
+0:48:59.920,0:49:03.520
+deux propriétés. La première propriété est :
+
+0:49:03.520,0:49:10.000
+comment obtenir des filtres spatiaux localisés ?
+
+0:49:10.000,0:49:14.839
+Pour cela, ce qu’ils proposent…. Ok pour obtenir des
+
+0:49:14.839,0:49:19.520
+filtres spatiaux localisés, donc vous voulez quelque chose qui est localisé,
+
+0:49:19.520,0:49:26.720
+ce que vous devez faire c'est calculer des filtres spectraux lisses. Quelque chose de très
+
+0:49:26.720,0:49:34.160
+lisse comme ça. Alors pourquoi voulez-vous des filtres spectraux lisses ? Car si vous êtes lisse dans
+
+0:49:34.160,0:49:37.680
+l'espace de fréquence, vous serez alors localisé dans
+
+0:49:37.680,0:49:40.559
+le domaine spatial. Donc c'est en physique, vous savez,
+
+0:49:40.559,0:49:44.319
+le principe d'entité d’Heisenberg. Et vous pouvez voir qu’avec
+
+0:49:44.319,0:49:48.000
+l'égalité de Parseval…. Disons que k = 1.
+
+0:49:48.000,0:49:51.280
+Si k = 1, vous avez la première dérivée de
+
+0:49:51.280,0:49:54.640
+la fonction spectrale. Donc si vous voulez que ce soit
+
+0:49:54.640,0:49:58.800
+petit, vous allez avoir une fonction lisse.
+
+0:49:58.800,0:50:03.200
+Et pour k = 1, vous voyez ici que ce sera la variance
+
+0:50:03.200,0:50:06.640
+de votre filtre spatial. Donc si la variance 
+
+0:50:06.640,0:50:11.599
+est petite, cela signifie que vous allez avoir
+
+0:50:11.599,0:50:15.440
+un filtre spatial avec un petit support compact.
+
+0:50:15.440,0:50:21.040
+Donc si vous êtes lisse dans l'espace de fréquence, vous allez
+
+0:50:21.040,0:50:24.720
+être localisé dans l'espace spatial. Donc vous avez besoin
+
+0:50:24.720,0:50:28.480
+du lissage. Comment l’obtenir pour une caractéristique spectrale ?
+
+0:50:28.480,0:50:31.920
+[Alfredo : on peut également penser à la transformation du delta à la
+
+0:50:31.920,0:50:35.119
+fonction de Dirac. Donc si on un delta dans la Dirac dans
+
+0:50:35.119,0:50:40.720
+le domaine temporel alors dans la fréquence que nous allons avoir une transformation complètement plate.
+
+0:50:40.720,0:50:44.079
+Donc c’est peut-être un autre moyen de voir ceci pour ceux qui
+
+0:50:44.079,0:50:48.359
+ne connaissent pas l'égalité de Parseval] Oui, exactement.
+
+0:50:48.359,0:50:52.880
+Donc comment obtenir un filtre spectral lisse ?
+
+0:50:52.880,0:50:56.880
+L'idée est que nous pouvons simplement décomposer
+
+0:50:56.880,0:51:01.280
+le filtre spectral est une combinaison linéaire
+
+0:51:01.280,0:51:07.200
+de noyaux lisses. Les noyaux lisses sont choisis pour être
+
+0:51:07.200,0:51:10.079
+des splines car que les splines sont belles
+
+0:51:10.079,0:51:14.400
+avec un support compact et sont lisses.
+
+0:51:14.400,0:51:19.520
+L'idée est : maintenant apprenons un vecteur de K coefficients et c'est
+
+0:51:19.520,0:51:22.400
+K noyaux lisses. L’apprentissage des coefficients se 
+
+0:51:22.400,0:51:27.200
+fait par rétropropagation. Tout est beau car vous avez
+
+0:51:27.200,0:51:31.359
+la localisation localité dans l'espace et le nombre de paramètres que vous
+
+0:51:31.359,0:51:35.680
+allez apprendre est au nombre de K. Donc ici par exemple
+
+0:51:35.680,0:51:39.920
+disons que K=9. Souvenez-vous qu'avant dans le cas
+
+0:51:39.920,0:51:42.400
+des convolutions, vous avez un 3 par 3
+
+0:51:42.400,0:51:45.599
+c'est-à-dire 9 paramètres. Donc c’est la même chose. 
+
+0:51:45.599,0:51:48.800
+Vous pouvez avoir 9 paramètres à apprendre.
+
+0:51:48.800,0:51:54.000
+Vous voulez apprendre une combinaison de 9 fonctions spline et c'est tout.
+
+0:51:54.000,0:52:00.000
+Vous avez un nombre constant nombre de paramètres à apprendre par couche. Donc c'est bien. 
+
+0:52:00.000,0:52:04.240
+Mais nous vous avez quand même la matrice ϕ
+
+0:52:04.240,0:52:08.800
+La complexité est donc encore quadratique.
+
+0:52:12.000,0:52:15.520
+Donc la question est : comment apprenons-nous
+
+0:52:15.520,0:52:22.400
+en temps linéaire ? Comment apprenons-nous par rapport à la taille du graphe, n.
+
+0:52:22.400,0:52:26.559
+Le problème de la complexité quadratique
+
+0:52:26.559,0:52:30.319
+provient directement de l'utilisation des vecteurs propres laplaciens.
+
+0:52:30.319,0:52:34.800
+Donc vous voyez que la chose qui est ennuyeuse
+
+0:52:34.800,0:52:39.440
+dans cette convolution spectrale n'est pas cette matrice diagonale,
+
+0:52:39.440,0:52:44.160
+ce n'est pas ce vecteur, c'est ce type. C'est la matrice ϕ.
+
+0:52:44.160,0:52:47.280
+Car c'est une matrice complète, c'est une matrice dense.
+
+0:52:47.280,0:52:51.040
+Puis c'est un nombre n carré d'éléments, donc c'est le prix
+
+0:52:51.040,0:52:55.359
+que nous devons payer. Donc nous savons que si nous voulons éviter
+
+0:52:55.359,0:53:01.359
+la complexité quadratique nous devons éviter la décomposition en valeurs propres.
+
+0:53:01.359,0:53:06.480
+Nous pouvons faire ça en apprenant simplement les fonctions du laplacien.
+
+0:53:06.480,0:53:10.000
+Donc c'est ce que nous avons proposé en 2016.
+
+0:53:10.000,0:53:20.119
+Donc la fonction spectrale juste une fonction monômiale 
+
+0:53:20.480,0:53:24.640
+du laplacien. C'est tout. Nous avons donc juste une somme
+
+0:53:24.640,0:53:28.160
+de certains paramètres que nous avons appris par rétropropagation
+
+0:53:28.160,0:53:35.200
+wk fois le laplacien à la puissance k. Donc quand nous faisons cela
+
+0:53:35.200,0:53:39.119
+une première chose qui est bien est que
+
+0:53:39.119,0:53:43.280
+nous allons avoir des filtres qui sont exactement localisés
+
+0:53:43.280,0:53:48.160
+dans un support k-hop. Donc si nous avons le laplacien à la puissance k,
+
+0:53:48.160,0:53:51.000
+les filtres spatiaux seront
+
+0:53:51.000,0:53:54.960
+exactement localisé dans le support k-hop [hop → « saut »].
+
+0:53:54.960,0:53:58.000
+Donc quel est le voisin 1 à un saut ?
+
+0:53:58.000,0:54:01.119
+Disons par exemple que vous avez ce graphe
+
+0:54:01.119,0:54:05.280
+et ici je vais mettre une source de chaleur. Donc la valeur va être de 1
+
+0:54:05.280,0:54:10.720
+à ce nœud et 0 pour tous les autres nœuds. Si j'applique le laplacien à cette 
+
+0:54:10.720,0:54:14.480
+source de chaleur, alors le support du signal va être
+
+0:54:14.480,0:54:19.680
+augmenté d'un 1-hop. Donc en gros chaque nœud
+
+0:54:19.680,0:54:23.520
+peut être atteint par un seul saut.
+
+0:54:23.520,0:54:26.800
+Et si vous faites deux sauts à partir de là,
+
+0:54:26.800,0:54:33.040
+vous atteindrez le second voisinage qui sont les 
+
+0:54:33.040,0:54:37.119
+nœuds orange ici. Donc si vous appliquez le
+
+0:54:37.119,0:54:40.000
+laplacien deux fois, ce sera le support.
+
+0:54:40.000,0:54:44.079
+Si vous appliquez le laplacien k fois, vous aurez le support de k-hop.
+
+0:54:44.079,0:54:48.640
+Donc vous contrôlez exactement la taille de vos filtres spatiaux.
+
+0:54:48.640,0:54:53.839
+C'était donc le premier point.
+
+0:54:53.840,0:54:58.079
+Le deuxième point… Laissez-moi vous montrer ce que vous obtenez pour
+
+0:54:58.079,0:55:04.400
+la complexité de l'apprentissage. Donc encore une fois, vous avez votre convolution 
+
+0:55:04.400,0:55:08.079
+w * h, vous avez la définition de la convolution spectrale. J'utilise ici
+
+0:55:08.079,0:55:14.240
+comme une convolution spectrale, une mônomiale du lapalcien puis je
+
+0:55:14.240,0:55:18.799
+remplace ce type, le laplacien à la puissance k fois
+
+0:55:18.799,0:55:22.319
+le vecteur h, par le vecteur Xk.
+
+0:55:22.319,0:55:27.200
+Xk est en fait donné par votre équation récursive.
+
+0:55:27.200,0:55:31.200
+Un truc récursif est toujours bon. Donc c’est donné par cette équation récursive
+
+0:55:31.200,0:55:35.520
+qui est le laplacien multiplié par le vecteur
+
+0:55:35.520,0:55:42.240
+Xk-1. Et X0 est simplement la fonction originale h.
+
+0:55:42.240,0:55:47.280
+Donc quand je fais ça, vous voyez que cette séquence
+
+0:55:47.280,0:55:51.839
+Xk est généré en multipliant une matrice,
+
+0:55:51.839,0:55:55.119
+le laplacien, et le vecteur Xk-1.
+
+0:55:55.119,0:55:59.119
+La complexité de cette opération est donc le nombre d’arêtes.
+
+0:55:59.119,0:56:03.359
+Vous le faites k fois. Donc le nombre d’arêtes
+
+0:56:03.359,0:56:07.440
+fois k. Et le truc est que pour des
+
+0:56:07.440,0:56:11.599
+graphes du monde réel… en gros, ils sont tous épars.
+
+0:56:11.599,0:56:16.000
+Car l’éparsité est une structure. Souvenez-vous par exemple pour
+
+0:56:16.000,0:56:22.640
+le web, celui-ci a des milliards de pages web. Mais pour chaque page
+
+0:56:22.640,0:56:25.920
+c’est en moyenne connecté à 50 autres
+
+0:56:25.920,0:56:30.000
+pages web. Donc comparer 50 à 1 milliard ce n'est rien.
+
+0:56:30.000,0:56:34.799
+Et de même pour le cerveau. Le cerveau est très épars.
+
+0:56:34.799,0:56:38.160
+La même chose pour les réseaux de transport.
+
+0:56:38.160,0:56:42.839
+Donc tout graphe naturel est généralement épars car l’éparsité est la structure.
+
+0:56:42.839,0:56:48.240
+Donc le nombre d’arêtes est une certaine valeur multipliée par n.
+
+0:56:48.240,0:56:52.400
+Donc à la fin, vous avez une complexité linéaire pour
+
+0:56:52.400,0:56:58.799
+les graphes épars du monde réel. Vous voyez ici que j’utilise le
+
+0:56:58.799,0:57:05.000
+laplacien et je ne fais jamais de décomposition en valeurs propres de celui-ci.
+
+0:57:05.000,0:57:12.559
+Parfois je vois un peu de confusion.
+
+0:57:12.559,0:57:16.319
+Donc j'appelle ceci un GCN spectral.
+
+0:57:16.319,0:57:20.079
+Mais c'est peut-être une erreur car je ne fais pas
+
+0:57:20.079,0:57:28.400
+aucune opération spectrale. Je n'utilise aucune décomposition en valeurs/vecteurs propres avec le laplacien.
+
+0:57:28.400,0:57:36.700
+Donc même si j'utilise la théorie spectrale pour définir ce GCN,
+
+0:57:36.720,0:57:41.800
+à la fin, les calculs sont tous effectués dans le domaine spatial en utilisant le laplacien.
+
+0:57:41.800,0:57:44.960
+Je n’utilise pas le
+
+0:57:44.960,0:57:48.000
+domaine spectral pour le calcul. J'utilise
+
+0:57:48.000,0:57:53.119
+tout dans le domaine spatial. Donc même si nous appelons cela le GCN spectral,
+
+0:57:53.119,0:57:57.400
+nous n’utilisons pas dans la pratique la décomposition spectrale.
+
+0:57:57.400,0:58:00.400
+C’était juste un commentaire.
+
+0:58:00.400,0:58:04.079
+Et le dernier commentaire que je veux faire est que les couches
+
+0:58:04.079,0:58:11.640
+de convolution de graphe, là encore il ne s'agit que d'opérations linéaires. Vous multipliez juste une matrice par un vecteur.
+
+0:58:11.640,0:58:15.640
+Donc juste une opération linéaire, ce qui compatible avec un GPU.
+
+0:58:15.640,0:58:20.880
+Le problème, c'est qu'ici vous faites de l'algèbre linéaire épars
+
+0:58:20.880,0:58:23.760
+et les GPU ne sont pas optimisés pour cela.
+
+0:58:23.760,0:58:26.400
+C’est, je pense, l'une des limites actuelles des GNNs.
+
+0:58:26.400,0:58:30.319
+Nous devons avoir un matériel spécialisé pour les GNNs,
+
+0:58:30.319,0:58:35.200
+nous avons besoin d'avoir du matériel qui s'adapte à l’éparsité
+
+0:58:35.200,0:58:38.559
+de ces opérations. Et nous n'avons pas cela aujourd'hui.
+
+0:58:38.559,0:58:44.380
+Si nous voulons aller très loin avec les GNNs, nous avons besoin d'un matériel spécialisé.
+
+0:58:44.400,0:58:50.160
+[Alfredo : qu'en est-il des TPUs ? Savez-vous si les TPUs peuvent gérer ça ?] C’est la même chose.
+
+0:58:50.160,0:58:56.500
+Ils sont optimisés pour des opérations linéaires comme des matrices complètes.
+
+0:58:56.500,0:59:01.119
+Ils sont spécialisés pour cela. Mais si vous voulez faire de
+
+0:59:01.119,0:59:04.799
+l'algèbre linéaire épars, pour cela, il faut du matériel spatialisé.
+
+0:59:04.799,0:59:08.160
+[Alfredo : ok, merci]
+
+0:59:08.160,0:59:13.839
+Alors comment implémenter ceci ? Par exemple,
+
+0:59:13.839,0:59:19.280
+nous avons un signal, nous avons une fonction définie sur le graphe.
+
+0:59:19.280,0:59:23.359
+Donc n est le nombre de sommets de votre graphe et d est la
+
+0:59:23.359,0:59:28.000
+dimensionnalité de les caractéristiques.
+
+0:59:28.000,0:59:32.160
+Donc pour chaque nœud, vous avez une caractéristique, un vecteur, de
+
+0:59:32.160,0:59:36.480
+dimension d. Donc comment avoir ça ? On a Xk
+
+0:59:36.480,0:59:39.520
+et ce que nous faisons, c'est que nous redimensionnons juste
+
+0:59:39.520,0:59:42.960
+de façon à ne faire que des opérations linéaires.
+
+0:59:42.960,0:59:50.720
+Donc Xk est disposé dans une matrice X̅, qui est de la taille
+
+0:59:50.720,0:59:57.500
+de K fois nd. Donc on redimensionne juste ce Xk en 1 par nd. 
+
+0:59:57.500,1:00:01.440
+Et nous avons K fois nd. Puis nous multiplions cela
+
+1:00:01.440,1:00:06.000
+par le vecteur que nous apprendrons par rétropropagation qui est de taille k par 1.
+
+1:00:06.000,1:00:08.559
+Nous faisons cela et l'opération donnera
+
+1:00:08.559,1:00:11.760
+1 fois nd, vous redimensionnez et obtenez n fois d.
+
+1:00:11.760,1:00:15.119
+Voici donc comment implémenter 
+
+1:00:15.119,1:00:18.480
+avec une PyTorch ou TensorFlow.
+
+1:00:18.480,1:00:22.960
+C'est ainsi que vous faites cette convolution spectrale.
+
+1:00:22.960,1:00:27.520
+Donc, là encore, les propriétés sont que les filtres sont exactement localisés
+
+1:00:27.520,1:00:31.839
+Vous avez un nombre constant de paramètres à apprendre,
+
+1:00:31.839,1:00:35.040
+c'est ce K paramètres que vous devez apprendre par
+
+1:00:35.040,1:00:38.720
+rétropropagation. Vous avez une complexité 
+
+1:00:38.720,1:00:43.200
+d'apprentissage linéaire mais la chose qui n'est pas bonne
+
+1:00:43.200,1:00:47.040
+est que j'utilise ici une base monômiale.
+
+1:00:47.040,1:00:51.440
+Donc j'utilise le laplacien à la puissance 0, le laplacien à la puissance 1,
+
+1:00:51.440,1:00:54.559
+à la puissance 2, 3 et etc. C’est ce que j’utilise ici.
+
+1:00:54.559,1:00:59.999
+Et le fait est que les bases monômiales sont instables pour l'optimisation.
+
+1:00:59.999,1:01:05.520
+Car cette base n'est pas orthogonale. Donc si vous changez un coefficient 
+
+1:01:05.520,1:01:09.920
+alors vous allez modifier l'approximation de votre fonction.
+
+1:01:09.920,1:01:15.839
+Donc vous avez besoin d'orthogonalité si vous voulez apprendre
+
+1:01:15.839,1:01:21.760
+avec une stabilité. Puis vous pouvez utiliser votre
+
+1:01:21.760,1:01:25.520
+base orthonormée préférée mais celle-ci
+
+1:01:25.520,1:01:29.680
+doit avoir une équation récursive.
+
+1:01:29.680,1:01:33.119
+C'est la seule chose dont vous avez besoin. Vous avez besoin de
+
+1:01:33.119,1:01:36.640
+votre base orthonormée pour avoir une équation récursive car c'est
+
+1:01:36.640,1:01:40.559
+la clé pour avoir la complexité linéaire. Donc nous utilisons
+
+1:01:40.559,1:01:44.000
+un polynôme de Tchebychev. C'est quelque chose de très bien connu
+
+1:01:44.000,1:01:47.760
+dans le domaine du traitement du signal. Donc nous allons 
+
+1:01:47.760,1:01:52.799
+approximer la convolution spectrale avec les fonctions de Tchebychev.
+
+1:01:52.799,1:01:56.240
+Les fonctions de Tchebychev appliquées à h. A nouveau cela peut
+
+1:01:56.240,1:02:00.240
+être représenté par Xk. Xk étant donné par cette équation récursive.
+
+1:02:00.240,1:02:03.119
+Donc c’est un peu plus complexe qu’avant
+
+1:02:03.119,1:02:06.880
+mais en pratique, c’est juste la
+
+1:02:06.880,1:02:11.119
+multiplication de votre laplacien par un vecteur.
+
+1:02:11.200,1:02:16.400
+En fin de compte la complexité est toujours linéaire, cela ne change rien.
+
+1:02:16.400,1:02:23.760
+Et cette fois vous avez une stabilité pendant votre processus d'apprentissage.
+
+1:02:23.760,1:02:28.559
+Donc nous avons fait un essai avec la base de données MNIST.
+
+1:02:28.920,1:02:36.960
+Ici c'est donc le numéro de sommets. Donc pour MNIST le graphe est la grille standard.
+
+1:02:36.960,1:02:40.799
+Nous utilisons la grille des k plus proches voisins pour faire cela.
+
+1:02:40.799,1:02:45.119
+Et vous voyez que vous avez une complexité linéaire. Ceci est le
+
+1:02:45.119,1:02:48.799
+nombre de sommets et vous avez 
+
+1:02:48.799,1:02:52.480
+la complexité linéaire donc c'est bon.
+
+1:02:52.480,1:02:58.000
+Pour la précision on a 99% de précision par rapport au LeNet5 standard. 
+
+1:02:58.000,1:03:06.319
+ChebNet [on garde la notation anglo-saxonne de Tchebychev par simplicité] est en gros un ConvNet pour un graphe arbitraire et nous avons la même
+
+1:03:06.319,1:03:12.400
+complexité linéaire pour l'apprentissage. Bien sûr la constante de complexité est beaucoup plus grande
+
+1:03:12.400,1:03:15.160
+que pour le ConvNet standard.
+
+1:03:15.160,1:03:19.760
+C'est quelque chose comme 20 ou 30. Donc c'est beaucoup plus petit
+
+1:03:19.760,1:03:23.920
+pour apprendre. Mais vous avez un ConvNet pour tout graphe arbitraire.
+
+1:03:23.920,1:03:28.000
+Donc c'est ce que vous voulez. Une autre limitation est que
+
+1:03:28.000,1:03:33.680
+c'est un modèle isotrope. Donc laissez-moi vous parler un peu de
+
+1:03:33.680,1:03:37.520
+l'isotropie versus l'anisotropie. Donc si vous regardez le ConvNet
+
+1:03:37.520,1:03:42.799
+standard, vous allez produire des filtres anisotropes, comme celui-ci.
+
+1:03:42.799,1:03:44.799
+Vous voyez donc que ce filtre est anisotrope,
+
+1:03:44.799,1:03:49.440
+il va dans cette direction. Et nous pouvons obtenir des filtres 
+
+1:03:49.440,1:03:53.119
+anisotropes avec des ConvNets standards car nous utilisons une grille.
+
+1:03:53.119,1:03:59.839
+Et sur une grille nous avons des directions. Nous savons où est le haut,
+
+1:03:59.839,1:04:03.640
+où est le bas, où est la gauche où est la droite.
+
+1:04:03.640,1:04:08.160
+Nous connaissons l'ordre des nœuds sur la grille,
+
+1:04:08.160,1:04:11.760
+nous le savons. Mais c'est différent pour les graphes.
+
+1:04:11.760,1:04:15.280
+Nous n'avons aucune notion de direction. Nous ne savons pas où est le
+
+1:04:15.280,1:04:18.319
+haut, où est le bas, où est la gauche, ou à la droite.
+
+1:04:18.319,1:04:21.920
+Donc la seule chose que nous pouvons faire à ce stade
+
+1:04:21.920,1:04:25.520
+est que nous pouvons calculer seulement des filtres isotropes.
+
+1:04:25.520,1:04:28.799
+« Filtres isotropes » signifie que la valeur du filtre
+
+1:04:28.799,1:04:38.000
+sera la même dans toutes les directions pour des cycles de même rayon.
+
+1:04:38.000,1:04:41.920
+Donc c'est ce que nous pouvons obtenir.
+
+1:04:41.920,1:04:46.400
+On ne peut obtenir que des filtres isotropes si l'on utilise un ChebNet.
+
+1:04:46.400,1:04:50.319
+Car nous n'avons aucune notion de direction sur des graphes arbitraires.
+
+1:04:50.319,1:04:55.119
+Je reviendrai sur ce point entre l'isotropie versus l'anisotropie.
+
+1:04:55.119,1:05:03.440
+Un peu plus tard. Donc très rapidement ce que nous avons aussi fait…
+
+1:05:03.440,1:05:08.640
+Je n'ai pas le temps… Oh wow le temps passe. Donc il faut que
+
+1:05:08.640,1:05:13.119
+j'accélère un peu les choses. Donc nous avons élargi cette
+
+1:05:13.119,1:05:17.039
+convolution spectrale d'un graphe à plusieurs graphes. Donc vous pouvez
+
+1:05:17.039,1:05:20.880
+faire ça. C'est comme passer d’un traitement de signal 1D à
+
+1:05:20.880,1:05:25.039
+un traitement d'images 2D. L'extension est donc mathématiquement
+
+1:05:25.039,1:05:29.039
+simple à faire. Nous l'avons fait par exemple pour les systèmes
+
+1:05:29.039,1:05:32.400
+de recommandation car nous avons des utilisateurs de films et
+
+1:05:32.400,1:05:36.720
+des utilisateurs de graphes. Comme je l'ai déjà dit, 
+
+1:05:36.720,1:05:41.359
+vous pouvez aussi utiliser votre polynôme orthogonal préféré
+
+1:05:41.359,1:05:45.760
+donc nous avons utilisé un CayleyNet car les Tchebychev
+
+1:05:45.760,1:05:50.240
+sont instables pour localiser les bandes de fréquences d'intérêt qui sont
+
+1:05:50.240,1:06:00.599
+les communautés de graphes. Nous utilisons des fonctions spectrales plus puissantes. Ce qui est plutôt bien.
+
+1:06:00.600,1:06:08.000
+Donc maintenant laissez-moi aller à cette classe de GCN que j'appelle
+
+1:06:08.000,1:06:13.000
+GCN spatiaux. Pour cette classe, je retourne au TM,
+
+1:06:13.000,1:06:18.720
+la définition de la convolution. Donc comment nous faisons le TM pour les graphes ?
+
+1:06:18.720,1:06:25.280
+Souvenez-vous que le problème principal quand vous voulez faire
+
+1:06:25.280,1:06:29.760
+le TM pour les graphes est que vous n'avez pas d’ordre dans les nœuds,
+
+1:06:29.760,1:06:33.760
+ou de positionnement pour votre patron.
+
+1:06:33.760,1:06:37.599
+Nous n'avons pas de positionnement. Donc en gros, la seule chose que nous
+
+1:06:37.599,1:06:41.000
+avons est l'index des nœuds et c'est tout.
+
+1:06:41.000,1:06:45.280
+Mais l'index n'est pas suffisant pour faire correspondre les informations
+
+1:06:45.280,1:06:49.599
+entre les nœuds. Donc comment pouvons-nous concevoir un
+
+1:06:49.599,1:06:54.160
+TM pour être invariante à la reparamétrisation des nœuds ?
+
+1:06:54.160,1:06:57.599
+Donc vous avez un graphe, cet index de nœuds
+
+1:06:57.599,1:07:02.960
+est disons de 6, mais c'est complètement arbitraire. Je peux avoir un
+
+1:07:02.960,1:07:07.760
+index de 122 par exemple. Donc je veux pouvoir
+
+1:07:07.760,1:07:11.119
+faire le TM indépendamment de l’index
+
+1:07:11.119,1:07:14.880
+de ce nœud. Donc comment je fais ça ?
+
+1:07:14.880,1:07:18.880
+La chose la plus simple que vous puissiez faire est en fait de
+
+1:07:18.880,1:07:26.079
+n'avoir qu'un seul vecteur de patron pour faire la correspondance.
+
+1:07:26.079,1:07:32.240
+Donc vous n'avez pas  wj1, wj2, wj3. Vous avez juste un
+
+1:07:32.240,1:07:35.440
+vecteur w et vous faites la correspondance de ce
+
+1:07:35.440,1:07:39.359
+vecteur avec tous les autres caractéristiques
+
+1:07:39.359,1:07:43.440
+sur votre graphe. C’est le TM
+
+1:07:43.440,1:07:47.799
+la plus simple que vous pouvez faire qui est invariante à la
+
+1:07:47.799,1:07:50.000
+reparamétrisation des nœuds. 
+
+1:07:50.000,1:07:54.799
+Cette propriété être utilisée dans la plupart des GNN aujourd'hui.
+
+1:07:54.799,1:07:58.000
+Donc voici la définition mathématique.
+
+1:07:58.000,1:08:03.520
+Je fais juste le produit entre le vecteur de patron w
+
+1:08:03.520,1:08:07.680
+à la couche l, donc c'est d par 1,
+
+1:08:07.680,1:08:13.119
+et j’ai le vecteur au nœud j qui est aussi la dimension d par 1.
+
+1:08:13.119,1:08:17.199
+J’obtiens le scalaire. Donc ici c'est seulement pour une caractéristique.
+
+1:08:17.199,1:08:20.319
+Bien entendu, vous devrez obtenir plus de caractéristiques, donc au lieu d'avoir
+
+1:08:20.319,1:08:24.640
+un vecteur d par 1, vous allez utiliser une matrice d par d.
+
+1:08:24.640,1:08:31.279
+Donc de cette façon, vous pouvez avoir d caractéristiques pour chaque nœud i.
+
+1:08:31.279,1:08:35.000
+Donc c’est la représentation au nœud i.
+
+1:08:35.000,1:08:38.880
+Je peux tout mettre dans une représentation vectorielle.
+
+1:08:38.880,1:08:46.239
+C'est mon activation à la couche l+1. C’est défini sur
+
+1:08:46.239,1:08:50.000
+sur le graphe de n sommets et il a d dimensions.
+
+1:08:50.000,1:08:56.239
+Ceci peut être réécrit comme la matrice d’adjacence A. Donc c'est
+
+1:08:56.239,1:09:00.000
+une matrice n par n. C'est mon activation à la couche l.
+
+1:09:00.000,1:09:07.279
+Donc c’est une matrice n par d. Et voici le patron
+
+1:09:07.279,1:09:10.480
+que je vais apprendre par rétropropagation, de taille d par d.
+
+1:09:10.480,1:09:15.679
+Donc vous faites ce produit, vous obtenez n par d.
+
+1:09:15.820,1:09:22.880
+Donc sur la base de ce TM pour graphe, je vais maintenant définir
+
+1:09:22.880,1:09:30.400
+deux classes de GCN spatial qui sont les GCNs isotropes
+
+1:09:30.400,1:09:35.120
+et les GCNs anisotropes. Commençons par les GCNs isotropes.
+
+1:09:35.120,1:09:39.279
+Il y a en fait une véritable histoire.
+
+1:09:39.279,1:09:44.640
+La formulation la plus simple de GCN spatial a été introduite par
+
+1:09:44.640,1:09:50.759
+Scarselli et ses co-auteurs en 2009 avant la révolution de l'apprentissage profond.
+
+1:09:50.759,1:09:54.520
+Et plus récemment Thomas Kipf et Max Welling.
+
+1:09:54.520,1:10:06.159
+Mais aussi Sainbayar Sukhbaatar, Arthur Szlam et Rob Fergus en 2016. Donc c'est en fait ce GNN,
+
+1:10:06.159,1:10:11.120
+ce que j’appelle le GNN de base. C’est exactement la même définition
+
+1:10:11.120,1:10:17.040
+qu’avant. Juste ici je mets la matrice D de telle sorte que j'ai la valeur moyenne.
+
+1:10:17.040,1:10:20.560
+Je fais juste la valeur moyenne par rapport au voisinage.
+
+1:10:20.560,1:10:25.840
+Mais c’est exactement l'équation que j'ai utilisée avant.
+
+1:10:25.840,1:10:32.560
+Donc cette équation peut gérer l’absence d’ordre dans les nœuds 
+
+1:10:32.560,1:10:36.800
+donc c’est totalement invariant à la reparamétrisation 
+
+1:10:36.800,1:10:43.199
+des nœuds. Donc si cet indice est, disons, 6 et le passe à 122, cela
+
+1:10:43.199,1:10:47.760
+ne va rien changer au calcul de la valeur de h
+
+1:10:47.760,1:10:51.760
+à la couche suivante. Cela ne changera rien. Vous pouvez également traiter
+
+1:10:51.760,1:10:56.080
+un voisinage de différentes tailles. Pas d’importance si vous avez
+
+1:10:56.080,1:11:01.679
+un voisinage de 4 nœuds ou un voisinage de 10 nœuds, ça ne va rien changer.
+
+1:11:01.679,1:11:05.679
+Vous avez le champ de réception local par conception avec GNN.
+
+1:11:05.679,1:11:09.920
+Il suffit de regarder les voisins et c'est tout. Cela vous est donné.
+
+1:11:09.920,1:11:12.880
+Vous avez le partage des poids. Cela signifie
+
+1:11:12.880,1:11:16.719
+que pour toutes les caractéristiques, vous allez utiliser le
+
+1:11:16.719,1:11:19.840
+même w quelle que soit la position sur le graphe.
+
+1:11:19.840,1:11:25.199
+Donc c'est une propriété de convolution. Cette formulation est également indépendante
+
+1:11:25.199,1:11:28.800
+de la taille du graphe car toutes les opérations sont effectuées localement.
+
+1:11:28.800,1:11:31.600
+Vous utilisez juste les informations locales
+
+1:11:31.600,1:11:35.679
+pour la couche suivante. Donc vous pouvez avoir un graphe de 10 nœuds ou 
+
+1:11:35.679,1:11:39.120
+en avoir un de 10 milliards de nœuds, cela n’a pas d’importance.
+
+1:11:39.120,1:11:42.159
+Donc vous pouvez tout faire en parallèle.
+
+1:11:42.159,1:11:46.159
+Mais cela se limite à la capacité isotrope. Donc le w
+
+1:11:46.159,1:11:50.480
+est le même pour tous les voisins. C’est un modèle isotrope qui
+
+1:11:50.480,1:11:54.480
+va donner la même valeur à tous les voisins.
+
+1:11:54.480,1:12:00.000
+A la fin, ce modèle pourra être représenté par cette figure.
+
+1:12:00.000,1:12:05.280
+Donc cette activation à la couche suivante est donc une fonction
+
+1:12:05.280,1:12:08.400
+de l'activation à la couche actuelle à
+
+1:12:08.400,1:12:15.199
+au nœud i et au voisinage du nœud i.
+
+1:12:15.199,1:12:18.320
+Et la seule chose que nous allons faire
+
+1:12:18.320,1:12:21.520
+est de changer la fonction, l'instanciation de
+
+1:12:21.520,1:12:25.360
+de la fonction. Vous obtiendrez alors toutes les familles de GNNs
+
+1:12:25.360,1:12:29.679
+par le simple fait de décider d'une fonction différente ici.
+
+1:12:29.679,1:12:32.800
+Tout est basé sur cette équation. Donc encore une fois
+
+1:12:32.800,1:12:37.760
+vous avez votre nœud central et ensuite vous avez votre voisinage
+
+1:12:37.760,1:12:42.560
+pour décider de l'activation de la couche suivante.
+
+1:12:43.840,1:12:47.280
+Je n'ai plus beaucoup de temps, alors je ne vais pas prendre trop de temps sur ça
+
+1:12:47.280,1:12:50.320
+mais ce que vous pouvez voir c'est que le
+
+1:12:50.320,1:12:53.679
+GNN de base que je viens de vous montrer est en fait une
+
+1:12:53.679,1:12:57.760
+simplification du Chebnet. Donc si vous tronquez l'expansion du Chebnet
+
+1:12:57.760,1:13:03.440
+en utilisant les deux premières fonctions de Tchebychev, à la fin, vous
+
+1:13:03.440,1:13:08.960
+avez la même équation. Donc voici la relation.
+
+1:13:08.960,1:13:15.199
+Un GCN intéressant est le GraphSage
+
+1:13:15.199,1:13:21.440
+qui a été présenté par William Hamilton, Rex Ying et Jure Leskovec.
+
+1:13:21.440,1:13:25.199
+Revenons au GCN de base. Supposons que la matrice de 
+
+1:13:25.199,1:13:29.520
+contiguïté a une valeur de 1 pour les arêtes.
+
+1:13:29.520,1:13:34.080
+J'ai cette équation. Donc le truc c'est que pour cette équation,
+
+1:13:34.080,1:13:38.480
+vous allez traiter le sommet central i
+
+1:13:38.480,1:13:42.239
+et le voisinage avec le même poids de patron.
+
+1:13:42.239,1:13:46.800
+Mais je peux différencier ça. Je peux avoir un patron
+
+1:13:46.800,1:13:50.400
+pour le nœud central w1 et je peux avoir un patron
+
+1:13:50.400,1:13:53.520
+pour le voisinage 1-hop. En faisant cela
+
+1:13:53.520,1:13:57.760
+vous améliorez beaucoup la performance de votre GNN.
+
+1:13:57.760,1:14:02.640
+Donc vous allez d'ici à là, donc vous avez
+
+1:14:02.640,1:14:06.320
+quelques patrons pour le nœud central
+
+1:14:06.320,1:14:08.480
+et un patron pour le voisinage.
+
+1:14:08.480,1:14:13.760
+Mais c’est encore un GCN isotrope car vous traitez
+
+1:14:13.760,1:14:16.400
+tous les voisins avec le même poids.
+
+1:14:16.400,1:14:20.080
+Ici c'est la moyenne mais vous pouvez changer. Vous pouvez prendre la somme ou 
+
+1:14:20.080,1:14:22.400
+prendre le maximum ou aussi prendre quelque chose de plus
+
+1:14:22.400,1:14:28.560
+élaboré comme une LSTM. Plus récemment les gens essaient
+
+1:14:28.560,1:14:32.800
+d'améliorer la compréhension théorique
+
+1:14:32.800,1:14:39.360
+des GCNs. Donc il y a un réseau pour graphe isomorphe
+
+1:14:39.360,1:14:44.960
+introduit par Jure Leskovec en 2018. L'idée est : pouvons-nous concevoir une
+
+1:14:45.080,1:14:50.880
+architecture qui peut différencier les graphes qui ne sont pas isomorphes ?
+
+1:14:50.880,1:14:56.960
+Donc l'isomorphisme est essentiellement une mesure d'équivalence entre les graphes.
+
+1:14:56.960,1:15:00.480
+Donc ces deux graphes sont isomorphiques l'un par rapport à l'autre
+
+1:15:00.480,1:15:04.400
+et bien sûr vous voulez les traiter de la même manière. Mais si vous n'êtes pas isomorphe
+
+1:15:04.400,1:15:08.080
+vous voulez surtout les traiter d'une manière différente.
+
+1:15:08.080,1:15:11.280
+Donc il y avait GNN basé sur
+
+1:15:11.280,1:15:19.360
+cette définition mais il s'agit toujours d'un GCN isotrope.
+
+1:15:19.840,1:15:23.520
+Donc maintenant je vais parler de GCNs anisotropes.
+
+1:15:23.520,1:15:28.800
+Je reviens donc à ce que j'ai dit précédemment, à savoir que les ConvNets standards peuvent
+
+1:15:28.800,1:15:32.480
+produire des filtres isotropes car qu'il y a une
+
+1:15:32.480,1:15:36.400
+notion de directions sur les grilles. Donc vous avez ce
+
+1:15:36.400,1:15:42.159
+filtre anisotrope dans cette direction. Les GCNs, comme ChebNets, CayleyNets, le GCN standard,
+
+1:15:42.159,1:15:45.920
+le GraphSage et le GIN calculent des filtres isotropes. Donc vous
+
+1:15:45.920,1:15:49.520
+avez ce genre de filtres que vous apprenez pendant le processus.
+
+1:15:49.520,1:15:53.360
+Mais ils sont isotropes. Nous savons que l'anisotropie est
+
+1:15:53.360,1:15:56.560
+très puissante. Donc comment revenir
+
+1:15:56.560,1:16:00.320
+à des GNNs anisotropes ? Donc vous pouvez obtenir l’anisotropie
+
+1:16:00.320,1:16:05.040
+naturellement. Par exemple si vous avez des caractéristiques d’arêtes…
+
+1:16:05.040,1:16:08.640
+Par exemple, si vous prenez des molécules de chimie,
+
+1:16:08.640,1:16:14.800
+les caractéristiques de la liaison peuvent être différentes. Elles peuvent être simple, double, aromatique.
+
+1:16:14.800,1:16:18.840
+Donc vous obtenez naturellement un GCN anisotrope.
+
+1:16:18.840,1:16:25.520
+Si nous voulons concevoir un mécanisme pour l'isotropie, nous voulons que ce mécanisme soit indépendant
+
+1:16:25.520,1:16:28.880
+en ce qui concerne la paramétrisation des nœuds. Pour faire cela
+
+1:16:28.880,1:16:34.320
+nous pouvons utiliser par exemple « Edge degress » qui a été proposé dans MoNets, « edge gates »
+
+1:16:34.320,1:16:38.159
+que nous proposons dans GatedGCNs ou « mécanisme d'attention »
+
+1:16:38.159,1:16:41.120
+dans GAT. Et l'idée est ce que je mets
+
+1:16:41.120,1:16:45.440
+ici à titre d'illustration. Donc ici vous allez traiter
+
+1:16:45.440,1:16:49.280
+vos voisins de la même manière. Donc avec le même patron.
+
+1:16:49.280,1:16:52.480
+Mais ce que vous voulez, c’est traiter vos
+
+1:16:52.480,1:16:55.760
+voisins d'une manière différente. Si c'est j1 vous voulez un
+
+1:16:55.760,1:16:59.840
+poids que si c’est pour j2. Pourquoi voulez-vous ça ? Par exemple si
+
+1:16:59.840,1:17:02.560
+vous voulez analyser des graphes, il y a des
+
+1:17:02.560,1:17:07.040
+communautés de personnes qui sont différentes. Par exemple
+
+1:17:07.040,1:17:10.320
+si c'est de la politique, vous avez des républicains et des démocrates.
+
+1:17:10.320,1:17:14.640
+Donc vous ne voulez pas avoir la même analyse pour le même groupe
+
+1:17:14.640,1:17:17.120
+de personnes. Donc vous voulez une anisotropie pour le graphe.
+
+1:17:17.120,1:17:20.159
+C'est assez important. Le premier modèle qui gère
+
+1:17:23.600,1:17:26.880
+l’anisotropie est MoNet. Il a été introduit par Federico Monti,
+
+1:17:26.880,1:17:30.400
+Michael Bronstein et leurs co-auteurs. L'idée était d'utiliser
+
+1:17:30.400,1:17:34.400
+un modèle de mélange gaussien (GMM) et d'apprendre les paramètres de ce
+
+1:17:34.400,1:17:38.000
+mélange gaussien. Donc ici ils ont K GMM et
+
+1:17:38.000,1:17:40.239
+ils apprennent les paramètres en utilisant le degré
+
+1:17:40.239,1:17:46.880
+du graphe. Puis il y a GAT
+
+1:17:46.880,1:17:50.560
+développé par Petar Veličković,  Yoshua Bengio et
+
+1:17:50.560,1:17:53.440
+leurs co-auteurs. En gros cela utilise le mécanisme 
+
+1:17:53.440,1:17:58.320
+d'attention développé par Dzmitry Bahdanau, Kyunghyun Cho et Yoshua Bengio
+
+1:17:58.320,1:18:01.520
+afin d'introduire l'anisotropie dans la fonction d’agrégation de voisinage.
+
+1:18:01.520,1:18:04.560
+Donc c’est ce que vous voyez ici.
+
+1:18:04.560,1:18:07.760
+Donc vous allez concaténer… c'est une architecture
+
+1:18:07.760,1:18:12.320
+multi-têtes et ici vous avez
+
+1:18:12.320,1:18:15.440
+ces poids qui sont le softmax
+
+1:18:15.440,1:18:19.199
+sur le voisinage. Vous faites le softmax sur le voisinage.
+
+1:18:19.199,1:18:23.760
+Donc certains nœuds seront plus importants que d'autres
+
+1:18:23.760,1:18:30.719
+donnés par le softmax. Ce que nous utilisons avec Thomas Laurent
+
+1:18:30.719,1:18:37.120
+en 2017, c’est un simple mécanisme d'obtention d’arête qui est une sorte de
+
+1:18:37.520,1:18:42.000
+processus d'attention par rapport au mécanisme d'attention épars
+
+1:18:42.000,1:18:48.000
+de Yoshua Bengio. Et ici nous avons aussi utilisé les caractéristiques d’arêtes explicites.
+
+1:18:48.000,1:18:51.679
+Et nous avons découvert récemment
+
+1:18:51.679,1:18:55.719
+que c'est très important pour la tâche de prédiction des arêtes. 
+
+1:18:55.719,1:18:59.199
+Si vous avez ça, c'est important de garder ça.
+
+1:18:59.199,1:19:05.520
+Donc c'est le modèle que nous avons utilisé.
+
+1:19:05.520,1:19:09.440
+Si je prends le transformer et si j’écris
+
+1:19:09.440,1:19:13.640
+l'équation de la version graphe du transformer, c'est ce que j’ai.
+
+1:19:13.640,1:19:16.560
+Donc vous reconnaissez ici la valeur,
+
+1:19:16.560,1:19:20.960
+ici la requête, ici la clé et ici vous avez le softmax.
+
+1:19:20.960,1:19:24.080
+Mais le softmax se fait dans le voisinage 1-hop.
+
+1:19:24.080,1:19:28.719
+Ok, ce serait ça. Et là je vais faire
+
+1:19:28.719,1:19:34.840
+une connexion avec le transformer de Vaswani et ses collaborateurs.
+
+1:19:34.840,1:19:38.040
+Donc qu'est-ce qu'un transformer ?
+
+1:19:38.040,1:19:42.480
+Un transformer standard est en fait un cas particulier de GCN
+
+1:19:42.480,1:19:46.320
+lorsque le graphe est entièrement connecté.
+
+1:19:46.320,1:19:49.120
+Il s'agit donc d'un graphe entièrement connecté.
+
+1:19:49.120,1:19:53.760
+Donc vous prenez n'importe quel nœud i et ce nœud va être connecté
+
+1:19:53.760,1:19:58.960
+à tous les autres nœuds de votre graphe. Et s'inclus lui-même.
+
+1:19:58.960,1:20:02.000
+Si vous regardez cette équation, l'équation que je viens d'écrire,
+
+1:20:02.000,1:20:07.600
+si le voisinage est cette fois-ci pas le voisinage 1-hop
+
+1:20:07.600,1:20:12.000
+mais tout le graphe,  vous avez l’équation
+
+1:20:12.000,1:20:16.320
+standard selon laquelle, si vous faites un transformer en NLP, vous
+
+1:20:16.320,1:20:20.480
+reconnaîtrez directement. [Alfredo : nous avons vu cela la semaine dernière].
+
+1:20:20.480,1:20:24.320
+Exactement, c’est une belle connexion, transition.
+
+1:20:24.320,1:20:28.159
+Vous voyez que vous avez la concaténation, là les multi-tête,
+
+1:20:28.159,1:20:30.960
+le softmax, la requête, la clé et la valeur. 
+
+1:20:30.960,1:20:34.000
+Puis vous avez les poids pour la multi-têtes.
+
+1:20:34.960,1:20:39.000
+La seule chose que je fais ici, mathématiquement, c'est juste avoir le voisinage
+
+1:20:39.000,1:20:43.040
+utilisant toutes les connexions. Il y a donc une question :
+
+1:20:43.040,1:20:48.719
+que signifie faire des GCNs pour les graphes
+
+1:20:48.719,1:20:51.760
+entièrement connectés ? Je pense que dans ce cas
+
+1:20:51.760,1:20:55.840
+il devient moins utile de parler de graphes car quand vous avez
+
+1:20:55.840,1:21:02.000
+chaque donnée connectée à toutes les autres données, alors vous n'avez plus de structure spécifique de graphe.
+
+1:21:02.000,1:21:07.250
+Car ce qui est le plus intéressant avec les graphes c’est l’éparsité de la structure.
+
+1:21:07.250,1:21:10.120
+Comme les connexions du cerveau ou les réseaux sociaux.
+
+1:21:10.120,1:21:16.120
+Ce qui est intéressant n'est pas que tout soit connecté mais d’avoir une connexion éparse entre les nœuds.
+
+1:21:16.120,1:21:18.320
+Donc je pense que dans ce cas, ce serait
+
+1:21:18.320,1:21:22.239
+mieux de parler d'ensembles que de graphes.
+
+1:21:22.239,1:21:26.560
+Et nous savons que les transformers sont des réseaux d’ensembles.
+
+1:21:26.560,1:21:29.679
+Donc dans un certain sens, au lieu de voir 
+
+1:21:29.679,1:21:33.600
+un graphe entièrement connecté avec des caractéristiques, la chose
+
+1:21:33.600,1:21:37.520
+que nous devrions voir est plutôt un ensemble de caractéristiques.
+
+1:21:37.520,1:21:41.540
+Et les transformers sont vraiment bons pour traiter des ensembles
+
+1:21:41.540,1:21:46.560
+de vecteurs de caractéristiques. Donc il y a un notebook
+
+1:21:46.560,1:21:54.120
+que j'ai mis ici. Il porte sur les GatedGCNs et utilise DGL.
+
+1:21:54.880,1:22:00.560
+C'est la librairie de graphes profonds développée par NYU-Shanghai
+
+1:22:00.560,1:22:05.679
+par le professeur Zhang Zheng. Et voici le lien vers le notebook.
+
+1:22:05.679,1:22:09.440
+Donc si vous cliquez dessus, vous irez directement dessus.
+
+1:22:09.440,1:22:14.000
+Cela utilise Google Collab donc vous allez juste
+
+1:22:14.000,1:22:16.800
+besoin d’un compte Gmail pour y accéder.
+
+1:22:16.800,1:22:20.400
+Vous pourrez alors l'exécuter sur Google Cloud.
+
+1:22:20.400,1:22:26.320
+Ici j’y ai mis seulement les fonctions les plus intéressantes
+
+1:22:26.320,1:22:30.080
+pour développer un GCN. Donc peut-être demain
+
+1:22:30.080,1:22:35.679
+[Alfredo : oui demain on va tout passer en revue tout ça].
+
+1:22:35.679,1:22:41.120
+Ok parfait. Donc j'ai mis quelques commentaires
+
+1:22:41.120,1:22:45.760
+sur le code. [Oui, j’ai vu] Et aussi pour comprendre
+
+1:22:45.760,1:22:49.280
+comment DGL fonctionne. Donc probablement vous ferez ça demain [Oui].
+
+1:22:49.280,1:22:53.920
+Alors laissez-moi maintenant parler un peu
+
+1:22:53.920,1:22:59.440
+d'analyse comparative des GNNs. Donc récemment nous avons
+
+1:22:59.440,1:23:04.800
+ce document « Benchmarking Graph Neural Networks ». Donc pourquoi nous avons fait ce benchmark ?
+
+1:23:04.800,1:23:07.440
+Si vous regardez la plupart des publications
+
+1:23:07.440,1:23:12.159
+sur les GCNs, la plupart des travaux utilisent en fait
+
+1:23:12.159,1:23:16.560
+un petit jeu de données comme CORA ou TUs et que sur la seule tâche
+
+1:23:16.560,1:23:19.360
+de classification. Et quand j'ai commencé à faire
+
+1:23:19.360,1:23:22.080
+des expériences sur ce point, j’ai réalisé que
+
+1:23:22.080,1:23:26.159
+si vous utilisez un GCN ou pas, vous obtiendrez statistiquement les mêmes performances
+
+1:23:26.159,1:23:34.000
+car l'écart type est très élevé pour ces petits jeux de données. Donc le fait est que nous
+
+1:23:34.000,1:23:39.360
+ne pouvons pas identifier de bons GCNs. Nous avons besoin de quelque chose d’autre.
+
+1:23:39.360,1:23:42.320
+Et aussi récemment, il y a eu
+
+1:23:42.320,1:23:46.719
+un nouveau développement théorique pour les GCNs.
+
+1:23:46.719,1:23:50.320
+Et la question est de savoir leurs performances en pratique.
+
+1:23:50.320,1:23:54.800
+C’est important d'avoir une bonne justification mathématique mais
+
+1:23:54.800,1:23:59.040
+nous devons être en mesure de prouver que c'est quelque chose d'utile.
+
+1:23:59.040,1:24:03.600
+Et je pense que le benchmarck est très essentiel pour progresser
+
+1:24:03.600,1:24:08.639
+dans de nombreux domaines. Bien sûr en apprentissage profond avec ImageNet
+
+1:24:08.639,1:24:12.560
+du professeur F. F. Li mais le truc c'est que les gens sont réticents 
+
+1:24:12.560,1:24:16.320
+à donner du crédit aux benchmarcks.
+
+1:24:16.320,1:24:19.440
+En tout cas, nous avons introduit ce benchmark ouvert.
+
+1:24:19.440,1:24:23.679
+Donc c'est sur GitHub et est basé sur PyTorch et DGL.
+
+1:24:23.679,1:24:27.840
+Nous avons présenté six nouveaux jeux de données de taille moyenne
+
+1:24:27.840,1:24:31.760
+pour les quatre problèmes fondamentaux des graphes : la classification de graphe
+
+1:24:31.760,1:24:35.600
+la régression de graphe, la classification de nœuds et la classification d’arêtes.
+
+1:24:35.600,1:24:39.600
+Je pense que si vous couvrez ces quatre problèmes fondamentaux, vous avez 
+
+1:24:39.600,1:24:43.040
+en savez déjà beaucoup sur les performances de votre GCN.
+
+1:24:43.040,1:24:48.400
+[Aldredo : pouvez-vous développer un peu ces quatre problèmes fondamentaux ?
+
+1:24:48.400,1:24:51.600
+Je pense que nous ne les avons pas encore mentionnés]
+
+1:24:51.600,1:24:56.400
+Ce que j'ai mentionné est en fait la première partie de tout ConvNet. 
+
+1:24:56.400,1:25:00.320
+C'est comment extraire une caractéristique puissante.
+
+1:25:00.320,1:25:04.639
+Le reste est assez facile. Si vous voulez faire de la régression, 
+
+1:25:04.639,1:25:06.800
+vous utilisez simplement un MLP. Si vous voulez faire de la
+
+1:25:06.800,1:25:09.760
+classification vous devez utiliser un MLP avec entropie croisée.
+
+1:25:09.760,1:25:13.600
+Je peux prendre plus de temps pour le faire, mais
+
+1:25:13.600,1:25:17.120
+ce que je présente est, je pense,
+
+1:25:17.120,1:25:20.639
+plus intéressant que de faire seulement ça.
+
+1:25:20.639,1:25:24.080
+Si vous me donnez une heure de plus, nous pourrions faire cela.
+
+1:25:24.080,1:25:27.920
+[Alfredo : je pense comprendre maintenant comment nous pouvons construire
+
+1:25:27.920,1:25:31.840
+une représentation d'un graphe, vous auriez en gros ces
+
+1:25:31.840,1:25:35.679
+caractéristiques par nœud, mais alors comment passeriez-vous de
+
+1:25:35.679,1:25:39.600
+cette caractéristique par nœud à la tâche finale ? Peut-être que nous pouvons mentionner cela ?]
+
+1:25:39.600,1:25:44.639
+Bien sûr. Donc ce que vous faites en gros…
+
+1:25:44.639,1:25:48.320
+On extrait des caractéristiques convolutives par nœud
+
+1:25:48.320,1:25:51.120
+et puis si vous voulez faire par exemple de
+
+1:25:51.120,1:25:54.560
+la classification de graphes, ce que vous ferez 
+
+1:25:54.560,1:25:58.800
+c’est un type d'agrégation de fonctions sur ce nœud.
+
+1:25:58.800,1:26:02.480
+Donc, par exemple, le plus courant est de faire la moyenne.
+
+1:26:02.480,1:26:06.239
+Vous faites donc la moyenne de tous les nœuds de caractéristiques et ensuite
+
+1:26:06.239,1:26:09.440
+vous utilisiez un MLP. Et vous faites alors la classification
+
+1:26:09.440,1:26:14.080
+de votre graphe. [Alfredo : et c’est toujours le même type de structure de
+
+1:26:14.080,1:26:19.600
+le graphe ou vous avez des structures différentes ? Comme des nombres différents de nœuds. 
+
+1:26:19.600,1:26:24.239
+Si vous utilisez la moyenne c'est complètement indépendant du nombre de nœuds.
+
+1:26:24.239,1:26:27.520
+[Ok, ok] De même si vous faites la somme ou le max.
+
+1:26:27.520,1:26:31.570
+Vous avez de nombreux opérateurs qui sont indépendants du nombre de nœuds.
+
+1:26:31.570,1:26:37.520
+[Ok] Donc nous avons ça et
+
+1:26:37.520,1:26:40.719
+cette taille moyenne suffit en fait
+
+1:26:40.719,1:26:46.080
+à séparer statistiquement les performances des GNNs.
+
+1:26:46.080,1:26:49.760
+Donc c’est plus facile pour les nouveaux utilisateurs d’ajouter
+
+1:26:49.760,1:26:54.080
+de nouveaux modèles de graphes et de nouveaux jeux de données.
+
+1:26:54.080,1:26:57.360
+Et voici le lien vers le répertoire GitHub.
+
+1:26:57.360,1:27:01.520
+Permettez-moi maintenant d'expliquer le pipeline d’un GNN.
+
+1:27:01.520,1:27:05.040
+Donc un pipeline standard est composé de trois couches
+								                     
+1:27:05.040,1:27:08.800		
+La première couche est une couche d'entrée et fait un
+
+1:27:08.800,1:27:12.880
+enchâssement des caractéristiques d'entrée des nœuds et des arêtes.
+
+1:27:12.880,1:27:17.199
+Puis vous aurez une série de couches de GNN.
+
+1:27:17.199,1:27:19.520
+Enfin, vous avez une couche de tâches. Il y aura donc une
+
+1:27:19.520,1:27:24.800
+couche de prédiction pour les tâches de graphe, de nœuds et d’arêtes.
+
+1:27:24.800,1:27:30.800
+Laissez-moi maintenant décrire en détail chacune de ces trois couches.
+
+1:27:31.199,1:27:35.199
+La couche d'entrée. Donc encore une fois nous avons les caractéristiques
+
+1:27:35.199,1:27:40.080
+de nœuds et d’arêtes. Cela provient de l'application. Pouvant être
+
+1:27:40.080,1:27:44.159
+une caractéristique du nœud par exemple pour un système de recommandation
+
+1:27:44.159,1:27:47.199
+de produits. Donc cela vous donne certaines caractéristiques des
+
+1:27:47.199,1:27:50.000
+votre produit. Donc ce que vous ferez, c'est que vous
+
+1:27:50.000,1:27:53.000
+prenez cette caractéristique brute et faites
+
+1:27:53.000,1:27:56.800
+un enchâssement linéaire. Vous obtenez un vecteur de dimensions d.
+
+1:27:56.800,1:28:01.800
+Nous pouvons faire la même chose pour une caractéristique d’arête :
+
+1:28:01.800,1:28:05.800
+enchâssement de l’entrée et obtenir un vecteur de dimension d.
+
+1:28:05.800,1:28:12.040
+Donc essentiellement la sortie de la couche d’enchâssement sera une matrice pour h,
+
+1:28:12.040,1:28:18.639
+de n nœuds et de dimension d pour les caractéristiques.
+
+1:28:18.639,1:28:22.880
+Pour les arêtes, c’est une matrice E, le nombre d’arêtes,
+
+1:28:22.880,1:28:30.639
+fois le nombre de caractéristiques d.
+
+1:28:33.760,1:28:39.600
+Et cette sortie de la couche d’enchâssement sera
+
+1:28:39.600,1:28:43.760
+l'entrée des couches du GNN.
+
+1:28:43.760,1:28:47.520
+Qui est ici. Puis ce que nous allons faire c'est que nous
+
+1:28:49.280,1:28:54.639
+appliquons notre couche GNN préférée
+
+1:28:54.639,1:29:00.320
+un certain nombre de fois l. Donc nous avons la représentation du
+
+1:29:00.320,1:29:04.639
+nœud et de l’arête à la couche l passant dans la couche de GNN
+
+1:29:04.639,1:29:07.840
+et cela vous donner la représentation des nœuds 
+
+1:29:07.840,1:29:11.120
+de h et e à la couche suivante. Et nous faisons cela 
+
+1:29:11.120,1:29:14.800
+l fois. Cela nous donne
+
+1:29:14.800,1:29:17.920
+la sortie des couches du GNN.
+
+1:29:17.920,1:29:21.280
+Il s'agit d'une matrice de n nœuds et de d dimensions
+
+1:29:21.280,1:29:26.239
+pour les nœuds. Pour les arêtes c’est une matrice de
+
+1:29:26.239,1:29:30.400
+E, le nombre d'arêtes, multiplié par la dimension.
+
+1:29:30.400,1:29:35.040
+C’est la sortie de notre couche de GNN.
+
+1:29:35.040,1:29:38.400
+Et enfin pour la dernière couche,
+
+1:29:38.400,1:29:43.920
+c'est la couche de tâche. Donc si nous faisons des prédictions
+
+1:29:43.920,1:29:46.719
+au niveau du graphe, ce qui se passe, c'est que nous
+
+1:29:46.719,1:29:50.320
+prenons la sortie des couches du GNN
+
+1:29:50.320,1:29:56.159
+et faisons une moyenne par rapport à tous les nœuds du graphe.
+
+1:29:56.159,1:30:01.199
+Donc cela nous donne une représentation du graphe
+
+1:30:01.199,1:30:07.760
+en d dimensions. Puis nous la donnons à un perceptron multicouche, MLP,
+
+1:30:07.760,1:30:11.440
+et cela nous donne un score qui peut être un scalaire si nous faisons
+
+1:30:11.440,1:30:16.000
+une régression. Par exemple l'estimation de propriété chimique.
+
+1:30:16.000,1:30:23.520
+Ou si c’est une classification, nous pouvons essayer de classer les molécules en classes.
+
+1:30:23.520,1:30:26.639
+Nous pouvons également prédire au niveau du nœud. 
+
+1:30:29.360,1:30:32.880
+Nous allons donc prendre les représentations
+
+1:30:32.880,1:30:36.880
+des nœuds à la sortie du GNN
+
+1:30:36.880,1:30:40.639
+et nous donnerons cela à un MLP. Nous obtiendrons un score
+
+1:30:40.639,1:30:44.159
+pour le nœud i qui peut être un scalaire pour la régression
+
+1:30:44.159,1:30:48.320
+ou un vecteur de dimension K pour la classification.
+
+1:30:48.320,1:30:52.480
+Nous pouvons aussi faire de la prédiction de niveau de l’arête.
+
+1:30:52.480,1:30:56.800
+Nous avons donc un lien entre le nœud i et le nœud j.
+
+1:30:56.800,1:31:02.639
+C’est la concaténation de la représentation du GNN
+
+1:31:02.639,1:31:07.040
+pour le nœud i et le nœud j. Nous donnons cela à un MLP et obtenons
+
+1:31:07.040,1:31:10.400
+un score pour le lien entre les nœuds i et j. Cela peut être
+
+1:31:10.400,1:31:15.440
+une régression ou une classification.  Donc rapidement car je suis à court
+
+1:31:15.440,1:31:20.560
+de temps, donc vous avez la tâche de régression du graphe. 
+
+1:31:20.560,1:31:23.600
+C'est pour les molécules. Donc ici nous voulons
+
+1:31:23.600,1:31:30.000
+prédire la solubilité moléculaire. Et là vous avez la table.
+
+1:31:30.040,1:31:35.840
+Donc c’est comme un GCN agnostique. Donc on n’utilise pas de structure de graphe.
+
+1:31:35.840,1:31:40.320
+Plus c'est bas, mieux c'est. Là, c'est de GCNs isotropes
+
+1:31:40.320,1:31:44.000
+et ici s'agit de GCNs anisotropes. Donc généralement vous verrez
+
+1:31:44.000,1:31:50.560
+que pour la plupart des expériences, les GCNs anisotropes marchent mieux
+
+1:31:50.560,1:31:54.080
+que les GCNs isotropes car vous utilisez bien sûr la
+
+1:31:54.080,1:31:58.239
+propriété directionnelle. Donc c’est pour la régression du graphe.
+
+1:31:58.239,1:32:00.800
+Ici c’est pour la classification de graphes. Donc vous avez des images
+
+1:32:00.800,1:32:08.239
+sous forme de nœuds et vous voulez classer ces images.
+
+1:32:08.239,1:32:15.920
+Vous avez aussi la classification des nœuds. Donc c'est ici un
+
+1:32:15.920,1:32:21.280
+problème d'optimisation combinatoire des TSP. Donc le problème du vendeur ambulant.
+
+1:32:21.280,1:32:24.800
+Vous avez donc un graphe et vous voulez savoir si cette arête appartient à 
+
+1:32:24.800,1:32:30.639
+la solution. Donc si elle en fait partie, c'est la classe 1 et si ce n’est pas le cas, c'est la classe 0.
+
+1:32:30.639,1:32:34.880
+Nous voyons qu'ici, vous avez besoin d'une caractéristique d’arête explicite. Donc vous voyez que
+
+1:32:34.880,1:32:39.560
+le seul modèle qui fait du bon travail par rapport à l’heuristique naïve 
+
+1:32:39.560,1:32:45.520
+est en utilisant la caractéristique explicite d’arête.
+
+1:32:45.520,1:33:00.080
+J’utilise cet exemple combinatoire pour faire un atelier à IPAM l'année prochaine avec Yann et Peter, Stephanie, Andreas, Stanley, Oriol et Max. [cf. les noms sur l’écran].
+
+1:33:00.159,1:33:03.760
+Donc on organise un atelier sur la combinaison de l'apprentissage approfondi et de l'optimisation combinatoire
+
+1:33:03.760,1:33:07.040
+ce qui me semble être une direction de recherche très intéressante.
+
+1:33:07.040,1:33:12.880
+Donc la conclusion. Nonc généralisons les ConvNets à des données de
+
+1:33:12.880,1:33:16.560
+graphes. Pour cela, nous avons dû redéfinir un
+
+1:33:16.560,1:33:19.520
+opérateur de convolution sur les graphes. Donc nous faisons cela pour
+
+1:33:19.520,1:33:25.280
+les TMs conduisant à la classe des GCNs spatiaux.
+
+1:33:25.280,1:33:29.040
+Nous l'avons aussi fait avec une convolution spectrale qui conduit à la 
+
+1:33:29.040,1:33:34.719
+classe des GCNs spectraux. Nous avons une complexité linéaire pour
+
+1:33:34.719,1:33:38.639
+les graphes du monde réel. Nous avons une implémentation sur GPU mais n'est
+
+1:33:38.639,1:33:43.000
+pas encore optimisée pour les GPUs que nous avons actuellement. Nous avons une capacité 
+
+1:33:43.000,1:33:47.040
+d’apprentissage universel. C’est le résultat de des travaux théoriques récents.
+
+1:33:47.040,1:33:51.520
+Et nous pouvons le faire des graphes multiples et aussi pour des graphes qui peuvent
+
+1:33:51.520,1:33:54.280
+changer : les graphes dynamiques. Des applications :
+
+1:33:54.280,1:33:58.639
+je suis content que maintenant que je n'ai plus besoin de justifier pourquoi
+
+1:33:58.639,1:34:03.600
+nous faisons des GNNs. Donc c'est de plus en plus appliqué.
+
+1:34:03.600,1:34:20.880
+Cette semaine à la conférence ICLR20, le mot-clé qui a eu la plus grosse
+amélioration était les GNNs.
+
+1:34:21.600,1:34:26.960
+Et vous avez maintenant des ateliers et des tutoriels sur les GNNs à
+
+1:34:26.960,1:34:30.560
+de nombreuses conférences de haut niveau sur l'apprentissage profond.
+
+1:34:30.560,1:34:34.719
+Ceci est probablement le premier des tutoriels sur GNNS
+
+1:34:34.719,1:34:39.440
+que nous avons organisé aux NeurIPS et à CVPR en 2017.
+
+1:34:39.440,1:34:44.560
+Si vous voulez quelques ressources supplémentaires à regarder, vous avez
+
+1:34:44.560,1:34:50.400
+l'atelier de l'IPAM organisé en 2018 et en 2019.
+
+1:34:50.400,1:34:53.440
+Pour ceux-là, il y a les enregistrements vidéo
+
+1:34:53.440,1:35:14.000
+si vous voulez en savoir plus sur ça. Et je voudrais remercier mes collaborateurs :  Y. Bengio, M. Bronstein, F. Monti, C. Joshi, V. P. Dwivedi, Y.Y. Leow, T. Laurent, A.Szlam, R. Levie, M. Defferrard, P. Vandergheynst et  P. Hagmann.
+
+1:35:14.000,1:35:16.080
+Et donc merci.
+
+1:35:17.199,1:35:21.920
+[Alfredo : merci, c'était vraiment impressionnant et je pense que tout le monde ici a été stupéfait par
+
+1:35:21.920,1:35:25.040
+la qualité des diapositives et de vos explications.
+
+1:35:25.040,1:35:29.280
+Nous avons vraiment apprécié, j’ai reçu tellement de messages privés ici,
+
+1:35:29.280,1:35:32.320
+tout le monde était très excité.
+
+1:35:32.320,1:35:36.000
+J'ai en fait quelques questions s’il vous
+
+1:35:36.000,1:35:40.840
+reste du temps] Oui. [Nous n'avons pas parlé de modèles 
+
+1:35:40.840,1:35:44.719
+générateurs. Avez-vous quelques mots sur la façon dont
+
+1:35:44.719,1:35:48.639
+nous pouvons par exemple générer de nouvelles protéines…
+
+1:35:48.639,1:35:51.679
+Je ne sais pas quoi d’autre…
+
+1:35:51.679,1:35:54.800
+Trouver un remède pour la covid ?
+
+1:35:54.800,1:35:59.800
+Des questions actuelles pour le monde actuel]
+
+1:35:59.800,1:36:03.440
+Oui absolument. La communauté travaille aussi
+
+1:36:03.440,1:36:07.920
+sur les modèles générateurs de graphes. Vous avez deux directions.
+
+1:36:07.920,1:36:10.560
+La première est de prendre la
+
+1:36:10.560,1:36:14.400
+manière récursive. Donc ce que vous allez faire c'est que vous
+
+1:36:14.400,1:36:18.960
+allez créer les atomes de votre molécule atome après atome.
+
+1:36:18.960,1:36:21.600
+Vous commencez par un atome, puis vous avez un candidat pour le prochain
+
+1:36:21.600,1:36:25.199
+et aussi la prochaine liaison entre les deux atomes.
+
+1:36:25.199,1:36:29.520
+Et vous pouvez faire cela. C'est une sorte de style de LSTM.
+
+1:36:29.520,1:36:32.560
+La deuxième direction est de le faire 
+
+1:36:32.560,1:36:37.679
+en une fois. Donc vous avez besoin d'un réseau qui peut
+
+1:36:37.679,1:36:43.520
+prédire quelle est la longueur ou la taille de
+
+1:36:43.520,1:36:47.280
+votre molécule et puis quelles sont les connexions.
+
+1:36:47.280,1:36:53.719
+Donc vous avez ces deux directions : le faire de manière récursive ou le faire d'un seul coup.
+
+1:36:53.719,1:36:56.560
+Donc elles sont différentes. La communauté
+
+1:36:56.560,1:36:59.600
+est actuellement plus intéressée par manière récursive.
+
+1:36:59.600,1:37:03.600
+J'ai un papier sur la manière en un coup. En gros cela a des performances
+
+1:37:03.600,1:37:07.360
+équivalentes. Je ne vois pas de différence.
+
+1:37:07.360,1:37:10.480
+Mais vous pouvez le faire. La seule chose
+
+1:37:10.480,1:37:13.679
+est comment traiter. La question est votre molécule
+
+1:37:13.679,1:37:23.040
+peut avoir des tailles différentes et c’est le défi ici. 
+
+1:37:23.040,1:37:26.800
+Donc comment gérer les différentes tailles.
+
+1:37:26.800,1:37:32.800
+Nous avons différentes options pour le faire. Ce qui est très intéressant par rapport à la chimie.
+
+1:37:32.839,1:37:38.600
+Les GNNs sont, dans un certain sens, trop flexibles.
+
+1:37:39.520,1:37:45.360
+Quand vous venez des ConvNets standards,
+
+1:37:45.360,1:37:48.300
+la grille est très structurée.
+
+1:37:48.300,1:37:54.999
+Donc vous pouvez obtenir beaucoup d'informations de la structure de la grille. Mais vous n'avez pas cela dans les graphes.
+
+1:37:54.999,1:37:59.440
+Vous perdez l'ordre des nœuds et tout.
+
+1:37:59.440,1:38:02.960
+Nous devons donc trouver un moyen d’avoir
+
+1:38:02.960,1:38:06.000
+plus de structure à l'intérieur des GNNS.
+
+1:38:06.000,1:38:09.040
+Une façon de faire cela est l'architecture.
+
+1:38:09.040,1:38:15.600
+Par exemple si vous faites de la chimie, vous voudriez combiner l'équation de Schrödinger,
+
+1:38:15.600,1:38:21.119
+comme l'énergie d’Hamilton. Donc les gens font ça pour mieux contraindre
+
+1:38:21.119,1:38:23.119
+votre GNN. Don encore une fois
+
+1:38:23.119,1:38:27.360
+les GNNs sont dans un sens trop flexibles. Vous avez besoin de
+
+1:38:27.360,1:38:31.000
+trouver un moyen d'ajouter plus de contraintes universelles.
+
+1:38:31.080,1:38:39.360
+[Alfredo : à propos des contraintes universelles, j'ai ici une question : qu'entendez-vous par capacité d’apprentissage universel ?]
+
+1:38:39.360,1:38:44.199
+Donc c’est les travaux récents sur les GNNs. Les gens essaient… 
+
+1:38:44.200,1:38:48.239
+Dans un certain sens, vous essayez de classer vos réseaux de neurones.
+
+1:38:48.239,1:38:52.080
+Il y a de nombreuses publications sur les réseaux neuronaux donc comment les classer ? Vous avez besoin
+
+1:38:52.080,1:38:56.239
+de trouver des propriétés mathématiques. Comme les propriétés isotropes/anisotropes.
+
+1:38:56.239,1:39:04.480
+Plus récemment il y a des travaux théoriques sur l'isomorphisme et
+
+1:39:04.480,1:39:07.679
+l’expressiabilité des GNNs en fonction d'une classe
+
+1:39:07.679,1:39:13.440
+de graphes théoriques. Les graphes ont commencé avec Euler
+
+1:39:13.440,1:39:16.719
+il y a deux cents ans, donc nous en savons beaucoup sur les graphes.
+
+1:39:16.719,1:39:20.400
+Et nous voulons classer les graphes en fonction de certaines propriétés mathématiques.
+
+1:39:20.400,1:39:24.360
+C'est donc ce que j'essayais de mentionner.
+
+1:39:24.360,1:39:28.400
+Vous pouvez concevoir des GNNs
+
+1:39:28.400,1:39:31.840
+pour certaines propriétés mathématiques particulières.
+
+1:39:31.840,1:39:35.920
+[Alfredo : n'hésitez pas à poser des questions. Vous pouvez aussi
+
+1:39:35.920,1:39:40.320
+m’écrire si vous êtes trop timide. Je ne suis pas timide, je sais juste lire]
+
+1:39:40.320,1:39:44.639
+[Etudiante : j'ai une question et merci beaucoup pour cette conférence.
+
+1:39:44.639,1:39:48.400
+Vous avez mentionné que vous avez créé comme un ensemble de données de référence
+
+1:39:48.400,1:39:52.320
+pour que les gens puissent comparer leurs différents GNNs.
+
+1:39:52.320,1:39:55.800
+Mais j'ai l'impression que beaucoup de ces réseaux
+
+1:39:55.800,1:39:59.440
+apprennent aussi par exemple la représentation dans le graphe.
+
+1:39:59.440,1:40:03.119
+Beaucoup de tâches en aval pourraient être comme un cadre non supervisé.
+
+1:40:03.119,1:40:11.400
+Je pense dans le benchmark vous utilisez la précision. Vous avez alors les étiquettes de vérité.
+
+1:40:11.440,1:40:15.199
+Donc c'est plus dans le cadre supervisé.
+
+1:40:15.199,1:40:20.639
+Avez-vous des idées sur la façon dont nous pourrions faire des comparaisons 
+
+1:40:20.639,1:40:25.080
+de performance de GNNS dans un cadre non supervisé ou dans
+
+1:40:25.080,1:40:33.760
+cadre semi-supervisé ou en mesurant la performance dans certaines tâches ou applications communes en aval
+
+1:40:33.760,1:40:36.800
+J'aimerais savoir ce que vous en pensez, merci]
+
+1:40:36.800,1:40:41.320
+Je pense que c'est l'un des sujets favoris de Yann : l’apprentissage auto-supervisé.
+
+1:40:40.320,1:40:49.440
+[Yann : oui, j’ai visiblement très bien lavé le cerveau des étudiants du cours]
+
+1:40:49.440,1:40:56.880
+[Etudiante : oui, c'est pour ça que je demande]
+
+1:40:56.880,1:41:04.400
+Bien sûr, une question importante est d’apprendre efficacement.
+
+1:41:04.400,1:41:08.480
+Vous ne voulez pas avoir trop d’étiquettes pour pouvoir
+
+1:41:08.480,1:41:13.280
+bien prédire. L'apprentissage autosupervisé
+
+1:41:13.280,1:41:18.960
+est une façon de faire ça. Et vous pouvez le faire aussi avec
+
+1:41:18.960,1:41:21.679
+les graphes. Vous pouvez cacher une partie des informations
+
+1:41:21.679,1:41:24.320
+de votre graphe et vous pouvez prédire
+
+1:41:24.320,1:41:28.159
+ces informations cachées pour avoir une présentation.
+
+1:41:28.159,1:41:33.080
+Il est difficile pour moi de suivre tous les travaux récents sur les GNNs.
+
+1:41:33.160,1:41:38.800
+Je suppose que si vous recherchez ça sur Google, il y aura probablement déjà un ou deux articles
+
+1:41:38.800,1:41:43.679
+sur cette idée. Je veux dire qu'il n'y a rien de spécial avec les GCNs.
+
+1:41:43.679,1:41:47.280
+Vous pouvez appliquer les mêmes idées, comme l'apprentissage autosupervisé
+
+1:41:47.280,1:41:51.440
+aux GCNs. Nous n’avons pas mis cela dans le benchmark
+
+1:41:51.440,1:41:54.719
+mais c'est une bonne idée. Donc c'est peut-être quelque chose que nous
+
+1:41:54.719,1:42:03.199
+nous pourrions faire. [Yann : en fait l'apprentissage autosupervisé exploite une sorte de structure de graphe.
+
+1:42:03.199,1:42:10.719
+Par exemple quand vous faites de l'apprentissage autosupervisé dans un texte vous prenez une séquence de mots
+
+1:42:10.719,1:42:15.520
+et vous apprenez à prédire un mot manquant peu importe où il est.
+
+1:42:15.520,1:42:19.520
+Il y a une structure de graphe et cette structure de graphe
+
+1:42:19.520,1:42:25.199
+c'est combien de fois un mot apparaît à une certaine distance d’un
+
+1:42:25.199,1:42:28.400
+autre mot. Donc imaginez que vous avez tous les
+
+1:42:28.400,1:42:32.800
+mots et puis vous dites : avec ce contexte
+
+1:42:32.800,1:42:36.080
+fait un graphe entre les mots. C’est une version très simple de ça.
+
+1:42:36.080,1:42:45.840
+Faites un graphe qui indique combien de fois ce mot apparaît à une distance de 3 de cet autre mot.
+
+1:42:45.840,1:42:49.440
+Puis un autre graphe pour une distance de 1, une distance de 2, etc.
+
+1:42:49.440,1:42:53.280
+Donc cela constitue un graphe et il vous indique 
+
+1:42:53.280,1:42:57.600
+dans quel contexte deux mots apparaissent simultanément.
+
+1:42:57.600,1:43:01.280
+Vous pouvez penser à un texte comme
+
+1:43:01.280,1:43:05.360
+un graphe linéaire et les voisins que vous prenez…
+
+1:43:05.360,1:43:10.240
+En gros quand vous entraînez un transformer, vous collez le voisinage dans ce graphe.
+
+1:43:10.239,1:43:15.840
+Quand vous faites de l'apprentissage métrique, le type de choses qu’Ishan [cf. cours 10]
+
+1:43:15.840,1:43:19.000
+a parlé : l'utilisation de l’entraînement contrastif
+
+1:43:19.000,1:43:25.000
+où vous avez deux échantillons qui sont similaires et deux échantillons qui sont dissemblables, il s'agit d'un graphe.
+
+1:43:25.000,1:43:28.719
+C'est un graphe de similarité que vous utilisez. Vous dites au système :
+
+1:43:28.719,1:43:32.320
+voici deux échantillons qui sont liés car je sais qu'ils sont similaires et
+
+1:43:32.320,1:43:35.840
+voici deux échantillons dont je sais qu'ils ne sont pas liés car je sais qu'ils sont dissemblables.
+
+1:43:35.840,1:43:39.440
+Et j'essaie de trouver un enchâssement de graphe essentiellement.
+
+1:43:39.440,1:43:43.119
+Ces réseaux neuronaux apprennent l’enchâssement de graphe pour les nœuds.
+
+1:43:43.119,1:43:47.760
+Les nœuds qui sont liés dans le graphe ont des vecteurs similaires et
+
+1:43:47.760,1:43:51.119
+les nœuds qui ne le sont pas ont des vecteurs dissemblables.
+
+1:43:51.119,1:43:55.320
+Donc il y a un lien très très fort entre l'apprentissage autosupervisé
+
+1:43:55.320,1:44:00.719
+et une sorte de vision par graphe d'un jeu d’entraînement.
+
+1:44:00.719,1:44:04.080
+Je ne pense pas que cela ait encore été exploité ou réalisé
+
+1:44:04.080,1:44:06.800
+par beaucoup de gens, donc il y aurait des choses vraiment intéressantes à faire.
+
+1:44:06.800,1:44:09.119
+Je ne sais pas ce que Xavier pense de ça]
+
+1:44:09.119,1:44:13.119
+Oui, exactement, c'est complètement lié. Sur le graphe vous
+
+1:44:13.119,1:44:16.480
+n'avez pas de positionnement des nœuds. Et ce tu dis Yann,
+
+1:44:16.480,1:44:19.440
+c'est exactement cela. Comment pouvons-nous avoir
+
+1:44:19.440,1:44:23.760
+le positionnement entre les nœuds qui sont pertinents à votre application particulière.
+
+1:44:23.760,1:44:30.320
+Et vous voulez le faire de manière autosupervisée car vous apprendrez toutes les configurations possibles
+
+1:44:30.320,1:44:35.440
+et vous n'avez pas besoin d'avoir des étiquettes pour le faire. Donc oui,
+
+1:44:35.440,1:44:38.880
+c'est le point. Si vous savez comment 
+
+1:44:38.880,1:44:43.440
+comparer des nœuds… donc en gros comment extraire
+
+1:44:43.440,1:44:46.960
+l'encodage de position, alors vous ferez un excellent travail.
+
+1:44:46.960,1:44:50.639
+C'est une des questions les plus importantes dans les GNNs
+
+1:44:50.639,1:44:55.119
+et aussi pour le NLP et de nombreuses autres applications.
+
+1:44:55.119,1:44:58.560
+[Etudiante : bien, merci]. [Alfredo : une question vient d'arriver ici.
+
+1:44:58.560,1:45:02.480
+Pourriez-vous éventuellement mettre en évidence les parties les plus importantes du graphe
+
+1:45:02.480,1:45:05.520
+avec attention ? Je pense que nous sommes peut-être allés un peu vite
+
+1:45:05.520,1:45:12.239
+dessus et quelqu'un s'est un peu perdu] Donc le « graph attention network ».
+
+1:45:12.239,1:45:16.080
+La première technique a été développée par Yoshua Bengio, Petar Veličković
+
+1:45:16.080,1:45:20.080
+et donc c'est probablement le premier travail que vous
+
+1:45:20.080,1:45:24.239
+aimeriez regarder. Mais vous pouvez aussi prendre
+
+1:45:24.239,1:45:27.440
+le transformer standard. Puis vous
+
+1:45:27.440,1:45:32.280
+pouvez en faire une version graphe. C'est assez simple à faire.
+
+1:45:32.280, 1:45:37.840
+[Alfredo : juste en multipliant par la matrice d’adjacence ?] Oui, exactement.
+
+1:45:37.840,1:45:40.080
+Vous pouvez déjà le faire le transformer
+
+1:45:40.080,1:45:44.960
+en PyTorch. Il y a un masque [Alfredo : oui, avec le moins infini]
+
+1:45:44.960,1:45:49.040
+Exactement. Si vous mettez moins infini avec la softmax vous obtiendrez 0.
+
+1:45:49.040,1:45:52.540
+[Alf : je pense que je vais montrer ça demain]
+
+1:45:52.540,1:45:58.080
+Donc vous pouvez déjà faire des « graphes transformer » facilement avec PyTorch. Mais le truc c'est que
+
+1:45:58.080,1:46:03.920
+ce sera une matrice complète. Donc ça va utiliser beaucoup de mémoire
+
+1:46:03.920,1:46:07.119
+car il existe de nombreuses valeurs dont vous n'avez pas besoin.
+
+1:46:07.119,1:46:10.800
+Si vous voulez vous mettre à l'échelle pour obtenir des graphes plus grands
+
+1:46:10.800,1:46:14.159
+alors vous avez besoin de quelque chose qui exploite l’éparsité comme DGN
+
+1:46:14.159,1:46:18.239
+ou PyTorch Geometric par exemple. [Alf : la semaine dernière nous avons codé le transformer
+
+1:46:18.239,1:46:22.080
+de zéro et avons vu toutes les opérations à l'intérieur
+
+1:46:22.080,1:46:25.360
+et nous pouvons peut-être y ajouter une matrice supplémentaire 
+
+1:46:25.360,1:46:28.480
+pour faire cette partie masquée pour pouvoir récupérer
+
+1:46:28.480,1:46:31.760
+le GCN à partir du code que nous avons déjà écrit.
+
+1:46:31.760,1:46:34.800
+Donc je pense qu'il y a une connexion
+
+1:46:34.800,1:46:38.320
+pour demain et il y a de nouvelles questions :
+
+1:46:38.320,1:46:41.600
+Existe-t-il une application où l'utilisation de ChebNet
+
+1:46:41.600,1:46:50.119
+pourrait être meilleure que le GCN spatial ?]
+
+1:46:50.960,1:46:56.000
+Je dirais qu'ils font partie de la famille des isotropes.
+
+1:46:56.000,1:47:01.679
+C'est la classe j'appelle GCNs isotropes.
+
+1:47:01.679,1:47:08.080
+Donc, pour moi… Bien sûr cela dépend de vos données et de votre tâche.
+
+1:47:08.080,1:47:12.639
+Si vous avez des tâches où vos données sont
+
+1:47:12.639,1:47:15.920
+Isotropes, avec ce genre d'information alors ChebNet fera une très
+
+1:47:15.920,1:47:19.119
+bon travail. Maintenant si vous avez des informations
+
+1:47:19.119,1:47:22.000
+où l'isotropie est important, par exemple pour les réseaux sociaux,
+
+1:47:22.000,1:47:28.119
+vous ne voulez pas traiter les voisins de la même manière alors cela ne va pas faire un bon travail.
+
+1:47:28.120,1:47:31.440
+Donc cela dépend vraiment de votre tâche
+
+1:47:31.440,1:47:35.600
+où l'isotropie est très importante. Si l'isotropie est très importante, vous
+
+1:47:35.600,1:47:39.520
+devriez utiliser ChebNet car il utilise
+
+1:47:39.520,1:47:43.199
+toutes les informations sur votre graphe de manière isotopique.
+
+1:47:43.199,1:47:47.520
+Et si vous utilisez le GCN standard, vous utilisez juste 
+
+1:47:47.520,1:47:50.639
+les deux premiers termes d’approximation de ChebNet.
+
+1:47:50.639,1:47:55.040
+[Alf : oui c'est là qu'on peut apprendre les arêtes, la représentation
+
+1:47:55.040,1:47:58.880
+pour les arêtes tels qu'elles discriminent entre voisins]
+
+1:47:58.880,1:48:02.400
+Non non non, celui-ci est isotrope.
+
+1:48:02.400,1:48:06.320
+[Alf : oh, ok]. C’est isotrope. Ce que je veux dire par isotrope c'est que
+
+1:48:06.320,1:48:12.400
+si vous avez un pur problème de graphe isotrope, alors vous
+
+1:48:12.400,1:48:15.920
+devriez utiliser ChebNet. [Alf : ok, sinon les autres].
+
+1:48:15.920,1:48:20.159
+Oui sinon c’est mieux d'utiliser des GCNs anisotropes.
+
+1:48:21.360,1:48:25.520
+[Alf : plus de questions ?] [Etudiant : hey j'ai une question, merci pour la conférence.
+
+1:48:25.520,1:48:28.880
+Je me demandais si beaucoup de ces méthodes nécessitaient
+
+1:48:28.880,1:48:35.119
+une matrice d’adjacence existante pour certains problèmes. Par exemple
+
+1:48:35.119,1:48:38.000
+si vous savez qu'il y a une structure de graphe mais ne connaissez pas
+
+1:48:38.000,1:48:41.199
+les liens sous-jacents. Connaissez-vous des travaux qui traitent
+
+1:48:41.199,1:48:45.840
+ce problème ?] Oui absolument. Jusqu'à présent la plupart des travaux
+
+1:48:45.840,1:48:49.199
+se concentrent sur le fait que vous connaissez déjà la
+
+1:48:49.199,1:48:54.159
+structure du graphe. Et bien sûr
+
+1:48:54.159,1:48:57.440
+parfois vous avez juste des données. Par exemple vous
+
+1:48:57.440,1:49:01.360
+avez un ensemble de caractéristiques et vous voulez
+
+1:49:01.360,1:49:06.719
+apprendre une certaine structure de graphe. C'est très dur, très très dur.
+
+1:49:06.719,1:49:11.119
+Donc il y a des travaux essayant de faire ça.
+
+1:49:11.119,1:49:14.480
+Ils essaient donc d'apprendre une certaine structure de graphe en même temps qu'ils
+
+1:49:14.480,1:49:18.239
+essayant d'apprendre une représentation des nœuds.
+
+1:49:18.239,1:49:20.560
+C'est prometteur, c'est intéressant
+
+1:49:20.560,1:49:25.679
+et c'est aussi un peu ce que j'essaie de faire maintenant. Mais je peux vous dire
+
+1:49:25.679,1:49:28.719
+que c'est très difficile à faire. Et surtout car
+
+1:49:28.719,1:49:32.960
+si vous laissez la matrice d’adjacence être une variable
+
+1:49:32.960,1:49:36.719
+alors vous êtes en n carré. Vous avez n carré
+
+1:49:36.719,1:49:42.960
+paramètres inconnus à apprendre. Donc ce n'est pas facile.
+
+1:49:42.960,1:49:46.239
+Je dirais que ces techniques…
+
+1:49:46.239,1:49:50.159
+il y a beaucoup de données naturelles venant avec des graphes.
+
+1:49:50.159,1:49:53.760
+Vous n’avez pas besoin de construire de graphes. Et cela vous donne déjà
+
+1:49:53.760,1:49:57.080
+beaucoup de bons outils. Maintenant si vous pouvez me donner
+
+1:49:57.080,1:50:00.320
+peut-être ce que vous avez en tête, quel genre d'application
+
+1:50:00.320,1:50:06.960
+que vous avez à l'esprit, quand vous voulez apprendre les graphes en même temps, peut-être que nous pouvons parler de ça.
+
+1:50:06.960,1:50:09.040
+[Yann : je peux te le dire Xavier.
+
+1:50:09.040,1:50:12.320
+Zimming me corrigera, mais il
+
+1:50:12.320,1:50:18.480
+travaille actuellement sur la prédiction de fonction de protéines.
+
+1:50:18.480,1:50:22.000
+Et donc le graphe sous-jacent serait
+
+1:50:22.000,1:50:26.480
+par exemple une carte de contact ou un type de graphe de proximité des différents
+
+1:50:26.480,1:50:29.599
+sites sur une protéine. Et vous n'avez pas cela. Je veux dire dans la 
+
+1:50:29.599,1:50:32.320
+plupart des cas. C'est un peu comme
+
+1:50:32.320,1:50:35.520
+les choses que tu as à prédire. On peut voir ça comme une sorte de
+
+1:50:35.520,1:50:40.480
+variable latente de graphe] Je vois. [Zimming, peut-être que tu as une autre idée
+
+1:50:40.480,1:50:43.840
+à l'esprit ?] [Zimming : oui je pense qu'en fait le problème le plus 
+
+1:50:43.840,1:50:47.679
+spécifique est que pour certains de ces graphes on connait les arêtes,
+
+1:50:47.679,1:50:51.040
+on connait certaines des arêtes mais on
+
+1:50:51.040,1:50:55.119
+ne connait pas les autres. Par exemple pour la prédiction de la fonction des protéines,
+
+1:50:55.119,1:50:59.760
+vous pouvez imaginer que deux protéines qui ont des fonctions similaires ont une arête
+
+1:50:59.760,1:51:03.040
+entre elles, mais elles n'ont peut-être pas la même fonction
+
+1:51:03.040,1:51:07.040
+donc on ne connait pas les poids des arêtes. Et vous ne pouvez pas avoir
+
+1:51:07.040,1:51:12.239
+comme des étiquettes humaines qui sont inexactes. Donc elles sont liées d’une certaine façon
+
+1:51:12.239,1:51:14.719
+mais on ne connait pas les poids des arêtes et
+
+1:51:14.719,1:51:18.800
+il y a d'autres protéines qui devraient être connectées, mais vous n'avez pas d'étiquettes.
+
+1:51:18.800,1:51:22.239
+Donc je suppose que c'est plus un problème de complétion de graphe]
+
+1:51:22.239,1:51:29.740
+Oui et celui-ci est facile. Celui-ci est comme le problème de regroupement des semi-graphes. Donc si vous
+
+1:51:29.760,1:51:33.599
+avez déjà certaines étiquettes, juste quelques-unes, et vous avez
+
+1:51:33.599,1:51:37.119
+une structure autour, c’est quelque chose que vous pouvez gérer.
+
+1:51:37.119,1:51:40.320
+Si vous n’avez absolument aucune structure sur les arêtes,
+
+1:51:40.320,1:51:43.440
+et devez apprendre le graphe, ceci est très difficile.
+
+1:51:43.440,1:51:50.320
+[Je vois ok merci] [Etudiant : j’ai une question à propos du
+
+1:51:50.320,1:51:55.320
+découpage des données lorsque vous entraînez un GNN.
+
+1:51:55.500,1:52:02.000
+Pouvez-vous parler des choses que vous voudriez considérer lors
+
+1:52:02.000,1:52:05.440
+de la division des données en deux parties, à savoir l’entraînement et la validation.
+
+1:52:05.440,1:52:10.880
+Vous pourriez vouloir avoir tous les nœuds dans les données d’entraînement
+
+1:52:10.880,1:52:13.840
+pour qu'il soit réellement exposé à tout ce qui est
+
+1:52:13.840,1:52:20.239
+dans les données du graphe. Et vous pourriez avoir un cas où différents types
+
+1:52:20.239,1:52:24.320
+d’arêtes sont déséquilibrés dans le jeu de données. Pouvez-vous parler
+
+1:52:24.320,1:52:27.840
+des moments où cela serait important, quelles sont les considérations
+
+1:52:27.840,1:52:32.320
+pour le découpage des données d’entraînement ?] Désolé, je ne suis pas sûr de comprendre la
+
+1:52:32.320,1:52:37.360
+question. Donc vous parlez des jeux d’entraînement déséquilibrés ?
+
+1:52:37.360,1:52:45.920
+[Oui et aussi si vous avez comme un énorme jeu relationnel. Vous pouvez parler des
+
+1:52:45.920,1:52:49.040
+considérations pour le découpage des données lorsque vous
+
+1:52:49.040,1:52:56.480
+essayer d’entraîner un GNN] 
+
+1:52:56.480,1:53:00.480
+Donc vous pourriez avoir des millions de petits graphes
+
+1:53:00.480,1:53:03.599
+et c'est bien car ces GNNs sont indépendants
+
+1:53:03.599,1:53:08.320
+de la taille de votre graphe. Donc ce n'est pas un problème pour apprendre
+
+1:53:08.320,1:53:12.320
+une bonne représentation de graphe. Cela ne pose pas de problème.
+
+1:53:12.320,1:53:18.800
+Si vous avez un jeu de données déséquilibré, je ne sais pas. Peut-être que vous pouvez
+
+1:53:18.800,1:53:21.280
+appliquer certaines techniques standard pour faire cela.
+
+1:53:21.280,1:53:25.199
+Avec l'entropie croisée par exemple, vous pouvez
+
+1:53:25.199,1:53:29.760
+pondérer votre entropie croisée en fonction de la taille de chaque classe.
+
+1:53:29.760,1:53:33.360
+Donc c'est peut-être quelque chose que vous pouvez faire.
+
+1:53:33.360,1:53:36.960
+Je n’y ai jamais trop pensé à ça.
+
+1:53:36.960,1:53:48.719
+[Ok, merci] [Alfredo : d’autres questions ? Je n'ai pas encore reçu d'autres questions écrites ici, mais vous pouvez parler.
+
+1:53:51.199,1:53:54.800
+[Etudiant : j'ai une question. Tout d'abord, merci beaucoup pour la conférence,
+
+1:53:54.800,1:53:59.679
+surtout à cette heure pour vous. Comment traitez-vous les cas où les
+
+1:53:59.679,1:54:03.599
+nœuds n'ont pas la même dimension ? Si je veux exécuter un petit
+
+1:54:03.599,1:54:10.360
+GNN standard mais mes nœuds sont quelque chose comme pour Facebook : des personnes
+
+1:54:10.400,1:54:13.840
+et puis des pages. Et je veux des dimensions différentes, donc comment 
+
+1:54:13.840,1:54:16.800
+faire pour un GNN très simple ?]
+
+1:54:16.800,1:54:21.360
+Il n’y a rien à faire avec les GNNs.
+
+1:54:21.360,1:54:25.000
+Si vous avez des dimensions différentes pour votre vecteur…
+
+1:54:25.000,1:54:28.500
+Donc vous devez probablement tout mettre dans la même dimension
+
+1:54:28.500,1:54:31.360
+et puis devez utiliser une fonction d'indicateur
+
+1:54:31.360,1:54:33.840
+comme 1 quand vous avez les informations et 0 quand vous n'en avez pas.
+
+1:54:33.840,1:54:38.080
+Et ces informations seront utilisées lors du calcul de la perte et puis
+
+1:54:38.080,1:54:41.440
+quand vous rétropropagez si vous n'avez pas de caractéristiques
+
+1:54:41.440,1:54:48.320
+d'informations, vous ne l'utiliserez pas. Mais je ne pense pas qu'il ait quelque chose à faire avec les GNNs. [Ok merci]
+
+1:55:13.280,1:55:16.480
+[Alfredo : je ne comprends peut-être pas la question, mais je vais la lire
+
+1:55:16.000,1:55:21.080
+à haute voix : y a-t-il un GCN qui peut fonctionner sur plusieurs
+
+1:55:21.080,1:55:28.080
+matrices d'adjacence ensemble ? Par exemple un graphe bidirectionnel. Je ne sais pas ce que ça signifie]
+
+1:55:28.080,1:55:32.080
+Si la question porte sur les hypergraphes…
+
+1:55:32.080,1:55:36.480
+Donc vous pouvez avoir plus d'une arête connectant vos nœuds alors oui
+
+1:55:36.480,1:55:39.280
+il y a des travaux à ce sujet. C'est une extension
+
+1:55:39.280,1:55:43.280
+mathématique naturelle. Donc oui vous pouvez faire ça.
+
+1:55:43.280,1:55:46.639
+Il n'y a pas de limitation pour les hypergraphes.
+
+1:55:46.639,1:55:49.840
+Et il y a maintenant quelques jeux de données
+
+1:55:49.840,1:56:01.520
+pour cette tâche. Donc pour les étudiants intéressés, il y a des choses/applications à faire. Il y a déjà des jeux de données
+
+1:56:01.520,1:56:05.679
+et papiers sur ça. [Alfredo : ok. Une autre question :
+
+1:56:05.679,1:56:09.599
+est-il logique d'avoir des nœuds qui sont des caractéristiques d'une personne
+
+1:56:09.599,1:56:14.480
+et faire une classification de graphe avec des nœuds en tant que personne et faire une
+
+1:56:14.480,1:56:17.520
+classification des nœuds ?] Je ne sais pas.
+
+1:56:18.119,1:56:25.280
+Souvent les gens me posent la question suivante : puis-je faire un graphe à partir de ces données ?
+
+1:56:25.280,1:56:29.599
+Cela dépend vraiment de la tâche à accomplir.
+
+1:56:29.599,1:56:32.800
+Quand est utile ou pas ?
+
+1:56:32.800,1:56:35.119
+Quand vous avez de bonnes relations
+
+1:56:35.119,1:56:42.320
+car le graphe n'est qu'une collection de connexions de paires. C'est tout.
+
+1:56:42.320,1:56:45.679
+La question est donc de savoir quand est-ce pertinent
+
+1:56:45.679,1:56:49.360
+pour résoudre votre tâche ? Parfois ça l’est, parfois non.
+
+1:56:49.360,1:56:56.000
+Donc ça dépend vraiment des données et de la tâche que vous voulez résoudre.
+
+1:56:56.000,1:57:01.040
+[Alfredo : l'étudiant est satisfait par votre réponse.
+
+1:57:02.400,1:57:05.920
+Je pense que nous sommes à court de questions, à moins qu'il n'y en ait d'autres ?
+
+1:57:05.920,1:57:13.360
+Non ? Il commence à faire jour]
+
+1:57:13.360,1:57:18.760
+Exactement, c’est ce que j’ai remarqué, le soleil se lève.
+
+1:57:18.760,1:57:21.040
+[Alfredo : ok je pense que c’est tout.
+
+1:57:21.040,1:57:25.679
+Merci beaucoup. C'était comme…
+
+1:57:25.679,1:57:29.360
+Je veux dire que c'était vraiment très joli. Ces diapositives étaient très jolies.
+
+1:57:29.360,1:57:36.080
+J'ai beaucoup à apprendre sur la façon dont il enseigne]
+
+1:57:36.080,1:57:40.800
+[Yann : merci encore Xavier de t’être réveillé si tôt.
+
+1:57:40.800,1:57:45.040
+Je pense que c'est un sujet fascinant. J'ai été impliqué
+
+1:57:45.040,1:57:49.280
+là dedans au début et je pense que cela ouvre une porte complètement nouvelle
+
+1:57:49.280,1:57:52.480
+aux applications de l'apprentissage machine et des réseaux de neurones.
+
+1:57:52.480,1:57:55.599
+C’est un nouveau monde, un monde complètement différent.
+
+1:57:55.599,1:57:58.800
+Je sais que ton doctorant a travaillé sur le
+
+1:57:58.800,1:58:02.320
+traitement des signaux de graphes pendant une longue période. C’était donc 
+
+1:58:02.320,1:58:06.239
+une transition naturelle pour lui et pour toi, je suppose.
+
+1:58:06.239,1:58:11.360
+Je pense que nous n'avons pas vu la fin de tout ça, nous allons...
+
+1:58:11.360,1:58:14.239
+nous allons être surpris par ce qui va en résulter. Je veux dire qu'il y a
+
+1:58:14.239,1:58:19.599
+vraiment déjà un travail fascinant dans ce domaine, en physique des particules,
+
+1:58:19.599,1:58:24.480
+dans la chimie computationnelle, dans les réseaux sociaux.
+
+1:58:24.480,1:58:30.159
+Tu as en quelque sorte cité tous les grands noms.
+
+1:58:30.159,1:58:33.520
+Si vous êtes intéressé par ce sujet,
+
+1:58:33.520,1:58:36.960
+Jure Leskovec est l'un des grands noms en plus de Xavier
+
+1:58:36.960,1:58:40.560
+évidemment. Également Joan Bruna que vous connaissez
+
+1:58:40.560,1:58:44.040
+car il est professeur ici et il en parle dans ses cours.
+
+1:58:44.040,1:58:48.239
+Michael Bronstein est aussi un grand contributeur. Il a fait 
+
+1:58:48.239,1:58:51.840
+quelques contributions vraiment intéressantes au sujet.
+
+1:58:51.840,1:58:57.560
+Aussi sur des méthodes différentes de celles présentées aujourd’hui.
+
+1:58:58.159,1:59:08.400
+Utilisant des GNNs pour des maillages 3D, pour l'infographie et d'autres choses de ce genre]
+
+1:59:08.639,1:59:11.520
+Je suis d'accord, je pense que c'est aussi un domaine
+
+1:59:11.520,1:59:17.800
+où il y a un va-et-vient entre les mathématiques et aussi les applications. Si vous regardez
+
+1:59:17.800,1:59:23.119
+par exemple le travail sur les protéines, c’est vraiment très très dur. Mais en même temps
+
+1:59:23.119,1:59:25.679
+on peut parfois apprendre beaucoup de choses du côté des mathématiques.
+
+1:59:25.679,1:59:30.080
+Et c'est très excitant car vous voulez les deux.
+
+1:59:30.080,1:59:34.400
+Pour pouvoir faire une découverte scientifique, il faut être
+
+1:59:34.400,1:59:39.760
+conduit par un problème très dur du monde réel.
+
+1:59:39.760,1:59:42.840
+Et en même temps vous disposez de ces nouveaux outils : la théorie des graphes, 
+
+1:59:42.840,1:59:47.360
+les réseaux neuronaux, etc… Et c'est aussi un moyen pour nous de mieux
+
+1:59:47.360,1:59:49.840
+comprendre pourquoi les réseaux neuronaux fonctionnent si bien.
+
+1:59:49.840,1:59:53.679
+Et c'est une direction où…
+
+1:59:53.679,1:59:57.280
+Chaque jour il y a un nouveau problème dans cette direction.
+
+1:59:57.280,2:00:00.800
+Donc la tarte est grande pour tout le monde,
+
+2:00:00.800,2:00:05.599
+pour les jeunes étudiants voulant venir profiter de ce domaine
+
+2:00:05.599,2:00:08.159
+de recherche. [Yann : très bien, merci encore et profitez
+
+2:00:11.119,2:00:16.480
+de ta journée] [Alfredo : oui merci encore] Merci beaucoup les gars.
+
+2:00:16.480,2:00:23.920
+Bye-bye, bye-bye [Alfredo : à demain !].
