@@ -1,20 +1,4 @@
-# Deep Learning (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)![hu](https://img.shields.io/badge/hu-1%25%202%2F104-red) ![sr](https://img.shields.io/badge/sr-1%25%202%2F104-red) ![ja](https://img.shields.io/badge/ja-53%25%2056%2F104-yellow) ![tr](https://img.shields.io/badge/tr-47%25%2049%2F104-yellow) ![en](https://img.shields.io/badge/en-100%25%20104%2F104-green) ![ru](https://img.shields.io/badge/ru-11%25%2012%2F104-red) ![zh](https://img.shields.io/badge/zh-57%25%2060%2F104-yellow) ![bn](https://img.shields.io/badge/bn-10%25%2011%2F104-red) ![it](https://img.shields.io/badge/it-43%25%2045%2F104-yellow) ![fr](https://img.shields.io/badge/fr-53%25%2056%2F104-yellow) ![vi](https://img.shields.io/badge/vi-6%25%207%2F104-red) ![fa](https://img.shields.io/badge/fa-20%25%2021%2F104-red) ![ko](https://img.shields.io/badge/ko-53%25%2056%2F104-yellow) ![ar](https://img.shields.io/badge/ar-38%25%2040%2F104-yellow) ![pt](https://img.shields.io/badge/pt-6%25%207%2F104-red) ![es](https://img.shields.io/badge/es-54%25%2057%2F104-yellow) 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Deep Learning (with PyTorch) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Atcold/pytorch-Deep-Learning/master)
 
 This notebook repository now has a [companion website](https://atcold.github.io/pytorch-Deep-Learning/), where all the course material can be found in video and textual format.
 
