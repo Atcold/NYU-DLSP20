@@ -1,0 +1,3593 @@
+0:00:00.030,0:00:04.080						                               
+Nous allons donc parler de deux ou trois sujets aujourd'hui et le premier
+
+0:00:04.080,0:00:08.790
+est une sorte de rappel de certaines des fonctions qui existent dans
+
+0:00:08.790,0:00:16.139
+PyTorch et quand et comment les utiliser. Donc le premier sujet concerne
+
+0:00:16.139,0:00:22.410
+les fonctions d'activation. Il y en a tout un tas qui sont définies dans PyTorch
+
+0:00:22.410,0:00:27.000
+et proviennent essentiellement de divers documents où les auteurs
+
+0:00:27.000,0:00:30.300
+affirment que pour tel ou tel fonction objectif 
+
+0:00:30.300,0:00:35.790
+ou fonction d'activation, cela fonctionne mieux pour leur problème.
+
+0:00:35.790,0:00:40.140
+Tout le monde connaît ReLU qui est très standard, mais il y a beaucoup de
+
+0:00:40.140,0:00:46.500
+variations de ReLU où la partie inférieure n'est pas constante et mise à 0.
+
+0:00:46.500,0:00:50.340
+Elle peut être autorisée à changer soit seulement avec une pente positive,
+
+0:00:50.340,0:00:55.379
+ou forcer à avoir une pente négative ou parfois être aléatoire dans le cas
+
+0:00:55.379,0:01:00.870
+de la RReLU. Donc il y a de jolis noms comme « Leaky ReLU », « PReLU », « RReLU »
+
+0:01:00.870,0:01:08.369
+Pour « Random RELU », etc. Donc Leaky ReLU est celle où vous autorisez
+
+0:01:08.369,0:01:16.350
+la partie inférieure à avoir une pente négative. Cela empêche le problème qui
+
+0:01:16.350,0:01:20.250
+apparaît parfois qui est que quand ReLU est éteinte, il n'y a pas de gradient.
+
+0:01:20.250,0:01:26.939
+Donc ici, vous avez une chance pour que ce système, cette fonction
+
+0:01:26.939,0:01:30.119
+propage le gradient et peut-être faire quelque chose d'utile comme aller jusqu'à
+
+0:01:30.119,0:01:35.570
+une sorte faire une ratification complète du signal, une sorte de valeur absolue si vous voulez.
+
+0:01:35.570,0:01:41.280
+[Alfredo : l'activation précédente est généralement utilisée dans le
+
+0:01:41.280,0:01:46.530
+discriminateur des GANs, de telle sorte que nous avons toujours les gradients qui sont
+
+0:01:46.530,0:01:51.329
+rétropropagés pour le générateur. Ces activations sont également nécessaires
+
+0:01:51.329,0:01:55.409
+pour entraîner le très petit réseau que j’ai montré au début du cours.
+
+0:01:55.409,0:01:59.700
+Car pour un réseau très très petit, il est impossible de rétropropager
+
+0:01:59.700,0:02:04.829
+les gradients car on se retrouvait dans une des quadrants
+
+0:02:04.829,0:02:12.179
+où tout est à zéro et puis plus rien est réellement entraîné si vous 
+
+0:02:12.800,0:02:17.390
+n’utilisez pas cette fonction d'activation permettant d'obtenir une sorte de
+
+0:02:17.390,0:02:21.350
+gradients même si nous sommes dans les régions où nous essayons de supprimer les
+
+0:02:21.350,0:02:32.180
+sorties] Donc PReLU est similaire sauf que maintenant la pente
+
+0:02:32.180,0:02:38.930
+dans la partie négative peut être à peu près n'importe quoi. Ce qui est intéressant
+
+0:02:38.930,0:02:42.620
+à propos de toutes ces fonctions que nous venons de voir est qu'elles
+
+0:02:42.620,0:02:47.090
+sont invariables à l'échelle dans le sens où vous pouvez multiplier le
+
+0:02:47.090,0:02:52.700
+signal par deux et la sortie ne sera pas modifiée.
+
+0:02:52.700,0:02:55.280
+Je veux dire qu'elle sera multipliée par deux mais inchangée autrement. 
+
+0:02:55.280,0:02:59.840
+Donc elles sont équivariantes à l'échelle. Il n'y a pas d'échelle intrinsèque dans ces
+
+0:02:59.840,0:03:05.260
+fonctions car il n'y a qu'une seule non-linéarité et qu'elle est nette.
+
+0:03:05.260,0:03:09.530
+Maintenant nous entrons dans des fonctions où l'échelle importe, l'amplitude du
+
+0:03:09.530,0:03:14.840
+signal entrant affectera le type de non linéarité que vous allez avoir.
+
+0:03:14.840,0:03:19.280
+L'une d'entre elles est la solfplus. C’est une sorte
+
+0:03:19.280,0:03:24.110
+de version différenciée de ReLU si vous voulez. C'est un peu la version
+
+0:03:24.110,0:03:29.780
+douce de la partie positive. Et c'est généralement paramétrable comme vous pouvez le voir en haut.
+
+0:03:29.780,0:03:34.670
+1/ β * log(1+exp(β*x))  C'est un peu comme le log
+
+0:03:34.670,0:03:41.420
+somme exponentielle que nous avons utilisé pour différents buts, sauf qu’ici
+
+0:03:41.420,0:03:45.440
+un des termes de la somme est égale à 1, ce qui est un peu comme exponentiel de zéro
+
+0:03:45.440,0:03:52.760
+Cela ressemble à une sorte de fonction qui est asymptotiquement une
+
+0:03:52.760,0:03:56.390
+fonction d'identité pour les grandes valeurs politiques et asymptotiquement nulle pour
+
+0:03:56.390,0:04:00.560
+des valeurs négatives. Donc vous approximez la ReLU. Il y a un paramètre scalaire,
+
+0:04:00.560,0:04:05.690
+ce paramètre β. Plus le β est important, plus la fonction ressemblera 
+
+0:04:05.690,0:04:10.400
+à une ReLU. Le coude sera en quelque sorte le coin sera plus net si β
+
+0:04:10.400,0:04:17.380
+va à l'infini. Cette fonction a une échelle.
+
+0:04:18.260,0:04:23.710
+Vous pouvez paramétriser ces fonctions de différentes manières et c'est
+
+0:04:23.710,0:04:29.360
+un autre exemple de version douce de ReLU si vous voulez.
+
+0:04:29.360,0:04:35.150
+Ici, vous utilisez la valeur comme base et vous ajoutez une petite constante,
+
+0:04:35.150,0:04:40.880
+cela rende les choses plus douces. Je ne peux pas vous dire que l'une
+
+0:04:40.880,0:04:44.840
+d'entre elles présente un avantage particulier par rapport aux autres.
+
+0:04:44.840,0:04:48.500
+Cela dépend du problème, mais elles ont toutes des propriétés similaires.
+
+0:04:48.500,0:04:56.660
+Vous pouvez également vous rapprocher continuellement de ReLU.
+
+0:04:56.660,0:05:04.820
+Une différence ici est que ce type va négatif.
+
+0:05:04.820,0:05:10.070
+Donc contrairement à ReLU qui a son minimum à zéro, un
+
+0:05:10.070,0:05:17.900
+asymptote horizontale à zéro, ce type va en dessous de zéro et cela peut ou 
+
+0:05:17.900,0:05:21.650
+pas être avantageux selon l’application que vous avez. Parfois, c'est
+
+0:05:21.650,0:05:26.450
+avantageux car cela permet au système de faire essentiellement la moyenne 
+
+0:05:26.450,0:05:32.510
+des sortie zero, ce qui est avantageux pour la convergence de la descente
+
+0:05:32.510,0:05:36.200
+de gradient. Les poids qui sont liés à des unités de cette façon, verront
+
+0:05:36.200,0:05:40.010
+à la fois des valeurs positives et négatives, ce qui converge plus rapidement que
+
+0:05:40.010,0:05:46.310
+de voir que des valeurs positives. C'est la même chose ici. C'est juste une 
+
+0:05:46.310,0:05:50.360
+sorte de paramétrisation différente de la même chose si vous voulez.
+
+0:05:50.360,0:05:56.960
+Avec des propriétés différentes. Donc bien sûr il y a des tonnes de variations de ça :
+
+0:05:56.960,0:06:03.050
+avec divers paramètres, avec différentes propriétés.
+
+0:06:03.050,0:06:09.820
+Certaines ont des propriétés particulières qui peuvent les relier aux
+
+0:06:09.820,0:06:14.990
+distributions gaussiennes, par exemple. Ce n’est pas la distribution cumulative d'une
+
+0:06:14.990,0:06:20.510
+gaussienne, mais d'accord. Ces choses ont un coude en elles.
+
+0:06:20.510,0:06:25.310
+Si le coude est aigu, il n'y a pas d'échelle. Si le coude a une certaine échelle, il y a
+
+0:06:25.310,0:06:29.240
+une certaine échelle mais c'est toujours une sorte de non-linéarité a un coude. Maintenant voyons
+
+0:06:29.240,0:06:33.080
+les non-linéarités avec deux coudes. Celle-ci est essentiellement une
+
+0:06:33.080,0:06:37.400
+ReLU saturée. Je ne suis pas sûr de pourquoi ça sature à 6 
+
+0:06:37.400,0:06:41.670
+mais pourquoi pas. Puis pourquoi ne pas paramétrer un peu mieux.
+
+0:06:41.670,0:06:46.230
+Voici une fonction douce que vous connaissez bien car elle est utilisée
+
+0:06:46.230,0:06:51.720
+dans les réseaux récurrents, les GRUs, les LSTMs
+
+0:06:51.720,0:06:56.730
+dans softmax. Il s'agit d'un softmax à double sens, vous pouvez y penser
+
+0:06:56.730,0:07:03.800
+de cette façon. C'est juste une fonction qui est assez douce entre 0 et 1.
+
+0:07:03.800,0:07:08.780
+On l'appelle aussi parfois fonction de Fermi Dirac car elle découle de
+
+0:07:08.780,0:07:15.240
+certains travaux en physique statistique. Puis il y a la tangente hyperbolique
+
+0:07:15.240,0:07:19.830
+dont nous avons également parlé. Elle est fondamentalement identique à la sigmoïde, sauf qu'elle est
+
+0:07:19.830,0:07:24.360
+centrée de sorte qu'elle va de - 1 à + 1. C'est deux fois
+
+0:07:24.360,0:07:28.710
+l'amplitude et le gain est un peu différent mais elle joue le même rôle.
+
+0:07:28.710,0:07:36.980
+L'avantage de la tangente hyperbolique est que la sortie n'a pas une moyenne nulle mais est
+
+0:07:36.990,0:07:43.500
+proche d’une moyenne nulle. Là encore, c'est avantageux pour les poids
+
+0:07:43.500,0:07:46.890
+car ils voient des valeurs positives et négatives et ils ont tendance à
+
+0:07:46.890,0:07:52.310
+converger plus rapidement. J'étais un grand fan de ça mais malheureusement,
+
+0:07:52.310,0:07:57.390
+si vous empilez beaucoup de sigmoïdes en plusieurs couches dans un
+
+0:07:57.390,0:08:05.160
+réseau neuronal, vous pouvez avoir tendance à ne pas apprendre très efficacement. Vous devez être
+
+0:08:05.160,0:08:09.030
+très prudent sur la normalisation si vous voulez que le système converge lorsque vous
+
+0:08:09.030,0:08:13.800
+avez de nombreuses couches. Les fonctions a un coude unique sont meilleures 
+
+0:08:13.800,0:08:21.660
+pour des réseaux plus profonds. Donc softsign. C'est un peu comme la sigmoïde
+
+0:08:21.660,0:08:25.560
+sauf qu'elle n'arrive pas aussi vite aux asymptotes. Elle ne va pas vers
+
+0:08:25.560,0:08:31.169
+les asymptotes aussi rapidement. Un problème avec la tangente hyperbolique
+
+0:08:31.169,0:08:37.440
+et la sigmoïde est qu’en se rapprochant des asymptotes, le gradient va à
+
+0:08:37.440,0:08:43.979
+zéro assez rapidement et donc si les poids d'une unité deviennent trop importants, ils
+
+0:08:43.979,0:08:48.690
+saturent cette unité et les gradients deviennent très faibles, puis la
+
+0:08:48.690,0:08:54.029
+l'unité ne fonctionne plus très vite. C'est un problème qui existe
+
+0:08:54.029,0:09:00.779
+à la fois dans la sigmoïde et la tangente hyperbolique. Donc softsign est 
+
+0:09:00.779,0:09:05.790
+une fonction qui a été proposé par Yoshua Bengio et ses collaborateurs qui
+
+0:09:05.790,0:09:12.230
+sature plus lentement. Elle n'a donc pas le même problème. Je veux dire 
+
+0:09:12.230,0:09:17.819
+qu'il a le problème aussi mais pas dans la même mesure. Ok et ceci est un 
+
+0:09:17.819,0:09:23.819
+peu l’opposé : hardtanh. Je ne sais pas si elle mérite ce nom mais il s’agit
+
+0:09:23.819,0:09:29.720
+en fait d'une simple rampe. Cela fonctionne étonnamment bien,
+
+0:09:29.720,0:09:35.310
+en particulier si vos poids sont maintenus dans de petite valeur afin que 
+
+0:09:35.310,0:09:42.569
+les unités ne saturent pas trop. C’est surprenant de voir à quel point cela fonctionne bien.
+
+0:09:42.569,0:09:46.579
+Les gens utilisent ça dans différents contextes mais ce n’est pas un standard.
+
+0:09:49.170,0:09:53.850
+Threshold est très rarement utilisé car on ne peut pas vraiment propager
+
+0:09:53.850,0:09:58.680
+le gradient avec. C'est ce qui a empêché les gens d’inventer la rétropropagation
+
+0:09:58.680,0:10:03.120
+dans les années 60 et 70, c'est-à-dire qu'ils utilisaient des neurones binaires et donc
+
+0:10:03.120,0:10:09.930
+ils n'ont pas pensé à l'idée de gradients à cause de cela.
+
+0:10:09.930,0:10:16.439
+D'autres fonctions sont rarement utilisées dans le contexte des réseaux neuronaux ou du moins comme
+
+0:10:16.439,0:10:20.730
+fonction d'activation dans un neurone traditionnel. C’est utilisé parfois
+
+0:10:20.730,0:10:26.220
+pour des choses comme le codage épars. Donc une étape dans un codage épars
+
+0:10:26.220,0:10:32.279
+consiste à calculer la valeur de la variable latente en rétrécissant par une
+
+0:10:32.279,0:10:35.879
+certaine valeur toutes les valeurs de la variable latente, les valeurs dans le vecteur.
+
+0:10:35.879,0:10:40.019
+Via une fonction de rétrécissement. Ceci est une sorte de version douce
+
+0:10:40.019,0:10:44.160
+de la fonction de rétrécissement. La version dure est ici. On parle de
+
+0:10:44.160,0:10:50.699
+rétrécissement doux [Softshrink], mais elle comporte en fait des coins. La raison de « Softshrink »
+
+0:10:50.699,0:10:55.029
+est car « Hardshrink » a l'air différente, je vous la montre dans une minute.
+
+0:10:55.029,0:10:59.819
+Donc cela ne fait que changer de variable
+
+0:10:59.819,0:11:16.910
+par une constante vers 0. Si cela passe en dessous de 0, elle [???]
+
+0:11:16.910,0:11:20.600
+C’est juste la fonction d'identité à laquelle vous soustrayez la tangente hyperbolique pour la rendre
+
+0:11:20.600,0:11:25.430
+semblable à un shrink. [Alfredo : basiquement avec celle-là, si nous essayons d'obtenir
+
+0:11:25.430,0:11:29.060
+la valeur la proche de zéro, cela force à mettre à zéro, non ?]
+
+0:11:29.060,0:11:33.860
+Correct. Les petites valeurs sont mises à 0, les autres sont réduites à 0
+
+0:11:33.860,0:11:37.850
+mais un assez grand nombre n'arriveront pas à 0. Donc encore une fois, c'est
+
+0:11:37.850,0:11:44.390
+utilisé principalement comme… Vous pouvez considérer ça comme une étape de gradient pour
+
+0:11:44.390,0:11:48.290
+le critère L1. Donc si vous avez une variable vous avez
+
+0:11:48.290,0:11:52.940
+une fonction de coût L1 sur elle et vous faites un pas dans le gradient négatif de L1.
+
+0:11:52.940,0:11:58.580
+Donc le coût L1 est une valeur absolue, ce qui fait que la variable va
+
+0:11:58.580,0:12:02.570
+aller vers zéro par une constante qui est la pente de ce critère L1, et
+
+0:12:02.570,0:12:07.730
+reste à zéro de part et d'autre. Cela n'est pas dépasser.
+
+0:12:07.730,0:12:12.290
+Donc c’est la fonction non linéaire que vous utilisez et l’une des étapes
+
+0:12:12.290,0:12:17.300
+de l'algorithme ISTA qui est utilisé pour l'inférence dans le codage épars.
+
+0:12:17.300,0:12:23.990
+Là encore, c’est vraiment utilisé dans des sortes de réseaux neuronaux ordinaires.
+
+0:12:23.990,0:12:34.490
+Votre encodeur est en quelque sorte utilisé comme une estimation du codage épars.
+
+0:12:34.490,0:12:40.010
+Hardshrink met chaque valeur inférieure à lambda à 0.
+
+0:12:40.010,0:12:48.500
+Donc si une valeur est plus petite que lambda ou plus grande que – lambda,
+
+0:12:48.500,0:12:51.560
+entre – lambda, lambda, quand lambda est une certaine constante, cela fixe 
+
+0:12:51.560,0:12:57.590
+à 0. Là encore, c’est utilisé pour certains types de codage clairsemé
+
+0:12:57.590,0:13:04.250
+mais rarement comme une fonction d'activation. LogSigmoid est surtout utilisée
+
+0:13:04.250,0:13:08.930
+dans les fonctions de coût, pas vraiment comme fonction d'activation, mais c'est une
+
+0:13:08.930,0:13:15.320
+fonction utile à avoir si vous voulez la brancher sur une fonction de perte. 
+
+0:13:15.320,0:13:19.300
+Nous verrons ça dans une minute. Donc Softmin que nous avons vu est comme
+
+0:13:21.470,0:13:27.589
+comme Softmax sauf que vous avez des signes moins. C'est des non-linéarités
+
+0:13:27.589,0:13:31.490
+multidimensionnelles. Vous avez un vecteur dedans et dehors
+
+0:13:31.490,0:13:35.930
+de même taille que le vecteur d'entrée et nous savons que
+
+0:13:35.930,0:13:40.790
+Softmax est exponentielle xi divisée par la somme sur j de exponentielle xj
+
+0:13:40.790,0:13:45.800
+C'est Softmin où vous mettez un signe moins devant le x. Vous pouvez voir 
+
+0:13:45.800,0:13:51.790
+le x comme l’énergie au lieu de scores, comme des pénalités au lieu de scores.
+
+0:13:51.790,0:13:58.160
+C'est une bonne façon de transformer un tas de chiffres en quelque chose qui ressemble 
+
+0:13:58.160,0:14:02.569
+à une distribution de probabilité : des nombres entre 0 et 1 qui somme à 1.
+
+0:14:02.569,0:14:10.190
+Là c’est le softmax que nous connaissons tous. Donc Logsoftmax. Encore une fois ce n'est pas
+
+0:14:10.190,0:14:14.959
+très utilisé comme non-linéarité au sein d’un réseau neuronal mais beaucoup
+
+0:14:14.959,0:14:18.920
+comme une sorte de pièce d'une fonction de perte, et nous verrons ça dans une
+
+0:14:18.920,0:14:26.839
+minute. [Alfredo : nous avons une question. Pour PReLU, je ne suis pas sûr 
+
+0:14:26.839,0:14:32.000
+de comprendre pourquoi nous voulons la même valeur pour toutes les canaux 
+
+0:14:32.000,0:14:37.250
+et comment l'apprentissage d'un a est en fait avantageux ?] Vous pourriez avoir un a différent
+
+0:14:37.250,0:14:41.480
+pour différents canaux. Donc différentes unités peuvent avoir un a différent.
+
+0:14:41.480,0:14:48.019
+Vous pouvez l'utiliser comme paramètre dans chaque unité. Ou non, il peut
+
+0:14:48.019,0:14:51.860
+être partagé. Il peut être partagé au niveau de la carte
+
+0:14:51.860,0:14:55.069
+de caractéristiques dans votre ConvNet ou peut être partagé toutes les cartes de
+
+0:14:55.069,0:14:59.240
+caractéristiques ou être propre à chaque unité. Si vous voulez vraiment préserver la
+
+0:14:59.240,0:15:02.899
+nature d'un ConvNet, vous voulez probablement avoir le même a pour chaque unité
+
+0:15:02.899,0:15:05.420
+de la carte de caractéristiques. Mais vous pouvez avoir différents a pour différents
+
+0:15:05.420,0:15:11.480
+cartes de caractéristiques. Quelle était la deuxième question ? [Alfredo : pourquoi l'apprentissage
+
+0:15:11.480,0:15:16.459
+d’une valeur spécifique aurait des avantages ? Pourquoi nous apprenons a ?] Vous pouvez l'apprendre
+
+0:15:16.459,0:15:21.949
+ou non. Vous pouvez le fixer. La raison de le fixer n’est pas
+
+0:15:21.949,0:15:27.750
+nécessairement une sorte de non-linéarité plus puissante mais
+
+0:15:27.750,0:15:32.190
+s'assurer que la non-linéarité vous donne un gradient non nul même si
+
+0:15:32.190,0:15:41.430
+c'est dans la région négative. Donc apprenable, pas apprenable… 
+
+0:15:41.430,0:15:46.200
+Le rendre apprenable permet au système de transformer une non-linéarité
+
+0:15:46.200,0:15:50.970
+soit en association linéaire qui n'est pas particulièrement intéressante
+
+0:15:50.970,0:15:57.330
+mais pourquoi, une ReLU, ou soit quelque chose comme une rectification complète. 
+
+0:15:57.330,0:16:03.720
+Où a = -1 dans la partie négative. Cela peut être intéressant
+
+0:16:03.720,0:16:06.150
+pour certains types d’applications. Par exemple si vous avez
+
+0:16:06.150,0:16:10.440
+avez un ConvNet qui a un détecteur de bord… Un détecteur de bord a une polarité.
+
+0:16:10.440,0:16:14.550
+Il a des coefficients positifs d'un côté, des coefficients négatifs de l'autre.
+
+0:16:14.550,0:16:19.800
+Donc si vous avez un bord dans une image, disons allant du sombre
+
+0:16:19.800,0:16:25.140
+au clair, la convolution réagira positivement à celui-ci.
+
+0:16:25.140,0:16:31.110
+Mais si vous avez un autre bord dans la direction contraire,
+
+0:16:31.110,0:16:36.510
+le filtre réagira maintenant négativement.
+
+0:16:36.510,0:16:41.370
+Si vous voulez que votre filtre réagisse à un bord, quelle que soit sa polarité, vous rectifiez.
+
+0:16:41.370,0:16:46.320
+Donc ce serait une sorte de valeur absolue. Vous pourriez bien sûr [???]
+
+0:16:46.320,0:16:50.610
+Utiliser une PReLU, pouvez juste utiliser la valeur absolue.
+
+0:16:50.610,0:16:55.170
+Une meilleure idée est probablement d'utiliser un carré en fait. Donc vous
+
+0:16:55.170,0:16:59.730
+une non-linéarité carrée. Ce n'est pas implémenté comme une sorte de réseau 
+
+0:16:59.730,0:17:02.430
+non-linéaire mais sous la forme d’une fonction PyTorch, vous mettez juste
+
+0:17:02.430,0:17:06.420
+le carré et c'est ok. J’espère que ça a répondu à la question.
+
+0:17:06.420,0:17:14.180
+D’autre question sur ce sujet ? [Etudiant : il me semble que cette
+
+0:17:14.180,0:17:21.230
+non-linéarité tente de rendre une fonction linéaire non linéaire.
+
+0:17:21.230,0:17:27.360
+Les modifications dans les lignes indiquent comme un changement de cette fonction. Donc pouvons
+
+0:17:27.360,0:17:37.440
+nous penser à cela comme si nous voulions modéliser une courbe dans la ligne ? devrions-nous avoir
+
+0:17:37.440,0:17:42.990
+des paramètres apprenables sur les deux… Comme avant le 0 et
+
+0:17:42.990,0:17:48.330
+après le 0 sur l'axe des x ?] Il y a un rendement décroissant.
+
+0:17:48.330,0:17:52.560
+La question est donc de savoir à quel point vous souhaitez que votre non-linéarité soit complexe.
+
+0:17:52.560,0:17:58.200
+Vous pourriez imaginer paramétrer toute une fonction non linéaire 
+
+0:17:58.200,0:18:02.520
+avec des paramètres de sprines ou des courbes ou quelque chose comme ça.
+
+0:18:02.520,0:18:08.890
+Ou disons des polynômes de Tchebyshev. Je veux dire que vous pouvez probablement essayer n'importe quelle association que vous voulez.
+
+0:18:08.890,0:18:12.180
+Vous pouvez imaginer que ces paramètres font partie du
+
+0:18:12.180,0:18:17.730
+processus d'apprentissage. Cependant, quel est l'avantage de faire ça
+
+0:18:17.730,0:18:23.220
+plutôt que de simplement que d’avoir plus d'unités dans votre système
+
+0:18:23.220,0:18:28.080
+en s'appuyant sur le fait que plusieurs unités sont sommées à la fin pour 
+
+0:18:28.080,0:18:33.600
+approximer la fonction que vous voulez ? En général, cela dépend. 
+
+0:18:33.600,0:18:37.260
+Si vous faites une régression dans un espace dimensionnel assez bas, peut-être que vous voulez
+
+0:18:37.260,0:18:43.080
+paramétriser certaines non-linéarités. Cela pourrait vous aider. Vous voudriez peut être
+
+0:18:43.080,0:18:48.390
+avoir une collection de différentes non-linéarités avec des choses comme
+
+0:18:48.390,0:18:53.250
+des polynômes de Tchebyshev si vous voulez faire de bonnes approximations. 
+
+0:18:53.250,0:18:56.370
+Pour les tâches en haute dimension comme la reconnaissance d'images ou des choses comme ça,
+
+0:18:56.370,0:19:01.620
+vous voulez juste une non-linéarité. Cela fonctionne mieux si la non-linéarité est
+
+0:19:01.620,0:19:05.700
+monotone sinon cela crée toutes sortes de problèmes car vous pourriez avoir 
+
+0:19:05.700,0:19:09.510
+deux points qui produiront la même sortie. Donc ça peut être ambiguë pour 
+
+0:19:09.510,0:19:14.910
+le système d’apprendre la bonne fonction. Donc c'est bien mieux si
+
+0:19:14.910,0:19:18.810
+la fonction est monotone et presque toutes les fonctions ici le sont.
+
+0:19:18.810,0:19:23.940
+Sauf si vous avez un a négatif ici dans le cas de la PReLU. Il y a un grand avantage
+
+0:19:23.940,0:19:30.480
+à avoir des fonctions monotones. Mais en principe vous pourriez paramétrer
+
+0:19:30.480,0:19:34.140
+n’importe quelle fonction vous voulez. Les gens ont joué avec cela. Ce n’est pas
+
+0:19:34.140,0:19:39.140
+très populaire car cela ne semble pas apporter un énorme avantage dans
+
+0:19:39.140,0:19:47.580
+les types d'applications pour lesquelles les gens utilisent un grand réseau neuronal.
+
+0:19:47.580,0:19:52.560
+D’autres questions ? [Alfredo : une question porte sur le coude versus le lissage]
+
+0:19:52.560,0:20:10.000
+[Un étudiant intervient et pose une question difficile à comprendre. Elle semble porter sur les coudes et notamment les doubles coudes]
+
+0:20:10.000,0:20:16.020
+C’est un problème avec les doubles coudes. Les doubles coudes ont une échelle intégrée, ce qui
+
+0:20:16.020,0:20:21.300
+signifie que si les poids d’une couche d’entrée sont multipliés par deux ou
+
+0:20:21.300,0:20:25.590
+l'amplitude du signal est multipliée par 2, le résultat de la sortie serait
+
+0:20:25.590,0:20:30.540
+complètement différent car le signal serait plus dans la non-linéarité.
+
+0:20:30.540,0:20:35.250
+Donc vous obtiendrez un comportement complètement différent de votre couche.
+
+0:20:35.250,0:20:39.390
+Alors que si vous avez une fonction avec un seul coude, si vous multipliez
+
+0:20:39.390,0:20:43.110
+l'entrée par deux, la sortie est également multipliée par deux. Modulo
+
+0:20:43.110,0:20:49.380
+un biais mais ignorons le. [Etudiant : pouvez-vous donner une
+
+0:20:49.380,0:20:53.670
+une situation où le choix d’une fonction d'activation fait une grand
+
+0:20:53.670,0:20:58.410
+différence sur la performance d’un modèle, sauf pour les réseaux utilisant
+
+0:20:58.410,0:21:06.000
+une ReLU ou une sigmoïde ?] Il n'y a aucune réponse générale à cela.
+
+0:21:06.000,0:21:13.620
+Si vous voulez utiliser l'attention, vous devez utiliser une softmax. Vous n'avez pas d’autre choix.
+
+0:21:13.620,0:21:17.460
+Je veux dire que ce n'est pas que vous devez utiliser une softmax mais vous voulez
+
+0:21:17.460,0:21:21.300
+avoir quelque chose avec des coefficients pour focaliser
+
+0:21:21.300,0:21:26.460
+l'attention du système sur, ou bien diffuser l'attention du système.
+
+0:21:26.460,0:21:31.470
+Et ne pas l’autoriser à tricher, c’est-à-dire, prêter attention à plusieurs choses
+
+0:21:31.470,0:21:36.180
+à la fois. Vous devez avoir une sorte de normalisation des
+
+0:21:36.180,0:21:40.980
+coefficients qui sortent du système d'attention. Normalement, dans
+
+0:21:40.980,0:21:44.480
+la plupart des systèmes d'attention comme dans les transformers,
+
+0:21:44.480,0:21:48.750
+les coefficients sont passés par une softmax, ce qui donne un ensemble de coefficients
+
+0:21:48.750,0:21:54.630
+compris entre 0 et 1 et sommant à 1. Donc cela force le système à payer
+
+0:21:54.630,0:21:59.370
+attention à un petit nombre de choses. Il peut seulement se concentrer
+
+0:21:59.370,0:22:06.009
+sur les coefficients d’un petit nombre d'éléments. Et il doit les répartir.
+
+0:22:06.009,0:22:11.779
+Il y a d'autres moyens de faire de la normalisation. Et en fait il y a quelque chose
+
+0:22:11.779,0:22:18.049
+qui est faux avec la normalisation softmax pour les transformers. Ou pour
+
+0:22:18.049,0:22:22.159
+l’attention qui est que si vous voulez qu'un coefficient sortant du softmax 
+
+0:22:22.159,0:22:26.840
+soit proche de 0, il faut que l'entrée soit proche de moins l’infini.
+
+0:22:26.840,0:22:32.419
+Ou être considérablement plus petit que le plus grand coef.
+
+0:22:32.419,0:22:38.389
+Quand vous allez dans le softmax, la plus grande entrée va rendre la
+
+0:22:38.389,0:22:42.200
+la sortie correspondante la plus grande. Si vous voulez que cette sortie
+
+0:22:42.200,0:22:46.129
+soit proche de 1 et que toutes les autres soient proches de 0, vous voulez alors que
+
+0:22:46.129,0:22:54.379
+cette entrée soit très grande positivement et toutes les autres soient grandes négativement.
+
+0:23:54.379,0:23:02.149
+Cela peut être un problème lorsque les calculs de vos entrées
+
+0:23:02.149,0:23:08.090
+sont des produits scalaires car le résultat est que… La façon la plus facile
+
+0:23:08.090,0:23:14.690
+pour qu’un système puisse produire un petit produit scalaire est d’avoir deux vecteurs qui
+
+0:23:14.690,0:23:18.590
+sont orthogonaux l'un par rapport à l'autre. Ce qui fait que le produit scalaire est nul. Si vous insistez pour
+
+0:23:18.590,0:23:20.480
+que le produit scalaire soit très très petit
+
+0:23:20.480,0:23:26.090
+alors vous devez faire en sorte que les deux vecteurs pointent dans
+
+0:23:26.090,0:23:31.580
+des directions opposées et devez les rendre très longs. Et ce n’est pas bien.
+
+0:23:31.580,0:23:39.769
+Donc l'utilisation de softmax pour l'attention limite fondamentalement le
+
+0:23:39.769,0:23:43.639
+contraste que vous allez avoir entre deux coefficients. Ce qui n'est pas
+
+0:23:43.639,0:23:50.600
+nécessairement une bonne chose. Même chose pour les LSTMs, les GRUs, 
+
+0:23:50.600,0:23:57.499
+les RNNs, etc. Vous avez besoin d’une sigmoïde là car vous avez besoin de
+
+0:23:57.499,0:24:01.039
+coefficients entre 0 et 1. Soit vous réinitialisez 
+
+0:24:01.039,0:24:06.590
+la cellule mémoire, soit vous propagez pour garder en mémoire
+
+0:24:06.590,0:24:14.770
+Ou soit écrivez la nouvelle entrée dedans. Donc là il est agréable d'avoir une sortie variant continuellement
+
+0:24:14.770,0:24:21.010
+entre 0 et 1. Vous n'avez pas le choix. Donc je veux dire que je ne pense pas que vous puissiez
+
+0:24:21.010,0:24:26.350
+dire en des termes génériques que cette non-linéarité est meilleure
+
+0:24:26.350,0:24:29.110
+que cette autre. Il y a certains cas où elle apprend mieux cependant dans
+
+0:24:29.110,0:24:33.970
+certains cas elle vous dispense d'initialiser correctement.
+
+0:24:33.970,0:24:37.690
+Dans certains cas cela fonctionne mieux si vous avez beaucoup de couches.
+
+0:24:37.690,0:24:40.900
+Si vous avez beaucoup de couches, les fonctions à un coude fonctionnent mieux qu’une
+
+0:24:40.900,0:24:48.130
+sïgmoide log-fonction. Il n’y a pas de réponse simple. 
+
+[Etudiant : j’ai une question
+
+0:24:48.130,0:24:54.190
+concernant les différences générales entre une activation non linéaire qui 
+
+0:24:54.190,0:25:00.130
+a des coudes versus une activation non linéaire lisse. Y a-t-il une sorte 
+
+0:25:00.130,0:25:06.340
+de raison ou de règle pour laquelle nous préférerions avoir des coudes dans une fonction ou pas ?]
+
+0:25:06.340,0:25:11.620
+Il s'agit d'une question d'équivalence d'échelle. Donc si le coude est dur
+
+0:25:11.620,0:25:15.610
+alors à nouveau, si vous multipliez l'entrée par 2, la sortie est multipliée par 2 et le
+
+0:25:15.610,0:25:22.660
+reste est inchangé. Si vous avez une transition lisse, si vous multipliez
+
+0:25:22.660,0:25:31.390
+l'entrée par 100 par exemple, la sortie ressemblera à un coude dur.
+
+0:25:31.390,0:25:35.860
+Car la partie lisse est réduite par un facteur de 100. Si vous divisez
+
+0:25:35.860,0:25:42.370
+l'entrée par 100, le coude devient très lisse, une sorte de fonction convexe.
+
+0:25:42.370,0:25:47.710
+Donc cela change le comportement, mais en changeant l'échelle
+
+0:25:47.710,0:25:52.810
+vous modifiez le comportement de l'unité. Cela peut poser un problème
+
+0:25:52.810,0:25:58.360
+parfois car lorsque vous entraînez un réseau multicouche et que vous
+
+0:25:58.360,0:26:04.680
+avez deux couches qui se succèdent, vous n’avez pas un bon contrôle comme
+
+0:26:04.680,0:26:09.370
+par exemple quelle est la taille des poids de cette couche par rapport à l'autre.
+
+0:26:09.370,0:26:13.030
+Imaginez que vous ayez un réseau à deux couches où vous n'avez pas de non-linéarité dans
+
+0:26:13.030,0:26:19.510
+le milieu, de sorte que le système est complètement linéaire. Si le réseau est arrivé
+
+0:26:19.510,0:26:24.100
+à la solution, vous pouvez multiplier la matrice de poids de la première couche par 2
+
+0:26:24.100,0:26:27.520
+divisé la deuxième matrice de poids par 2
+
+0:26:27.520,0:26:31.300
+et dans l'ensemble, le réseau aura exactement la même sortie. Vous n’aurez
+
+0:26:31.300,0:26:36.370
+rien changé. Cela signifie que lorsque vous entraînez, il n’y a rien
+
+0:26:36.370,0:26:41.350
+qui oblige le système à avoir une échelle particulière pour la matrice de poids.
+
+0:26:41.350,0:26:45.190
+Si vous mettez une non-linéarité dans le milieu et n’avez
+
+0:26:45.190,0:26:49.050
+toujours pas de contrainte pour le système comme
+
+0:26:49.050,0:26:53.820
+avoir une échelle pour la première couche versus la deuxième couche,
+
+0:26:53.820,0:26:58.990
+il vaut mieux avoir une non-linéarité qui ne se soucie pas de l'échelle.
+
+0:26:58.990,0:27:04.950
+Donc si vous avez une non-linéarité qui se soucie de l'échelle,
+
+0:27:04.950,0:27:10.030
+votre réseau n'a pas le choix de la taille de la matrice de poids qu'il peut utiliser dans
+
+0:27:10.030,0:27:14.170
+la première couche car cela va complètement changer le comportement.
+
+0:27:14.170,0:27:17.740
+Vous pouvez vouloir avoir des poids importants pour d’autre raisons. Cela 
+
+0:27:17.740,0:27:23.560
+saturera la non-linéarité et créer des problèmes de disparition du gradient.
+
+0:27:23.560,0:27:29.350
+Il n'est pas tout à fait clair pourquoi les réseaux fonctionnent mieux
+
+0:27:29.350,0:27:34.000
+avec les fonctions à un coude mais c'est probablement dû à cette échelle,
+
+0:27:34.000,0:27:38.140
+la propriété d'invariance, la propriété d'équivariance. 
+
+0:27:38.140,0:27:42.190
+Il y a d'autres moyens de régler ce problème qui consistant en gros à fixer
+
+0:27:42.190,0:27:45.340
+une grande échelle sur les poids de chaque couche. Comme normaliser les poids
+
+0:27:45.340,0:27:50.860
+des couches, de sorte que la variance des choses qui entrent dans une
+
+0:27:50.860,0:27:53.560
+unité soit toujours constante. En fait, c'est un peu ce que la batch
+
+0:27:53.560,0:27:56.830
+normalisation fait, les différents schémas de normalisation. Ils font ça 
+
+0:27:56.830,0:28:02.530
+dans une certaine mesure. Ils mettent la moyenne à 0 et la variance est constante.
+
+0:28:02.530,0:28:07.570
+Donc la variance, l'amplitude de la sortie ne dépend pas de la taille des
+
+0:28:07.570,0:28:16.020
+poids car c’est normalisé. Donc c'est en partie pour cela que des choses 
+
+0:28:16.020,0:28:21.670
+comme la batch norme, la groupe norme et des choses comme ça aident. Car elles
+
+0:28:21.670,0:28:32.200
+peuvent fixer un peu l'échelle. Mais si vous fixez l'échelle avec quelque chose
+
+0:28:32.200,0:28:37.420
+comme la batch norme, le système n'a maintenant aucun moyen de choisir quelle
+
+0:28:37.420,0:28:41.320
+partie de la non-linéarité il va utiliser dans un système de fonction à deux coudes.
+
+0:28:41.320,0:28:45.820
+Des choses comme la groupe normalisation ou batch normalisation sont incompatibles
+
+0:28:45.820,0:28:52.159
+avec des sortes de sigmoïdes si vous voulez. Si vous avez une sigmoïde vous ne voulez pas normaliser
+
+0:28:52.159,0:28:57.899
+juste avant elle. [Etudiant : cela donne une très bonne intuition, merci]
+
+0:28:57.899,0:29:03.549
+[Etudiant : j'ai encore une question à poser. J'ai remarqué que dans la fonction softmax certaines personnes utilisent le
+
+0:29:03.549,0:29:07.840
+coefficient de température, donc dans quels cas voudrions-nous utiliser la température ?]
+
+0:29:07.840,0:29:12.580
+Dans une certaine mesure, la température est redondante avec les poids
+
+0:29:12.580,0:29:18.059
+entrants. Si vous avez une somme pondérée qui arrive dans votre softmax,
+
+0:29:18.059,0:29:22.750
+avoir un paramètre béta dans votre softmax égal à 2 au lieu de 1, c'est
+
+0:29:22.750,0:29:26.730
+pareil que si vous avez vos poids deux fois plus gros. Cela a exactement le même effet.
+
+0:29:26.730,0:29:32.320
+Donc ce paramètre β est redondant avec la taille des poids.
+
+0:29:32.320,0:29:36.009
+La taille de la somme pondérée, la variance de la somme pondérée si vous voulez.
+
+0:29:36.009,0:29:39.700
+Mais encore une fois, si vous avez une batch normalisation par lots, alors 
+
+0:29:39.700,0:29:45.190
+le paramètre de température est important car maintenant les variances des entrées sont fixes.
+
+0:29:45.190,0:29:51.460
+Donc maintenant la température importe. La température contrôle en gros
+
+0:29:51.460,0:29:58.389
+la dureté de la distribution de la sortie. Donc avec un
+
+0:29:58.389,0:30:02.470
+β très très important, vous aurez essentiellement un dans la sortie
+
+0:30:02.470,0:30:05.379
+égal à 1 et tous les autres très proche de 0. Je veux dire un très proche
+
+0:30:05.379,0:30:09.850
+de 1 et les autres très proche de 0. Quand le β est faible alors c’est plus lisse. Pour la limite
+
+0:30:09.850,0:30:13.029
+de β égale à 0, c'est plutôt une moyenne que vous obtenez. Le softmax
+
+0:30:13.029,0:30:19.779
+se comporte un peu comme une moyenne. Quand le β va vers l'infini, cela
+
+0:30:19.779,0:30:24.159
+se comporte un peu comme argmax. Et quand β tend vers 0 il se comporte comme une moyenne.
+
+0:30:24.159,0:30:32.440
+Donc si vous avez une sorte de normalisation avant le softmax alors
+
+0:30:32.440,0:30:36.419
+tuner ce paramètre vous permet de contrôler cette sorte de dureté.
+
+0:30:36.419,0:30:42.850
+Ce que les gens font parfois, dans certains scénarios, c'est qu'ils commencent par un
+
+0:30:42.850,0:30:49.000
+β relativement faible, donc les chiffres qui sont produits sont en quelque sorte doux.
+
+0:30:49.000,0:30:53.740
+Vous obtenez des gradients partout. Cela se comporte bien en termes de
+
+0:30:53.740,0:30:57.179
+gradient et ensuite au fur et à mesure de la progression si vous voulez
+
+0:30:57.179,0:31:01.139
+des décisions plus dures dans votre mécanisme d'attention ou quoi que ce soit,
+
+0:31:01.139,0:31:05.580
+vous augmentez les données. Ce qui fait que le système prend des décisions plus difficiles.
+
+0:31:05.580,0:31:08.789
+Cela ne fonctionne plus aussi bien, mais après quelques itérations, c’est
+
+0:31:08.789,0:31:13.379
+en quelque sorte dans la bonne direction. Vous pouvez aiguiser la décision.
+
+0:31:13.379,0:31:18.509
+mais il peut y avoir une augmentation des données. C'est utile par exemple dans un
+
+0:31:18.509,0:31:24.509
+mélange d'experts. Vous pouvez penser les systèmes d’auto-attention 
+
+0:31:24.509,0:31:31.169
+comme une sorte de forme bizarre de mélange d'experts.
+
+0:31:31.169,0:31:35.070
+Donc un mélange d'experts, il y a plusieurs sous-réseaux et leurs sorties
+
+0:31:35.070,0:31:38.549
+peuvent se combiner linéairement avec des coefficients qui sont le résultat
+
+0:31:38.549,0:31:45.450
+de la softmax elle-même. Contrôlé par un autre réseau neuronal. Donc si vous voulez
+
+0:31:45.450,0:31:48.539
+une sorte de mélange doux, vous avez un β faible et à mesure que vous augmentez β vers
+
+0:31:48.539,0:31:52.739
+l'infini, vous allez en gros choisir un des experts et ignorer tous
+
+0:31:52.739,0:31:57.090
+les autres. Cela peut être utile par exemple si vous voulez entraîner un mélange
+
+0:31:57.090,0:32:00.960
+d'experts ou un mécanisme d'attention. Mais au final vous voulez économiser du calcul
+
+0:32:00.960,0:32:05.159
+en déterminant simplement quel expert doit être calculé et ne pas calculer
+
+0:32:05.159,0:32:08.460
+les autres. Donc dans ce cas vous voulez que ces coefficients soient
+
+0:32:08.460,0:32:13.350
+soit 1 ou 0. Vous pouvez entraîner progressivement le système à cette fin
+
+0:32:13.350,0:32:19.649
+en augmentant β. Les physiciens ont un nom pour ça car
+
+0:32:19.649,0:32:22.859
+ils utilisent des sortes d'astuces et diverses autres choses. Cela s’appelle l’annéliation.
+
+0:32:22.859,0:32:30.480
+Cela a la même signification que…  L’annéliation vient du travail des métaux.
+
+0:32:30.480,0:32:37.289
+Vous fabriquez un acier pour faire une épée ou quelque chose comme ça.
+
+0:32:37.289,0:32:43.919
+Vous le chauffez et ensuite vous vous le refroidissez. Selon que vous le
+
+0:32:43.919,0:32:49.649
+refroidissez rapidement ou lentement vous changez la structure 
+
+0:32:49.649,0:32:54.389
+cristalline du métal. Donc cette idée d’annealing,
+
+0:32:54.389,0:32:58.320
+l'abaissement de la température correspond à cette augmentation ce β. 
+
+0:32:58.320,0:33:04.570
+β est comme une température inverse. D’autres questions ?
+
+0:33:04.570,0:33:18.850
+[Alfredo : je pense qu’on est bon]. Ok donc le prochain sujet est les fonctions de perte.
+
+0:33:18.850,0:33:25.420
+PyTorch a tout un tas de fonctions de perte comme vous avez pu le voir.
+
+0:33:25.420,0:33:32.110
+Il y a des choses simples, comme l'erreur quadratique moyenne, donc je n'ai pas besoin de
+
+0:33:32.110,0:33:35.020
+vous expliquer ce que c’est. Calculer le carré de l'erreur entre la
+
+0:33:35.020,0:33:41.830
+sortie désirée y et la sortie du réseau x. Si vous faites sur des mini-batchs avec n échantillons
+
+0:33:41.830,0:33:49.240
+alors vous avez n pertes : une pour chacun des échantillons du batch.
+
+0:33:49.240,0:33:52.660
+Vous pouvez dire à cette fonction de perte de conserver ce vecteur ou de
+
+0:33:52.660,0:34:02.590
+le réduire en calculant une moyenne ou une somme. Plutôt simple. Voici une 
+
+0:34:02.590,0:34:06.010
+autre perte que tout le monde connaît. Il s'agit en gros de la valeur absolue de
+
+0:34:06.010,0:34:10.780
+la différence entre la sortie souhaitée et la sortie réelle. Vous voulez
+
+0:34:10.780,0:34:15.970
+l'utiliser pour faire ce qu'on appelle une régression robuste. Donc vous voulez que de petites
+
+0:34:15.970,0:34:20.350
+erreurs comptent beaucoup et que de grosses erreurs comptent mais pas autant que si
+
+0:34:20.350,0:34:23.620
+vous utilisez le carré. Peut-être parce que vous avez du bruit dans vos
+
+0:34:23.620,0:34:27.820
+données. Donc vous avez un tas de points de données, vous essayez d’entraîner 
+
+0:34:27.820,0:34:33.370
+un réseau ou quelque chose afin d’ajuster une courbe ou faire une
+
+0:34:33.370,0:34:36.850
+régression mais avez quelques aberrations, quelques points
+
+0:34:36.850,0:34:40.000
+qui sont très loin de ce qu'ils devraient être simplement car
+
+0:34:40.000,0:34:44.500
+le système a du bruit ou que les données ont été collectées avec du bruit.
+
+0:34:44.500,0:34:47.740
+Donc vous voulez que le système soit robuste à ce bruit. Vous ne voulez pas que la
+
+0:34:47.740,0:34:53.800
+fonction de coût augmente trop rapidement car les points sont loin de 
+
+0:34:53.800,0:35:01.180
+la courbe générale. Donc la perte L1 sera plus robuste. Le problème avec
+
+0:35:01.180,0:35:05.890
+cette perte L1, c'est que ce n’est pas différentiable au bas.
+
+0:35:05.890,0:35:11.110
+Donc vous devez être prudent lorsque vous faites le gradient.
+
+0:35:11.110,0:35:16.390
+C’est essentiellement fait avec la « soft shrink ».
+
+0:35:16.390,0:35:26.710
+C'est le gradient de la perte L1. Pour corriger ça, les gens
+
+0:35:26.710,0:35:33.759
+ont trouvé différentes façons de faire la perte L1 pour des pertes grandes
+
+0:35:33.759,0:35:38.529
+mais toujours avec une douceur en bas, se comportant comme une erreur
+
+0:35:38.529,0:35:43.259
+quadratique en bas. Un exemple est cette fonction : la « smoothL1loss ».
+
+0:35:43.259,0:35:48.309
+C'est en gros L1 au loin et une sorte de L2 au près. 
+
+0:35:48.309,0:35:53.619
+C’est parfois appelé la perte [???]. Certains appellent cela aussi
+
+0:35:53.619,0:36:02.470
+ElasticNet car un vieux papier des années 1980 ou 1990 proposait
+
+0:36:02.470,0:36:08.589
+ce type de fonction objective à des fins différentes.
+
+0:36:08.589,0:36:16.390
+Cela a été utilisé par Ross Girshick dans le papier sur Fast R-CNN et
+
+0:36:16.390,0:36:20.140
+c’est assez utilisé en vision par ordinateur dans la division de Cuba pour plusieurs buts.
+
+0:36:20.140,0:36:29.680
+Et à nouveau c’est pour se protéger contre les valeurs aberrantes. [Alfredo : cela donne aussi des résultats plus précis
+
+0:36:29.680,0:36:42.880
+quand nous faisons de la prédiction d'images non ?] Plus précis que ? [que l'utilisation de la MSE] Pas particulièrement.
+
+0:36:42.880,0:36:49.119
+C'est comme la MSE pour les petites erreurs. Donc ça ne fait pas de différence.
+
+0:36:49.119,0:36:54.609
+Ou peut-être ai-je mal compris ce que tu voulais pointer Alfredo.
+
+0:36:54.609,0:36:59.769
+[Alfredo : j’essayais de comparer la L1 versus la L2. La L2 nous donne
+
+0:36:59.769,0:37:04.359
+comme généralement des prédictions floues quand nous essayons de faire
+
+0:37:04.359,0:37:09.400
+de la prédiction en minimisant la L2 météo alors les gens
+
+0:37:09.400,0:37:14.259
+minimisent plutôt la L1 afin d'avoir des prévisions globales plus précises.
+
+0:37:14.259,0:37:19.869
+Ok donc si vous prenez un tas de points… Si vous prenez un tas de valeurs
+
+0:37:19.869,0:37:26.200
+de y, et vous vous demandez quelle valeur… Vous prenez un tas de points
+
+0:37:26.200,0:37:30.710
+sur y. Et vous posez la question : quelle valeur de y minimise
+
+0:37:30.710,0:37:35.710
+la SE ? La réponse est que c'est la moyenne de tous les y.
+
+0:37:35.710,0:37:40.460
+Donc si pour un x vous avez tout un tas de y, ce qui signifie que
+
+0:37:40.460,0:37:47.090
+vous avez du bruit dans vos données, votre système voudra produire la moyenne de tous
+
+0:37:47.090,0:37:52.340
+les y que vous observez. Et si le y que vous observez n'est pas une
+
+0:37:52.340,0:37:57.200
+valeur unique mais une image, la moyenne d'un tas d'images
+
+0:37:57.200,0:38:00.730
+est une image floue. C'est pourquoi vous obtenez cet effet de flou.
+
+0:38:00.730,0:38:09.860
+Maintenant avec L1, la valeur de y qui minimise la norme L1, la distance L1 
+
+0:38:09.860,0:38:13.610
+donc la somme des valeurs absolues des différences entre la valeur que
+
+0:38:13.610,0:38:17.830
+vous considérez et tous les points y, c'est la médiane.
+
+0:38:17.830,0:38:26.330
+Donc c'est un point donné. [Alfredo : je vois]. La médiane est
+
+0:38:26.330,0:38:34.280
+bien sûr pas floue. C'est juste une image. Bien que ce soit difficile à
+
+0:38:34.280,0:38:42.650
+définir en multiples dimensions. Un problème avec cette perte est qu’elle
+
+0:38:42.650,0:38:48.440
+a une échelle. Donc ici la transition est à 0.5 mais pourquoi devrait-elle 
+
+0:38:48.440,0:38:52.430
+être à 0.5 ? Cela dépend de l’échelle de vos erreurs.
+
+0:38:52.430,0:39:01.700
+La perte « Negative log likelihood » [NLLLoss dans la suite]. Ce n’est pas exactement la NNL.
+
+0:39:01.700,0:39:06.190
+Je ne sais pas pourquoi on l'appelle ainsi dans PyTorch. Mais en gros ici,
+
+0:39:06.190,0:39:11.810
+imaginez que vous avez un vecteur x et votre fonction de perte est
+
+0:39:11.810,0:39:17.740
+qu'il y a un x correct. Donc imaginez que chaque x correspond à un score,
+
+0:39:17.740,0:39:22.550
+disons pour de la classification multiclasses. Vous avez une classe souhaitée qui
+
+0:39:22.550,0:39:27.680
+est à un indice particulier dans ce vecteur. Maintenant ce que vous voulez 
+
+0:39:27.680,0:39:32.390
+c’est que ce score soit le plus élevé possible. Si ces scores sont des probabilités,
+
+0:39:32.390,0:39:38.600
+il s'agit alors d'une probabilité logarithmique négative minimale. Si ces scores sont des probabilités
+
+0:39:38.600,0:39:42.380
+logarithmiques. C'est la probabilité maximale ou le NNL minimal.
+
+0:39:42.380,0:39:49.380
+Mais il n'y a rien dans ce module qui précise que les l doivent être des LL.
+
+0:39:49.380,0:39:55.020
+Donc c’est juste rendre mon composant désiré aussi grand que possible. C'est tout.
+
+0:39:55.020,0:40:02.070
+Si vous mettez des signes négatifs devant, vous pouvez interpréter les x comme une
+
+0:40:02.070,0:40:06.630
+énergie par opposition aux scores. Ce n’est plus un score positif mais
+
+0:40:06.630,0:40:13.440
+comme s'il s'agissait de pénalités si vous voulez. Mais c'est la même chose. 
+
+0:40:13.440,0:40:20.160
+Donc la formule ici dit qu'il suffit de choisir le x qui se trouve être le bon pour un
+
+0:40:20.160,0:40:25.920
+échantillon dans le batch et faire en sorte que ce score soit le plus élevé possible.
+
+0:40:25.920,0:40:32.630
+Elle vous permet de donner une voie différente à différentes catégories.
+
+0:40:32.630,0:40:38.280
+Les w. C'est un vecteur de poids qui donne une voie à chacune des catégories.
+
+0:40:38.280,0:40:43.140
+C’est utile dans de nombreux cas, en particulier si vous avez
+
+0:40:43.140,0:40:51.390
+des fréquences très différentes pour les catégories. Vous pourriez souhaiter
+
+0:40:51.390,0:40:56.990
+augmenter le poids des échantillons pour lesquels vous disposez d'un petit nombre d’exemples.
+
+0:40:56.990,0:41:02.510
+Je veux dire pour les catégories pour lesquelles vous avez un petit nombre d'échantillons.
+
+0:41:02.510,0:41:08.580
+Mais je ne suis pas vraiment fan de cette idée. Je pense que c'est une bien meilleure
+
+0:41:08.580,0:41:17.590
+idée d'augmenter simplement la fréquence des échantillons pour la classe qui apparaît rarement.
+
+0:41:17.590,0:41:26.840
+Donc vous égalisez la fréquence des classes quand vous entraînez. C'est beaucoup mieux car
+
+0:41:26.840,0:41:33.180
+cela exploite mieux le gradient stochastique. Donc le résultat de ça est…
+
+0:41:33.180,0:41:40.260
+Laissez-moi faire un dessin. Donc disons que vous avez un problème où
+
+0:41:40.260,0:41:45.000
+vous avez des tonnes d'échantillons pour la catégorie 1, un petit nombre
+
+0:41:45.000,0:41:51.500
+d'échantillons pour la catégorie 2 et un nombre infime d'échantillons pour la catégorie 3.
+
+0:41:51.500,0:41:59.670
+Disons que vous avez ici 1000 échantillons, là 500 échantillons et 200 ici.
+
+0:41:59.670,0:42:06.119
+Ce que vous pourriez faire c’est d'utiliser ce genre de fonction de poids.
+
+0:42:06.119,0:42:12.869
+Vous pourriez donner un poids de 1, un poids de 2 à ce type, et un poids de 5 à ce type.
+
+0:42:12.869,0:42:17.099
+Ensuite vous pouvez égaliser les poids si vous voulez. C'est mieux
+
+0:42:17.099,0:42:19.650
+de s'assurer que les poids se normalisent à 1. Cela serait probablement une
+
+0:42:19.650,0:42:27.000
+meilleure idée. Mais ce que je recommande n'est pas ça. Ce que je recommande est : quand vous choisissez vos échantillons,
+
+0:42:27.000,0:42:36.660
+vous choisissez en principe un échantillon de la classe 1, puis un échantillon
+
+0:42:36.660,0:42:40.529
+de la classe 2 et un de la classe 3. Et vous continuez à faire cela pendant
+
+0:42:40.529,0:42:46.950
+votre session d’entraînement. Et lorsque vous arrivez à la fin de la classe 3, vous retournez au début.
+
+0:42:46.950,0:42:52.200
+Donc vous continuez ici, mais ici vous revenez au premier échantillon.
+
+0:42:52.200,0:42:58.380
+Continuez ici, et revenez au premier là. Maintenant vous avez le deuxième échantillon. Vous arrivez à
+
+0:42:58.380,0:43:05.490
+la fin de la classe 2 et revenez au début. Donc le prochain échantillon va être
+
+0:43:05.490,0:43:13.380
+ici ici et ici et ici et ici ici et ici et ici et ici et ici et ici et ici
+
+0:43:13.380,0:43:18.780
+Ce type s'enroule à nouveau, etc. Vous avez en gros des
+
+0:43:18.780,0:43:23.519
+fréquences égales pour toutes les catégories juste en passant plus souvent 
+
+0:43:23.519,0:43:29.789
+via ce genre de tampons circulaires sur les catégories pour lesquelles vous avez moins d’échantillons.
+
+0:43:29.789,0:43:37.470
+Une chose que vous ne devez absolument pas faire c’est d'égaliser les fréquences
+
+0:43:37.470,0:43:42.869
+en n'utilisant pas tous les échantillons dans les catégories les plus nombreuses.
+
+0:43:42.869,0:43:46.680
+C'est horrible, vous ne devriez jamais laisser de données sur le sol. Il n’y a 
+
+0:43:46.680,0:43:52.680
+jamais de raison de laisser cela sur le sol. Il y a un problème avec cela. 
+
+0:43:52.680,0:43:56.609
+C'est qu'après avoir entraîné votre réseau à faire ça, le réseau ne
+
+0:43:56.609,0:44:02.430
+connaît pas les fréquences relatives des échantillons.
+
+0:44:02.430,0:44:07.230
+Disons que c'est un système faisant des diagnostics médicaux.
+
+0:44:07.230,0:44:14.260
+Il ne sait pas que le rhume est beaucoup plus fréquent que le cancer du 
+
+0:44:14.260,0:44:22.869
+poumon ou quelque chose. Donc ce que vous devez faire, c'est faire quelques
+
+0:44:22.869,0:44:29.750
+passes peut-être où vous pouvez finetuner votre système avec les fréquences réelles des catégories.
+
+0:44:29.750,0:44:38.000
+L'effet de cela est que le système adapte les biais de la couche de sortie. 
+
+0:44:38.000,0:44:43.390
+La probabilité d’un diagnostic correspondra à sa fréquence. Cela favorise
+
+0:44:43.390,0:44:47.200
+les choses qui sont plus fréquentes. La raison pour laquelle je ne veux pas faire ça sur
+
+0:44:47.200,0:44:53.560
+l'ensemble de l’entraînement est que si vous entraînez un réseau multicouche, 
+
+0:44:53.560,0:44:57.940
+le système ne développe jamais les bonnes caractéristiques pour les cas rares.
+
+0:44:57.940,0:45:05.560
+On a déjà parlé de cela en classe ces dernières semaines. Pour recycler
+
+0:45:05.560,0:45:10.660
+l'exemple de l'école de médecine, lorsque vous étudiez en médecine,
+
+0:45:10.660,0:45:16.089
+le temps d’étude pour la grippe est proportionnelle à la fréquence de la
+
+0:45:16.089,0:45:21.099
+grippe par rapport à des maladies très rares par exemple. Vous passez en gros
+
+0:45:21.099,0:45:24.820
+le même temps d'étude sur toutes les maladies. En fait, vous passez plus de temps à étudier
+
+0:45:24.820,0:45:30.070
+une maladie compliquée qui a tendance à être plus rare car vous devez
+
+0:45:30.070,0:45:33.640
+développer les caractéristiques pour. Puis vous devez en quelque sorte 
+
+0:45:33.640,0:45:39.160
+corriger par le fait que ces maladies rares sont rares.
+
+0:45:39.160,0:45:46.900
+Vous ne soupçonnez pas très souvent le diagnostic de maladies rares car
+
+0:45:46.900,0:45:58.300
+vous savez que c'est rare. Donc c'est tout pour les poids. La perte d’entropie croisée.
+
+0:45:58.300,0:46:05.260
+Vous allez l’utiliser beaucoup. La perte d’entropie croisée est une sorte de fusion de
+
+0:46:05.260,0:46:10.900
+deux choses : la fusion de la fonction de logsoftmax et de la perte NLL.	
+
+0:46:10.900,0:46:18.510
+La raison pour laquelle vous voulez avoir ça, est pour une raison numérique.
+
+0:46:20.150,0:46:26.660
+La logsoftmax est une softmax suivie d’un log. Donc vous calculez d’abord le softmax puis calculez le log. 
+
+0:46:26.660,0:46:31.369
+Si vous faites la softmax puis le log et vous rétropropagez,
+
+0:46:31.369,0:46:36.680
+vous pourriez avoir des gradients au milieu : entre le log et la softmax
+
+0:46:36.680,0:46:42.580
+qui finissent par être infinies. Donc par exemple si la valeur maximale
+
+0:46:42.580,0:46:48.160
+d'un des éléments de la solftmax est proche de 1 et les autres proches de 0,
+
+0:46:50.990,0:46:55.430
+vous prenez le log et obtenez quelque chose qui est proche de - l'infini. 
+
+0:46:55.430,0:46:59.090
+Vous rétropropagez à travers le log et obtenez quelque chose qui est proche de l'infini.
+
+0:46:59.090,0:47:07.040
+Car la pente du log près du 0 est très très proche de l'infini.
+
+0:47:07.040,0:47:10.849
+Mais vous multipliez cela par une softmax qui est saturée. Donc c’est multiplié par
+
+0:47:10.849,0:47:13.730
+quelque chose qui est très proche de 0. Donc à la fin vous obtenez un nombre raisonnable.
+
+0:47:13.730,0:47:19.280
+Car les nombres intermédiaires sont proches de l'infini ou de 0. On multiplie
+
+0:47:19.280,0:47:22.940
+quelque chose qui est proche de plus l'infini par quelque chose qui est proche de 0  donc on obtient
+
+0:47:22.940,0:47:26.750
+un problème numériques. Donc vous ne voulez pas séparer le log et la softmax. Vous voulez faire
+
+0:47:26.750,0:47:30.680
+faire logsoftmax en une seule fois. Cela simplifie la formule et rend
+
+0:47:30.680,0:47:37.660
+tout cela beaucoup plus stable numériquement. Pour des raisons similaires, vous souhaitez également
+
+0:47:37.660,0:47:42.040
+fusionner logsoftmax et la perte NLL. Donc en gros si vous avez 
+
+0:47:42.040,0:47:45.589
+logsoftmax et la perte NLL, cela indique que j'ai
+
+0:47:45.589,0:47:48.890
+un tas de sommes pondérées, je les passe à travers softmax et je prends le log de ça.
+
+0:47:48.890,0:47:54.950
+Puis je veux que la sortie de la logsoftmax pour la bonne classe
+
+0:47:54.950,0:47:59.420
+soit aussi grande que possible. C'est ce que la perte NLL fait.
+
+0:47:59.420,0:48:02.869
+Elle veut rendre le score de la bonne classe aussi grand que possible.
+
+0:48:02.869,0:48:08.750
+Nous l'avons vu il y a une minute. Quand vous rétropropagez à travers logsoftmax,
+
+0:48:08.750,0:48:12.230
+la conséquence est que ça rend le score de toutes les autres classes
+
+0:48:12.230,0:48:19.580
+aussi petit que possible en raison de la normalisation.
+
+0:48:19.580,0:48:35.109
+C'est pourquoi quand vous construisez un réseau avec des modules, il y a parfois un avantage à fusionner les modules en un unique.
+
+0:48:42.219,0:48:50.269
+La perte d'entropie croisée explique en fait un peu ces simplifications numériques.
+
+0:48:50.269,0:48:58.410
+Donc la perte prend prenne un vecteur x et une catégorie souhaitée,
+
+0:48:58.410,0:49:04.049
+une classe. Et elle calcule le logarithme négatif du softmax
+
+0:49:04.049,0:49:11.279
+appliqué au vecteur des scores. Mais celui qui se trouve sur le numérateur
+
+0:49:11.279,0:49:18.029
+ici est le x de l'index de la bonne classe. Donc c'est votre perte.
+
+0:49:18.029,0:49:22.440
+Le logarithme négatif de l'exponentielle du score de la bonne classe divisé 
+
+0:49:22.440,0:49:27.930
+par la somme des exponentielles de tous les scores. Vous pouvez considérer x comme
+
+0:49:27.930,0:49:38.759
+des énergies négatives. C'est complètement équivalent. Quand vous faites le 
+
+0:49:38.759,0:49:42.329
+calcul, le log et l'exponentielle se simplifient et donc vous obtenez
+
+0:49:42.329,0:49:45.450
+juste le score de la bonne classe, le score négatif de la bonne classe.
+
+0:49:45.450,0:49:50.559
+Donc pour rendre ça petit, vous rendez le score grand et puis plus le log
+
+0:49:50.559,0:49:55.509
+de la somme des exponentielles des scores de toutes les autres classes à rendre
+
+0:49:55.509,0:50:01.529
+petit. Vous rendez tous les xj petits. Aussi négatifs que possible.  
+
+0:50:01.529,0:50:06.529
+Donc cela rendra le score de la bonne classe grand et tout le reste petit.
+
+0:50:05.029,0:50:12.069
+Et comme dans NLL, vous pouvez avoir un poids par catégorie.
+
+0:50:12.069,0:50:18.989
+[Alfredo : il existe également une interprétation physique de
+
+0:50:18.989,0:50:23.000
+l'entropie croisée] Ok. Pourquoi l'appelle-t-on entropie croisée ? 
+
+0:50:23.000,0:50:27.660
+Car c’est l'entropie croisée entre deux distributions.
+
+0:50:27.660,0:50:31.049
+C'est la divergence KL entre deux distributions.
+
+0:50:31.049,0:50:37.079
+Cela n'apparaît pas clairement ici dans cette formule. Mais pensez à la softmax appliquée
+
+0:50:37.079,0:50:41.339
+au vecteur x comme une distribution. Donc prenez le vecteur x, le score,
+
+0:50:41.339,0:50:46.890
+donnez le à une softmax, vous obtenez un tas de chiffres entre 0 et 1 qui somment à 1.
+
+0:50:46.890,0:50:52.020
+Et maintenant vous avez une distribution souhaitée, la distribution cible
+
+0:50:52.020,0:50:56.700
+si vous voulez, qui est celle où toutes les mauvaises catégories ont 0 et
+
+0:50:56.700,0:51:01.410
+la bonne catégorie a 1. Calculez la divergence KL entre ces deux
+
+0:51:01.410,0:51:11.040
+distributions. Il s'agit de la somme sur les indices de la bonne probabilité,
+
+0:51:11.040,0:51:19.280
+qui est égale 0 sauf pour un terme, fois le rapport entre le logarithme de
+
+0:51:19.280,0:51:24.750
+la probabilité que le système produit et la bonne probabilité qui est 1.
+
+0:51:24.750,0:51:31.440
+Donc tous ces termes se réduisent à une sorte de terme unique
+
+0:51:31.440,0:51:36.630
+qui est celui pour lequel le terme de bonne probabilité est 1.
+
+0:51:36.630,0:51:41.010
+Donc nous nous retrouvons avec ce terme, c'est juste un log négatif de la softmax
+
+0:51:41.010,0:51:46.230
+pour la bonne classe. Nous pouvons utiliser cela comme une entropie croisée entre la 
+
+0:51:46.230,0:51:51.180
+distribution produite par le système et le « one hot » vecteur correspondant 
+
+0:51:51.180,0:51:55.970
+à la distribution souhaitée si vous voulez bien. Il y a une autre
+
+0:51:55.970,0:52:01.140
+version plus sophistiquée de ça qui est la divergence KL réelle
+
+0:52:01.140,0:52:04.620
+entre la distribution produite par le système et une distribution que vous
+
+0:52:04.620,0:52:07.950
+proposer quelle qu'elle soit. Une distribution cible, qui n'est pas binaire,
+
+0:52:07.950,0:52:11.820
+ce n'est plus un vecteur « one hot » mais c'est un vecteur de nombres.
+
+0:52:11.820,0:52:20.960
+Et c'est appelé la divergence KL. Cee que nous allons voir dans une minute.
+
+0:52:20.960,0:52:25.620
+La divergence KL n'est pas une distance parce qu'elle n'est pas symétrique
+
+0:52:25.620,0:52:31.980
+mais c'est une sorte de divergence entre les distributions discrètes.
+
+0:52:31.980,0:52:40.400
+Ok donc celle-ci est une sorte d'extension de la logsoftmax, si vous voulez.
+
+0:52:40.400,0:52:48.110
+C'est une version qui s'applique aux très très grandes catégorisations.
+
+0:52:48.110,0:52:53.580
+Donc si vous avez beaucoup, beaucoup, beaucoup de catégories, ce que vous pourriez vouloir
+
+0:52:53.580,0:52:58.690
+c'est en quelque sorte couper les coins pour ne pas avoir à calculer une softmax géante sur des
+
+0:52:58.690,0:53:04.390
+millions de catégories ou peut-être même plus. Donc vous pouvez en quelque 
+
+0:53:04.390,0:53:10.390
+sorte ignorer celles qui sont petites et utiliser des trucs pour
+
+0:53:10.390,0:53:16.270
+améliorer la vitesse de calcul. C'est ce que cela fait.
+
+0:53:16.270,0:53:19.300
+Je ne vais pas entrer dans les détails de ce qu'il fait exactement car je
+
+0:53:19.300,0:53:22.839
+ne connais pas les détails, mais il s'agit en gros d'une approximation efficace
+
+0:53:22.839,0:53:34.089
+de la softmax pour un très très grand nombre de catégories. Ceci est un cas particulier de
+
+0:53:34.089,0:53:40.000
+l'entropie croisée lorsque vous n'avez que deux catégories. Dans ce cas, il 
+
+0:53:40.000,0:53:45.310
+cela se réduit à quelque chose de simple. Donc cela n'inclut pas softmax, c'est juste
+
+0:53:45.310,0:53:50.589
+l'entropie croisée quand vous avez deux catégories. Comme je l'ai dit avant
+
+0:53:50.589,0:54:02.859
+la perte d'entropie croisée est la somme de nos catégories de la probabilité… Je veux dire
+
+0:54:02.859,0:54:06.849
+somme de nos indices ou somme de nos catégories de la probabilité pour la
+
+0:54:06.849,0:54:12.750
+cible, la probabilité cible pour cette catégorie, multipliée par le rapport entre le log
+
+0:54:12.750,0:54:21.550
+de la probabilité produite par le système divisée par la probabilité de
+
+0:54:21.550,0:54:27.220
+la catégorie cible. Et si vous la calculez pour deux catégories, nécessairement un
+
+0:54:27.220,0:54:33.130
+score est un moins l'autre. Si vous avez deux catégories exclusives.
+
+0:54:33.130,0:54:39.609
+Et cela se résume à ça. Cela suppose que x et y sont
+
+0:54:39.609,0:54:44.829
+des sortes de probabilités. Ils doivent se situer strictement entre 0 et 1.
+
+0:54:44.829,0:54:47.589
+Je veux dire pas strictement mais…  
+
+0:54:47.589,0:54:53.540
+Un genre de strictement car sinon les logs vont exploser ici.
+
+0:54:53.540,0:55:01.650
+Ici c’est la perte de la divergence KL dont je vous ai parlé plus tôt.
+
+0:55:01.650,0:55:07.019
+Ici c’est écrit sous une forme drôle mais essentiellement…
+
+0:55:07.019,0:55:13.980
+Il s'agit en faites d'une autre perte que celle dont je vous ai parlé plus tôt.
+
+0:55:13.980,0:55:19.410
+En fait celle-ci est également une version simplifiée quand vous avez une 
+
+0:55:19.410,0:55:27.000
+distribution « one hot » pour la cible. Donc y est une catégorie.
+
+0:55:27.000,0:55:32.069
+Elle a l'inconvénient de ne pas être fusionnée avec quelque chose comme la softmax ou la logsoftmax.
+
+0:55:32.069,0:55:42.420
+Il peut donc avoir des problèmes numériques. A nouveau cela suppose que 
+
+0:55:42.420,0:55:46.970
+x et y sont des distributions. Ceci est la perte de Poisson.
+
+0:55:54.089,0:56:00.509
+Cette version de l'entropie croisée binaire prend des scores qui ne sont pas passés
+
+0:56:00.509,0:56:06.980
+par une sigmoïde, donc celle-ci ne suppose pas que les x sont compris entre 0 et 1.
+
+0:56:06.980,0:56:12.210
+Cela prend les valeurs, quelles qu'elles soient et les passent dans une
+
+0:56:12.210,0:56:17.430
+sigmoïde pour s'assurer qu’elles sont entre 0 et 1, strictement. Donc c'est 
+
+0:56:17.430,0:56:23.369
+probablement plus stable numériquement. C'est un peu le même genre d'idées 
+
+0:56:23.369,0:56:31.480
+que la fusion de la logsoftax et la NLL. Même chose ici.
+
+0:56:31.480,0:56:37.950
+Donc la « margin loss ». C’est une sorte de catégorie de pertes importante.
+
+0:56:37.950,0:56:50.579
+Ces pertes disent en gros que si j'ai, dans ce cas, deux entrées :
+
+0:56:50.579,0:56:56.579
+je veux qu'une entrée soit plus importante que l'autre d'au moins une marge.
+
+0:56:56.579,0:57:00.760
+Donc imaginez les deux entrées sont scorées pour deux catégories.
+
+0:57:00.760,0:57:04.680
+Vous voulez que le score de la bonne catégorie soit plus élevé que le score 
+
+0:57:04.680,0:57:09.279
+de la catégorie incorrecte, mais il y a une certaine marge que vous passez à travers le système.
+
+0:57:09.279,0:57:14.730
+C'est la formule que vous voyez en bas. Donc c'est en gros un hinge.
+
+0:57:14.730,0:57:19.260
+Il prend la différence entre les deux scores. Donc y est une variable 
+
+0:57:19.260,0:57:23.000
+binaire, + 1 ou -1, et contrôle si vous voulez que x1 soit
+
+0:57:23.000,0:57:28.430
+pour être plus grand que x2 ou si vous voulez que x2 soit plus grand que x1.
+
+0:57:28.430,0:57:32.910
+Vous donnez en gros deux scores et vous lui dites laquelle vous voulez être
+
+0:57:32.910,0:57:39.150
+le plus élevé. Puis la fonction de coût indique si celui-ci est
+
+0:57:39.150,0:57:43.380
+plus grand que celui-là d'au moins une marge, puis le coût est nul.
+
+0:57:43.380,0:57:47.609
+Si elle est inférieure à la marge ou si elle est dans l'autre sens, le coût
+
+0:57:47.609,0:58:00.150
+augmente linéairement. C’est ce qu'on appelle la hinge loss. C’est très utile
+
+0:58:00.150,0:58:14.160
+pour un certain nombre de choses différentes. Nous en avons vu un exemple. [Il cherche un exemple].
+
+0:58:14.160,0:58:19.940
+Il s'agit d'une sorte « Margin Ranking Loss ». Donc vous avez deux valeurs 
+
+0:58:19.940,0:58:24.390
+mais il y a une version simplifiée de ça. Je veux dire qu'il y a une version plus simple
+
+0:58:24.390,0:58:29.430
+que je n'ai pas ici pour une raison quelconque. Nous n'avons qu'un x.
+
+0:58:29.430,0:58:35.660
+Donc, en gros, la perte est max(0,-x * marge). Et cela veut juste
+
+0:58:39.630,0:58:46.020
+que x soit plus petit que la marge. C'est donc une sorte de cas particulier
+
+0:58:46.020,0:58:51.000
+où vous avez un classement entre deux scores de deux catégories.
+
+0:58:51.000,0:58:56.280
+Voici comment vous utiliseriez ceci pour la classification : vous faites
+
+0:58:56.280,0:59:01.770
+votre classifieur, vous obtenez des scores. Avant vous faites des non-linéarités,
+
+0:59:01.770,0:59:07.020
+des sommes pondérées, et vous connaissez la bonne catégorie. Donc, alors vous dites : je veux que
+
+0:59:07.020,0:59:13.050
+la bonne catégorie ait un score élevé. Ensuite vous prenez une autre
+
+0:59:13.050,0:59:18.000
+catégorie qui a le score le plus offensant. Soit une autre catégorie,
+
+0:59:18.4000,0:59:23.070
+une catégorie incorrecte qui a un score plus élevé que la catégorie correcte ou
+
+0:59:23.070,0:59:27.850
+qui a un score inférieur mais qui est très proche. Donc vous prenez
+
+0:59:27.850,0:59:34.240
+la catégorie dont le score est le plus proche du bon score ou qui
+
+0:59:34.240,0:59:40.030
+est plus élevé que le bon. Vous donnez ces deux scores à une fonction de perte comme celle-là.
+
+0:59:40.030,0:59:46.890
+Donc en gros, cela va faire grimper le score dans la bonne catégorie et baisser le score de la catégorie incorrecte et ce jusqu'à la différence
+
+0:59:46.890,0:59:52.630
+soit au moins égale à la marge. C’est une bonne façon d’entraîner quelque chose.
+
+0:59:52.630,0:59:57.160
+Par exemple dans le cadre d'un modèle à base d’énergie, c'est le genre
+
+0:59:57.160,1:00:02.310
+de choses que vous pourriez vouloir faire. Vous pourriez vouloir dire :
+
+1:00:02.310,1:00:07.230
+moins x1 est l'énergie de la bonne réponse
+
+1:00:07.230,1:00:11.540
+et moins x2 l'énergie de la mauvaise réponse.
+
+1:00:11.540,1:00:17.000
+Comme un terme contrastif d’une réponse incorrecte. Et vous voulez pousser
+
+1:00:17.000,1:00:22.460
+vers le bas l'énergie de la bonne réponse et pousser vers le haut l'énergie de la mauvaise réponse afin que
+
+1:00:22.460,1:00:27.870
+la différence est d’au moins une certaine marge. On peut utiliser ce type de perte pour ça.
+
+1:00:27.870,1:00:31.630
+La « Triplet loss » est comme un affinement de ça. Elle est beaucoup utilisée
+
+1:00:31.630,1:00:37.420
+pour l'apprentissage métrique. Pour les réseaux siamois dont parlait
+
+1:00:37.420,1:00:46.290
+Ishan Misra la semaine dernière, l'idée est de dire que j'ai une distance…
+
+1:00:47.010,1:00:53.620
+Disons que j'ai trois échantillons. J'ai un échantillon et un autre
+
+1:00:53.620,1:00:57.040
+très similaire que je passe dans deux ConvNets. J’obtiens deux vecteurs,
+
+1:00:57.040,1:01:01.510
+je calcule la distance entre ces deux vecteurs, d(ai,pi), par exemple.
+
+1:01:01.510,1:01:05.620
+Je veux rendre cette distance aussi petite que possible car c’est un
+
+1:01:05.620,1:01:11.540
+exemple correct. Puis je prends deux échantillons dont je sais qu'ils sont sémantiquement différents.
+
+1:01:11.540,1:01:15.430
+L'image d'un chat et l’autre d’une table. Je veux rendre le vecteur
+
+1:01:15.430,1:01:18.670
+aussi loin l'un de l'autre. Donc je calcule la distance et veux la rendre
+
+1:01:18.670,1:01:27.100
+grande. Je peux insister sur le fait que la première soit 0 et insister
+
+1:01:27.100,1:01:29.590
+pour que la deuxième distance soit supérieure à la marge. Ce qui serait
+
+1:01:29.590,1:01:35.260
+une sorte de perte de marge. Mais ce que je peux faire, c'est que l'une de 
+
+1:01:35.260,1:01:39.700
+ces « Triplet Margin Loss » où je dis que la seule chose qui m'intéresse est que
+
+1:01:39.700,1:01:43.500
+la distance que j'obtiens pour la bonne paire, soit plus petite que la distance que j'obtiens
+
+1:01:43.500,1:01:47.580
+pour la mauvaise paire. Je me fiche que la distance soit petite, je veux juste qu’elle soit
+
+1:01:47.580,1:01:54.450
+plus petite que la distance pour la mauvaise paire. C'est ce que ces pertes de classements font.
+
+1:01:54.450,1:02:02.670
+Un tas d’entre elles… Je veux dire l'une des premières, je pense, a été proposé
+
+1:02:02.670,1:02:08.820
+par Jason Weston et Samy Bengio. Cela remonte à l'époque où Jason Weston était encore à Google.
+
+1:02:08.820,1:02:15.869
+Ils ont utilisé cela pour entraîner une sorte de système de recherche d'images pour Google.
+
+1:02:15.869,1:02:19.350
+Je ne suis pas sûr que ce soit toujours vrai, mais à l'époque, on tapait une requête sur Google,
+
+1:02:19.350,1:02:24.780
+Google encodait cette requête dans un vecteur puis comparait cela à tout un
+
+1:02:24.780,1:02:30.440
+un tas de vecteurs décrivant des images que ayant déjà été indexées et
+
+1:02:30.440,1:02:35.040
+récupérait en quelque sorte les images dont le vecteur était proche de la requête.
+
+1:02:35.040,1:02:40.260
+Et la façon dont vous entraînez les réseaux qui calculent
+
+1:02:40.260,1:02:45.180
+ces vecteurs, à l'époque c'était des réseaux linéaires, c’est en 
+
+1:02:45.180,1:02:50.900
+utilisant cette « Triplet Loss ». Donc vous dites : « bons résultats pour ma recherche »
+
+1:02:50.900,1:02:55.020
+doit avoir une distance, entre les vecteurs, qui soit plus petite que celle de toute mauvaise recherche. 
+
+1:02:55.020,1:03:00.500
+Et je me fiche que la distance soit petite, je veux juste que ce soit plus petit que « mauvaise recherche ».
+
+1:03:00.500,1:03:10.140
+Des questions ? Ceci est une sorte d'explication graphique de ça où
+
+1:03:10.140,1:03:17.610
+p est un échantillon positif, donc similaire à a. Avec a qui est l'échantillon que vous considéré.
+
+1:03:17.610,1:03:22.240
+p est une sorte d'échantillon positif et n est un échantillon négatif ou
+
+1:03:22.240,1:03:27.869
+un échantillon contrastif. Vous voulez pousser n loin et rapprocher p.
+
+1:03:27.869,1:03:38.220
+Dès que p est plus près de n par une certaine marge, vous arrêtez de pousser.
+
+1:03:38.220,1:03:41.790
+Une version douce de ça. En fait, vous pouvez penser à la NCE, la fonction
+
+1:03:41.790,1:03:46.920
+de perte dont Ishan  parlait, comme une sorte de version douce de ça où,
+
+1:03:46.920,1:03:51.450
+en gros, vous avez un tas de positifs et un tas de négatifs ou vous avez un
+
+1:03:51.450,1:03:57.140
+positif et un tas de négatifs et vous les passez dans la softmax et dites :
+
+1:03:57.140,1:04:05.820
+« je veux exp(- la distance pour le bon) soit plus petit que exp(- l’autre).
+
+1:04:05.820, 1:04:12.170
+Donc il vous pousse le positif vers vous et pousse les autres plus loin. Mais maintenant avec
+
+1:04:12.170,1:04:19.730
+une sorte de softmax, une sorte de taux de décroissance exponentielle suppose une sorte de
+
+1:04:19.730,1:04:27.440
+une marge importante. Dans PyTorch vous avez des choses qui vous permettent d'avoir plusieurs étiquettes.
+
+1:04:27.440,1:04:33.290
+Cela vous permet d'obtenir plusieurs sorties correctes.
+
+1:04:33.290,1:04:38.750
+C’est une perte de classement mais cela insiste sur le fait qu'il n'y a
+
+1:04:38.750,1:04:42.680
+qu'une bonne catégorie. Vous voulez un score élevé pour la bonne
+
+1:04:42.680,1:04:46.430
+catégorie et un mauvais score pour tout le reste. Ici vous pouvez avoir un
+
+1:04:46.430,1:04:50.360
+nombre de catégories pour lesquelles vous souhaitez obtenir un score élevé. 
+
+1:04:50.360,1:04:54.200
+Et ensuite toutes les autres sont repoussées, leurs scores sont baissés.
+
+1:04:54.200,1:04:59.810
+Il s'agit donc d'une hinge perte, mais vous faites une somme de ces
+
+1:04:59.810,1:05:07.520
+hinge pertes sur toutes les catégories. Pour chaque catégorie, si la catégorie est une
+
+1:05:07.520,1:05:12.170
+désirée, vous poussez vers le haut. S'il s'agit d'une non désirée, vous poussez vers le bas.
+
+1:05:12.170,1:05:19.340
+C’est ce que dit la formule suivante. Bien sûr vous avez une version douce 
+
+1:05:19.340,1:05:26.000
+de ça où je n'entrerai pas dans les détails. Et une version multi-marge.
+
+1:05:26.000,1:05:35.060
+Donc ces poussements pour l'apprentissage métrique, pour l’enchâssement, pour les réseaux siamois
+
+1:05:35.060,1:05:40.400
+dont je vous parlais sont tous implémentés dans cette « HingeEmbeddingLoss ».
+
+1:05:40.400,1:05:45.400
+Donc cette perte est une perte pour les réseaux siamois
+
+1:05:45.400,1:05:51.920
+poussant à vous les choses qui sont sémantiquement similaires et repoussant les choses qui ne le sont pas.
+
+1:05:51.920,1:05:56.810
+Donc la variable y indique si la paire ou le score
+
+1:05:56.810,1:06:00.590
+que vous donnez au système doit être poussé vers le haut ou vers le bas.
+
+1:06:00.590,1:06:05.780
+Elle choisit la hinge perte rendant le score positif si y = +1.
+
+1:06:05.780,1:06:18.240
+Et rend le score négatif avec une certaine marge delta si y = -1. 
+
+1:06:20.480,1:06:29.890
+Très souvent, lorsque vous faites des réseaux siamois, la façon dont vous calculez la similarité entre deux vecteurs,
+
+1:06:29.890,1:06:32.950
+ce n’est pas via la distance euclidienne mais via 
+
+1:06:32.950,1:06:39.000
+la distance cosinus. Donc moins le cosinus de l'angle entre les deux vecteurs.
+
+1:06:39.000,1:06:42.890
+Il s'agit en gros d'une distance euclidienne normalisée si vous
+
+1:06:42.890,1:06:47.950
+y penser de cette manière. L'avantage est que chaque fois que vous
+
+1:06:47.950,1:06:52.210
+poussez la distance… Chaque fois que vous avez deux vecteurs et vous voulez rendre
+
+1:06:52.210,1:07:00.310
+une distance aussi grande que possible, il existe un moyen très facile pour le système de le faire en rendant les deux vecteurs très grands, très longs.
+
+1:07:00.310,1:07:04.390
+En ne pointant pas dans la même direction et les rendant très très longs. Donc la distance
+
+1:07:04.390,1:07:08.109
+serait importante. Mais bien sûr, ce n'est pas ce que vous voulez. Vous ne voulez pas que 
+
+1:07:08.109,1:07:11.950
+le système rend les vecteurs plus grands. Vous voulez tourner le vecteur dans
+
+1:07:11.950,1:07:15.820
+la bonne direction. Donc vous normalisez les vecteurs et calculez une distance
+
+1:07:15.820,1:07:19.390
+euclidienne normalisée. C'est en gros ce que cela fait.
+
+1:07:19.390,1:07:24.369
+Pour les cas positifs, il essaie de faire en sorte que les vecteurs soient alignés entre eux
+
+1:07:24.369,1:07:31.720
+autant que possible. Pour les paires négatives, il essaie de rendre le cosinus plus petit que
+
+1:07:31.720,1:07:35.890
+la marge particulière. La marge dans ce cas est probablement quelque chose
+
+1:07:35.890,1:07:42.910
+qui est proche de 0. Dans espace en grandes dimensions, il y a
+
+1:07:42.910,1:07:47.100
+beaucoup d'espace près de l'équateur de la sphère en haute dimension.
+
+1:07:47.100,1:07:50.950
+Donc tous vos points sont maintenant normalisés sur la sphère et ce que
+
+1:07:50.950,1:07:55.540
+vous voulez, c'est des échantillons symétriquement similaires à ceux que vous devriez avoir
+
+1:07:55.540,1:07:59.589
+près de vous. Les échantillons qui sont dissemblables doivent être orthogonaux.
+
+1:07:59.589,1:08:03.640
+Vous ne voulez pas qu'ils soient opposés car il n'y a qu'un seul point dans 
+
+1:08:03.640,1:08:09.330
+le pôle sud alors qu'à l'équateur se trouve un très grand espace élevé, l'ensemble de
+
+1:08:09.330,1:08:15.250
+la sphère entière moins une dimension. Donc vous pouvez mettre la marge à juste 
+
+1:08:15.250,1:08:19.250
+une petite valeur positive et puis vous obtenez l'équateur entier de la
+
+1:08:19.250,1:08:27.480
+sphère en gros, contenant presque tout le volume de la sphère en haute dimension.
+
+1:08:27.569,1:08:37.269
+La perte CTC. C’est un peu plus compliqué car c'est une tâche qui utilise la prédiction de la structure,
+
+1:08:37.269,1:08:42.940
+ce qu'on appelle la prédiction de la structure. J’en ai parlé brièvement 
+
+1:08:42.940,1:08:48.909
+il y a quelques semaines. C'était quelque chose de très similaire à cela. 
+
+1:08:48.909,1:08:56.949
+Cette perte est applicable quand votre sortie est une séquence de vecteurs 
+
+1:08:56.949,1:09:05.230
+de scores où les vecteurs correspondent à des scores de catégories. 
+
+1:09:05.230,1:09:09.639
+Votre système calcule un vecteur de score. Donc imaginez par exemple
+
+1:09:09.639,1:09:15.069
+un système de reconnaissance vocale. Toutes les 10 millisecondes, il vous donne un
+
+1:09:15.069,1:09:19.750
+vecteur de probabilités pour ce qu’est le son actuellement prononcé.
+
+1:09:19.750,1:09:24.700
+Le nombre de catégories est généralement assez important, de l'ordre de quelques milliers.
+
+1:09:24.700,1:09:28.119
+Donc en gros vous donnez un vecteur softmax d'une taille de trois mille
+
+1:09:28.119,1:09:34.619
+généralement. Et disons un toutes les 10 millisecondes.
+
+1:09:34.619,1:09:40.409
+Vous avez une sortie souhaitée étant « quel mot a été prononcé ». 
+
+1:09:40.409,1:09:48.519
+Ce mot prononcé correspond à une sorte de séquence particulière de sons si vous voulez.
+
+1:09:48.519,1:09:53.380
+Donc ce dont vous avez besoin maintenant, c'est un coût qui est bas si
+
+1:09:53.380,1:10:00.820
+cette séquence ressemble à cette séquence. Mais ce que vous pourriez permettre,
+
+1:10:00.820,1:10:10.090
+pour la séquence d'entrée, est de répéter certains des sons.
+
+1:10:10.090,1:10:16.630
+Par exemple, mon coût… la cible pourrait être le mot « seven » [sept] disons. 
+
+1:10:16.630,1:10:20.440
+Et il se prononce très rapidement. Donc vous avez un très petit nombre
+
+1:10:20.440,1:10:25.059
+d'échantillons de chaque son dans la séquence. Mais ensuite peut-être la personne
+
+1:10:25.059,1:10:28.750
+qui prononce le mot dans l’échantillon d’entraînement le prononce
+
+1:10:28.750,1:10:35.559
+très lentement, comme « seeeeven ». Donc maintenant le premier « e » prend 
+
+1:10:35.559,1:10:40.030
+plusieurs trames de 10 millisecondes qui devraient toutes être associées
+
+1:10:40.030,1:10:47.050
+à la même instance du « e » dans la sortie.
+
+1:10:47.560,1:10:55.960
+J'ai déjà fait cette photo, mais je vais la refaire.
+
+1:10:55.960,1:11:06.730
+Donc vous avez une séquence de scores provenant de la softmax.
+
+1:11:06.730,1:11:12.640
+C’est en fait mieux c’est des énergies, mais pour la CTC, elles doivent être…
+
+1:11:12.640,1:11:25.530
+Puis vous avez la séquence cible. Pensez à ça comme une sorte de matrice. 
+
+1:11:25.530,1:11:30.850
+Chaque entrée dans cette matrice mesure la distance entre les deux vecteurs.
+
+1:11:30.850,1:11:37.570
+Qui sont ici. Donc une entrée de la matrice indique à quoi ce vecteur
+
+1:11:37.570,1:11:41.590
+ressemble dans ce vecteur. Par exemple avec l'entropie croisée ou quelque chose comme ça.
+
+1:11:41.590,1:11:49.770
+Ou l’erreur carrée, peu importe ce qu’est la fonction. Donc maintenant
+
+1:11:49.800,1:12:05.290
+si c'est le mot « seven » prononcé lentement, et que ceci n'a
+
+1:12:05.290,1:12:15.190
+qu’une instance de chaque son, vous voulez que tous les vecteurs
+
+1:12:15.190,1:12:27.250
+correspondant au « e » soit associés à ce vecteur ici.
+
+1:12:27.250,1:12:35.470
+Donc vous voulez calculer ce coût de tous ces « e » associés à ce « e ».
+
+1:12:35.470,1:12:39.100
+Bien sûr ici le système produit la bonne réponse donc vous n'ayez pas de
+
+1:12:39.100,1:12:43.420
+problèmes. Mais si la cible est « seven » mais le mot qui a été prononcé
+
+1:12:43.420,1:12:51.780
+ici… ou la sortie qui a été produit par le système ne correspond pas à « seven »,
+
+1:12:51.780,1:12:55.210
+c'est là que vous avez des problèmes. Ici ce que vous faites,
+
+1:12:55.210,1:13:01.420
+c’est que  vous trouvez la meilleure association de la séquence d'entrée à 
+
+1:13:01.420,1:13:06.190
+la séquence de sortie. Donc le « s » est associé avec le « s », le « e » avec le « e », le « v » avec
+
+1:13:06.190,1:13:12.460
+le « v », le « e » avec le « e » et le « n » avec le « n ». Donc vous obtenez ce genre de chemin
+
+1:13:12.460,1:13:15.880
+si vous voulez. Pensez à ça comme un chemin dans le graphe.
+
+1:13:15.880,1:13:20.88
+La façon dont vous le déterminez est en utilisant un algorithme de programmation 
+
+1:13:20.880,1:13:25.880
+dynamique, l'algorithme du chemin le plus court qui détermine comment aller d'ici à ici.
+
+1:13:25.880,1:13:30.480
+Le chemin qui minimise la somme des distances entre
+
+1:13:30.480,1:13:35.890
+tous les vecteurs des distances entre les vecteurs de tous les points.
+
+1:13:35.890,1:13:41.890
+C’est une optimisation par rapport à un variable latente si vous voulez.
+
+1:13:41.890,1:13:45.670
+Et en gros CTC décide pour vous. Donc vous donnez
+
+1:13:45.670,1:13:50.230
+deux séquences, cela calcule la distance entre elles et fait la
+
+1:13:50.230,1:13:58.960
+la meilleure association entre les deux en permettant d’associer de
+
+1:13:58.960,1:14:03.550
+multiples vecteurs d'entrée à un vecteur unique sur la sortie. Il ne peut pas
+
+1:14:03.550,1:14:09.489
+étendre, il ne peut que réduire si vous voulez. Cela se fait d'une certaine manière
+
+1:14:09.489,1:14:13.989
+que vous pouvez rétropropager le gradient. Nous reviendrons sur ces deux 
+
+1:14:13.989,1:14:21.820
+choses supplémentaires à la fin si on peut. Donc c’est ce que la cible
+
+1:14:21.820,1:14:26.260
+suppose d’être « plusieurs » vers « un ». L'alignement de l’entrée de la cible est supposé
+
+1:14:26.260,1:14:29.020
+être de « plusieurs » vers « un ». Ce qui limite la longueur de la séquence cible.
+
+1:14:29.020,1:14:33.010
+Elle doit être inférieure à la longueur d’entrée pour la raison que je viens d’expliquer.
+
+1:14:33.010,1:14:37.930
+Donc c'est en gros une distorsion temporelle différenciable. Vous pouvez
+
+1:14:37.930,1:14:43.420
+penser à ça de cette façon. Ou une sorte de module qui fait de la DTW [voir cours 14] ou
+
+1:14:43.420,1:14:48.400
+de la programmation dynamique. C’est toujours différentiable. L'idée de ça remonte
+
+1:14:48.400,1:14:54.340
+au début des années 90 dans la thèse de Léon Bottou, c'est très vieux.
+
+1:14:54.340,1:15:00.550
+[Etudiant : y a-t-il un bon document ou une ressource pour en savoir plus sur cet algorithme de programmation dynamique ?]
+
+1:15:00.550,1:15:05.980
+En fait, c'est un peu de cela dont je vais parler ensuite. Je n’aurais peut-être 
+
+1:15:05.980,1:15:12.329
+pas le temps d'en parler, mais j'essaierai. Mais en gros, la dernière
+
+1:15:12.329,1:15:17.909
+partie du tutoriel sur les modèles à base d'énergie.
+
+1:15:17.909,1:15:27.909
+Donc nous vous avons donner un lien vers une référence d’un papier de 2006 sur un tutoriel sur les modèles à base d'énergie.
+
+1:15:27.909,1:15:32.510
+La deuxième partie de celui-ci est consacrée à tout ce genre de chose.
+
+1:15:32.510,1:15:42.510
+Donc davantage de choses sur les modèles à base d'énergie mais maintenant dans un contexte plus supervisé si vous voulez.
+
+1:15:42.510,1:15:52.050
+Avant d'en arriver là, je voudrais revenir sur la formulation générale
+
+1:15:52.050,1:16:01.949
+des modèles à base d'énergie [EBMs dans la suite].
+
+1:16:01.949,1:16:06.300
+Si vous voulez définir les EBMs de manière appropriée, ces versions conditionnelles,
+
+1:16:06.300,1:16:13.079
+vous avez un jeu d’entraînement, un groupe de paires Xi, Yi avec i allant de 1 à P.
+
+1:16:13.079,1:16:18.869
+Vous avez une fonction de perte : L(E,S). Donc vous prenez la
+
+1:16:18.869,1:16:23.820
+fonction énergie calculée par le système et le jeu d’entraînement. Et cela vous donne
+
+1:16:23.820,1:16:28.139
+une valeur scalaire. Vous pouvez considérer cela comme une fonctionnelle.
+
+1:16:28.139,1:16:32.219
+Une fonctionnelle est une fonction d'une fonction. Mais en fait car la fonction énergie elle-même
+
+1:16:32.219,1:16:36.510
+est paramétrée par le paramètre W, vous pouvez transformer cette perte fonctionnelle
+
+1:16:36.510,1:16:40.469
+en une fonction de perte qui n'est pas seulement une fonction de W. Une autre fonction 
+
+1:16:40.469,1:16:47.000
+de la fonction d'énergie. L'ensemble des fonctions d’énergie est appelé epsilon ici
+
+1:16:47.000,1:16:53.909
+paramétré par le paramètre W qui est pris dans le jeu.
+
+1:16:53.909,1:16:57.630
+L’entraînement consiste à minimiser la fonction de perte par rapport à W
+
+1:16:57.630,1:17:02.400
+et trouver le W qui minimise. Une question que vous pourriez vous poser :
+
+1:17:02.400,1:17:08.880
+j'ai présenté toute une série de fonctions objectives, de fonction de perte, et la question est si vous êtes dans un cadre d’EBM, 
+
+1:17:08.880,1:17:14.670
+quelles fonctions de perte sont bonnes et quelles fonctions sont mauvaises ? 
+
+1:17:14.670,1:17:18.929
+Comment caractériser une fonction de perte utile pour vous ?
+
+1:17:18.929,1:17:23.480
+Donc voici une formulation générale d’une fonction de coût.
+
+1:17:23.480,1:17:29.300
+C’est une moyenne sur les échantillons d’entraînement. Donc ici je suppose
+
+1:17:29.300,1:17:34.070
+que c’est invariant à la permutation des échantillons, donc une moyenne
+
+1:17:34.070,1:17:38.510
+est aussi bonne que toute autre fonction d'agrégation. Donc la moyenne
+
+1:17:38.510,1:17:44.150
+de nos échantillons d’entraînement, une fonction de perte par échantillon L. Elle prend
+
+1:17:44.150,1:17:50.000
+la réponse souhaitée Y qui peut être une simple catégorie ou une image entière ou
+
+1:17:50.000,1:17:56.180
+peu importe. Elle prend la fonction d'énergie où X, la variable Xi est
+
+1:17:56.180,1:18:03.200
+égal à l'échantillon d'entraînement i. La variable Y est indéterminée.
+
+1:18:03.200,1:18:10.370
+Donc E(W,Y,Xi) est en gros la forme entière de la fonction d’énergie pour les valeurs
+
+1:18:10.370,1:18:15.200
+de Y, par rapport aux valeurs de Y pour un X donné. X égal à Xi. Et vous pouvez avoir un
+
+1:18:15.200,1:18:22.790
+régulariseur si vous voulez. Donc c’est une perte fonctionnelle à nouveau.
+
+1:18:22.790,1:18:26.090
+Bien sûr, nous devons concevoir cette fonction de perte de manière à ce qu'elle rende 
+
+1:18:26.090,1:18:31.520
+l'énergie des bonnes réponses faible et l'énergie des mauvaises réponses grande.
+
+1:18:31.520,1:18:38.060
+Nous allons passer par un tas de types de pertes différentes.
+
+1:18:38.060,1:18:45.050
+Donc une chose que nous pourrions faire est de dire que ma fonction de perte va juste être
+
+1:18:45.050,1:18:50.180
+l'énergie de la bonne réponse. Donc je vais me placer dans le contexte d’EBM.
+
+1:18:50.180,1:18:53.960
+Mon système produit des scores que j'interprète comme des énergies.
+
+1:18:53.960,1:19:01.540
+Donc élevées c'est mauvais et basses c’est bon. Par opposition à des
+
+1:19:01.540,1:19:11.760
+scores positifs. Et ce que je vais faire, c'est définir mon énergie fonctionnelle [ou fonctionnelle d’énergie ?],
+
+1:19:11.760,1:19:17.000
+une fonction de fonction d’énergie de la fonction de Y, comme simplement l'énergie que
+
+1:19:17.020,1:19:22.950
+mon modèle donne à la bonne réponse. Donc en gros je lui donne un X et la
+
+1:19:22.950,1:19:27.890
+bonne réponse Y, et demande au système quelle énergie donner à cette paire
+
+1:19:27.890,1:19:33.110
+puis j'essaie de faire en sorte que cette énergie soit aussi petite que possible.
+
+1:19:33.110,1:19:36.700
+Vous avez ce paysage de l'énergie ici. Je vous ai montré cette
+
+1:19:36.700,1:19:40.900
+diapositive dans le contexte non supervisé/autosupervisé. Ici c’est 
+
+1:19:40.900,1:19:44.710
+le contexte supervisé. Alors imaginez que l'une des variables est X
+
+1:19:44.710,1:19:49.180
+et l'autre variable est Y. Les perles bleues sont des échantillons d'entraînement et vous
+
+1:19:49.180,1:19:54.940
+voulez faire en sorte que l'énergie des perles bleues soit aussi petites que possible.
+
+1:19:54.940,1:19:58.330
+Donc vous tirez vers le bas les perles bleues mais vous ne faites rien d'autre.
+
+1:19:58.330,1:20:01.510
+Comme résultat, en fonction de l'architecture de votre réseau, si votre réseau n'est
+
+1:20:01.510,1:20:09.300
+conçu correctement ou s'il est conçu un peu de façon non particulière, il pourrait que la fonction énergie devienne plate partout.
+
+1:20:09.300,1:20:13.630
+Vous essayez juste de faire en sorte que l'énergie de la bonne réponse soit faible.
+
+1:20:13.630,1:20:18.930
+Vous ne dites pas au système que l'énergie de tout le reste devrait être plus élevée.
+
+1:20:18.930,1:20:24.670
+Donc le système pourrait s'effondrer. La perte d'énergie n'est pas bonne en
+
+1:20:24.670,1:20:29.100
+ce sens, mais il y a certaines situations où c’est applicable car si
+
+1:20:29.100,1:20:35.500
+la forme de la fonction d’énergie est telle qu'elle ne peut rendre que
+
+1:20:35.500,1:20:40.450
+l'énergie d'une seule réponse faible, toutes les autres étant plus grandes,
+
+1:20:40.450,1:20:45.370
+alors vous devez avoir un terme contrastif. Et nous avons vu cela dans le contexte
+
+1:20:45.370,1:20:49.720
+de l’apprentissage autosupervisé. [Alfredo : ils sont complètement perdus concernant la perte
+
+1:20:49.720,1:20:57.760
+fonctionnelle] Ok. Donc c'est une fonction L, et c'est une fonction d’une
+
+1:20:57.760,1:21:03.400
+autre fonction E. Donc on l'appelle une fonctionnelle car c'est une
+
+1:21:03.400,1:21:08.360
+fonction d'une de fonction. Ce n'est pas une fonction d'un point. C'est une fonction d'une fonction.
+
+1:21:08.360,1:21:15.730
+Si cette seconde fonction est paramétrée par un paramètre W alors on peut dire
+
+1:21:15.730,1:21:18.430
+que la fonction de perte est en fait une fonction de ce paramètre W.
+
+1:21:18.430,1:21:25.710
+Et cela devient une fonction normale. C'est ce que j'avais dans… [Aldredo : peux-tu l’écrire ?] C'est écrit ici. 
+
+1:21:25.100,1:21:33.520
+Vous pouvez soit écrire la fonctionnelle comme L(E,S) qui est donc une
+
+1:21:33.520,1:21:40.000
+fonctionnelle car une fonction de E qui est elle-même une fonction.
+
+1:21:40.000,1:21:45.610
+Mais E elle-même est une fonction de W. Donc si j'écris la fonction de perte directement comme une
+
+1:21:45.610,1:21:49.290
+fonction de W, maintenant c'est juste une fonction normale.
+
+1:21:50.190,1:21:59.920
+[Alfredo : oui j'ai posé la question qui a été posée dans le chat] Je comprends.
+
+1:21:59.920,1:22:15.530
+[Je sais déjà ça]. Je sais. [rires]. 
+
+1:22:15.530,1:22:25.380
+Nous avons vu la NLL avant, j’en ai parlé. Donc c’est une fonction de perte qui essaie
+
+1:22:25.380,1:22:35.210
+de rendre l'énergie de la bonne réponse, regardez le rectangle en rouge, essaie de rendre l'énergie de la bonne réponse aussi faible que possible. 
+
+1:22:35.210,1:22:42.090
+Puis vous avez le deuxième terme : 1/ β * log de somme sur les y de exp(- β * E(W,y,Xi)).
+
+1:22:42.090,1:22:49.330
+Et celui-ci essaie de faire en sorte que l'énergie de tous les y pour ce X
+
+1:22:49.330,1:22:53.320
+donné soit la plus grande nombre possible car la meilleure façon de rendre ce terme
+
+1:22:53.320,1:22:58.150
+petit est de rendre ces énergies grandes car elles entrent dans une
+
+1:22:58.150,1:23:06.340
+exponentielle négative. Donc cela pousse vers le bas sur une bonne réponse
+
+1:23:06.340,1:23:13.360
+et pousse vers le haut une mauvaise réponse. Nous avons vu avant…
+
+1:23:13.360,1:23:20.110
+Nous avons juste parlé de la perte de marge et d'autres types de pertes.
+
+1:23:20.110,1:23:22.900
+Voici quelque chose qu'on appelle une perte de perceptron car c'est fondamentalement très similaire,
+
+1:23:22.900,1:23:28.900
+je veux dire que c'est exactement la même perte que celle qui a été utilisée pour le perceptron il y a 60 ans.
+
+1:23:28.900,1:23:34.480
+Il y a plus de 60 ans. Donc celle-ci dit : « je veux rendre l'énergie de la
+
+1:23:34.480,1:23:43.410
+réponse correcte petite et en même temps je veux rendre la plus petite
+
+1:23:43.410,1:23:49.660
+énergie pour toutes les réponses la plus grande possible ». Donc choisissez le Y
+
+1:23:49.660,1:23:54.280
+qui a la plus petite énergie dans votre système, faites en sorte qu'elle soit aussi grande que possible.
+
+1:23:54.280,1:23:57.760
+Et en même temps choisissez la bonne énergie et rendez là aussi petite que possible.
+
+1:23:57.760,1:24:00.690
+Il y a un point auquel la réponse avec la bonne énergie va
+
+1:24:02.360,1:24:07.370
+être égale à la bonne réponse. Et cette différence ne peut jamais être négative.
+
+1:24:07.370,1:24:13.970
+Car le premier terme est nécessairement un terme de ce minimum.
+
+1:24:13.970,1:24:22.010
+La différence est donc au mieux de 0 et pour tous les autres cas, c'est positif.
+
+1:24:22.010,1:24:27.250
+C’est seulement 0 quand le système vous donne la bonne réponse.
+
+1:24:27.250,1:24:33.740
+Mais cette fonction objective n'empêche pas le système de donner
+
+1:24:33.740,1:24:39.010
+la même énergie à chaque réponse. Donc dans ce sens c'est une mauvaise fonction de perte.
+
+1:24:39.010,1:24:43.670
+Une mauvaise fonction de perte car elle dit : « je veux l'énergie que
+
+1:24:43.670,1:24:47.720
+la bonne réponse soit petite, je veux que l'énergie de toutes les autres réponses soit
+
+1:24:47.720,1:24:51.170
+grande », mais je n'insiste pas sur le fait qu'il y a une différence entre elles.
+
+1:24:51.170,1:24:59.000
+Donc le système peut choisir de faire en sorte que chaque réponse ait la même énergie. C'est un effondrement.
+
+1:24:59.000,1:25:02.510
+La perte de perceptron n'est donc pas bonne. Elle n'est bonne que pour les systèmes linéaires
+
+1:25:02.510,1:25:11.150
+mais elle n'est pas bonne comme fonction objective pour les systèmes non linéaires.
+
+1:25:11.150,1:25:16.670
+Il y a un moyen de concevoir une fonction objective qui sera toujours bonne.
+
+1:25:16.670,1:25:19.790
+Vous prenez l'énergie de la bonne réponse et vous prenez l'énergie de la plus
+
+1:25:19.790,1:25:24.260
+offensante réponse incorrecte, c'est-à-dire la valeur de y qui est incorrecte mais
+
+1:25:24.260,1:25:30.920
+en même temps est la plus faible énergie de toutes les mauvaises réponses. 
+
+1:25:30.920,1:25:35.600
+Le système fonctionnera si cette différence est négative. C'est-à-dire si l'énergie de
+
+1:25:35.600,1:25:39.410
+la bonne réponse est plus petite que l'énergie de la plus offensante des mauvaises réponses.
+
+1:25:39.410,1:25:45.710
+Mais au moins d’une certaine quantité, une certaine marge. Tant que votre fonction 
+
+1:25:45.710,1:25:49.550
+objectif que vous concevrez garantit que l'énergie de la bonne réponse est
+
+1:25:49.550,1:25:52.580
+inférieure d'au moins une marge à l'énergie de la plus offensante des mauvaises réponses
+
+1:25:52.580,1:26:02.510
+par au moins une marge non nulle alors vous êtes bon. Votre fonction de perte est bonne. Donc les choses
+
+1:26:02.510,1:26:07.580
+Des choses comme la Hinge Loss sont bonnes. La Hinge Loss, dont nous avons parlé
+
+1:26:07.580,1:26:11.210
+juste avant, veut que l'énergie de la bonne réponse soit plus petite que
+
+1:26:11.210,1:26:12.889
+l'énergie du plus offensante des réponses incorrectes,
+
+1:26:12.889,1:26:18.679
+dénotée Y barre ici. Mais au moins de m. C’est ce que cette fonction de perte fait.
+
+1:26:18.679,1:26:22.610
+C'est une Hinge Loss et elle veut faire baisser l'énergie de ce type
+
+1:26:22.610,1:26:31.340
+en dessous de l'énergie de ce type d'au moins cette marge. Donc il y a une marge m
+
+1:26:31.340,1:26:36.230
+et si vous entraînez un système avec cette perte, il peut et il va
+
+1:26:36.230,1:26:42.260
+apprendre la tâche. Et produira probablement de bonnes réponses.
+
+1:26:42.260,1:26:47.210
+La soft hinge loss dans le contexte des EBMs s’exprime de cette façon.
+
+1:26:47.210,1:26:55.670
+En gros au lieu de donner la différence entre l'énergie de la bonne réponse et la réponse incorrecte la plus offensante dans une hinge,
+
+1:26:55.670,1:27:02.600
+c’est donné à une soft hinge dont nous avons parlé il y a quelques minutes.
+
+1:27:02.600,1:27:10.989
+Et là aussi cette fonction à une marge…  [Alfredo : comment choisir le m ?]
+
+1:27:10.989,1:27:22.850
+C’est arbitraire. Vous pouvez mettre m à 1, vous pouvez mettre m à 0.1. C'est un peu arbitraire car cela
+
+1:27:22.850,1:27:25.880
+détermine simplement la taille des poids de votre dernière couche. C'est ce que ça fait.
+
+1:27:25.880,1:27:33.429
+Donc c'est à vous de décider. Donc la soft hinge loss a une marge infinie.
+
+1:27:37.190,1:27:39.830
+Elle veut que la différence entre ces deux énergies soit infinie,
+
+1:27:39.830,1:27:44.540
+mais la pente diminue de façon exponentielle, donc ça n’arrive jamais
+
+1:27:44.540,1:27:50.060
+car les gradients deviennent très petites à mesure que la différence augmente.
+
+1:27:50.060,1:27:58.760
+Voici un autre exemple de perte de marge : la square-square loss.
+
+1:27:58.760,1:28:05.090
+C’est une perte qui essaye de rendre l'énergie de la bonne
+
+1:28:05.090,1:28:10.340
+réponse au carré est aussi faible que possible. Puis elle a une hinge 
+
+1:28:10.340,1:28:15.979
+pour repousser, pour faire monter l'énergie la plus offensante des réponses incorrectes.
+
+1:28:15.979,1:28:21.469
+Cela fonctionne. C’est très similaire au type de perte que les gens
+
+1:28:21.469,1:28:25.849
+utilisent pour les réseaux siamois et des trucs comme ça dont vous avez entendu parler.
+
+1:28:25.849,1:28:28.929
+Il y a toute une ménagerie de telles pertes que je ne vais pas développer.
+
+1:28:28.929,1:28:35.510
+Il y a en fait un tableau ici qui est aussi dans le papier sur le tutoriel sur les EBMs.
+
+1:28:35.510,1:28:40.010
+Ce qui est indiqué sur le côté droit c’est s’il y a une marge ou pas.
+
+1:28:40.010,1:28:44.000
+Donc la perte d'énergie n'a pas de marge et ne pousse rien.
+
+1:28:44.000,1:28:49.070
+Donc pas de marge, ça ne marche pas toujours. Il faut concevoir
+
+1:28:49.070,1:28:53.810
+la machine de manière à ce qu'elle puisse fonctionner pour ce système.
+
+1:28:53.810,1:28:58.489
+La perte de perceptron ne fonctionne pas en général. Que si vous avez un
+
+1:28:58.489,1:29:02.750
+paramétrage de votre énergie, comme fonction des paramètres. Mais c'est un
+
+1:29:02.750,1:29:08.510
+cas particulier et c'est le cas pour le perceptron. Puis certaines d'entre elles ont
+
+1:29:08.510,1:29:12.280
+une marge finie comme la perte hinge et certaines ont une marge infinie comme
+
+1:29:12.280,1:29:24.679
+la soft hinge si vous voulez. Une grande partie de ces pertes servent ou
+
+1:29:24.679,1:29:29.119
+ont été inventés dans le contexte de l'apprentissage discriminatoire pour
+
+1:29:29.119,1:29:35.300
+les systèmes de reconnaissance vocale. Elles n'ont pas été inventés avant que les gens s’y intéressent
+
+1:29:35.300,1:29:41.210
+en apprentissage machine. [Alfredo : une question est comment on trouve le Y barre ?
+
+1:29:41.210,1:29:45.500
+Donc si vous avez comme un code discret nous pouvons trouver simplement
+
+1:29:45.500,1:29:55.000
+la valeur minimale, mais sinon, nous effectuons une descente de gradient]
+
+1:29:55.000,1:30:01.040
+Si Y est continue, il n'y a pas de définition claire de ce qu’est la
+
+1:30:01.040,1:30:06.290
+réponse incorrecte la plus offensante. Vous devrez définir une sorte de distance
+
+1:30:06.290,1:30:12.280
+autour de la bonne réponse au-dessus de laquelle vous considérez une réponse comme incorrecte.
+
+1:30:12.280,1:30:17.570
+Donc par exemple vous êtes dans un paysage énergétique continu, un
+
+1:30:17.570,1:30:20.900
+échantillon de entraînement ici, vous voulez rendre l'énergie de cet échantillon de entraînement
+
+1:30:20.900,1:30:25.460
+petit assez simplement. Calculez l'énergie à travers votre réseau neural, vous poussez vers le bas,
+
+1:30:25.460,1:30:29.300
+rétropagez, mettez à jour les poids donc l’énergie baisse assez simplement.
+
+1:30:29.300,1:30:33.990
+Pour la réponse incorrecte, si vous prenez une réponse qui est juste à l'extérieur de ça, d’epsilon,
+
+1:30:33.990,1:30:40.699
+vous poussez vers le haut. Votre surface d'énergie pourrait être un peu
+
+1:30:40.699,1:30:44.150
+raide car est entièrement calculée par un réseau paramétré. Donc cela peut 
+
+1:30:44.150,1:30:49.310
+ne pas être possible. Donc vous voulez probablement avoir une réponse incorrecte
+
+1:30:49.310,1:30:55.190
+un peu à l'extérieur que vous allez pousser vers le haut. Donc c'est comme ça que vous définissez.
+
+1:30:55.190,1:30:58.130
+Toute la question est de savoir comment vous définissez un échantillon 
+
+1:30:58.130,1:31:03.710
+contrastif que vous allez pousser vers le haut. Ces fonctions objectives
+
+1:31:03.710,1:31:13.330
+ici, ces fonctions de perte, utilisent un seul échantillon Y barre, échantillon négatif.
+
+1:31:13.330,1:31:20.290
+Mais il n’y a une seule façon simple et correcte de choisir ce Y barre. 
+
+1:31:20.290,1:31:26.000
+Particulièrement dans le cas continu ou dans le cas où Y
+
+1:31:26.000,1:31:33.429
+est soit très très grand, soit continu et en grandes dimensions.
+
+1:31:33.429,1:31:38.739
+Il n'y a pas de moyen simple de choisir Y barre. Beaucoup de discussions que nous avons
+
+1:31:38.739,1:31:43.699
+sur les méthodes contrastives dont Ishan a parlé pour les réseaux siamois
+
+1:31:43.699,1:31:48.219
+et dont nous avons déjà parlé est comment choisir un Y barre dans le cas
+
+1:31:48.219,1:31:55.520
+autosupervisé. En autosupervisé, vous n’avez pas de X.
+
+1:31:55.520,1:32:02.179
+Il y a de nombreuses façons de choisir. Il n'y a qu'une seule façon évidente que dans quelques cas.
+
+1:32:02.179,1:32:06.469
+Je veux juste souligner la formule qui figure en bas.
+
+1:32:06.469,1:32:13.790
+Vous pouvez penser à ça comme une sorte de forme générale de
+
+1:32:13.790,1:32:22.699
+type de pertes hinge contrastives où vous avez une fonction H ici. Pensez à cela comme une hinge.
+
+1:32:22.699,1:32:30.230
+Et au lieu de cette hinge vous avez l'énergie de la bonne réponse.
+
+1:32:30.230,1:32:34.790
+Donc c'est l'énergie de W, Yi, Xi. Donc c’est votre exemple d’entraînement,
+
+1:32:34.790,1:32:39.290
+l'énergie que votre système donne à l'échantillon d’entraînement. Le deuxième terme est
+
+1:32:39.290,1:32:48.170
+l'énergie de la somme sur y. Pour le même échantillon d’entraînement X.
+
+1:32:48.170,1:32:52.220
+Puis il y a une marge C qui est en fait une fonction de Yi et y.
+
+1:32:52.220,1:32:56.210
+Et vous pourriez imaginer que la marge est en fait aussi une fonction de X
+
+1:32:56.210,1:33:01.280
+et Xi. Donc, en gros, vous déterminez une marge en fonction de la distance
+
+1:33:01.280,1:33:08.800
+entre les Y. Et vous donnez cela à, disons, une hinge.
+
+1:33:08.800,1:33:13.020
+Le fait est que cette fonction de perte est une somme sur tous les y.
+
+1:33:13.020,1:33:18.470
+C’est une somme discrète car y l’est mais vous pourriez imaginer une intégrale.
+
+1:33:18.470,1:33:23.270
+C’est genre de perte dit : « J'ai une énergie pour ma bonne réponse,
+
+1:33:23.270,1:33:28.100
+j'ai des énergies pour toutes les autres réponses dans mon espace et je veux pousser
+
+1:33:28.100,1:33:33.380
+l'énergie de toutes les autres réponses, mais la quantité par laquelle je 
+
+1:33:33.380,1:33:40.120
+veux les accroitre, la marge, dépend de la distance entre Y et Y barre. » 
+
+1:33:40.120,1:33:46.310
+Ou dans ce cas entre Y^i qui est ceci et y qui est l'autre y.
+
+1:33:46.310,1:33:51.020
+Donc vous pouvez imaginer que cette marge devient de
+
+1:33:51.020,1:33:54.260
+plus en plus petite car les deux Y vont se rapprocher. Dans ce cas
+
+1:33:54.260,1:33:57.950
+vous ne poussez pas trop loin pour les choses qui sont trop proches. Et vous poussez en
+
+1:33:57.950,1:34:02.540
+proportion de la distance du Y, peu importe la distance que vous pensez
+
+1:34:02.540,1:34:09.640
+être appropriée. Il s'agit bien sûr d'une fonction de perte plus difficile à optimiser.		
+
+1:34:09.640,1:34:14.480									               
+J’ai dépassé le temps donc je devrais parler du problème de la structure de la prédiction
+
+1:34:14.480,1:34:21.560
+que j’ai dit que j'allais parler plus tard. Des questions ?
+
+1:34:21.560,1:34:28.709
+[Etudiant : dans les papiers sur l’apprentissage autosupervisé, 
+
+1:34:28.780,1:34:36.660
+la méthode constastive consiste généralement à prendre des images
+
+1:34:36.660,1:34:41.770
+au hasard comme exemples négatifs. Avez-vous une idée d’utilisation de
+
+1:34:41.770,1:34:46.330
+cette fonction que quiconque a essayé d’expérimenter avec ça ?] Utiliser 
+
+1:34:46.330,1:34:51.280
+quel type de fonction ? [Etudiant : ces fonctions de perte que vous nous expliquez maintenant]
+
+1:34:51.280,1:34:57.350
+La plupart utilisent en gros la perte NLL qui s’appelle NLL/MMI dans ce tableau.
+
+1:34:57.350,1:35:06.560
+La NCE dont vous a parlé Ishan, ce qu’il utilise, essaie de rendre la distance
+
+1:35:06.700,1:35:11.920
+entre les échantillons aussi petits que possible. Et le terme contrasté est 
+
+1:35:11.920,1:35:15.310
+essentiellement une log softmax des distances. Donc quand vous calculez la
+
+1:35:15.310,1:35:20.080
+log softmax… Considérez la distance comme une énergie et vous calcluez
+
+1:35:20.080,1:35:28.810
+la log softmax de ces énergies. Vous obtenez cette formule ici. L’avant dernière ligne appelée NLL/MMI.
+
+1:35:28.810,1:35:40.150
+[Etudiant : quand est-il de prendre des images comme un exemple négatif pour approximer l’intégrale ?]
+
+1:35:40.150,1:35:47.710
+Il est impossible de calculer cette intégrale sur l'ensemble des y.
+
+1:35:47.710,1:35:54.580
+Ou cette somme si y est discrète. Vous approximer en gros la somme par 
+
+1:35:54.580,1:36:00.220
+quelques termes que vous choisissez au hasard. C’est Monte-Carlo.
+
+1:36:00.220,1:36:04.440
+Je veux dire qu'en gros, si vous voulez faire cela correctement, vous devez choisir ces échantillons
+
+1:36:04.440,1:36:09.940
+selon la règle de l'échantillonnage de Monte Carlo. Mais peu importe, je veux dire
+
+1:36:09.940,1:36:14.000
+c'est pour ça que l’hard negatif mining est dur. C’est ce qui fait la
+
+1:36:14.000,1:36:19.520
+différence entre MoCo, PIRL, SimCLR, etc. C’est la façon dont vous choisissez ces échantillons négatifs.
+
+1:36:19.520,1:36:24.580
+C'est pourquoi j'ai dit qu'il n'y a pas de méthode prédéfinie. Dans les cas où l'espace des y
+
+1:36:24.580,1:36:29.560
+est en grandes dimensions,  Il n'y a pas de façon prédéfinie de prendre les 
+
+1:36:29.560,1:36:34.000
+échantillons négatifs. C’est que pour la classification que c’est facile.
+
+1:36:34.000,1:36:42.440
+[Etudiant : est-ce que d'autres personnes ont testé d'autres pertes ?] Oui. Beaucoup
+
+1:36:42.440,1:36:48.530
+de personnes utilisent la square-square ou la hinge avec des différences
+
+1:36:48.530,1:36:53.599
+d'énergie. Donc certains des systèmes utilisés… au moins certains points
+
+1:36:53.599,1:36:58.880
+du système DeepFace, le système de reconnaissance des visages utilisé
+
+1:36:58.880,1:37:05.539
+par Facebook pour étiqueter les personnes, repose sur un ConvNet entraîné
+
+1:37:05.539,1:37:10.579
+en mode supervisé avec un certain nombre de catégories : essentiellement des images avec, je ne sais pas,
+
+1:37:10.579,1:37:14.809
+des millions de personnes ou quelque chose comme ça. Il y a une phase de fine tuning
+
+1:37:14.809,1:37:20.900
+utilisant l’apprentissage métrique, en gros des réseaux siamois où vous montrez deux photos de
+
+1:37:20.900,1:37:24.380
+la même personne et vous dites que ce sont les mêmes personnes puis deux photos de
+
+1:37:24.380,1:37:28.039
+gens différents et vous les séparer. Cela a permis d'essayer différentes
+
+1:37:28.039,1:37:32.750
+fonctions objectives, mais je pense qu'ils utilisaient la perte square-square
+
+1:37:32.750,1:37:38.929
+sur certain point. Ou peut-être la square-exp. Je ne suis pas tout à fait sûr de ce qu'ils utilisent maintenant.
+
+1:37:38.929,1:37:46.570
+[Etudiant : quel sujet allez-vous aborder dans la prochaine conférence ?]
+
+1:37:46.570,1:37:52.280
+Nous allons avoir deux conférences avec des invités. La prochaine étant celle 
+
+1:37:52.280,1:37:58.780
+de Michael Lewis qui est un chercheur à Facebook à Seattle.
+
+1:37:58.780,1:38:04.599
+Il est spécialiste du traitement du langage naturel et de la traduction.
+
+1:38:04.599,1:38:11.119
+Il va vous dire toutes les choses intéressantes sur les séquences à séquences,
+
+1:38:11.119,1:38:19.039
+les transformers, le NLP, la traduction. Il connaît bien mieux
+
+1:38:19.039,1:38:24.880
+les détails de ça que moi. C’est la bonne personne pour parler de ce sujet.
+
+1:38:24.880,1:38:32.000
+Nous allons avoir un autre invité, Xavier Bresson, qui l'un des spécialistes mondiaux des réseaux sur graphes.
+
+1:38:32.000,1:38:38.239
+C'est donc l'idée de savoir comment appliquer des réseaux de neurones…  
+
+1:38:38.239,1:38:44.179
+Vous pouvez penser à une image comme une fonction sur une grille.
+
+1:38:44.179,1:38:48.380
+Chaque pixel est un emplacement sur la grille. On peut considérer une image 
+
+1:38:48.380,1:38:52.140
+comme une fonction sur cette grille. Donc une grille est un graphe d'un type particulier
+
+1:38:52.140,1:38:57.510
+et l'image n'est qu'une fonction sur le graphe. Vous pouvez alors penser 
+
+1:38:57.510,1:39:04.560
+une vidéo comme une grille 3D où vous avez de l'espace et du temps.
+
+1:39:04.560,1:39:10.110
+La plupart des signaux naturels peuvent être considéré comme des fonctions
+
+1:39:10.110,1:39:15.570
+sur un graphe. Qu'en est-il du cas où la fonction qui vous intéresse n'est 
+
+1:39:15.570,1:39:20.280
+sur le graphe euclidien si vous voulez. Imaginons par exemple que vous
+
+1:39:20.280,1:39:26.550
+prenez une photo avec un appareil photo panoramique 360 degrés.
+
+1:39:26.550,1:39:32.010
+Donc l’appareil prend en gros une image sphérique. Donc vos pixels vivent sur la sphère.
+
+1:39:32.010,1:39:39.390
+Comment calculer une convolution sur une sphère ? Donc vous voulez exécuter 
+
+1:39:39.390,1:39:43.380
+votre ConvNet sur cette image qui vit maintenant sur la sphère.
+
+1:39:43.380,1:39:49.640
+Vous ne pouvez pas utiliser les moyens habituels de calcul des convolutions.
+
+1:39:49.640,1:39:54.710
+Vous devez donc trouver comment calculer des convolutions sur la sphère. C'est un exemple.
+
+1:39:54.710,1:40:01.020
+Voici maintenant quelque chose d'un peu plus compliqué : imaginez que vous avez un
+
+1:40:01.020,1:40:06.480
+scanner en 3D. Et vous capturez un danseur, quelqu'un devant le
+
+1:40:06.480,1:40:12.570
+scanner 3D. Cette personne a une pose particulière. Disons comme ça. 
+
+1:40:12.570,1:40:18.530
+Puis vous prenez une autre photo en 3D, des données 3D
+
+1:40:18.530,1:40:24.060
+d'une autre personne et cette autre personne est dans un autre pose.
+
+1:40:24.060,1:40:30.030
+Cette personne a une forme de corps différente, elle a une pose différente. 
+
+1:40:30.030,1:40:34.230
+Et ce que vous voulez, c'est être capable d’associer l’une à l’autre.
+
+1:40:34.230,1:40:38.520
+Être capable de dire comme : où est la main pour la première personne, où
+
+1:40:38.520,1:40:43.170
+est la main pour la deuxième personne. Donc ce que vous devez faire, c’est essentiellement avoir un
+
+1:40:43.170,1:40:48.660
+réseau qui prend en compte un maillage 3d représentant la géométrie d’une
+
+1:40:48.660,1:40:55.830
+main et entraîner à dire que c’est une main. Donc quand vous l'appliquez à la main
+
+1:40:55.830,1:40:59.010
+cela indique que c'est une main, quand vous vous appliquez sur les autres parties du corps, vous dit que
+
+1:40:59.010,1:41:03.480
+c'est autre chose. Mais les données que vous avez ne sont pas une image, c'est un maillage 3D.
+
+1:41:03.480,1:41:07.050
+Le maillage peut avoir différentes résolutions, les triangles peuvent être courbés
+
+1:41:07.050,1:41:11.310
+à différents endroits, donc comment définir une convolution sur un domaine
+
+1:41:11.310,1:41:17.100
+comme ça ? C’est indépendant de la résolution de la maille et dépend que
+
+1:41:17.100,1:41:21.330
+de la forme. Donc vous pouvez classer une main indépendamment de la
+
+1:41:21.330,1:41:27.480
+l'orientation, la taille, la prise, la forme du corps de la personne et
+
+1:41:27.480,1:41:32.930
+des choses de ce genre. Un autre exemple qui est peut-être plus
+
+1:41:32.930,1:41:39.900
+intéressant : vous voulez entraîner quelque chose comme un réseau siamois
+
+1:41:39.900,1:41:46.940
+mais vous voulez l’entraîner pour qu’il vous dise si une
+
+1:41:46.940,1:41:51.239
+molécule va se coller à une autre molécule. Vous donnez deux molécules
+
+1:41:51.239,1:41:57.590
+à votre réseau et votre il produit deux vecteurs. Si ces deux molécules
+
+1:41:57.590,1:42:05.270
+se collent entre elles, cela donne deux vecteurs dont la distance est faible.
+
+1:42:05.270,1:42:09.060
+S'ils ne se collent pas ensemble, la distance est grande. Donc vous pouvez
+
+1:42:09.060,1:42:14.300
+considérer la distance comme une sorte d'énergie libre négative de la 
+
+1:42:14.300,1:42:21.540
+liaison énergétique des deux les deux molécules.
+
+1:42:21.540,1:42:26.720
+L'énergie libre moins une constante si vous voulez.
+
+1:42:26.720,1:42:33.220
+Donc vous entraînez comme un réseau siamois mais le problème est comment représenter une molécule
+
+1:42:33.220,1:42:38.250
+à un réseau sachant qu'il s'agit du même réseau que vous appliquez sur cette molécule et
+
+1:42:38.250,1:42:41.310
+sur cette molécule mais les deux molécules n'ont pas la même forme.
+
+1:42:41.310,1:42:43.980
+Elles n'ont pas la même longueur, n'ont pas le même nombre d'atomes.
+
+1:42:43.980,1:42:48.270
+Donc comment représenter une molécule ? La meilleure façon de le faire
+
+1:42:48.270,1:42:53.960
+est comme un graphe. C'est essentiellement un graphe dont la structure
+
+1:42:53.960,1:42:59.100
+change avec la molécule. Et ce graphe est annoté par l'identité des
+
+1:42:59.100,1:43:04.170
+atomes de chaque site. Peut-être par leur localisation dans l'espace 3D, leur emplacement relatif.
+
+1:43:04.170,1:43:11.010
+Peut-être par l'angle des liaisons entre deux atomes successifs ou la liaison
+
+1:43:11.010,1:43:15.900
+énergétique ou des choses de ce genre. Donc la meilleure façon de
+
+1:43:15.900,1:43:19.760
+représenter une molécule est sous la forme de graphe essentiellement.
+
+1:43:19.760,1:43:24.610
+Il y a un autre exemple peut-être plus pertinent pour quelque chose comme Facebook.
+
+1:43:24.610,1:43:33.770
+Disons que je veux inférer…. Ou disons Amazon ou quelque chose de ce genre. 
+
+1:43:33.770,1:43:38.720
+Je veux inférer quel type… Disons Amazon.
+
+1:43:38.720,1:43:44.240
+J’ai un client et ce client a acheté un tas de choses différentes.
+
+1:43:44.240,1:43:48.050
+Il a commenté tout un tas de choses différentes. Je pourrais penser ça
+
+1:43:48.050,1:43:53.720
+en encodant un vecteur, mais ce serait un vecteur de taille variable
+
+1:43:53.720,1:43:57.000
+car les gens achètent un nombre différent de choses.
+
+1:43:57.000,1:44:01.370
+Donc il me faudrait trouver un moyen d'agréger ces données afin que tout le monde
+
+1:44:01.370,1:44:05.140
+puisse être représenté par le même vecteur de taille fixe. Que se passerait-il si, à la place,
+
+1:44:05.140,1:44:09.440
+je représente la personne et toutes les choses que cette personne a acheté
+
+1:44:09.440,1:44:15.410
+et les commentaires qu’elle a posté, etc…  sous la forme d’un graphe ?
+
+1:44:15.410,1:44:21.050
+Donc ce que je donne au réseau c’est le graphe avec des valeurs sur
+
+1:44:21.050,1:44:25.550
+les nœuds et peut-être les arcs. Si j'ai une façon de représenter un graphe 
+
+1:44:25.550,1:44:28.610
+que je peux connecter à un réseau, indépendamment de la forme du graphe,
+
+1:44:28.610,1:44:33.290
+alors je peux faire ce genre d'application. C'est donc ce que font les réseaux neuronaux sur graphes.
+
+1:44:33.290,1:44:37.430
+C’est un sujet très très chaud en ce moment. C'est extrêmement prometteur 
+
+1:44:37.430,1:44:41.750
+pour de nombreuses applications, notamment en biomédecine, en chimie, dans
+
+1:44:41.750,1:44:47.650
+la science des matériaux mais aussi en sciences sociales pour l'analyse des réseaux sociaux 
+
+1:44:47.650,1:44:52.100
+et toutes sortes d'applications. L'infographie, ce genre de truc.
+
+1:44:52.100,1:44:56.660
+C'est vraiment cool et Xavier est vraiment un des experts de ce sujet
+
+1:44:56.660,1:45:00.260
+donc je suis donc très heureux qu'il ait accepté de venir nous parler.
+
+1:45:00.260,1:45:04.460
+Ce ne sera pas facile pour lui car il est à Singapour [Alfredo :
+
+1:45:04.460,1:45:08.120
+il sera très tôt le matin pour lui]. Je donne une conférence dans
+
+1:45:08.120,1:45:15.290
+quelques jours à Hong Kong, donc je pense que ça sera pareil pour moi. [rires].
+
+1:45:15.290,1:45:21.020
+[Alfredo : il est à la « Nanyang Technological University », la NTU] 
+
+1:45:21.020,1:45:25.280
+Ah oui oui correct, c’est la NTU, j’ai confondu.
+
+1:45:25.280,1:45:33.440
+[Alfredo : c’est tout… Ah il y a une autre question] [Etudiant : c'était vraiment intéressant professeur,
+
+1:45:33.440,1:45:38.180
+j'ai une question supplémentaire. Je lisais ce terme appelé normalisation des flux et je
+
+1:45:38.180,1:45:42.620
+ne comprends pas de quoi il s’agit. Pourriez-vous donner une intuition sur pourquoi
+
+1:45:42.620,1:45:49.250
+les gens sont enthousiastes à ce sujet ?] Donc la normalisation des flux…
+
+1:45:49.250,1:45:55.910
+Ce n’est pas une technique avec laquelle j’ai beaucoup d'expérience, mais j'ai lu le papier.
+
+1:45:55.910,1:46:02.420
+Cela a été proposé par Danilo Rezende et Shakir Mohamed de DeepMind 
+
+1:46:02.420,1:46:08.230
+il y a un certain temps, il y a cinq ans environ [en 2015]. C'est une sorte de méthode
+
+1:46:08.230,1:46:13.190
+d'estimation de densité, c'est un peu comme les GANs. Cela a un peu le même
+
+1:46:13.190,1:46:20.120
+esprit que les GANs. C’est inspiré de l'ICA : l’analyse en composantes
+
+1:46:20.120,1:46:24.080
+indépendantes, bien que ce ne soit pas très explicite dans le document original.
+
+1:46:24.080,1:46:29.720
+Mais voici l'idée de base : vous voulez entraîner un réseau
+
+1:46:29.720,1:46:33.290
+pour transformer une distribution connue dont vous pouvez prélever un échantillon en
+
+1:46:33.290,1:46:37.550
+une distribution qui se trouve être la distribution de vos données.
+
+1:46:37.550,1:46:41.870
+Imaginez que vous avez une variable latente z échantillonnée à partir d'une 
+
+1:46:41.870,1:46:47.240
+distribution gaussienne ou une distribution uniforme sur le domaine.
+
+1:46:47.240,1:46:51.680
+Vous la faites passer par une fonction implémentée par un réseau de neurones.
+
+1:46:51.680,1:46:59.720
+Et vous voulez entraîner ce réseau. Donc la distribution que vous obtenez en sortie soit est celle que vous voulez, correspondant à vos données.
+
+1:46:59.720,1:47:16.910
+Je vais vous donner un exemple très simple. Disons que j'ai une variable
+
+1:47:16.910,1:47:23.210
+Z et que j'ai une variable observée Y. J'échantillonne ma variable Z avec 
+
+1:47:23.210,1:47:28.000
+une répartition uniforme entre 0 et 1.
+
+1:47:28.000,1:47:34.540
+Et ce que je veux sur la sortie, c'est… je ne sais pas… disons une gaussienne.
+
+1:47:34.540,1:47:40.120
+C'est un peu stupide de vouloir une gaussienne mais disons que j’en veux une.
+
+1:47:40.120,1:47:45.160
+Car je peux facilement prélever un échantillon d'un gaussienne. Donc ce que je dois faire, c'est
+
+1:47:45.160,1:47:50.590
+transformer cette distribution uniforme en une gaussienne par une
+
+1:47:50.590,1:48:01.140
+association et cette association sera une fonction comme…
+
+1:48:01.140,1:48:15.910
+Le 0 est ici, donc une fonction un peu comme ça si vous voulez.
+
+1:48:15.910,1:48:23.710
+C’est l’inverse de l'intégrale de la distribution gaussienne. Donc si je prends la
+
+1:48:23.710,1:48:32.739
+dérivé de cette fonction… Ok donc laissez-moi dessiner …
+
+1:48:32.739,1:48:40.179
+C’est un peu difficile à voir mais si j’associe…  Ok, la dérivée de cette fonction ici
+
+1:48:40.179,1:48:45.580
+indique à quel point je transforme un petit morceau ici en un morceau ici.
+
+1:48:45.580,1:48:50.350
+Donc plus la dérivée est grande, plus j'étire. Si la pente ici est de 1,
+
+1:48:50.350,1:48:55.090
+alors ce morceau de la distribution ici ne va pas s'étirer. 
+
+1:48:55.090,1:49:02.739
+Il va être inchangé. Et plus la pente est grande,
+
+1:49:02.739,1:49:06.820
+plus j'étends la distribution, plus j'étends un petit morceau ici.
+
+1:49:06.820,1:49:10.590
+Je peux donc distribuer tous les échantillons qui tombent dans cette
+
+1:49:10.590,1:49:19.570
+localisation ici. Je les étire sur une grande région. Donc ce dont j'ai besoin
+
+1:49:19.570,1:49:24.250
+de faire c’est de concevoir cette fonction de manière à ce qu'elle étende la distribution de mes entrées.
+
+1:49:24.250,1:49:30.020
+Donc cette distribution se transforme en la distribution de sortie que je veux.
+
+1:49:30.020,1:49:34.870
+Il y a une formule qui dit… En multidimensionnel, c'est un peu plus
+
+1:49:34.870,1:49:38.380
+compliqué que cela, mais cela dit que la distribution que vous
+
+1:49:38.380,1:49:42.999
+avez en Y va être égal à la distribution 
+
+1:49:42.999,1:49:48.210
+avec laquelle vous avez commencé en Z, multipliée par l'inverse du
+
+1:49:48.210,1:50:06.210
+déterminant du Jacobien de cette fonction F. Donc c'est F. Moins 1.
+
+1:50:06.210,1:50:15.150
+En fait, la formule originale est celle-ci mais ces deux choses sont égales.
+
+1:50:15.150,1:50:18.880
+C’est pour une fonction vectorielle multidimensionnelle.
+
+1:50:18.880,1:50:28.090
+Il a donc un Jacobien pour associer Z à Y. Donc si vous prenez le déterminant de
+
+1:50:28.090,1:50:36.489
+l’inverse du Jacobien de cette fonction, c’est une valeur scalaire, indiquant de combien
+
+1:50:36.489,1:50:45.639
+la distribution est étirée ou comprimée, dans ce cas, à q.
+
+1:50:45.639,1:50:48.940
+Dans ce cas, il s'agit du taux de compression, c'est l'inverse de la dérivée.
+
+1:50:48.940,1:51:03.309
+Donc plus vous comprimez ici, plus la probabilité sera élevée, plus P(Y) sera grande, la densité P(Y) pour
+
+1:51:03.309,1:51:17.789
+ce Y sera grande pour un Q donné. Donc c’est pour Y = F(Z).
+
+1:51:17.789,1:51:28.409
+La grande question des méthodes de normalisation de flux est de savoir comment faire ça.
+
+1:51:28.409,1:51:32.880
+Etant donné un nombre d'échantillons de P(Y) et étant donné que vous
+
+1:51:32.880,1:51:39.570
+distribuez Q… Vous avez votre distribution Q et vous échantillonnez à partir d’elle,
+
+1:51:39.570,1:51:44.909
+comment minimiser une fonction objective qui
+
+1:51:44.909,1:51:50.500
+connaissant le P que vous obtenez à la sortie qui est égale au Q que vous mettez en entrée,
+
+1:51:50.500,1:51:54.559
+multipliée par ce déterminant inverse du Jacobien de la fonction F.
+
+1:51:54.559,1:51:57.119
+Ce que vous devez trouver c’est la fonction F. 
+
+1:51:57.119,1:52:01.289
+Donc, en gros, vous devez différencier. Donc calculer une distance entre 
+
+1:52:01.289,1:52:05.670
+les divergences KL par exemple. Entre P(Y) et la chose à droite du signe égal.
+
+1:52:05.670,1:52:10.500
+Vous devez différencier par rapport aux paramètres de F.
+
+1:52:10.500,1:52:20.119
+Vous devez rétropropager à travers l'inverse du gradient du Jacobien de F.
+C’est pas facile.
+
+1:52:20.119,1:52:26.719
+Très souvent, les gens écrivent F comme une succession de F très simples
+
+1:52:26.719,1:52:35.340
+qui ne modifient que très peu la distribution. Donc très souvent, c'est 
+
+1:52:35.340,1:52:40.999
+quelque chose comme l'identité plus une certaine déviation. Un peu comme ResNet si vous voulez.
+
+1:52:40.999,1:52:45.900
+Puis vous empilez beaucoup, beaucoup de couches de cela. Le problème
+
+1:52:45.900,1:52:52.070
+devient plus simple car quand ces fonctions font un peu de modification,
+
+1:52:52.070,1:52:58.320
+beaucoup de problèmes deviennent plus simples.
+
+1:52:58.320,1:53:03.090
+Le déterminant ici se simplifie. C’est une sorte de description abstraite 
+
+1:53:03.090,1:53:13.559
+de la normalisation des flux. Il y a des articles intéressants
+
+1:53:13.559,1:53:19.130
+sur ce sujet ces dernières années et même ces derniers mois utilisant ça
+
+1:53:19.130,1:53:23.130
+en physique des particules et des trucs comme ça. Kyle Cranmer de la NYU est une 
+
+1:53:23.130,1:53:31.890
+sorte de spécialiste de ça. [Etudiant : merci beaucoup professeur]. D’autres question ? 
+
+1:53:31.890,1:53:36.080
+[Alfredo : je pense que c’est tout]. Ok, merci beaucoup à tous.
+
+1:53:36.080,1:53:42.610
+[Alfredo : à demain les gars, bye] Au revoir, prenez soin de vous.

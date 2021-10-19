@@ -1,0 +1,2147 @@
+0:00:01.480,0:00:10.040
+Ok ok ok. Donc aujourd'hui nous allons… Partage d'écran. Ok, Boom.  
+
+0:00:10.040,0:00:17.900
+Et voilà, c'est parti. Donc les bases de l’apprentissage profond. C'est moi.
+
+0:00:17.900,0:00:23.990
+Suivez-moi sur Twitter. Ok donc aujourd'hui nous allons
+
+0:00:23.990,0:00:28.460
+parler d'attention et il existe en particulier deux types d’attention.
+
+0:00:28.460,0:00:33.440
+Il y a l'auto-attention ou l'attention croisée. Et il va y aussi
+
+0:00:33.440,0:00:40.390
+l'attention dure ou l'attention douce. Mais en général quand nous
+
+0:00:40.390,0:00:45.869
+parlons de l'attention que nous allons parler de traiter des ensembles.
+
+0:00:45.869,0:00:51.199
+Je vais vous donner un petit aperçu : les transformers sont faits de
+
+0:00:51.199,0:00:57.590
+modules d’attention. Les transformers associent des ensembles à des ensembles.
+
+0:00:57.590,0:01:01.219
+Ils ne s'occupent pas vraiment de séquences. Ils peuvent. Une séquence peut être pensée
+
+0:01:01.219,0:01:08.150
+comme un ensemble d'ordres. Mais ce n’est pas nécessaire d’avoir des séquences d'ordres.
+
+0:01:08.150,0:01:14.570
+C’est d’ailleurs la partie super cool. Alors commençons.
+
+0:01:14.570,0:01:21.530
+Commençons par l’auto-attention. Donc nous avons avec un ensemble de x, ces x roses,
+
+0:01:21.530,0:01:28.990
+indicés par i allant de 1 à t. Donc vous avez t éléments différents de
+
+0:01:28.990,0:01:37.310
+cet ensemble : x1, x2, …, xt. Chacun de ces xi appartenant à ℝⁿ
+
+0:01:37.310,0:01:42.710
+C’est notre représentation classique que nous avons vue jusqu'ici.
+
+0:01:42.710,0:01:49.550
+C'est comme un vecteur à n dimensions. Ce qu'il y a avec
+
+0:01:49.550,0:01:56.030
+cette auto-attention est que ma représentation cachée h est une
+
+0:01:56.030,0:02:03.560
+combinaison linéaire de ces vecteurs. Si vous vous souvenez de l'un
+
+0:02:03.560,0:02:09.500
+des cours au début, je crois que c’est le quatrième, je vous ai montré 
+
+0:02:09.500,0:02:14.000
+comment vous pouvez faire une notation rapide de cette combinaison
+
+0:02:14.000,0:02:21.110
+linéaire de vecteurs. C'est simplement en utilisant des multiplications de matrices.
+
+0:02:21.110,0:02:28.220
+Donc cet ensemble de x, ces t x de dimension n peuvent être pensés comme
+
+0:02:28.220,0:02:34.790
+une matrice X, en rose, qui a n lignes car la hauteur de ces x est n
+
+0:02:34.790,0:02:41.240
+et a t colonnes. Donc vous pouvez penser à ça comme, en gros,
+
+0:02:41.240,0:02:47.650
+une pile horizontale de ces vecteurs. Donc c'est mon ensemble.
+
+0:02:47.650,0:02:50.780
+Dans lequel vous avez un ordre actuellement.
+
+0:02:50.780,0:02:57.140
+Cette représentation cachée peut être écrite comme quoi ? 
+
+0:02:57.140,0:03:04.610
+La matrice X fois le vecteur de ces alphas que je vais noter a, en gras.
+
+0:03:04.610,0:03:13.100
+Donc dans ce cas, mon h est la matrice X multipliée par a. C'est un peu funky.
+
+0:03:13.100,0:03:18.320
+En général, lorsque nous pensons à la représentation cachée, nous avons une 
+
+0:03:18.320,0:03:27.230
+rotation de l’entrée avec la matrice de poids. Mais dans ce cas, c'est
+
+0:03:27.230,0:03:32.000
+la rotation de l'attention. Donc je ne peux pas vraiment y penser de cette façon.
+
+0:03:32.000,0:03:35.450
+Je préfère voir ça comme une combinaison linéaire des
+
+0:03:35.450,0:03:42.500
+colonnes de X. Donc combinaison linéaire de ces x. Et donc nous pouvons
+
+0:03:42.500,0:03:48.650
+l'écrire en haut à droite juste pour garder ça en mémoire. Maintenant nous pouvons penser 
+
+0:03:48.650,0:03:55.579
+à l'attention dure si nous imposons que la norme zéro de ce vecteur a
+
+0:03:55.579,0:04:02.040
+est égale à 1 et le terme non nul est égal à 1 aussi. Ce qui signifie que a est un vecteur « one-hot ».
+
+0:04:02.040,0:04:07.220
+Que se passe t’il si vous multipliez ces x par un vecteur « one-hot » ?
+
+0:04:07.220,0:04:13.340
+Vous pouvez sélectionner le x où se trouve le 1, donc la colonne spécifique.
+
+0:04:13.340,0:04:18.470
+Donc si le deuxième élément de a est égal à 1 et
+
+0:04:18.470,0:04:30.070
+tous les autres sont égaux à 0, quand vous multipliez X par a, vous pouvez récupérer la deuxième colonne.
+
+0:04:30.320,0:04:37.160
+Vous pouvez voir maintenant comment cela peut fonctionner.
+
+0:04:37.160,0:04:44.720
+L'attention ne porte que sur un élément de votre ensemble. Et un seul élément
+
+0:04:44.720,0:04:51.020
+dans le cas où nous parlons de l'attention dure. Mais nous pouvons avoir
+
+0:04:51.020,0:04:55.400
+aussi une attention différente : l'attention douce. Dans l'attention douce
+
+0:04:55.400,0:05 05.360
+la contrainte est plutôt que la somme des éléments de a, les alphas, doivent sommer à 1. C'est donc la différence.
+
+0:05:05.360,0:05:10.180
+Dans ce cas, h va juste être une combinaison linéaire des colonnes de
+
+0:05:10.180,0:05:17.150
+la matrice X. C’est cool jusqu’à présent ? Il n’y a pas de choses bizarres.
+
+0:05:17.150,0:05:25.040
+Donc deuxième partie :  attention numéro deux. On va comprendre d'où 
+
+0:05:25.040,0:05:30.440
+viennent ces a. Dans ce cas a comme vous pouvez le voir 
+
+0:05:30.440,0:05:37.340
+est l'arg max ou la soft arg max de X que j’ai transposée.
+
+0:05:37.340,0:05:43.640
+Cela veut dire que chaque ligne est un échantillon. Puis je calcule
+
+0:05:43.640,0:05:48.770
+le produit scalaire entre la ligne et le vecteur. 
+
+0:05:48.770,0:05:53.750
+Chaque élément dans le produit final est le produit scalaire 
+
+0:05:53.750,0:06:00.000
+des vecteurs xi avec i allant de 1 à t avec ce X spécifique.
+
+0:06:00.000,0:06:08.990
+C’est clair jusqu'à présent ? Avant nous disions que… [Chat : qu’est-ce que bêta ?]
+
+0:06:08.990,0:06:13.730
+Bêta est le paramètre pour la softargmax. L'inverse de la température.
+
+0:06:13.730,0:06:18.260
+Vous connaissez la softargmax : l’exp. de l'argument divisée par la somme des exp.
+
+0:06:18.260,0:06:24.290
+Et à l'intérieur de l’exp. vous avez bêta. [Chat : d'où vient le bêta ?]
+
+0:06:24.290,0:06:28.880
+Chaque fois que vous avez la softargmax, ou ce que les gens appellent softmax,
+
+0:06:28.880,0:06:33.530
+il y a toujours un paramètre bêta. Généralement, il est réglé à 1. Donc vous ne le voyez pas.
+
+0:06:33.530,0:06:43.639
+Donc avant on a vu que mon X… [Alfredo lit le chat]
+
+0:06:43.639,0:06:50.120
+Je n’ai pas encore parler de ça. Donc X est un ensemble de colonnes
+
+0:06:50.120,0:06:54.320
+et h est une combinaison linéaire de ces colonnes. Mais d’où
+
+0:06:54.320,0:07:00.230
+viennent ces alphas ? Donc mon alpha donné, mon premier vecteur a,
+
+0:07:00.230,0:07:11.870
+est chaque colonne de X, chaque ligne de X transposée. Vous multipliez par X et obtenez le
+
+0:07:11.870,0:07:17.900
+produit scalaire de ces deux types. Donc vous obtenez quelle est la valeur
+
+0:07:17.900,0:07:25.510
+du produit scalaire de mon X par rapport à toute autre valeur de x dans mon ensemble.
+
+0:07:25.510,0:07:33.169
+[Chat : x est une colonne de vecteur ?] x est un vecteur de taille n.
+
+0:07:33.169,0:07:38.820
+C’était écrit avant. x est un x générique.
+
+0:07:38.820,0:07:45.860
+Mon crochet représente un argument facultatif. Vous pouvez soit avoir l'argmax et
+
+0:07:45.860,0:07:53.090
+obtenez donc un « one-hot » a, soit la softargmax, qui est ce que nous
+
+0:07:53.090,0:07:56.120
+avons utilisé tout au long des cours jusqu'à présent, et obtenez
+
+0:07:56.120,0:07:59.930
+l’exponentielle divisée par la somme des exponentielles.
+
+0:07:59.930,0:08:05.570
+C’est la classique, celle que les gens appellent habituellement softmax.
+
+0:08:05.570,0:08:11.510
+Nous avons dit que nous avons un ensemble de xi Donc si vous avez un ça,
+
+0:08:11.510,0:08:16.560
+cela implique que vous avez un ensemble de ai. Car pour chaque x vous avez un a.
+
+0:08:15.560,0:08:21.680
+Donc si vous avez tous ces a qui sont des vecteurs, vous pouvez les empiler
+
+0:08:21.680,0:08:26.780
+les l'un après l'autre et obtenez A.
+
+0:08:26.780,0:08:41.180
+A est d’une hauteur t car a est de taille t. Et vous avez t lignes dans X transposée.
+
+0:08:41.180,0:08:48.200
+Puis vous en empilez t car avez t x.
+
+0:08:48.200,0:08:53.200
+J'espère que c'est clair jusqu'à présent. Cool.
+
+0:08:53.200,0:08:58.790
+Que manque t’il ?  Il manque ceci : étant donné que nous avons
+
+0:08:58.790,0:09:04.280
+maintenant un ensemble de ai, nous avons un ensemble de ai.
+
+0:09:04.280,0:09:09.740
+Si vous regardez en haut à droite de cette diapositive, vous avez h qui
+
+0:09:09.740,0:09:16.520
+est la multiplication matricielle entre X et a. Donc h est la combinaison
+
+0:09:16.520,0:09:24.470
+linéaire des colonnes de ma matrice X. Mais étant donné que nous avons
+
+0:09:24.470,0:09:31.010
+de nombreux a, nous allons avoir de nombreux h. Combien de h ?
+
+0:09:31.010,0:09:36.440
+Le même nombre que de a. Donc vous avez cette matrice X ayant beaucoup
+
+0:09:36.440,0:09:42.740
+de colonnes. [Etudiant : x dans l’équation de la softargmax
+
+0:09:42.740,0:09:47.240
+qui appartient à ℝⁿ c'est l'une des colonnes de X ?]
+
+0:09:47.240,0:09:52.999
+Oui. Vous pouvez l’appeler xi et alors avoir ai devant.
+
+0:09:52.999,0:09:57.710
+J’ai retiré l'index pour que ce soit un peu moins encombré. [Etudiant : ok, mais
+
+0:09:57.710,0:10:04.880
+X est de taille t par n donc X transposée devrait être de taille n par t] X est n par t.
+
+0:10:04.880,0:10:11.360
+[Etudiant : oh X est n par t]. Donc X est la pile de toutes les colonnes.
+
+0:10:11.360,0:10:18.170
+[Etudiant : oh ok, j’ai oublié cette mention, merci] Il y a deux options : vous pouvez penser
+
+0:10:18.170,0:10:22.820
+X comme l'ensemble des lignes et je pense c’est ce qui est fait dans le code,
+
+0:10:22.820,0:10:27.830
+mais je pense que c'est beaucoup plus facile à écrire de cette façon. Si vous écrivez les maths.
+
+0:10:27.830,0:10:33.020
+Du mois je préfère. Donc étant donné que nous avons beaucoup de a, vous allez avoir
+
+0:10:33.020,0:10:40.190
+de nombreuses colonnes de la matrice H. Nous pouvons ainsi simplement écrire H,
+
+0:10:40.190,0:10:45.830
+qui est le sous-ensemble de ces h, comme la combinaison linéaire des
+
+0:10:45.830,0:10:51.600
+éléments de X par A. On utilise ainsi des facteurs comme la première
+
+0:10:51.600,0:10:57.600
+colonne de A, la deuxième colonne, la troisième, etc. Donc c’est
+
+0:10:57.600,0:11:05.100
+à peu près tout sur l'attention. Vous mélangez les éléments de cet ensemble de x,
+
+0:11:05.100,0:11:09.300
+que nous pouvons représenter sous forme de matrice, en utilisant ces 
+
+0:11:09.300,0:11:15.150
+coefficients qui sont calculés via l’argmax ou la softargmax où chaque composante
+
+0:11:15.150,0:11:21.510
+à l'intérieur, que nous pouvons appeler un score, est simplement le produit 
+
+0:11:21.510,0:11:30.540
+scalaire d’un x donné contre tous les autres x de l’ensemble. Donc c'est la première
+
+0:11:30.540,0:11:36.980
+partie du cours. C’est clair jusqu'ici ? Sinon nous pouvons continuer.
+
+0:11:36.980,0:11:43.950
+Donc est-ce clair ou pas ? [Etudiant : pouvez-vous réexpliquer la première équation :
+
+0:11:43.950,0:11:51.180
+qu’est-ce qu’une softargmax et la valeur de la multiplication de X avec x ?]
+
+0:11:51.180,0:11:56.550
+Dans la diapositive précédente, nous avons simplement dit qu'il n'y a qu'une ligne ici.
+
+0:11:56.550,0:12:01.800
+Nous avons dit que la couche cachée est une combinaison linéaire de ces x.
+
+0:12:01.800,0:12:10.200
+[Etudiant : oui]. Et cette combinaison linéaire utilise ces alphas
+
+0:12:10.200,0:12:15.090
+contenus dans ce vecteur a. [Oui] Et j'ai donc écrit ça ici.
+
+0:12:15.090,0:12:20.580
+h est la combinaison linéaire des colonnes de X où ces colonnes de X
+
+0:12:20.580,0:12:26.790
+sont les éléments de mon ensemble. [Oui] Donc si on a celui-là, on va à la
+
+0:12:26.790,0:12:33.320
+deuxième diapositive et je vous dis comment calculer un a. Donc pour calculer un a ici.
+
+0:12:33.320,0:12:40.770
+Ce a va être par exemple la softargmax, que les gens appellent aussi 
+
+0:12:40.770,0:12:47.850
+la softmax, de quoi ? Donc vous avez un x spécifique ici. Quand vous
+
+0:12:47.850,0:12:52.950
+calculez le produit entre X transposée… X transposée ayant tous
+
+0:12:52.950,0:12:59.220
+les xi sur les lignes. Laissez-moi dessiner ça. Donc X transposée a
+
+0:12:59.220,0:13:04.589
+le premier gars, le deuxième, le troisième, etc. Et puis je fais celui-là
+
+0:13:04.589,0:13:09.600
+contre mon gars ici. Donc si vous faites une multiplication matricielle de de vecteur, 
+
+0:13:09.600,0:13:14.209
+le premier est ce produit scalaire du premier type contre moi-même.
+
+0:13:14.209,0:13:20.939
+Puis le second contre moi-même. Et le troisième contre moi-même. [Ok]
+
+0:13:20.939,0:13:24.689
+Vous obtenez ici par exemple trois scores. Vous allez voir à quel point
+
+0:13:24.689,0:13:31.170
+votre vecteur est proche/aligné par rapport aux trois éléments de mon ensemble.
+
+0:13:31.170,0:13:36.749
+Puis je donne ça à la softargmax. Vous obtenez ces trois valeurs à la fin :
+
+0:13:36.749,0:13:42.629
+première valeur, deuxième valeur, troisième valeur. A la fin cela doit
+
+0:13:42.629,0:13:50.970
+sommer à 1. [Oui, ok merci beaucoup] Vous pouvez avoir soit
+
+0:13:50.970,0:13:54.989
+la softargmax avec les exponentielles, soit avoir l’argmax qui
+
+0:13:54.989,0:13:59.699
+envoie essentiellement le bêta à de très grandes valeurs.
+
+0:13:59.699,0:14:05.040
+Donc vous pouvez simplement écrire la softargmax et avoir un grand bêta.
+
+0:14:05.040,0:14:15.119
+[Etudiante : je ne comprends toujours pas pourquoi il s'agit d'un vecteur dans ℝᵗ] Lequel ?
+
+0:14:15.119,0:14:25.829
+[Le a] Celui-ci ? Ok. Donc X transposée est mes xi dans cette direction. 
+
+0:14:25.110,0:14:31.519
+Donc ces gars-là sont ma X transposée.
+
+0:14:34.760,0:14:37.760
+Et cette longueur ici est n.
+
+0:14:42.460,0:15:00.510
+Et là c’est t. Donc si vous faites t fois ce gars, qui est aussi n,
+
+0:15:02.640,0:15:07.430
+vous allez obtenir un vecteur de taille t.
+
+0:15:08.480,0:15:16.060
+Est-ce que cela fait sens ? [Etudiante : a est un vecteur « one-hot » ?] a peut être un « one-hot » si vous utilisez l'argmarx
+
+0:15:16.060,0:15:26.310
+ou une version plus douce si la softargmax qui est x divisé par la somme des x.
+
+0:15:26.310,0:15:34.680
+[Etudiante : lorsque vous multipliez une matrice par un vecteur, vous obtenez un vecteur. Donc si vous prenez une argmax de ça,
+
+0:15:34.680,0:15:40.319
+vous devriez obtenir un scalaire non ?] Non l’argmax vous donne l'indice.
+
+0:15:40.319,0:15:45.220
+Comme le vecteur « one-hot » correspondant au vecteur. 
+
+0:15:45.220,0:15:52.220
+Vous pouvez penser à l’argmax comme une fonction vous donnant un 1 où vous avez le
+
+0:15:52.220,0:16:02.699
+maximum et tout le reste va être 0. [Etudiante : ok] Cela fait sens ? [Oui] 
+
+0:16:02.699,0:16:11.129
+Donc si vous avez le vecteur [3,7,9,2], l’argmax vous donne [0,0,1,0].
+
+0:16:11.129,0:16:18.389
+Elle met un 1 à l’élément se trouvant à la position où est le maximum.
+
+0:16:18.389,0:16:28.329
+[Etudiant : Bêta est-il un scalaire ou un vecteur ?] Dites qu’il est égal à 1. Il n'y en a pas besoin ici pour le moment.
+
+0:16:28.910,0:16:36.029
+[Etudiant : est-ce que les termes xi termes sont ceux que le vecteur « one-hot »
+
+0:16:36.029,0:16:45.420
+représente notre entrée ?] Les xi sont juste mon entrée. Ils ne doivent pas être « one-hot ».
+
+0:16:45.420,0:16:55.000
+[Mais ils pourraient l'être s'ils représentent des mots ou pas ?] Généralement ils représentent des enchâssements donc ils sont en fait denses.
+
+0:16:55.000,0:17:10.459
+[Oh ok. Et est-ce que via X transposée par x on détermine la similarité entre les deux ?]
+
+0:17:10.459,0:17:17.689
+Oui. Cela déterminer dans quelle mesure chaque élément de mon ensemble xi est similaire à mon x.
+
+0:17:17.689,0:17:26.079
+Donc ce a me dit comment tous ces gars ici sont similaires par rapport à ce gars là. [Etudiant : ok merci]
+
+0:17:26.079,0:17:35.260
+Très bien, c'était la première partie. Passons à la suite et voyons comment cela peut être amélioré/élargi.
+
+0:17:35.260,0:17:37.720
+Nous avons ici une définition : le « key/value store ». C’est à propos de la structure des données, juste pour vous donner un peu de définition.
+
+0:17:50.590,0:17:56.110
+Il s'agit donc d'un paradigme pour le stockage/la sauvegarde, la récupération/le requêtage
+
+0:17:56.110,0:18:01.870
+et le management d’un tableau associatif/dictionnaire/table de hachage. 
+
+0:18:01.870,0:18:08.350
+Qu’est que cela veut dire ? Par exemple quand vous tapez une question…
+
+0:18:08.350,0:18:14.040
+disons que vous voulez regarder une vidéo sur YouTube sur la façon de cuisiner des lasagnes.
+
+0:18:14.040,0:18:19.230
+Vous allez sur YouTube, vous écrivez « lasagne » et appuyez sur entrée.
+
+0:18:19.230,0:18:24.810
+Donc vous avez une requête qui vérifie toutes les clés possibles dans
+
+0:18:24.810,0:18:30.160
+votre ensemble de données. Les clés peuvent être, disons, le titre de la vidéo ou la description.
+
+0:18:30.160,0:18:35.500
+Vous vérifiez ainsi comment est alignée votre requête par rapport à toutes 
+
+0:18:35.500,0:18:40.300
+les titres qui sont disponibles dans l'ensemble de données de YouTube. 
+
+0:18:40.300,0:18:46.870
+Dès que vous trouvez le score maximal via l’argmax, vous récupérez la vidéo associée.
+
+0:18:46.870,0:18:51.940
+Sinon si vous faites la softargmax, vous pouvez obtenir une distribution
+
+0:18:51.940,0:18:56.560
+de probabilité. Ainsi vous pouvez récupérer un ordre/ un classement.
+
+0:18:56.560,0:19:01.240
+Vous pouvez d'abord récupérer la vidéo la plus alignée, puis avez
+
+0:19:01.240,0:19:07.060
+une séquence de vidéos de moins en moins pertinentes. C’est clair pour
+
+0:19:07.060,0:19:13.840
+le moment ce qu’est ce paradigme « key/value store » ? Vous avez une requête
+
+0:19:13.840,0:19:20.840
+qui est votre question. Etant donné une requête, vous vérifiez toutes les clés et trouvez à quel point il y a
+
+0:19:20.840,0:19:25.450
+une concordance de la clé par rapport à votre requête. Puis vous récupérez 
+
+0:19:25.450,0:19:32.410
+toutes ces vidéos, toutes ces valeurs, tous ces contenus. Et donc nous allons faire exactement
+
+0:19:32.410,0:19:37.150
+la même chose ici. Dans ce cas précis nous allons spécialiser
+
+0:19:37.150,0:19:42.730
+un peu ce que nous avons vu jusqu'à présent qui était assez trivial.
+
+0:19:42.730,0:19:48.640
+[Chat : la clé ici est le titre de la vidéo ?] Oui c'est exact.
+
+0:19:48.640,0:19:54.630
+Les clés sont donc les titres de toutes les vidéos sur YouTube. Vous n'avez qu'une seule requête : « lasagnes ».
+
+0:19:54.630,0:19:58.010
+Ou « comment cuisiner des lasagnes comme Alfredo ? »
+
+0:19:58.010,0:20:05.240
+Et vous vérifiez cette question par rapport à toutes les clés. Puis quand vous trouvez l’argmax,
+
+0:20:05.240,0:20:09.380
+vous trouvez l'index du maximum, vous le récupérez. Ou si vous faites une
+
+0:20:09.380,0:20:13.550
+softargmax vous allez obtenir des probabilités. Vous pouvez alors trier
+
+0:20:13.550,0:20:21.710
+par probabilité. Donc nous disposons maintenant des requêtes, des clés et de valeurs.
+
+0:20:21.710,0:20:31.010
+Donc que sont-elles ? Ce sont simplement la rotation de toutes mes entrées spécifiques x. 
+
+0:20:31.010,0:20:38.000
+Donc mon q est mon x que j’ai tourné par Wq. Puis ma clé est encore mon x
+
+0:20:38.000,0:20:44.500
+que j'ai fait tourner par Wk. Et ensuite ma valeur de v où x est tourné par Wv.
+
+0:20:44.500,0:20:52.310
+Jusqu'à présent nous avons juste ajouté trois matrices de plus, c’est tout.
+
+0:20:52.310,0:20:58.040
+C'est comme ça que vous pouvez ajouter tellement plus… Nous ajoutons en faites
+
+0:20:58.040,0:21:05.720
+des paramètres d’entraînements. Jusqu'à présent, nous n'avions pas de paramètres entraînables.
+
+0:21:05.720,0:21:11.690
+[Chat : qu’est x dans la métaphore sur les lasagnes ?].
+
+0:21:11.690,0:21:19.190
+x c’est moi qui ai très faim. Donc vu que j’ai faim j’écris une question
+
+0:21:19.190,0:21:29.020
+sur la façon de faire la nourriture. Mais étant donné que je sais aussi cuisiner, je peux aussi vérifier.
+
+0:21:30.110,0:21:34.760
+Si on reprend les lasagnes, « avoir faim » est mon x.
+
+0:21:34.760,0:21:39.980
+Donc ma requête est « quelle est la meilleure recette que je puisse trouver ? » et puis je
+
+0:21:39.980,0:21:46.310
+peux vérifier dans ma mémoire/ma tête, toutes les recettes de lasagnes possibles.
+
+0:21:46.310,0:21:50.240
+Tous les livres de cuisine de ma mère. Donc je peux vérifier et puis je tombe
+
+0:21:50.240,0:21:56.670
+sur les lasagnes de ma grand-mère. Je récupère alors la recette de ma grand-mère.
+
+0:21:56.670,0:22:02.620
+Elles sont fabuleuses. Cela fait sens ? J'ai faim [rires].
+
+0:22:02.620,0:22:07.940
+[Chat : il y a une raison pour laquelle nous n'ajoutons pas de non-linéarités ici ?]
+
+0:22:07.940,0:22:15.620
+Oui. Donc ces choses d'attention sont complètement basées sur l'orientation.
+
+0:22:15.620,0:22:19.940
+Nous vérifions juste quelle est l'orientation de ces vecteurs. C’est
+
+0:22:19.940,0:22:24.290
+comment fonctionne l'attention. Nous n'aimons pas les non-linéarités. La seule non-linéarité est
+
+0:22:24.290,0:22:29.330
+chaque fois que vous essayez d'obtenir la probabilité, la distribution,
+
+0:22:29.330,0:22:34.550
+la softargmax. Ok cool, cela fait sens. Vous êtes à bord. Donc encore une fois 
+
+0:22:34.550,0:22:44.780
+nous introduisons maintenant ces paramètres apprenables. Donc nous pouvons apprendre des choses : apprentissage machine. Yeahhh.
+
+0:22:44.370,0:22:51.140
+Donc q et k doivent avoir la même longueur, la même dimensionnalité car vous vérifiez une requête/question,
+
+0:22:51.140,0:22:55.820
+comment faire des lasagnes, contre toutes les représentations possibles des titres.
+
+0:22:55.820,0:23.06.000
+Donc cela doit avoir la même longueur car sinon vous ne pouvez pas vérifier l’orientation. Ils doivent être dans le même espace. 
+
+0:23:06.000,0:23:17.090
+v est le contenu de ma recette. Je ne me soucie pas de la longueur. Cela peut faire 5 pages de la recette. Donc c’est juste toute la recette.
+
+0:23:17.540,0:23:26.500
+Donc v dans mon cas est grand et la clé, la représentation du titre, correspond à la taille de la représentation de la question.
+
+0:23:26.500,0:23:39.780
+Rendons les choses simples. Donc on dit que d’ = d’’ = d. Tout est d.
+
+0:23:40.520,0:23:45.230
+Nous avons donc dit que nous avons une séquence. Pas une séquence ! Désolé. 
+
+0:23:45.230,0:23:50.960
+Nous avons ensemble de x. Donc, étant donné cet ensemble de X, vous allez obtenir
+
+0:23:50.960,0:23:57.830
+un ensemble de requêtes, un ensemble de clés et un ensemble de valeurs.
+
+0:23:57.830,0:24:02.780
+Et comme vous pouvez l'imaginer, vous allez obtenir une matrice comportant toutes
+
+0:24:02.780,0:24:11.540
+les colonnes de tous les Q, K et V. Donc combien de colonnes avez-vous ? t.
+
+0:24:11.540,0:24:19.540
+Car vous avez empilé t vecteurs. Quelle est la hauteur de ces vecteurs ? d.
+
+0:24:19.619,0:24:26.320
+Ok cool. Donc quelle est la suite ? Avant nous disions que mon a est la
+
+0:24:26.320,0:24:36.580
+softargmax ou l’argmax de X transposée x. Maintenant vous allez vérifier une requête par rapport à toutes ces clés.
+
+0:24:36.580,0:24:45.519
+Donc je transpose d'abord K pour avoir des lignes, puis je multiplie ma première ligne, ma première clé, fois ma requête.
+
+0:24:45.519,0:24:50.529
+La deuxième clé fois la requête, troisième clé fois la requête, etc…
+
+0:24:50.529,0:24:56.539
+Combien de lignes ai-je ? t. Donc à la fin vous avez t scores.
+
+0:24:56.539,0:25:01.769
+Puis vous calculez la softargmax et obtenez les probabilités.
+
+0:25:01.769,0:25:07.529
+Je pense que ça fait sens. Je veux dire ça le fait pour moi. J’ai passé un peu de temps dessus.
+
+0:25:07.529,0:25:17.100
+Est-ce que cela fait sens pour vous ? [Etudiante : quelle est la différence entre q et k ?]
+
+0:25:17.100,0:25:24.279
+k représente la clé qui est le titre dans le livre de recettes.
+
+0:25:24.279,0:25:29.619
+q est ma question « Comment faire des lasagnes ? ». Et puis je vérifie tous les titres
+
+0:25:29.619,0:25:35.200
+de mon livre de recettes contenant : comment faire une pizza ? Comment faire des pâtes ? Comment faire des raviolis ?
+
+0:25:35.200,0:25:39.789
+Comment faire des tortellinis ? Comment faire un polpettone ? Comment faire des lasagnes ?
+
+0:25:39.789,0:25:46.409
+On y est ! Là vous obtenez un score élevé et récupérez celui-là. 
+
+0:25:46.409,0:25:52.239
+[Etudiant : je comprends que la requête est dérivée de la transformation de X mais je
+
+0:25:52.239,0:26:01.269
+ne comprends pas pourquoi K et V sont également dérivées de X. 
+
+0:26:01.269,0:26:07.149
+Dans votre analogique, V serait une vidéo, donc pourquoi ça dérive de X ?]
+
+0:26:07.149,0:26:12.100
+Vous avez tout à fait raison et c’est l’enjeu de la prochaine diapositive.
+
+0:26:12.100,0:26:17.350
+Mais celle-ci est appelée l'auto-attention. Donc vous faites un travail rétrospectif.
+
+0:26:17.350,0:26:21.700
+Vous pensez dans votre tête : « je veux faire des lasagnes ». Donc je dois chercher
+
+0:26:21.700,0:26:28.389
+dans ma tête pour savoir quelles sont les recettes que je peux faire. Et puis je la trouve.
+
+0:26:28.389,0:26:37.540
+Donc tout est dans ma tête. Et vu que ma tête est X, les trois matrices viennent de ma tête et cela s'appelle l’auto-attention.
+
+0:26:37.540,0:26:40.840
+Sinon, si vous êtes un peu plus normal que moi,
+
+0:26:40.840,0:26:45.910
+vous regardez juste un livre de recettes et alors seule la question vient
+
+0:26:45.910,0:26:49.390
+de votre cerveau. Les clés et les valeurs viennent du livre.
+
+0:26:49.390,0:26:56.230
+Les clés et les valeurs, viennent d’ailleurs et c’est l'attention croisée.
+
+0:26:56.230,0:27:04.240
+Vous vérifiez votre requête contre tous ces clés et puis récupérer la chose finale.
+
+0:27:04.240,0:27:15.480
+La prochaine étape est le fait qu'une couche cachée est la combinaison linéaire des colonnes de la matrice V,
+
+0:27:15.480,0:27:22.860
+pondérées par ces coefficients alphas qui se trouvent à l'intérieur de mon a.
+
+0:27:22.860,0:27:29.130
+Donc c'est exactement la même chose que ce que nous avons vu avant.
+
+0:27:29.130,0:27:36.190
+Mais j’ai spécialisé. Au lieu d'utiliser tout le temps X transposée,
+
+0:27:36.190,0:27:40.240
+j’ai maintenant la requête, les clés et les valeurs. 
+
+0:27:40.240,0:27:46.410
+Requête d'un côté, les clés et les valeurs de l’autre.
+
+0:27:46.410,0:27:54.210
+[Etudiante :  hier [cf. cours 12] vous avez dit qu'il n'y a qu'une seule requête mais de multiples clés et valeurs donc ici
+
+0:27:54.700,0:28:03.170
+cela signifie qu'il n'y a qu'une seule requête pour un xi, un qi pour un xi mais il doit
+
+0:28:03.170,0:28:11.020
+interagir avec toutes les autres clés] Oui donc c'est exactement ce que nous avons fait. Merci pour le rappel.
+
+0:28:11.020,0:28:15.010
+Le point avec cette ligne, la dernière ligne que je vous montre ici,
+
+0:28:15.010,0:28:20.440
+vous avez un q. Et un q qui est une question, comment faire des lasagnes,
+
+0:28:20.440,0:28:25.270
+va être vérifiée avec tous les titres du livres. Donc une question
+
+0:28:25.270,0:28:30.520
+passe en revue tous les titres afin de trouver où le bon titre est.
+
+0:28:30.520,0:28:34.690
+Une question, comment faire des lasagnes, et vous vérifiez :
+
+0:28:34.690,0:28:39.260
+Comment faire une pizza, comment faire des pâtes, comment faire des tortellinis, comment faire un polpettone ?
+
+0:28:39.260,0:28:43.000
+Puis vous récupérez celui qui correspond. Vous avez une question, 
+
+0:28:43.000,0:28:52.750
+vous vérifiez vos nombreuses clés la valeur de celui qui correspond. Ou si vous avez deux scores élevés,
+
+0:28:52.750,0:28:59.770
+vous pouvez faire un mélange de recettes. Je ne sais pas à quel point cela s’interpole.
+
+0:28:59.770,0:29:07.310
+Est-ce que cela fait sens ? [Deux étudiants répondent en même temps et l’un laisse parler l’autre]
+
+0:29:07.940,0:29:16.610
+[Etudiante : que voulez-vous dire par deux recettes ?] Donc si je vérifie comment faire des lasagnes et dans mon livre j'ai
+
+0:29:16.610,0:29:22.450
+lasagne avec le « e » à la fin et ai aussi autre chose qui sonne similairement,
+
+0:29:22.450,0:29:27.160
+alors peut-être que si le mot que vous cherchez… Laissez-moi réfléchir à
+
+0:29:27.160,0:29:31.210
+un autre mot. Disons que je veux faire une pizza. Il y en a une autre
+
+0:29:31.210,0:29:38.460
+recette qui s'appelle pizzaiola [sauce tomate/ail/origan servant dans plusieurs recettes dans la cuisine italienne]
+
+0:29:38.570,0:29:46.900
+Mais si je cherche pizza, pizzaiola va avoir un score de correspondance plus élevé. Si je fais une pizza et prends l'argmax,
+
+0:29:46.900,0:29:50.860
+cela va bien marcher. Mais si je prends la softargmax, je vais avoir une
+
+0:29:50.860,0:29:55.360
+combinaison entre pizza et pizzaiola car elles sont similaires.
+
+0:29:55.360,0:30:00.250
+Donc vous avez une probabilité de masse venant de l'autre gars.
+
+0:30:00.250,0:30:08.130
+Lorsque vous récupérez les valeurs, elles seront une combinaison linéaire de ces colonnes multipliée par ces coefficients.
+
+0:30:08.800,0:30:13.420
+Si vous avez un « one-hot », vous n'avez qu'une seule valeur. Mais s'il y a
+
+0:30:13.420,0:30:20.370
+de multiples valeurs, comme une softargmax, vous avez plusieurs valeurs mélangées ensemble.
+
+0:30:20.680,0:30:29.380
+[Etudiante : vous dites que nous avons deux candidats très proches ayant une grande valeur disons pizza et pizzaiola
+
+0:30:29.380,0:30:35.560
+mais ici la requête q est unique] q est pizza.
+
+0:30:35.560,0:30:41.170
+Mais à l'intérieur de la clé, il y a deux recettes qui sont la pizza et la pizzaiola.
+
+0:30:41.170,0:30:46.350
+Ces deux-là sont très similaires. Donc le score est en partie similaire.
+
+0:30:46.350,0:30:51.460
+Donc chaque fois que vous faites la softargmax, vous n'obtenez pas 
+
+0:30:51.460,0:30:56.020
+exactement un seul score très élevé mais obtenez deux scores élevés.
+
+0:30:56.020,0:31:04.160
+Donc h qui est la combinaison linéaire de ces recettes, va être comme la moyenne de pizza et de pizzaiola.
+
+0:31:04.160,0:31:07.560
+[Etudiante : ok, c'est bon, ça fait sens, merci]
+
+0:31:07.560,0:31:13.980
+Il y avait une autre question. Non ? Peut-être devrions-nous passer à autre chose car
+
+0:31:13.980,0:31:22.530
+il nous reste 15 minutes. Encore une fois, combien de q avons-nous ? t. 
+
+0:31:22.530,0:31:25.320
+Donc de nombreuses requêtes. Ohhh attendez.
+
+0:31:25.320,0:31:30.320
+Qu’est bêta ? Bêta nous aimons le fixer à 1 sur la racine carrée de d.
+
+0:31:30.320,0:31:39.750
+Pourquoi ? Car si vous avez un vecteur avec que des 1 en 1D, la longueur de ce vecteur est de 1.
+
+0:31:39.750,0:31:45.360
+En 2D, la longueur de ce même vecteur est racine carrée de 2.
+
+0:31:45.360,0:31:50.160
+Le même vecteur en 3D est de longueur racine carrée de 3.
+
+0:31:50.800,0:32:00.150
+Donc si vous un vecteur en D dimensions, la magnitude augmente avec la racine carrée du nombre de dimensions.
+
+0:32:00.710,0:32:08.260
+Pour maintenir la température de la softargmax constante, nous devons
+
+0:32:08.260,0:32:16.400
+diviser par la racine carrée du nombre de dimensions. C’est un point technique, cela n’importe pas si vous ne l’avez pas.
+
+0:32:16.400,0:32:20.730
+A nouveau combien de requêtes avons-nous ?
+
+0:32:20.730,0:32:28.140
+Donc nous pouvons avoir t a. Puis la matrice A. Donc finalement vous avez
+
+0:32:28.140,0:32:33.420
+H qui est simplement la multiplication de ces valeurs par cette
+
+0:32:33.420,0:32:37.200
+matrice où les colonnes sont les composants du mélange
+
+0:32:37.200,0:32:47.600
+Et c’est à peu près tout sur l'attention croisée. [Etudiant : pourriez-vous juste dire pourquoi
+
+0:32:47.600,0:32:58.280
+q et k sont de même dimension mais pas v. Je m’attendais à ce que k et v soient de la même dimension et q d’une autre]
+
+0:32:58.130,0:33:03.960
+v est la recette de pizza. Elle fait 1 page.
+
+0:33:03.960,0:33:10.050
+Alors que q et k sont la question et le titre. Ils doivent matcher
+
+0:33:10.050,0:33:18.200
+car vous comparez le degré de correspondance entre les deux, à quel point ils sont alignés. 
+
+0:33:18.250,0:33:27.270
+Cela vient de ce truc ici. Donc chaque fois que je vérifie ma requête avec toutes les clés,
+
+0:33:27.270,0:33:32.640
+je fais la ligne par le vecteur et ils doivent avoir la même taille, la même longueur.
+
+0:33:32.640,0:33:37.200
+Sinon je ne peux pas multiplier. Donc vous vérifiez votre question par rapport à toutes
+
+0:33:37.200,0:33:46.390
+ces clés. Vous obtenez un score et en déduisez la recette qui peut être la vidéo YouTube entière ou n'importe quoi.
+
+0:33:46.920,0:33:53.210
+[Etudiant : ok, merci] J’ai faim.
+
+0:33:53.210,0:33:59.520
+Donc un détail d’implémentation. Par exemple pour rendre les choses plus rapides,
+
+0:33:59.520,0:34:04.980
+nous pouvons empiler tous ces W en un seul gros W.
+
+0:34:04.980,0:34:10.650
+Puis BOOM vous calculez tous les q, k et v en une itération.
+
+0:34:10.650,0:34:16.230
+Rien d'extraordinaire. Nous avons fait la même chose avant pour le RNN.
+
+0:34:16.230,0:34:25.330
+Nous empilions les x et les h et calculions ça avec la version empilée de W en haut à droite de la diapositive.
+
+0:34:25.620,0:34:33.300
+Donc rien de bien fantaisiste. Il y a quelque chose d'autre appelé têtes. 
+
+0:34:33.300,0:34:38.940
+Donc ceci peut représenter une tête. Mais nous pouvons avoir plusieurs têtes. Par exemple h têtes.
+
+0:34:38.940,0:34:47.610
+Donc si j'ai h têtes, j'aurai h q, h k et h v.
+
+0:34:47.610,0:34:51.600
+Donc vous vous retrouver avec une chose qui est h fois plus grande.
+
+0:34:51.600,0:35:01.880
+Mais vous pouvez toujours vous ramener à n'importe quelle dimension d si vous multipliez par une matrice Wh.
+
+0:35:01.880,0:35:12.600
+C’est une façon possible d’implémenter ce genre de choses.
+
+0:35:12.600,0:35:17.580
+Mais à nouveau c’est des détails. Donc passons enfin au transformer.
+
+0:35:17.580,0:35:24.170
+Donc à l'origine le transformer est composé de deux blocs : un encodeur et un décodeur.
+
+0:35:24.710,0:35:30.540
+Où avons-nous vu précédemment cette architecture encodeur-décodeur ?
+
+0:35:30.540,0:35:36.680
+[Etudiant : les auto-encodeurs] Absolument. Donc un petit récapitulatif sur les auto-encodeurs.
+
+0:35:36.680,0:35:42.490
+Pour les auto-encodeurs. Nous pouvons avoir le diagramme à gauche. Aujourd'hui, nous allons nous concentrer sur celui de droite.
+
+0:35:42.490,0:35:49.700
+Deux blocs : un encodeur et un décodeur. L'encodeur fait correspondre le x à la représentation cachée
+
+0:35:49.700,0:35:54.290
+puis le décodeur fait correspondre la représentation cachée avec l’entrée.
+
+0:35:54.290,0:35:58.540
+C’est les deux composantes principales de l’auto-encodeur.
+
+0:35:58.540,0:36:03.710
+Donc dans ce cas nous allons avoir quelque chose de plus ou moins similaire.
+
+0:36:03.710,0:36:09.140
+Voici l’encodeur du transformer, le bloc violet.
+
+0:36:09.140,0:36:15.270
+Donc dans ce gars nous avons l’auto-attention. Nous savons déjà ce que c’est.
+
+0:36:15.270,0:36:22.700
+Dans la partie supérieure nous allons exécuter une couche linéaire sur chaque composante.
+
+0:36:22.700,0:36:29.220
+Donc si vous pensez à une convolution avec un noyau de taille 1, vous appliquez en gros
+
+0:36:29.220,0:36:35.000
+la même couche linéaire à chaque élément dans l’ensemble.
+
+0:36:35.000,0:36:42.510
+Cela se fait appeler parfois « feed-forward », mais ce sera une feed-forward appliquée à chaque élément de l'ensemble.
+
+0:36:41.510,0:36:46.630
+Il s'agit donc en fait d'une convolution où le noyau est égal à 1.
+
+0:36:46.630,0:36:54.200
+Puis nous appliquons un module que nous pouvons appeler « Ad & Norm » après ces deux types.
+
+0:36:54.200,0:36:59.270
+Qu’est-ce que ce module ? C’est en gros une boîte qui a deux composantes :
+
+0:36:59.270,0:37:05.000
+une composante d'addition et ensuite une couche de normalisation.
+
+0:37:05.000,0:37:09.680
+Donc si nous connectons ce type ici à droite, vous allez obtenir
+
+0:37:09.680,0:37:15.000
+l’auto-attention avec une connexion résiduelle qui la contourne.
+
+0:37:15.000,0:37:19.400
+Puis couche de normalisation et il se passe la même pour l’autre en haut.
+
+0:37:19.400,0:37:24.530
+Donc la partie convolutive a aussi cette connexion résiduelle et la 
+
+0:37:24.530,0:37:29.900
+couche de normalisation. Donc comment cela fonctionne-t-il ?
+
+0:37:29.900,0:37:40.570
+Vous mettez l'ensemble des entrées en bas puis faites remonter et obtenez la représentation cachée à la sortie de l’encodeur.
+
+0:37:40.880,0:37:44.750
+Donc le hEnc. Rien de fou.
+
+0:37:44.750,0:37:50.300
+Je viens de mettre deux blocs. Nous avons vu l'auto-attention juste avant.
+
+0:37:50.300,0:37:54.220
+Vous savez comment marche une convolution 1D. 
+
+0:37:54.220,0:37:59.900
+Cela applique juste un perception multicouche à chaque composante de l’ensemble.
+
+0:37:59.900,0:38:04.550
+La normalisation vous aide avoir les gradients qui reviennent plus tard.
+
+0:38:04.550,0:38:09.100
+Et la connexion résiduelle rend tout cela plus doux.
+
+0:38:09.100,0:38:15.830
+Donc c'était l’encodeur. Quel est le décodeur dans ce cas ?
+
+0:38:15.830,0:38:21.590
+Alors laissez-moi nettoyer un peu. Je retire la boîte de l'encodeur,
+
+0:38:21.590,0:38:25.790
+supprime cette ligne, ainsi que les x en bas et la sortie finale.
+
+0:38:25.790,0:38:36.560
+Donc c'était l’encodeur. Maintenant je vais supprimer la connexion au centre et parler du décodeur.
+
+0:38:36.560,0:38:42.020
+Donc le décodeur est exactement comme l’encodeur mais je vais avoir
+
+0:38:42.020,0:38:47.390
+une attention croisée comme certains d'entre vous l'ont déjà mentionné.
+
+0:38:47.390,0:38:58.960
+Vous me demandiez pourquoi vous vérifiez ces clés de vous-même ? Cette attention croisée est connectée juste après ces modules de normalisation.
+
+0:38:58.960,0:39:06.330
+Bien sûr l'attention croisée obtient la représentation cachée de la dernière couche de l’encodeur. 
+
+0:39:06.330,0:39:11.350
+Puis vous avez la même chose. : l'addition et la normalisation que vous connectez.
+
+0:39:11.350,0:39:16.070
+Puis finalement vous le rebranchez. Donc nous avons un module supplémentaire.
+
+0:39:16.070,0:39:20.930
+Et ce sera mon décodeur. Donc le décodeur est comme l'encodeur mais a
+
+0:39:20.930,0:39:25.440
+ce module supplémentaire pris en sandwich entre. 
+
+0:39:25.440,0:39:31.190
+[Chat : pouvez-vous en dire plus sur l'attention croisée ?] L'attention croisée est exactement
+
+0:39:31.190,0:39:38.819
+l’auto-attention mais vous avez le fait que mes clés, comme ce x ici,
+
+0:39:38.819,0:39:47.699
+et ce gars-là, ne sont plus x mais mon h venant de l’encodeur.
+
+0:39:47.699,0:39:57.089
+C'est tout. Et c’est un ensemble.
+
+0:39:57.089,0:40:05.950
+L'ensemble des hi. Je ne peux pas écrire mieux avec la souris.
+
+0:40:05.950,0:40:16.869
+Donc c'est exactement la même chose mais j’ai remplacé les x par la représentation finale cachée de l’encodeur.
+
+0:40:16.869,0:40:20.109
+Ce type me fournir les valeurs et les clés.
+
+0:40:20.109,0:40:28.520
+[Chat : donc nous utilisons toujours le x original pour calculer la requête et ensuite vous utilisez le h pour calculer]
+
+0:40:28.520,0:40:35.859
+Donc celui-ci, vous allez obtenir le x pour calculer les
+
+0:40:35.859,0:40:40.630
+les requêtes ici. Ici je calcule les requêtes. Et cela me permet de
+
+0:40:40.630,0:40:47.349
+calculer les clés k et ensuite les valeurs. Donc comment ça marche ? Comment je peux entraîner ?
+
+0:40:47.349,0:40:56.400
+Qu’avons-nous en bas ? En bas, nous avons les sorties ŷ de l'itération précédente.
+
+0:40:53.210,0:41:02.320
+Donc vous avez une sortie là, la sortie du système. Peut-être qu’il y a 
+
+0:41:02.320,0:41:06.820
+une couche supplémentaire manquante à cet endroit. Puis d’une manière autorégressive,
+
+0:41:06.820,0:41:11.290
+vous obtenez cette sortie et la renvoyez. Il y a une couche supplémentaire
+
+0:41:11.290,0:41:15.640
+en plus au-dessus mais ça n'a pas d'importance. Je veux dire que ce n'est pas important.
+
+0:41:15.640,0:41:20.050
+Donc vous mettez ça en bas puis autorégressivement, vous produisez une séquence de sorties.
+
+0:41:20.050,0:41:26.640
+Chaque fois que vous avez une nouvelle entrée, celle-ci demande pour une autre requête.
+
+0:41:26.640,0:41:43.869
+Cette une autre requête va porter sur différentes valeurs de l’encodeur. Donc le codeur a résumé ce qu’est le contenu de mon jeu d'entrée d’ensemble.
+
+0:41:43.869,0:41:50.940
+Ici nous avons un ensemble d'entrées et puis la sortie de ce type est un ensemble de représentation cachée.
+
+0:41:50.940,0:42:02.050
+Puis vous avez le décodeur qui interroge ce qui est requis. Cela via ce q sur cet ensemble de représentations cachée de l’encodeur.
+
+0:42:02.050,0:42:09.930
+Et nous devons vraiment jeter un œil au notebook car nous il ne reste plus de beaucoup de temps.
+
+0:42:07.930,0:42:14.200
+Donc on importe des choses. Ici nous avons ici l'attention multi-têtes.
+
+0:42:14.200,0:42:18.869
+Comment cette attention multi-têtes fonctionne-t-elle ?
+
+0:42:18.869,0:42:30.950
+Dans la partie d’initialisation, nous avons ces trois matrices Wq, Wk, Wv qui permettent de faire tourner mon entrée.
+
+0:42:30.950,0:42:42.190
+Ensuite nous avons ça qui permet de fusionner les têtes à la fin. Donc comment ce « forward » fonctionne-t-il ?
+
+0:42:42.190,0:42:50.920
+Donc dans e « forward » vous avez une entrée X pour la requête, une entrée X pour les clés et une entrée X pour les valeurs.
+
+0:42:50.920,0:43:01.119
+Puis vous avez le Q, le K, et le V simplement la multiplication de mon entrée pour l’élément spécifique par cette matrice Wq.
+
+0:43:01.119,0:43:05.380
+Donc c'est la rotation de mon X. Vous avez Q, K et V.
+
+0:43:05.380,0:43:16.089
+Puis vous calculez ce « scalded_dot_product ». Le produit scalaire entre
+
+0:43:17.019,0:43:24.190
+la question et toutes les clés. Donc si nous montons ici.
+
+0:43:24.190,0:43:30.999
+Laissez-moi zoomer un peu. Une seconde.
+
+0:43:30.999,0:43:34.849
+Donc ici vous avez essentiellement les scores.
+
+0:43:34.849,0:43:42.880
+Nous divisons d’abord par la racine carrée de la dimension car nous avons dit auparavant que sinon les choses explosent.
+
+0:43:42.880,0:43:53.140
+Nous avons alors une multiplication matricielle entre une question et toutes les clés. Et à la fin nous appliquons la softargmax.
+
+0:43:53.140,0:43:03.150
+De sorte que nous puissions calculer les carrés. Désolé. Que nous pouvons calculer le coefficient de mélange. 
+
+0:44:03.150,0:44:12.099
+Puis finalement vous multipliez ces coefficients de mélange par la matrice V. Vous obtenez en gros le résultat final.
+
+0:44:12.099,0:44:18.910
+Et c'est à peu près tout. C’était l’auto-attention.
+
+0:44:18.910,0:44:25.000
+Enfin, puisque vous avez plusieurs têtes, nous allons fusionner le tout ensemble en utilisant ce Wh.  
+
+0:44:25.000,0:44:35.710
+C'était donc la première partie sur l’attention. Des questions sur cette attention ? Si vous avez suivi les diapositives, ceci est exactement la même chose.
+
+0:44:35.710,0:44:44.560
+Dites-moi si vous avez besoin que j'aille plus lentement sur cette partie. Puis la partie suivante… Alors qu’avons-nous besoin ?
+
+0:44:44.560,0:44:50.560
+Nous avons la partie sur l’attention, l’auto-attention.
+
+0:44:50.560,0:44:55.240
+Ceci est l’attention multi-têtes. Donc qu’essayons-nous de faire ?
+
+0:44:55.240,0:44:59.020
+Nous allons utiliser un encodeur pour classer des phrases.
+
+0:44:59.020,0:45:04.119
+Ces phrases sont des critiques de films classées comme positive ou négative.
+
+0:45:04.119,0:45:13.879
+Donc je vais juste utiliser l’encodeur et puis l’entraîner à effectuer une tâche de classification. Donc, de quoi avons-nous besoin pour l’encodeur ?
+
+0:45:13.880,0:45:18.790
+Si nous vérifions à partir de ces diapositives… Donc si nous vérifions ici,
+
+0:45:18.790,0:45:23.619
+de quoi avons-nous besoin pour l'encodeur ? L'encodeur a deux composantes :
+
+0:45:23.619,0:45:28.760
+l'auto-attention, dont nous venons de voir le code, et la convolution.
+
+0:45:28.760,0:45:32.260
+Ce MLP, perceptron multicouche, appliqué à chaque élément de l'ensemble.
+
+0:45:32.260,0:45:38.140
+Donc voyons où se trouve cette couche convolutive. Quelques vérifications…
+
+0:45:38.140,0:45:43.190
+Ce code sera en ligne d'ici la fin de la journée.
+
+0:45:43.190,0:45:52.120
+Donc il y a cette classe « EncoderLayer » ayant cette attention multi-têtes plus un ConvNet dont vous connaissez le fonctionnement.
+
+0:45:52.180,0:46:01.260
+Si vous regardez la documentation de PyTorch, vous pouvez savoir que les couches « nn.Linear » agissent comme une convolution 1D.
+
+0:46:01.260,0:46:05.830
+Donc vous pouvez utiliser un « nn.Linear » ici. Donc c'est comme un
+
+0:46:05.830,0:46:10.480
+ConvNet, vous avez une convolution, la ReLU puis la convolution finale.
+
+0:46:10.480,0:46:16.570
+Je pense que je ne suis pas en train d’aller trop vite car vous savez déjà 
+
+0:46:16.570,0:46:21.460
+comment faire un ConvNet. Puis nous avons les deux couches de normalisation. 
+
+0:46:21.460,0:46:27.770
+Donc d’abord vous avez une attention multi-têtes. C'est une auto-attention. On donne x, x et x pour toutes les entrées.
+
+0:46:26.770,0:46:33.130
+[Etudiant : une question stupide mais pourquoi l'appeler convolution 
+
+0:46:33.130,0:46:38.859
+puis ce que c'est juste un MLP ?] Ce n'est pas stupide, c'est très
+
+0:46:38.859,0:46:45.820
+important car une couche linéaire associe une certaine représentation
+
+0:46:45.820,0:46:51.490
+à une autre représentation. C’est appliqué à chaque élément de l'ensemble.
+
+0:46:51.490,0:46:57.550
+Donc j'ai ensemble d'entrées ici. Et par ici je vais avoir un
+
+0:46:57.550,0:47:07.210
+ensemble de représentation. Donc j'ai un ensemble ici. Puis j'applique la
+
+0:47:07.210,0:47:13.570
+couche linéaire à chaque élément séparément. Donc si vous appliquez la même
+
+0:47:13.570,0:47:18.150
+couche linéaire à chaque élément d'une séquence, c’est une convolution.
+
+0:47:18.150,0:47:26.850
+[Etudiant : ohhhh ok. Donc chaque représentation cachée passe par la convolution 1D séparément].
+
+0:47:26.850,0:47:36.500
+Oui. Dans le papier original, ils appellent cela une couche linéaire. Mais ce n’en ai pas une car c'est en fait une convolution.
+
+0:47:36.520,0:47:42.850
+Chaque fois que vous verrez… Chaque implémentation utilise une couche linéaire.
+
+0:47:42.850,0:47:48.490
+Ils l’appellent tous feed-forward, mais c’est une convolution. Cela fait du « broadcasting » [voir NumPy].
+
+0:47:48.490,0:47:55.300
+Mais c’est une convolution. De la même façon que nous disons softargmax au lieu de softmax car c’est erroné.
+
+0:47:55.320,0:48:05.460
+[Etudiant : ok merci] Très bonne question. J'ai presque fini.
+
+0:48:05.460,0:48:11.290
+Donc c'est mon ConvNet puis vous avez une attention multi-têtes et ce « CNN ».
+
+0:48:11.290,0:48:23.650
+Encore une fois, il s'agit simplement d'une convolution 1D où la taille du noyau est aussi de 1.
+
+0:48:23.650,0:48:28.990
+Et donc ça peut être implémenté par une « nn.Linear ». J’aurais pu écrire 
+
+0:48:28.990,0:48:33.700
+une « Conv1d » avec un noyau de taille 1. C’est implémenté exactement 
+
+0:48:33.700,0:48:38.440
+de la même manière si vous vérifiez le code sur PyTorch.
+
+0:48:38.440,0:48:42.190
+Mais donc c’est une convolution.
+
+0:48:42.190,0:48:46.720
+Donc vous avez l’attention multi-têtes et obtenez la première sortie.
+
+0:48:46.720,0:48:52.000
+Vous envoyez cette sortie et l'additionnez à l'entrée car nous avons une connexion résiduelle.
+
+0:48:52.000,0:48:57.020
+Vous envoyez ça à travers la couche de normalisation. Vous avez alors une sortie.
+
+0:48:57.020,0:49:00.440
+Désolé, la sortie est « out1 ».
+
+0:49:00.440,0:49:04.220
+Vous l’envoyez à l'intérieur de la convolution et obtenez ce type.
+
+0:49:04.220,0:49:09.790
+Vous le donnez avec une connexion résiduelle à la couche de normalisation.
+
+0:49:09.790,0:49:13.580
+Et donc ceci est l’encodeur terminé.
+
+0:49:13.580,0:49:20.420
+Quelque chose que je n'ai pas mentionné, c'est… Laissez-moi revenir ici.
+
+0:49:20.420,0:49:26.990
+Donc j'utilise cet encodeur pour faire une classification de phrases.
+
+0:49:26.990,0:49:31.930
+Chaque mot a un ordre. Si vous mettez un « bag-of-word » …
+
+0:49:31.930,0:49:37.050
+C'est en gros comme agir et travailler sur un « bag-of-word » mais
+
+0:49:37.050,0:49:42.980
+si vous souhaitez qu’il y ait un sens [dans les mots], vous devez envoyer d'index [des mots].
+
+0:49:42.980,0:49:48.740
+Donc le premier élément de l'ensemble est le premier élément [de la séquence].
+
+0:49:48.740,0:49:55.250
+Vous devez envoyer l’information concernant la position de l’élément.
+
+0:49:55.250,0:50:01.130
+Jusqu'ici l’encodeur dans ce transformer et cette attention est
+
+0:50:01.130,0:50:06.950
+complètement permutable car nous n'avons pas d'informations sur l'ordre.
+
+0:50:06.950,0:50:16.930
+Mais si je veux faire de la classification de phrases, peut-être que cela fait sens de prendre en compte l'ordre des mots. 
+
+0:50:16.970,0:50:25.070
+Nous pouvons donc ajouter des informations sur la position. Mais là encore, ce n'est pas important.
+
+0:50:29.570,0:50:35.450
+Donc j'ai mon encodeur qui enchâsse l'entrée, puis il a plusieurs couches de l'encodeur.
+
+0:50:35.450,0:50:41.960
+Ici je vous montre… Oh où suis-je parti. Ok. Donc c'est juste un encodeur.
+
+0:50:41.960,0:50:47.870
+Mais comme nous faisons des réseaux profonds, vous pouvez avoir plusieurs encodeurs.
+
+0:50:47.870,0:50:54.870
+Un réseau profond. Chacun d'entre eux est un encodeur.
+
+0:50:54.870,0:51:02.060
+Donc vous pouvez empiler plusieurs encodeurs pour rendre votre réseau plus puissant.
+
+0:51:02.060,0:51:07.160
+Donc ici vous avez comme une liste pour un certain nombre de couches auxquelles vous ajoutez plusieurs encodeurs.
+
+0:51:07.160,0:51:17.020
+Puis nous entraînons sur le jeu de données IMDB qui contient les critiques de films.
+
+0:51:17.090,0:51:22.970
+Puis nous devons déterminer si c'est un bon ou un mauvais film.
+
+0:51:22.970,0:51:27.110
+Et c'est tout. Donc nous entraînons ce gros gars.
+
+0:51:27.110,0:51:34.260
+Je passe la boucle d’entraînement car c’est exactement la même boucle que nous avons vu tant de fois.
+
+0:51:34.260,0:51:39.260
+Vous obtenez une précision qui est au début de 54.99%
+
+0:51:39.260,0:51:50.000
+car il ne sait pas mieux. Puis, à mesure que vous entraînez, cela monte jusqu’à 92.5% et cela commence à surentraîner un petit peu.
+
+0:51:50.000,0:51:56.730
+La précision de test est de 83%. Quelque chose sur laquelle vous voulez vraiment payer attention
+
+0:51:56.730,0:52:03.920
+est le fait que quand vous faites de la classification de phrases avec un RNN,
+
+0:52:03.920,0:52:08.150
+vous devez envoyer plusieurs fois. Vous devez envoyer le premier mot à l'intérieur,
+
+0:52:08.150,0:52:13.700
+puis envoyer le deuxième mot, etc. C'est un ensemble séquentiel d'opérations.
+
+0:52:13.700,0:52:18.200
+Alors que dans ce cas, dans ces mécanismes d’attention, il n'y a pas
+
+0:52:18.200,0:52:23.060
+opération séquentielle. Tout est calculé en une fois.
+
+0:52:23.060,0:52:29.810
+Ici, vous obtenez cette matrice H finale, qui est la représentation de tous les éléments
+
+0:52:29.810,0:52:35.290
+dans ma phrase d’un coup. C’est calculer en une fois. Il n'y a plus de
+
+0:52:35.290,0:52:40.930
+boucle temporelle. Il n'y a plus de temps d'attente. C'est comme un boom immédiat.
+
+0:52:40.930,0:52:47.000
+Cela vous permet de paralléliser énormément car c'est juste une multiplication matricielle.
+
+0:52:47.000,0:52:52.400
+Donc c'est très facile de paralléliser. Une chose de plus à remarquer est…
+
+0:52:52.400,0:53:01.190
+Où est cette matrice… Oh ok.
+
+0:53:01.190,0:53:07.820
+Ce gars ici est très dangereux. t est le nombre de titres.
+
+0:53:07.820,0:53:13.130
+Donc mon livre de recettes contient des milliers de recettes
+
+0:53:13.130,0:53:16.880
+car c’est le livre « Les milles recettes d’Alfredo ».
+
+0:53:16.880,0:53:21.260
+Quelle est la taille de cette matrice ? 1000 par 1000.
+
+0:53:21.260,0:53:28.340
+1 000 000, c’est énorme. Vous pouvez donc voir clairement ici le fait
+
+0:53:28.340,0:53:34.850
+que si vous avez beaucoup d'index… beaucoup de clés, ce truc commence
+
+0:53:34.850,0:53:39.230
+à exploser assez rapidement. Donc il faut faire attention à cela.
+
+0:53:39.230,0:53:44.390
+Il y a différentes façons de gérer cela. Par exemple vous pouvez découper
+
+0:53:44.390,0:53:49.990
+en deux et faire des choses. Mais encore une fois, ces des détails d’implémentation.
+
+0:53:49.990,0:53:54.920
+On a dépassé de 10 minutes. Je suis là pour vous répondre à toutes sortes de questions
+
+0:53:54.920,0:53:59.270
+mais je pense que nous avons réussi à parcourir le notebook d’une manière correcte.
+
+0:53:59.270,0:54:13.100
+Questions ? [Etudiant : j’ai deux questions. Dans une tête d’attention vous
+
+0:54:13.100,0:54:21.830
+n'utilisez qu'une seule matrice, une matrice de pondération, pour la requête, la clé et la valeur ?]
+
+0:54:21.830,0:54:27.500
+Oui. Puis on colle toutes v finales ensemble et on peut réduire.
+
+0:54:27.500,0:54:36.560
+Donc à la fin, j’ai hd, la dimension de v puis je peux utiliser cette matrice ici
+
+0:54:36.560,0:54:41.040
+pour tout réduire à la dimension d. C'est UNE façon de faire.
+
+0:54:41.040,0:54:48.710
+[Etudiant : j’ai deux questions. L'attention multi-têtes est essentiellement l'utilisation de plusieurs
+
+0:54:48.710,0:54:54.890
+matrices de poids qui ne partagent pas [Bruit aigüe]] Quelque chose vient de faire un bruit,
+
+0:54:54.890,0:55:01.100
+mais oui, l'attention multi-têtes signifie que vous avez de multiples requêtes pour la même entrée.
+
+0:55:01.100,0:55:06.110
+Cela vous permet ensuite d'avoir plusieurs questions sur le même tir.
+
+0:55:06.110,0:55:11.170
+Un exemple : vous aviez faim. Une question serait : comment je peux faire des lasagnes ?
+
+0:55:11.170,0:55:14.300
+Mais vous savez que vous n'avez pas de viande hachée chez vous.
+
+0:55:14.300,0:55:19.640
+Donc une deuxième question serait : puis-je faire un plat végétarien ?
+
+0:55:19.640,0:55:24.020
+Etant donné que vous avez toujours faim, vous pouvez vous poser différentes questions.
+
+0:55:24.020,0:55:29.700
+[Ok. Et pouvez-vous aller à la diapositive sur la structure de l'encodeur/décodeur utilisant
+
+0:55:29.700,0:55:38.100
+l’attention croisée ?] Oui. [Ok. Donc l'entrée à la première auto-attention 
+
+0:55:38.100,0:55:44.520
+est la façon dont vous calculez la requête, dans ce cas, Wq fois xi.
+
+0:55:44.520,0:55:50.100
+Disons que qi est égal à ça] Donc dans l'auto-attention ? [Oui].
+
+0:55:50.100,0:56:02.130
+Dans l'auto-attention tous ces q, k et v viennent du ŷ au lieu de x. Vous voulez remplacer ce x par ce ŷ.
+
+0:56:02.130,0:56:06.030
+[Etudiant : désolé, quel est le ŷ ?] ŷ est…
+
+0:56:06.030,0:56:12.060
+Donc chaque fois que vous entraînez ce système ici, vous prédisez le premier mot… 
+
+0:56:12.060,0:56:16.710
+Ah ! Je ne vous l’ai même pas dit. Vous avez raison.
+
+0:56:16.710,0:56:22.530
+Ce système est donc entraîné pour faire de la traduction. Vous mettez une phrase en entrée
+
+0:56:22.530,0:56:27.510
+dans une langue, « I’m hungry » [J’ai faim] puis vous mettez l'autre
+
+0:56:27.510,0:56:33.180
+langue comme l'italien par exemple : « Ho fame ».
+
+0:56:33.180,0:56:47.320
+Vous donnez ici « I’m hungry », vous en avez sa représentation et après un passage dans le système, le premier mot qui va sortir ici en Italien est :
+
+0:56:47.160,0:57:00.030 
+« Ho ». Vous mettez « Ho » en bas ici et forcez le système à sortir « fame ». Je vais l’écrire.
+
+0:57:00.030,0:57:07.680
+[Etudiant : ok, donc il s'occupe de sa propre sortie de la version traduite de…]
+
+0:57:07.680,0:57:14.520
+Disons « A cat » en anglais [un chat] et vous avez en italien « Un gatto ».
+
+0:57:14.520,0:57:25.350
+Donc d'abord vous avez « A cat » qui va à l'intérieur de l'encodeur qui
+
+0:57:25.350,0:57:30.330
+crache ce type ici. Il y a un h associé à chacune de ces entrées.
+
+0:57:30.330,0:57:35.910
+Puis vous mettez ce truc à l’intérieur ici.
+
+0:57:35.910,0:57:42.430
+Au début vous allez mettre un grand 0 ici et ce truc va sortir « Un » qui est le « A ».
+
+0:57:42.430,0:57:51.640
+Vous mettez le « Un » ici et puis ce gars va sortir « gatto ». Puis vous mettez « gatto » en bas et le gars va dire « Terminé ».
+
+0:57:51.640,0:58:00.579
+Vous êtes arrivés à la fin. [Etudiant : ok]
+
+0:58:00.579,0:58:06.280
+Chaque fois vous obtenez une entrée différente ici en bas. Le décodeur peut décider
+
+0:58:06.280,0:58:11.470
+d'examiner différentes composantes de ces huit encodeurs. Cela fait sens ?
+
+0:58:11.470,0:58:18.280
+[Oui. Et que va dans le module d’attention croisée dans ce cas ?]
+
+0:58:18.280,0:58:23.829
+Ce module prend la sortie du module « Add, Norm ».
+
+0:58:23.829,0:58:31.930
+Donc la sortie de ce « Add, Norm » va ici, pour le q, la requête de
+
+0:58:31.930,0:58:46.890
+l'attention croisée et puis ça prend aussi les valeurs et les clés de l’encodeur. [Etudiant : ok, merci]
+
+0:58:47.470,0:58:56.730
+Vous avez parlé de deux questions. [Etudiant : c’était la deuxième. La première portait sur le nombre de matrices de poids] Ah oui !
+
+0:58:56.730,0:59:01.150
+[Etudiant : merci] J'espère que c'était un peu plus clair qu’hier.
+
+0:59:01.150,0:59:05.670
+mais j'ai encore remarqué que c'était assez dense aujourd’hui.
+
+0:59:05.670,0:59:11.599
+[Etudiant : j’étais juste un peu confus sur ce à quoi les cellules se réfèrent et ce que les croix renvoient].
+
+0:59:10.599,0:59:22.329
+Oui, oui oui. D’autres questions ? [Etudiant : dans cet exemple du Cat/Gatto, avez dit 
+
+0:59:22.329,0:59:29.050
+qu'avec le décodeur, vous obtenez une certaine représentation et la passez
+
+0:59:29.050,0:59:40.119
+comme un y, cela me semble être une sorte de récurrence. C’est le cas ?]
+
+0:59:40.119,0:59:45.230
+C’est ce qu'on appelle l'autorégression. C’est pour générer du texte.
+
+0:59:45.230,0:59:52.890
+Donc pour générer du texte vous devez générer la première sortie, puis la remettre afin d’obtenir la deuxième.
+
+0:59:52.329,0:59:57.000
+Donc l’encodeur n'a pas d'autorégression. Il génère juste ce hEnc.
+
+0:59:56.859,1:00:09.849
+Le décodeur lui génère un mot à la fois de manière autorégressive. Donc le décodeur est un modèle génératif.
+
+1:00:09.849,1:00:15.099
+[Etudiant : mais entraînez l’encodeur et le décodeur d’un seul coup 
+
+1:00:15.099,1:00:21.160
+quand vous entraînez ce modèle ?] Oui. [Donc comment entraîner si
+
+1:00:21.160,1:00:26.059
+c’est autorégressif  et qu'une étape dépend de l'étape précédente ?]
+
+1:00:26.059,1:00:31.609
+[Aishwarya : l’entraînement n’est pas autorégressif, seulement l’inférence] 
+
+1:00:31.609,1:00:36.349
+[Etudiant : ah donc que l’inférence] [Aishwarya : oui il y a des masques.
+
+1:00:36.349,1:00:43.099
+On masque le pas de temps futur pour ne pas le montrer. Si tu essaies
+
+1:00:43.099,1:00:51.180
+de le faire pour le premier mot, cela reçoit seulement le premier et rien d’autres, comme un masque sur le futur]
+
+1:00:51.180,1:01:00.160
+[Ok, merci, intéressant] [Etudiant : dans l’exemple du « Cat »,
+
+1:01:00.160,1:01:05.940
+le q dans ce cas serait un mot italien, comme « un »]
+
+1:01:03.940,1:01:15.200
+Oui ici en haut. [Ok, puis cela descend, on fait passer et le q va dans l’attention croisée. 
+
+1:01:15.200,1:01:31.829
+Et à ce moment-là, k est la clé pour le mot anglais, et la valeur vient aussi de la représentation anglaise.
+
+1:01:32.349,1:01:38.309
+Donc comment on se retrouve avec un mot italien à la fin ?] Bonne question.
+
+1:01:38.309,1:01:46.109
+Vous avez empilé plusieurs de ces modules et d'une manière ou d'une autre la magie opère.
+
+1:01:46.289,1:01:52.599
+Les valeurs et les clés viennent de l’anglais, mais là encore…
+
+1:01:52.599,1:01:57.190
+Quand vous entraînez ce système, vous vous retrouverez avec des représentations qui sont
+
+1:01:57.190,1:02:02.019
+fondamentalement agnostiques sur le plan linguistique. Donc vous avez d'un 
+
+1:02:02.019,1:02:06.910
+côté l'anglais de l'autre côté l'italien. Mais au milieu quand vous avez
+
+1:02:06.910,1:02:11.470
+ce genre d’enchâssement, on peut supposer qu'il s'agit d'un langage agnostique.
+
+1:02:11.470,1:02:16.510
+Donc la question va juste comprendre : « Hé ce mot italien cherche
+
+1:02:16.510,1:02:26.890
+quelque chose qui ressemble à ceci ». Quels sont les enchâssements correspondant à ma question spécifique ?
+
+1:02:26.920,1:02:30.370
+Je pense que cela pourrait être une interprétation comme ça.
+
+1:02:30.370,1:02:35.710
+Vous avez l’anglais en bas et en passant dans l’encodeur vous enlevez la
+
+1:02:35.710,1:02:41.740
+spécificité de la langue. Puis vous réutilisez en quelque sorte ce genre d’encodeur.
+
+1:02:41.740,1:02:47.560
+Je suppose. Je veux dire, c'est similaire à la façon dont cela fonctionne dans l’encodeur-décodeur RNN.
+
+1:02:47.560,1:02:53.200
+Vous avez un encodeur qui encode une phrase entière et puis vous pouvez
+
+1:02:53.200,1:02:59.920
+avoir comme une représentation de cette phrase ne dépendant plus de la langue.
+
+1:03:00.040,1:03:06.190
+Et après être passé dans le RNN, vous avez comme un décodeur qui soit
+
+1:03:06.190,1:03:09.520
+utilise cette représentation finale ou vous pouvez avoir une attention qui
+
+1:03:09.520,1:03:17.200
+regarde des étapes spécifiques de temps dans le passé.
+
+1:03:17.200,1:03:32.000
+Cela fait partie de la NTM : neural translation machine [traduction automatique]
+
+1:03:32.000,1:03:38.999
+[Etudiant : désolé, mais une dernière question] Ai-je répondu à votre question précédente ?
+
+1:03:38.999,1:03:44.080
+Je veux dire que c’est mon intuition. C'est comme si l’enchâssement est
+
+1:03:44.080,1:03:49.930
+le hEnc et qu’il dépouille l’information concernant la langue spécifique.
+
+1:03:49.930,1:03:55.480
+Ce ne sont que des concepts. Ce ne sont que la représentation de
+
+1:03:55.480,1:04:00.540
+concept sans qu’une langue y soit attachée. C’est mon opinion.
+
+1:04:00.540,1:04:07.180
+[Etudiant : dans ce sens, on dirait que q a un enchâssement sur lui même
+
+1:04:07.180,1:04:11.050
+et c’est ensuite comparé avec le k] C’est correct.
+
+1:04:11.050,1:04:16.390
+Et le q dans ce cas vient de votre langue cible.
+
+1:04:16.390,1:04:21.590
+[Etudiant : ok, cela fait sens, merci]
+
+1:04:21.590,1:04:28.210
+Je vous recommande vivement de consulter l’article de blog de mon ami
+
+1:04:28.210,1:04:35.360
+qui est appelé le « Transformer illustré ». Il est très très bien écrit.
+
+1:04:35.360,1:04:40.250
+Il donne peut-être un peu plus de contexte pour la partie linguistique.
+
+1:04:40.250,1:04:45.350
+J'essaie de ne pas avoir la langue dans cette présentation
+
+1:04:45.350,1:04:49.070
+car vous pouvez utiliser ce transformer pour tout type de données.
+
+1:04:49.070,1:04:54.860
+Cela associe en gros des ensembles à des ensembles. Mais là encore, peut-être que cet exemple
+
+1:04:54.860,1:05:01.310
+était juste très adapté à la traduction. Mais cela n’a pas besoin d’être de la traduction.
+
+1:05:01.310,1:05:07.640
+Vous pouvez avoir des transformers pour créer des modèles générateurs pixel par pixel.
+
+1:05:07.640,1:05:13.220
+Vous pouvez dessiner des choses avec cette chose, avec cette architecture.
+
+1:05:13.220,1:05:17.620
+[Etudiant : est-ce « The Illustrated Transformer » par Jay Alammar ?] Oui, c’est lui.
+
+1:05:17.620,1:05:23.840
+J'aime vraiment sa façon de voir les choses. Mais voici mes matrices transposées.
+
+1:05:23.840,1:05:29.930
+C'est comme si cela me dérangeait. Je pense que c'est moi qui ai transposé les matrices.
+
+1:05:29.930,1:05:36.710
+Tout le monde les a à l'horizontale mais je pense que les maths sont plus belles avec les verticales.
+
+1:05:36.710,1:05:43.940
+Ok plus de questions ? [Etudiant : vous avez dit que les représentations de l’encodeur
+
+1:05:43.940,1:05:56.210
+sont agnostiques concernant le langage. Cela ne suppose pas une certaine 
+similarité entre les deux langues de la traduction ? 
+
+1:05:56.210,1:06:03.140
+Comme par exemple le fait qu’il y a plus de similarité entre l’anglais et le français qu’entre l’anglais et le chinois.
+
+1:06:03.140,1:06:12.400
+Pas seulement en termes de données disponibles mais aussi en termes de grammaire et de syntaxe entre les deux langues.
+
+1:06:12.400,1:06:22.560
+Donc est-ce que cela marche aussi bien entre deux langues moins similaires ou à quel point cela fonctionne moins bien ? 
+
+1:06:22.570,1:06:30.060
+[Aishwarya : les langues ayant peu de données disponibles ou les langues avec peu de similarité sont 
+
+1:06:26.180,1:06:30.060
+un problème pour tout type de modèles. Les transformers où les autres modèles
+
+1:06:30.060,1:06:40.290
+devraient pouvoir le résoudre. Toutes les catégories de modèles ont des problèmes quand la langue cible est trop différente de la langue source] 
+
+1:06:40.980,1:06:47.360
+[Etudiant : juste par curiosité, y a-t-il des approches pour réduire cet écart ?]
+
+1:06:47.360,1:06:51.950
+[Aishwarya : oui mais c’est un problème ouvert]
+
+1:06:51.950,1:06:55.950
+D’autres questions pour moi ou pour Aishwarya ?
+
+1:06:55.950,1:07:03.750
+Des questions de langue pour elle et peut être des questions de contenu pour moi.
+
+1:07:03.750,1:07:11.280
+[Etudiante : est-ce que vous pouvez revenir à la diapositive sur le décodeur ? Merci.
+
+1:07:11.280,1:07:18.080
+J’ai compris que dans l'attention croisée nous avons l'attention avec la représentation cachée de l’encodeur.
+
+1:07:18.080,1:07:22.620
+Je suis un peu confuse en ce qui concerne l'auto-attention.
+
+1:07:22.620,1:07:28.440
+Ici l’auto-attention ne se porte que sur le y car nous ne pouvons pas voir les mots dans le futur.
+
+1:07:28.440,1:07:34.770
+Quand j’entre à un temps t, que fais l’auto-attention ?
+
+1:07:34.770,1:07:41.910
+Est-ce qu’elle porte une attention sur tous les y entrés avant le temps t ?
+
+1:07:41.910,1:07:47.620
+Il faut que je précise des choses, je pense que j’ai fait un mauvais travail d’explication.
+
+1:07:47.620,1:07:57.810
+Donc il y a deux parties. La première est l’entraînement. Durant celui-ci
+vous avez toute la séquence mais vous ne pouvez pas regarder la sortie future. 
+
+1:07:57.810,1:08:02.910
+Donc le premier y en bas ne peut pas regarder le suivant.
+
+1:08:02.910,1:08:07.020
+Le deuxième y ne peut pas regarder le troisième et etc.
+
+1:08:07.020,1:08:12.560
+Donc le premier y ne peut pas regarder l'ensemble des y futurs. Mais le y futur peut regarder les y précédents.
+
+1:08:12.560,1:08:18.570
+Car vous pouvez toujours savoir ce que vous avez sorti mais pas ce que vous pourriez produire à l'avenir. 
+
+1:08:18.570,1:08:24.630
+Donc chaque fois que vous entraînez ce système, vous devez aussi masquer les informations futures que vous fournissez au système.
+
+1:08:24.630,1:08:34.290
+Donc ici vous allez avoir l'ensemble qui entre et ce premier module du décodeur génère la question.
+
+1:08:34.290,1:08:39.000
+Et cette question descend ici et va permettre de retrouver
+
+1:08:39.000,1:08:43.560
+les informations provenant de la phrase encodée.
+
+1:08:43.560,1:08:49.020
+Et la phrase encodée est en quelque sorte convertie dans l'autre langue.
+
+1:08:49.020,1:08:58.120
+Et tout cela se fait en un seul passage. Boom. Chaque fois que vous faites une inférence allez commencer par une représentation
+
+1:08:58.200,1:09:03.200
+spécifique venant de l’encodeur. Vous n’avez pas de valeur initiale, donc vous obtenez comme un 0.
+
+1:09:03.200,1:09:07.750
+Puis vous allez poser une ancienne question : que sera le premier mot
+
+1:09:07.750,1:09:11.750
+avec lequel je devrais commencer ? Puis celui-ci va vous dire que vous 
+
+1:09:11.750,1:09:16.819
+devriez commencer par la traduction de « A ». Vous passez dans tout ça et obtenez « Un ».
+
+1:09:16.819,1:09:23.760
+Puis vous placez ce « Un » dans l’entrée. Et étant donné que maintenant
+
+1:09:23.760,1:09:28.710
+le réseau sait que « Oh j’ai déjà sorti « Un » », il va poser une nouvelle 
+
+1:09:28.710,1:09:35.839
+question qui sera : « quel sera mon prochain mot sachant que j’ai entré « Un » » ?
+
+1:09:35.839,1:09:42.839
+Donc cette deuxième va recevoir : « Oh, tu devrais parler du « cat » ».  
+
+1:09:42.839,1:09:47.640
+Le « cat » est cette représentation et celle-ci est donc convertie ici dans
+
+1:09:47.640,1:09:54.690
+le « gatto » correspondant, c'est-à-dire « cat » en italien. Puis vous 
+
+1:09:54.690,1:10:02.700
+mettez « gatto » en bas et c’est le même processus. Cela vous dit que vous êtes arrivés à la fin de la phrase et avez un point.
+
+1:10:02.720,1:10:14.130
+[Etudiante : « gatto a-t-il une attention sur lui-même ?] [Aishwarya : Il peut voir toutes les étapes précédentes]
+
+1:10:14.130,1:10:19.560
+[Par voir, cela veut dire porter attention ?] [Aishwarya : oui, toutes les
+
+1:10:19.560,1:10:25.680
+étapes temporelles avant l’étape temporelle actuelle] [Ok merci]
+
+1:10:25.680,1:10:30.780
+Je vous recommande de regarder les animations de distill.pub
+
+1:10:30.300,1:10:39.420
+Ils ont un article sur l'attention où ils montrent comment chaque mot regarde les autres mots.
+
+1:10:39.420,1:10:48.470
+Par exemple si vous dites « mon trophée ne rentre pas dans mon bagage
+
+1:10:48.470,1:10:55.890
+car il est trop grand », je suppose que c’est le trophée qui est trop grand.
+
+1:10:55.890,1:10:59.760
+Mais si vous dites « mon trophée ne rentre pas dans mon bagage
+
+1:10:59.760,1:11:04.620
+car il est trop petit, « le petit » porte à présent sur le bagage.
+
+1:11:04.620,1:11:09.510
+Car s’il est trop petit, vous ne pouvez rien mettre dedans.
+
+1:11:09.510,1:11:14.100
+Donc si vous vérifiez la phrase, c’est la même. Seul l’adjectif final change.
+
+1:11:14.100,1:11:23.380
+Et en fonction de l’adjectif, on regarde alors soit le trophée, soit le bagage.
+
+1:11:23.760,1:11:27.420
+Donc je recommande de regarder cet article de distill.pub où ils
+
+1:11:27.420,1:11:31.850
+vous donnent de beaux visuels sur la façon dont ces attentions vérifient
+
+1:11:31.850,1:11:37.410
+différentes parties d'une phrase. Ces phrases ont un nom mais 
+
+1:11:37.410,1:11:45.050
+j’ai oublié le nom, peut être que Aishwarya sais. [Aishwarya : les « Winograd Schema Challenge » ?] Oui oui oui, Winograd Schema.
+
+1:11:45.090,1:11:48.989
+[Etudiant : pouvez-vous nous envoyer ce lien ou au moins nous le nom de 
+
+1:11:48.989,1:11:54.890
+distill.pub ?] Distill.pub c'est de mon ami Chris, Christopher Olah.
+
+1:11:54.890,1:12:01.920
+Il était à Google Brain et est maintenant à OpenAI.
+
+1:12:01.920,1:12:06.090
+Il sponsorise son propre site qui est en fait en gros un journal en ligne
+
+1:12:06.090,1:12:13.739
+où vous avez des visualisations très mignonnes. Donc je fais des vidéos
+
+1:12:13.739,1:12:19.770
+et des présentations, lui fait des articles interactifs. Je recommande
+
+1:12:19.770,1:12:26.960
+vraiment de tout lire ce qu’il y a dessus j'aime vraiment. Oui, j’ai de bons amis sur internet.
+
+1:12:26.960,1:12:34.950
+Plus de questions ? Je pense que cela aurait dû être étalé sur deux cours.
+C’est plutôt dense.
+
+1:12:34.950,1:12:40.380
+[Chat : Aishwarya, avez-vous une idée de ce que fait le Reformer ?]
+
+1:12:40.380,1:12:44.910
+Vous pouvez voir le Reformer sur un blog dont j’ai oublié le nom.
+
+1:12:44.910,1:12:53.489
+[Aishwarya : le Reformer traite des séquences plus longues.
+
+1:12:53.489,1:12:58.140
+Les modèles actuels n’étant en mesure de traiter plus de 512 jetons.
+
+1:12:58.140,1:13:05.190
+Le Reformer fait de l'attention via LSH]
+
+1:13:05.190,1:13:15.040
+Le problème des longues séquences vient d’ici, car celui-là explose [quadratiquement].
+
+1:13:15.040,1:13:25.020
+Il y a un article de blog d’une fille dont j'ai oublié le nom… Lilian [Weng] ! Lilian a fait un bel article
+
+1:13:25.020,1:13:31.100
+il y a deux/trois jours qui s'appelle « The Transformers Family ».
+
+1:13:31.100,1:13:41.850
+Il y a quelques erreurs dans l’article mais je pense que c'est bon.
+
+1:13:41.850,1:13:48.150
+D’autres questions ou je peux aller préparer le dîner ? [Etudiant : pouvez-vous redire
+
+1:13:48.150,1:13:56.860
+le titre de la de distill.pub ?] Ok. Laissez-moi voir, je ne sais plus exactement.
+
+1:13:56.860,1:14:07.260
+Ok donc c'est Jay, le gars supercool. Et l’article… Celui-ci ! Cette image vient de distill.pub si je ne me trompe pas.
+
+1:14:07.260,1:14:15.090
+Donc la chose à laquelle je faisais référence est celle-ci.
+
+1:14:15.090,1:14:20.820
+Cette illustration, image du « The Illustrated Transformer ».
+
+1:14:20.820,1:14:25.890
+Et je crois que cela vient de distill.pub de Christopher Olah.
+
+1:14:25.890,1:14:34.520
+Donc l'autre site est distill.pub. Ouais voilà.
+
+1:14:34.520,1:14:53.090
+Donc ici vous avez l’attention.
+
+1:14:53.290,1:14:58.189
+Je crois que cela vient de là. Il parle de l'attention dur et de l’attention douce.
+
+1:15:04.100,1:15:13.400
+Euh peut-être que j’ai menti. Je parlais de cette photo ici.
+
+1:15:13.400,1:15:17.060
+Je pensais que ça venait de distill.pub mais je me suis peut-être trompé.
+
+1:15:17.060,1:15:23.090
+C’est l’image dont je parlais. Cela porte l’attention sur plusieurs mots.  
+
+1:15:23.090,1:15:30.700
+« The animal didn’t cross the street because it was too tired » [L’animal n’a pas traversé la rue parce qu'il était trop fatigué].
+
+1:15:30.700,1:15:34.199
+Puis vous avez ici « it » qui se réfère à « The animal ».
+
+1:15:34.199,1:15:38.120
+Si on dit « The animal didn’t cross the street because it was too wide »
+
+1:15:38.120,1:15:43.250
+Donc « wided » [large] à la place de « tired ». « it » se réfère alors à « the street ».
+
+1:15:43.250,1:15:47.840
+« It » peut donc se référer soit à « animal » ou « street » mais vous 
+
+1:15:47.840,1:15:54.320
+obtenez un score plus élevé ici. Le produit scalaire a un score plus élevé dans cette région.
+
+1:15:54.320,1:15:58.739
+Vous avez encore besoin de moi ?
+
+1:15:58.739,1:16:06.059
+Non ? Ok. Bye bye.
+
+1:16:06.059,1:16:12.960
+Nous avons donc fini. C'était une leçon assez importante.
+
+1:16:12.960,1:16:15.719
+Encore une fois, comment tirer le meilleur parti de cette leçon ?
+
+1:16:15.719,1:16:20.789
+Compréhension. Quelque chose n'était pas claire ? J'ai fait un mauvais travail, demandez-moi
+
+1:16:20.789,1:16:26.309
+quoi que ce soit dans la section « Commentaires » ci-dessous. Nouvelles. Vous pouvez trouver tout
+
+1:16:26.309,1:16:32.820
+ce que je fais et j'enseigne sur Twitter à @alfcnz. Mises à jour.
+
+1:16:32.820,1:16:36.539
+Si vous vous abonnez à cette chaîne YouTube, vous aurez les dernières vidéos
+
+1:16:36.539,1:16:41.730
+dès que je les mettrai en ligne. Si vous aimez mon travail et cette vidéo en
+
+1:16:41.730,1:16:46.050
+en particulier, il suffit d'appuyer sur le bouton « J’aime ». Cette vidéo a une retranscription en anglais
+
+1:16:46.050,1:16:52.860
+sur le site web du cours où tous les titres sont liés aux sections de cette vidéo.
+
+1:16:52.860,1:16:57.179
+Parli italiano ? ¿ Hablas español ? 你說普通話嗎 ?
+
+1:16:57.179,1:17:01.590
+Vous parlez coréen ? Vous parlez turc ? Nous avons toutes ces traductions
+
+1:17:01.590,1:17:05.429
+disponibles sur le site web du cours. Alors allez-y et consultez.
+
+1:17:05.429,1:17:09.239
+Si vous souhaitez disposer de votre propre langue, n'hésitez pas à me contacte
+
+1:17:09.239,1:17:14.670
+de sorte que nous puissions en commencer la traduction. Enfin vous devriez
+
+1:17:14.670,1:17:19.440
+essayez de passer en revue le notebook que nous avons vu dans ce cours et
+
+1:17:19.440,1:17:24.749
+vous familiariser avec les méthodes, les cours et toutes les petites
+
+1:17:24.749,1:17:29.010
+les choses que vous devriez essayer. Entraîner en changeant les paramètres 
+
+1:17:29.010,1:17:34.440
+afin de vous permettre de bien comprendre de quoi il s'agit.
+
+1:17:34.440,1:17:38.880
+Vous avez donc intérêt à bien vérifier ce notebook. 
+
+1:17:38.880,1:17:44.130
+Enfin si vous trouvez des erreurs de frappe ou quoique ce soit qui peut 
+
+1:17:44.130,1:17:48.690
+être amélioré, nous pouvons améliorer le contenu avec votre aide si vous
+
+1:17:48.690,1:17:53.400
+contribuez au dépôt GitHub où le site web est hébergé. Et c’est à peu près tout.
+
+1:17:53.400,1:18:00.110
+Merci encore de rester avec nous et bye-bye.

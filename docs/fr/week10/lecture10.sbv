@@ -1,0 +1,4173 @@
+0:00:00.979,0:00:05.730							               
+[Alfredo : l'enregistrement est en cours et comme vous pouvez le voir, nous avons aujourd'hui 
+
+0:00:05.730,0:00:11.519
+un conférencier invité, nous avons un Ishan Mishra. Ishan Mishra est chercheur au Facebook AI
+
+0:00:11.519,0:00:16.320
+Research (FAIR) où il travaille sur la vision par ordinateur et l'apprentissage machine. Ses sujets de 
+
+0:00:16.320,0:00:20.939
+recherches consistent à réduire le besoin de supervision dans l'apprentissage visuel.
+
+0:00:20.939,0:00:25.680
+Il a terminé son doctorat à l'Institut de robotique de l'Université Carnegie Mellon
+
+0:00:25.680,0:00:32.369
+où il a travaillé avec Martial Hebert et Abhinav Gupta. Sa thèse de doctorat
+
+0:00:32.369,0:00:37.649
+s'intitulait « Apprentissage visuel avec un minimum de supervision humaine »
+
+0:00:37.649,0:00:43.530
+pour laquelle il a reçu le prix de la meilleure thèse de la SCS en 2018.
+
+0:00:43.530,0:00:49.440
+Donc avec moins… comment dire ? Sans plus attendre, je ne sais pas comment le dire
+
+0:00:49.440,0:00:54.809
+en anglais, allons… On ne peut même pas applaudir ! Pouvons-nous
+
+0:00:54.809,0:00:59.730
+dans le chat faire un tonnerre d'applaudissements pour notre orateur ?] Alors tout le monde, je m’appelle
+
+0:00:59.730,0:01:04.940
+Ishan et aujourd'hui je vais parler de l'apprentissage autosupervisé et de la vision par ordinateur.
+
+0:01:04.940,0:01:07.890
+Nous nous focaliserons particulièrement sur les
+
+0:01:07.890,0:01:11.790
+approches discriminatives plutôt que génératives, et cela
+
+0:01:11.790,0:01:15.210
+de plus en plus au fur et à mesure que j'avance
+
+0:01:15.210,0:01:21.509
+dans mon discours. Donc, la réussite en apprentissage des représentations
+
+0:01:21.509,0:01:25.439
+comme la vision par ordinateur, était jusqu'à présent basé sur ce genre d'étape de pré-entraînement,
+
+0:01:25.439,0:01:31.409
+« le moment ImageNet » de la vision par ordinateur. Ce qui a vraiment bien fonctionné, c'est que
+
+0:01:31.409,0:01:35.220
+lorsque nous disposons d'un vaste ensemble de données étiquetées comme ImageNet, nous pouvons apprendre une
+
+0:01:35.220,0:01:39.540
+représentation en effectuant une tâche de classification des images sur ces grandes données.
+
+0:01:39.540,0:01:44.070
+Ce qui est très utile, c'est de ne pas se contenter d'accomplir cette tâche particulière
+
+0:01:44.070,0:01:48.000
+mais de prendre ces représentations que vous apprenez et de les utiliser pour
+
+0:01:48.000,0:01:53.810
+les tâches en aval pour lesquelles vous n'avez peut-être pas suffisamment de données étiquetées. Cela a fonctionné
+
+0:01:53.810,0:01:57.140
+vraiment très bien et c'est en quelque sorte la recette standard du succès.
+
+0:01:57.140,0:02:03.170
+Il s'agit en fait de collecter un vaste ensemble de données d’images et vous
+
+0:02:03.170,0:02:08.390
+devez vous procurer un tas divers de ces grandes images et les étiqueter
+
+0:02:08.390,0:02:12.950
+avec un tas de grands concepts divers. Essayons donc de voir d'abord
+
+0:02:12.950,0:02:19.370
+si nous pouvons collecter ces étiquettes et quelles sont les difficultés
+
+0:02:19.370,0:02:25.160
+pour le faire. L'ensemble de données d'ImageNet est un très petit jeu de données
+
+0:02:25.160,0:02:30.530
+en terme d’ordre de grandeur. Par exemple, ImageNet n'a que 14
+
+0:02:30.530,0:02:36.380
+millions d'images et compte environ 22 000 concepts. Le simple fait d'étiqueter tout ça,
+
+0:02:36.380,0:02:40.160
+si vous regardez la quantité d'efforts déployés, c'est environ 
+
+0:02:40.160,0:02:45.560
+22 années humaines pour étiqueter cet ensemble de données. En revanche, beaucoup de gens ont commencé
+
+0:02:45.560,0:02:49.400
+en examinant ces approches de supervision alternatives où vous prédisez
+
+0:02:49.400,0:02:54.950
+quelque chose comme… pas vraiment une sorte de belle étiquette vierge mais quelque chose qui
+
+0:02:54.950,0:03:00.170
+est plus facile à obtenir. Par exemple, prédire les mots-dièse ou les emplacements GPS
+
+0:03:00.170,0:03:04.880
+d'images ou ce sur quoi nous allons nous focaliser lors de cette conférence 
+
+0:03:04.880,0:03:11.420
+c’est-à-dire l'apprentissage autosupervisé qui utilise les données elles-mêmes. Ainsi, la
+
+0:03:11.420,0:03:15.680
+première question que j'aime toujours me poser au départ est la suivante : pourquoi
+
+0:03:15.680,0:03:19.519
+aimer avoir des étiquettes pour toutes les données ? Pourquoi inventer
+
+0:03:19.519,0:03:24.650
+toute une ligne de recherche ? Pourquoi ne pas simplement obtenir tous les labels ? J'ai donc fait ce petit
+
+0:03:24.650,0:03:28.519
+exercice où j'ai tracé le degré de supervision que nous avons pour les jeux de données en vision.
+
+0:03:28.519,0:03:33.650
+Donc, en gros, j'ai regardé toutes les images qui ont
+
+0:03:33.650,0:03:39.110
+des cadres de délimitation et donc, ce sont des images où vous savez quel genre de concepts sont
+
+0:03:39.110,0:03:42.170
+dans l'image. Vous avez aussi une boîte dessinée autour d'eux et c'est
+
+0:03:42.170,0:03:46.070
+la chose standard à faire pour un modèle de détection d'objet. Ainsi, si 
+
+0:03:46.070,0:03:49.160
+vous regardez tous les jeux de données en vision qui ont des cadres de délimitation, vous obtiendrez en gros
+
+0:03:49.160,0:03:53.870
+environ un million d'images. Maintenant, si vous assouplissez cette contrainte et que vous dites
+
+0:03:53.870,0:03:57.769
+« Ok, je ne me soucie pas vraiment de l'endroit où se trouve l'objet, tout ce qui m'intéresse, c'est
+
+0:03:57.769,0:04:01.670
+quels sont les objets présents dans l'image ».
+
+0:04:01.670,0:04:05.810
+En assouplissant cette contrainte, vous obtenez immédiatement un ordre de grandeur de données supplémentaires. Donc
+
+0:04:05.810,0:04:10.910
+vous obtenez en gros environ 40 millions d'images.
+
+0:04:10.910,0:04:14.540
+Maintenant, si vous assouplissez encore cette contrainte et que vous dites 
+
+0:04:14.540,0:04:19.040
+« Je ne me soucie pas non plus de cette supervision au niveau de l'image, tout ce qui m'intéresse c’est
+
+0:04:19.040,0:04:25.070
+les photos présentes sur Internet », vous obtenez en gros cinq
+
+0:04:25.070,0:04:30.680
+fois plus de données. Et donc, si vous regardez ce graphique maintenant, vous
+
+0:04:30.680,0:04:34.040
+pouvez voir immédiatement que la quantité de données dont nous disposons, qui est étiquetée, même
+
+0:04:34.040,0:04:38.180
+au niveau de l'image ou du cadre, n'est rien par rapport à toutes les
+
+0:04:38.180,0:04:43.610
+images existent à l'échelle d'Internet. Je n'ai pas oublié les
+
+0:04:43.610,0:04:47.480
+images, pas oublié les barres sur le côté gauche, c'est juste qu'elles
+
+0:04:47.480,0:04:50.750
+disparaissent complètement. Vous devez vraiment faire ce graphique avec une échelle logarithmique 
+
+0:04:50.750,0:04:58.010
+pour faire apparaître ces barres. Alors maintenant, bien sûr, les photos sur Internet
+
+0:04:58.010,0:05:01.100
+ne représentent pas tout le monde. Il y a des choses qui
+
+0:05:01.100,0:05:04.640
+nécessitent des mouvements ou des choses qui requièrent vraiment d'autres sens physiques pour apprendre.
+
+0:05:04.640,0:05:08.630
+Donc, dans le monde réel, il y a beaucoup plus de choses que vous
+
+0:05:08.630,0:05:13.400
+expérimentez, beaucoup plus d'apports sensoriels que vous pouvez obtenir et il est vraiment difficile
+
+0:05:13.400,0:05:17.540
+d'obtenir des labels pour l'ensemble de ces données. Et encore une fois, pour mettre les choses en perspective,
+
+0:05:17.540,0:05:22.310
+ImageNet, qui n'a que 14 millions d'images et un très petit nombre de
+
+0:05:22.310,0:05:26.840
+Concepts, et cela a requis beaucoup de temps l'étiquetage. Donc clairement l'étiquetage
+
+0:05:26.840,0:05:30.800
+n'est pas vraiment à l'échelle de toutes les photos sur Internet, ni même du
+
+0:05:30.800,0:05:38.960
+monde. L'autre problème de l'étiquetage est que pour les concepts complexes,
+
+0:05:38.960,0:05:44.210
+comme pour la vidéo, il est très difficile de mettre à l'échelle l'étiquetage. Le deuxième problème est
+
+0:05:44.210,0:05:50.810
+que les concepts rares sont en quelque sorte difficiles à étiqueter. Par exemple, il s'agit d'un
+
+0:05:50.810,0:05:55.580
+des jeux de données populaire en image appelé LabelMe. Ici nous pouvons voir que pour
+
+0:05:55.580,0:05:59.330
+les types de concepts que vous observez, il y a beaucoup de concepts qui
+
+0:05:59.330,0:06:03.710
+sont si rares que vous devez étiqueter beaucoup de données pour obtenir un
+
+0:06:03.710,0:06:09.770
+peu d'exemples de ces concepts. Ainsi, dans ce jeu de données, 10% des classes
+
+0:06:09.770,0:06:14.660
+représente plus de 93% des données, ce qui vous indique déjà que pour 
+
+0:06:14.660,0:06:19.190
+mettre à l'échelle l'étiquetage de plus en plus de concepts, il vous faudra beaucoup, beaucoup plus de
+
+0:06:19.190,0:06:23.630
+données, avec des rendements très décroissants. Il s'agit donc d'une sorte de problème à longue queue.
+
+0:06:23.630,0:06:29.340
+Et bien sûr, le pré-entraînement n'est pas toujours la bonne
+
+0:06:29.340,0:06:32.400
+chose à faire. Par exemple, si vous changez complètement votre domaine
+
+0:06:32.400,0:06:36.330
+pour le déplacer vers, disons, l'imagerie médicale, il n'est pas clair si 
+
+0:06:36.330,0:06:40.860
+le pré-entraînement sur ImageNet est la bonne chose à faire pour cette tâche. Ou si vous ne
+
+0:06:40.860,0:06:44.520
+connaîssez pas les tâches en aval, comment collecter un grand jeu de données
+
+0:06:44.520,0:06:48.060
+et quelle est la recette pour faire le pré-entraînement et le finetuning des tâches en aval.
+
+0:06:48.060,0:06:54.570
+L'apprentissage autosupervisé se situe donc en quelque sorte entre les deux et tente de donner
+
+0:06:54.570,0:06:59.729
+un autre moyen de pré-entraîner vos modèles, ou de tirer des enseignements des données ou d'apprendre
+
+0:06:59.729,0:07:06.780
+d'expériences sans exiger une supervision parfaite. Donc, dans ce cas...
+
+0:07:06.780,0:07:09.870
+Il y a en quelque sorte deux définitions simples que vous pouvez trouver pour 
+
+0:07:09.870,0:07:13.770
+l'apprentissage autosupervisé. La première est plus du genre discriminant,
+
+0:07:13.770,0:07:17.970
+une perspective d’entraînement supervisé. Ainsi, dans ImageNet, par exemple, vous avez une image
+
+0:07:17.970,0:07:22.110
+et elle peut être classée en mille catégories. Donc l'apprentissage  
+
+0:07:22.110,0:07:27.410
+autosupervisé peut être considéré comme un moyen d'obtenir des étiquettes à partir des données
+
+0:07:27.410,0:07:31.919
+en utilisant un processus automatique. Ce processus automatique n’exige pas vraiment
+
+0:07:31.919,0:07:36.030
+beaucoup d'intervention humaine. Donc, une fois que vous obtenez ces labels automatiques,
+
+0:07:36.030,0:07:42.060
+vous pouvez en quelque sorte entraîner votre modèle à l'aide de ces étiquettes.
+
+0:07:42.060,0:07:45.419
+L'autre façon de concevoir l'apprentissage autosupervisé est de voir ça comme
+
+0:07:45.419,0:07:49.770
+un problème de prédiction où vous essayez de prédire une partie des données
+
+0:07:49.770,0:07:54.840
+à partir des autres parties des données. Vous avez donc des données observées et vous avez
+
+0:07:54.840,0:07:58.950
+des données cachées. Vous pouvez formuler une tâche en tenant compte des
+
+0:07:58.950,0:08:03.060
+données observées, essayez de prédire soit les données cachées, soit une propriété des
+
+0:08:03.060,0:08:07.740
+données cachées. Et donc, beaucoup de techniques autosupervisées
+
+0:08:07.740,0:08:10.930
+peuvent être considérées dans ce cadre particulier.
+
+0:08:10.930,0:08:16.600
+Pour le terme d'apprentissage autosupervisé, j'aime bien donner cette analogie
+
+0:08:16.600,0:08:21.100
+venant de Virginia de Sa, où elle essaie de distinguer
+
+0:08:21.100,0:08:24.130
+les trois termes : supervisé, non supervisé et autosupervisé.
+
+0:08:24.130,0:08:30.430
+Dans l'apprentissage supervisé, vous avez, disons, une vache en entrée. Et vous
+
+0:08:30.430,0:08:35.020
+donnez la cible exacte, qui sera ici l’étiquette « vache ». Dans 
+
+0:08:35.020,0:08:39.070
+l'apprentissage non supervisé, vous recevez cette entrée et ce n'est pas clair ce que
+
+0:08:39.070,0:08:43.599
+la cible entière est, quelle est exactement la fonction objective. L'apprentissage
+
+0:08:43.599,0:08:49.959
+autosupervisé est le terme que l'on préfère à présent de plus en plus.
+
+0:08:49.959,0:08:54.940
+L'idée est que le label provient soit d'une modalité concomitante, soit d’une
+
+0:08:54.940,0:08:58.779
+partie co-occurrente des données elles-mêmes. Donc, en réalité, tout le pouvoir se trouve dans les données
+
+0:08:58.779,0:09:02.410
+et vous essayez de prédire l'une ou l'autre partie avec les
+
+0:09:02.410,0:09:09.730
+propriétés des données. Donc, un exemple standard et réussi de
+
+0:09:09.730,0:09:16.150
+cela est le modèle Word2vec. On donne une phrase, par exemple
+
+0:09:16.150,0:09:20.500
+« le chat est assis sur le tapis ». On vous donne une partie de la phrase que
+
+0:09:20.500,0:09:24.490
+vous observez, ce qui est, dans ce cas, qualifié de contexte ou d'histoire
+
+0:09:24.490,0:09:29.650
+et ensuite vous avez une partie de la phrase, ou du mot dans ce cas, qui n'est pas
+
+0:09:29.650,0:09:35.200
+observé. C’est en quelque sorte caché de tout ce modèle. Et dans ce contexte
+
+0:09:35.200,0:09:39.820
+vous demandez au modèle de prédire cette cible. Et vous avez donc votre propre
+
+0:09:39.820,0:09:44.529
+objectif. Vous pouvez le minimiser d'une manière particulière et 
+
+0:09:44.529,0:09:49.839
+apprendre une représentation pour vos données d'entrée. Et Word2vec a 
+
+0:09:49.839,0:09:53.410
+montré beaucoup de promesses dans une variété d'applications et cette
+
+0:09:53.410,0:09:57.160
+sorte de modèle prédictif a inspiré beaucoup de travail en informatique et 
+
+0:09:57.160,0:10:03.339
+en vision également. Le succès de l'apprentissage autosupervisé est incontestable
+
+0:10:03.339,0:10:07.990
+dans le traitement du langage naturel. En 2018, il y a eu ce
+
+0:10:07.990,0:10:14.440
+modèle appelé BERT qui est essentiellement une forme d'auto-encodeur masqué et ce
+
+0:10:14.440,0:10:18.100
+module a révolutionné la quantité de choses que l'on peut faire en NLP
+
+0:10:18.100,0:10:22.420
+avec une quantité limitée de données. Beaucoup de gens appellent cela le « moment ImageNet » du
+
+0:10:22.420,0:10:28.360
+NLP. Donc, dans cet exposé, nous allons motiver pourquoi
+
+0:10:28.360,0:10:32.410
+nous voulons utiliser l'apprentissage autosupervisé. Nous allons vraiment
+
+0:10:32.410,0:10:38.980
+nous concentrer sur la façon dont vous pouvez examiner les données, et utiliser les observations et
+
+0:10:38.980,0:10:42.520
+les interactions des données pour formuler des tâches autosupervisées. Comment vous pouvez tirer parti
+
+0:10:42.520,0:10:46.570
+de multiples modalités et je vais vous parler un peu plus en détail de ce
+
+0:10:46.570,0:10:51.810
+terme « modalités » signifie ou la structure dans les données pour apprendre des
+
+0:10:51.810,0:10:57.760
+représentations. Passons donc au contexte de la vision par ordinateur et je vais
+
+0:10:57.760,0:11:01.450
+essayer de définir de façon plus concrète les choses dont j'ai parlé.
+
+0:11:01.450,0:11:05.800
+[Alfredo : première question, l'apprentissage autosupervisé est donc
+
+0:11:05.800,0:11:14.440
+en gros, juste un apprentissage non supervisé, n'est-ce pas ?] Oui.
+
+0:11:14.440,0:11:21.250
+Au fond, les principales différences, comme le fait de ne pas être supervisé, sont en quelque sorte très peu
+
+0:11:21.250,0:11:26.730
+définies. Donc, il y a supervisé, mais qu'est-ce qui n'est pas supervisé ? 
+
+0:11:26.730,0:11:31.240
+L'analogie donnée par Jitendra Malik est : il y a un chat mais il n'y a pas de catégorie
+
+0:11:31.240,0:11:35.530
+sans chat. C'est donc la raison pour laquelle il faut
+
+0:11:35.530,0:11:39.520
+de plus en plus, il s'agit en fait d'utiliser les données ou les
+
+0:11:39.520,0:11:43.480
+les propriétés des données elles-mêmes pour la supervision. C’est pourquoi on parle d'autosupervision.
+
+0:11:43.480,0:11:53.980
+[Alfredo : donc, c'est un sous-ensemble ?] Oui, je suppose. Oui. [Yann : la 
+
+0:11:53.980,0:11:59.560
+raison pour laquelle on l'appelle ainsi est que les algorithmes sont
+
+0:11:59.560,0:12:02.440
+essentiellement les mêmes que pour l'apprentissage supervisé mais avec certaines
+
+0:12:02.440,0:12:07.450
+modifications car vous entraînez le système à apprendre une partie
+
+0:12:07.450,0:12:11.830
+d'une autre partie de l'entrée, donc c'est très similaire à l'apprentissage supervisé dans
+
+0:12:11.830,0:12:17.890
+de nombreuses façons, sauf que vous devez mieux gérer l'incertitude et les catégories négatives
+
+0:12:17.890,0:12:22.830
+si vous le souhaitez. La catégorie peut être beaucoup plus large, ce qui est une sorte de problème, mais
+
+0:12:22.830,0:12:27.460
+l'apprentissage non supervisé n'est vraiment pas très bien défini. L'apprentissage autosupervisé est
+
+0:12:27.460,0:12:31.120
+un concept très différent, il n'est pas tout à fait clair qu'il s'agit d'un sous-ensemble de
+
+0:12:31.120,0:12:33.960
+l'apprentissage non supervisé]. Donc, pour continuer, je vais maintenant essayer de
+
+0:12:41.459,0:12:47.470
+parler de l'apprentissage autosupervisé dans le contexte de la vision. Donc en vision
+
+0:12:47.470,0:12:54.310
+beaucoup de ces problèmes de prédiction ont été présentés comme des tâches de prétexte.
+
+0:12:54.310,0:13:00.060
+Donc beaucoup d’algorithmes de vision… ce terme [il parle du mot « prétexte »] remonte à 2015 
+
+0:13:00.060,0:13:05.490
+dans cet article de Carl Doersch. L'idée était que vous avez une
+
+0:13:05.490,0:13:10.959
+une tâche de texte ou une tâche qui vous tient vraiment à cœur, comme la classification
+
+0:13:10.959,0:13:16.660
+d'images, mais bien sûr vous n'avez pas beaucoup de données pour cela. Donc
+
+0:13:16.660,0:13:22.000
+vous voulez résoudre une tâche avant d'aller à la vraie tâche, donc une tâche prétexte.
+
+0:13:22.000,0:13:26.680
+Donc cette tâche prétexte est une tâche de prédiction que vous êtes en train de résoudre, mais ce n'est pas souvent la
+
+0:13:26.680,0:13:31.570
+tâche réelle qui vous tient vraiment à cœur. Vous résolvez cette tâche particulière pour apprendre
+
+0:13:31.570,0:13:35.649
+une représentation, puis vous obtenez enfin votre tâche en aval où vous souhaitez
+
+0:13:35.649,0:13:40.200
+utiliser cette représentation pour réaliser quelque chose de significatif.
+
+0:13:40.200,0:13:45.070
+Ces tâches de prétexte sont donc assez drôles, elles sont souvent… Les gens
+
+0:13:45.070,0:13:51.600
+peuvent être très créatifs pour arriver à ces tâches de prétexte. Alors regardons
+
+0:13:51.600,0:13:56.740
+comment vous pouvez définir un ensemble de tâches de prétexte et ce que chacune
+
+0:13:56.740,0:14:02.140
+tentent de faire. Et donc vous pouvez utiliser soit des images, soit de la vidéo, soit du son lorsque
+
+0:14:02.140,0:14:06.070
+vous essayez de faire ces choses. Et dans chaque cas, vous aurez un tas de données observées
+
+0:14:06.070,0:14:10.880
+et vous essaierez soit de prédire des données cachées, soit de prédire une
+
+0:14:10.880,0:14:16.050
+propriété dans les données cachées. Ce type de distinction distingue un ensemble d'approches.
+
+0:14:16.050,0:14:22.770
+Voyons donc comment vous pouvez utiliser des images pour définir quelque chose comme une tâche de prétexte.
+
+0:14:22.770,0:14:28.540
+Le document qui a introduit ce terme de tâche prétexte a abouti à ceci.
+
+0:14:28.540,0:14:36.250
+C'est une drôle de méthode. Ce que vous faites, c'est que vous prenez, disons, deux patchs d'image.
+
+0:14:36.250,0:14:39.730
+Vous prenez le réseau et lui demandez de prédire quelle est la position relative
+
+0:14:39.730,0:14:45.220
+de chaque patch par rapport à l'autre. Donc, dans ce cas, disons que je prélève d'abord un patch
+
+0:14:45.220,0:14:51.170
+bleu. Ensuite j'échantillonne un autre patch rouge. Donc ce que je fais en gros c’est de passer
+
+0:14:51.170,0:14:55.220
+ces deux patchs dans un ConvNet et j'obtiens un classifieur qui va résoudre
+
+0:14:55.220,0:14:59.600
+le problème de la classification à 8 sorties. Comment obtenir le label pour
+
+0:14:59.600,0:15:03.530
+ce problème de classification ? Eh bien, je regarde juste où se trouve le patch rouge
+
+0:15:03.530,0:15:08.030
+par rapport à la tache bleue et c'est tout. Donc, à la fin, en prédisant
+
+0:15:08.030,0:15:12.270
+vous ne faites que résoudre une tâche de classification à 8 sorties.
+
+0:15:12.270,0:15:16.220
+Vous obtenez vos labels en exploitant cette propriété
+
+0:15:16.220,0:15:22.100
+des données d'entrée et c'est tout. Maintenant, vous pouvez l'utiliser pour entraîner
+
+0:15:22.100,0:15:28.070
+l'ensemble du ConvNet. Donc, pour voir ça dans d’une manière différente,
+
+0:15:28.070,0:15:32.570
+cela ne résout qu'un très petit problème de classification.
+
+0:15:32.570,0:15:37.180
+Il s'agit simplement de résoudre un problème avec huit lieux possibles.
+
+0:15:37.180,0:15:42.110
+Il est surprenant de constater que ce genre de prétexte permet d'apprendre quelque chose
+
+0:15:42.110,0:15:48.020
+d'assez raisonnable. La seule façon de voir ce que ce réseau a appris est 
+
+0:15:48.020,0:15:51.320
+de regarder ce qu'il considère comme les voisins les plus proches dans l'espace de
+
+0:15:51.320,0:15:57.680
+représentation. Donc, pour expliquer un peu plus ça, sur la gauche
+
+0:15:57.680,0:16:01.610
+vous avez le patch d'entrée. Vous faites passer ce patch d'entrée par ce
+
+0:16:01.610,0:16:08.150
+ConvNet et vous extrayez un tas de patchs sur les données, sur votre jeu de données.
+
+0:16:08.150,0:16:11.960
+Dans le cas présent, ImageNet. Vous calculez les représentations des caractéristiques pour chacun de
+
+0:16:11.960,0:16:16.160
+ces patchs. Maintenant, pour le patch d'entrée particulier que vous avez envoyé par le biais du
+
+0:16:16.160,0:16:20.150
+ConvNet, vous calculez les voisins les plus proches de tous les patchs du jeu de données
+
+0:16:20.150,0:16:23.210
+et vous pouvez utiliser trois réseaux différents pour calculer les représentations des
+
+0:16:23.210,0:16:27.560
+caractéristiques. La première colonne est donc la tâche de prétexte de positionnement relatif
+
+0:16:27.560,0:16:32.510
+et la deuxième colonne est essentiellement un AlexNet initialisé de façon aléatoire.
+
+0:16:32.510,0:16:36.320
+La troisième colonne est un AlexNet pré-entraîné sur ImageNet.
+
+0:16:36.320,0:16:43.400
+Donc, si vous regardez un peu ce que cette tâche de positionnement relatif permet de capturer,
+
+0:16:43.400,0:16:47.510
+elle est vraiment capable de trouver de très bons patchs, des patchs identiques ou
+
+0:16:47.510,0:16:52.970
+très proches du patch d'entrée. Et vous voyez aussi que c'est, par exemple, dans
+
+0:16:52.970,0:16:57.290
+la rangée du chat, la quatrième rangée, vous pouvez voir que c’est capable
+
+0:16:57.290,0:17:01.610
+de comprendre que c’est légèrement invariant aux couleurs. Donc, le chat en entrée est
+
+0:17:01.610,0:17:04.460
+noir et blanc, et c’est capable de repérer les chats qui ne sont pas uniquement
+
+0:17:04.460,0:17:09.050
+en noir et blanc. Donc, cela fait vraiment quelque chose. C’est au moins capable
+
+0:17:09.050,0:17:15.170
+de raisonner sur l'ensemble des patchs. Alors, pourquoi cette représentation devrait-elle
+
+0:17:15.170,0:17:20.180
+tout faire ce qui est sémantique ? Donc, la technique de visualisation du plus proche voisin
+
+0:17:20.180,0:17:24.710
+est bonne pour vous dire ce que cet espace de représentation a capturé. 
+
+0:17:24.710,0:17:29.810
+Dans ce cas, nous pouvons affirmer avec certitude que cette représentation 
+
+0:17:29.810,0:17:35.000
+relative a appris à associer un ensemble de ces patchs locaux,
+
+0:17:35.000,0:17:37.890
+des patchs qui ont à peu près la même apparence.
+
+0:17:37.890,0:17:42.030
+Et donc parce c’est capable de raisonner sur ces patchs locaux, peut-être est-ce
+
+0:17:42.030,0:17:45.750
+réellement capable de raisonner sur une image car l'image peut être considérée comme
+
+0:17:45.750,0:17:50.550
+un tas de patchs locaux mis ensemble. C’est donc capable de regrouper ces patchs en
+
+0:17:50.550,0:17:54.680
+une partie de l'espace de représentation. Comme je l'ai dit, les gens
+
+0:17:58.280,0:18:02.510
+sont devenus assez créatifs dans la réalisation des tâches de prétexte.
+
+0:18:02.510,0:18:07.780
+Un autre type de prétexte populaire consiste à prédire les rotations d'une image.
+
+0:18:07.780,0:18:13.280
+Cette tâche est très simple. Vous avez une image, vous pouvez
+
+0:18:13.280,0:18:19.610
+lui appliquer une rotation de 0 degré, 90 degrés, 180 degrés ou 270 degrés.
+
+0:18:19.610,0:18:24.410
+Et, en gros, vous donnez cette image sur laquelle vous avez appliqué une
+
+0:18:24.410,0:18:28.370
+rotation et vous demandez au réseau de prédire quelle a été la rotation 
+
+0:18:28.370,0:18:33.230
+appliqué à l'image. Cela ne fait que résoudre un problème de classification à quatre voies. Ainsi, le réseau
+
+0:18:33.230,0:18:41.960
+prédit essentiellement si la rotation est de 0, 90, 180 ou 270 [degrés] et 
+
+0:18:41.960,0:18:45.140
+c'est donc l'une des tâches de prétexte les plus populaires actuellement car elle est
+
+0:18:45.140,0:18:50.480
+facile à mettre en œuvre. Vous prenez simplement une image et c'est très très simple. Vous
+
+0:18:50.480,0:18:54.049
+n'avez pas besoin d'échantillonner trop de patchs ou de résoudre des problèmes compliqués.
+
+0:18:54.049,0:18:57.799
+C'est une architecture très standard et vous pouvez résoudre ce problème. C’est devenu
+
+0:18:57.799,0:19:02.150
+assez populaire maintenant. [Alfredo : donc, le réseau va être entraîné, donc les caractéristiques
+
+0:19:02.150,0:19:06.410
+sont entraînées afin de résoudre ce problème, n'est-ce pas ?] Oui [Suite : donc, le résultat sera,
+
+0:19:06.410,0:19:11.690
+d'une manière ou d'une autre, en fonction de la tâche spécifique que quelqu'un va choisir
+
+0:19:11.690,0:19:16.000
+n'est-ce pas ?] Oui. C'est donc, encore une fois, une tâche de prétexte. Nous ne sommes pas vraiment
+
+0:19:16.000,0:19:19.970
+intéressés par la prédiction des rotations d'une image, nous utilisons simplement cette tâche
+
+0:19:19.970,0:19:24.440
+comme un substitut pour apprendre certaines caractéristiques afin que dans les tâches en aval, par exemple
+
+0:19:24.440,0:19:28.490
+quelqu'un nous donne 1000 images étiquetées d'un chat, nous pouvons alors utiliser cette 
+
+0:19:28.490,0:19:31.490
+représentation pré-entraînée pour accomplir cette tâche particulière.
+
+0:19:31.490,0:19:35.490
+Ces tâches de prétexte ne vont souvent pas vraiment faire beaucoup de sens sémantique
+
+0:19:35.490,0:19:40.090
+et c'est en quelque sorte la raison pour laquelle on les appelle prétexte.
+
+0:19:40.090,0:19:44.000
+Car vous avez une tâche en aval où vous avez une certaine sémantique 
+
+0:19:44.000,0:19:48.100
+ou que vous savez être bonne. [Alfredo : merci]. [Etudiant : pourquoi prédire
+
+0:19:51.620,0:19:59.480
+les rotations nous donnent des représentations utiles ?] En fait, quand ce
+
+0:19:59.480,0:20:03.770
+papier a été publié, cette question était celle de beaucoup de gens et également la mienne.
+
+0:20:03.770,0:20:07.480
+Empiriquement, cela fonctionne vraiment bien.
+
+0:20:07.480,0:20:13.940
+Et mon intuition à cet égard a été que pour prédire quelle
+
+0:20:13.940,0:20:18.410
+est la rotation d'un objet, il faut qu'il comprenne approximativement
+
+0:20:18.410,0:20:23.120
+quelles sont les limites ou quels sont certains concepts de cette image. Par exemple,
+
+0:20:23.120,0:20:28.130
+pour prédire que cette image particulière est tournée de 180 degrés, il
+
+0:20:28.130,0:20:33.800
+faut séparer le ciel du sable, ou le ciel de l’eau.
+
+0:20:33.800,0:20:38.810
+Ou du moins comprendre que pour un arbre, les feuilles ne sont généralement
+
+0:20:38.810,0:20:44.720
+pas en bas. Que le feuillage ne pousse pas vers le bas mais vers le haut.
+
+0:20:44.720,0:20:49.310
+Donc le réseau doit raisonner implicitement sur certaines choses. Ce n'est pas très clair
+
+0:20:49.310,0:20:55.000
+ce qu'il doit vraiment faire, mais cette tâche fonctionne très bien de manière empirique. [Etudiant : est-ce que cela
+
+0:20:55.000,0:21:01.910
+a été seulement testé/fonctionne comme une tâche avec une classification discrète ? Ou cela
+
+0:21:01.910,0:21:05.750
+a été testé sur une échelle continue d'angles auxquels l'image est
+
+0:21:05.750,0:21:10.790
+tournée ?] Oui, vous pouvez faire les deux versions. Vous pouvez
+
+0:21:10.790,0:21:14.120
+augmenter le nombre d’angles que vous souhaitez et vous rendez cela
+
+0:21:14.120,0:21:18.870
+très très grand, ce qui se rapproche davantage d'un problème de régression
+
+0:21:18.870,0:21:23.360
+où vous avez une variable continue. En pratique, ces quatre angles fonctionnent
+
+0:21:23.360,0:21:32.210
+assez bien, en mettre plus donne un bénéfice marginal. [Alfredo : il y a une question sur la diapositive précédente. Comment
+
+0:21:32.210,0:21:36.410
+le voisin le plus proche fonctionne-t-il dans ce contexte ? Est-ce que vous exécutez chaque patch,
+
+0:21:36.410,0:21:41.720
+par le biais du ConvNet ?] Oui, donc c'est juste pour la visualisation, c'est juste la
+
+0:21:41.720,0:21:46.970
+compréhension. Bien que ce soit en quelque sorte coûteux à calculer cela
+
+0:21:46.970,0:21:50.300
+vous donne une très bonne idée de ce que la représentation a appris. Donc
+
+0:21:50.300,0:21:54.440
+les auteurs ont extrait un tas de patchs de chaque image,
+
+0:21:54.440,0:22:00.530
+environ neuf à dix patchs, et donc sur un petit ensemble d'images.
+
+0:22:00.530,0:22:03.120
+Je pense que dans ce cas, il s'agissait de 50 000 à 100 000 images et
+
+0:22:03.120,0:22:06.539
+alors vous calculez simplement les voisins les plus proches sur ces patchs 
+
+0:22:06.539,0:22:08.960
+des images. Est-ce clair ? [Oui, c'est clair]. 
+
+0:22:12.780,0:22:22.200
+Une autre tâche qui est également assez populaire est appelée colorisation.
+
+0:22:22.200,0:22:28.950
+Donc, dans ce cas, avec une image en niveaux de gris, vous essayez de prédire les couleurs
+
+0:22:28.950,0:22:32.490
+de cette image. Vous pouvez donc formuler cette tâche pour n'importe quelle image. Vous
+
+0:22:32.490,0:22:36.870
+pouvez prendre une image, vous pouvez enlever sa couleur et vous pouvez demander à un réseau de
+
+0:22:36.870,0:22:40.020
+prédire la couleur à partir de cette échelle de gris ou de noir et blanc de
+
+0:22:40.020,0:22:47.429
+l'image. Cette tâche est utile à certains égards. Pour coloriser
+
+0:22:47.429,0:22:52.890
+de vieux films par exemple. Sélectionnez des films courts disons des
+
+0:22:52.890,0:22:57.900
+années 30 ou 40, quand il n'y avait pas beaucoup de technologie de couleurs, et vous
+
+0:22:57.900,0:23:01.530
+pouvez y appliquer cette tâche. Ainsi, d'une certaine manière, c’est
+
+0:23:01.530,0:23:07.350
+en fait plus utile que d'autres tâches de prétexte. Et pourquoi cette tâche
+
+0:23:07.350,0:23:11.549
+apprend quelque chose de significatif ? Eh bien, elle doit reconnaître que les arbres sont
+
+0:23:11.549,0:23:15.990
+verts, il faut comprendre de quel type de catégories d'objets il s'agit 
+
+0:23:15.990,0:23:20.490
+afin d’assez bien les colorier. Ainsi, dans la pratique, cela a été étendu
+
+0:23:20.490,0:23:24.809
+au domaine de la vidéo et il y a beaucoup de travaux de suivi sur la polarisation
+
+0:23:24.809,0:23:31.260
+elle-même. [Alfredo : c'est intéressant car, je pense, la cartographie des couleurs n'est pas 
+
+0:23:31.260,0:23:36.350
+déterministe, n'est-ce pas ?] Ce n'est pas déterministe, oui. [Alfredo : donc il y a plusieurs
+
+0:23:36.350,0:23:43.740
+vraies solutions possibles, n'est-ce pas ?] Oui. Le document initial proposait essentiellement
+
+0:23:43.740,0:23:47.520
+une cartographie déterministe. Donc vous résolviez soit une classification, soit
+
+0:23:47.520,0:23:52.740
+un problème de régression. Ainsi, vous ne pourriez avoir, disons, qu'un parapluie bleu. 
+
+0:23:52.740,0:23:58.679
+Vous ne pourrez jamais prédire un parapluie de couleur grise. Et donc, ce qui s'est passé, c'est que pour
+
+0:23:58.679,0:24:04.049
+beaucoup de catégories qui ont différentes sortes de couleurs, par exemple
+
+0:24:04.049,0:24:07.440
+supposons, que vous ayez une balle et que cette balle puisse apparaître en rouge/vert/bleu.
+
+0:24:07.440,0:24:11.700
+Le réseau prédirait que ce serait gris. Car, c’est la valeur moyenne 
+
+0:24:11.700,0:24:15.260
+de ce genre de choses, donc c'est le mieux qu'il puisse faire.
+
+0:24:15.260,0:24:21.149
+Le groupe de David Forsyth au sein de l'UIUC a effectué un travail qui a tenté de
+
+0:24:21.149,0:24:24.360
+de trouver des auto-encodeurs variationnels, de sorte que vous ayez en fait 
+
+0:24:24.360,0:24:28.240
+une variable latente pour pouvoir avoir une colorisation diverse. Ainsi, dans la
+
+0:24:28.240,0:24:32.320
+pratique, vous pouvez faire des approches de ce genre, pour avoir une
+
+0:24:32.320,0:24:35.500
+balle de couleur verte. Et car vous faites cela pour toute la scène, vous pouvez
+
+0:24:35.500,0:24:38.800
+avoir des colorations cohérentes de toute la scène. [Alfredo : oui, c'est de ça,
+
+0:24:38.800,0:24:42.460
+dont nous avons parlé avec Yann. Chaque fois que nous avons quelque chose
+
+0:24:42.460,0:24:48.160
+allant de un vers plusieurs, nous devrions choisir un modèle à variable
+
+0:24:48.160,0:24:51.910
+latente qui nous permet de choisir une solution multiple étant donné que nous avons
+
+0:24:51.910,0:25:01.360
+la même entrée]. Je pense que les raisons pour lesquelles les gens ne se sont pas vraiment concentrés
+
+0:25:01.360,0:25:07.960
+sur cet aspect particulier de ce cas, du moins à l'époque sont, premièrement,
+
+0:25:07.960,0:25:11.620
+qu’il n'était pas clair de ce qui fonctionnait et ce qui ne fonctionnait pas, et deuxièmement les
+
+0:25:11.620,0:25:15.520
+gens n'étaient pas vraiment préoccupés par la qualité de la colorisation.
+
+0:25:15.520,0:25:19.000
+Ils étaient plus préoccupés par la qualité de la représentation. Mais je pense que maintenant
+
+0:25:19.000,0:25:23.290
+beaucoup d'entre nous comprennent que ces deux choses sont assez liées l'une à l'autre.
+
+0:25:23.290,0:25:27.790
+Que vous devez vraiment avoir cette association non déterministe pour obtenir
+
+0:25:27.790,0:25:35.530
+quelque chose de plus dans les données. [Alfredo : je vois, merci].
+
+0:25:35.530,0:25:40.330
+Excusez-moi pour cette photo, elle est tirée du papier et je pense qu'elle était en basse résolution. 
+
+0:25:40.330,0:25:44.410
+Il s'agit donc d'une autre tâche qui est l'auto-encodage du contexte. 
+
+0:25:44.410,0:25:49.330
+L'idée est essentiellement empruntée à Word2vec. Donc, vous cachez une
+
+0:25:49.330,0:25:53.230
+partie de l'image et connaissant la partie de l'image qui l'entoure vous devez
+
+0:25:53.230,0:25:56.530
+prédire ce qui a été caché. C'est donc en quelque sorte une tâche de remplissage
+
+0:25:56.530,0:26:02.090
+de trous. Pourquoi cela devrait-il fonctionner ? Et bien, cela essaye
+
+0:26:02.090,0:26:07.250
+de raisonner sur les objets présents. Donc les voitures roulent sur les 
+
+0:26:07.250,0:26:11.539
+routes, les bâtiments sont essentiellement constitués de fenêtres et quand
+
+0:26:11.539,0:26:15.470
+on est près du sol, il est censé avoir des portes, etc. Donc on a besoin
+
+0:26:15.470,0:26:19.460
+d’en apprendre plus sur la structure implicite des données, en exécutant cette
+
+0:26:19.460,0:26:26.840
+tâche. Il ne s'agissait donc que d'images, je vais maintenant parler des
+
+0:26:26.840,0:26:34.159
+autres tâches que vous pouvez effectuer en vidéo. Donc, dans la vidéo, la
+
+0:26:34.159,0:26:40.390
+principale source de supervision est cette notion de séquentialité des images.
+
+0:26:40.390,0:26:45.080
+Les images ont fondamentalement un ordre inhérent et vous voulez utiliser cet ordre
+
+0:26:45.080,0:26:49.070
+pour obtenir quelque chose. Par exemple, prédire l'ordre des images ou remplir
+
+0:26:49.070,0:26:53.240
+les blancs et un tas d'autres prétextes qui dépendent toutes du
+
+0:26:53.240,0:26:58.309
+caractère séquentiel. Je vais donc parler ici de l'un des
+
+0:26:58.309,0:27:03.440
+travaux que j'ai effectués en 2016, qui consistaient à prédire l’ordre temporel des
+
+0:27:03.440,0:27:08.539
+Images pour savoir s’il est correct ou incorrect. Ceci est très inspiré de travaux antérieurs de
+
+0:27:08.539,0:27:13.250
+Yann et d'autres l'ont fait sur l'ordre séquentiel des images à travers
+
+0:27:13.250,0:27:16.760
+l'apprentissage contrastif. J’en parlerai vers la fin lorsque je parlerais
+
+0:27:16.760,0:27:22.429
+de l’apprentissage contrastif. Ainsi, dans ce travail, nous étions très
+
+0:27:22.429,0:27:26.960
+très inspirés par les tâches de prétexte et avons vu le problème de
+
+0:27:26.960,0:27:32.120
+classification binaire. Donc, étant donné un tas d'images, nous en extrayons trois et si
+
+0:27:32.120,0:27:36.529
+nous les extrayons dans le bon ordre nous les étiquetons « +1 » et si nous les mélangeons
+
+0:27:36.529,0:27:40.520
+nous les considérons comme « 0 ». Et donc, nous devons maintenant résoudre un problème 
+
+0:27:40.520,0:27:44.700
+de classification binaire pour prédire si quelque chose est mélangé ou non.
+
+0:27:44.700,0:27:52.070
+La raison pour laquelle cela fonctionne est que, étant donné trois images, 
+
+0:27:52.070,0:27:57.090
+en les considérant comme un début, un milieu et une fin, ce réseau essaie vraiment
+
+0:27:57.090,0:28:02.640
+d'apprendre, compte tenu d'un point de départ et d'arrivée, si cette
+
+0:28:02.640,0:28:05.850
+interpolation des points de départ et d'arrivée est valide. Il essaie donc vraiment
+
+0:28:05.850,0:28:13.710
+d'interpoler en douceur ces caractéristiques compte tenu de cette entrée visuelle.
+
+0:28:13.710,0:28:17.760
+Le réseau est assez simple, c'est un réseau siamois de triplets.
+
+0:28:17.760,0:28:22.800
+Vous avez trois images, vous les donnez chacune indépendamment, vous concaténez
+
+0:28:22.800,0:28:25.980
+les caractéristiques que vous obtenez à partir de ces trois images et ensuite vous
+
+0:28:25.980,0:28:29.640
+effectuez un problème de classification binaire. Vous prédisez si cette chose est
+
+0:28:29.640,0:28:33.240
+correcte ou incorrecte, qu'il s'agisse d'un mélange ou pas.
+
+0:28:33.240,0:28:37.410
+Vous pouvez minimiser cela avec perte d'entropie croisée
+
+0:28:37.410,0:28:41.900
+et vous pouvez entraîner tout ce réseau de bout en bout.
+
+0:28:42.140,0:28:48.060
+Donc, encore une fois, comme je l'ai déjà dit, le plus proche voisin est un bon moyen
+
+0:28:48.060,0:28:52.890
+pour visualiser ce que ces réseaux apprennent. Nous poursuivons le travail préalable et nous
+
+0:28:52.890,0:28:58.260
+regardons les voisins les plus proches des images. Ainsi, sur la gauche
+
+0:28:58.260,0:29:02.070
+vous avez une image requête et vous donnez cette image au réseau, vous obtenez une caractéristique et
+
+0:29:02.070,0:29:05.730
+alors vous regardez les voisins les plus proches dans cette représentation de caractéristique.
+
+0:29:05.730,0:29:11.850
+Nous faisons cela pour ImageNet, « Shuffle&Learn » [S&L dans la suite], pour des caractéristiques aléatoires.
+
+0:29:11.850,0:29:16.260
+Ce que vous observez, c'est qu'il y a une différence très nette entre ce 
+
+0:29:16.260,0:29:22.500
+que vous donnent ImageNet, S&L et l’aléa. Dans la première ligne, si vous regardez la
+
+0:29:22.500,0:29:26.880
+scène de gymnastique, ImageNet est vraiment bon pour comprendre qu'il s'agit d'une scène de gymnastique.
+
+0:29:26.880,0:29:30.930
+C’est le voisin le plus proche qu'il récupère, son apparence est très différente de la scène initiale,
+
+0:29:30.930,0:29:35.670
+l'image requête que nous avons donnée. Le sol est beaucoup mieux
+
+0:29:35.670,0:29:42.240
+éclairé. Dans la requête, le sol était noir. L'exercice exact
+
+0:29:42.240,0:29:45.780
+n'est pas vraiment le même, mais ImageNet est vraiment bon pour
+
+0:29:45.780,0:29:50.760
+faire s'effondrer toute cette catégorie sémantique et apporter
+
+0:29:50.760,0:29:56.130
+différentes scènes de gymnastique ensemble à proximité dans l'espace de représentation.
+
+0:29:56.130,0:30:00.660
+Même chose pour la ligne du bas. Donc, vous avez une scène en plein air et
+
+0:30:00.660,0:30:04.140
+ImageNet est immédiatement en mesure de capter cette partie extérieure.
+
+0:30:04.140,0:30:08.190
+Il est capable de comprendre qu'il y a de l'herbe et ainsi de suite. Il associe ces
+
+0:30:08.190,0:30:14.640
+deux points ensemble dans l'espace de présentation. Si vous regardez, le point le plus à droite,
+
+0:30:14.640,0:30:19.890
+les voisins les plus proches récupérés par le réseau aléatoire, vous voyez 
+
+0:30:19.890,0:30:24.270
+qu'il se concentre sur la couleur. Donc, dans la rangée du haut, c'est une sorte de concentration sur le noir
+
+0:30:24.270,0:30:29.160
+le sol, il regarde vraiment, peut-être, la couleur noire dans cette image.
+
+0:30:29.160,0:30:32.970
+C'est comme ça qu'il récupère son plus proche voisin. Maintenant, si vous regardez
+
+0:30:32.970,0:30:37.080
+S&L, les voisins les plus proches sont assez bizarres. Ce n'est pas immédiatement clair
+
+0:30:37.080,0:30:40.470
+de savoir s’il se concentre sur la couleur ou si il se concentre sur le
+
+0:30:40.470,0:30:46.260
+concept sémantique. Après un examen plus approfondi et après avoir examiné
+
+0:30:46.260,0:30:50.190
+beaucoup de ces exemples, nous avons compris qu'il s'agissait en fait de la 
+
+0:30:50.190,0:30:54.299
+pose de la personne. Si vous regardez, dans la rangée du haut, la personne est 
+
+0:30:54.299,0:30:57.990
+à l'envers et c'est en quelque sorte le voisin le plus proche qui est récupéré aussi.
+
+0:30:57.990,0:31:03.299
+Et dans la deuxième rangée, la personne a ses pieds d’une manière particulière.
+
+0:31:03.299,0:31:07.440
+Il essaie vraiment d'avoir ces
+
+0:31:07.440,0:31:11.549
+plus proches voisins là et il ignore toute la scène. Il ne s'est pas
+
+0:31:11.549,0:31:16.139
+vraiment concentré sur le fond. Et quand nous avons réfléchi à cela, pourquoi
+
+0:31:16.139,0:31:20.940
+un réseau essaierait-il de faire quelque chose de ce genre ? Eh bien, nous avons pensé
+
+0:31:20.940,0:31:26.429
+à notre tâche de prétexte. La tâche de prétexte était de prédire l'ordre, 
+
+0:31:26.429,0:31:30.480
+de prédire si les choses sont dans le bon ordre ou non. Pour ce faire
+
+0:31:30.480,0:31:35.700
+vous devez vraiment vous concentrer sur ce qui bouge de la même manière, ou 
+
+0:31:35.700,0:31:39.840
+dans ce cas les gens. Donc, si vous vous concentrez sur le contexte, vous 
+
+0:31:39.840,0:31:42.450
+ne pourrez jamais répondre assez bien à cette question car
+
+0:31:42.450,0:31:46.409
+l'arrière-plan ne change pas beaucoup entre trois images qui sont prises 
+
+0:31:46.409,0:31:49.919
+à proximité dans une vidéo. La seule chose qui change est la personne ou
+
+0:31:49.919,0:31:54.749
+les choses qui bougent dans cette vidéo. Donc, en quelque sorte par accident, 
+
+0:31:54.749,0:31:58.740
+nous avons entraîné un réseau qui essayait vraiment d'examiner les choses
+
+0:31:58.740,0:32:03.029
+qui sont en mouvement et a fini par se concentrer sur la pose des gens. 
+
+0:32:03.029,0:32:09.419
+Bien sûr, c'est mon interprétation. Nous avons voulu vérifier cela
+
+0:32:09.419,0:32:15.749
+quantitativement, donc nous avons pris notre représentation et nous l'avons finetunée
+
+0:32:15.749,0:32:19.679
+sur cette tâche « d'estimation des points clés humains ». Cette tâche est donc essentiellement,
+
+0:32:19.679,0:32:25.529
+pour un humain donné, vous devez prédire où se trouvent certains points clés. 
+
+0:32:25.529,0:32:30.779
+Donc les points clés sont définis comme étant fondamentaux : le nez, le
+
+0:32:30.779,0:32:36.840
+cou, l'épaule gauche, l'épaule droite, le coude droit, le coude gauche, le poignet, etc.
+
+0:32:36.840,0:32:40.440
+Vous disposez donc d'un ensemble de points clés prédéfinis et vous entraînez
+
+0:32:40.440,0:32:44.399
+un réseau à les prédire. C'est donc vraiment utile pour quelque chose comme
+
+0:32:44.399,0:32:51.509
+le suivi [« tracking »] ou l'estimation de la pose d'une personne. Nous avons donc pris notre méthode « S&L » autosupervisée
+
+0:32:51.509,0:32:56.220
+et nous l'avons finetunée sur deux jeux de données appelés Flick et MPII.
+
+0:32:56.220,0:33:01.710
+Nous avons fait la même chose pour un réseau ImageNet et un réseau supervisé, qui
+
+0:33:01.710,0:33:04.919
+était à l'époque AlexNet. Donc AlexNet est l'architecture que nous avons utilisée.
+
+0:33:04.919,0:33:12.210
+De manière assez surprenante, nous avons constaté que la représentation
+
+0:33:12.210,0:33:16.320
+autosupervisée était très compétitive ou même légèrement meilleure que celle d'ImageNet qui est une
+
+0:33:16.320,0:33:21.509
+représentation supervisée pour cette tâche d'estimation des points clés. 
+
+0:33:21.509,0:33:25.200
+Dans ce cas, l’indicateur que je mesure est l’aire sous la courbe (AUC), donc plus c'est haut, mieux c'est.
+
+0:33:25.200,0:33:28.350
+Vous pouvez voir que cela fonctionne assez bien, ce qui
+
+0:33:28.350,0:33:32.490
+nous a beaucoup surpris car nous n'avions pas pensé à cette tâche lorsque
+
+0:33:32.490,0:33:37.710
+nous avons conçu cette tâche de prétexte. Nous pensions vraiment que cette prétexte
+
+0:33:37.710,0:33:42.540
+nous aiderait à mieux comprendre les actions, mais il s'avère que vous
+
+0:33:42.540,0:33:45.990
+pouvez avoir des résultats surprenants en fonction de ce que vous créez
+
+0:33:45.990,0:33:50.880
+comme tâche de prétexte. Dans ce cas, il s'agissait donc d'une estimation de la pose. 
+
+0:33:50.880,0:33:56.580
+[Etudiant : pour cet exemple vous avez finetuné l'estimation ponctuelle
+
+0:33:56.580,0:34:02.880
+de points clés, donc c'est un peu une étape supervisée une fois que vous 
+
+0:34:02.880,0:34:10.110
+avez vos représentations de prétexte ?] Oui, le pipeline va généralement
+
+0:34:10.110,0:34:15.360
+être : vous faites une étape de pré-entraînement, cela peut être sur ImageNet,
+
+0:34:15.360,0:34:18.510
+pour prédire une classe parmi 1000 et ensuite vous avez une tâche en 
+
+0:34:18.510,0:34:22.530
+aval où vous avez un certain nombre de labels. Donc, dans ce cas
+
+0:34:22.530,0:34:28.020
+c'est prédire les points clés humains. Dans cette façon d'évaluer,
+
+0:34:28.020,0:34:32.580
+il faut un tas de réseaux pré-entraînés puis les
+
+0:34:32.580,0:34:36.810
+finetuner en utilisant les mêmes données supervisées à la fin. Ainsi ce
+
+0:34:36.810,0:34:42.030
+que vous évaluez, c'est à quel point c’est bon en partant soit d’un réseau 
+
+0:34:42.030,0:34:45.570
+réseau supervisé sur ImageNet ou soit d’un réseau S&L pour accomplir cette tâche
+
+0:34:45.570,0:34:54.030
+d'estimation des points clés. [D'accord, merci. Autre question : est-il étrange que cela fonctionne bien puisque S&L
+
+0:34:54.030,0:34:59.700
+se concentre sur le fond ?] En fait, il se concentre beaucoup sur le 
+
+0:34:59.700,0:35:04.080
+premier plan. C'est ce que j'essayais de montrer dans cet
+
+0:35:04.080,0:35:07.860
+exemple. Si vous regardez le plus proche voisin, il est vraiment focalisé
+
+0:35:07.860,0:35:11.310
+sur la personne ok ? C'est regarder la personne à l'envers
+
+0:35:11.310,0:35:16.710
+pour trouver son voisin le plus proche. Et la raison est que si vous voulez
+
+0:35:16.710,0:35:20.970
+parler de l'ordre des images, il faut en fait se concentrer sur les choses 
+
+0:35:20.970,0:35:25.260
+qui bougent. Dans ces vidéos, les gens sont les choses qui bougent. Donc si
+
+0:35:25.260,0:35:30.270
+il se concentre sur le fond, il ne sera pas en mesure de résoudre la tâche S&L.
+
+0:35:30.270,0:35:35.750
+C'était donc un peu surprenant
+
+0:35:35.750,0:35:41.060
+et cela montre que si vous concevez bien votre tâche de prétexte, cela
+
+0:35:41.060,0:35:47.270
+fonctionnera bien pour un certain ensemble de tâches en aval. Et il y a eu
+
+0:35:47.270,0:35:52.670
+des méthodes assez sympathiques depuis, qui portent essentiellement sur
+
+0:35:52.670,0:35:57.590
+la prédiction de ça, utiliser la séquentialité, si les
+
+0:35:57.590,0:36:01.160
+choses sont dans le bon ordre ou non. Il s'agit donc de réseaux bizarres
+
+0:36:01.160,0:36:04.940
+qui, au fond, plutôt que de résoudre un problème de classification binaire, 
+
+0:36:04.940,0:36:10.970
+essaient en fait de prédire laquelle des images est la plus différente ou
+
+0:36:10.970,0:36:16.369
+la bizarre, celle qui est trafiquée. Et cela, car vous augmentez
+
+0:36:16.369,0:36:19.130
+la quantité d'informations que vous prédisez comme sorties.
+
+0:36:19.130,0:36:23.869
+Ce genre de réseau finit par faire de mieux en mieux. Et il y a aussi des
+
+0:36:23.869,0:36:27.550
+raisons concernant plus d'images à la fois. Vous avez donc vu des images et
+
+0:36:31.060,0:36:36.460
+vidéos. Il y a eu aussi beaucoup de travail créatif au niveau du multimodal, où
+
+0:36:36.460,0:36:42.220
+il faut deux modalités. Par exemple la vidéo et le son, ou deux entrées sensorielles.
+
+0:36:42.220,0:36:47.680
+Ces deux ont été très populaires et un assez bon travail en a résulté.
+
+0:36:47.680,0:36:54.190
+Ainsi, le signal clé dans ces travaux est de prédire si une image ou disons
+
+0:36:54.190,0:37:00.490
+un clip vidéo, correspond à un clip audio. Ainsi, la façon dont vous pouvez construire ces
+
+0:37:00.490,0:37:06.700
+tâches consistent à prendre une vidéo et vous pouvez en principe simplement
+
+0:37:06.700,0:37:11.800
+échantillonnez des images et de la même manière, prendre une piste audio et en échantillonner une partie.
+
+0:37:11.800,0:37:15.040
+Maintenant, le problème consiste essentiellement à prédire si ces choses 
+
+0:37:15.040,0:37:23.520
+correspondent ou non. Donc, étant donné cette vidéo entière d'une batterie,
+
+0:37:23.520,0:37:27.910
+vous pouvez échantillonner l'image et le son correspondant, et appeler cela 
+
+0:37:27.910,0:37:33.550
+positif. Et dans ce cas, vous prenez une vidéo différente, et vous prenez
+
+0:37:33.550,0:37:37.210
+l'audio de la vidéo de la batterie et cela devient votre négatif. Et donc, encore une fois, vous
+
+0:37:37.210,0:37:40.150
+pouvez résoudre un problème de classification binaire en prenant ces
+
+0:37:40.150,0:37:43.200
+positifs et négatifs. L'architecture est donc assez simple.
+
+0:37:46.920,0:37:49.980
+Vous prenez une image, vous la passez dans un
+
+0:37:49.980,0:37:54.570
+sous-réseau de vision. Vous faites passez votre audio, dans sous-réseau d’audio
+
+0:37:54.570,0:38:00.990
+et obtenez 128 caractéristiques dimensionnelles et donc aussi des enchâssements. Ensuite, vous
+
+0:38:00.990,0:38:05.610
+les fusionnez et avez un problème de classification binaire, en disant
+
+0:38:05.610,0:38:09.360
+si ces choses correspondent ou non. Donc, à la fin, il s'agit simplement de résoudre un
+
+0:38:09.360,0:38:18.420
+problème binaire unique. Cela montre que vous pouvez réellement faire un
+
+0:38:18.420,0:38:22.770
+tas de choses agréables quand on entraîne les réseaux de cette façon. Ainsi, vous pouvez
+
+0:38:22.770,0:38:26.610
+répondre à la question « Qu'est-ce qui fait un son ? », car le réseau a vraiment besoin
+
+0:38:26.610,0:38:31.050
+pour se concentrer, pour prédire si le son provient de cette vidéo. Il s'agit également
+
+0:38:31.050,0:38:36.330
+d’identifier ce qui, dans la vidéo, pourrait produire le son, donc si c'est 
+
+0:38:36.330,0:38:39.810
+le son d'une guitare, il doit comprendre ce à quoi ressemble une guitare.
+
+0:38:39.810,0:38:43.650
+Ou si c'est une batterie, il doit identifier approximativement ce à quoi ressemble
+
+0:38:43.650,0:38:51.680
+une batterie. Dans ce cas particulier, l'auteur a examiné les visualisations
+
+0:38:51.680,0:38:57.960
+deux instruments. Vous avez donc un piano et une flûte, et vous regardez
+
+0:38:57.960,0:39:03.840
+juste l'information de la vidéo et rien d'autre. Le réseau accorde
+
+0:39:03.840,0:39:10.170
+une très grande importance visuelle au piano et à la flûte.
+
+0:39:10.170,0:39:14.400
+Et ce, car lorsque vous transmettez cette image, il sait
+
+0:39:14.400,0:39:17.720
+qu'il va y avoir ces deux types de choses qui peuvent produire des sons.
+
+0:39:17.720,0:39:24.650
+Il apprend donc vraiment à identifier automatiquement ce genre d'objets.
+
+0:39:25.360,0:39:30.710
+[Etudiant : dans la diapositive avant lorsque vous aviez le ConvNet
+
+0:39:30.710,0:39:35.420
+sur le spectrogramme, savez-vous quelle est la taille du noyau pour ce 
+
+0:39:35.420,0:39:39.220
+ConvNet audio ? Je suis intéressé de savoir s'il est logique d'avoir une 
+
+0:39:39.220,0:39:47.810
+taille rectangulaire ou carrée pour le noyau]. Ce sont des noyaux carrés. Il y a maintenant des modèles 
+
+0:39:47.810,0:39:52.190
+modernes qui fonctionnent essentiellement sur le log-spectrogramme donc il
+
+0:39:52.190,0:39:55.990
+encore besoin de décider manuellement comment calculer exactement ce spectrogramme.
+
+0:39:55.990,0:40:00.050
+Les gens ont maintenant compris que vous pouvez utiliser l'audio brut et que vous pouvez
+
+0:40:00.050,0:40:04.850
+appliquer des convolutions directement sur le signal audio. [Alfredo : oui, oui, bien sûr].
+
+0:40:04.850,0:40:08.540
+Il s'agit généralement d'une petite fenêtre, cela dépend vraiment de la
+
+0:40:08.540,0:40:13.220
+vidéo que vous utilisez. Environ une seconde de son en une seconde
+
+0:40:13.220,0:40:23.840
+de la vidéo. Maintenant que je vous ai montré qu’il existe de multiples
+
+0:40:23.840,0:40:30.410
+façons créatives différentes de définir ce qu'est une tâche de prétexte, essayons de voir ce qu'est 
+
+0:40:30.410,0:40:35.270
+une prétexte apprend et comment pouvez-vous, si je vous donne 25
+
+0:40:35.270,0:40:40.430
+tâches de prétexte, comment pouvez-vous a priori décider laquelle utiliser
+
+0:40:40.430,0:40:47.930
+et ce qu'elles vont apprendre. La première chose est que les tâches de prétexte
+
+0:40:47.930,0:40:52.610
+sont en fait complémentaires. Il y a donc eu ce très beau papier en 2017 
+
+0:40:52.610,0:40:58.280
+qui a examiné deux de ces tâches. La position relative a été la première 
+
+0:40:58.280,0:41:01.760
+dont j’ai parlé, où vous prenez deux patchs et vous essayez de prédire ce 
+
+0:41:01.760,0:41:05.660
+leur position relative les uns par rapport aux autres est et la deuxième est la colorisation.
+
+0:41:05.660,0:41:10.100
+Il s'agit de prendre une image en niveaux de gris et d'essayer d'en prédire les couleurs. Et alors
+
+0:41:10.100,0:41:14.810
+ces auteurs ont montré est que si l'on entraîne un seul réseau à faire ces
+
+0:41:14.810,0:41:18.920
+ces deux tâches, pour prédire à la fois la sortie de colorisation ainsi que
+
+0:41:18.920,0:41:23.210
+position relative, vous pouvez en fait obtenir des gains de performance. Donc, encore une fois, c'est
+
+0:41:23.210,0:41:26.000
+évalué de la même manière dont je parlais plus tôt. Vous avez un réseau
+
+0:41:26.000,0:41:29.120
+pré-entraîné ensuite vous l'évaluez essentiellement sur une tâche
+
+0:41:29.120,0:41:34.210
+en l'occurrence le benchmark de classification et de détection d'ImageNet.
+
+0:41:34.210,0:41:39.980
+Et dans les deux cas, vous pouvez obtenir des gains en accomplissant ces deux tâches
+
+0:41:39.980,0:41:44.840
+et obtenir le meilleur des deux. Donc, d'une certaine manière, cela vous montre aussi qu'une
+
+0:41:44.840,0:41:49.220
+prétexte unique peut ne pas être la bonne réponse. Prédire juste des tâches colorées ou juste
+
+0:41:49.220,0:41:53.750
+prédire une position relative n'est peut-être pas la bonne réponse pour apprendre
+
+0:41:53.750,0:41:59.090
+des représentations autosupervisées. En fait, si vous raisonnez sur
+
+0:41:59.090,0:42:04.790
+l'information qui est prédite, elle varie vraiment beaucoup d'une tâche à l'autre. Ainsi, en commençant
+
+0:42:04.790,0:42:08.030
+avec la tâche de position relative, vous prédisez un niveau assez bas.
+
+0:42:08.030,0:42:12.980
+Vous ne prédisez que huit lieux possibles. Donc, juste un problème de
+
+0:42:12.980,0:42:16.580
+classification à 8 sorties. Pour le problème S&L, vous prédisez si les
+
+0:42:16.580,0:42:19.580
+choses sont mélangées ou non. Il s'agit donc d'un simple problème 
+
+0:42:19.580,0:42:23.560
+binaire. C'est donc une quantité d'informations moins importante qui est prédite.
+
+0:42:23.560,0:42:28.310
+Alors que si vous regardez à l'extrême droite, si vous essayez de prédire ce qui
+
+0:42:28.310,0:42:31.580
+manque dans une image et essayez de reconstruire les pixels, vous prédisez
+
+0:42:31.580,0:42:35.870
+beaucoup d'informations car toute cette boîte contient… je veux dire
+
+0:42:35.870,0:42:40.070
+que vous pouvez avoir espace d'apparence très différent, ok ? Donc, en
+
+0:42:40.070,0:42:44.180
+terme de pixels, vous pouvez avoir beaucoup de valeurs différentes pour
+
+0:42:44.180,0:42:47.450
+toute cette région prédictive. Donc vous prédisez beaucoup d'informations
+
+0:42:47.450,0:42:52.070
+là. Il s'agit donc d'une façon simple de penser aux questions de prétexte, 
+
+0:42:52.070,0:42:56.830
+combien d'informations vous prédisez et qui peut déjà vous donner une 
+
+0:42:56.830,0:43:01.070
+bonne idée de si vous prédisez réellement beaucoup d'informations. Et donc
+
+0:43:01.070,0:43:08.300
+probablement que la représentation sera en fait meilleure. Donc, en général, c'est
+
+0:43:08.300,0:43:13.670
+ce qui va guider la suite de mon exposé. Vous pouvez penser à ceci, cette 
+
+0:43:13.670,0:43:17.270
+prédiction de plus d'informations comme sur un axe, et je vais parler de 
+
+0:43:17.270,0:43:21.470
+trois différentes sortes de catégories. En fait deux catégories différentes. Donc
+
+0:43:21.470,0:43:24.950
+les tâches de prétexte sont ce dont j'ai parlé jusqu'à présent, c’est à dire juste de prédire
+
+0:43:24.950,0:43:30.260
+des problèmes de classification simples comme les différents degrés de rotation, etc.
+
+0:43:30.260,0:43:34.970
+Les méthodes contrastives qui prédisent plus d'informations
+
+0:43:34.970,0:43:39.980
+que ces tâches de prétexte et dans cet exposé particulier, je ne vais
+
+0:43:39.980,0:43:43.130
+pas parler de modèles générateurs. Mais les modèles générateurs prédisent
+
+0:43:43.130,0:43:48.559
+encore plus d'informations qu’une méthode contrastive typique et donc
+
+0:43:48.559,0:43:53.480
+c'est essentiellement une façon de penser à ces classes de méthodes. [Etudiant : comment
+
+0:43:53.480,0:43:59.510
+entraînons nous de multiples tâches de pré-entraînement ? Mélangeons-nous les données pour les deux tâches ?
+
+0:43:59.510,0:44:06.200
+Si l’entraînement est individuel, cela conduit-il à un oubli catastrophique ?]
+
+0:44:06.200,0:44:10.400
+La façon la plus simple de faire l’entraînement est d’alterner les batchs 
+
+0:44:10.400,0:44:14.660
+de sorte que vous puissiez disposer du même réseau et que dans un batch, 
+
+0:44:14.660,0:44:17.990
+vous lui donnez des images en noir et blanc et en lui demandant de prédire 
+
+0:44:17.990,0:44:23.390
+la couleur et dans le deuxième batch vous l'alimentez et
+
+0:44:23.390,0:44:26.480
+demandez de faire les tâches de position relative. Vous avez deux
+
+0:44:26.480,0:44:33.829
+couches différentes, comme les sommets des couches des réseaux entièrement connectés. Ainsi, vous pouvez
+
+0:44:33.829,0:44:38.150
+alterner fondamentalement entre ces tâches. Ce que les auteurs de l'article 
+
+0:44:38.150,0:44:44.619
+ont fait est en fait un peu plus sophistiqués. Ils avaient essentiellement 
+
+0:44:44.619,0:44:50.569
+un réseau multitâche de taille trois ou quatre selon le nombre de tâches de 
+
+0:44:50.569,0:44:54.470
+prétextes et les résolvez toutes en même temps. Il y avait
+
+0:44:54.470,0:44:58.819
+une meilleure répartition des poids entre ces trois ou quatre réseaux de 
+
+0:44:58.819,0:45:10.910
+tâches. [Etudiant : à propos des tâches de prétexte, quelle performance devons-nous viser ?
+
+0:45:10.910,0:45:15.349
+Quand savons-nous que cela suffit ? Ou quand pouvons-nous arrêter ?
+
+0:45:15.349,0:45:19.940
+parce qu'en fin de compte, nous nous soucions de la performance en aval.
+
+0:45:19.940,0:45:23.930
+C’était la première question. La deuxième est que vous parliez du manque d'information et de
+
+0:45:23.930,0:45:29.299
+plus d'informations, par exemple dans le cas que vous avez mentionné où vous 
+
+0:45:29.299,0:45:32.780
+prédisiez si une séquence est bonne ou non, vous auriez pu aussi prédire
+
+0:45:32.780,0:45:38.510
+la permutation réelle des images, n'est-ce pas ? Alors, comment décidez-vous
+
+0:45:38.510,0:45:45.470
+entre de la tâche à suivre et sur la base de quoi ?] La deuxième partie de
+
+0:45:45.470,0:45:49.700
+la question sera en fait dans quelques diapositives, donc je vais reporter
+
+0:45:49.700,0:45:53.390
+cette question à un peu plus tard. La première partie : comment entraînez-
+
+0:45:53.390,0:45:58.200
+vous ce modèle sur une tâche prétexte ? Donc, un bon signe d'une tâche de
+
+0:45:58.200,0:46:02.970
+prétexte est qu'à mesure que votre précision sur la tâche de prétexte s'améliore, de sorte que vous
+
+0:46:02.970,0:46:05.970
+prédisez mieux si les choses sont mélangées ou non ou à mesure que vous vous améliorez
+
+0:46:05.970,0:46:10.830
+à la prédiction des rotations, la précision sur la sémantique les tâches en 
+
+0:46:10.830,0:46:15.870
+aval s'amélioreront également. Donc, une bonne règle de base pour l'utilisation de ces
+
+0:46:15.870,0:46:21.570
+tâches de prétexte est de demander ou d’essayer de faire une tâche de prétexte
+
+0:46:21.570,0:46:26.340
+aussi difficile que possible et ensuite optimiser ou réduire la perte sur
+
+0:46:26.340,0:46:31.260
+cette tâche de prétexte pour que votre précision finale, en aval, s'améliore.
+
+0:46:31.260,0:46:36.580
+C’est très corrélé. [Etudiant : donc en pratique, vous entraînez l’ensemble
+
+0:46:36.760,0:46:41.079
+du pipeline, chaque ligne à chaque fois, comme la prétexte et l'aval
+
+0:46:41.079,0:46:44.740
+et mesurez la performance. Ce n'est donc pas comme si vous arrêtiez la prétexte à un
+
+0:46:44.740,0:46:47.950
+certain point et ensuite passez à la tâche en aval ou quelque chose comme ça]
+
+0:46:47.950,0:46:51.550
+C'est généralement ainsi que ces méthodes sont évaluées, mais je suppose que lorsque vous êtes
+
+0:46:51.550,0:46:55.690
+en développement, vous feriez probablement ce pipeline à plusieurs reprises.
+
+0:46:55.690,0:47:00.579
+Ces méthodes sont donc entraînées comme vous le faites : votre tâche de prétexte puis vous
+
+0:47:00.579,0:47:04.329
+arrêtez, puis vous effectuez votre tâche d'évaluation en aval et cela vous 
+
+0:47:04.329,0:47:08.289
+donne la mesure finale de la qualité de votre tâche de prétexte et vous
+
+0:47:08.289,0:47:15.210
+faites tout cela une fois. [Etudiant : bien, merci].
+
+0:47:15.339,0:47:20.849
+Et en ce qui concerne la deuxième partie de votre question, la partie la plus informative, j’y viendrai
+
+0:47:20.849,0:47:24.609
+plus tard… la permutation et ainsi de suite. Bien, donc ce sont en quelque sorte 
+
+0:47:27.770,0:47:34.520
+les trois principaux sceaux et les deux premiers vont être couverts maintenant. Donc ceci
+
+0:47:34.520,0:47:39.170
+est un autre travail que nous avons fait. Il consistait à passer à l'échelle
+
+0:47:39.170,0:47:45.140
+l'apprentissage autosupervisé. Dans ce travail particulier, nous nous sommes donc concentrés sur deux problèmes. Le premier était le
+
+0:47:45.140,0:47:49.930
+problème de colorisation dont j'ai déjà parlé et le second est le suivant.
+
+0:47:49.930,0:47:56.180
+C’est une variante plus informative de la tâche de position relative.
+
+0:47:56.180,0:48:00.770
+Cette tâche est appelée « Jigsaw puzzles ». L'idée est que vous prenez une image et que vous
+
+0:48:00.770,0:48:05.299
+la divisez en plusieurs parties différentes et essayez de prédire, même
+
+0:48:05.299,0:48:09.049
+si l'on mélange ces patchs par une permutation, la permutation
+
+0:48:09.049,0:48:13.309
+qui a été appliquée à l'entrée. C’est très similaire à ce l'étudiant
+
+0:48:13.309,0:48:16.480
+suggérait plus tôt. D'accord, donc, la façon dont vous résolvez ce problème
+
+0:48:19.880,0:48:24.799
+est que vous prenez, disons dans ce cas trois patchs, que vous donnez chacun
+
+0:48:24.799,0:48:28.609
+de manière indépendante. Vous concaténez leurs caractéristiques. Et ensuite, vous
+
+0:48:28.609,0:48:34.039
+classez la permutation utilisée pour permuter ces patchs d'entrée. 
+
+0:48:34.039,0:48:38.900
+Les auteurs ont utilisé neuf patchs pour résoudre ce problème. Cela va donc
+
+0:48:38.900,0:48:44.650
+être neuf factorielle, ce qui est donne 360 000 permutations. Bien sûr,
+
+0:48:44.650,0:48:48.799
+lorsque vous essayez d'effectuer cette classification à la fin, cela
+
+0:48:48.799,0:48:52.730
+signifie que votre couche entièrement connectée devrait avoir 360 000 neurones de sortie,
+
+0:48:52.730,0:48:57.319
+ce qui est un nombre assez important. Donc, en pratique, ce que les auteurs ont fait, c'est
+
+0:48:57.319,0:49:03.950
+avoir un sous-ensemble de permutations. Ils ont échantillonné
+
+0:49:03.950,0:49:08.030
+100 permutations parmi les neuf factorielles permutations et ensuite
+
+0:49:08.030,0:49:13.579
+ont fait la classification des 100 poids. Donc, vous pouvez
+
+0:49:13.579,0:49:18.380
+considérer la taille de ce sous-ensemble comme la complexité du problème ou
+
+0:49:18.380,0:49:21.770
+la quantité d'informations que vous prédisez. Si vous prédisez la totalité 
+
+0:49:21.770,0:49:25.670
+des neuf factorielles, vous prédisez en fait beaucoup d'information
+
+0:49:25.670,0:49:29.539
+à la sortie. Si vous ne faites qu'un sous-échantillon, disons, deux ou trois permutations,
+
+0:49:29.539,0:49:32.510
+alors vous ne prédisez pas beaucoup d'informations. Donc le problème
+
+0:49:32.510,0:49:38.750
+devient en fait de plus en plus difficile à mesure que la taille du sous-ensemble augmente. Ainsi, dans ce travail
+
+0:49:38.750,0:49:43.819
+nous voulions essentiellement étudier le rôle global de la quantité d'informations
+
+0:49:43.819,0:49:48.170
+prédite et quelle est la qualité de la représentation finale apprise. Donc
+
+0:49:48.170,0:49:53.329
+en termes d'évaluation, il y a deux façons de la faire une fois que vous avez votre
+
+0:49:53.329,0:49:57.589
+réseau autosupervisé pré-entraîné. Il y a beaucoup de débats pour savoir quelle 
+
+0:49:57.589,0:50:02.750
+méthode est la bonne pour évaluer les réseaux. La première méthode consiste 
+
+0:50:02.750,0:50:06.710
+en gros, à finetuner avec précision toutes les couches d'un réseau. Vous avez donc un réseau pour une tâche 
+
+0:50:06.710,0:50:11.510
+en aval, une estimation de la pose, ou disons la classification des images… vous entraînez ce réseau
+
+0:50:11.510,0:50:15.069
+et vous mettez à jour tous les paramètres de ce réseau pour la tâche en aval.
+
+0:50:15.069,0:50:20.329
+La deuxième façon consiste à utiliser votre réseau comme un extracteur de caractéristiques. Ainsi, vous
+
+0:50:20.329,0:50:23.930
+faites passer vos images, vous obtenez la représentation de vos caractéristiques
+
+0:50:23.930,0:50:27.579
+et vous n'entraînez un classifieur linéaire qu'en plus de cette représentation fixe des caractéristiques.
+
+0:50:27.579,0:50:32.120
+Dans ce travail particulier, nous avons dit qu'une bonne représentation
+
+0:50:32.120,0:50:36.590
+devrait être transférée avec peu d’entraînement. Nous avons donc opté pour 
+
+0:50:36.590,0:50:41.090
+la deuxième partie, qui consiste simplement à entraîner un classifieur linéaire au sommet d'un réseau
+
+0:50:41.090,0:50:45.200
+traité comme un extracteur de caractéristiques. Il y a donc bien sûr différents avantages et inconvénients à
+
+0:50:45.200,0:50:50.620
+utiliser les deux méthodes. La première méthode, qui consiste à finetuner toutes les couches, est de
+
+0:50:50.620,0:50:55.580
+traiter le réseau autosupervisé comme une initialisation car vous 
+
+0:50:55.580,0:50:59.690
+mettez à jour l'ensemble du réseau. Donc, si vos tâches en aval ont, disons
+
+0:50:59.690,0:51:03.710
+1 million d'images, vos poids mettent à jour tout votre réseau pour ces 1 million d’images.
+
+0:51:03.710,0:51:08.090
+Alors que dans le second cas, vous n’entraînez qu'un nombre très limité de
+
+0:51:08.090,0:51:12.320
+paramètres de l'extracteur de caractéristiques. Donc d'une certaine manière
+
+0:51:12.320,0:51:18.500
+la deuxième méthode consiste à mesurer la qualité d'une caractéristique que vous avez réalisé.
+
+0:51:18.500,0:51:24.030
+Ok donc, l'autre chose qui est en quelque sorte critique dans l'évaluation 
+
+0:51:24.030,0:51:28.860
+des méthodes autosupervisées consistent à les évaluer sur un ensemble de tâches différentes. Donc, plus tôt,
+
+0:51:28.860,0:51:32.100
+quand j'ai parlé de le travail sur le S&L, je vous ai montré les résultats 
+de
+
+0:51:32.100,0:51:36.900
+l'estimation de la pose. Ainsi, en ce qui concerne l'estimation de la pose, elle était très bien, mais en fait cela
+
+0:51:36.900,0:51:40.920
+n'a pas vraiment bien réussi dans d'autres tâches, comme la reconnaissance des actions, par exemple. Ainsi, dans cette
+
+0:51:40.920,0:51:44.910
+évaluation particulière, nous voulions corriger cette erreur et nous 
+
+0:51:44.910,0:51:49.260
+voulions nous concentrer sur de multiples tâches différentes comme la
+
+0:51:49.260,0:51:53.790
+classification d’images, le few-shot learning, la détection d'objets, la compréhension 3D,
+
+0:51:53.790,0:51:58.080
+la navigation et ainsi de suite. Nous avons défini un ensemble de neuf tâches.
+
+0:51:58.080,0:52:05.580
+Ainsi, la façon d'évaluer les représentations consiste à extraire des caractéristiques fixes
+
+0:52:05.580,0:52:09.210
+et vous pouvez extraire ces caractéristiques fixes de différentes parties 
+
+0:52:09.210,0:52:12.810
+du réseau, de sorte qu'elles peuvent provenir d'une couche très proche de l’entrée
+
+0:52:12.810,0:52:16.770
+ou d'une couche de très haut niveau qui est très proche de la sortie. 
+
+0:52:16.770,0:52:19.590
+De cette façon, vous mesurez la sémantique de chacun de ces différentes
+
+0:52:19.590,0:52:24.920
+couches. Et la chose standard que nous avons faite pour beaucoup
+
+0:52:25.109,0:52:29.430
+de ces expériences consistait à utiliser une tâche de classification d'images pour 
+
+0:52:29.430,0:52:34.769
+comprendre ce qui se passe. La tâche de classification d’images repose sur 
+
+0:52:34.769,0:52:37.980
+le jeu de données appelé VOC, qui est assez standard pour la détection.
+
+0:52:37.980,0:52:44.099
+L'idée est de prédire si une image a une des caractéristiques vingt classes 
+
+0:52:44.099,0:52:49.650
+suivantes. Une image peut donc avoir plus d'une classe.
+
+0:52:49.650,0:52:54.480
+Par exemple, cette photo d'une personne avec un chien a à la fois une personne et un chien.
+
+0:52:54.480,0:52:57.809
+Ce réseau doit donc reconnaître les deux objets que l’image contient, donc 
+
+0:52:57.809,0:53:02.759
+c’est peu plus difficile que pour ImageNet où il suffit de certifier un
+
+0:53:02.759,0:53:07.039
+des objets clés de l'image. La première chose que nous avons faite a donc 
+
+0:53:10.390,0:53:13.510
+été de vérifier l'hypothèse si l'augmentation de la quantité d’informations
+
+0:53:13.510,0:53:18.670
+prédite donne de meilleures représentations. Ainsi, en abscisse
+
+0:53:18.670,0:53:23.440
+nous augmentons le nombre de permutations que nous utilisons pour
+
+0:53:23.440,0:53:28.089
+entraîner notre réseau, donc ça passe de 100 à 10 000. Et sur l’axe
+
+0:53:28.089,0:53:31.630
+des y, nous mesurons la performance transférée en aval de ces
+
+0:53:31.630,0:53:35.769
+représentations pré-entraînes. C’est mesuré à l'aide d'une métrique appelée 
+
+0:53:35.769,0:53:41.339
+mAP, qui correspond à une précision moyenne. Donc car c'est un 
+
+0:53:41.339,0:53:45.339
+problème de classification multilabels, vous allez mesurer
+
+0:53:45.339,0:53:48.849
+la précision moyenne pour chacune des 20 classes différentes et vous 
+
+0:53:48.849,0:53:52.480
+calculez la moyenne de la précision. Donc plus c’est élevé, mieux c’est 
+
+0:53:52.480,0:53:57.250
+dans notre cas. Nous le faisons pour deux architectures différentes. AlexNet, qui
+
+0:53:57.250,0:54:02.289
+a été utilisé à l'origine dans le papier Jigsaw, puis dans le ResNet-50. Et ce que vous
+
+0:54:02.289,0:54:07.869
+observez pour AlexNet, est qu’augmenter le nombre de permutations est utile jusqu'à un
+
+0:54:07.869,0:54:12.609
+certain point mais le gain est globalement limité. Alors que pour ResNet, si vous
+
+0:54:12.609,0:54:16.690
+augmentez le nombre de permutations, la qualité de la représentation s'améliore de mieux en
+
+0:54:16.690,0:54:22.240
+mieux. Notre hypothèse était que le modèle ResNet a suffisamment de
+
+0:54:22.240,0:54:26.170
+capacité, qu'il peut réellement résoudre un problème de permutation très difficile, et
+
+0:54:26.170,0:54:30.279
+lorsqu'il résout un problème de permutation difficile, il est capable d'apprendre
+
+0:54:30.279,0:54:38.740
+de meilleures représentations qui se généralisent à différentes tâches en aval.
+
+0:54:38.740,0:54:42.910
+Ensuite, nous avons évalué notre méthode sur la tâche de détection d'objets. 
+
+0:54:42.910,0:54:47.349
+Donc la détection d'objets est le moyen d'identifier les objets présents
+
+0:54:47.349,0:54:51.910
+dans une image. Nous essayons de dessiner une boîte autour d'eux et la mesure est basée
+
+0:54:51.910,0:54:56.170
+sur la qualité de la disposition des boîtes autour de l'objet et si vous avez pu
+
+0:54:56.170,0:55:01.000
+identifier tous les objets d'une image. Et pour celle-ci aussi, nous 
+
+0:55:01.000,0:55:05.490
+utilisons les mêmes jeux de données COV. C'est donc dans ce cadre que nous
+
+0:55:05.490,0:55:09.900
+avons finetuné toutes les couches d'un réseau car c'est le standard 
+
+0:55:09.900,0:55:15.930
+en détection. Et ce que nous avons observé, c'est que, sur deux fractions différentes des
+
+0:55:15.930,0:55:21.200
+jeux de données VOC, la méthode Jigsaw était comparable, dans la marge
+
+0:55:21.200,0:55:27.060
+d'erreur d’un entraînement via une méthode supervisée par ImageNet. Donc
+
+0:55:27.060,0:55:30.600
+vous disposez d'un réseau supervisé par ImageNet, vous le finetunez sur la 
+
+0:55:30.600,0:55:35.369
+tâche de détection, et vous obtenez une précision moyenne de 70,5 ou 
+
+0:55:35.369,0:55:39.240
+76,2, et la méthode Jigsaw se situe essentiellement dans la marge d'erreur 
+
+0:55:39.240,0:55:45.660
+de ces méthodes. Ce qui en soi montre qu'elle avait effectivement une
+
+0:55:45.660,0:55:53.880
+belle propriété sémantique et a pu localiser assez bien les objets. Et pour mettre
+
+0:55:53.880,0:55:59.340
+ceci en contexte, pour l'apprentissage des caractéristiques sémantiques, en vision
+
+0:55:59.340,0:56:03.480
+par ordinateur en particulier, la détection d'objets est considérée comme l'ensemble de données de référence
+
+0:56:03.480,0:56:08.580
+pour parvenir à quelque chose. Ce résultat obtenu, lorsque
+
+0:56:08.580,0:56:12.030
+nous l'avons publié, était le plus proche que quiconque ait jamais eu
+
+0:56:12.030,0:56:17.150
+via pré-entraînement supervisée en matière de détection. 
+
+0:56:17.490,0:56:22.890
+Y a-t-il une question ? [Étudiant : est-ce que les tâches de prétexte
+
+0:56:22.890,0:56:28.500
+sont similaires à ce que nous pourrions essayer de réaliser avec l'apprentissage par transfert ou est-ce comme un
+
+0:56:28.500,0:56:33.570
+sous-ensemble de cela ? La façon dont vous évaluez ces tâches de prétexte est par
+
+0:56:33.570,0:56:37.260
+l'apprentissage par transfert, donc vous effectuez vos tâches de prétexte et ensuite vous 
+
+0:56:37.260,0:56:41.790
+finetunez sur un jeu de données pour une tâche particulière, comme la détection. L'évaluation est
+
+0:56:41.790,0:56:44.810
+toujours par apprentissage par transfert. La tâche suivante que nous avons examinée était
+
+0:56:51.190,0:56:56.350
+l'évaluation normale de surface. Il s'agit, compte tenu une entrée que vous 
+
+0:56:56.350,0:57:01.330
+essayez d’estimer, quelles sont les propriétés 3D de chaque pixel de
+
+0:57:01.330,0:57:06.730
+l'emplacement dans l'entrée. Vous essayez de prédire l'orientation de la surface. Donc en 3D
+
+0:57:06.730,0:57:13.060
+les vecteurs x, y et z de chaque surface particulière. Il s'agit d'une sorte de
+
+0:57:13.060,0:57:16.690
+problème de prédiction dense où il faut attribuer ce vecteur xyz à chaque
+
+0:57:16.690,0:57:22.109
+emplacement dans l'entrée. Pour cela nous utilisons ce beau jeu de données créé par la NYU.
+
+0:57:22.109,0:57:29.050
+Nous avons mesuré les propriétés de prédiction de notre méthode et l’avons
+
+0:57:29.050,0:57:33.940
+comparé à une méthode supervisée par ImageNet. Et donc, dans ce cas, nous avons mesuré
+
+0:57:33.940,0:57:38.770
+l'erreur médiane et le pourcentage de prédictions correctes. Plus l'erreur médiane
+
+0:57:38.770,0:57:42.070
+est basse, mieux c’est. Pour le pourcentage, plus il est élevé, mieux c’est.
+
+0:57:42.070,0:57:47.230
+Il s'est donc avéré que la tâche de pré-entraînement Jigsaw était vraiment
+
+0:57:47.230,0:57:51.670
+bonne dans ce cas et a apporté des améliorations significatives par rapport 
+
+0:57:51.670,0:57:56.080
+à ImageNet. C'est à dire qu'il s'agissait d’un entraînement préalable sur plusieurs ensembles différents, sur de
+
+0:57:56.080,0:58:00.160
+multiples découpages. Il a pu très facilement surpasser le réseau ImageNet
+
+0:58:00.160,0:58:05.740
+pré-entraîné de manière supervisée. Ainsi, encore une fois, cela montre que l'évaluation
+
+0:58:05.740,0:58:09.850
+d’une tâche de prétexte sur de multiples tâches différentes et de multiples jeux de données différents
+
+0:58:09.850,0:58:14.770
+est vraiment important pour comprendre ce qui se passe réellement dans une tâche de prétexte.
+
+0:58:14.770,0:58:20.470
+D'une certaine manière, Jigsaw intègre vraiment quelque chose comme la géométrie et
+
+0:58:20.470,0:58:23.830
+une information au niveau du pixel bien meilleure que celle des méthodes 
+
+0:58:23.830,0:58:26.640
+supervisées sur ImageNet. Enfin, nous avons trouvé le talon d'Achille de 
+
+0:58:30.690,0:58:35.610
+cette méthode, comme les tâches de pré-entraînement Jigsaw. Pour ce faire, 
+
+0:58:35.610,0:58:40.170
+nous évaluons dans un cadre de « few shot learning ». En few shot learning
+
+0:58:40.170,0:58:45.060
+vous avez un nombre très limité d'exemples d’entraînement. Vous entraînez
+
+0:58:45.060,0:58:49.830
+votre classifieur juste sur ces exemples d’entraînement très limités. Donc
+
+0:58:49.830,0:58:54.030
+sur l'axe des x, j'ai le nombre d'exemples d’entraînement qui ont été utilisés pour
+
+0:58:54.030,0:58:59.670
+entraîner une méthode. Donc cela va de 1 à 96. Et je vous montre les courbes
+
+0:58:59.670,0:59:03.660
+pour 2 méthodes autosupervisées différentes, Jigsaw entraîné sur
+
+0:59:03.660,0:59:07.740
+deux jeux de données différents. ImageNet qui est en haut et un
+
+0:59:07.740,0:59:13.110
+ResNet-50 aléatoire. Ce que vous pouvez observer, c'est qu'il y a un écart
+
+0:59:13.110,0:59:16.380
+de performance entre une méthode autosupervisée et une méthode supervisée.
+
+0:59:16.380,0:59:21.240
+Cet écart ne semble pas se réduire à mesure que l'on augmente le
+
+0:59:21.240,0:59:25.890
+nombre d'exemples étiquetés. Cela montre en quelque sorte que les
+
+0:59:25.890,0:59:29.700
+représentations, bien que pouvant être bonnes pour des tâches comme l'estimation de la pose
+
+0:59:29.700,0:59:35.040
+ou des tâches particulières comme l'estimation normale de surface, ont encore beaucoup de
+
+0:59:35.040,0:59:38.850
+différence entre l'aspect sémantique des données capturé. Car dans
+
+0:59:38.850,0:59:43.890
+ces quelques tâches d'apprentissage, si je vous donne une image et si vous
+
+0:59:43.890,0:59:47.250
+pouvez en dire quelque chose, votre représentation de caractéristique doit 
+
+0:59:47.250,0:59:50.750
+être vraiment bonne pour résoudre cette tâche. L'autre façon d'évaluer cette méthode était
+
+0:59:55.730,1:00:00.349
+d’examiner ce qu'elle apprend à chaque couche différente. Ainsi, nous
+
+1:00:00.349,1:00:06.770
+avons entraîné des classifieurs linéaires sur différentes couches de représentations
+
+1:00:06.770,1:00:11.240
+dans un ResNet-50. Donc de conv1 qui va être la couche la plus proche de
+
+1:00:11.240,1:00:15.500
+l'entrée, à la sortie, par exemple du bloc res2, du bloc res3 et du bloc res5.
+
+1:00:15.500,1:00:19.010
+La couche res5 est donc la représentation la plus élevée que vous
+
+1:00:19.010,1:00:23.510
+sortez d'un ResNet-50. Après cette représentation, c'est là que vous
+
+1:00:23.510,1:00:28.040
+effectuez ce Jigsaw, comme pour prédire la tâche de permutation. Et donc
+
+1:00:28.040,1:00:32.780
+vous regardez dans ce cas, l'axe des x qui représente l'endroit d’où la caractéristique
+
+1:00:32.780,1:00:38.000
+vient de conv1 ou res5, et sur l'axe des y, nous regardons encore une fois,
+
+1:00:38.000,1:00:44.000
+la précision moyenne de la classification des images sur VOC. Et curieusement, ce que vous voyez
+
+1:00:44.000,1:00:48.859
+c’est que la qualité de la représentation s'améliore lorsque l'on passe de conv1
+
+1:00:48.859,1:00:53.619
+à res4, de sorte que la précision moyenne augmente régulièrement,
+
+1:00:53.619,1:00:59.930
+mais vers la fin il y a une forte baisse. Donc de res4 à res5 il y a une forte baisse de
+
+1:00:59.930,1:01:04.339
+performance qui… [Alfredo : est-ce dû au fait qu'elle est spécialisée dans une tâche spécifique ?]
+
+1:01:04.339,1:01:10.490
+Oui, exactement. C'était donc très inquiétant car si vous affichez
+
+1:01:10.490,1:01:15.920
+cette chose pour un réseau supervisé, vous observez que de conv1 à res5 
+
+1:01:15.920,1:01:19.940
+la qualité de la représentation s'améliore toujours. Et c'est vrai pour à peu près
+
+1:01:19.940,1:01:24.650
+tout bon réseau supervisé. Alors que pour beaucoup de réseaux autosupervisés, nous
+
+1:01:24.650,1:01:28.910
+avons répété cette expérience pour la rotation, pour la colorisation, pour
+
+1:01:28.910,1:01:33.650
+la position relative… nous observons toujours cet écart très marqué de
+
+1:01:33.650,1:01:40.220
+res4 à res5. Donc, cela signifie que la tâche finale que nous sommes en train de résoudre, la tâche
+
+1:01:40.220,1:01:45.680
+de prétexte, n'est probablement pas très belle car ce n'est pas très bien aligné sur
+
+1:01:45.680,1:01:50.860
+les tâches sémantiques en aval que nous voulons vraiment résoudre.
+
+1:01:50.860,1:01:55.780
+Ce qui m'amène essentiellement à la partie suivante qui consiste à comprendre ce qui est
+
+1:01:55.780,1:02:01.200
+manquant dans ces tâches de prétextes ou ces tâches de substitution.
+
+1:02:01.470,1:02:07.080
+Donc, récapitulons. Les tâches de prétexte sont essentiellement des choses comme la prédiction d’une rotation ou
+
+1:02:07.080,1:02:12.720
+la prédiction de puzzles et si vous regardez tout ça avec du recul 
+
+1:02:12.720,1:02:16.890
+elles sont très surprenantes. Le fait même qu'elles fonctionnent
+
+1:02:16.890,1:02:22.080
+est super surprenant. Donc, pour les tâches de prétexte, nous avons ceci :
+
+1:02:22.080,1:02:26.010
+une étape de pré-entraînement qui est autosupervisée et ensuite nous avons notre tâche
+
+1:02:26.010,1:02:30.900
+de transfert comme la classification ou la détection d'images. Et c'est vraiment beaucoup 
+
+1:02:30.900,1:02:34.980
+de vœux pieux et d'espoir que la tâche de pré-entraînement et celle de transfert
+
+1:02:34.980,1:02:40.080
+soient super alignées. Il n'y a pas vraiment de preuve, c'est plus un très 
+
+1:02:40.080,1:02:43.770
+fort souhait quel que soit la prétexte que nous ayons trouvé soit vraiment
+
+1:02:43.770,1:02:47.580
+bien adaptée à notre tâche de transfert, que la résolution de cette tâche de prétexte sera
+
+1:02:47.580,1:02:51.840
+vraiment bien dans les tâches de transfert. Ainsi, une grande partie de la recherche porte sur la conception
+
+1:02:51.840,1:02:58.800
+des tâches de prétexte et la façon de bien les mettre en œuvre. Il n'est pas clair pourquoi
+
+1:02:58.800,1:03:03.119
+la résolution de quelque chose comme les puzzles devrait nous apprendre quelque chose sur la sémantique.
+
+1:03:03.119,1:03:08.640
+Par exemple, même dans le cas d'un apprentissage faiblement supervisé, où vous essayez de
+
+1:03:08.640,1:03:13.050
+prédire les mots-dièse à partir d'une image. Il n'est pas clair pourquoi prédire les mots-dièse d'une image
+
+1:03:13.050,1:03:18.210
+va faire quelque chose de bien dans l’apprentissage d’un bon classifieur
+
+1:03:18.210,1:03:25.140
+sur les tâches de transfert. La question reste donc de savoir comment concevoir de bonnes 
+
+1:03:25.140,1:03:32.160
+tâches de pré-entraînement qui sont bien alignées avec vos tâches de transfert. 
+
+1:03:32.160,1:03:37.770
+Cet espoir de généralisation et la façon dont nous pouvons l'évaluer est
+
+1:03:37.770,1:03:41.280
+essentiellement en examinant la représentation de chaque couche et si dans
+
+1:03:41.280,1:03:45.089
+la dernière couche nous ne voyons pas de représentations bien alignées
+
+1:03:45.089,1:03:49.650
+avec la tâche de transfert, alors c'est un signal d'alarme, que peut-être
+
+1:03:49.650,1:03:54.040
+cette tâche de pré-entraînement n'est pas vraiment la bonne à résoudre.
+
+1:03:54.040,1:03:58.330
+Donc comme je l'ai déjà mentionné, c'est les sortes de motifs que nous avons
+
+1:03:58.330,1:04:03.370
+pour Jigsaw et cela nous montre que les dernières couches se sont probablement 
+
+1:04:03.370,1:04:07.410
+beaucoup spécialisées dans ce problème de puzzle. En général, ce que nous voulons
+
+1:04:11.339,1:04:15.750
+des caractéristiques pré-entraînées est qu'elles représentent la façon dont les images sont liées
+
+1:04:15.750,1:04:20.940
+entre elles. Ainsi, la représentation des caractéristiques devrait… cela revient essentiellement à
+
+1:04:20.940,1:04:24.569
+dire que la visualisation du plus proche voisin que j’ai, devrait vraiment être capable de
+
+1:04:24.569,1:04:30.059
+regrouper des images qui sont sémantiquement liées d'une manière ou d'une autre.
+
+1:04:30.059,1:04:35.460
+La deuxième propriété est une propriété qui a été l'épine dorsale de la conception des caractéristiques
+
+1:04:35.460,1:04:39.809
+en vision, avant même que les caractéristiques d'apprentissage profond ne soient populaires.
+
+1:04:39.809,1:04:43.500
+Les caractéristiques manuelles ont toujours été une question d'invariance. 
+
+1:04:43.500,1:04:47.520
+Être invariant à des choses comme l'éclairage, la couleur exacte ou
+
+1:04:47.520,1:04:51.690
+l'emplacement. Ce sont les deux propriétés que nous voulons vraiment dans 
+
+1:04:51.690,1:04:58.530
+nos caractéristiques pré-entraînées. Et il y a deux façons de réaliser ces choses : l'une est le clustering [« regroupement » en français]
+
+1:04:58.530,1:05:03.720
+et l'autre est l'apprentissage contrastif. Ces deux méthodes sont 
+
+1:05:03.720,1:05:09.410
+prometteuses parce qu'elles essaient d'obtenir ces propriétés
+
+1:05:09.410,1:05:13.859
+lorsqu'elles essaient d'apprendre des représentations. Et je crois que 
+
+1:05:13.859,1:05:17.970
+c'est pourquoi elles ont commencé à être plus performantes que n’importe quelles
+
+1:05:17.970,1:05:24.779
+tâches de prétexte conçues à la main jusqu'à présent. Je me concentre donc
+
+1:05:24.779,1:05:29.130
+maintenant sur deux travaux récents qui tombent dans cette poche de
+
+1:05:29.130,1:05:33.359
+clustering et d’invariance. L'un s'appelle ClusterFit et l'autre s'appelle
+
+1:05:33.359,1:05:40.079
+PIRL. Les deux seront présentés à CVPR cette année. 
+
+1:05:40.079,1:05:45.869
+ClusterFit est une méthode qui semble très bonne pour améliorer la généralisation
+
+1:05:45.869,1:05:52.380
+des représentations visuelles. Le clustering est donc un bon moyen de
+
+1:05:52.380,1:05:56.609
+comprendre quelles images sont regroupées : quelles images vont ensemble et
+
+1:05:56.609,1:06:01.200
+celles qui ne vont pas ensemble. Essentiellement, en effectuant des
+
+1:06:01.200,1:06:05.160
+regroupements sur l'espace de présentation, vous pouvez obtenir ces jolis 
+
+1:06:05.160,1:06:11.579
+amas d’images qui sont liées et ou pas. Ainsi, l'idée principale de ce
+
+1:06:11.579,1:06:17.069
+papier est extrêmement simple. Il n'y a que deux étapes. La première est celle du regroupement et
+
+1:06:17.069,1:06:21.000
+l'autre est celle de la prédiction. Donc ce que nous faisons, c'est que nous prenons
+
+1:06:21.000,1:06:25.800
+un réseau pré-entraîné, cela peut être n'importe quel réseau pré-entraîné et peut ne pas
+
+1:06:25.800,1:06:30.270
+être autosupervisé, il peut s'agir d'un réseau pré-entraîné sur ImageNet ou d'un
+
+1:06:30.270,1:06:34.440
+réseau pré-entraîné en utilisant des mots-dièse par exemple ou bien un réseau autosupervisé comme celui
+
+1:06:34.440,1:06:38.970
+entraîné pour prédire les permutations du puzzle. Donc vous prenez ce réseau pré-entraîné
+
+1:06:38.970,1:06:45.060
+et vous en extrayez un tas de caractéristiques sur un ensemble d'images, 
+
+1:06:45.060,1:06:49.440
+et bien sûr ces images n'ont pas d'étiquettes. Vous extrayez ces caractéristiques en effectuant un k-means
+
+1:06:49.440,1:06:55.260
+et ce que vous obtenez, c'est que pour chaque image vous savez à quel 
+
+1:06:55.260,1:07:00.690
+groupe elle appartient et cela devient son étiquette. Ainsi, dans la deuxième
+
+1:07:00.690,1:07:06.210
+étape, ce que vous faites, c'est que vous entraînez un réseau à partir de zéro, initialisé au hasard,
+
+1:07:06.210,1:07:11.000
+et vous entraînez ce réseau à ne prédire que ces pseudo étiquettes. Elles sont
+
+1:07:11.000,1:07:15.480
+« pseudo » car elles ont été obtenues par clustering, donc ne sont pas
+
+1:07:15.480,1:07:19.290
+des étiquettes « dures » qui ont été données par un annotateur humain.
+
+1:07:19.290,1:07:23.550
+Ce deuxième réseau tente donc de prédire ces clusters, les affectations.
+
+1:07:23.550,1:07:27.960
+Il prend donc notre image et essaie de prédire auquel des k-clusters que
+
+1:07:27.960,1:07:34.070
+vous avez obtenu de votre k-means, elle appartient. Donc un pré-entraînement/transfert
+
+1:07:34.070,1:07:38.160
+standard consiste à effectuer votre pré-entraînement, la ligne du haut
+
+1:07:38.160,1:07:42.000
+[sur la diapositive], sur un objectif comme la prévision des mots-dièse
+
+1:07:42.000,1:07:46.830
+ou la prévision des positions GPS, et ensuite évaluer cette caractéristique
+
+1:07:46.830,1:07:52.150
+basée sur l’apprentissage linéaire. Dans le monde de ClusterFit, nous ne
+
+1:07:52.150,1:07:57.260
+touchons pas au pré-entraînement. Donc vous effectuez votre pré-entraînement comme vous le feriez.
+
+1:07:57.260,1:08:03.000
+Vous insérez juste une étape entre, qui est l'étape ClusterFit où vous prenez un jeu de données
+
+1:08:03.000,1:08:07.230
+D et votre réseau pré-entraîné. Vous apprenez un nouveau réseau de zéro
+
+1:08:07.230,1:08:11.910
+sur ces données. Et enfin, vous utilisez cela comme un réseau vert [cf. la couleur sur la diapositive]
+
+1:08:11.910,1:08:20.220
+pour toutes vos tâches en aval. La raison pour laquelle nous pensons que cette méthode fonctionne
+
+1:08:20.220,1:08:24.900
+est parce qu’à l'étape du clustering où vous regroupez en quelque sorte ces
+
+1:08:24.900,1:08:29.940
+images, vous ne saisissez que les informations essentielles qui sont
+
+1:08:29.940,1:08:34.469
+quelles images vont ensemble et quelles images ne vont pas ensemble. Donc vous lancez
+
+1:08:34.469,1:08:38.369
+toutes les autres informations présentes dans le réseau d'origine, mais seulement
+
+1:08:38.369,1:08:43.440
+en saisissant les relations inter-images qui étaient modélisées
+
+1:08:43.440,1:08:50.130
+par le réseau initial. Et pour comprendre cela, nous avons réalisé une
+
+1:08:50.130,1:08:54.719
+expérience assez simple. Nous avons ajouté du bruit aux étiquettes, du bruit synthétique
+
+1:08:54.719,1:08:59.339
+aux étiquettes d’ImageNet, et avons entraîné un réseau sur cet ImageNet bruyant.
+
+1:08:59.339,1:09:06.059
+Il suffit de retourner un tas d'étiquettes d'image et d’entraîner un réseau. Vous évaluez
+
+1:09:06.059,1:09:10.199
+la représentation des caractéristiques de ce réseau sur une tâche en aval, qui est
+
+1:09:10.199,1:09:14.190
+encore une fois ImageNet. Mais une version beaucoup plus grande d'ImageNet, 
+
+1:09:14.190,1:09:21.599
+donc les 9 000 classes possibles. Les axes x ont la quantité de bruit 
+
+1:09:21.599,1:09:27.449
+ajouté aux étiquettes des images, qui passe de 0 à 75%, et sur l'axe des y
+
+1:09:27.449,1:09:31.650
+nous examinons les performances de transfert sur le réseau ImageNet plus large,
+
+1:09:31.650,1:09:37.799
+celui avec 9000 classes. La ligne rose vous montre donc les réseaux pré-entraînés.
+
+1:09:37.799,1:09:42.690
+Au fur et à mesure que le bruit des étiquettes augmente, les performances
+
+1:09:42.690,1:09:46.769
+des réseaux pré-entraînés sur les tâches en aval diminuent. Et bien, ce
+
+1:09:46.769,1:09:51.329
+n'est pas surprenant car à mesure que vos étiquettes deviennent de moins en moins fiables,
+
+1:09:51.329,1:09:55.679
+la qualité de votre représentation en souffre. Ce qui fait que la qualité de votre représentation baisse très
+
+1:09:55.679,1:10:02.610
+rapidement. Dans la ligne bleue, nous avons expérimenté une technique appelée
+
+1:10:02.610,1:10:07.019
+la « distillation de modèle », où vous prenez votre réseau initial et vous l'utilisez pour
+
+1:10:07.019,1:10:11.940
+générer des labels. Donc vous regardez les sorties de ce réseau et une sorte de confiance dans
+
+1:10:11.940,1:10:15.809
+les sorties de réseau et vous générez des labels pour un second réseau.
+
+1:10:15.809,1:10:20.309
+C'est ce qu'on appelle la distillation de modèle. Ainsi, la distillation fait généralement
+
+1:10:20.309,1:10:24.150
+mieux que le réseau pré-entraîné et vous pouvez le constater sur toute la ligne. Quand
+
+1:10:24.150,1:10:27.989
+la quantité de bruit des étiquettes augmente, le modèle de distillation fait beaucoup
+
+1:10:27.989,1:10:33.389
+mieux que le modèle original. Et enfin à la fin, nous avons ClusterFit, 
+
+1:10:33.389,1:10:36.510
+la ligne verte. Vous pouvez voir que le modèle fait
+
+1:10:36.510,1:10:41.880
+toujours mieux que l'une de ces méthodes, que ce soit la distillation ou
+
+1:10:41.880,1:10:47.099
+le pré-entraînement. Il donne constamment de meilleurs résultats, y compris 
+
+1:10:47.099,1:10:49.929
+lorsque votre bruit est de niveau zéro, ce qui est en gros quand vous avez 
+
+1:10:49.929,1:11:00.850
+un réseau ImageNet pré-entraîné. Nous avons donc postulé… [Etudiant : pourriez-vous développer 
+
+1:11:00.850,1:11:08.920
+la différence entre la distillation et ClusterFit ?] Oui, donc dans la
+
+1:11:08.920,1:11:13.510
+distillation, ce que vous feriez… donc dans cette première étape
+
+1:11:13.510,1:11:16.660
+vous prendriez le réseau pré-entraîné et vous utiliseriez les étiquettes 
+
+1:11:16.660,1:11:23.260
+que le réseau prédit. Disons que le réseau prédit en gros 1 000 classes.
+
+1:11:23.260,1:11:28.870
+Vous utilisez donc ces étiquettes de manière plus douce pour générer
+
+1:11:28.870,1:11:34.960
+des étiquettes pour vos images. Imaginons que le réseau ait été entraîné pour prédire 100
+
+1:11:34.960,1:11:40.000
+différents types de chiens. Donc vous prenez vos images et vous obtenez une distribution sur ces
+
+1:11:40.000,1:11:43.780
+100 types de chiens différents. Vous utilisez cette distribution pour entraîner votre deuxième réseau.
+
+1:11:43.780,1:11:48.910
+Alors que dans ClusterFit, vous ne vous souciez pas vraiment de l'espace de l'étiquette ou de
+
+1:11:48.910,1:11:52.989
+l'espace de sortie du réseau pré-entraîné. Vous ne regardez que les caractéristiques.
+
+1:11:52.989,1:11:56.560
+Vous ne regardez même pas la dernière couche entièrement connectée. Vous ne regardez que 
+
+1:11:56.560,1:12:03.580
+les caractéristiques précédentes. [J'ai compris, et aussi pourquoi une distribution plus souple aiderait
+
+1:12:03.580,1:12:07.989
+l’entraînement, comme si l’entraînement sur ce point était aidé, ce qui est comme l'intuition
+
+1:12:07.989,1:12:12.610
+derrière la distillation ?] La principale intuition de la distillation est que si votre réseau
+
+1:12:12.610,1:12:17.699
+a été très bien entraîné, alors supposons que vous n'ayez pas de bruit d'étiquette.
+
+1:12:17.699,1:12:23.620
+Car beaucoup d'images n'ont pas vraiment leur place dans ce genre de
+
+1:12:23.620,1:12:28.360
+classes. Supposons que votre ensemble de données comporte en fait 200 types
+
+1:12:28.360,1:12:32.440
+de chiens différents, mais vous en avez fait étiqueter qu’une centaine.
+
+1:12:32.440,1:12:37.330
+Et donc pour beaucoup de ces images, disons, si on devait choisir
+
+1:12:37.330,1:12:41.350
+lequel des chiens c'était, une distribution plus douce va vous aider à 
+
+1:12:41.350,1:12:46.690
+découvrir les catégories cachées. Il s'agit donc essentiellement : à 0,5 ce 
+
+1:12:46.690,1:12:52.090
+type de chien et à 0,5 ce type de chien. Donc, en gros, le fait d'avoir des 
+
+1:12:52.090,1:12:57.850
+étiquettes plus souples vous aident à améliorer la répartition initiale par 
+
+1:12:57.850,1:13:00.120
+classe que vous avez. [D'accord, merci]. Donc nous avons appliqué cette 
+
+1:13:10.449,1:13:15.699
+méthode à l'apprentissage autosupervisé. La tâche de puzzle dont j'ai parlé
+
+1:13:15.699,1:13:19.420
+plus tôt. Nous avons pu constater des montants surprenants de gains sur un
+
+1:13:19.420,1:13:25.570
+tas de jeux de données. La méthode Jigsaw se trouve dans la ligne supérieure. 
+
+1:13:25.570,1:13:29.949
+Dans chaque colonne, vous examinez les performances de transfert de
+
+1:13:29.949,1:13:34.960
+cette méthode de puzzle sur un jeu de données différentes. Si vous appliquez la méthode ClusterFit
+
+1:13:34.960,1:13:40.329
+à cette méthode de puzzle, vous pouvez en fait voir des gains sur tous ces jeux de données
+
+1:13:40.329,1:13:44.769
+et ils sont assez cohérents. Nous effectuons ce test sur un tas de méthodes
+
+1:13:44.769,1:13:49.659
+différentes de pré-entraînement comme RotNet, donc la prévision des rotations.
+
+1:13:49.659,1:13:54.389
+Là encore, nous avons pu constater des gains assez importants dans ces quatre jeux de données.
+
+1:13:54.389,1:13:59.829
+Et, chose surprenante, ClusterFit fonctionne vraiment sur n'importe quel réseau pré-entraîné.
+
+1:13:59.829,1:14:04.179
+Il peut donc s'agir soit d'un réseau entièrement supervisé, soit d'un réseau peu supervisé.
+
+1:14:04.179,1:14:10.150
+Donc disons, un réseau entraîné à la prédiction des mots-dièse ou un réseau peu supervisé 
+
+1:14:10.150,1:14:15.280
+pour la vidéo ou n'importe quel réseau autosupervisé. Et dans chacun de ces cas
+
+1:14:15.280,1:14:19.780
+nous pouvons observer des gains assez conséquents lorsque nous appliquons 
+
+1:14:19.780,1:14:23.590
+ClusterFit. Cela peut donc améliorer la généralisation de la plupart de
+
+1:14:23.590,1:14:32.110
+ces méthodes. [Echanges entre Alfredo et Ishan à propos du bruit de son micro].
+
+1:14:35.110,1:14:41.079
+La deuxième chose, c'est que ces gains ont été possibles sans augmentation
+
+1:14:41.079,1:14:44.559
+d’étiquetage de données ou de changements dans l'architecture. Ainsi, d'une certaine manière, vous pouvez
+
+1:14:44.559,1:14:50.679
+imaginer cela comme une étape de finetuning autosupervisé. Vous avez donc votre 
+
+1:14:50.679,1:14:53.800
+réseau pré-entraîné, puis vous effectuez cette étape de clustering, qui est
+
+1:14:53.800,1:14:58.989
+complètement autosupervisée ou non, et puis vous pouvez constater que la
+
+1:14:58.989,1:15:07.750
+qualité de la représentation s'améliore. [Etudiant : dans la diapositive
+
+1:15:07.750,1:15:12.050
+que vous avez montré sur l'amélioration avec Jigsaw en utilisant ClusterFit,
+
+1:15:12.050,1:15:17.240
+dans ce ClusterFit, c'est séparé, n'est-ce pas ? Cela n'utilise pas du tout Jigsaw ?]
+
+1:15:17.240,1:15:21.950
+C’est appliqué en plus de la méthode Jigsaw. Il y avait donc un 
+
+1:15:21.950,1:15:27.710
+réseau pré-entraîné dont vous extrayez les caractéristiques, donc
+
+1:15:27.710,1:15:33.100
+dans ce cas, ce réseau pré-entraîné est le réseau pré-entraîné Jigsaw. [Étudiant : d'accord].
+
+1:15:33.100,1:15:36.500
+Donc, vous prenez le réseau pré-entraîné Jigsaw et vous appliquez ClusterFit par-dessus.
+
+1:15:36.500,1:15:49.130 			                                   
+[D’accord, merci] [Autre étudiant : y a-t-il une manière logique de penser que Clusterfit est une bonne idée ?]
+
+1:15:47.000,1:15:52.430
+Je pense que la principale intuition est que lorsque vous effectuez la tâche du puzzle, la dernière couche devient
+
+1:15:52.430,1:15:56.180
+très finetunée pour cette tâche particulière de puzzle. Nous avons donc vu que
+
+1:15:56.180,1:16:00.470
+la précision diminue. Maintenant, lorsque vous prenez ces caractéristiques et que vous effectuez le clustering dessus,
+
+1:16:00.470,1:16:04.700
+vous pouvez considérer cela comme une réduction de la quantité d’information.
+
+1:16:04.700,1:16:09.230
+Si j’entraîne le deuxième réseau à régresser directement les caractéristiques
+
+1:16:09.230,1:16:13.760
+du premier réseau, j'obtiendrais en gros le même réseau. Mais si j’entraîne
+
+1:16:13.760,1:16:17.660
+le deuxième réseau uniquement pour prédire quelles images sont regroupées
+
+1:16:17.660,1:16:23.150
+dans le premier, je prédis en fait moins d'informations. Et je pense 
+
+1:16:23.150,1:16:27.290
+que le clustering est une sorte de technique de suppression du bruit. 
+
+1:16:27.290,1:16:32.180
+Cela retire vraiment tous les artefacts spécifiques à Jigsaw de cet espace de caractéristiques
+
+1:16:32.180,1:16:35.210
+et le deuxième réseau apprend donc quelque chose de plus générique.
+
+1:16:35.210,1:16:41.180
+[Très bien, merci]. C'est la raison de cette expérience. 
+
+1:16:41.180,1:16:45.200
+Dans ce cas, nous validons empiriquement cette hypothèse en ingérant
+
+1:16:45.200,1:16:49.820
+une quantité de bruit d'étiquette. Donc la dernière couche cela va être de plus
+
+1:16:49.820,1:16:53.210
+en plus bruitée et quand vous faites du ClusterFit par-dessus, vous
+
+1:16:53.210,1:16:57.020
+constatez à nouveau une amélioration. C'est donc notre validation de cette
+
+1:16:57.020,1:17:03.800
+hypothèse. [Etudiant : avez-vous mesuré la performance de ClusterFit
+
+1:17:03.800,1:17:07.880
+sur la détection d'objets ? Est-il aussi performant ou est-ce juste
+
+1:17:07.880,1:17:13.430
+bon qu’en classification ?] Il est également performant en matière de détection.
+
+1:17:13.430,1:17:19.850
+Nous avons fait une détection expérimentale initiale où il était
+
+1:17:19.850,1:17:25.539
+vraiment performant. Nous n'avons pas vraiment poussé davantage dans le
+
+1:17:25.539,1:17:29.530
+domaine de la détection dans ce papier. Nous étions plus intéressés
+
+1:17:29.530,1:17:33.579
+par l’extraction ou par une classification linéaire.
+
+1:17:33.579,1:17:39.010
+[D'accord, car je me disais qu'on aurait envie de produire ces pseudo étiquettes
+
+1:17:39.010,1:17:44.349
+et être capable d'effectuer des tâches de classification au lieu de détection,
+
+1:17:44.349,1:17:48.099
+nous pourrions peut-être perdre l'une de ces caractéristiques que Jigsaw
+
+1:17:48.099,1:17:55.840
+a obtenu] C'est possible, du moins les premières expériences que j'ai menées
+
+1:17:55.840,1:17:59.530
+ne semblent pas suggérer qu'il y a eu une amélioration de la détection. Elle était mineure.
+
+1:17:59.530,1:18:04.119
+Mais les améliorations de détection en général, comme l'écart de performance, sont déjà faibles.
+
+1:18:04.119,1:18:08.280
+Les améliorations sont généralement très faibles. [D'accord, merci]
+
+1:18:08.280,1:18:18.789
+[Etudiant : j'ai une question sur l'algorithme ClusterFit. La dernière couche de ClusterFit
+
+1:18:18.789,1:18:24.219
+n'est plus covariante avec les étiquettes utilisées pour l'entraîner à 
+
+1:18:24.219,1:18:29.769
+cette tâche ?] Cela devient moins covariant. Ce que nous avons trouvé, c'est que si vous
+
+1:18:29.769,1:18:32.860
+devez en quelque sorte… le papier a un graphique que je n’ai pas en diapositive
+
+1:18:32.860,1:18:40.119
+malheureusement. Le papier a un graphique particulier où nous examinons
+
+1:18:40.119,1:18:43.989
+les conv1 à res5 et ClusterFit est bien meilleur. Il y a un écart entre res5 et res4 
+
+1:18:43.989,1:18:48.010
+pour ClusterFit et il est beaucoup plus petit que pour, disons, Jigsaw
+
+1:18:48.010,1:18:55.150
+ou RotNet. [Mais était-ce mieux que res4 ?] C'était un peu moins bien. C'était sur
+
+1:18:55.150,1:19:00.400
+VOC, et pour la classification c'était mieux, mais pour d'autres tâches comme ImageNet, c'était
+
+1:19:00.400,1:19:07.510
+un peu plus mauvais. Cela n'a donc pas complètement résolu le problème. [D'accord, merci] 
+
+1:19:07.510,1:19:13.570
+C’était une sorte de motivation pour PIRL. Je n'ai pas parlé de PIRL. Donc PIRL est
+
+1:19:13.570,1:19:17.679
+en quelque sorte né de l'hypothèse que vous devez être invariant à ces
+
+1:19:17.679,1:19:24.579
+des tâches de prétexte. Avant d'entrer dans les détails de PIRL, je vais donc parler 
+
+1:19:24.579,1:19:29.260
+un peu de l'apprentissage contrastif. De combien de minutes je dispose ?
+
+1:19:29.260,1:19:38.679
+[Alfredo : 15 minutes plus ou moins]. Ok, donc l'apprentissage contrastif est un 
+
+1:19:38.679,1:19:44.500
+cadre général qui tente d'apprendre un espace de caractéristiques. Il combine
+
+1:19:44.500,1:19:49.300
+ou rassemble des points qui sont liés entre eux et écarte ceux qui ne sont 
+
+1:19:49.300,1:19:53.830
+pas liés. Donc, dans ce cas, imaginez que les cases bleues sont les points
+
+1:19:53.830,1:19:56.650
+liés, les verts sont les points liés et les violets sont les points liés.
+
+1:19:56.650,1:20:02.199
+Vous allez extraire des caractéristiques pour chacun de ces points de données
+
+1:20:02.199,1:20:06.460
+par le biais d'un réseau partagé appelé réseau siamois. Vous obtenez un
+
+1:20:06.460,1:20:12.429
+ensemble d'éléments d'image pour chacun de ces points de données, puis vous appliquez
+
+1:20:12.429,1:20:17.520
+une fonction de perte. C’est une fonction de perte contrastive qui va essayer de
+
+1:20:17.520,1:20:23.020
+minimiser la distance entre les points bleus, par opposition à
+
+1:20:23.020,1:20:28.300
+la distance entre le point bleu et le point vert. La distance entre les
+
+1:20:28.300,1:20:31.750
+points bleus doit être inférieure à la distance entre le point bleu et le
+
+1:20:31.750,1:20:36.280
+point vert, ou le point bleu et le point violet. Donc les enchâssements
+
+1:20:36.280,1:20:40.780
+des échantillons apparentés doivent être beaucoup plus proches que les 
+
+1:20:40.780,1:20:44.980
+enchâssements des échantillons non apparentés. C'est donc en quelque sorte l'idée générale de l’apprentissage
+
+1:20:44.980,1:20:48.520
+contrastif, et bien sûr, Yann a été l'un des premiers à proposer cette
+
+1:20:48.520,1:20:54.280
+méthode avec son article avec Raia Hadsell qui s'appelait DrLIM.
+
+1:20:54.280,1:20:57.940
+Ainsi, l'apprentissage contrastif a fait un retour en force dans l'apprentissage autosupervisé.
+
+1:20:57.940,1:21:01.389
+La plupart des méthodes de pointe autosupervisées sont basée sur un
+
+1:21:01.389,1:21:07.960
+apprentissage contrastif. Et la question principale est de savoir comment 
+
+1:21:07.960,1:21:13.000
+définir qu'est-ce qui est lié et non lié ? Dans le cas de l'apprentissage supervisé, c'est
+
+1:21:13.000,1:21:18.130
+assez clair : toutes les images de chiens sont des images liées, et toute image qui n’est
+
+1:21:18.130,1:21:21.940
+pas une image de chien est une image sans rapport. Mais ce n'est pas aussi 
+
+1:21:21.940,1:21:24.580
+clair pour définir ce qui est lié et non lié dans le cas de l’apprentissage
+
+1:21:24.580,1:21:30.489
+autosupervisé. L'autre différence principale par rapport à quelque chose
+
+1:21:30.489,1:21:35.860
+comme une tâche de prétexte est que l'apprentissage contrastif raisonne vraiment sur
+
+1:21:35.860,1:21:42.670
+beaucoup de données à la fois. Donc, pour revenir à ma diapositive précédente, 
+
+1:21:42.670,1:21:47.170
+si vous regardez la fonction de perte, elle implique toujours des images multiples, ok ? 
+
+1:21:47.170,1:21:50.290
+Il s'agit donc, pour la première ligne des
+
+1:21:50.290,1:21:54.430
+images bleues et des images vertes. Dans la deuxième rangée, il s'agit des
+
+1:21:54.430,1:21:58.930
+images bleues et des images violettes. Alors que si vous regardez une tâche comme,
+
+1:21:58.930,1:22:03.220
+le puzzle ou une tâche comme la rotation, vous êtes toujours en train de raisonner sur une seule
+
+1:22:03.220,1:22:08.500
+image de manière indépendante. C'est donc une autre différence avec l'apprentissage contrastif.
+
+1:22:08.500,1:22:11.440
+L'apprentissage contrastif raisonne toujours à la fois sur les points de 
+
+1:22:11.440,1:22:18.130
+données multiples. J'en viens maintenant à la question de savoir comment définir des images liées ou non.
+
+1:22:18.130,1:22:24.100
+Vous pouvez utiliser des techniques similaires à celles dont je parlais
+
+1:22:24.100,1:22:28.690
+plus tôt. Vous pouvez utiliser les images d'une vidéo, vous pouvez utiliser la nature
+
+1:22:28.690,1:22:35.860
+séquentielle des données. Pour comprendre que les images qui sont proches dans une vidéo,
+
+1:22:35.860,1:22:39.910
+sont liées et que les images d'une autre vidéo ou les images de la même
+
+1:22:39.910,1:22:44.760
+vidéo mais éloignées dans le temps, ne sont pas liées. Et cela a été à la base de beaucoup
+
+1:22:44.760,1:22:49.390
+des méthodes d'apprentissage autosupervisé dans ce domaine. Donc, si vous connaissez cette méthode populaire
+
+1:22:49.390,1:22:53.350
+appelée CPC, qui est un codage prédictif contrastif, cela repose
+
+1:22:53.350,1:22:58.660
+sur la nature séquentielle d'un signal et indique que les échantillons qui 
+
+1:22:58.660,1:23:03.310
+sont proches dans l'espace-temps sont liés, et les échantillons qui sont 
+
+1:23:03.310,1:23:09.450
+plus éloignés dans l'espace-temps sont sans rapport. Un grand nombre de travaux assez importants
+
+1:23:09.450,1:23:14.830
+exploitent cela. Cela peut être soit dans le domaine de la parole, soit en
+
+1:23:14.830,1:23:21.130
+vidéo, soit en texte, soit dans des images particulières.
+
+1:23:21.130,1:23:25.720
+Récemment, nous avons travaillé sur la vidéo et l'audio, en disant que pour 
+
+1:23:25.720,1:23:30.490
+une vidéo et un audio correspondant, il s’agit d’exemples liés, et pour une vidéo et
+
+1:23:30.490,1:23:38.560
+l'audio d'une autre image vidéo, il s’agit d’échantillons non liés. Et certains 
+
+1:23:38.560,1:23:44.160
+des premiers travaux sur l'apprentissage autosupervisé ont également utilisé cette
+
+1:23:44.160,1:23:48.790
+méthode d'apprentissage contrastif. La façon dont ils ont défini les échantillons liés était assez
+
+1:23:48.790,1:23:54.610
+intéressante. Donc, vous passez un tracker d'objets sur une vidéo et
+
+1:23:54.610,1:23:59.170
+cela vous donne une sorte de patch qui bouge. Ce que vous dites c'est que
+
+1:23:59.170,1:24:04.230
+tout patch qui a été suivi par le tracker est lié à mon patch original
+
+1:24:04.230,1:24:09.420
+alors qu'un patch provenant d'une autre vidéo n'est pas un patch lié. 
+
+1:24:09.420,1:24:14.040
+Ce qui vous donne ces tas d'échantillons liés et non liés. Ainsi, si vous
+
+1:24:14.040,1:24:19.670
+regardez, dans ce cas, la figure C où vous avez cette notation de distance,
+
+1:24:19.670,1:24:23.610
+ce que ce réseau essaie d'apprendre, c'est que les patchs qui arrivent
+
+1:24:23.610,1:24:27.840
+de la même vidéo sont liés et les patchs qui proviennent de vidéos 
+
+1:24:27.840,1:24:33.390
+différentes ne sont pas liées. Et donc, d'une certaine manière, cela apprend automatiquement
+
+1:24:33.390,1:24:38.370
+différentes poses d'un objet. Un cycle de différents points de vue, d’angles.
+
+1:24:38.370,1:24:44.100
+Comme les différentes poses d'un chien. Et cela essaie donc de les regrouper
+
+1:24:44.100,1:24:54.320
+ensemble. En général, si vous ne parlez que d'images, beaucoup de travail consiste
+
+1:24:54.320,1:25:00.030
+à regarder les zones d'image proches par rapport aux zones éloignées. Ainsi, la plupart des 
+
+1:25:00.030,1:25:04.590
+méthodes de la version 1 et de la version 2 du CPC exploitent cette
+
+1:25:04.590,1:25:09.420
+propriété des images. Donc, les patchs qui sont proches sont qualifiées
+
+1:25:09.420,1:25:15.360
+de positifs, et des patchs plus éloignés les uns des autres, qui sont
+
+1:25:15.360,1:25:19.290
+plus loin dans l'image, sont considérés comme des négatifs. Et puis, vous
+
+1:25:19.290,1:25:23.580
+minimisez une perte contrastive en utilisant cette définition de positifs 
+
+1:25:23.580,1:25:29.670
+et négatifs. La façon la plus populaire, ou la plus performante, de procéder est de
+
+1:25:29.670,1:25:36.720
+regarder des taches provenant d'une image et les mettre en contraste avec des taches provenant d'une
+
+1:25:36.720,1:25:41.790
+image différente. Cela constitue donc la base de nombreuses méthodes 
+
+1:25:41.790,1:25:48.660
+comme par exemple Instance Discrimination, MoCo, PIRL ou SimCLR. L'idée est de savoir
+
+1:25:48.660,1:25:53.880
+ce qui est montré dans l'image. Pour être plus précis, ces méthodes
+
+1:25:53.880,1:25:57.840
+extraient deux patchs complètement aléatoires d'une image. Donc ces patchs 
+
+1:25:57.840,1:26:01.890
+peuvent se chevaucher, être contenus l’uns dans l’autre ou ils peuvent être
+
+1:26:01.890,1:26:06.840
+complètement éloignés l'un de l'autre. Elles appliquent ensuite une sorte d'augmentation des données.
+
+1:26:06.840,1:26:12.120
+Dans ce cas, disons une couleur tremblante ou qu’on enlève, etc. 
+
+1:26:12.120,1:26:15.110
+Ensuite vous définissez ces deux patchs comme étant vos exemples positifs.
+
+1:26:15.110,1:26:19.760
+Vous extrayez un autre patch d'une image différente. A nouveau un patch
+
+1:26:19.760,1:26:25.580
+aléatoire. Cela devient juste un négatif. Beaucoup de ces méthodes extraient
+
+1:26:25.580,1:26:30.170
+un grand nombre de patchs négatifs, puis effectuent l'apprentissage 
+
+1:26:30.170,1:26:34.850
+contrastif. Vous reliez donc des échantillons positifs mais vous avez une 
+
+1:26:34.850,1:26:39.010
+sorte d'échantillon négatif auquel vous comparez.
+
+1:26:39.840,1:26:46.679
+Passons maintenant un peu à PIRL. Essayons de comprendre qu’elle est la
+
+1:26:46.679,1:26:50.579
+principale différence entre les tâches de prétexte, et en quoi l'apprentissage contrastif 
+
+1:26:50.579,1:26:54.840
+est très différent des tâches de prétexte. Donc, j'ai déjà mentionné que
+
+1:26:54.840,1:26:59.820
+les tâches de prétexte raisonnent toujours à propos d'une seule image à la fois. Ainsi, l'idée est que
+
+1:26:59.820,1:27:03.869
+pour une image donnée, vous appliquez une transformation à cette image. Dans le cas ici,
+
+1:27:03.869,1:27:10.800
+une transformation Jigsaw, puis vous entrez cette image transformée dans
+
+1:27:10.800,1:27:14.219
+un ConvNet et vous essayez de prédire la propriété de la transformation que vous avez
+
+1:27:14.219,1:27:18.239
+appliquée. Donc la permutation que vous avez appliquée ou la rotation que vous avez appliquée
+
+1:27:18.239,1:27:24.329
+ou le type de couleur que vous avez enlevé, etc. Ainsi, la tâche de prétexte raisonne
+
+1:27:24.329,1:27:28.500
+toujours sur une seule image. La deuxième chose est que la tâche que vous
+
+1:27:28.500,1:27:33.989
+effectuez, doit vraiment capter une partie de la transformation. Elle doit
+
+1:27:33.989,1:27:38.099
+vraiment capturer la permutation exacte que vous avez appliquée, ou le type
+
+1:27:38.099,1:27:42.449
+de rotation que vous avez appliqué, ce qui signifie que la dernière couche
+
+1:27:42.449,1:27:47.010
+de représentation va en fait covarier ou varier beaucoup car les
+
+1:27:47.010,1:27:52.199
+transformations changent. Et c'est par conception, car vous essayez vraiment de
+
+1:27:52.199,1:27:57.270
+résoudre cette tâche de prétexte. Mais malheureusement, cela signifie que
+
+1:27:57.270,1:28:02.010
+les représentations de la dernière couche capturent une propriété de très bas niveau du signal, donc
+
+1:28:02.010,1:28:07.469
+elles capturent des choses comme la rotation ou autres. Alors que ce qui 
+
+1:28:07.469,1:28:11.579
+est conçu, ce qui attendu de ces représentations est qu'elles soient 
+
+1:28:11.579,1:28:15.119
+invariantes à ces choses, ce qui signifie que vous devriez être capable de reconnaître un chat,
+
+1:28:15.119,1:28:18.449
+peu importe le fait que le chat soit debout ou que le chat soit tourner de
+
+1:28:18.449,1:28:21.690
+90 degrés. Alors que lorsque vous résolvez cette tâche particulière de
+
+1:28:21.690,1:28:25.079
+prétexte vous imposez la chose inverse. Vous dites que je devrais être 
+
+1:28:25.079,1:28:28.590
+capable de reconnaître si cette image est droite ou si elle est inclinée
+
+1:28:28.590,1:28:36.659
+sur le côté. Il y a donc de nombreuses exceptions dans lesquelles vous
+
+1:28:36.659,1:28:42.030
+voulez vraiment que ces représentations de bas niveau soient covariantes, 
+
+1:28:42.030,1:28:46.199
+et une grande partie de ce travail est liée aux tâches que vous effectuez, 
+
+1:28:46.199,1:28:50.519
+et un peu de tâches veulent vraiment être prédictives. Vous voulez donc
+
+1:28:50.519,1:28:54.990
+prédire les transformations de la caméra lorsque vous regardez deux vues du même
+
+1:28:54.990,1:28:59.760
+objet ou autre. Mais à moins que vous n'ayez ce genre de demande spécifique, pour beaucoup
+
+1:28:59.760,1:29:04.780
+de tâches sémantiques ce que vous voulez vraiment, c’est être invariant à la transformation
+
+1:29:04.780,1:29:11.940
+utilisée comme entrée. L'invariance a donc été le cheval de bataille de l'apprentissage
+
+1:29:11.940,1:29:18.540
+de caractéristiques. Ainsi, quelque chose comme SIFT, qui est un extracteur de caractéristique à la main assez populaire, le
+
+1:29:18.540,1:29:23.100
+I dans SIFT signifie invariant. Et les réseaux supervisés par exemple,
+
+1:29:23.100,1:29:27.090
+AlexNet supervisé ou ResNet supervisé, sont entraînés pour être invariants
+
+1:29:27.090,1:29:32.400
+à l'augmentation des données. Vous voulez que ce réseau classifie différents recadrages, ou
+
+1:29:32.400,1:29:37.350
+différentes rotations de cette image comme un arbre, plutôt que de lui demander de prédire ce
+
+1:29:37.350,1:29:43.110
+qu’était exactement la transformation appliquée à l'entrée. C'est donc ce qui a inspiré PIRL.
+
+1:29:43.110,1:29:48.660
+PIRL signifie « Pretext-Invariant Representation Learning », où l'idée est
+
+1:29:48.660,1:29:52.740
+que vous voulez que la représentation soit invariante. Qu'elle capture aussi peu
+
+1:29:52.740,1:29:59.220
+d'information possible sur la transformation d'entrée. Vous avez donc l'image, vous avez
+
+1:29:59.220,1:30:03.030
+la version transformée de l'image, vous alimentez ces deux images
+
+1:30:03.030,1:30:06.860
+par le biais d'un ConvNet, vous obtenez une représentation et ensuite vous 
+
+1:30:06.860,1:30:12.600
+encouragez ces représentations à être similaires. Ainsi, en ce qui concerne la notation,
+
+1:30:12.600,1:30:18.570
+dont nous parlions tout à l'heure, vous dites en gros que l'image I et toute version de 
+
+1:30:18.570,1:30:23.670
+prétexte de transformation de cette image I sont des échantillons apparentés, et toute autre image est un
+
+1:30:23.670,1:30:29.430
+échantillon sans rapport. Ainsi, lorsque vous entraînez le réseau, cette
+
+1:30:29.430,1:30:33.690
+représentation contient, espérons-le, très peu d'informations sur la 
+
+1:30:33.690,1:30:39.720
+transformation t et ensuite vous entraînez en utilisant l'apprentissage contrastif. 
+
+1:30:39.720,1:30:44.970
+Celui-ci consiste essentiellement à avoir, disons la fonction VI provenant de
+
+1:30:44.970,1:30:50.010
+l’image originale I et la caractéristique VIt provenant de la transformation,
+
+1:30:50.010,1:30:54.450
+et vous voulez que ces deux représentations soient identiques. Et les publications à l’état de l’art 
+
+1:30:54.450,1:30:57.750
+que nous avons examiné utilisent deux tâches de prétexte
+
+1:30:57.750,1:31:01.320
+de transformation : Jigsaw et la méthode de rotation dont nous avons
+
+1:31:01.320,1:31:04.830
+parlées plus tôt. Nous avons également exploré des combinaisons de ces
+
+1:31:04.830,1:31:09.690
+transformations, comme appliquer les deux méthodes en même temps. Donc d'une certaine manière,
+
+1:31:09.690,1:31:13.290
+c'est comme un apprentissage multitâche mais cela n'essaie pas vraiment de prédire.
+
+1:31:13.290,1:31:19.970
+Cela essaie d'être invariants à la fois au puzzle et à la rotation.
+
+1:31:19.970,1:31:25.830
+L'élément clé qui a fait que l'apprentissage contrastif a bien fonctionné 
+
+1:31:25.830,1:31:30.560
+dans le passé, est qu’on utilise en réalité un grand nombre de négatifs.
+
+1:31:30.560,1:31:37.020
+Et l'un des bons papiers qui a introduit cette idée est « instance
+
+1:31:37.020,1:31:42.750
+discrimination » en 2018 qui a introduit le concept de banque de mémoire.
+
+1:31:42.750,1:31:47.520
+Et cela a alimenté, je dirais, la plupart des méthodes récentes qui sont
+
+1:31:47.520,1:31:51.720
+à la pointe du sujet, y compris MoCo, PIRL. Ils sont toutes construits sur
+
+1:31:51.720,1:31:55.950
+cette idée de banque de mémoire. [Alfredo: peux-tu débrancher tes écouteurs
+
+1:31:55.950,1:31:59.220
+de l'ordinateur parce qu'il est très bruyant, car le microphone est pris
+
+1:31:59.220,1:32:04.760
+sur les écouteurs..] C'est mieux maintenant ? [Alfredo : peut-être, je ne sais pas, essayons]
+
+1:32:09.180,1:32:17.040
+La banque de mémoire est donc un bon moyen d'obtenir un grand nombre de négatifs
+
+1:32:17.040,1:32:22.770
+sans vraiment augmenter les besoins de calcul. Ce que vous faites c'est
+
+1:32:22.770,1:32:28.860
+que vous stockez en mémoire un vecteur de caractéristique par image et vous l'utilisez ensuite
+
+1:32:28.860,1:32:34.860
+dans l'apprentissage contrastif. Alors, parlons d'abord de comment vous
+
+1:32:34.860,1:32:40.650
+feriez toute cette installation PIRL sans utiliser une banque de mémoire. Vous avez donc
+
+1:32:40.650,1:32:45.560
+une image I, vous avez une image It, vous donnez ces deux images, vous
+
+1:32:45.560,1:32:52.350
+obtenez un vecteur de caractéristique f(VI) à partir de l'image originale I, vous obtenez une caractéristique g(VIt)
+
+1:32:52.350,1:32:58.290
+des versions transformées, les patchs dans ce cas, et ce que vous voulez
+
+1:32:58.290,1:33:02.700
+est que les caractéristiques f et g soient similaires. Et vous voulez les caractéristiques de n'importe quel autre
+
+1:33:02.700,1:33:10.740
+image, donc une image sans rapport, soient l’échantillon négatif. Dans ce cas, 
+
+1:33:10.740,1:33:15.870
+ce que nous pouvons faire, si nous voulons beaucoup de négatifs, nous 
+
+1:33:15.870,1:33:19.350
+voudrions beaucoup de ces images négatives à donner en même temps. Ce qui
+
+1:33:19.350,1:33:24.390
+signifie qu'il faut une grande taille de batch pour pouvoir le faire. Et
+
+1:33:24.390,1:33:29.130
+une grande taille de batch signifie qu'il n'est pas possible d'avoir une
+
+1:33:29.130,1:33:33.450
+quantité illimitée de mémoire GPU, donc la façon de le faire est d'utiliser
+
+1:33:33.450,1:33:37.530
+quelque chose qui s'appelle une banque de mémoire. Donc, cette banque de mémoire fait en sorte de
+
+1:33:37.530,1:33:42.630
+stocker un vecteur de caractéristique pour chacune des images de votre jeu de données et lorsque vous faites
+
+1:33:42.630,1:33:46.470
+l'apprentissage contrastif, plutôt que d'utiliser les vecteurs de caractéristiques, disons 
+
+1:33:46.470,1:33:50.580
+d’une image différente ou négative, une image différente dans votre batch, vous pouvez
+
+1:33:50.580,1:33:55.500
+juste récupérer ces caractéristiques d’une mémoire. Vous pouvez donc simplement récupérer dans la mémoire 
+
+1:33:55.500,1:33:59.070
+les caractéristiques de toute autre image non liées et vous pouvez simplement substituer ça
+
+1:33:59.070,1:34:04.650
+pour effectuer un apprentissage contrastif. Ainsi, dans PIRL, nous avons divisé l'objectif en deux parties.
+
+1:34:04.650,1:34:10.040
+Il y avait un terme contrasté pour faire apparaître le vecteur de caractéristique de l’image
+
+1:34:10.040,1:34:15.480
+image transformée, donc g(VI), similaire à la représentation que nous avons dans la
+
+1:34:15.480,1:34:21.180
+mémoire : MI. De même nous avons un deuxième terme contrastif qui tente de
+
+1:34:21.180,1:34:25.860
+rapprocher la caractéristique f(VI) de la représentation de la caractéristique que nous avons dans
+
+1:34:25.860,1:34:31.620
+la mémoire. Donc, essentiellement, g est rapproché de MI et f est rapproché de MI.
+
+1:34:31.620,1:34:36.360
+Ainsi, par transitivité, f et g sont rapprochés l’un de l’autre. Et la 
+
+1:34:36.360,1:34:41.460
+raison de cette séparation est qu'elle a stabilisé l’entraînement.
+
+1:34:41.460,1:34:46.290
+Nous avons entraîné sans faire ça et l’entraînement ne
+
+1:34:46.290,1:34:50.220
+convergerait pas vraiment. Et en séparant cela sous deux formes plutôt que
+
+1:34:50.220,1:34:54.960
+de faire un apprentissage contrastif direct entre f et g, nous avons pu
+
+1:34:54.960,1:35:01.620
+stabiliser l’entraînement et faire que cela fonctionne. La façon d'évaluer ceci
+
+1:35:01.620,1:35:07.080
+est par le biais d'une évaluation standard de pré-entraînement. Donc
+
+1:35:07.080,1:35:12.390
+l'apprentissage par transfert, où nous pouvons entraîner à l'avance sur des images sans étiquette,
+
+1:35:12.390,1:35:16.100
+la façon standard de procéder est de prendre ImageNet, de jeter les étiquettes et de prétendre que c'est
+
+1:35:16.100,1:35:21.810
+non supervisé, puis évaluer en utilisant un simple finetuning ou un
+
+1:35:21.810,1:35:26.190
+un classifieur linéaire entraîné. La deuxième chose que nous avons faite est de tester PIRL sur
+
+1:35:26.190,1:35:31.230
+sa robustesse aux distributions d'images en l'entraînant sur des images dans la nature [« in-the-wild »].
+
+1:35:31.230,1:35:34.810
+Nous prenons un million d'images au hasard sur Flickr, c'est donc la base
+
+1:35:34.810,1:35:39.610
+YFCC, et ensuite nous effectuons essentiellement un pré-entraînement
+
+1:35:39.610,1:35:43.930
+sur ces images, puis effectuons un apprentissage par transfert sur différents
+
+1:35:43.930,1:35:51.420
+jeux de données. [Etudiant : j'avais une question sur la banque de mémoire de PIRL, 
+
+1:35:51.420,1:35:57.610
+les m, ne seraient-ils pas dépassés comme la représentation des caractéristiques stockées dans la banque de mémoire ?]
+
+1:35:57.610,1:36:04.720
+Oui, ils sont un peu obsolètes, mais en pratique cela ne fait pas vraiment
+
+1:36:04.720,1:36:09.070
+une grande différence. La manière particulière de les mettre à jour utilise…
+
+1:36:09.070,1:36:14.050
+Donc M de I est une moyenne mobile de la représentation f,
+
+1:36:14.050,1:36:19.900
+et cette moyenne mobile bien qu'elle soit encore…, en fait n'a pas beaucoup
+
+1:36:19.900,1:36:25.630
+d'importance dans la pratique. Vous pouvez toujours continuer à les utiliser.
+
+1:36:25.630,1:36:31.030
+[Etudiant : j'ai récemment lu le papier sur PIRL où vous vous êtes lancé dans un énorme batch
+
+1:36:31.030,1:36:37.540
+de taille 8 000 ou quelque chose comme ça, donc en utilisant l'approche de la banque de mémoire et en obtenant
+
+1:36:37.540,1:36:43.000
+ces 8 000 exemples et une fonction de perte, est-ce possible ?]  Oui,
+
+1:36:43.000,1:36:47.980
+une manière plus simple de faire ça nécessite vraiment une grande taille de batch car vous obtenez des
+
+1:36:47.980,1:36:52.330
+négatifs de différentes images dans un même batch. Alors que si vous utilisez quelque chose
+
+1:36:52.330,1:36:55.660
+comme la banque de mémoire, vous n'avez vraiment pas besoin d'un bacth important. Vous pouvez donc entraîner
+
+1:36:55.660,1:37:00.160
+environ 32 images dans un batch car tous les négatifs proviennent
+
+1:37:00.160,1:37:03.790
+de la banque de mémoire, ce qui ne vous oblige pas vraiment à faire plusieurs
+
+1:37:03.790,1:37:10.520
+feed-forwards. [Etudiant : d'accord, merci] [Autre étudiant : si vous 
+
+1:37:10.520,1:37:14.330
+utilisez la banque de mémoire, vous ne pouvez pas revenir en arrière et propager l'exemple négatif, 
+
+1:37:14.330,1:37:20.510
+n'est-ce donc pas un problème ?] Cela ne crée pas tant de problèmes.
+
+1:37:20.510,1:37:25.010
+C'était une chose qui me préoccupait aussi. Au début nous avons essayé
+
+1:37:25.010,1:37:29.150
+une version qui utilisait une taille de batch plus importante mais lorsque
+
+1:37:29.150,1:37:34.159
+nous sommes passés à la banque de mémoire, cela n'a pas vraiment réduit
+
+1:37:34.159,1:37:41.150
+la performance. Que très très peu. Une très légère réduction de la performance. [Étudiant : une
+
+1:37:41.150,1:37:47.480
+intuition sur les raisons de ça ?] Je pense que l'apprentissage contrastif global est assez
+
+1:37:47.480,1:37:53.090
+lent à converger. Toutes les méthodes comme la dernière version de MoCo et
+
+1:37:53.090,1:37:56.390
+ainsi de suite, s'entraînent sur un très grand nombre d'époques de toute façon
+
+1:37:56.390,1:38:00.890
+donc le nombre de rétropropagations ou le nombre de mémoire, des paramètres
+
+1:38:00.890,1:38:04.219
+que vous effectuez sont généralement très importants. De sorte que le fait
+
+1:38:04.219,1:38:07.699
+que vous manquiez l'un d'entre eux, dans ce cas particulier, n'a probablement
+
+1:38:07.699,1:38:16.340
+pas beaucoup d'effet. [Merci]. [Alfredo : les cinq dernières minutes]. Bien, on y est presque.
+
+1:38:16.340,1:38:21.050
+Donc nous les avons évalués sur un tas de tâches différentes. La première
+
+1:38:21.050,1:38:27.770
+était la détection d'objets. Encore une fois une sorte de tâche standard dans la vision.
+
+1:38:27.770,1:38:32.210
+PIRL a pu surpasser l’entraînement supervisé sur ImageNet pour la détection 
+
+1:38:32.210,1:38:37.730
+pour les jeux de données VOC07 et VOC07+12. Il surpasse sur le critère
+
+1:38:37.730,1:38:42.020
+d'évaluation le plus strict AP « all » qui a été introduit par COCO. 
+
+1:38:42.020,1:38:46.820
+Ce qui était déjà un signe positif, il était capable de le faire.
+
+1:38:46.820,1:38:51.620
+La deuxième chose sur laquelle nous avons examinée PIRL est l'apprentissage
+
+1:38:51.620,1:38:55.730
+semi-supervisé et, une fois de plus, PIRL a obtenu d'assez bons résultats.
+
+1:38:55.730,1:39:01.159
+C'était en fait mieux que, disons, la tâche prétexte de Jigsaw. La seule
+
+1:39:01.159,1:39:05.150
+différence entre la rangée du haut et celle du bas est le fait que PIRL est 
+
+1:39:05.150,1:39:09.510
+une version invariante alors que Jigsaw est une version covariante.
+
+1:39:09.510,1:39:14.230
+En termes de classification linéaire, lorsque le PIRL est sorti, il était essentiellement à
+
+1:39:14.230,1:39:19.060
+l’état de l’art avec la dernière version de CPC. Il a obtenu d'assez bons 
+
+1:39:19.060,1:39:22.720
+sur différents paramétrages et un tas d'architectures différentes.
+
+1:39:22.720,1:39:27.190
+Bien sûr, vous pouvez maintenant obtenir d'assez bonnes performances grâce à des méthodes comme SimCLR,
+
+1:39:27.190,1:39:31.980
+de sorte que le nombre correspondant pour SimCLR est d'environ 69 ou 70
+
+1:39:31.980,1:39:37.020
+alors que pour PIRL nous sommes à environ 63. L'autre chose que nous avons examinée était
+
+1:39:39.280,1:39:44.620
+la manière dont PIRL généralise à travers les distributions de données. Donc pour cela nous avons
+
+1:39:44.620,1:39:50.380
+seulement regardé les images Flickr du jeu de données YFCC. PIRL a pu 
+
+1:39:50.380,1:39:54.310
+surpasser les méthodes qui ont été entraînées en utilisant cent fois plus 
+
+1:39:54.310,1:39:58.690
+de données. Le Jigsaw de la deuxième ligne a été entraîné sur 100 millions
+
+1:39:58.690,1:40:02.530
+d'images alors que le PIRL a été entraîné sur 1 million d'images.
+
+1:40:02.530,1:40:07.390
+Malgré cela, il est en mesure de surpasser Jigsaw et cela assez facilement.
+
+1:40:07.390,1:40:11.890
+Cela vous montre encore une fois la puissance du brisage
+
+1:40:11.890,1:40:15.310
+de l'invariance dans votre représentation plutôt que 
+
+1:40:15.310,1:40:21.660
+prédire des tâches de prétexte. Et enfin, ce que par quoi j'ai commencé 
+
+1:40:21.660,1:40:25.560
+qui est de savoir si cette chose est réellement sémantique. Donc, si vous
+
+1:40:25.560,1:40:29.790
+regardez différentes couches de représentations, donc conv1 à res5, Jigsaw
+
+1:40:29.790,1:40:34.199
+montre une baisse de performance de res4 à res5. Mais pour PIRL vous
+
+1:40:34.199,1:40:38.340
+voyez un graphique agréablement croissant, où res4 et res5 obtiennent
+
+1:40:38.340,1:40:45.719
+de plus en plus de sémantique. En termes de problème de complexité, PIRL 
+
+1:40:45.719,1:40:49.140
+gère très bien cela car vous ne prédisez jamais le nombre de permutations.
+
+1:40:49.140,1:40:52.980
+Vous les utilisez juste en entrée comme une sorte d'augmentation de données.
+
+1:40:52.980,1:40:58.710
+PIRL peut donc très bien s'adapter à toutes les 360 000 permutations possibles dans
+
+1:40:58.710,1:41:02.340
+les neuf patchs. Alors que pour Jigsaw, car vous le prédisez, vous êtes
+
+1:41:02.340,1:41:09.239
+très limité par la taille de votre espace de sortie. Le papier montre également que nous
+
+1:41:09.239,1:41:13.380
+pouvons étendre PIRL. Il n'est pas limité à Jigsaw. Vous pouvez le faire 
+
+1:41:13.380,1:41:17.010
+sur la rotation, vous pouvez combiner Jigsaw et la rotation, et vous pouvez
+
+1:41:17.010,1:41:24.690
+obtenir de plus en plus de gains si vous commencez à faire cela. Donc 
+
+1:41:24.690,1:41:28.860
+si vous examinez ces méthodes, allant des tâches prétexte, au clustering,
+
+1:41:28.860,1:41:33.300
+à PIRL, en allant de gauche à droite, on obtient de plus en plus
+
+1:41:33.300,1:41:38.580
+d'invariance. D'une certaine manière, vous constatez également une augmentation des performances. Cela 
+
+1:41:38.580,1:41:41.640
+suggère que le fait de rendre de plus en plus invariantes vos méthodes va 
+
+1:41:41.640,1:41:47.580
+être plus utile à long terme. Il y a quelques lacunes, nous
+
+1:41:47.580,1:41:50.219
+ne comprenons pas vraiment quel est l'ensemble des données transformées qui
+
+1:41:50.219,1:41:54.719
+compte. Jigsaw fonctionne très bien, mais il n'est pas très clair de ce qui
+
+1:41:54.719,1:42:00.390
+se passe. Donc, pour un futur travail, ou si vous voulez dépenser vos
+
+1:42:00.390,1:42:04.380
+cycles de réflexion, c'est vraiment comprendre quelles invariances
+
+1:42:04.380,1:42:08.760
+ont vraiment de l'importance lorsque vous essayez de résoudre une tâche supervisée, quelles invariances
+
+1:42:08.760,1:42:13.800
+ont vraiment de l'importance pour quelque chose comme ImageNet. Et c'est fini.
+
+1:42:13.800,1:42:17.520
+Donc, en gros, prédire de plus en plus d'informations et essayer d'être aussi invariant
+
+1:42:17.520,1:42:23.000
+que possible. Je vous remercie. [Etudiant : j'avais une question, ces réseaux contrastifs,
+
+1:42:23.000,1:42:28.530
+ils ne peuvent pas utiliser la couche de batch norm, n'est-ce pas ? Parce qu'alors les informations
+
+1:42:28.530,1:42:31.080
+passeraient d'un échantillon à l'autre et ensuite pourraient
+
+1:42:31.080,1:42:35.910
+apprendre une façon très triviale de séparer les négatifs des positifs ?]
+
+1:42:35.910,1:42:42.360
+Donc, pour PIRL par exemple, nous n'avons pas observé ce phénomène.
+
+1:42:42.360,1:42:45.810
+Nous n'avons pas vraiment eu à utiliser d’astuces particuliers avec la batch norm.
+
+1:42:45.810,1:42:52.260
+Nous avons pu l’utiliser telle quelle. [D'accord, et il n'est pas nécessaire que
+
+1:42:52.260,1:42:57.150
+tous les réseaux contrastifs utilisent la batch norm ? C’est normal d'avoir
+
+1:42:57.150,1:43:02.760
+une couche de batch norm ici ?] Oui, par exemple pour SimCLR et ainsi de suite,
+
+1:43:02.760,1:43:06.510
+ils essaient de passer à la même batch norm car ils veulent émuler une 
+
+1:43:06.510,1:43:12.000
+grande taille de batch. Vous devrez donc peut-être apporter quelques modifications à la batch norm, mais en gros vous
+
+1:43:12.000,1:43:15.150
+ne pouvez pas vraiment l'éviter, car si vous la supprimez complètement, alors
+
+1:43:15.150,1:43:20.970
+l’entraînement de ces réseaux très profonds est généralement très difficile. [Étudiant : d'accord.
+
+1:43:20.970,1:43:27.090
+Pensez-vous que PIRL fonctionne avec les couches de batch norm parce qu'il utilise une banque
+
+1:43:27.090,1:43:32.580
+de mémoire, et toutes les représentations ne sont pas prises en même temps ? Alors que pour MoCo 
+
+1:43:32.580,1:43:37.710
+je crois qu’ils ont spécifiquement mentionné de ne pas utiliser la couche de batch norm ou de l'utiliser
+
+1:43:37.710,1:43:42.450
+répartie sur plusieurs GPU]. Donc, je pense qu'il y a une différence 
+
+1:43:42.450,1:43:46.020
+car les négatifs que vous mettez en contraste et les résultats positifs
+
+1:43:46.020,1:43:50.460
+proviennent d'étapes temporelles différentes. Cela rend plus difficile la batch norm,
+
+1:43:50.460,1:43:56.520
+cette façon de tricher. Mais quant aux autres méthodes comme MoCo et SimCLR, elles sont très
+
+1:43:56.520,1:44:00.810
+en corrélation avec le batch particulier que vous évaluez. [Ok, y a-t-il une
+
+1:44:00.810,1:44:05.730
+suggestion sur la manière de procéder si nous utilisons une perte N-paires 
+
+1:44:05.730,1:44:09.120
+plutôt qu'une banque de mémoire ? Faut-il s'en tenir à AlexNet et VGG
+
+1:44:09.120,1:44:14.970
+qui n'utilisent pas une couche de batch norm, ou y a-t-il un moyen de
+
+1:44:14.970,1:44:23.600
+l'éteindre ?] Pouvez-vous décrire ça un peu plus en détails ?
+
+1:44:23.600,1:44:30.750
+[Donc, en gros, ce que j'essaie de faire, c'est d'entraîner sur les images d’une vidéo
+
+1:44:30.750,1:44:35.910
+en utilisant une configuration de N-paires où j'essaie de contraster les n-échantillons plutôt
+
+1:44:35.910,1:44:41.040
+que deux ou trois échantillons, et ce qui m'inquiète c'est de savoir si je
+
+1:44:41.040,1:44:45.730
+dois utiliser ou non la batch norm, et si je ne l'utilise pas du tout, 
+
+1:44:45.730,1:44:49.910
+quelle architecture de modèles pré-entraînés puis-je utiliser ?]
+
+1:44:51.199,1:44:55.590
+C'est délicat. Un problème avec les images vidéo est qu'elles sont
+
+1:44:55.590,1:45:01.050
+Corrélées. Donc en général la performance de batch norm se dégrade et vous
+
+1:45:01.050,1:45:05.520
+avez des échantillons assez corrélés. Donc, avec la vidéo, cela devient de 
+
+1:45:05.520,1:45:11.250
+plus en plus un problème. Les mauvaises nouvelles
+
+1:45:11.250,1:45:15.330
+sont que même si vous regardez une mise en œuvre typique d'AlexNet
+
+1:45:15.330,1:45:19.980
+de nos jours, elle inclura la batch norm. Car c’est beaucoup plus stable
+
+1:45:19.980,1:45:23.280
+de l’entraîner avec cela. On peut entraîner avec un taux d'apprentissage plus élevé et on peut
+
+1:45:23.280,1:45:26.699
+l'utiliser pour un ensemble de tâches différentes en aval. Je pense donc
+
+1:45:26.699,1:45:31.710
+que vous devrez peut-être continuer à utiliser la batch norm. Si ce n'est pas le cas, vous pouvez user d'autres variantes comme
+
+1:45:31.710,1:45:38.370
+la group norm qui essaie de ne pas dépendre de la taille du batch. [Étudiant : ok, ça fait
+
+1:45:38.370,1:45:44.600
+sens, merci]. [Yann : ok, merci beaucoup Ishan.
+
+1:45:44.600,1:45:52.230
+il y a beaucoup de détails intéressants] [Aldredo : je pense qu'il nous reste encore huit minutes,
+
+1:45:52.230,1:45:58.739
+s’il reste des étuidants] [Yann : des questions ?] [Étudiant : oui, j’avais
+
+1:45:58.739,1:46:02.699
+une question. Que j'avais également posée dans la conférence lorsque nous 
+
+1:46:02.699,1:46:08.760
+discutions de PIRL. Cette question porte sur la fonction de perte. Puis-je la poser
+
+1:46:08.760,1:46:15.449
+maintenant ?] Oui, allez-y. [Etudiant : en lisant le papier, il y a un terme de probabilité
+
+1:46:15.449,1:46:20.969
+calculé après avoir calculé les représentations VI et VIt pour l'image et
+
+1:46:20.969,1:46:26.670
+la version transformée. Après avoir obtenu ces probabilités, il y a 
+
+1:46:26.670,1:46:33.030
+l’utilisation d’une perte NCE, donc j'étais un peu confus. N’aurait-il pas
+
+1:46:33.030,1:46:37.170
+été préférable que seul un logarithme négatif de cette probabilité soit
+
+1:46:37.170,1:46:44.550
+minimisé ?] Vous pouvez utiliser les deux. La raison d'utiliser NCE était essentiellement
+
+1:46:44.550,1:46:50.130
+plus en rapport avec la façon dont le papier sur la banque de mémoire a été mis en place.
+
+1:46:50.130,1:46:54.030
+Si vous avez K négatifs vous résolvez essentiellement K+1 problèmes, donc 
+
+1:46:54.030,1:46:58.830
+vous avez fondamentalement K+1 problèmes binaires différents que vous êtes
+
+1:46:58.830,1:47:02.250
+en train de résoudre. C'est donc une façon de faire. L'autre
+
+1:47:02.250,1:47:05.970
+est ce qu'on appelle aujourd'hui « info NC », qui est en fait le softmax.
+
+1:47:05.970,1:47:10.320
+Il suffit donc d'appliquer une fonction softmax et de minimiser la log-vraisemblance négative
+
+1:47:10.320,1:47:16.290
+de cela. [C'est car cette arête, la fonction de probabilité, semblait
+
+1:47:16.290,1:47:25.380
+comme le softmax]. Oui, donc au moment où je l'ai utilisé, cela a donné
+
+1:47:25.380,1:47:29.880
+des résultats un peu moins bons et c'est pourquoi j'ai utilisé NCE. C’était
+
+1:47:29.880,1:47:34.320
+seulement des expériences initiales. Maintenant, quand je réessaie, cela me donne des résultats similaires.
+
+1:47:34.320,1:47:39.050
+Je suppose donc qu'en fin de compte, cela ne fait pas une grande différence.
+
+1:47:41.150,1:47:46.260
+[Etudiant : c'est plus en rapport avec le cours. Nous allons avoir un projet sur 
+
+1:47:46.260,1:47:52.020
+l'apprentissage autosupervisé. Ishan, pouvez-vous nous donner des informations sur la façon d'obtenir 
+
+1:47:52.020,1:47:59.790
+un modèle d'apprentissage autosupervisé  qui fonctionne ? En ce qui concerne les détails de l’implémentation, comme
+
+1:47:59.790,1:48:05.280
+il s'agit d'une conférence sur une idée de haut niveau, comment faire pour   
+
+1:48:05.280,1:48:12.690
+la faire fonctionner rapidement ?] Il y a certaines classes de techniques qui sont
+
+1:48:12.690,1:48:16.740
+beaucoup plus faciles à faire marcher dès le départ. Par exemple, si
+
+1:48:16.740,1:48:20.930
+vous ne regardez que des tâches de prétexte, alors regardez essentiellement
+
+1:48:20.930,1:48:26.010
+quelque chose comme la rotation car c'est une tâche très facile à mettre en œuvre. Vous
+
+1:48:26.010,1:48:29.850
+ne pouvez vraiment pas vous tromper, au sens qu'il y a très peu de choses à implémenter.
+
+1:48:29.850,1:48:34.710
+Le nombre de pièces en mouvement est donc un bon indicateur. L'autre chose 
+
+1:48:34.710,1:48:41.310
+dont il faut se souvenir est que si vous mettez en œuvre une méthode existante,
+
+1:48:41.310,1:48:46.050
+il y aura beaucoup de petits détails dont les auteurs parleront. Ainsi, 
+
+1:48:46.050,1:48:49.440
+par exemple, le taux d'apprentissage exact qu'ils ont utilisé ou la façon dont ils ont utilisé la batch norm
+
+1:48:49.440,1:48:51.630
+et ainsi de suite. S'il y a beaucoup de ces choses, alors il
+
+1:48:51.630,1:48:55.710
+sera de plus en plus difficile pour vous de vous reproduire les résultats,
+
+1:48:55.710,1:49:01.320
+et plus de chance que vous vous trompiez. La deuxième chose à retenir, est l’augmentation de
+
+1:49:01.320,1:49:06.390
+données. L'augmentation de données est vraiment essentielle. Donc si vous obtenez quelque chose
+
+1:49:06.390,1:49:10.650
+qui fonctionne, essayez d'y ajouter de l’augmentation de données.
+
+1:49:10.650,1:49:17.070
+[Etudiant : recommandez-vous nous d’essayer PIRL ou pensez-vous que ça serait trop difficile de le
+
+1:49:17.070,1:49:25.980
+faire en un mois ?] Je ne suis pas sûr de savoir quel est vraiment le cadre, donc je ne suis pas sûr de pouvoir faire des commentaires à ce sujet. 
+
+1:49:25.980,1:49:30.780
+[D'accord, merci. Encore une chose, avez-vous essayé d'utiliser le momemtum contrast sur PIRL à la place
+
+1:49:30.780,1:49:35.550
+de la banque de mémoire ?] Je ne l'ai pas fait, nous passons à la banque de mémoire de bout en bout
+
+1:49:35.550,1:49:41.520
+ce qui est similaire à SimCLR. Donc le truc c'est que, je veux dire, vous
+
+1:49:41.520,1:49:44.670
+pouvez rassembler un tas de négatifs provenant de différents GPU, augmenter
+
+1:49:44.670,1:49:49.410
+votre taille de batch, qui en fait aide généralement beaucoup. [Etudiant : je soupçonne
+
+1:49:49.410,1:49:54.030
+que MoCo aiderait aussi beaucoup. Je pense que MoCo améliorerait les performances par rapport à
+
+1:49:54.030,1:50:00.720
+SimCLR en remplaçant l’entraînement de bout en bout par MoCo]. Les chiffres 
+
+1:50:00.720,1:50:05.820
+sont encore assez similaires. Il y a de petites différences dans le protocole d'évaluation
+
+1:50:05.820,1:50:11.340
+que vous pouvez voir à travers ces papiers, donc nous prévoyons de publier
+
+1:50:11.340,1:50:15.210
+un référentiel d'évaluation plus standardisé. Nous l’avons l’année dernière
+
+1:50:15.210,1:50:18.810
+malheureusement c'était en Caffe2. Donc nous essayons de sortir quelque chose sous
+
+1:50:18.810,1:50:22.950
+PyTorch maintenant. Fournir des implémentations standardisées, comme PIRL
+
+1:50:22.950,1:50:30.720
+et un tas d'autres, un protocole d'évaluation standardisé pour tout.
+
+1:50:30.720,1:50:36.720
+[Etudiant : j'avais une question sur l'apprentissage autosupervisé. Que pensez-vous
+
+1:50:36.720,1:50:42.200
+de l'état des méthodes génératives ? Et avez-vous pensé à combiner des
+
+1:50:42.200,1:50:48.210
+méthodes contrastives avec les méthodes génératives ? Comme SimCLR a en fait 
+
+1:50:48.210,1:50:51.780
+un espace différent, de sorte qu'ils ont comme une couche linéaire au-dessus de la
+
+1:50:51.780,1:50:55.830
+représentation des caractéristiques où ils calculent la représentation  de caractéristique réelle, là où
+
+1:50:55.830,1:51:01.380
+ils ont fait la perte contrastive, le truc NCE. Donc vous pensez qu'avoir une autre
+
+1:51:01.380,1:51:07.830
+tête, étant donné un recadrage de l'image, vous essayez juste de cadrer
+
+1:51:07.830,1:51:13.290
+cette image, et vous avez cette information car vous recadrez cette image ?]
+
+1:51:13.290,1:51:21.330
+C'est certainement une bonne idée, je pense que c’est
+
+1:51:21.330,1:51:24.449
+la partie délicate. Il s'agit de faire en sorte que d’entraîner ces choses 
+
+1:51:24.449,1:51:29.280
+et c’est juste non trivial. Je n'ai donc pas vraiment essayé d’approches
+
+1:51:29.280,1:51:33.539
+génératives. D'après mon expérience, c'est un peu plus difficile à
+
+1:51:33.539,1:51:37.409
+faire fonctionner. Mais je suis d'accord, je pense qu’à long terme
+
+1:51:37.409,1:51:42.820
+c'est le genre de choses sur lesquelles il faut se concentrer.
+
+1:51:42.820,1:51:56.030
+[Merci] [Alfredo : dernière question ? Non ? C'est tout ? Je crois que..] [Etudiant : oh, je peux poser une question ?
+
+1:51:56.030,1:52:01.130
+Il s'agit de la distillation. Vous disiez
+
+1:52:01.130,1:52:05.860
+comment la prédiction de distributions plus douces donne une
+
+1:52:05.860,1:52:11.930
+cible, n'est-ce pas ? Pouvez-vous nous en dire plus ? Car cela augmente en quelque sorte
+
+1:52:11.930,1:52:16.490
+l'incertitude de notre modèle, n'est-ce pas ? Nous prédisons à partir d'une distribution « one hot » et
+
+1:52:16.490,1:52:19.340
+puis l'assouplissons. Ensuite nous prédisons sur cela et donc plus d'incertitude.
+
+1:52:19.340,1:52:23.540
+D'ailleurs, pourquoi l'appelle-t-on cela distillation ? Car j'ai l'impression
+
+1:52:23.540,1:52:31.220
+qu’il faut plus de paramètres pour tenir compte de cette cible plus riche] 
+
+1:52:31.220,1:52:36.170
+Si vous entraînez sur des étiquettes uniques, vos modèles ont tendance à être
+
+1:52:36.170,1:52:40.220
+très confiant en général. Si vous avez entendu parler de ces trucs appelés
+
+1:52:40.220,1:52:45.440
+« lissage des étiquettes » [« label smoothing » en anglais], qui sont maintenant utilisés par un 
+
+1:52:45.440,1:52:49.490
+tas de méthodes, vous pouvez considérer ça comme la version la plus simple 
+
+1:52:49.490,1:52:51.740
+de la distillation. Vous disposez donc d'un vecteur one hot que vous
+
+1:52:51.740,1:52:54.920
+essayez de prédire, mais plutôt que d'essayer de prédire ce vecteur unique,
+
+1:52:54.920,1:52:59.150
+ce que vous faites, c'est que vous en retirez une certaine masse de probabilité… Donc, vous
+
+1:52:59.150,1:53:03.130
+prédisez un 1 et un tas de 0. Plutôt que de faire cela, prédisez disons
+
+1:53:03.130,1:53:07.490
+0,97 et ajoutez 0,01, 0,01, 0,01, comme les trois autres étiquettes.
+
+1:53:07.490,1:53:10.610
+Il suffit donc de commencer une distribution uniforme au reste. Donc
+
+1:53:10.610,1:53:14.810
+la distillation est une façon plus éclairée de le faire. Ainsi, au lieu
+
+1:53:14.810,1:53:18.860
+d’augmenter de façon aléatoire la probabilité d'une classe non apparentée,
+
+1:53:18.860,1:53:25.010
+d'avoir un réseau qui a été pré-entraîné, ce qui est plutôt bien. En
+
+1:53:25.010,1:53:29.800
+général, les distributions plus douces, sont très utiles pour les méthodes de pré-entraînement car
+
+1:53:29.800,1:53:33.860
+les modèles ont tendance à être trop confiants. Le pré-entraînement 
+
+1:53:33.860,1:53:37.370
+sur la distribution est en fait un peu plus facile que les problèmes d'optimisation. Vous convergez
+
+1:53:37.370,1:53:42.380
+un peu plus rapidement également. Ces deux avantages sont présents dans la distillation et
+
+1:53:42.380,1:53:48.710
+aussi quelque chose comme le lissage des étiquettes. [Alfredo : aussi car des étiquettes lisses vous permettent d'avoir un chien ressemblant à un chat
+
+1:53:48.710,1:53:52.670
+ou un chien qui ressemble à un chat. Donc, si vous avez un très grand 
+
+1:53:52.670,1:53:55.270
+réseau qui a été entraîné sur de très nombreux échantillons, il va
+
+1:53:55.270,1:54:00.040
+avoir une idée, une idée précise de ce qu'est une image sans ambiguïté ok ?
+
+1:54:00.040,1:54:04.450
+Et donc, si vous pouvez vraiment apprendre cette idée douce, vous allez 
+
+1:54:04.450,1:54:12.240
+apprendre plus que si vous vous contentez de donner cette étiquette one-hot. Je pense que nous n'avons plus le temps.
+
+1:54:12.240,1:54:16.420
+Nous manquons de temps comme une demi-heure mais c'était la
+
+1:54:16.420,1:54:20.230
+séance de questions/réponses.
+
+1:54:20.230,1:54:27.700
+S'il n'y a pas de questions vraiment vraiment urgentes, je vais dire que 
+
+1:54:27.700,1:54:35.170
+c’est la fin du cours d'aujourd'hui. Merci de l'écoute. Je vous vois
+
+1:54:35.170,1:54:41.070
+demain pour la session pratique, n'oubliez pas de venir,
+
+1:54:41.070,1:54:47.590
+et c'est tout. Merci beaucoup Ishan et à bientôt]
+
+1:54:47.590,1:54:52.020
+[Yann : merci Ishan, merci à tous, prenez soin de vous]. Au revoir.

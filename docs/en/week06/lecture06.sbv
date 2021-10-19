@@ -1532,7 +1532,7 @@ But I encourage you to take a computer vision course for to hear about this
 Yeah, this is okay this data set this particular dataset that we used
 
 0:41:51.590,0:41:57.969
-Is a collection of images street images that was collected mostly by Antonio de Alba at MIT and
+Is a collection of images street images that was collected mostly by Antonio Torralba at MIT and
 
 0:42:02.690,0:42:04.130
 He had a
@@ -1634,13 +1634,13 @@ How do you deal with this?
 So here is an example of a recurrent net architecture
 
 0:44:18.920,0:44:25.210
-Where you have an input which varies over time X of T that goes through the first neural net. Let's call it an encoder
+Where you have an input which varies over time X(t) that goes through the first neural net. Let's call it an encoder
 
 0:44:25.789,0:44:29.349
 That produces a representation of the of the input
 
 0:44:29.349,0:44:32.679
-Let's go eat H of T and it goes into a recurrent layer
+Let's call it H(t) and it goes into a recurrent layer
 
 0:44:32.680,0:44:38.409
 This recurrent layer is a function G that depends on trainable parameters W this trainable parameters also for the encoder
@@ -1652,10 +1652,10 @@ but I didn't mention it and
 that
 
 0:44:42.680,0:44:46.480
-Recurrent layer takes into account H of T, which is the representation of the input
+Recurrent layer takes into account H(t), which is the representation of the input
 
 0:44:46.480,0:44:49.539
-but it also takes into account Z of T minus one, which is the
+but it also takes into account Z(t-1), which is the
 
 0:44:50.150,0:44:55.509
 Sort of a hidden state, which is its output at a previous time step its own output at a previous time step
@@ -1673,10 +1673,10 @@ Its output at a previous time step
 Okay
 
 0:45:13.160,0:45:15.049
-Z of T minus 1
+Z(t-1)
 
 0:45:15.049,0:45:21.788
-So that's why this delay indicates here. The input of G at time T is actually Z of T minus 1
+So that's why this delay indicates here. The input of G at time t is actually Z(t-1)
 
 0:45:21.789,0:45:24.459
 Which is the output its output at a previous time step
@@ -1694,13 +1694,13 @@ So, how do you deal with this, you unroll the loop
 So this is basically the same diagram, but I've unrolled it in time
 
 0:45:49.160,0:45:56.170
-Okay, so at time at times 0 I have X of 0 that goes through the encoder produces H of 0 and then I apply
+Okay, so at time at times 0 I have X(0) that goes through the encoder produces H of 0 and then I apply
 
 0:45:56.170,0:46:00.129
 The G function I start with a Z arbitrary Z, maybe 0 or something
 
 0:46:01.160,0:46:05.980
-And I apply the function and I get Z 0 and that goes into the decoder produces an output
+And I apply the function and I get Z(0) and that goes into the decoder produces an output
 
 0:46:06.650,0:46:08.270
 Okay
@@ -1709,10 +1709,10 @@ Okay
 and then
 
 0:46:09.740,0:46:16.479
-Now that has Z 0 at time step 1 I can use the 0 as the previous output for the time step. Ok
+Now that has Z(0) at time step 1. I can use the Z(0) as the previous output for the time step. Ok
 
 0:46:17.570,0:46:22.570
-Now the output is X of 1 and time 1 I run through the encoder I run through the recurrent layer
+Now the output is X(1) and time 1. I run through the encoder I run through the recurrent layer
 
 0:46:22.570,0:46:24.570
 Which is now no longer recurrent
@@ -2015,7 +2015,7 @@ weights and inputs
 Okay classic, but the weights actually themselves are weighted sums of weights and inputs
 
 0:53:38.780,0:53:43.149
-okay, so WIJ here, which is the IJ'th term in the weight matrix of
+okay, so Wij here, which is the ij'th term in the weight matrix of
 
 0:53:43.820,0:53:46.479
 The module we're considering is actually itself
@@ -2024,22 +2024,22 @@ The module we're considering is actually itself
 a weighted sum of
 
 0:53:50.060,0:53:53.439
-three third order tenser u ijk
+three third order tenser Uijk
 
 0:53:54.410,0:53:56.560
-weighted by variables ZKs
+weighted by variables Zk.
 
 0:53:58.220,0:54:02.080
-Okay, so basically what you get is that W IJ is kind of a weighted sum of
+Okay, so basically what you get is that Wij is kind of a weighted sum of
 
 0:54:04.160,0:54:06.160
 Matrices
 
 0:54:06.800,0:54:08.800
-UK
+Uk
 
 0:54:09.020,0:54:13.419
-Weighted by a coefficient ZK and the ZKs can change there are input variables the same way
+Weighted by a coefficient Zk and the Zk can change there are input variables the same way
 
 0:54:13.460,0:54:17.230
 So in effect, it's like having a neural net
@@ -2078,7 +2078,7 @@ form
 Ok, so overall when you kind of write it all down
 
 0:55:06.570,0:55:13.339
-SI is equal to sum over J And K of UijkZkXj. This is a double sum
+SI is equal to sum over j And k of Uijk Zk Xj. This is a double sum
 
 0:55:15.750,0:55:18.169
 People used to call this Sigma Pi units, yes
@@ -2129,16 +2129,16 @@ basically computes a
 convex linear combination of a bunch of vectors, so
 
 0:56:32.790,0:56:34.849
-X1 and x2 here are vectors
+x₁ and x₂ here are vectors
 
 0:56:37.770,0:56:42.499
-W1 and w2 are scalars, basically, okay and
+w₁ and w₂ are scalars, basically, okay and
 
 0:56:45.540,0:56:47.870
 What the system computes here is a weighted sum of
 
 0:56:49.590,0:56:55.069
-X1 and x2 weighted by w1 w2 and again w1 w2 are scalars in this case
+x₁ and x₂ weighted by w₁ w₂ and again w₁ w₂ are scalars in this case
 
 0:56:56.910,0:56:58.910
 Here the sum at the output
@@ -2147,31 +2147,31 @@ Here the sum at the output
 so
 
 0:57:01.020,0:57:07.999
-Imagine that those two weights. W1 w2 are between 0 and 1 and sum to 1 that's what's called a convex linear combination
+Imagine that those two weights. w₁ w₂ are between 0 and 1 and sum to 1 that's what's called a convex linear combination
 
 0:57:10.260,0:57:13.760
-So by changing w1 w2 so essentially
+So by changing w₁ w₂ so essentially
 
 0:57:15.480,0:57:18.139
 If this sum to 1 there are the output of a softmax
 
 0:57:18.810,0:57:23.629
-Which means w2 is equal to 1 minus w1 right? That's kind of the direct consequence
+Which means w₂ is equal to 1 - w₁ right? That's kind of the direct consequence
 
 0:57:27.450,0:57:29.450
 So basically by changing
 
 0:57:29.790,0:57:34.340
-the size of w1 w2 you kind of switch the output to
+the size of w₁ w₂ you kind of switch the output to
 
 0:57:34.530,0:57:39.860
-Being either x1 or x2 or some linear combination of the two some interpolation between the two
+Being either x₁ or x₂ or some linear combination of the two some interpolation between the two
 
 0:57:41.610,0:57:43.050
 Okay
 
 0:57:43.050,0:57:47.179
-You can have more than just X 1 and X 2 you can have a whole bunch of X's X vectors
+You can have more than just x₁ and x₂ you can have a whole bunch of x vectors
 
 0:57:48.360,0:57:50.360
 and that
@@ -2213,7 +2213,7 @@ You get a bunch of numbers between 0 & 1 that sum to 1 use those as coefficient 
 of a bunch of vectors X
 
 0:58:54.560,0:58:56.589
-X_i and you get the weighted sum
+xᵢ and you get the weighted sum
 
 0:58:57.290,0:59:00.070
 Weighted by those coefficients those coefficients are data dependent
@@ -2288,13 +2288,13 @@ simply the application of a nonlinear function the sigmoid function
 to
 
 1:00:44.089,1:00:49.119
-two linear layers and a bias and those two linear layers take into account the input X of T and
+two linear layers and a bias and those two linear layers take into account the input X(t) and
 
 1:00:49.400,1:00:54.389
 The previous state which they did note H in their case, not Z like I did
 
 1:00:55.930,1:01:01.889
-Okay, so you take X you take H you compute ----- matrices
+Okay, so you take X you take H you compute matrices
 
 1:01:02.950,1:01:04.140
 You pass a result
@@ -2315,10 +2315,10 @@ You see the formula at the bottom the Z is used to basically compute a linear co
 of two inputs if Z is equal to 1
 
 1:01:25.420,1:01:28.379
-You basically only look at HT-1 if Z 
+You basically only look at h(t-1). If Z 
 
 1:01:29.859,1:01:35.669
-Is equal to 0 then 1 minus Z is equal to 1 then you you look at this
+Is equal to 0 then 1 - Z is equal to 1 then you you look at this
 
 1:01:36.400,1:01:38.109
 expression here and
@@ -3026,7 +3026,7 @@ What you're going to do is you're going to compare this X
 With a bunch of vectors, we're gonna call K
 
 1:20:08.180,1:20:10.180
-So k1 k2 k3
+So k₁ k₂ k₃
 
 1:20:12.890,1:20:18.910
 Okay, so you compare those two vectors and the way you compare them is via dot product very simple
@@ -3041,10 +3041,10 @@ They are scalar values, you know plug them to a softmax
 So what you get are three numbers between 0 & 1 that sum to 1
 
 1:20:53.840,1:20:59.259
-What you do with those you have 3 other vectors that I'm gonna call v v1
+What you do with those you have 3 other vectors that I'm gonna call V
 
 1:21:00.680,1:21:02.680
-v2 v3
+v₁, v₂ and v₃
 
 1:21:03.770,1:21:07.120
 And what you do is you multiply

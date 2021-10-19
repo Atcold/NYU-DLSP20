@@ -1,0 +1,2606 @@
+0:00:00.320,0:00:06.560
+Donc je disais que j'ai préparé cette vidéo à partir de zéro et ça a été difficile.
+
+0:00:10.240,0:00:13.679
+C'est la deuxième semaine que je ne fais rien d'autre que
+
+0:00:13.679,0:00:16.720
+de préparer, lire, étudier et devenir fou mais
+
+0:00:16.720,0:00:21.600
+je pense que c'est une amélioration, je grandis.
+
+0:00:21.760,0:00:29.199
+[Chat : Sur quoi faites-vous des recherches ?]
+
+0:00:29.199,0:00:34.000
+Sur comment mieux enseigner [rires]. Cette semaine j’ai juste lu tout ce
+
+0:00:34.000,0:00:42.000
+que j'ai pu sur les réseaux de neurones pour graphes [GNNs dans la suite], les réseaux convolutifs pour graphes [GCNs dans la suite].
+
+0:00:42.000,0:00:49.760
+J’ai dû lire quelques dizaines de publications. Je suis un peu ivre pour être honnête.
+
+0:00:50.480,0:00:54.480
+Ok, donc, de quoi parlons-nous aujourd'hui ?
+
+0:00:54.480,0:00:58.000
+Les GCNs exploitant l’éparsité des domaines.
+
+0:00:58.000,0:01:04.239
+Hier, Xavier a également mentionné les trois propriétés
+
+0:01:04.239,0:01:10.320
+des signaux naturels qui sont : la localité, la stationnarité et
+
+0:01:10.320,0:01:14.080
+ce qu’il a appelé hiérarchie mais que j’appelle compositionnalité. Il a utilisé le terme
+
+0:01:14.080,0:01:17.439
+de composition pour signifier l'ensemble des trois choses.
+
+0:01:17.439,0:01:21.040
+Mais encore une fois je suppose que c'est juste du jargon,
+
+0:01:21.040,0:01:25.200
+nous disons la même chose.
+
+0:01:25.200,0:01:29.280
+Donc que sont ces GCNs ?
+
+0:01:29.280,0:01:34.240
+Un autre type d'architecture, une autre façon d'exploiter quelle est la
+
+0:01:34.240,0:01:38.240
+structure de vos données.
+
+0:01:38.240,0:01:42.920
+Nous y arriverons en partant de la leçon de la dernière semaine.
+
+0:01:42.920,0:01:46.200
+Faisons un bref rappel de la semaine dernière.
+
+0:01:46.200,0:01:51.920
+Nous parlions de l’auto-attention. Dans l’auto-attention, nous avions cet ensemble
+
+0:01:51.920,0:01:58.159
+de x. Donc x1, x2, etc… jusqu'à xt.
+
+0:01:58.159,0:02:02.320
+Et vous pouvez empiler ces x l'un après l'autre et obtenir
+
+0:02:02.320,0:02:07.439
+la matrice X. Chaque petit x
+
+0:02:07.439,0:02:11.280
+est de taille de ℝⁿ. Puis ma couche cachée,
+
+0:02:11.280,0:02:15.760
+pour tout x que je considère,
+
+0:02:15.760,0:02:22.959
+est cette combinaison linéaire de ces vecteurs dans l’ensemble.
+
+0:02:22.959,0:02:27.040
+Et nous savons que c'est depuis, je pense, le
+
+0:02:27.040,0:02:31.120
+practinum 4, qu'une combinaison linéaire de vecteurs peut
+
+0:02:31.120,0:02:35.840
+s'écrire comme une multiplication d’une matrice et d’un vecteur. Donc nous
+
+0:02:35.840,0:02:39.920
+avons ici que le h est égal à X fois a. 
+
+0:02:39.920,0:02:48.000
+a contient le coefficient pour changer d’échelle ces vecteurs.
+
+0:02:48.640,0:02:52.800
+Puis tous ces coefficients sont positifs
+
+0:02:52.800,0:02:56.879
+et doivent sommer à 1. Si seulement un
+
+0:02:56.879,0:03:00.480
+est en fait 1 alors nous avons l'attention dure. Et X
+
+0:03:00.480,0:03:04.879
+est juste cette collection de x. Mais, à nouveau, c'est un ensemble.
+
+0:03:04.879,0:03:10.080
+Un ensemble signifie que ce n'est pas une séquence. Il n'y a pas d'ordre.
+
+0:03:10.080,0:03:14.640
+Jusqu'à présent, vous devriez être familier, n'est-ce pas ?
+
+0:03:14.640,0:03:16.879
+A l'aise avec ce genre de notation. 
+
+0:03:16.879,0:03:22.360
+Cette combinaison linéaire de colonnes n'est qu'une multiplication matricielle. 
+
+0:03:22.360,0:03:27.840
+Donc j’ai lu la littérature sur ce GCN. Je lisais, je lisais,
+
+0:03:27.840,0:03:33.480
+et j’étais comme : « c’est en faites la même chose ».
+
+0:03:33.640,0:03:44.480
+Donc partons de là. C'est mon point de vue qui, une fois encore, n'est peut-être pas le meilleur mais
+
+0:03:44.480,0:03:51.920
+vous m'avez, donc vous devez faire avec moi. Donc commençons par ce GCN.
+
+0:03:53.680,0:03:58.959
+Donc mon a qui est ce vecteur sur la gauche ici
+
+0:03:58.959,0:04:02.879
+dans l'attention qui contient tous les coefficients
+
+0:04:02.879,0:04:06.720
+qui pondèrent les colonnes.
+
+0:04:06.720,0:04:10.239
+Dans ce cas, je vais appeler cela mon
+
+0:04:10.239,0:04:14.879
+vecteur d’adjacence. Quel est donc ce vecteur ?
+
+0:04:14.879,0:04:18.959
+Nous devons donc commencer à introduire un peu de notation.
+
+0:04:18.959,0:04:23.280
+Je présente ici mon premier sommet, en rouge,
+
+0:04:23.280,0:04:27.120
+qui représente
+
+0:04:27.120,0:04:33.680
+mon entrée x donnée et a également 
+
+0:04:33.680,0:04:37.000
+ma couche cachée h. Comme on l’a vu avant
+
+0:04:37.000,0:04:41.520
+sur la partie sur l'attention, nous avions ce x et ce h génériques.
+
+0:04:41.520,0:04:47.440
+Donc je vais continuer à utiliser ce genre de notation générique.
+
+0:04:47.440,0:04:51.440
+J'ai donc mon sommet générique v, où je peux avoir mon
+
+0:04:51.440,0:04:56.479
+x générique et mon h et générique. Puis bien sûr vous allez avoir
+
+0:04:56.479,0:05:04.160
+tous les autres sommets que je vais les appeler vj sur lesquels vous pouvez trouver le signal qui va être
+
+0:05:04.160,0:05:09.280
+xj et hj. La représentation cachée et la
+
+0:05:09.280,0:05:14.320
+valeur d'entrée pour ce sommet ou nœud spécifique.
+
+0:05:14.320,0:05:18.080
+Et puis quoi ? Vous en avez plusieurs : l'ensemble
+
+0:05:18.080,0:05:23.840
+de points de données. Mais il y a une différence maintenant.
+
+0:05:23.840,0:05:27.120
+Nous avons que ces nœuds, ces sommets sont
+
+0:05:27.120,0:05:32.560
+connectés. Et donc nous dessinons un ensemble de flèches.
+
+0:05:32.560,0:05:37.759
+Donc, pour l'instant, nous avons que le vecteur a
+
+0:05:37.759,0:05:42.160
+va avoir des composantes αj
+
+0:05:42.160,0:05:45.919
+qui sont égales à 1 chaque fois qu'il y a une flèche
+
+0:05:45.919,0:05:52.800
+allant du vecteur vj vers moi-même.
+
+0:05:52.800,0:05:56.960
+Si vous pensez à la façon dont nous faisions cela avant pour l'attention,
+
+0:05:56.960,0:06:02.000
+nous calculions a comme une softargmax ou juste l'argmax, si c'est une
+
+0:06:02.000,0:06:06.160
+attention dure, comme un produit scalaire.
+
+0:06:06.160,0:06:09.919
+Le produit scalaire de tous ces clés
+
+0:06:09.919,0:06:14.639
+ou toutes ces lignes multipliées par ma requête. Vous aviez donc toutes les clés multipliées par la requête
+
+0:06:14.639,0:06:17.520
+et puis vous aviez ces scores. Puis en calculant
+
+0:06:17.520,0:06:22.720
+la softargmax ou l’argmax et vous aviez en gros
+
+0:06:22.720,0:06:28.080
+ces valeurs qui vous disent où vous devez regarder.
+
+0:06:28.080,0:06:32.240
+Dans ce cas, ici dans le GCN
+
+0:06:32.240,0:06:35.440
+nous avons cette structure qui vous est donnée.
+
+0:06:35.440,0:06:41.120
+Donc, une fois de plus, on peut penser que ce vecteur d’adjacence
+
+0:06:41.120,0:06:45.520
+comme ce vecteur avec 1 correspondant à ces
+
+0:06:45.520,0:06:49.440
+sommets qui ont des flèches pointant vers
+
+0:06:49.440,0:06:54.720
+moi-même en rouge. Donc si vous comprenez cela, c'est fini.
+
+0:06:54.720,0:07:00.720
+La leçon est terminée. Car tout le reste suivra automatiquement.
+
+0:07:00.720,0:07:08.880
+Donc d va être ma norme 1, ce qui correspond au nombre de 1 que j'ai.
+
+0:07:08.880,0:07:11.919
+Dans mon cas, ici d va être 2.
+
+0:07:11.919,0:07:14.960
+Quelle est la taille de a dans ce cas ?
+
+0:07:14.960,0:07:21.080
+Pouvez-vous me dire ? Si vous suivez… Vous me suivez ?
+
+0:07:21.840,0:07:29.360
+répondez à ma question. Vous m'entendez ? [Etudiant : le nombre de nœuds].
+
+0:07:29.360,0:07:31.680
+Oui ! Donc le nombre de nœuds dans ce cas est 6.
+
+0:07:31.680,0:07:37.759
+Et nous appelions cela dans l’auto-attention, ce t minuscule. 
+
+0:07:37.759,0:07:42.960
+x fois a est bien sûr de taille t
+
+0:07:42.960,0:07:48.160
+car il faut multiplier les vecteurs t. Donc vous avez t nœuds,
+
+0:07:48.160,0:07:51.680
+t vecteurs. Donc vous avez besoin de t coefficients.
+
+0:07:51.680,0:07:57.360
+Bien sûr, je pense, a est de taille t
+
+0:07:57.360,0:08:00.800
+et d, qui est le nombre de 1 en gros,
+
+0:08:00.800,0:08:02.919
+va être le degré.
+
+0:08:02.919,0:08:08.879
+Je pense que cela peut aussi être écrit comme la norme 0.
+
+0:08:08.879,0:08:13.840
+Je pense. Oui, c'est juste la norme 0.
+
+0:08:14.080,0:08:20.639
+Qui a-t-il après ? Donc dans l’auto-attention nous avions que ma
+
+0:08:20.639,0:08:25.759
+couche cachée était cette multiplication matricielle
+
+0:08:25.759,0:08:30.080
+de mes x fois a. Donc cela signifie que les colonnes des x
+
+0:08:30.080,0:08:34.880
+sont mis à l'échelle par les facteurs à l'intérieur de a.
+
+0:08:34.880,0:08:37.919
+Premier problème. Donc si vous avez plusieurs 1, ce h
+
+0:08:39.919,0:08:45.279
+va être plus grand pour les sommets qui ont de nombreuses connexions entrantes.
+
+0:08:45.279,0:08:48.640
+Et s'il a, par exemple, une seule connexion entrante,
+
+0:08:48.640,0:08:52.800
+ce sera  petit. Donc ce truc est
+
+0:08:52.800,0:08:56.560
+proportionnel au nombre de connexions entrantes. Alors comment pouvons-nous
+
+0:08:56.560,0:09:00.800
+réparer ça ? Oh attendez, des messages.
+
+0:09:00.800,0:09:04.399
+Oui, bien sûr, vous divisez par le nombre d’éléments.
+
+0:09:04.399,0:09:09.600
+Et donc nous multiplions cela par l’inverse de d.
+
+0:09:09.600,0:09:13.200
+Donc qu’arrive t’il après ? Peut-être que nous voulons faire une rotation
+
+0:09:13.200,0:09:17.040
+des choses. Donc mettons là une métrique de rotation.
+
+0:09:17.040,0:09:22.959
+Nous n'avons pas considéré nous-même.
+
+0:09:22.959,0:09:26.399
+Il s'agit en gros de prendre en compte toutes les arêtes entrantes
+
+0:09:26.399,0:09:30.959
+mais nous ne nous considérons pas nous-mêmes. Nous pourrions vouloir le faire.
+
+0:09:30.959,0:09:35.279
+il y aurait alors un lien vers soi-même. Donc nous pouvons ajouter
+
+0:09:35.279,0:09:40.160
+un autre type : ce U, cette version rotative du x.
+
+0:09:40.160,0:09:44.320
+Puis juste pour faire ressembler 
+
+0:09:44.320,0:09:48.320
+le tout à un réseau de neurones qu'ajoute-t-on ?
+
+0:09:48.320,0:09:52.560
+Oui, la fonction linéaire, bien sûr.
+
+0:09:52.560,0:09:58.160
+ReLU, sigmoïde, tanh, quoi que soit. Nous avons dit que nous avons plusieurs de
+
+0:09:58.160,0:10:01.839
+ces sommets. Nous n'avons pas qu'un seul sommet, nous n'avons pas qu'un
+
+0:10:01.839,0:10:06.000
+x, nous avons beaucoup de ces types. Donc nous avons un ensemble de
+
+0:10:06.000,0:10:12.640
+sommets ou ensemble d'entrées. Pour i allant de 1 à t. Et cela conduit
+
+0:10:12.640,0:10:17.040
+donc à cette notation matricielle. Il suffit d'empiler plusieurs arêtes.
+
+0:10:17.040,0:10:22.480
+Vous obtenez une matrice en empilant des plusieurs x, vous faites tourner ces x multiples,
+
+0:10:22.480,0:10:27.440
+il suffit de prendre la pile. Puis vous sommez ça à l'attention
+
+0:10:27.440,0:10:32.320
+où l'attention, le vecteur d’adjacence est maintenant est une
+
+0:10:32.320,0:10:35.440
+matrice d’adjacence. C’est toutes ces colonnes
+
+0:10:35.440,0:10:38.640
+vous indiquant où se trouvent
+
+0:10:38.640,0:10:41.440
+les connexions entrantes, ces flèches entrantes.
+
+0:10:41.440,0:10:46.000
+Et D va être l'inverse de la diagonale
+
+0:10:46.000,0:10:50.560
+où vous avez tous les degrés sur la diagonale.
+
+0:10:50.560,0:10:57.120
+Terminé. C’était tout. GCNs. Cela ressemble
+
+0:10:57.120,0:11:01.360
+à l'attention pour moi. Donc que faisons-nous aujourd'hui ?
+
+0:11:01.360,0:11:05.519
+Y a-t-il des questions jusqu'à présent ? Etes-vous avec moi ?
+
+0:11:05.519,0:11:08.079
+Vous suivez ? Il n'y a rien ici que nous n'ayons pas
+
+0:11:08.079,0:11:11.680
+vu la dernière fois : des non-linéarités
+
+0:11:11.680,0:11:15.680
+des auto-connexions. [Chat : d’où les caractéristiques viennent ?
+
+0:11:15.680,0:11:21.040
+x n'est pas une caractéristique ?] x est une caractéristique oui.
+
+0:11:21.040,0:11:24.720
+x est une caractéristique et les caractéristiques ici…
+
+0:11:24.720,0:11:28.800
+Donc il y a un graphe qui vous indique
+
+0:11:28.800,0:11:32.079
+quels sommets sont connectés et chaque sommet a
+
+0:11:32.079,0:11:35.519
+un x qui est l'entrée et une valeur cachée.
+
+0:11:35.519,0:11:40.560
+[Chat : les vecteurs cachés précédents sont-ils utilisés pour
+
+0:11:40.560,0:11:45.040
+calculer le nouveau ?] Non pas ici.
+
+0:11:45.040,0:11:48.560
+Vous pouvez avoir plusieurs couches. Et donc la deuxième couche, la
+
+0:11:48.560,0:11:53.920
+couche suivante h, va utiliser les valeurs cachées
+
+0:11:53.920,0:11:56.480
+de la couche précédente. C’est juste une
+
+0:11:56.480,0:12:02.000
+façon normale, comme si vous empiliez plusieurs de ces blocs.
+
+0:12:02.959,0:12:09.120
+Le U est juste un terme qui me permet de considérer
+
+0:12:09.120,0:12:13.760
+ma propre valeur x. Donc maintenant A va
+
+0:12:13.760,0:12:19.040
+me donner en gros la moyenne de ces colonnes entrantes
+
+0:12:19.040,0:12:22.880
+et puis U me permet d’effectuer une
+
+0:12:22.880,0:12:26.240
+rotation de mon propre vecteur. Donc chaque fois que vous avez
+
+0:12:26.240,0:12:29.040
+comme un graphe dans ce cas, il y a deux options :
+
+0:12:29.040,0:12:32.240
+ou c'est vous et êtes le v rouge
+
+0:12:32.240,0:12:35.600
+ou est l'autre qui est le vj.
+
+0:12:35.600,0:12:38.639
+Ici vous avez deux termes : l'un s'occupe du v
+
+0:12:38.639,0:12:42.959
+rouge v l'autre s'occupe de vj.
+
+0:12:42.959,0:12:46.880
+Dernière question : la matrice d’adjacence n'a pas
+
+0:12:46.880,0:12:51.680
+d'auto-connexions ? La matrice d’adjacence a des 0 sur la diagonale.
+
+0:12:51.680,0:12:55.360
+Si vous voulez considérer la matrice d’adjacence avec des 1
+
+0:12:55.360,0:12:59.120
+sur la diagonale, vous pouvez avoir l’identité plus A.
+
+0:12:59.120,0:13:04.959
+Donc la prochaine diapositive qui est
+
+0:13:04.959,0:13:10.600
+ce que nous allons implémenter aujourd'hui. Ai-je manqué des questions ?
+
+0:13:10.600,0:13:15.600
+[Etudiante : Dans A, la diagonale contient que des 0 ?]
+
+0:13:14.480,0:13:18.160
+Oui, donc les vecteurs d’adjacence ici
+
+0:13:18.160,0:13:24.560
+ont 1 que si vj, qui est mon voisin, est
+
+0:13:24.560,0:13:27.760
+connecté à moi. Et puisqu'il n’y a
+
+0:13:27.760,0:13:32.500
+pas une flèche partant de moi-même et retournant vers moi,
+
+0:13:32.500,0:13:35.600
+il n'y a pas de 1 correspondant avec
+
+0:13:35.600,0:13:42.480
+ma propre position. Donc on a une matrice d’adjacence avec une diagonale avec que des 0
+
+0:13:42.480,0:13:46.160
+et puis a des 1 où il y a des connexions entrantes.
+
+0:13:46.160,0:13:50.160
+Si vous avez un graphe non orienté, alors vous avez une matrice 
+
+0:13:50.160,0:13:53.760
+symétrique car vous le même 1
+
+0:13:53.760,0:13:57.440
+dans les deux sens, c'est comme avoir un
+
+0:13:57.440,0:14:04.000
+flèche dans les deux sens de l’arête. [Ok, merci]
+
+0:14:04.000,0:14:11.279
+[Etudiant : Comment est représenté x ? x est un vecteur qui se réfère à un nœud
+
+0:14:11.279,0:14:16.320
+donc comment représenter un nœud à l'aide d'un vecteur ?]
+
+0:14:16.320,0:14:22.880
+Comment représentez le nœud ? Donc x est un vecteur de dimension n
+
+0:14:22.880,0:14:28.320
+et ceci est votre ensemble de vecteurs, votre ensemble d'entrées.
+
+0:14:28.320,0:14:35.040
+Cela va de 1 à t, cela vient de l’ensemble d’auto-attention.
+
+0:14:35.040,0:14:41.440
+Donc c'est un ensemble. Et à partir de cette autre diapositive, vous n'avez 
+
+0:14:41.440,0:14:46.320
+en gros que certains de ces x qui sont reliés à d'autres x.
+
+0:14:46.320,0:14:52.160
+Donc vous avez un ensemble de x et vous allez avoir en gros
+
+0:14:52.160,0:14:56.839
+la connectivité spécifiée entre ces sommets.
+
+0:14:56.839,0:15:02.639
+Donc x et h, et x et h de la couche suivante et ainsi de suite,
+
+0:15:02.639,0:15:07.519
+sont fondamentalement des valeurs dans un ensemble
+
+0:15:07.519,0:15:11.440
+mais alors le fait est que ces éléments dans cet ensemble sont liés
+
+0:15:11.440,0:15:17.279
+via ces flèches. Donc c’est simplement ça,
+
+0:15:17.279,0:15:21.040
+il n’y a pas de magie ici. [Etudiant : supposons que vous avez
+
+0:15:21.040,0:15:30.000
+un graphe avec les x étiquetés 1, 2, 3, 4, 5. Comment passer de l'étiquette 1 à x1 ?]
+
+0:15:30.000,0:15:34.800
+Chacun d'entre eux ne sera qu'un numéro, peu importe,
+
+0:15:34.800,0:15:38.639
+et vous jouez avec ça. Vous pouvez penser à ça à
+
+0:15:38.639,0:15:42.120
+comme une séquence de mots d’une phrase
+
+0:15:42.120,0:15:46.320
+ou considérer ça comme les pixels d'une image.
+
+0:15:46.320,0:15:50.880
+Il peut s'agir d'une image linéaire ou avoir une
+
+0:15:50.880,0:15:54.720
+image normale. Donc ce sont juste les valeurs que
+
+0:15:54.720,0:15:58.880
+nous avons appelé dans le domaine ℝᶜ.
+
+0:15:58.880,0:16:01.920
+A chaque fois que nous associons le
+
+0:16:01.920,0:16:05.839
+domaine Oméga à ces valeurs d'image.
+
+0:16:05.839,0:16:12.079
+Il s'agit donc simplement d'un ensemble de valeurs et, dans ce cas, nous
+
+0:16:12.079,0:16:16.000
+spécifions un domaine spécifique qui a des connexions
+
+0:16:16.000,0:16:20.800
+entre les sommets. C'est aussi simple que cela.
+
+0:16:20.800,0:16:24.000
+Nous allons donc regarder le code maintenant afin que vous puissiez
+
+0:16:24.000,0:16:27.519
+comprendre tout ce qui se passe. N’ayez pas peur.
+
+0:16:27.519,0:16:33.759
+Mais je ne pense pas qu'il y ait d’autre « folie » à venir.
+
+0:16:33.759,0:16:37.199
+La seule folie est la partie sur les types de GCN
+
+0:16:37.199,0:16:39.120
+que nous allons implémenter dès à présent.
+
+0:16:39.120,0:16:44.160
+Donc nous allons implémenter quelque chose de cool
+
+0:16:44.160,0:16:47.839
+car sinon, ce serait ennuyeux. C’est-à-dire
+
+0:16:47.839,0:16:53.920
+le GCN à porte résiduelle [RG GCN dans la suite]. Et bien sûr, cela vient 
+
+0:16:53.920,0:16:57.600
+de Bresson et Laurent, la référence est ci-dessous.
+
+0:16:57.600,0:17:00.959
+Donc là encore nous pouvons penser à notre
+
+0:17:00.959,0:17:05.039
+propre sommet v, le gars rouge, qui a à nouveau la caractéristique
+
+0:17:05.039,0:17:09.799
+d’entrée x et la représentation cachée h.
+
+0:17:09.799,0:17:12.319
+Et puis vous avez vj
+
+0:17:12.319,0:17:15.760
+représentant tous les autres sommets
+
+0:17:15.760,0:17:19.199
+et vous avez tous ces types.
+
+0:17:19.199,0:17:22.799
+Dans ce cas précis, en fait, nous allons
+
+0:17:22.799,0:17:26.480
+nommer aussi les arêtes. Donc dans ce cas
+
+0:17:26.480,0:17:34.760
+mon arête a aussi une caractéristique sur elle. Dans les RG GCN,
+
+0:17:34.760,0:17:41.200
+les arêtes ont aussi une représentation sur elles.
+
+0:17:41.200,0:17:44.960
+On l’appelle ej. Donc vous avez
+
+0:17:44.960,0:17:49.039
+tous ces sommets qui étaient blancs avant et sont maintenant colorés.
+
+0:17:49.039,0:17:53.280
+Nous allons avoir une représentation des arêtes pour la couche d'entrée
+
+0:17:53.280,0:17:57.039
+x et pour la couche cachée. Donc nous allons avoir
+
+0:17:57.039,0:18:05.360
+ex et puis eh. Quelles sont les équations de mise à jour pour ce RG GCN ?
+
+0:18:05.720,0:18:11.760
+Comme il y a des résidus, nous allons commencer par notre connexion résiduelle. Nous avons
+
+0:18:11.760,0:18:14.559
+une entrée x en rose et puis nous avons
+
+0:18:14.559,0:18:17.600
+plus quelque chose qui est toujours positive.
+
+0:18:17.600,0:18:24.800
+Donc cela pourrait diverger et une correction facile pour cette première équation serait d'avoir
+
+0:18:24.880,0:18:30.799
+un poids supplémentaire en multipliant la parenthèse. Peu importe, allons-y
+
+0:18:30.799,0:18:35.919
+pour cette version. Nous avons donc x plus quelque chose
+
+0:18:35.919,0:18:40.080
+dont nous prenons la partie positive. Et à l'intérieur nous allons avoir
+
+0:18:40.080,0:18:43.840
+la rotation de l'entrée qui est exactement la même
+
+0:18:43.840,0:18:50.320
+que vous avez vu précédemment. Donc nous avons ici
+
+0:18:50.320,0:18:58.480
+ce h égal à la rotation de l'entrée x. Donc c’est la même chose ici.
+
+0:18:58.480,0:19:03.679
+Nous avons ce h égal au résidu puis la rotation de moi-même.
+
+0:19:03.679,0:19:07.760
+Puis nous avons plus une rotation du xj,
+
+0:19:07.760,0:19:15.280
+le j entrant. Cette rotation il est aussi mise à l'échelle
+
+0:19:15.280,0:19:19.000
+par êta. Et êta est notre porte.
+
+0:19:19.000,0:19:23.760
+Donc voilà pourquoi on l'appelle le GCN à portes résiduelles.
+
+0:19:23.760,0:19:28.799
+Car nous avons une porte êta qui est basée sur la représentation
+
+0:19:28.799,0:19:33.039
+vivant sur l’arête entrante ej qui module
+
+0:19:33.039,0:19:38.240
+l’amplitude du sommet entrant xj.
+
+0:19:38.240,0:19:41.679
+Et enfin nous allons sommer pour toutes
+
+0:19:41.679,0:19:47.200
+les arêtes venant vers mon propre sommet. Donc pour toutes les arêtes
+
+0:19:47.200,0:19:51.600
+entrantes, je vais faire tourner la représentation
+
+0:19:51.600,0:19:56.960
+du sommet entrant. Et je vais puis mettre à l'échelle en
+
+0:19:56.960,0:20:00.880
+modulant l'amplitude de ce sommet tourné entrant
+
+0:20:00.880,0:20:04.080
+grâce à cette porte. A nouveau cette porte c'est
+
+0:20:04.080,0:20:09.440
+une fonction de ej. Donc qu’est ej ? Voyons son équation.
+
+0:20:09.440,0:20:14.159
+ej est une rotation de ma représentation
+
+0:20:14.159,0:20:18.240
+initiale des arêtes qui est alimentée par les données d'entrée.
+
+0:20:18.240,0:20:25.440
+Donc ex est ma donnée d'entrée vivant sur l’arête. Et donc je tourne cela.
+
+0:20:25.440,0:20:32.000
+J’additionne la représentation tournée de ma caractéristique entrante xj.
+
+0:20:32.000,0:20:35.840
+Puis somme une rotation de ma propre
+
+0:20:35.840,0:20:41.200
+caractéristique ex. x est ma propre caractéristique que je fais tourner avec la matrice E.
+
+0:20:41.200,0:20:47.760
+Donc ceci est ma representation ej et êta va être ceci.
+
+0:20:47.760,0:20:51.600
+Donc c'est une sorte de
+
+0:20:51.600,0:20:58.960
+variante de softargmax où au numérateur
+
+0:20:58.960,0:21:04.480
+nous avons la sigmoïde de ej, qui est la somme de
+
+0:21:04.480,0:21:08.960
+ces trois composantes en bas, divisé par
+
+0:21:08.960,0:21:13.039
+la somme de toutes les sigmoïdes
+
+0:21:13.039,0:21:19.840
+des arêtes entrantes. Donc nous avons une arête donnée puis nous calculons.
+
+0:21:19.840,0:21:23.360
+En général, si vous avez la softargmax, vous aurez l'exponentielle
+
+0:21:23.360,0:21:27.840
+de la valeur spécifique divisée par la somme des exponentielles.
+
+0:21:27.840,0:21:31.120
+Dans ce cas, cette porte vous est donnée par
+
+0:21:31.120,0:21:37.520
+la sigmoïde de l’arête donnée divisée par la somme de toutes les arêtes entrantes.
+
+0:21:37.520,0:21:42.240
+Toutes les connexions entrantes. Enfin nous avons la couche suivante.
+
+0:21:46.240,0:21:50.480
+Donc pour la couche cachée, la couche suivante, la représentation des arêtes, nous allons avoir
+
+0:21:50.480,0:21:52.559
+un lien résiduel. Donc c’est ma
+
+0:21:52.559,0:21:59.440
+valeur initiale ex plus la partie positive de ej. A nouveau ceci
+
+0:21:59.440,0:22:03.280
+peut exploser car vous allez toujours sommer des termes positifs.
+
+0:22:03.280,0:22:09.600
+Donc je suggère un poids supplémentaire en multipliant ces
+
+0:22:09.600,0:22:12.960
+parties positives telles que  vous pouvez avoir des valeurs négatives.
+
+0:22:12.960,0:22:19.520
+Cool. Donc c'est à peu près ça. Donc si nous comparons
+
+0:22:19.520,0:22:23.760
+à ce que nous avons vu avant… Avant on avait que la
+
+0:22:26.799,0:22:31.520
+représentation cachée était une fonction non linéaire.
+
+0:22:31.520,0:22:36.240
+Ici nous avons choisi la ReLU, la partie positive.
+
+0:22:36.240,0:22:43.280
+Dans ce cas, nous avons f étant la partie positive
+
+0:22:44.240,0:22:52.240
+de ma représentation tournée de moi-même plus ce terme ici.
+
+0:22:52.240,0:22:56.880
+Donc ce Xad⁻¹ veut dire prendre la moyenne
+
+0:22:56.880,0:23:00.240
+du x entrant, car a vaut 1
+
+0:23:00.240,0:23:05.440
+pour les sommets arrivant vers mon sommet.
+
+0:23:05.440,0:23:10.000
+Puis je divise par le d qui est le degré, le nombre de sommets entrants.
+
+0:23:10.000,0:23:14.799
+Et donc je somme toutes ces valeurs
+
+0:23:14.799,0:23:19.600
+entrantes et puis divise par le nombre de valeurs entrantes.
+
+0:23:19.600,0:23:22.960
+Donc c’est la moyenne. Puis je fais tourner la moyenne.
+
+0:23:22.960,0:23:26.960
+De même ici, nous allons faire exactement la même chose. Nous avons la
+
+0:23:26.960,0:23:31.120
+rotation de toutes les arêtes entrantes. Donc ces toutes
+
+0:23:31.120,0:23:36.159
+arêtes entrantes et je les additionne. Mais dans ce cas, η n'est pas
+
+0:23:36.159,0:23:40.960
+seulement une constante égale à 1 sur le nombre de connexions entrantes,
+
+0:23:40.960,0:23:45.279
+mais est un nombre
+
+0:23:45.279,0:23:49.919
+de 0 à 1 qui pondère ma représentation
+
+0:23:49.919,0:23:52.960
+des sommets entrants basée sur ce qu'est la
+
+0:23:52.960,0:23:57.360
+représentation vivant sur l’arête. Il y a donc beaucoup de couleurs,
+
+0:24:00.640,0:24:04.320
+de chiffres et de symboles, mais je ne pense pas que ce soit si différent 
+
+0:24:04.320,0:24:08.080
+de ce que nous avons vu avant. Les principales différences sont d’une part 
+
+0:24:08.080,0:24:12.080
+cette porte qui n'est plus un facteur constant mais une fonction
+
+0:24:12.080,0:24:16.000
+de la représentation et d’autre part les connexions résiduelles.
+
+0:24:16.000,0:24:20.880
+Encore une fois, je dirais qu'il manque ici un
+
+0:24:20.880,0:24:25.919
+paramètre supplémentaire ici et là. Je suggère
+
+0:24:25.919,0:24:29.679
+d’avoir une matrice supplémentaire ici et ici de telle
+
+0:24:29.679,0:24:34.880
+sorte que nous puissions permettre des valeurs positives et négatives.
+
+0:24:34.880,0:24:39.600
+Sinon cette représentation risque d'exploser. Maintenant comment
+
+0:24:39.600,0:24:45.520
+calculons-nous la représentation pour la deuxième couche cachée ? Donc nous pouvons appeler x
+
+0:24:45.520,0:24:52.799
+hl et ce sera ma l-ème couche de représentation.
+
+0:24:52.799,0:24:58.559
+Puis le xj devient hlj. Et il ne nous reste plus qu'à
+
+0:24:58.559,0:25:04.159
+dire que mon h à la couche l+1 est
+
+0:25:04.159,0:25:10.960
+ce h actuel. Mais je préfère utiliser h et x pour supprimer cet
+
+0:25:10.960,0:25:13.520
+indice supplémentaire pour simplifier la notation.
+
+0:25:17.039,0:25:44.120
+[Etudiant : j'ai une question. Je ne suis pas sûr de ce que signifie avoir cette sorte de porte… Comme un genre de modèle récurrent mais dans le contexte de graphes. Avez-vous un exemple ?]
+
+0:25:44.559,0:25:49.200
+Oui, bien sûr. Donc cette partie sur la porte ici, le fait est que
+
+0:25:49.200,0:25:54.080
+tous ces différents sommets ici, n'ont pas d’ordre. Je ne sais pas
+
+0:25:54.080,0:25:58.320
+lequel est v1, v2, etc… Je connais l’ordre mais
+
+0:25:58.320,0:26:02.640
+ce sommet rouge ne sait pas combien de sommets
+
+0:26:02.640,0:26:07.520
+sont reliés à lui-même. Et alors il ne sait pas comment 
+
+0:26:07.520,0:26:12.720
+penser à eux de différentes manières. A moins qu'il n'y ait des informations
+
+0:26:12.720,0:26:18.880
+qui viennent de cette arête. Donc cette arête me permet de changer,
+
+0:26:18.880,0:26:24.000
+moduler ce message entrant.
+
+0:26:24.000,0:26:30.400
+Donc ce type ici transite, ce x transite cette ligne
+
+0:26:30.400,0:26:36.559
+mais est modulé par la représentation, par cette porte
+
+0:26:36.559,0:26:40.480
+qui est basée sur la représentation qui vit sur cette arête.
+
+0:26:40.480,0:26:46.159
+Donc l’arête a une représentation et cet η me donne un multiplicateur,
+
+0:26:46.159,0:26:50.559
+un facteur que je peux utiliser comme un scalaire pour multiplier
+
+0:26:50.559,0:26:54.880
+chaque composante de ce vecteur ici. Et donc cela me permet
+
+0:26:54.880,0:27:00.640
+de tuner la partie du vecteur pouvant m’intéresser. Donc c’est entraîné
+
+0:27:00.640,0:27:03.520
+par rétropropagation donc le réseau
+
+0:27:03.520,0:27:07.919
+va découvrir ce qui est intéressant et ce qui ne l'est pas.
+
+0:27:07.919,0:27:11.120
+Mais oui, la raison d'être ici est,
+
+0:27:11.120,0:27:13.919
+étant donné que tous les sommets ont l'air
+
+0:27:13.919,0:27:17.520
+identique pour moi, dans ce cas, si vous
+
+0:27:17.520,0:27:22.080
+enlevez cette partie ici, vous obtenez simplement la somme de toutes ces h.
+
+0:27:22.080,0:27:25.279
+Donc cela va juste faire la moyenne de tout.
+
+0:27:25.279,0:27:30.640
+La chose que je vous ai dit ici. Donc c'est exactement
+
+0:27:30.640,0:27:34.480
+ce que je vous dis ici. Dans ce cas, vous moyennez juste
+
+0:27:34.480,0:27:38.080
+tous les sommets, moyennez toutes les représentations
+
+0:27:38.080,0:27:42.640
+sur les sommets entrants. Et donc c'est comme si
+
+0:27:42.640,0:27:45.919
+cela floute tout, ce la jette 
+
+0:27:45.919,0:27:50.240
+toutes les informations. Donc, au lieu de cela, ici,
+
+0:27:50.240,0:27:53.520
+nous n'allons pas nous contenter de faire la moyenne de tous ces valeurs
+
+0:27:53.520,0:27:56.720
+mais nous allons les pondérer, nous allons
+
+0:27:56.720,0:28:01.000
+les moduler en fonction de ce que nous pensons de ce qui pourrait être pertinent ou non.
+
+0:28:01.000,0:28:08.000
+[Etudiant : est-ce que les exposants l et l+1 pour le h signifient que
+
+0:28:08.000,0:28:14.559
+c’est une structure de graphe sur le temps…] Une couche.
+
+0:28:14.559,0:28:18.600
+Vous avez plusieurs couches dans ce réseau.
+
+0:28:18.600,0:28:22.000
+Donc hl avec l=0 est mon x.
+
+0:28:22.000,0:28:26.000
+[Etudiant : il s'agit de parler de couches et non de temps]
+
+0:28:26.000,0:28:30.080
+Oui, il y a plusieurs couches donc vous avez plusieurs couches.
+
+0:28:30.080,0:28:34.640
+Toutes ces couches sont toujours des ensembles.
+
+0:28:34.640,0:28:38.799
+Donc vous avez un ensemble d'entrées.
+
+0:28:40.960,0:28:44.960
+Donc c’est mon ensemble d'entrées. Puis vous avez un ensemble de
+
+0:28:44.960,0:28:52.000
+couches cachées. Puis un ensemble de couche cachée à la deuxième couche et ainsi de suite.
+
+0:28:52.000,0:28:55.279
+Mais ici nous avons juste un ensemble.
+
+0:28:58.480,0:29:00.799
+La seule différence est que dans ce cas
+
+0:29:00.799,0:29:04.640
+il y a des ensembles mais aussi des connexions entre les éléments dans
+
+0:29:04.640,0:29:06.960
+les ensembles. C'est la seule différence.
+
+0:29:06.960,0:29:10.080
+La seule différence entre l'attention et ce genre de choses ici
+
+0:29:10.080,0:29:17.039
+c'est que ces gars vous sont donnés par cette matrice d’adjacence au lieu
+
+0:29:17.039,0:29:22.080
+d'être calculés avec l’attention, la softarmax et etc.
+
+0:29:22.080,0:29:26.000
+C'est mon point de vue à partir du cours de la semaine dernière.
+
+0:29:26.000,0:29:29.039
+Donc la seule étape faisant une différence
+
+0:29:29.039,0:29:34.240
+avec la semaine dernière est que cette connexion vous ai donnée.
+
+0:29:34.240,0:29:38.240
+Tout le reste sera identique en gros.
+
+0:29:38.240,0:29:41.919
+Donc il est temps de passer au notebook car cela va prendre
+
+0:29:41.919,0:29:46.720
+du temps sauf en cas de questions imminentes.
+
+0:29:46.720,0:29:49.679
+Donc ceci est lourdement inspiré
+
+0:29:49.679,0:29:53.679
+par le notebook de Xavier mais j'ai tout changé.
+
+0:29:53.679,0:29:57.360
+Je n'ai pas aimé ce qu'il a écrit [rires]
+
+0:29:57.360,0:30:02.399
+J’ai mis ça dans notre format ou du moins dans mon format pour que
+
+0:30:02.399,0:30:07.840
+cela vous soit familier. Quand j'ai lu le notebook la première fois je me
+
+0:30:07.840,0:30:13.760
+suis demandé ce qui se passait [rires]. Donc on importe des choses.
+
+0:30:13.760,0:30:17.840
+La seule différence ici est nous avons « import os » qui
+
+0:30:17.840,0:30:22.080
+me permet de fixer une variable d'environnement. Donc « [‘DGLBACKEND’] 
+
+0:30:22.080,0:30:26.240
+= ‘pytorch’ » me permet de dire à DGL
+
+0:30:26.240,0:30:29.679
+d’utiliser PyTorch. Qu’est-ce que DGL ? Donc en fait vous devez
+
+0:30:29.679,0:30:33.760
+« pip install dgl », c'est dans la description de l'environnement.
+
+0:30:33.760,0:30:42.080
+DGL va être ma librairie pour utiliser très facilement les GCNs.
+
+0:30:42.080,0:30:46.960
+Donc nous importons ces choses ainsi que « networkx » qui me permet
+
+0:30:46.960,0:30:51.679
+d’afficher de très jolis graphiques.
+
+0:30:51.679,0:30:55.440
+J'ai mis quelques valeurs par défaut. Oh vous pouvez voir que
+
+0:30:55.440,0:30:58.000
+nous utilisons PyTorch. Donc tout d’abord voici
+
+0:30:58.000,0:31:02.559
+le mini jeu de données de classification pour graphe.
+
+0:31:02.559,0:31:09.039
+Il s'appelle « MiniGCDataset ». Je spécifie le nombre de graphes,
+
+0:31:09.039,0:31:12.640
+la valeur minimale de vecteurs et
+
+0:31:12.640,0:31:18.000
+le nombre maximum de vecteurs. Euh pas des vecteurs, des sommets !
+
+0:31:18.000,0:31:21.919
+Ici, je l'appelle les différents graphes par leur nom
+
+0:31:21.919,0:31:25.760
+et puis je vous les montre ici.
+
+0:31:25.760,0:31:28.960
+Donc ici vous avez le premier type : le cercle.
+
+0:31:28.960,0:31:33.279
+Donc le graphe circulaire où vous avez chacun des éléments reliés à l'autre
+
+0:31:33.279,0:31:37.360
+et voyez qu'il y a un double flèche. Puis nous avons le graphe en étoile 
+
+0:31:39.519,0:31:42.720
+qui est en gros, tous le sommets connectés au premier.
+
+0:31:42.720,0:31:49.279
+Puis nous avons le graphe en forme de roue. Vous pouvez comprendre ce que c’est.
+
+0:31:49.279,0:31:53.600
+Ensuite nous avons la sucette. [Alfredo chante]
+
+0:31:53.600,0:31:58.480
+C'est un groupe de points reliés par une ficelle,
+
+0:31:58.480,0:32:02.159
+ça ressemble à un cerf-volant pour moi.
+
+0:32:02.159,0:32:05.120
+Il y a l'hypercube qui est super mignon et
+
+0:32:05.120,0:32:10.720
+qui est ce truc fou ici. Puis il y a cette grille classique.
+
+0:32:10.720,0:32:15.840
+Donc cela peut être considéré comme une image.
+
+0:32:15.840,0:32:19.519
+Il y a une clique qui est un graphe entièrement connecté.
+
+0:32:19.519,0:32:23.519
+Puis nous avons cette échelle circulaire. Donc c'est une échelle qui
+
+0:32:23.519,0:32:28.000
+se ferme. Donc qu’elle va être notre tâche ?
+
+0:32:28.000,0:32:34.320
+Etant donné une structure de graphe, il faut essayer de la classer.
+
+0:32:34.320,0:32:37.039
+Donc chacun de ces graphes est
+
+0:32:37.039,0:32:41.360
+en gros défini par cette matrice d’adjacence. Et compte tenu cette matrice
+
+0:32:41.360,0:32:45.279
+nous allons en gros essayer de déterminer si
+
+0:32:45.279,0:32:49.600
+un graphe est d’un type ou d’un autre.
+
+0:32:49.600,0:32:53.039
+Cette matrice d’adjacence sera de taille variable
+
+0:32:53.039,0:32:57.000
+car, comme vous l'avez déjà vu avant… Où est-ce ?
+
+0:32:57.000,0:34:00.640
+Vous pouvez donner un nombre minimum et maximum
+
+0:33:04.640,0:33:12.320
+de nœuds et donc vous ne pouvez pas vraiment faire une classification « straightforward ». Ok cool.
+
+0:33:12.320,0:33:15.279
+Je n'ai pas dit Google. Ma Google Home proteste.
+
+0:33:17.519,0:33:21.200
+Donc ajoutons un signal au domaine. Donc il s’agit du domaine,
+
+0:33:21.200,0:33:24.399
+c'est là que l'information reste. Donc si vous avez
+
+0:33:24.399,0:33:28.880
+ce type ici… Où est-il ? Donc si vous avez celui-ci, ceci est le domaine
+
+0:33:28.880,0:33:32.000
+et au sommet, vous aurez les valeurs, les couleurs si vous
+
+0:33:32.000,0:33:34.640
+avez une image en couleur. Donc ce sont les
+
+0:33:34.640,0:33:37.999
+domaines et nous allons mettre un peu de signal au sommet.
+
+0:33:37.999,0:33:41.440
+Lisons ça ensemble : nous pouvons attribuer des
+
+0:33:41.440,0:33:45.600
+caractéristiques aux nœuds et aux arêtes de DGLGraph.
+
+0:33:45.600,0:33:49.200
+Les caractéristiques sont représentées sous forme de dictionnaire de noms
+
+0:33:49.200,0:33:56.159
+(chaînes de caractères) et de tenseurs appelés champs. « nadata » et « edata »
+
+0:33:56.159,0:34:01.500
+sont le sucre syntaxique pour accéder aux données de caractéristiques de tous les nœuds et arêtes.
+
+0:34:01.500,0:34:04.880
+Donc dans ce cas ici, je vais simplement dire que
+
+0:34:04.880,0:34:11.839
+chacune de mes informations de nœud, donc mes x, vont être « in_degrees » 
+
+0:34:11.839,0:34:17.359
+qui est le nombre de sommets que j'ai.
+
+0:34:17.359,0:34:21.599
+Donc, chaque nœud, chaque x, a sa valeur, le nombre
+
+0:34:21.599,0:34:28.399
+de sommets connectés. Au lieu de cela, chaque arête a juste un 1.
+
+0:34:28.399,0:34:33.359
+Donc chaque arête a un 1 et l'autre a le nombre de gars connectés.
+
+0:34:33.359,0:34:38.560
+Cool, alors ici je génère juste mes jeux
+
+0:34:38.560,0:34:42.720
+d’entraînement et de test, puis je me contente de tracer le tout
+
+0:34:42.720,0:34:46.879
+pour vous montrer. Ces gars ont une caractéristique,
+
+0:34:46.879,0:34:50.159
+les deux sont appelés « feat » et il y a une « feat »
+
+0:34:50.359,0:34:56.879
+pour le nœud n et une « feat » pour l’arête e.
+
+0:34:56.879,0:35:02.800
+Et voici donc les équations pour les GGCNs.
+
+0:35:02.800,0:35:07.680
+Elles ont l'air terrible car c’est un notebook, donc
+
+0:35:07.680,0:35:11.280
+nous allons utiliser ceci qui est un peu plus joli.
+
+0:35:11.280,0:35:16.480
+Donc avant de lire ces instructions,
+
+0:35:16.480,0:35:23.040
+lisons la partie sur l'initialisation de ce module.
+
+0:35:23.040,0:35:28.880
+Donc nous pouvons voir ici que nous avons quelques matrices :
+
+0:35:28.880,0:35:34.400
+nous avons A, B, C, D et E. Nous avons donc besoin de ces matrices.
+
+0:35:34.400,0:35:38.079
+Chaque fois que je commence mon module, 
+
+0:35:38.079,0:35:41.800
+un « nn.Module » dans PyTorch,
+
+0:35:41.800,0:35:44.000
+nous allons initialiser
+
+0:35:44.000,0:35:50.320
+quatre matrices différentes : A, B, C, D et E qui sont des « nn.Linear ».
+
+0:35:50.320,0:35:54.880
+Donc, dans ce cas, il y a aussi le biais. Il n'y a pas seulement la rotation.
+
+0:35:54.880,0:35:59.119
+Ce sont des modules de transformations affines.
+
+0:35:59.119,0:36:02.720
+De plus, nous avons une normalisation par batchs pour la
+
+0:36:02.720,0:36:06.800
+représentation cachée. De même pour les arêtes.
+
+0:36:06.800,0:36:13.680
+Chaque fois que nous faisons un passage en avant, nous envoyons
+
+0:36:13.680,0:36:19.200
+le g qui est le graphe, X qui est la
+
+0:36:19.200,0:36:24.320
+collection de tous ces sommets. Donc comme nous l'avons vu dans
+
+0:36:24.320,0:36:28.160
+le module d'attention, dans la leçon sur l'attention, nous avons un
+
+0:36:28.160,0:36:31.680
+petit x, on peut avoir un ensemble de tous
+
+0:36:31.680,0:36:35.119
+les petits x qui est représenté par X.
+
+0:36:35.119,0:36:39.359
+Ce n’est pas une séquence, c'est juste une façon de représenter un
+
+0:36:39.359,0:36:45.359
+ensemble. Donc dans ce cas les graphes sont constitués d'ensembles de
+
+0:36:45.359,0:36:52.040
+sommets mais je peux spécifier la relation, les connexions entre les sommets.
+
+0:36:52.320,0:36:55.920
+Donc j'ai X et puis E_X
+
+0:36:55.920,0:36:59.760
+c'est-à-dire toutes ces arêtes. Donc nous pouvons avoir comme
+
+0:36:59.760,0:37:03.280
+ensemble d’arêtes et puis nous pouvons considérer la
+
+0:37:03.280,0:37:06.320
+matrice où j'ai toutes ces colonnes.
+
+0:37:06.320,0:37:11.119
+Donc ici je vais remplir mon graphe avec cette représentation.
+
+0:37:11.119,0:37:18.320
+Sur les « g.data », je vais définir la variable H où je
+
+0:37:18.320,0:37:21.520
+donne ma représentation initiale. Puis je vais avoir
+
+0:37:21.520,0:37:27.200
+AX, BX, DX et EX qui vont constituer la matrice
+
+0:37:27.200,0:37:29.599
+en multipliant toutes ces colonnes. Donc vous allez
+
+0:37:29.599,0:37:36.400
+avoir la rotation de toutes les colonnes qui sont simplement obtenues en passant le
+
+0:37:36.400,0:37:39.760
+X, la collection de tous les x, à ma
+
+0:37:39.760,0:37:46.720
+matrice A, B, D et E. Où est C ? 
+
+0:37:46.720,0:37:50.400
+C ne faisait que tourner la représentation de l’arête. Donc nous avons
+
+0:37:50.400,0:37:54.400
+C multipliant l’arête. Puis nous avons cette fonction,
+
+0:37:54.400,0:37:59.040
+la nouvelle fonction. Nous ne connaissons pas ce truc.
+
+0:37:59.040,0:38:03.359
+Donc essayons de comprendre ce que c'est.
+
+0:38:03.359,0:38:06.720
+Donc nous devons lire ce qui se passe ici :
+
+0:38:06.720,0:38:13.760
+Dans DGL, les fonctions de message sont exprimées sous la forme de fonctions définies par l'utilisateur, « Edge UDF ».
+
+0:38:13.760,0:38:20.640
+« Edge UDF » prend un unique argument « edges ». Celui-ci a
+
+0:38:20.640,0:38:27.200
+trois membres : source (« scr »), destination (« dst ») et données (« data ») pour accéder aux caractéristiques 
+
+0:38:27.200,0:38:31.200
+du nœud source, celles du nœud de destination et celles des arêtes.  
+
+0:38:31.200,0:38:34.960
+Donc chaque fois que nous avons cette arête ici,
+
+0:38:34.960,0:38:38.880
+nous allons avoir une représentation vivant sur l’arête,
+
+0:38:38.880,0:38:42.640
+une représentation vivant sur le sommet source,
+
+0:38:42.640,0:38:47.920
+que j'avais l'habitude d'appeler le sommet entrant et puis nous avons
+
+0:38:47.920,0:38:51.760
+nous-mêmes qui est le sommet de destination. Donc nous avons le
+
+0:38:51.760,0:38:55.599
+Sommet source, notre arête connectant la source à la destination,
+
+0:38:55.599,0:38:58.960
+et puis nous avons notre propre sommet de destination.
+
+0:38:58.960,0:39:01.599
+Donc vous avez une représentation
+
+0:39:01.599,0:39:05.920
+vivant sur le sommet source, une représentation vivant sur l’arête
+
+0:39:05.920,0:39:09.920
+et puis une représentation vivant sur la destination.
+
+0:39:09.920,0:39:16.500
+Et ce sont les x s’ils sont associés à la première couche de mon réseau.
+
+0:39:16.500,0:39:20.800
+Ils seront appelés h s'ils sont associés à la deuxième couche et
+
+0:39:20.800,0:39:25.440
+les suivantes de mon réseau. Donc h est ma première couche cachée qui
+
+0:39:25.440,0:39:32.560
+est la deuxième couche d'un réseau. Donc revenons ici.
+
+0:39:32.560,0:39:36.560
+Donc « Edge UDF » a une source vj, 
+
+0:39:36.560,0:39:41.440
+une destination v et les données vivant sur l’arête.  
+
+0:39:41.440,0:39:48.240
+Cool. Les fonctions de réduction sont des « Node UDFs ».
+
+0:39:48.240,0:39:57.200
+Les Node UDFs ont un seul argument « nodes ». Avant on avait « edges ».
+
+0:39:57.200,0:40:02.720
+Donc ls nœud agit comme un nœud donné.
+
+0:40:02.720,0:40:09.760
+Donc qui a deux membres « data » et « mailbox ». « data »  contient les caractéristiques de nœud
+
+0:40:09.760,0:40:15.040
+et « mailbox » contient toutes les caractéristiques des messages entrants,
+
+0:40:15.040,0:40:18.960
+empilés le long de la deuxième dimension.
+
+0:40:18.960,0:40:23.200
+Finalement « update_all » qui est fonction
+
+0:40:23.200,0:40:27.680
+que nous venons de voir ici, la nouvelle fonction.
+
+0:40:27.680,0:40:32.240
+« update_all » a deux paramètres : la fonction de message et la fonction 
+
+0:40:32.240,0:40:35.839
+de réduction. Elle envoie les messages par toutes les arêtes
+
+0:40:35.839,0:40:41.760
+et met à jour tous les nœuds. Eventuellement appliquer une fonction pour mettre à jour les caractéristiques des nœuds
+
+0:40:41.760,0:40:45.920
+après réception. Cette combinaison est pratique pour effectuer
+
+0:40:45.920,0:40:52.480
+« send(g.edges(), message_func » et « recv(g.nodes,reduce_func ».
+
+0:40:52.480,0:40:55.760
+Donc c'est comme une version condensée.
+
+0:40:55.760,0:40:59.359
+Alors découvrons ce que sont
+
+0:40:59.359,0:41:03.200
+ma fonction message et ma fonction réduction.
+
+0:41:03.200,0:41:06.480
+Donc la fonction message. Nous allons d’abord
+
+0:41:06.480,0:41:12.160
+extraire le Bx_j. Donc l’arête
+
+0:41:12.160,0:41:16.400
+connecte mon vj à mon v et donc j'extrais
+
+0:41:16.400,0:41:20.960
+ici la représentation vivant sur vj.
+
+0:41:20.960,0:41:27.760
+Donc Bx_j est le BX associé à mon sommet j.
+
+0:41:27.760,0:41:35.839
+Ce type là : Bx_j. Cool, puis j’ai
+
+0:41:35.839,0:41:40.240
+e_j qui est la somme des arêtes tournées
+
+0:41:40.240,0:41:47.520
+de cette arête, la source tournée et
+
+0:41:47.520,0:41:56.319
+puis le sommet de destination. Donc ici vous avez
+
+0:41:56.319,0:41:59.680
+la représentation de l’arête :
+
+0:41:59.680,0:42:06.160
+rotation de C de ex. Puis nous avons le D de la source.
+
+0:42:06.160,0:42:11.599
+Donc Dx_j et enfin E_x pour la destination.
+
+0:42:11.599,0:42:16.560
+Cool. Ensuite je stocke ce e_j
+
+0:42:16.560,0:42:21.040
+dans ce E pour que nous nous retrouvions avec toutes les
+
+0:42:21.040,0:42:24.720
+représentations pour un usage ultérieur. Car plus tard nous allons
+
+0:42:24.720,0:42:30.079
+utiliser ce e_j ici en bas. Donc nous avons
+
+0:42:30.079,0:42:35.599
+calculé le message.
+
+0:42:35.599,0:42:40.319
+Après ça, nous allons appeler la fonction de réduction.
+
+0:42:40.319,0:42:44.560
+La fonction de réduction termine de calculer les formules de mise à jour.
+
+0:42:44.560,0:42:51.680
+Donc nous avons Ax qui va être AX pour mes propres données.
+
+0:42:51.680,0:42:54.720
+Donc ceci. X étant tous
+
+0:42:54.720,0:42:58.400
+les sommets et le x est ici.
+
+0:42:58.400,0:43:02.800
+Puis je regarde ma « mailbox ». 
+
+0:43:02.800,0:43:09.520
+Donc la fonction de message a envoyé un message par l’arête et
+
+0:43:09.520,0:43:13.440
+maintenant, au récepteur, nous recevons un message. Donc nous
+
+0:43:13.440,0:43:16.800
+vérifions la mailbox  et nous recevons ce Bx_j.
+
+0:43:16.800,0:43:23.920
+Donc ici nous avons Bx_j puis nous avons aussi la
+
+0:43:23.920,0:43:28.240
+représentation e_j. Donc ça vient aussi.
+
+0:43:28.240,0:43:32.079
+Je calcule la sigmoïde ici. J'ai la sigmoïde pour l’arête
+
+0:43:32.079,0:43:38.640
+entrante. Donc la sigmoïde de l’arête entrante et puis
+
+0:43:38.640,0:43:42.319
+il ne nous reste plus qu'à faire en sorte que mon
+
+0:43:42.319,0:43:45.920
+h qui est ma rotation de x… donc Ax
+
+0:43:45.920,0:43:50.800
+la rotation de moi-même, la représentation du sommet de moi-même.
+
+0:43:50.800,0:43:58.240
+Puis je dois faire la somme de toutes les arêtes entrantes de ma porte
+
+0:43:58.240,0:44:01.359
+qui multiplie ma représentation entrante
+
+0:44:01.359,0:44:04.960
+tournée, puis nous divisons
+
+0:44:04.960,0:44:11.520
+par tous ces sigmas. Tous ces sigmoïdes. Ce truc ici.
+
+0:44:11.520,0:44:16.160
+Donc nous multiplions sigma avec ce Bx
+
+0:44:16.160,0:44:20.160
+et puis nous divisons par la somme de tous puis
+
+0:44:20.160,0:44:24.079
+on additionne tous ces types. Donc on a 
+
+0:44:24.079,0:44:28.240
+la somme de Bj redimensionné
+
+0:44:28.240,0:44:31.599
+qui est également normalisé par la somme
+	
+0:44:31.599,0:44:35.359
+de tous les sigmas. Et c'est tout. Donc nous avons maintenant
+
+0:44:35.359,0:44:38.880
+le h qui va être retourné
+
+0:44:38.880,0:44:46.640
+dans H, le conteneur des h. Et c'est ainsi que nous écrivons
+
+0:44:46.640,0:44:49.760
+ces trois équations. Ces quatre.
+
+0:44:49.760,0:44:52.800
+Bon trois car nous n'avons pas vu celle-là.
+
+0:44:52.800,0:44:58.720
+Alors quoi d'autre ? Nous pouvons à présent récupérer h car nous venons de mettre à jour
+
+0:44:58.720,0:45:02.560
+toute la représentation qui a été calculée ici et
+
+0:45:02.560,0:45:06.800
+retournée là. Puis nous pouvons aussi obtenir les nouvelles
+
+0:45:06.800,0:45:11.280
+arêtes car nous avons écrit l’information des arêtes ici.
+
+0:45:11.280,0:45:14.079
+Nous étions donc en train d'écrire les nouvelles informations sur l’arête
+
+0:45:14.079,0:45:21.280
+et ici, nous avons écrit les nouvelles informations h. Donc nous récupérons
+
+0:45:21.280,0:45:25.040
+les nouvelles h et e que nous divisons par la racine carrée de la
+
+0:45:25.040,0:45:29.040
+taille telle que les choses ne changent pas avec la
+
+0:45:29.040,0:45:33.680
+taille de la représentation cachée.
+
+0:45:33.680,0:45:39.280
+C’est juste un point technique mais cela vous permet d'avoir comme un
+
+0:45:39.280,0:45:43.119
+facteur d'échelle comme nous l'avons vu la semaine dernière avec
+
+0:45:43.119,0:45:47.200
+l'attention où nous divisions par la racine carrée de la
+
+0:45:47.200,0:45:51.839
+dimension telle que la softargmax se comporte de manière similaire
+
+0:45:51.839,0:45:55.680
+indépendamment de la dimension.
+
+0:45:55.680,0:46:01.680
+Donc on ne change pas la température. Nous appliquons une normalisation par batch
+
+0:46:01.680,0:46:05.440
+pour obtenir de beaux gradients, ne pas surentraîner et toutes
+
+0:46:05.440,0:46:07.839
+les bonnes choses que la batch norm.
+
+0:46:07.839,0:46:13.280
+nous donne. Enfin on applique la non-linéarité :
+
+0:46:13.280,0:46:20.880
+le h+. Donc nous calculons cette non-linéarité pour celui-ci et celui-là.
+
+0:46:20.880,0:46:27.200
+Et nous pouvons écrire que ma nouvelle h donc la représentation pour la première
+
+0:46:27.200,0:46:29.920
+couche cachée, donc ma deuxième couche va être ma
+
+0:46:29.920,0:46:36.000
+entrée x plus h. Donc on a l’entrée x plus ce
+
+0:46:36.000,0:46:39.599
+gars ici, cette ReLU, la partie positive.
+
+0:46:39.599,0:46:43.119
+De même nous allons avoir la représentation E qui est ma 
+
+0:46:43.119,0:46:47.920
+représentation initiale plus ce nouveau E. Terminé. Et nous retournons
+
+0:46:47.920,0:46:53.760
+H et E. J'ai un perceptron multicouche et puis ici j'ai cette
+
+0:46:53.760,0:47:00.160
+pile de couches. Donc ici j'appelle simplement mon « GatedGCN ».
+
+0:47:00.160,0:47:04.560
+Donc vous pouvez voir toutes ces matrices. Mais encore une fois nous nous en fichons.
+
+0:47:04.560,0:47:10.800
+Quelques trucs pour collecter la précision. Ok donc la passe de test.
+
+0:47:10.800,0:47:16.000
+Comment tester la passe avant ? Je définis simplement mes données et
+
+0:47:16.000,0:47:20.240
+j’ai mon batch de x étant les données qui partent sur
+
+0:47:20.240,0:47:24.640
+les sommets. Donc mon x va être les données qui vivent sur
+
+0:47:24.640,0:47:28.079
+les sommets. Et mon e va être les données qui vivent
+
+0:47:28.079,0:47:35.000
+sur les arêtes, ce sont tous des 1 et là c’est juste le degré.
+
+0:47:35.040,0:47:38.559
+Je vais donc vous montrer quelques-unes de ces valeurs.
+
+0:47:38.559,0:47:54.400
+[Etudiant : Juste pour l'entrée, n'est-ce pas ?] Répétez. [Etudiant : Vos E seront juste pour la première couche/pile ? Et pour les restantes vous passerez les sorties de la pile précédente]
+
+0:47:54.400,0:47:56.720
+Oui, oui, oui. Absolument.
+
+0:47:56.720,0:48:00.000
+Donc ce sont les valeurs d'entrée. Donc mon graphe
+
+0:48:00.000,0:48:04.160
+qui est le domaine a… Je mets quelques signaux
+
+0:48:04.160,0:48:07.440
+au début, ce qui est un peu arbitraire.
+
+0:48:07.440,0:48:10.960
+Pour les nœuds, j'ai indiqué le nombre de connexions d'entrée.
+
+0:48:10.960,0:48:15.359
+Et pour les arêtes je mets juste 1. Puis vous avez plusieurs couches de 
+
+0:48:15.359,0:48:20.720
+ce GCN. Comme ici. Donc vous avez ce « GatedGCN »
+
+0:48:20.720,0:48:25.359
+ayant quelques couches. Donc si vous avez
+
+0:48:25.359,0:48:29.839
+l qui est le nombre de couches, vous allez avoir autant de couches
+
+0:48:29.839,0:48:33.280
+de GCN, qui sont celles que je vous ai montrées précédemment,
+
+0:48:33.280,0:48:39.200
+que l. Donc vous avez empilé plusieurs de ces couches.
+
+0:48:39.200,0:48:41.440
+Et au début, vous avez ce degré
+
+0:48:41.440,0:48:45.680
+et tous les 1, puis, comme vous avez plusieurs piles, vous commencez
+
+0:48:45.680,0:48:50.800
+à avoir une représentation qui évolue.
+
+0:48:50.800,0:48:57.280
+Cela fait sens ? Oui ? Non ? [Etudiant : cette valeur de E
+
+0:48:57.839,0:49:01.040
+serait un peu comme le poids de d’arête ?]
+
+0:49:01.040,0:49:07.440
+La valeur de e est la représentation.
+
+0:49:07.440,0:49:12.240
+Donc e a comme…
+
+0:49:12.240,0:49:17.280
+e ici pour l'instant c'est juste 1 mais plus tard
+
+0:49:17.280,0:49:20.960
+dans les couches suivantes, il y aura un vecteur.
+
+0:49:20.960,0:49:24.800
+Et ce vecteur vous permet en gros de régler cette porte
+
+0:49:24.800,0:49:30.960
+pour ce message entrant. Finissons le notebook [Ok].
+
+0:49:30.960,0:49:35.839
+Sinon nous ne finissons pas le notebook. Je répondrais alors à toutes vos questions.
+
+0:49:35.839,0:49:40.880
+Donc ici je vous montre ce graphe DGL qui a 
+
+0:49:40.880,0:49:44.720
+ces caractéristiques. Ces caractéristiques vont être mon entrée.
+
+0:49:44.720,0:49:52.480
+J'ai dans ce cas 133 nœuds et 739 arêtes. Quel est le
+
+0:49:52.480,0:50:00.880
+nombre maximum d’arêtes que je peux avoir ? Vous suivez ?
+
+0:50:01.599,0:50:08.800
+133 au carré. [Chat : divisé par 2] Yeah.
+
+0:50:08.800,0:50:15.839
+De l'ordre de 133 au carré. Cool, très bien, donc exécutons
+
+0:50:15.839,0:50:20.640
+celui-ci. Donc nous voyons qu’au début le réseau
+
+0:50:20.640,0:50:27.680
+ne peut pas vraiment classer correctement. C’est une chose stupide.
+
+0:50:27.680,0:50:32.720
+Donc regardons comment entraîner ce réseau.
+
+0:50:32.720,0:50:36.079
+J'ai J, ma fonction objective,
+
+0:50:36.079,0:50:42.400
+qui va être l'entropie croisée des scores des batchs
+
+0:50:42.400,0:50:46.640
+et les étiquettes des batchs. Donc c'est ce que mon réseau
+
+0:50:46.640,0:50:50.240
+me dit. C’est les scores des batchs, les logits,
+
+0:50:50.240,0:50:53.359
+et puis j'ai les étiquettes.
+
+0:50:53.359,0:50:57.440
+Ce sont les étiquettes originales pour les graphes.
+
+0:50:57.440,0:51:00.480
+Il a bien fonctionné, tout a fonctionné.
+
+0:51:00.480,0:51:03.599
+Nous avons la propagation,
+
+0:51:03.599,0:51:08.079
+le calcul de la perte, « zero_grad », la rétropropagation, l'optimiseur. 
+
+0:51:08.079,0:51:11.920
+Nous définissons ici une fonction d’entraînement qui est exactement la même que celle que nous
+
+0:51:11.920,0:51:17.280
+voyons tout le temps. Laissez-moi exécuter ça.
+
+0:51:17.280,0:51:20.400
+Donc pour la fonction d’entraînement nous connaissons déjà tout.
+
+0:51:20.400,0:51:24.000
+Donc x sont les caractéristiques
+
+0:51:24.000,0:51:28.880
+des nœuds sur les sommets et e sont les caractéristiques sur les arêtes.
+
+0:51:28.880,0:51:32.960
+Les scores des batchs, les logits, sont en gros la sortie de mon modèle.
+
+0:51:32.960,0:51:37.359
+La fonction objectif J est l'entropie croisée entre les logits et
+
+0:51:37.359,0:51:41.760
+les cibles, puis vous nettoyer les gradients, vous
+
+0:51:41.760,0:51:46.400
+rétropropagez et faites un pas. Il s’agit des 5 étapes :
+
+0:51:46.400,0:51:51.119
+un, deux, trois, quatre, cinq étapes.
+
+0:51:51.119,0:51:57.200
+L'évaluation, de la même manière mais sans la mise à jour des paramètres.
+
+0:51:57.200,0:52:01.640
+Donc ici nous avons juste les jeux d’entraînement et de test.
+
+0:52:01.640,0:52:06.400
+Nous pouvons vérifier la progression.
+
+0:52:06.400,0:52:11.359
+Donc ici, je vous montre juste l’entraînement et la précision test.
+
+0:52:11.359,0:52:19.839
+Oh pardon, mettons 40 époques. Voyons si ça marche ou pas.
+
+0:52:26.480,0:52:33.839
+Cela la précision d’entraînement s'améliore.
+
+0:52:43.680,0:52:51.040
+Celle de test est encore faible mais progresse aussi.
+
+0:52:51.040,0:52:55.680
+Oui, la convergence. Donc encore une fois, nous voulons penser…
+
+0:52:57.040,0:53:02.559
+Si vous pensez du point de vue de l'attention,
+
+0:53:02.559,0:53:06.960
+nous avons un ensemble de valeurs. Et dans l'attention nous n'avons pas
+
+0:53:06.960,0:53:09.440
+de type de connexions entre ces valeurs.
+
+0:53:09.440,0:53:13.760
+C’est juste un ensemble. Tout regarde tout le monde. Donc avec l'attention
+
+0:53:13.760,0:53:16.079
+vous devez vérifier tout ce qui se passe
+
+0:53:16.079,0:53:20.720
+car vous n'avez aucune idée de qui devrait regarder quoi.
+
+0:53:20.720,0:53:24.160
+Dans ce cas… C'est le point principal.
+
+0:53:24.160,0:53:27.200
+Qu'a dit Xavier hier ? Le point principal
+
+0:53:27.200,0:53:32.319
+est l’éparsité dans la matrice d’adjacence. Car l’éparsité
+
+0:53:32.319,0:53:35.599
+vous donne une structure et la structure est le 1
+
+0:53:35.599,0:53:39.440
+qui vous dit qui est connecté avec qui. Donc si tout le monde est connecté
+
+0:53:39.440,0:53:43.200
+avec tout le monde, vous obtenez des 1 partout.
+
+0:53:43.200,0:53:46.000
+Il converge. Donc si vous avez
+
+0:53:46.000,0:53:49.359
+tout le monde regardant tout le monde, la matrice d’adjacence est
+
+0:53:49.359,0:53:54.160
+une matrice avec que des 1. Si vous avez juste quelques vecteurs
+
+0:53:56.640,0:54:00.960
+qui sont connectés les uns aux autres, alors vous allez avoir 
+
+0:54:00.960,0:54:05.119
+des 1 sporadiques. Donc vous allez avoir une matrice éparse.
+
+0:54:05.119,0:54:12.240
+Donc ce truc allait jusqu'à 100 de précision avant, je suppose que j’aurais dû fixer une graine pour
+
+0:54:12.240,0:54:17.680
+vous montrez de meilleurs résultats.
+
+0:54:17.680,0:54:21.680
+Donc c'était à peu près tout. Il n'y a pas de grosse chose,
+
+0:54:21.680,0:54:25.200
+je pense, au moins pour cette première perspective
+
+0:54:25.200,0:54:29.680
+et ce que j'ai appris la semaine dernière sur ces réseaux.
+
+0:54:29.680,0:54:33.359
+Y a-t-il des questions ? Je peux prendre des questions. Je veux dire que je n'ai pas
+
+0:54:33.359,0:54:39.839
+voulu prendre une éternité pour terminer le cours car si des gens devaient partir, ils n’auraient pas pu.
+
+0:54:39.839,0:54:45.119
+Je suis aussi en retard de neuf minutes, donc je ne suis pas non plus à l'heure. 
+
+0:54:45.119,0:54:51.440
+Mieux que pire. [Etudiant : qu'avons-nous exactement prédit ici ?
+
+0:54:51.440,0:54:56.880
+Nous avions les classes, les sept classes de graphes au début]
+
+0:54:56.880,0:55:03.599
+Donc ce sont les classes.
+
+0:55:04.400,0:55:07.599
+Ce sont les classes et puis je vais générer ici,
+
+0:55:07.599,0:55:15.200
+je génère… Où est-il ? Jeu d’entraînement.
+
+0:55:15.680,0:55:24.240
+Je ne le vois. Attendez.
+
+0:55:24.240,0:55:32.079
+Ici. Donc le jeu d’entraînement où on crée 350 graphes
+
+0:55:32.079,0:55:38.319
+qui ont entre 10 et 20 sommets chacun.
+
+0:55:38.319,0:55:44.160
+Ils peuvent être de n'importe quelle de ces huit classes que nous avons vues avant.
+
+0:55:44.160,0:55:48.400
+Cela peut… Laissez-moi dézoomer.
+
+0:55:48.400,0:55:55.920
+Donc ça peut être la classe 7, 6, 5, 4, 3, 2, 1 et 0.
+
+0:55:55.920,0:55:59.520
+Donc vous pouvez avoir n'importe laquelle parmi elles.
+
+0:55:59.520,0:56:03.319
+Ce truc a un nombre variable de sommets.
+
+0:56:03.319,0:56:07.359
+Et maintenant vous posez la question à votre réseau :
+
+0:56:07.359,0:56:11.359
+quel type de graphe t’ai-je donné ?
+
+0:56:11.359,0:56:17.760
+Donc le GCN vous dit
+
+0:56:17.760,0:56:22.240
+quel type de graphe vous regardez. Donc il fait
+
+0:56:22.240,0:56:27.119
+en gros une classification de votre matrice d’adjacence qui
+
+0:56:27.119,0:56:32.720
+précise la connectivité des sommets.
+
+0:56:32.880,0:56:37.119
+[Etudiant : le jeu d’entraînement est un ensemble de
+
+0:56:37.119,0:56:43.599
+petits graphes et la taille du batch est de 50, donc c'est
+
+0:56:43.599,0:56:46.240
+50 graphes de taille variable, d’un nombre variable
+
+0:56:46.240,0:56:50.319
+de nœuds de 10 à 20. Il n'est pas nécessaire que chaque batch
+
+0:56:50.319,0:56:53.440
+ait des graphes avec le même nombre de nœuds ?]
+
+0:56:53.440,0:56:57.359
+C'est ce qui est fait à l'intérieur, c'est ce qui a été fait dans 
+
+0:56:57.359,0:57:02.319
+les lignes appelant DGL pour accélérer
+
+0:57:02.319,0:57:08.640
+l’entraînement. Mais c'est fait dans votre dos.
+
+0:57:08.640,0:57:13.119
+C'est pareil que vous quand vous entraînez un modèle de langue.
+
+0:57:13.119,0:57:20.559
+Vous voulez regrouper toutes les phrases avec des longueurs identiques pour ne pas gaspiller de calculs. C’est la même chose ici.
+
+0:57:20.559,0:57:26.319
+[Etudiant : quelles sont dimensions de la sortie ?]
+
+0:57:33.200,0:57:39.359
+Donc j'ai ici un MLP qui va de la dimension cachée de la chose quelconque
+
+0:57:39.359,0:57:43.760
+à ma dimension de sortie. Donc quelle est la dimension
+
+0:57:43.760,0:57:47.920
+la sortie ? Regardons. La dimension de sortie
+
+0:57:47.920,0:57:52.160
+est 8. Donc 8, c’est le nombre de classes possibles.
+
+0:57:52.160,0:57:56.400
+Cela donne donc 8 logits
+
+0:57:56.400,0:58:03.920
+de dimension 8. Enfin quand vous avez ces logits de dimension 8, c'est juste un classifieur.
+
+0:58:03.920,0:58:08.720
+Vous les branchez à l'intérieur de l'entropie croisée.
+
+0:58:08.720,0:58:15.680
+Ici. La perte de mes logits contre mes étiquettes. Et cette perte est 
+
+0:58:15.680,0:58:20.079
+définie ici. C'est mon entropie croisée qui attend des logits
+
+0:58:20.079,0:58:24.400
+et calcule le score final.
+
+0:58:24.400,0:58:31.119
+Puis, vous avez exécuté juste la rétropropagation en retour. [Etudiant : est-ce que tous les nœuds
+
+0:58:31.119,0:58:37.760
+ont une sorte de logit et d'étiquette… chaque nœud
+
+0:58:37.760,0:58:42.240
+a la même étiquette qui correspond à la classe du graphe global ou est
+
+0:58:42.240,0:58:47.119
+que ce n'est pas ainsi que cela fonctionne ?] Chaque graphe a un
+
+0:58:47.119,0:58:50.480
+vecteur de logits. Vous voulez classer
+
+0:58:50.480,0:58:54.640
+les différents graphes. Donc vous fournissez ces graphes
+
+0:58:54.640,0:58:58.720
+au réseau et ces graphes ont une structure arbitraire.
+
+0:58:58.720,0:59:02.799
+Ils n'ont pas un nombre fini de sommets.
+
+0:59:02.799,0:59:05.920
+Donc disons que vous avez comme
+
+0:59:05.920,0:59:09.599
+10 graphes et chacun d'entre eux ont
+
+0:59:09.599,0:59:16.240
+un graphe de taille 5, taille 10, taille 15 et taille 20. Donc vous avez des ensembles
+
+0:59:16.240,0:59:20.880
+avec un nombre différent de sommets. Et un lien spécifique entre ces sommets.
+
+0:59:20.880,0:59:25.359
+Donc compte tenu de ces longueurs variables d’ensembles,
+
+0:59:25.359,0:59:30.079
+vous précisez les connexions entre ces sommets.
+
+0:59:30.079,0:59:34.160
+Vous demandez à votre réseau de vous donner
+
+0:59:34.160,0:59:38.000
+un vecteur logit où indiquant
+
+0:59:38.000,0:59:42.160
+en gros à quel famille ce graphe appartient.
+
+0:59:42.160,0:59:47.280
+Donc 8 est le nombre de possibilités que vous avez :
+
+0:59:47.280,0:59:53.040
+cercle, étoile, etc… Chaque graphe d’entrée sera
+
+0:59:53.040,0:59:56.160
+associé à un gars spécifique.
+
+0:59:56.160,1:00:00.559
+Donc vous faites juste une classification du type de graphe
+
+1:00:00.559,1:00:04.000
+mais le fait est que ce graphe comporte un nombre variable de
+
+1:00:04.000,1:00:09.599
+sommets. Donc vous devez en gros…
+
+1:00:09.599,1:00:13.200
+demander la structure.
+
+1:00:13.200,1:00:17.040
+Le GCN doit intrinsèquement
+
+1:00:17.040,1:00:23.200
+extraire quelle est la typologie de la connectivité que vous fournissez.
+
+1:00:23.200,1:00:30.400
+[Etudiant : Cool merci] [Autre étudiant : l’exemple que nous utilisons
+
+1:00:30.400,1:00:32.799
+ici est la classification de graphes,
+
+1:00:32.799,1:00:37.040
+mais la plupart du temps pour une utilisation dans le monde réel,
+
+1:00:37.040,1:00:41.040
+nous avons un seul graphe où chaque nœud représente une
+
+1:00:41.040,1:00:44.240
+entité particulière et nous devons classer ces entités
+
+1:00:44.240,1:00:47.680
+donc comment faire ? On prend une partie du graphe
+
+1:00:47.680,1:00:52.640
+et on l’entraîne sur ça puis on redresse ?] Donc pour celui-ci
+
+1:00:52.640,1:00:55.680
+ici vous avez différents graphes et
+
+1:00:55.680,1:00:58.720
+à la fin, vous allez les réunir tous ensemble.
+
+1:00:58.720,1:01:04.319
+Donc chaque fois que vous avez le « GatedGCN » à la fin,
+
+1:01:04.319,1:01:10.559
+Vous avez cette partie et le « mean_nodes ».
+
+1:01:10.559,1:01:15.040
+Donc dgl, y, bous obtenez la moyenne de tous
+
+1:01:15.040,1:01:22.000
+les nœuds et puis vous appliquez le MLP sur cette représentation moyenne.
+
+1:01:22.000,1:01:24.319
+C’est pour cette classification de l'ensemble du graphe.
+
+1:01:24.319,1:01:27.760
+Mais alors si vous voulez faire,
+
+1:01:27.760,1:01:31.920
+d'autres choses, vous n'avez pas cette fonction.
+
+1:01:31.920,1:01:37.040
+Vous n'avez pas cette ligne. Vous allez appliquer un
+
+1:01:37.040,1:01:42.640
+vecteur de logit sur chaque sommet.
+
+1:01:42.640,1:01:50.720
+Vous aurez un vecteur de logit pour chaque sommet.
+
+1:01:50.720,1:01:58.559
+[Oui] Donc vous un logit par sommet et puis vous faites
+
+1:01:58.640,1:02:05.200
+l'entraînement sur chacun de ces types. Donc ce serait… 
+
+1:02:05.200,1:02:09.039
+Par exemple si vous allez sur dgl.ai…
+
+1:02:09.039,1:02:14.640
+Ce cours a demandé beaucoup d'efforts [rires]
+
+1:02:14.640,1:02:20.000
+Tutoriels. Ce tutoriel. 
+
+1:02:20.000,1:02:24.480
+Non où est-il ?
+
+1:02:29.200,1:02:31.839
+Ici, cool. Donc dans ce cas
+
+1:02:35.920,1:02:41.680
+ils font la classification des nœuds.
+
+1:02:41.680,1:02:46.319
+C’est le deuxième type de choses. Donc dans ce cas vous avez un
+
+1:02:46.319,1:02:50.400
+club de karaté. Je ne suis pas sûr que vous soyez familier
+
+1:02:50.400,1:02:54.079
+et il y a l’instructeur le 0. Puis il y a
+
+1:02:54.079,1:03:00.799
+le manager, le 33. Ces arêtes représentent
+
+1:03:00.799,1:03:07.440
+en gros les interactions en dehors du club, dans la vie réelle.
+
+1:03:07.440,1:03:10.960
+Donc le 4 interagit beaucoup avec
+
+1:03:10.960,1:03:15.119
+l'instructeur en dehors du club. Et le 26 interagit beaucoup avec
+
+1:03:15.119,1:03:19.200
+le manager à l'extérieur du club. Donc vous avez
+
+1:03:19.200,1:03:24.000
+que deux étiquettes : instructeur et manager. Et vous voudriez obtenir une étiquette
+
+1:03:24.000,1:03:27.839
+pour tous ces autres nœuds ou ces autres sommets.
+
+1:03:27.839,1:03:30.799
+Donc chaque fois que vous faites l’entraînement.
+
+1:03:30.799,1:03:35.280
+C'est ce qu'on appelle de l'apprentissage semi-supervisé car vous n'avez que quelques étiquettes.
+
+1:03:35.280,1:03:39.740
+Donc chaque fois que vous vous entraînez à ce genre de choses,
+
+1:03:39.740,1:03:42.799
+vous avez votre GCN
+
+1:03:42.799,1:03:46.720
+qui produit un certain nombre de classes pour chaque sommet.
+
+1:03:46.720,1:03:50.720
+Donc chaque sommet a le logit complet
+
+1:03:50.720,1:03:53.920
+mais puis, pendant l’entraînement,
+
+1:03:53.920,1:03:57.359
+vous obtenez les logits
+
+1:03:57.359,1:04:00.559
+pour chaque sommet, mais lorsque vous
+
+1:04:00.559,1:04:04.319
+calculez la perte finale qui est la NLL,
+
+1:04:04.319,1:04:14.039
+vous ne sélectionnez que les étiquettes que vous disposez : 0 et 33.
+
+1:04:14.039,1:04:19.039
+Ce sont les deux seules étiquettes que vous avez.
+
+1:04:19.039,1:04:23.480
+Et il y a donc un vecteur qui s'appelle 0 à 33.
+
+1:04:23.480,1:04:27.200
+Ici. C'est mon étiquette des nœuds.
+
+1:04:27.200,1:04:32.720
+Ce ne sont que ces deux gars. Donc dans ma perte d’entraînement ici
+
+1:04:32.720,1:04:38.720
+vous ne sélectionnez que les deux nœuds qui ont une étiquette. Et vous forcez
+
+1:04:38.720,1:04:42.799
+ces étiquettes à être celles-là. Puis vous entraînez classiquement : 
+
+1:04:42.799,1:04:47.359
+« zero_grad », « .backward », « optimizer.step ». Cela vous permet
+
+1:04:47.359,1:04:51.119
+en gros de propager à travers
+
+1:04:51.119,1:04:54.240
+toute la structure du graphe
+
+1:04:54.240,1:04:58.880
+quelles sont ces informations qui doivent sortir du logit de deux
+
+1:04:58.880,1:05:05.079
+sommets spécifiques. Donc vous avez plusieurs couches empilées de GCN et 
+
+1:05:05.200,1:05:11.200
+vous forcer ces deux sommets à produire
+
+1:05:11.200,1:05:16.079
+cette étiquette spécifique. Puis vous rétropropagez.
+
+1:05:16.079,1:05:19.680
+En fait, toutes ces informations se propagent dans le réseau.
+
+1:05:19.680,1:05:23.039
+Une propagation d’une sorte de représentation
+
+1:05:23.039,1:05:27.280
+à travers ce domaine. Et si vous affichez…
+
+1:05:27.280,1:05:32.079
+Ceci est au début. Donc c'est la représentation des
+
+1:05:32.079,1:05:38.240
+sommets sans entraînement. Puis après un entraînement de quelques
+
+1:05:38.240,1:05:42.319
+les époques, vous pouvez voir comment cette représentation est attirée.
+
+1:05:42.319,1:05:50.680
+Donc que 0 et 33 sont arrachés de telle sorte qu’ils soient linéairement classifiables.
+
+1:05:50.680,1:05:58.720
+Puis les sommets sont glissés près d'eux. C’est en gros
+
+1:05:58.880,1:06:02.960
+le nombre de connexions qu'ils ont en quelque sorte.
+
+1:06:02.960,1:06:06.400
+C'est ainsi que vous faites une classification
+
+1:06:06.400,1:06:10.00
+sur des sommets plutôt que sur des graphes.
+
+1:06:10.000,1:06:14.000
+Peut-être qu’hier nous n’avons pas mentionnez
+
+1:06:14.000,1:06:18.160
+comment appliquez ces choses. Mais encore une fois Xavier et moi-même
+
+1:06:18.160,1:06:23.920
+ne sommes peut-être pas trop intéressés par la partie application mais
+
+1:06:23.920,1:06:29.039
+plus par la partie algorithmique. Ai-je répondu à votre question ?
+
+1:06:29.039,1:06:34.000
+[Oui, cela fait sens] Ok, génial. Au moins je suis compréhensible parfois.
+
+1:06:34.000,1:06:36.720
+Plus de questions ? Non ? Vous avez fini, vous en avez marre ?
+
+1:06:41.039,1:06:46.640
+[Etudiants : les autres sont partis] 18 personnes [rires].
+
+1:06:46.640,1:06:50.079
+Oui il est temps de dîner, j'ai faim. Mon colocataire vient de manger mon repas.
+	
+1:06:50.079,1:06:59.839
+Ces deux semaines ont été folles, j'ai vraiment beaucoup travaillé. Bye-bye.
+
+1:06:59.839,1:07:11.920
+Je pense que c’est l’un des cours les plus intensifs jusqu'à présent. Je l’ai préparé en
+
+1:07:11.920,1:07:16.000
+une semaine et je pense que j'ai peut-être couvert
+
+1:07:16.000,1:07:22.319
+beaucoup de matériel. Il est donc tout à fait raisonnable d'être submergé
+
+1:07:22.319,1:07:26.559
+mais alors comment tout extraire de cette vidéo ?
+
+1:07:26.559,1:07:30.559
+Il y a quelques étapes que je recommande vivement
+
+1:07:30.559,1:07:36.000
+de suivre. Commençons avec les problèmes de compréhension.
+
+1:07:36.039,1:07:40.319
+J'ai peut-être été un peu confus et ai également réenregistré
+
+1:07:40.319,1:07:43.359
+quelques nouveaux morceaux car j'ai loupé des choses.
+
+1:07:43.359,1:07:46.720
+Donc si vous avez une question à laquelle je n'ai pas encore répondu,
+
+1:07:46.720,1:07:50.559
+il suffit de la poser dans la section « Commentaires » sous cette vidéo.
+
+1:07:50.559,1:07:54.480
+De plus, si vous souhaitez suivre les dernières nouvelles concernant
+
+1:07:54.480,1:07:58.160
+mon enseignement, l'apprentissage machine et des choses jolies,
+
+1:07:58.160,1:08:01.599
+suivez-moi sur Twitter. J’y post les
+
+1:08:01.599,1:08:08.720
+dernières nouvelles dessus. Si vous voulez être toujours être au courant des
+
+1:08:08.720,1:08:11.599
+derniers contenus ajoutés, je vous recommande
+
+1:08:11.599,1:08:16.319
+de vous abonner à ma chaîne et d’activer la cloche de notification 
+
+1:08:16.319,1:08:21.359
+afin de ne manquer aucune nouvelle vidéo. Si vous aimez cette vidéo,
+
+1:08:21.359,1:08:24.960
+n'oubliez pas d'appuyer sur le bouton « J’aime ».
+
+1:08:24.960,1:08:31.440
+J'apprécie vraiment ça. Recherche : chacune des vidéos a une transcription
+
+1:08:31.440,1:08:38.560
+anglaise. Nous avons aussi le japonais, l’espagnol, l’italien, le turc, le mandarin, le coréen
+
+1:08:38.560,1:08:42.250
+de disponibles au cas où l'anglais n'est pas votre
+
+1:08:42.250,1:08:45.759
+langue principale. Si vous souhaitez aider pour la traduction
+
+1:08:45.759,1:08:51.199
+n'hésitez pas à me contacter par e-mail ou sur Twitter.
+
+1:08:51.199,1:08:54.400
+Vous devriez vraiment vraiment prendre le temps de passer en revue
+
+1:08:54.400,1:09:00.319
+le notebook que nous avons couvert aujourd'hui. Vérifiez chaque ligne de code.
+
+1:09:00.319,1:09:04.319
+Il y a beaucoup de choses sur lesquelles je n’ai pas passé
+
+1:09:04.319,1:09:11.000
+suffisamment de temps aujourd'hui pour que la vidéo ne soit pas trop longue.
+
+1:09:11.000,1:09:16.400
+Vous devriez donc vraiment regarder les lignes et comprendre profondément ce qui se passe.
+
+1:09:16.400,1:09:20.640
+Si vous trouvez une faute de frappe, une erreur ou un bug, comme beaucoup d'entre vous
+
+1:09:20.640,1:09:25.040
+ont déjà trouvé, veuillez le signaler sur GitHub.
+
+1:09:25.040,1:09:27.839
+Et si vous êtes motivez, vous pouvez aussi envoyer une PR
+
+1:09:27.839,1:09:34.319
+corrigeant cette erreur. C’est positif car nous pouvons alors tous
+
+1:09:34.319,1:09:38.239
+bénéficier de votre contribution. Vous obtenez aussi une certaine valeur
+
+1:09:38.239,1:09:42.159
+de vous être sali les mains avec le code.
+
+1:09:42.159,1:09:45.679
+Cela m’aide ainsi que toute la communauté
+
+1:09:45.679,1:09:50.480
+de l'apprentissage profond qui utilisent ce matériel.
+
+1:09:50.480,1:09:54.480
+Et c'est à peu près tout. Merci encore d'être resté avec moi
+
+1:09:54.480,1:09:58.719
+et comme on m'a dit de dire : partager et aimé et abonnez-vous :] 
+
+1:09:58.719,1:10:03.360
+A la prochaine fois, bye bye.

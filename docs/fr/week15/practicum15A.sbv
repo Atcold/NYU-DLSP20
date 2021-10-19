@@ -1,0 +1,1709 @@
+0:00:00.720,0:00:06.000
+Très bien, très bien. Donc aujourd'hui nous allons à nouveau parler
+
+0:00:06.000,0:00:13.840
+des fondements de l'apprentissage profond. C’est moi Alfredo, vous pouvez me trouver sur Twitter via @alfcnz.
+
+0:00:13.840,0:00:17.840
+Vous pouvez trouver sur Twitter des informations sur la leçon du jour.
+
+0:00:17.840,0:00:21.359
+Ce que j’ai posté en ligne la nuit dernière.
+
+0:00:21.359,0:00:28.720
+Donc l'accord est toujours le même. Dès que vous ne comprenez pas, que ça ne fais pas sens, 
+
+0:00:28.720,0:00:32.239
+c’est que je n'ai pas assez dormi car ai travaillé sur ce sujet ces 30 dernières heures.
+
+0:00:32.239,0:00:36.079
+Il est très probable que je ne sois pas très logique à certains moments
+
+0:00:36.079,0:00:39.520
+donc chaque fois que quelque chose n'est pas clair, arrêtez-moi.
+
+0:00:39.520,0:00:42.559
+Demandez-moi quoi que ce soit car, encore une fois, si je continue
+
+0:00:42.559,0:00:47.360
+et que vous ne suivez pas, alors nous n'irons nulle part.
+
+0:00:53.020,0:01:01.120
+Donc aujourd'hui nous allons parler de l’inférence pour les modèles à base d’énergie à variable latente [LV-EBMs dans la suite].
+
+0:01:01.120,0:01:07.920
+L’exemple de l'ellipse. Nous n'avons couvert que l’inférence 
+
+0:01:07.920,0:01:12.320
+dans notre premier cas pratique. Aujourd'hui, nous ne couvrirons que
+
+0:01:12.320,0:01:21.080
+l’inférence pour les modèles à base d'énergie. Je ne dirai plus le mot entraînement de la vidéo. Du moins je vais essayer.
+
+0:01:21.080,0:01:27.080
+Donc aujourd’hui on va parler de l'inférence. Qu'est-ce que c'est et d’où commençons-nous ? 
+
+0:01:27.080,0:01:31.880
+On commence à partir d’exemples d’entraînement. J’ai dit le mot entraînement…
+
+0:01:31.880,0:01:38.799
+Donc voyons le type de données sur lesquels nous allons travailler et pourquoi nous avons besoin de ces EBMs.
+
+0:01:38.799,0:01:45.920
+Nous pouvons penser à nos données y comme ayant deux composantes y1, y2.
+
+0:01:45.920,0:01:55.000
+y1 est cette fonction ρ1(x), x étant mon entrée, multipliée par le
+
+0:01:55.000,0:01:59.920
+cosinus de θ, qui est un angle que nous ne connaissons pas, plus un bruit ε.
+
+0:02:00.040,0:02:10.680
+Puis ρ2(x) multipliée par un sinus de θ, auquel on n’a pas accès, plus un bruit ε.
+
+0:02:11.360,0:02:18.480
+ρ est une fonction qui permet d’associer l'entrée ℝ1 en ℝ2.
+
+0:02:18.480,0:02:26.560
+Donc cela associe mon x à α(x) + β(1-x) pour la première composante
+
+0:02:26.560,0:02:36.239
+et β(x) + α(1-x) pour la deuxième composante. Puis tout est multiplié par exp(2x).
+
+0:02:36.840,0:02:45.760
+Donc α et β sont simplement 1,5 et 2. Donc c’est simplement l’équation pour une ellipse.
+
+0:02:45.760,0:03:02.000
+Mais si x va de 0 à 1, comme je vous le montre ici, cela va dessiner une sorte de corne qui est exponentielle dans le profil.
+
+0:03:02.000,0:03:05.280
+Cela commence par quelque chose comme ça et puis éventuellement
+
+0:03:05.280,0:03:09.440
+comme une ellipse horizontale et éventuellement fini par une ellipse verticale.
+
+0:03:09.440,0:03:15.840
+x ici est échantillonné d’une distribution uniforme.
+
+0:03:15.840,0:03:22.640
+De même, le θ est aussi échantillonné à partir de la distribution uniforme de 0 à 2π.
+
+0:03:22.640,0:03:31.680
+ε est plutôt échantillonné à partir d'une distribution normale avec une moyenne de 0 et un écart type de 1/20.
+
+0:03:31.680,0:03:34.879l
+Donc encore une fois comme vous avez pu le voir sur Twitter,
+
+0:03:34.879,0:03:38.159
+ce truc est plutôt cool et ressemble à ça.
+
+0:03:38.159,0:03:42.720
+Et comme j’ai de la magie de mon côté, nous pouvons faire ça.
+
+0:03:42.720,0:03:47.280
+Vous pouvez voir ici comment nous avons cette exponentielle,
+
+0:03:47.280,0:03:57.340
+cette enveloppe exponentielle. Nous commençons par l’ellipse qui est comme verticale et on se retrouve avec cette horizontale.
+
+0:03:57.360,0:04:04.080
+A quoi voulons-nous prêter attention ici ?
+
+0:04:04.080,0:04:10.480
+A un endroit spécifique donné x, il n'y a pas qu’un seul y.
+
+0:04:10.480,0:04:16.880
+Donc nous ne pouvons pas vraiment entraîner un réseau neuronal associant
+
+0:04:16.880,0:04:20.799
+un vecteur à un autre vecteur car il n'y a pas de vecteur à associer.
+
+0:04:20.799,0:04:24.320
+Il y a un tas de vecteurs. Donc étant donné une seule entrée x,
+
+0:04:24.320,0:04:28.639
+il y a beaucoup de beaucoup de beaucoup de y possibles.
+
+0:04:28.639,0:04:32.160
+Il y en a tout une ellipse pour un x donnée.
+
+0:04:32.160,0:04:38.080
+Donc nous ne pouvons pas vraiment utiliser un réseau neuronal normal pour faire ça.
+
+0:04:38.080,0:04:41.199
+De la même manière, si nous parlons juste de y,
+
+0:04:41.199,0:04:48.160
+étant donné une valeur de y1, je ne peux même pas dire quelle est l'autre correspondante y2
+
+0:04:48.240,0:04:51.680
+car il y a presque toujours deux valeurs pour y2 pour un y1.
+
+0:04:51.680,0:04:00.120
+Donc utiliser une association vecteurs à vecteurs comme nous l'avons appris jusqu'à présent, n'est pas suffisant.
+
+0:05:00.320,0:05:08.400
+Donc aujourd'hui nous allons trouver comment utiliser ces LV-EBMs afin de traiter ce type de résultat multimodale
+
+0:05:11.600,0:05:19.120
+Pour rendre les choses simples et rendre ma vie plus facile, nous allons faire quelques simplifications.
+
+0:05:19.120,0:05:25.360
+La première est que je vais supprimer l'entrée. Donc il n'y a pas de données d'entrée.
+
+0:05:25.360,0:05:32.560
+Mon modèle n'a pas de données d'entrée. Je fixe mon x à 0.
+
+0:05:32.560,0:05:38.320
+En fixant x à 0 je vais avoir que mon exponentielle devient simplement 1.
+
+0:05:38.320,0:05:50.240
+Puis, fondamentalement, il en découle que ρ1 devient 2 car α est supprimé par le 0 et il suffit de multiplier le β par 1.
+
+0:05:50.240,0:05:54.080
+Puis ρ2 devient automatiquement 1,5.
+
+0:05:54.080,0:06:00.400
+Donc mes points de données y vont être simplement :
+
+0:06:00.400,0:06:10.520
+2 fois cosinus de cette uniforme et 1,5 fois sinus de cette uniforme.
+
+0:06:10.199,0:06:20.300
+La collection de tous mes y me donne Y. Donc Y est la collection de tous mes échantillons.
+
+0:06:20.319,0:06:28.800
+Et ici j'ai décidé de n'utiliser que 24 échantillons, donc j'ai 24 échantillons différents de la distribution uniforme.
+
+0:06:28.800,0:06:39.120
+Et pour chacun de ces échantillons il y a un ε pour la première composante, et un ε pour la deuxième composante.
+
+0:06:39.120,0:06:44.800
+Ok, donc ce que nous essayons de faire aujourd'hui, c'est d'apprendre…
+
+0:06:44.800,0:06:48.160
+Faux, nous n'apprenons rien du tout.
+
+0:06:48.160,0:06:52.479
+Nous imaginons que quelqu'un nous donne un réseau déjà entraîné et
+
+0:06:52.479,0:07:04.060
+nous allons voir comment faire de l’inférence, comment utiliser un modèle pour déterminer si un point appartient ou pas à une surface d’entraînement.
+
+0:07:04.080,0:07:10.800
+Donc ce sont mes données d’entraînement, ce sont mes y, qui sont
+
+0:07:10.800,0:07:14.800
+à nouveau une ellipse. Vous pouvez voir ici le grand rayon est 2.
+
+0:07:14.800,0:07:24.160
+Il y a 4 boites et chaque boite est 0,5. Donc ce rayon est de 2. 
+
+0:07:24.400,0:07:30.680
+Puis le petit rayon a 3 cases, chaque boite valant 0,5 le petit rayon est donc de 1,5.
+
+0:07:30.680,0:07:35.560
+[Etudiant : quand vous avez dit qu'il n'y a pas d'entrée,
+
+0:07:35.560,0:07:40.800
+considérez-vous le comme une entrée ?] Nous n’avons pas accès à θ.
+
+0:07:40.800,0:07:44.879
+θ est quelque chose qu'on ne voit pas.
+
+0:07:44.879,0:07:51.919
+x pourrait être l’entrée que nous fournissons au modèle pour déterminer à quel endroit nous sommes dans cette genre de corne.
+
+0:07:51.919,0:07:56.400
+Cela nous permet de comprendre la dimension de ces ellipses.
+
+0:07:56.400,0:08:01.440
+Mais θ ici est quelque chose auquel nous n'avons pas accès.
+
+0:08:01.440,0:08:10.319
+θ est simplement une variable qui est manquante et ayant servi à générer nos données.
+
+0:08:10.400,0:08:17.919
+Mais nous n'y avons pas accès, donc c'est une variable manquante, une entrée manquante.
+
+0:08:17.919,0:08:21.360
+[Etudiant : ok, ça fait sens.]
+
+0:08:21.360,0:08:28.479
+Donc regardons ce que la surface du modèle est. Dans ce cas, je vais avoir une entrée latente
+
+0:08:28.479,0:08:33.200
+qui est quelque chose… latente signifie qu'elle est manquante, que je n’y ai pas accès.
+
+0:08:33.200,0:08:36.640
+Il y a encore des entrées potentielles.
+
+0:08:36.640,0:08:40.839
+Vous remarquez que c’est la même couleur que pour θ.
+
+0:08:40.839,0:08:49.040
+Donc j’ai mon z appartenant à [0,2π[.
+
+0:08:49.040,0:09:03.440
+Donc je considère un vecteur allant de 0 à 2 π avec 2 π exclus avec un pas de π/24.
+
+0:09:03.440,0:09:09.760
+Donc c’est essentiellement une ligne où il y a beaucoup de points, 48 points.
+
+0:09:09.760,0:09:13.320
+De 0 à 2π exclus.
+
+0:09:13.320,0:09:19.839
+L'entrée latente va dans un décodeur et celui-ci va me donner ce ỹ.
+
+0:09:19.839,0:09:23.519
+ỹ est en gras car il vit en deux dimensions.
+
+0:09:23.519,0:09:37.720
+Plus précisément, en faisant varier z sur une ligne, ỹ va varier autour d'une ellipse.
+
+0:09:37.760,0:09:42.360
+De l'autre côté, nous allons plutôt ces y qui est mes observations.
+
+0:09:42.360,0:09:45.920
+Donc comment savoir si ce sont des observations ?
+
+0:09:45.920,0:09:52.120
+Car le cercle est ombragé alors que les autres cercles sont simplement transparents.
+
+0:09:52.160,0:09:56.640
+Le y du bas est un peu gris, ce qui signifie que j'ai accès à ces données.
+
+0:09:56.640,0:10:01.760
+Donc voici à quoi ressemblent ces points.
+
+0:10:01.760,0:10:06.120
+Les points bleus sont l’échantillon de mes données générées par la distribution.
+
+0:10:06.260,0:10:14.999
+Nous les avons déjà échantillonnés, nous en avons 24. Puis là, j'ai décidé de tracer 48 de ces valeurs de
+
+0:10:14.999,0:10:25.519
+la reconstruction de ces variables latentes. De cette façon je peux clairement voir ce que le réseau pense être la véritable surface.
+
+0:10:25.519,0:10:30.000
+Dans le deuxième épisode, quand nous allons apprendre, nous verrons
+
+0:10:30.000,0:10:35.600
+comment faire correspondre ma conviction interne, ici en violet,
+
+0:10:35.600,0:10:39.990
+avec les données dont nous disposons. Mais nous ne verrons pas ça aujourd’hui.
+
+0:10:39.990,0:10:48.100
+Aujourd’hui, nous avons déjà ce modèle qui est assez mauvais puisqu'il ne correspond pas encore aux données.
+
+0:10:48.160,0:10:56.600
+Nous allons voir comment utiliser ce modèle. [Etudiant : qu’est-ce qui détermine la forme de ces points rouges/oranges ? Est-ce α et le β ?]
+
+0:10:56.600,0:11:00.760
+α et β déterminent la forme de cette chose bleue.
+
+0:11:00.760,0:11:07.519
+La chose générale est la corne que je vous ai montré avant, le truc qui tournait,
+
+0:11:07.519,0:11:11.500
+puis nous avons décidé de la couper à une valeur spécifique de x.
+
+0:11:11.500,0:11:17.040
+Il s'agit donc d'une section transversale qui nous donne cette patate bleue.
+
+0:11:17.040,0:11:22.959
+De l'autre côté je vais dire vous ce qui se trouve à l'intérieur du décodeur. 
+
+0:11:22.959,0:11:28.560
+Nous avons une croyance interne de ce qu’est la vraie surface de données.
+
+0:11:28.560,0:11:33.839
+C’est ce à quoi le modèle croit que les données ressemblent. 
+
+0:11:33.839,0:11:42.800
+Laissez-moi vous montrer la prochaine diapositive qui contient un peu plus d'informations, que l’on se synchronise.
+
+0:11:42.880,0:11:48.959
+Donc ici nous allons examiner cette fonction d’énergie.
+
+0:11:48.959,0:11:52.800
+Donc quelle est cette fonction d’énergie ?
+
+0:11:52.800,0:11:12:04.880
+C’est quelque chose qui m’indique la compatibilité entre ce ỹ et le y bleu.
+
+0:12:04.880,0:12:09.040
+Dans ce cas, il s'agit essentiellement de mesurer la distance entre
+
+0:12:09.040,0:12:16.079
+mon échantillon d’entraînement et ma reconstruction / ma meilleure estimation
+
+0:12:16.079,0:12:20.880
+de ce que je pense être le vrai point.
+
+0:12:20.880,0:12:24.240
+Donnons plus de contexte ici.
+
+0:12:24.240,0:12:31.440
+Mon énergie E est une fonction de mon point de données y et de ma variable latente z.
+
+0:12:31.440,0:12:38.079
+C’est la somme des distances euclidiennes carrées des deux composantes.
+
+0:12:38.079,0:12:46.240
+Nous avons donc la composante [y1 – g1(z)]² avec g qui est notre décodeur
+
+0:12:46.160,0:12:54.560
+et l’autre composante qui est [y2 – g2(z)]².
+
+0:12:54.000,0:13:01.979
+Et ce qui est important, c’est que ça se produit pour chaque y que nous choisissons de Y.
+
+0:13:01.979,0:13:07.519
+Donc dans ce cas nous avons 24 E différentes.
+
+0:13:07.519,0:13:14.120
+Nous pouvons indexer 24 E différentes en fonction du y spécifique que vous prenez.
+
+0:13:14.120,0:13:18.560
+Plus de détails sur ça dans la prochaine diapositive.
+
+0:13:18.560,0:13:22.079
+Quel est ce décodeur ? Donc ce décodeur est un peu « cuisiné ».
+
+0:13:22.079,0:13:32.820
+Je connais le processus de génération de données donc je peux mettre dans le g ce qui est aligné avec ce que je crois.
+
+0:13:32.880,0:13:36.839
+C'est une très bonne estimation de ce à quoi la sortie devrait ressembler. 
+
+0:13:36.839,0:13:45.519
+Donc mon g est une fonction à deux composantes, g1 et g2, allant de ℝ dans ℝ².
+
+0:13:45.519,0:13:54.959
+Et donc cela associe mon z dans ces deux composantes qui sont w1 cos(z) et w2 sin(z).
+
+0:13:54.959,0:14:08.720
+Remarquez ici que les seuls paramètres dont nous disposons dans ce décodeur sont w1 et w2.
+
+0:14:08.740,0:14:18.800
+Cosinus(z) et sinus(z) sont des a priori, je sais déjà et mets ma meilleure hypothèse pour eux.
+
+0:14:18.800,0:14:26.480
+Donc, là encore, ce réseau a que deux paramètres mais avec deux paramètres, nous pouvons encore faire beaucoup de choses.
+
+0:14:26.480,0:14:34.420
+Donc, une fois de plus, ce E existe pour tout y choisis dans l’ensemble de tous les y.
+
+0:14:34.420,0:14:45.440
+Mettons ce E en haut pour pouvoir faire un peu de place sur l’écran.
+
+0:14:45.440,0:14:52.959
+Donc maintenant, je vous montre les 24 énergies que nous avons. Comment je les obtiens ?
+
+0:14:52.959,0:14:57.600
+Ces énergies proviennent du fait que je choisis un y spécifique.
+
+0:14:57.600,0:15:07.000
+Donc le premier que je choisis, y’, est le premier y de mon échantillon d’entraînement.
+
+0:15:07.760,0:15:12.639
+Donc je peux appeler la première énergie E1. Je peux les indexer.
+
+0:15:12.639,0:15:19.440
+Puisque j’ai un nombre discret d'échantillons d’entraînement, j'ai un nombre discret d'énergies.
+
+0:15:19.519,0:15:23.920
+Donc c'est mon E1. Et la dernière de la rangée va être celle
+
+0:15:23.920,0:15:31.080
+associée au sixième échantillon d’entraînement. Donc c’est E6.
+
+0:15:31.080,0:15:40.919
+Si on descend jusqu’à la dernière rangée, j’ai le 19ème échantillon de mon ensemble d'entraînement et donc ai E19.
+
+0:15:40.959,0:15:50.880
+Et finalement si je choisis y’ = Y[24], alors je termine avec E24. 
+
+0:15:50.880,0:15:56.560
+Sur l'axe des x de chacune de ces petites cellules, vous avez z.
+
+0:15:56.560,0:16:08.800
+Donc chacun de ces E, E1, E2, E3, …, E24, sont des fonctions de ma variable latente z.
+
+0:16:08.800,0:16:14.560
+Celle-ci s’étant, comme nous l'avons dit avant, de [0, 2π[.
+
+0:16:14.560,0:16:18.880
+Dans ce dessin ici, j’ai juste séparé par π/12.
+
+0:16:18.880,0:16:23.680
+Donc j'ai belle séparation pour dessiner cette fonction.
+
+0:16:23.680,0:16:30.240
+De plus, la plage de cette énergie, dans ce cas, est de 0 à 12 et
+
+0:16:30.240,0:16:37.480
+nous allons calculer ces valeurs dans un court instant afin que nous puissions mieux comprendre de quoi je parle.
+
+0:16:37.480,0:16:41.519
+Encore une fois, jusqu'à hier, je n'en avais aucune idée.
+
+0:16:41.519,0:16:47.759
+Je suis donc très novice sur ce sujet.
+
+0:16:47.759,0:16:55.519
+Nous explorons donc ensemble ce qu'est cette jungle de fonctions bizarres, drôles et ondulantes.
+
+0:16:55.519,0:16:58.639
+Nous allons commencer par en choisir deux.
+
+0:16:58.639,0:17:14.839
+Par exemple l'E23 qui a l’air lisse, convexe dans la partie centrale.
+
+0:17:14.640,0:17:24.819
+Puis, comme j’ai choisi une plutôt jolie/douce, je vais aussi choisir une bizarre, qui se déhanche. 
+
+0:17:25.199,0:17:36.360
+Mais comme je l'ai dit, commençons par une version simple. Tout est ok pour le moment ? Personne n'écrit dans le chat.
+
+0:17:36.720,0:17:40.559
+Sean a juste posé quelques questions. Donc jusqu'à présent nous sommes
+
+0:17:40.559,0:17:48.480
+tous à bord ou j'ai perdu certains d'entre vous ? Non ?
+
+0:17:48.480,0:17:58.580
+[Etudiant : donc cette fonction carrée est Y[23] et l'axe des x montre l’évolution quand vous faites varier z. Vous allez évaluer E(y23,z)]
+
+0:17:59.580,0:18:04.039
+Oui, c’est E23 que je vous montre en ce moment.
+
+0:18:04.080,0:18:09.760
+[Etudiant : super, je comprends bien] Ok, ok, c'est fantastique.
+
+0:18:09.760,0:18:14.080
+Donc regardons ce premier exemple sur cette fonction en forme de u.
+
+0:18:14.080,0:18:19.760
+Donc comment est-ce que cette forme de u arrive ?
+
+0:18:19.760,0:18:26.320
+Ceci est la configuration actuelle. Nous avons y’ qui est le 23ème
+
+0:18:26.320,0:18:35.360
+exemple de mon ensemble d’entraînement. Symbolisé ici par ce x vert.
+
+0:18:35.360,0:18:43.320
+Quand je commence avec z = 0, il s'avère en fait que z = 0 correspond à cet endroit.
+
+0:18:43.840,0:18:50.400
+Donc si j'envoie z = 0 à l'intérieur du décodeur je vais
+
+0:18:50.400,0:18:58.880
+obtenir un point ici. Pourquoi cela ? Car le w1 que nous venons de générer aléatoirement, est un nombre négatif.
+
+0:18:58.880,0:19:06.440
+Donc cette taille ici de 0 à là, ce point de là à là est mon w1.
+
+0:19:06.440,0:19:10.000
+Et le w2 quant à lui est un nombre positif.
+
+0:19:10.000,0:19:17.200
+Donc chaque fois que z = 0, vous avez que le cosinus de 0 est égal à 1, donc cela
+
+0:19:17.200,0:19:21.440
+devient 1 multiplié par un nombre négatif. Je descends donc ici.
+
+0:19:21.440,0:19:28.360
+Et sinus de 0 est égal à 0. Donc vous êtes sur l’axe des x.
+
+0:19:28.400,0:19:32.080
+Donc par ici ce sera mon premier point.
+
+0:19:32.080,0:19:36.360
+A quelle distance se trouve ce point du x vert ?
+
+0:19:36.360,0:19:41.840
+Comptons : 1, 2, 3, 4, 5, 6, 7 boîtes.
+
+0:19:41.840,0:19:51.480
+Deux boites valent 1. Donc 7 boites donnent 3,5.
+
+0:19:51.520,0:19:57.440
+Donc, si je compte correctement : 1, 2, 3, 3,5.  Donc la distance entre
+
+0:19:57.440,0:20:02.720
+ce point ici et la croix verte ici est d’environ 3,5.
+
+0:20:02.720,0:20:07.919
+Maintenant si vous prenez 3,5 et le mettez au carré, vous obtenez
+
+0:20:07.919,0:20:11.919
+grossièrement 12.  Et c'est pour ça que nous en arrivons à ce point ici.
+
+0:20:11.919,0:20:17.039
+Si vous ne me faites pas confiance, sortez une calculatrice et vérifier le carré de 3,5 [12.25].
+
+0:20:17.039,0:20:23.280
+C'est pourquoi nous commençons à cet endroit ici, à 12.
+
+0:20:23.280,0:20:30.880
+Nous continuons à augmenter z et nous passons de 0 à π/2, nous nous retrouvons à cet endroit, ici.
+
+0:20:30.880,0:20:36.000
+Puis en continuant jusqu'à π, vous vous retrouver à cet endroit ici.
+
+0:20:36.000,0:20:42.480
+Comme vous pouvez le dire, π est à une case de cette croix verte.
+
+0:20:42.480,0:20:51.100
+Donc une case est 0,5. 0,5 au carré est 0,25.
+
+0:20:51.159,0:20:55.840
+Donc la hauteur de cette courbe rouge 
+
+0:20:55.840,0:21:02.640
+à cet endroit, est de 0,25. Très proche de 0.
+
+0:21:02.640,0:21:06.559
+Puis nous continuons à augmenter z et allons à 3,5π.
+
+0:21:06.559,0:21:12.159
+Puis vous continuez à monter jusqu'à 2π.
+
+0:21:12.159,0:21:14.880
+Nous allons essentiellement nous rendre au même endroit
+
+0:21:14.880,0:21:19.760
+où nous avons commencé. Et si vous continuez, vous allez répéter :
+
+0:21:19.760,0:21:23.919
+ça va aller de haut en bas, de bas en haut, de haut en bas.
+
+0:21:23.919,0:21:28.159
+Cela a l'air plutôt ok. Je pense. Non ? Pas de trucs dingues.
+
+0:21:28.159,0:21:32.000
+Mais voyons l'autre qui est un peu tordue. Sue se passe t’il ici ?
+
+0:21:32.000,0:21:36.720
+Au lieu d'utiliser Y[23], nous allons utiliser maintenant Y[10].
+
+0:21:36.720,0:21:40.480
+Cette chose ressemblant à la signature de Yann.
+
+0:21:40.480,0:21:54.000
+Donc que se passe t’il ici ? Donc dans ce cas le y’ sélectionné dans tous les y possibles, est celui-ci ici. La croix en haut ici.
+
+0:21:54.000,0:21:58.080
+Et encore une fois, comme je vous l'ai déjà dit, à chaque fois que z
+
+0:21:58.080,0:22:01.440
+est égal à 0, nous commençons à cet endroit, ici. 
+
+0:22:01.440,0:22:04.480
+Donc si vous avez compris ce dont je parle, nous allons maintenant
+
+0:22:04.480,0:22:07.760
+faire un exercice pour que vous me répondiez.
+
+0:22:07.760,0:22:13.679
+Pouvez-vous me dire quelle est la distance entre cet endroit ici et la croix ici ?
+
+0:22:13.679,0:22:17.120
+Donc une question pour les gens à la maison.
+
+0:22:17.120,0:22:24.840
+Quelqu'un peut-il me dire quelle est la longueur de ce segment que je viens de dessiner ?
+
+0:22:24.840,0:22:31.760
+[Chat : 1,5 fois 1,4.   1,4 étant la racine carrée de 2]
+
+0:22:31.760,0:22:37.520
+Oui, c’est correct. Si vous mettez au carré
+
+0:22:37.520,0:22:43.840
+vous allez avoir quoi ? 1,5 fois 1,5 fois 2.
+
+0:22:43.840,0:22:55.000
+[Alfredo détaille les calculs pour montrer que 1,5 fois 1,5 fois 2 vaut 4,5]
+
+0:22:55.760,0:23:05.915
+Donc nous pouvons déterminer que mon énergie initiale, qui est la longueur carrée de ce segment, vaut 4,5.
+
+0:23:05.919,0:23:10.000
+Ce qui correspond exactement à cette valeur initiale ici.
+
+0:23:10.000,0:23:16.640
+Donc ce point ici c’est 4,5.
+
+0:23:16.880,0:23:27.159
+[Etudiant : pouvez-vous répéter pourquoi vous savez que z = 0 correspond au point le plus à gauche ?]
+
+0:23:27.159,0:23:32.799
+Oui. Je le sais car j'ai vérifié le code.
+
+0:23:32.799,0:23:47.840
+Je sais que mon w1 est égal à quelque chose comme -1.5. 
+
+0:23:47.840,0:23:51.840
+Puis nous avons w2.
+
+0:24:01.039,0:24:04.159
+Je dessine avec le touchpad, c'est fou.
+
+0:24:04.159,0:24:10.880
+Il vaut 0,3 ou 0,4, quelque chose comme ça.
+
+0:24:11.200,0:24:15.600
+Disons 0,4. Cela ressemble à 1 mais c’est un 4.
+
+0:24:17.520,0:24:22.720
+Croyez-moi c'est un 4. Quand on va à π/2,
+
+0:24:22.720,0:24:28.720
+nous sommes à peu près à une unité de ce point. Donc 1 au carré c’est 1.
+
+0:24:28.720,0:24:32.559
+Je veux dire, quelque chose d'à peu près égal à 1.
+
+0:24:32.559,0:24:36.600
+Son carré sera toujours vers là. Donc cette hauteur par ici va être 1.
+
+0:24:36.600,0:24:40.000
+Puis nous grimpons jusqu'à cet endroit.
+
+0:24:400.000,0:24:51.120
+Et à cet endroit par ici, nous devrions fondamentalement obtenir le même point ici.
+
+0:24:51.120,0:24:54.400
+Donc nous allons obtenir une valeur similaire un peu plus petite.
+
+0:24:54.400,0:24:57.600
+Puis que se passe-t-il ici ? Quand on passe 
+
+0:24:57.600,0:25:01.720
+à 1,5π, nous sommes en fait à cet endroit, ici. 
+
+0:25:02.720,0:25:06.000
+Et nous avons un autre minimum. Que se passe-t-il ? En gros vous avez
+
+0:25:06.000,0:25:10.559
+ce point qui est plus proche de ma croix verte qu’un
+
+0:25:10.559,0:25:14.320
+point par ici. Donc dans ce cas,
+
+0:25:14.320,0:25:17.840
+cette fonction ici, cette énergie, a un minimum local
+
+0:25:17.840,0:25:23.520
+à cet endroit, à 1,5π ici.
+
+0:25:23.520,0:25:24.500
+Très bien, cool... Revenons à la flèche.
+
+0:25:27.500,0:25:31.440
+Donc nous avons déterminé que cette hauteur est de 4,5,
+
+0:25:31.440,0:25:36.000
+celui-ci 1, et que cette quelque est disons comme 2² donc 4.
+
+0:25:36.000,0:25:43.760
+Ok donc que se passe t’il maintenant ? Oh le trait est toujours là. Ok, nettoyé.
+
+0:25:43.760,0:25:51.840
+Ok l’énergie libre. Donc qu’est-ce que c’est ? Nous allons le découvrir tout de suite.
+
+0:25:51.840,0:25:58.320
+Donc l'énergie libre… En fait c'est la température limite 0 de l’énergie libre.
+
+0:25:58.320,0:26:04.400
+C’est la valeur minimale de cette fonction E par rapport à z.
+
+0:26:04.480,0:26:15.200
+Donc nous pouvons calculer ce z^check comme l’argmin E(y,z).
+
+0:26:15.520,0:26:21.039
+Pourquoi le check [✓, un caron] ? Car il pointe vers le bas.
+
+0:26:21.039,0:26:26.320
+Donc chaque fois que je minimise mon énergie, je trouve l'endroit qui est
+
+0:26:26.320,0:26:29.279
+le plus bas et c'est pourquoi je mets le check.
+
+0:26:29.279,0:26:40.840
+Cela signifie que z est l'endroit où l'énergie est la plus basse. Et comment pouvons-nous trouver ce z ?
+
+0:26:40.880,0:26:45.320
+Donc si z est discret… disons que nous avons des K-means,
+
+0:26:45.320,0:26:51.520
+nous pouvons faire une recherche exhaustive, nous pouvons vérifier chaque z que nous avons.
+
+0:26:51.520,0:26:01.120
+Autrement, nous pouvons utiliser des techniques à base de gradient telles que la descente de gradient.
+
+0:27:02.080,0:27:05.760
+Prêtez attention au fait que je n'ai pas dit descente de gradient stochastique.
+
+0:27:05.760,0:27:09.840
+Car ici nous ne faisons rien de stochastique.
+
+0:27:09.840,0:27:15.760
+E est une fonction dont nous savons tout. Quand nous faisons une descente de gradient stochastique,
+
+0:27:15.760,0:27:19.760
+nous minimisons une fonction de perte s’exprimant sous la forme d'une
+
+0:27:19.760,0:27:28.000
+moyenne de ces fonctions de perte d'échantillon. Ici à la place nous minimisons cette valeur spécifique de E.
+
+0:27:28.320,0:27:32.000
+Il n’y a pas de moyenne, ce n'est donc pas stochastique.
+
+0:27:32.000,0:27:35.279
+Vous pouvez donc utiliser des algorithmes tels que le gradient conjugué
+
+0:27:35.279,0:27:42.480
+line search, LBFGS, etc. Donc regardons et comprenons qu’est-ce que
+
+0:27:42.480,0:27:45.919
+cette énergie libre, comment cela fonctionne.
+
+0:27:45.919,0:27:51.440
+Etant donné nous avons défini ce z^check, cette énergie libre,
+
+0:27:51.440,0:27:54.960
+la limite en zéro pour l'énergie libre, est simplement 
+
+0:27:54.960,0:27:58.000
+cette énergie E calculée à l'emplacement de mon z^check.
+
+0:27:58.000,0:28:09.279
+Donc visualisons ici E10.
+
+0:28:09.760,0:28:16.000
+J'initialise ma variable latente z tilde, en orange, avec certaine valeur
+
+0:28:16.000,0:28:20.640
+et je vais ensuite appliquer une méthode à base de gradient pour minimiser.
+
+0:28:20.640,0:28:25.360
+Donc je me retrouve dans l'emplacement bleu qui est mon z^check.
+
+0:28:25.360,0:28:28.720
+C’est bleu car qu'il fait froid. Donc c'est bas.
+
+0:28:28.720,0:28:32.240
+Je pense généralement à cette énergie comme une température.
+
+0:28:32.240,0:28:40.360
+Je veux dire que si vous multipliez par la constante de Boltzmann kB, vous avez une certaine énergie
+
+0:28:40.880,0:28:45.440
+Donc l'énergie et la température sont très étroitement liées.
+
+0:28:45.440,0:28:49.840
+Donc j'utilise le bleu pour vous montrer que c'est bas/froid.
+
+0:28:49.840,0:28:59.500
+Donc à cet endroit du z^check, on atteint le minimum de cette énergie.
+
+0:28:59.520,0:29:05.039
+Et c’est l'énergie libre, la limite en zéro pour l'énergie libre. Cool.
+
+0:29:05.200,0:29:10.960
+[Etudiant : donc en pratique cela dépend de l'initialisation ?]
+
+0:29:10.960,0:29:15.679
+Oh oui, oh oui.
+
+0:29:15.679,0:29:25.440
+L'initialisation… Donc à coup sûr votre algorithme va se planter en fonction de l'initialisation. 
+
+0:29:25.440,0:29:31.120
+Je pourrai vous montrer plus tard que LBFGS donne le mauvais minimum
+
+0:29:31.120,0:29:36.320
+mais néanmoins l'énergie libre est le minimum global.
+
+0:29:36.320,0:29:42.000
+Donc la valeur minimale de E est l'énergie libre.
+
+0:29:42.000,0:29:48.680
+Si nous n'y arrivons pas, car ne savons pas comment y arriver, c'est un problème différent.
+
+0:29:48.720,0:29:54.399
+Donc cela ne dépend pas de l'initialisation. L'initialisation donne à
+
+0:29:54.399,0:30:01.000
+votre algorithme plus ou moins de chances de converger vers la bonne solution.
+
+0:30:01.000,0:30:10.480
+Que se passe-t-il ici ? Les points bleus ici sont mes points de la distribution d’entraînement.
+
+0:30:10.480,0:30:22.200
+Le tilde est échantillonné à partir de mon modèle. Mon y’ est celui que j’ai choisi
+
+0:30:22.559,0:30:26.799
+Donc c'est mon 10ème point dans l’ensemble d’entraînement.
+
+0:30:26.799,0:30:36.559
+Puis si j’envoie mon z^tilde, qui est la valeur par laquelle j’ai initialisé z, dans le décodeur que je vous ai montré avant,
+
+0:30:36.559,0:30:41.760
+Cela va générer ce point ici, cet emplacement ici.
+
+0:30:41.760,0:30:46.000
+Je peux alors exécuter un algorithme de minimisation
+
+0:30:46.000,0:30:50.960
+et vous vous retrouvez à cet endroit, l'emplacement bleu.
+
+0:30:50.960,0:30:54.399
+Le x bleu va être la version décodée du z^check
+
+0:30:54.399,0:31:01.440
+qui est l'objet le plus proche de ce x vert ici.
+
+0:31:01.440,0:31:08.960
+Donc pourquoi faisons-nous ces choses ? Comment pouvons-nous utiliser ce modèle ? A quoi sert ce modèle ?
+
+0:31:08.960,0:31:13.200
+Si nous avons quelqu'un qui a entraîné ce modèle et nous a donné ce y,
+
+0:31:13.200,0:31:20.960
+nous pouvons potentiellement trouver ce qui est le plus proche de la valeur
+
+0:31:20.960,0:31:26.559
+dans notre ensemble de toutes les valeurs possibles nous pouvons générer.
+
+0:31:26.559,0:31:32.000
+Qui est la plus proche de votre échantillon. Nous pouvons utiliser ça 
+
+0:31:32.000,0:31:36.799
+pour effectuer du débruitage par exemple. Donc si j'ai une image qui est 
+
+0:31:36.799,0:31:41.360
+corrompue, qui est éloignée de ma surface, de la surface de mon modèle,
+
+0:31:41.360,0:31:45.120
+alors je peux demander à mon modèle : « Hé, peux-tu me dire qu’elle est
+
+0:31:45.120,0:31:51.919
+la latente qui va donner la version décodée, l’élément décodé ici
+
+0:31:51.919,0:31:56.320
+qui est le plus proche possible de l'image que je regarde ? ».
+
+0:31:56.320,0:32:04.480
+Potentiellement nous pourrions juste choisir cette valeur ici, comme la version nettoyée de mon entrée corrompue.
+
+0:32:04.559,0:32:10.799
+Quelle est l'énergie libre maintenant ?
+
+0:32:10.799,0:32:16.559
+C'est simplement la distance carrée entre le point vert et le bleu x.
+
+0:32:16.559,0:32:24.399
+Donc si vous prenez ces deux boites, ce qui vaut 1, et que vous mettez au carré 1, 1² donne à nouveau 1.
+
+0:32:24.559,0:32:33.279
+C’est donc l'énergie libre correspondant à ce x ici. Donc chaque x, chaque emplacement ici dans la surface d’entrainement,
+
+0:32:33.279,0:32:44.240
+aura une l'énergie libre qui détermine ce qu’est la distance la plus proche par rapport à la surface.
+
+0:32:44.559,0:32:50.799
+Donc vous pouvez voir dans ce cas que… Disons que notre modèle est bien entrainé.
+
+0:32:50.799,0:32:54.159
+On peut dire que cet endroit, ici,
+
+0:32:54.159,0:32:58.000
+a une énergie libre beaucoup plus faible qu'un point par ici.
+
+0:32:58.000,0:33:06.600
+Donc ces points pourraient être compatible avec ce sur quoi ce modèle a été entraîné.
+
+0:33:06.600,0:33:11.200
+Ou comme nous montrons dans ce cas, ce modèle n'est certainement pas bien entraîné.
+
+0:33:11.200,0:33:14.880
+[Chat : que voulez-vous dire par bien entraîné ?]
+
+0:33:14.880,0:33:24.440
+Dans ce cas ici, pour un aspect pédagogique, je n'ai pas été complètement entraîné ce modèle de sorte qu'il y ait des erreurs.
+
+0:33:24.440,0:33:33.120
+Dans l'idéal, ces points violets devraient correspondre exactement à ces points bleus.
+
+0:33:33.120,0:33:40.480
+Ce serait un modèle bien entraîné. C’est à dire qui capte toutes les dépendances entre ces variables y.
+
+0:33:40.480,0:33:44.799
+Encore une fois, c’est une section transversale de cette corne.
+
+0:33:44.799,0:33:51.120
+C’est un modèle pas bien entraîné, ce qui signifie que j'ai arrêté l’entraînement après quelques époques.
+
+0:33:51.120,0:33:55.799
+Donc le modèle a essayé d'y arriver mais n'a pas encore réussi.
+
+0:33:55.799,0:34:00.480
+Nous pouvons réfléchir à cela ou nous pouvons réfléchir à ceci est un
+
+0:34:00.480,0:34:05.039
+modèle bien entraîné. Donc il apprend réellement correctement. Puis les points ici
+
+0:34:05.039,0:34:08.879
+sont beaucoup plus loin. Donc en calculant l'énergie libre de ces
+
+0:34:08.879,0:34:14.000
+points, vous pouvez avoir comme une mesure de la distance qui les sépare 
+
+0:34:14.000,0:34:19.359
+la distribution de l'apprentissage. Donc passons à autre chose.
+
+0:34:19.359,0:34:22.320
+Regardez maintenant Y[23].
+
+0:34:22.320,0:34:28.639
+Donc, dans ce cas, c’est beaucoup plus facile. On a des minimums et maximums globaux.
+
+0:34:28.639,0:34:32.079
+Oh, il y a une question.
+
+S'il s'agissait d'un débruitage et que le modèle était entraîné au point où les points sarcelles étaient au-dessus des points bleus, ne ferions-nous pas un débruitage ?
+
+0:34:32.079,0:34:37.200
+[Chat : s'il s'agissait d'un débruitage et que le modèle était entraîné au point où
+
+0:34:37.200,0:34:41.280
+où les points sarcelles étaient au-dessus des points bleus,
+
+0:34:41.280,0:34:46.879
+ne ferions-nous pas un débruitage ?] Donc de ce que je comprends :
+
+0:34:48.960,0:34:54.560
+si le point tilde est éloigné du violet.
+
+0:34:54.560,0:34:59.280
+Cela signifierait que le modèle n’est pas bien entraîné.
+
+0:34:59.280,0:35:07.119
+Si ces points bleus sont comme ici et tous proches d'un certain point par ici,
+
+0:35:07.520,0:35:11.599
+cela signifie que ce modèle est mauvais, mal entraîné.
+
+0:35:11.599,0:35:15.839
+Encore une fois, aujourd'hui, nous ne parlons pas d’entraînement. C'est simplement ce qui
+
+0:35:15.839,0:35:19.040
+nous a été donné et nous jouons avec ce que nous avons.
+
+0:35:19.040,0:35:23.759
+Nous essayons de comprendre ce qu'est cette énergie et ce que l’énergie libre signifie.
+
+0:35:23.759,0:35:28.720
+Donc c’est comment utiliser ce truc plutôt que l’entraînement.
+
+0:35:28.720,0:35:31.520
+L’entraînement ce sera la prochaine fois.
+
+0:35:31.520,0:35:36.160
+C’est suffisant de comprendre comment utiliser ça. Croyez-moi.
+
+0:35:36.160,0:35:41.000
+Alors voyons ce qui se passe avec cette fonction en forme de U.
+
+0:35:41.119,0:35:49.680
+Elle provient de l'exemple ici. Donc ici nous initialisons à la croix
+
+0:35:49.680,0:35:55.680
+orange et ensuite en exécutant une méthode basée sur le gradient ou un autre
+
+0:35:55.680,0:36:00.640
+processus de minimisation, on trouve ces x bleus qui sont mon z^check.
+
+0:36:00.640,0:36:08.079
+Donc on passe du z tilde qui est la valeur d’initialisation de ma latente à ce z^check qui est la
+
+0:36:08.400,0:36:15.040
+valeur à laquelle je trouve le minimum pour mon énergie.
+
+0:36:15.040,0:36:19.040
+Comme c'est périodique, je vais vous montrer juste la prochaine répétition.
+
+0:36:19.040,0:36:25.119
+Je n’encombre pas trop le tableau. Cela vient de cette configuration.
+
+0:36:25.119,0:36:28.720
+Nous commençons par ces points d’entraînement.
+
+0:36:28.720,0:36:32.480
+Ce sont des points que je viens d’échantillonner de mon modèle.
+
+0:36:32.480,0:36:36.720
+Mon pic est ce vert ici.
+
+0:36:36.720,0:36:40.200
+Et dans ce cas, je peux peut-être dire que le modèle…
+
+0:36:40.200,0:36:43.560
+Nous initialisons la latente avec l'orange.
+
+0:36:43.560,0:36:48.480
+et puis il est allé un peu trop loin. Je pense qu'il n'a pas choisi le meilleur endroit.
+
+0:36:48.480,0:36:54.160
+Donc c'est un peu comme s’il dépassait un peu.
+
+0:36:54.160,0:37:03.280
+L’énergie libre de cet endroit ici, est de 0,25. 0,5 au carré.
+
+
+0:37:03.520,0:37:07.520
+Coo, cool, cool. Donc que reste-t-il à vous montrer ?
+
+0:37:07.520,0:37:11.040
+Encore quelques petites choses, mais nous avons presque terminé.
+
+0:37:11.040,0:37:23.160
+Puis je regarderais toutes vos questions car je pense que vous en avez. J’ai des questions pour ma part.
+
+0:37:28.400,0:37:36.280
+Donc calculons l'énergie libre pour chaque endroit que je vous montre dans cette grille.
+
+0:37:36.640,0:37:41.040
+Qu’est ce que cela signifie le calcul de l'énergie libre pour chaque endroit ?
+
+0:37:41.040,0:37:51.440
+Donc pour que les choses soient claires, je vais me répéter car j'aime écouter ou parler. J'aime parler. [rires]
+
+0:37:51.440,0:37:57.599
+Donc sélectionnons en vert ici. Disons que je choisis cet échantillon ici
+
+0:37:57.599,0:38:04.079
+comme ma première localisation. Donc étant donné cette localisation là…
+
+0:38:04.079,0:38:10.680
+prenons du orange… il n’y pas l’orange. Désolé. Prenons du rouge alors. 
+
+0:38:10.680,0:38:22.880
+Donc alors disons que j'initialise ma variable latente telle que le g, la version décodée, de z tilde est ce point par ici
+
+0:38:22.880,0:38:30.320
+Puis nous exécutons notre processus de minimisation pour effectuer une inférence. Pour connaître le z^check.
+
+0:38:30.320,0:38:35.119
+Donc chaque fois que nous trouvons z^check, le processus est appelé inférence.
+
+0:38:35.119,0:38:44.000
+Etant donné une énergie, étant donné une localisation y, je fais une inférence pour savoir
+
+0:38:44.320,0:38:49.920
+quelle est la variable latente, variable manquante, la plus probable qui a généré ce point-là.
+
+0:38:49.920,0:38:54.079
+Donc l’inférence signifie que nous faisons une minimisation 
+
+0:38:54.079,0:39:03.440
+et nous nous déplaçons autour de notre surface de donnée jusqu'à ce que j'arrive à cet endroit.
+
+0:39:03.440,0:39:11.119
+Quel est cette localisation là-bas ? C’est celle qui est la plus proche de mon échantillon y que j'ai choisi.
+
+0:39:11.680,0:39:21.720
+Quelle est mon énergie libre ? C’est simplement la distance au carrée entre ce gars vert et le rouge.
+
+0:39:21.720,0:39:28.480
+Donc ce segment ici, au carré, est l'énergie libre de ce point ici.
+
+0:39:28.480,0:39:34.640
+Une question pour vous : comment l'énergie libre du point en haut à gauche
+
+0:39:34.640,0:39:41.210
+se compare à l'énergie du point que j’entoure en jaune ici.
+
+0:39:46.800,0:39:50.480
+Lequel est le plus grand ? Lequel est le plus petit ?
+
+0:39:50.480,0:39:54.720
+Et où se trouve mon z^check pour le deuxième exemple ?
+
+0:39:54.720,0:39:59.839
+[Chat : le vert est plus grand] Oui en effet car cette distance au carrée 
+
+0:39:59.839,0:40:07.200
+est beaucoup plus grande que cette distance. De façon similaire,
+
+0:40:07.200,0:40:10.960
+si nous initialisons avec de la chance et exécutons une descente comme
+
+0:40:10.960,0:40:15.520
+les méthodes basées sur la descente de gradient, nous pouvons nous retrouver dans un endroit ici.
+
+0:40:15.520,0:40:21.359
+Donc l'énergie libre est la distance carrée entre ce point ici
+
+0:40:21.359,0:40:25.599
+et ce point-là. Donc ce point est définitivement beaucoup plus éloigné,
+
+0:40:25.599,0:40:29.040
+l'énergie libre est beaucoup plus grande que pour ce point.
+
+0:40:29.040,0:40:32.880
+Une autre question que quelqu'un pourrait poser est :
+
+0:40:32.880,0:40:40.960
+à quelle distance se trouve le point vert de ma distribution ? A quelle distance se trouve le point vert de ma distribution apprise ?  
+
+0:40:41.000,0:40:46.720
+La distribution apprise est représentée ici par les points bleus. Donc vous pouvez dire
+
+0:40:46.720,0:40:50.400
+que ce point en haut à gauche, va avoir une énergie plus élevée.
+
+0:40:50.400,0:41:00.200
+Il est le plus éloigné donc moins compatible que par rapport à l'autre gars. Ok, donc on a presque fini.
+
+0:41:00.480,0:41:06.160
+Pour faire un genre d’exercice, faites attention à ces cinq valeurs.
+
+0:41:06.160,0:41:13.400
+Donc je choisis cette ligne juste en dessous de l'axe des x et prends toutes les valeurs espacées de deux points.
+
+0:41:14.319,0:41:19.680
+Donc je vais tracer ces fonctions d’énergie.
+
+0:41:19.680,0:41:23.520
+Elles sont très jolies.
+
+0:41:23.960,0:41:33.520
+Pour la bleue, comme vous pouviez vous y attendre, nous montons jusqu'à 20 et descendons jusqu’à 2,5 environ.
+
+0:41:33.520,0:41:40.720
+20 se trouvera à cet endroit. La distance au carrée entre ce point et ce point plus loin ici.
+
+0:41:40.960,0:41:49.599
+Et 2,5 au carré est cette distance au carrée. De la même façon vous avez
+
+0:41:49.599,0:41:55.520
+une fonction d’énergie pour la rouge, pour la violette, la verte et l’orange.
+
+0:41:55.520,0:41:59.599
+Étant donné que je calcule toutes ces valeurs pour l'énergie,
+
+0:41:59.599,0:42:03.760
+je peux calculer à présent quelle est l'énergie libre. Donc l'énergie libre
+
+0:42:03.760,0:42:09.280
+au lieu d'être une fonction, est une valeur quand je choisis un endroit précis.
+
+0:42:09.280,0:42:12.780
+Donc ce n'est plus une fonction de la latente.
+
+0:42:12.780,0:42:21.000
+A chaque fois que nous calculons l'énergie libre, la latente disparaît et j'obtiens z^check qui est la latente optimale.
+
+0:42:21.040,0:42:26.000
+La latente qui est le plus susceptible de me donner ce point.
+
+0:42:26.000,0:42:32.079
+Donc ici nous avons que z^check pour la courbe bleue arrive ici.
+
+0:42:32.079,0:42:39.900
+De même z^check pour la verte, l’orange, la violette et la rouge se produisent dans ces endroits.
+
+0:42:39.920,0:42:44.480
+Il est certain que nous aurions pu nous retrouver pris dans un minimum local.
+
+0:42:44.480,0:42:51.920
+C’est certainement un des pièges lorsque vous utilisez certaines méthodes basées sur les gradients.
+
+0:42:51.920,0:42:56.720
+Donc une question maintenant pour vous.
+
+0:42:56.720,0:43:03.720
+J'enlève tout. Qu’est-ce que F∞ ? Combien de dimensions a ce truc ?
+
+0:43:03.720,0:43:10.600
+Quelqu'un peut-il me le rappeler ? Quelqu'un peut-il me dire quel est le domaine et l'image de cette fonction ?
+
+0:43:10.640,0:43:15.359
+Où vit F∞ ?
+
+0:43:17.800,0:43:24.640
+Quelqu’un peut répondre ? Est-ce que tout le monde écoute ? 
+
+0:43:25.280,0:43:31.680
+[Chat : y est sur ℝ24].
+
+0:43:31.680,0:43:38.079
+Il y a juste un ℝ, je ne sais pas ce que ℝ veut dire.
+
+0:43:38.079,0:43:44.880
+Y a 24 éléments. Chaque élément dans Y sont bidimensionnels.
+
+0:43:44.880,0:43:52.160
+Donc y est une matrice mais je ne demande pas Y. Je demande F∞.
+
+0:43:52.160,0:43:57.599
+Donc F∞ est… Quelqu'un l’a mentionné ici dans le chat,
+
+0:43:57.599,0:44:04.920
+c’est une valeur réelle. Dans notre cas, c’est une valeur non négative. Car c'est une somme des carrées.
+
+0:44:05.359,0:44:08.880
+Et quel est le domaine de F ?
+
+0:44:19.280,0:44:26.160
+Le domaine est essentiellement l'endroit où y appartient.
+
+0:44:26.160,0:44:30.960
+y est un vecteur en deux dimensions. Donc ça va être ℝ2.
+
+0:44:30.960,0:44:36.520
+Ces F sont des valeurs scalaires. Je vais représenter les différentes intensités de ces valeurs avec cette barre de couleur.
+
+0:44:36.560,0:44:46.040
+En violet très foncé, c’est l’énergie libre égale à 0.
+
+0:44:46.720,0:44:55.160
+Puis en bleu je vais représenter la température pour la limite vers zéro, énergie libre, égale à 1.
+
+0:44:55.160,0:45:00.880
+Puis tout ce qui est supérieur ou égal à 2 est en jaune.
+
+0:45:00.880,0:45:06.560
+Voici donc à quoi ressemble cette grille.
+
+0:45:06.560,0:45:17.119
+Chaque endroit de cette grille ici, je vous ai montré avant les points verts, ont une énergie libre qui est ici représentée par cette couleur.
+
+0:45:17.119,0:45:26.480
+A cet endroit, ici en bas, on peut voir que c’est jaune, ce qui signifie qu’il a une énergie libre qui est égale ou supérieure à 2.
+
+0:45:26.480,0:45:34.280
+De plus, ces flèches qui pointent sont les gradients. Donc elles
+
+0:45:34.319,0:45:39.920
+pointent dans la direction de l'ascension maximale. A mesure que nous nous rapprochons
+
+0:45:39.920,0:45:43.440
+de cette région ici, vous obtenez des couleurs.
+
+0:45:43.440,0:45:53.200
+Et ici vous pouvez voir que l'énergie libre est de plus en plus basse jusqu'à ce que nous atteignions l'endroit où cette reconstruction se produit.
+
+0:45:53.599,0:45:57.599
+C’est l'endroit, la région où mon énergie libre est nulle.
+
+0:45:57.599,0:46:08.400
+Quand on entraîne ce modèle, on essaie d'obtenir ce niveau d'énergie zéro pour « matcher » l'emplacement de ces points bleus.
+
+0:46:08.400,0:46:12.400
+Comme vous pouvez le constater, ce modèle est très mal entraîné.
+
+0:46:12.400,0:46:20.640
+Cette surface d’énergie ne correspond pas bien à mon point d'entraînement. Il s'en rapproche mais ce n'est pas encore ça.
+
+0:46:20.640,0:46:32.240
+Donc la prochaine fois, nous verrons comment étirer cette énergie pour que cela s’adapte mieux à ces points bleus.
+
+0:46:32.240,0:46:37.119
+[Chat : pourquoi la surface d’énergie est-elle une valeur unique ?]
+
+0:46:37.119,0:46:43.280
+Donc la surface d'énergie est la valeur de F∞.
+
+0:46:43.280,0:46:47.119
+et F∞  est le minimum de mon énergie.
+
+0:46:47.119,0:46:54.800
+Donc l’énergie E est une fonction sur tous les latentes possibles.
+
+0:46:54.800,0:47:01.000
+Mais étant donné que nous avons cette fonction, nous allons trouver quelle est la valeur minimale que cette énergie peut prendre.
+
+0:47:01.000,0:47:10.560
+Cette valeur minimale est la température de la limite vers zéro de l'énergie libre.
+
+0:47:10.560,0:47:16.880
+Qui est F∞. Donc E(y,z) est une fonction de y et z
+
+0:47:16.880,0:47:21.200
+mais chaque fois que nous enlevons le z avec la minimisation,
+
+0:47:21.200,0:47:25.359
+nous obtenons ce F qui est une fonction de y.
+
+0:47:25.359,0:47:31.760
+Donc chaque fois que je me déplace dans l'espace y ici, nous avons y1 et y2 les deux composantes,
+
+0:47:31.760,0:47:38.440
+vous avez F qui est savoir plus grande que 2, plus grand que 2, etc. 
+
+0:47:38.440,0:47:42.400
+Puis 1,75  1,50 et ainsi de suite jusqu'à ce que nous obtenions
+
+0:47:42.400,0:47:46.160
+F à peu près égale à 0. Puis dans le milieu ça augmente un peu.
+
+0:47:46.160,0:47:54.700
+Peut-être que la prochaine fois je vous montrerai aussi ce tableau, en une version 3D qui tourne. Je n'ai pas eu le temps de la faire.
+
+0:47:54.720,0:47:57.500
+Ai-je répondu à votre question ?
+
+0:47:57.500,0:48:05.200
+Est-ce clair pourquoi la fonction d’énergie est une valeur unique ? C’est une valeur scalaire. Vous avez parlé d’unique, ai-je bien compris la question ?
+
+0:48:05.200,0:48:07.839
+[Chat : mais nous avons 24 y]
+
+0:48:11.520,0:48:18.000
+Les y sont ces points bleus. Les y que j’utilise actuellement sont là.
+
+0:48:18.000,0:48:24.160
+Donc il n’y en a pas 24. Il y en a… Laissez-moi agrandir pour les compter.
+
+0:48:24.160,0:48:41.119
+[Alfredo compte le nombre de points, il y en a 17 fois 25.]
+
+0:48:41.280,0:48:53.839
+Je ne sais pas combien font 17 fois 25. « Ok google » combien fait 17 fois 25 ? [L’enceinte ne répond pas] Elle n'écoute pas…
+
+0:48:53.960,0:49:00.400
+[L’enceinte répond] Ah ! 425. Donc actuellement nous avons 425 points.
+
+0:49:00.400,0:49:06.079
+Nous avons donc 425 fonctions d’énergie de quelle fonction de y ?
+
+0:49:06.079,0:49:11.200
+Etant donné que je choisis un y, j'ai une fonction d’énergie.
+
+0:49:11.200,0:49:16.200
+Ce sont des fonctions en z. Etant donné que vous choisissez la valeur minimale de
+
+0:49:16.200,0:49:20.839
+cette fonction d’énergie, c’est votre énergie libre pour un y spécifique.
+
+0:49:20.839,0:49:24.720
+Donc vous supprimez cette variable latente. Donc on a une façon possible
+
+0:49:24.720,0:49:31.040
+interne de dépenser notre surface. Donc vous voulez penser à ça comme…   
+
+0:49:31.040,0:49:35.280
+Vous avez votre pomme de terre, votre modèle.
+
+0:49:35.280,0:49:41.680
+Il pense à la forme sous laquelle sont distribuées les données et puis
+
+0:49:41.680,0:49:46.319
+votre variable latente vous permet de faire le tour de cette pomme de terre.
+
+0:49:46.319,0:49:49.760
+Donc maintenant si vous me demandez :
+
+0:49:49.760,0:49:54.480
+Oh ce point ici est-il sur la surface ou pas ? 
+
+0:49:54.480,0:49:58.400
+Si oui, je le sais en faisant le tour de ma surface et y arrivant.
+
+0:49:58.400,0:50:12.800
+Donc si l'énergie libre de ce point est nulle, cela signifie que le point sur lequel vous m'interrogez vit sur la surface que le modèle a apprise.
+
+0:50:12.800,0:50:16.720
+Si votre énergie libre n'est pas nulle, alors ce sera simplement égale à la distance quadratique euclidienne entre votre point et la surface.
+
+0:50:24.240,0:50:33.680
+J'ai bien répondu à la question. Oui, d'accord. D'autres questions ?
+
+0:50:33.680,0:50:43.119
+Ou tout est clair ? Ce truc je l'ai digéré ces 30 dernières heures, donc encore une fois, je n'ai peut-être pas fait un très bon travail.
+
+0:50:43.119,0:50:50.119
+[Chat : comment choisir une fonction pour représenter la surface des données ? 
+
+0:50:50.119,0:51:02.400
+Dans ce cas, il semble que nous ayons choisi une ellipse basée sur les données, mais quand est-il pour d'autres scénarios ?]
+
+0:51:02.400,0:51:10.160
+Absolument. Il y a de nombreuses recherches actuellement sur les architectures de réseau.
+
+0:51:10.160,0:51:14.319
+Oui ici nous avons choisi ça.
+
+0:51:14.319,0:51:18.559
+La prochaine fois, je vais essayer d’apprendre le niveau de compatibilité…
+
+0:51:18.559,0:51:22.559
+Essayer d'apprendre cette énergie, pour le triplet x, y, z.
+
+0:51:22.559,0:51:31.599
+Nous allons donc utiliser des réseaux neuronaux. Même avec le sinus et le cosinus, vous pouvez approximer d'une manière ou d'une autre avec quelques couches.
+
+0:51:31.599,0:51:34.319
+Donc au lieu d'avoir cette fonction g ici…
+
+0:51:34.319,0:51:43.440
+Au lieu d'avoir cette chose très simple, nous pouvons avoir plusieurs couches d'un réseau neuronal.
+
+0:51:43.440,0:51:47.920
+Donc vous pouvez toujours utiliser quelques couches d'un réseau
+
+0:51:47.920,0:51:53.280
+mais vous n'utiliserez pas le réseau pour faire de l’association vecteur à vecteur.
+
+0:51:53.280,0:51:59.599
+Vous pouvez utiliser un réseau pour associer un tas de vecteurs vers des scalaires.
+
+0:51:59.599,0:52:06.760
+Donc, un tas de vecteurs vers des scalaires est une façon de penser les choses à base d'énergie.
+
+0:52:06.800,0:52:13.280
+Car, encore une fois, disons que vous voulez traduire quelque chose d'une langue vers une autre.
+
+0:52:13.280,0:52:16.559
+J'ai donc une phrase, mais je peux la traduire
+
+0:52:16.559,0:52:20.240
+de différentes manières dans une autre langue. Donc comment entraîner ?
+
+0:52:20.240,0:52:24.079
+Vous ne pouvez pas vraiment dire : « je fais une softmax » car, tout d'abord
+
+0:52:24.079,0:52:29.520
+il y a un nombre infini de phrases, donc vous ne pouvez pas faire ça.
+
+0:52:29.520,0:52:33.280
+Et il peut y avoir de nombreuses traductions pouvant être associée correctement
+
+0:52:33.280,0:52:37.839
+à votre première phrase. Donc ce modèle à base d’énergie vous permet
+
+0:52:37.839,0:52:41.680
+d’avoir un  mécanisme de scorage, qui est l’énergie,
+
+0:52:41.680,0:52:46.720
+qui vous indique dans quelle mesure des points sont compatibles.
+
+0:52:46.720,0:52:50.880
+Donc ici x, y et z sont tous interchangeables.
+
+0:52:50.880,0:52:54.079
+Si on m'en donne un, je peux trouver les autres. Donc si j'ai l'énergie,
+
+0:52:54.079,0:52:58.559
+si mon modèle a appris l'énergie, je peux trouver x étant donné y,
+
+0:52:58.559,0:53:01.920
+je peux trouver y étant donné z, je peux trouver z étant donné x, je peux 
+
+0:53:01.920,0:53:08.480
+trouver toutes sortes de combinaisons. Je n’ai même pas besoin d’écrire x, y et z, je peux juste écrire tous les éléments.
+
+0:53:08.480,0:53:12.000
+Tant que mon modèle apprend ça. 
+
+0:53:12.000,0:53:16.480
+Il apprend toutes les interactions qui existent dans mes données.
+
+0:53:16.480,0:53:21.760
+C'est pour ça que Yann les aime tant et qu'ils sont super puissants.
+
+0:53:21.760,0:53:26.000
+Car ils ne font pas trop de suppositions, je pense.
+
+0:53:26.160,0:53:32.880
+J'ai répondu à votre question. Nous avons dépassé le temps imparti.
+
+0:53:32.880,0:53:38.079
+Je pense que cette leçon était plutôt bien. Je ne sais pas. A vous de me le dire car je ne sais pas vraiment.
+
+0:53:38.079,0:53:42.640
+J’espère que vous avez aimé. [Etudiant : oui, c'était génial]
+
+0:53:42.640,0:53:47.040
+Ok car les gens sont très silencieux aujourd'hui. Je voulais aussi faire un
+
+0:53:47.040,0:53:49.599
+notebook mais il est vraiment moche.
+
+0:53:49.599,0:53:54.500
+J'utilise le notebook pour faire de jolies visualisations mais le code est vraiment moche.
+
+0:53:54.500,0:54:01.000
+Peut-être la prochaine fois je pourrais vous partager une version de nettoyée du notebook pour un but pédagogique.
+
+0:54:01.440,0:54:07.599
+Surtout pour vous montrer ce réseau qui n'a pas d'entrée, n'a pas de
+
+0:54:07.599,0:54:10.720
+fonction « forward ». Ce qui est drôle.
+
+0:54:10.720,0:54:14.559
+Puis nous verrons peut-être comment apprendre l'énergie libre sans ce
+
+0:54:14.559,0:54:19.880
+Β qui va à l'infini et nous verrons comment entraîner.
+
+0:54:19.880,0:54:25.359
+Donc aujourd'hui encore une fois, nous avons juste…  Laissez-moi aller au début pour terminer.
+
+0:54:25.359,0:54:29.760
+Donc aujourd'hui nous parlons de l'inférence.
+
+0:54:29.760,0:54:33.440
+Nous faisons l’inférence en minimisant une fonction d’énergie.
+
+0:54:33.440,0:54:36.559
+L'apprentissage est un sujet dont nous allons parler la prochaine fois.
+
+0:54:36.559,0:54:39.280
+C'est deux sujets différents.
+
+0:54:39.280,0:54:43.520
+La prochaine fois, ça sera l'autre partie.
+
+0:54:43.520,0:54:45.760
+Il s'agissait ici de l’inférence pour les LV-EBMs.
+
+0:54:45.760,0:54:53.040
+Permettant de capturer, cette multi modalité de coexistence des choses.
+
+0:54:53.040,0:55:01.760
+Vous ne pouvez pas avoir simplement vecteur à vecteur. Vous avez un vers plusieurs options.
+
+0:55:01.760,0:55:06.400
+Et nous avons parlé de ce truc ici
+
+0:55:06.400,0:55:12.799
+et comment nous pouvons éventuellement essayer d'apprendre cette combinaison de x y.
+
+0:55:12.799,0:55:16.000
+Il y a une question.
+
+0:55:16.000,0:55:24.480
+[Chat : minimiser l'énergie par rapport à la surface d’entraînement signifie essentiellement débruiter ?]
+
+0:55:24.480,0:55:29.760
+Je pense que vous pouvez penser à ça de cette façon.
+
+0:55:29.760,0:55:35.040
+Donc la véritable surface… Cela dépend de qui est la véritable surface.
+
+0:55:35.040,0:55:40.079
+Si le modèle a appris la surface réelle, alors en minimisant l'énergie,
+
+0:55:40.079,0:55:45.000
+vous pouvez trouver quelle est la version débruitée de votre entrée.
+
+0:55:45.000,0:55:48.000
+Une autre option pour débruiter est :
+
+0:55:48.000,0:55:50.079
+si vous vous retrouvez ici,
+
+0:55:50.079,0:55:53.280
+vous pouvez calculer cette énergie et suivre le gradient. Puis ici vous
+
+0:55:53.280,0:55:56.960
+pouvez recalculer l'énergie et continuer à suivre le gradient.
+
+0:55:56.960,0:56:01.119
+Vous finissez là sur la surface. Donc vous pouvez faire de
+
+0:56:01.119,0:56:06.079
+petits pas pour pouvoir trouver où aller.
+
+0:56:06.079,0:56:15.520
+Ou vous pouvez utiliser le z^check pour savoir quelle est la meilleure approximation de votre point.
+
+0:56:15.520,0:56:17.839
+Ok donc c’est tout.
+
+0:56:21.280,0:56:23.520
+Merci pour l'écoute, passez une bonne soirée.
+
+0:56:23.520,0:56:27.200
+Je vous vois vendredi. N’hésitez pas à poser des questions à Yann à
+
+0:56:27.200,0:56:30.640
+propos de ce practinum, il a bien sur beaucoup aidé.
+
+0:56:30.640,0:56:34.000
+Passer une bonne nuit, bye bye.
+
+0:56:34.000,0:56:40.000
+Donc comment pouvez-vous tirer le meilleur parti de la leçon d’aujourd’hui ?
+
+0:56:40.000,0:56:44.400
+Compréhension. Si quelque chose n’est toujours pas clair,
+
+0:56:44.400,0:56:51.440
+vous pouvez me demander quoi que ce soit dans la section des commentaires ci-dessous, je répondrai à chaque commentaire que vous écrivez.
+
+0:56:51.440,0:57:00.000
+Nouvelles. Si vous souhaitez rester au courant de tout ce que je mets en ligne, regardez mon compte Twitter @alfcnz.
+
+0:56:57.440,0:57:11.119
+Si vous souhaitez également que YouTube vous notifie les dernières vidéos que je mets en ligne, appuyez sur bouton d'abonnement et activer la cloche.
+
+0:57:11.119,0:57:17.280
+Vous ne manquerez alors aucun contenu. Si vous aimez cette vidéo, mettez un pouce, cela signifie beaucoup pour moi.
+
+0:57:17.280,0:57:27.000
+Rechercher. Nous avons un site web où vous pouvez trouver toutes les vidéos transcrites par des étudiants qui se sont portés volontaires.
+
+0:57:27.000,0:57:35.000
+Par exemple ici vous pouvez voir la transcription de cette vidéo. Vous pouvez voir que les titres sont des liens.
+
+0:57:35.000,0:57:38.880
+Ils vous redirigent vers la bonne section dans la vidéo.
+
+0:57:38.880,0:57:43.599
+Nous avons donc ici la transcription de cette leçon en anglais.
+
+0:57:43.599,0:57:49.359
+Il n'y a pas que l'anglais qui est disponible. Vous pouvez voir ici le drapeau anglais.
+
+0:57:49.359,0:57:55.040
+Vous pouvez aussi remontez la barre et voyons la page d’accueil.
+
+0:57:55.040,0:57:05.500
+Ici vous pouvez trouver de nombreuses langues disponibles : arabe, espagnol, français, italien, japonais, coréen, russe, turc, chinois 
+
+0:58:05.500,0:58:13.400
+et bien d'autres encore sont à venir. Si vous souhaitez contribuer et ajouter votre langue n'hésitez pas à me contacter sur Twitter ou par mail.
+
+0:58:13.520,0:58:16.520
+C'est la partie linguistique.
+
+0:58:16.520,0:58:26.599
+De plus, cela vous aide énormément si vous implémentez les choses que nous couvrons en classe avec PyTorch.
+
+0:58:26.599,0:58:30.960
+Il y aura peut-être un notebook de cette leçon car elle n’en a pas actuellement.
+	 
+0:58:30.960640,0:58:40.400
+Néanmoins je vous recommande vraiment d’essayer de le faire vous-même afin de pouvoir tester vos connaissances.
+
+0:58:40.400,0:58:47.839
+Enfin si vous trouvez un bug dans les notebooks précédents, sur le site web, où quoi que ce soit, vous êtes vraiment encouragé à
+
+0:58:47.839,0:58:55.359
+les signaler sur le répertoire GitHub. Vous pouvez aussi soumettre une PR afin d'être un contributeur officiel de ce projet.
+
+0:58:55.680,0:59:04.240
+N'oubliez pas d'aimer, de partager et de vous abonner. Bye bye.

@@ -1,0 +1,4173 @@
+0:00:00.399,0:00:04.720
+Très bien, vous voyez les diapositives, je suppose.
+
+0:00:05.120,0:00:08.559
+Alfredo, je ne te vois pas, je ne vois personne d'autre. [Alfredo : oui] D'accord.
+
+0:00:08.559,0:00:12.320
+[Alfredo : oui, c'est ok]. Vous pouvez faire des signes, je peux vous voir.
+
+0:00:12.320,0:00:17.359
+Ok donc nous allons encore parler
+
+0:00:17.359,0:00:21.520
+des modèles à base d’énergie et principalement dans le contexte de
+
+0:00:21.520,0:00:25.119
+l'apprentissage autosupervisé ou non supervisé pour continuer
+
+0:00:25.119,0:00:31.119
+là où nous nous sommes arrêtés la dernière fois. Alors laissez-moi commencer par
+
+0:00:31.119,0:00:35.840
+rappel de l'endroit où nous sommes partis la dernière fois.
+
+0:00:35.840,0:00:40.879
+Nous avons parlé de l'apprentissage autosupervisé comme étant l'idée
+
+0:00:41.040,0:00:45.680
+d'essayer prévoir tout à partir de tout le reste
+
+0:00:45.680,0:00:49.280
+en prétendant qu'une partie de l'entrée n'est pas visible par le système et une autre
+
+0:00:49.280,0:00:52.559
+partie est visible. Nous entraînons le système à prévoir la
+
+0:00:52.559,0:00:56.719
+partie non visible de la partie visible. Bien sûr, cela pourrait être
+
+0:00:58.559,0:01:00.640
+n’importe quoi comme une partie d'une vidéo ou bien
+
+0:01:00.640,0:01:04.000
+autre chose. Il existe un cas particulier où 
+
+0:01:04.000,0:01:08.000
+nous ne supposons pas que tout est visible à tout moment et nous demandons donc simplement au
+
+0:01:08.000,0:01:13.439
+système de prédire sans aucune entrée.
+
+0:01:13.439,0:01:18.479
+Nous avons donc parlé de l'approche des modèles à base d’énergie
+
+0:01:18.479,0:01:23.840
+qui consistent en gros à avoir une fonction implicite
+
+0:01:23.840,0:01:26.000
+qui rend compte de la dépendance entre x et y.
+
+0:01:26.000,0:01:29.920
+Ou dans le cas où vous n'avez pas de x, c’est la dépendance entre les différents
+
+0:01:29.920,0:01:34.079
+composantes de y. La raison pour laquelle nous avons besoin d'une
+
+0:01:34.079,0:01:37.680
+fonction implicite est que pour une valeur particulière de x, il pourrait
+
+0:01:37.680,0:01:43.200
+avoir de multiples valeurs de y possibles.
+
+0:01:43.439,0:01:46.880
+Donc si nous avions une prédiction directe de x à y, nous ne pourrions faire qu'une prédiction.
+
+0:01:46.880,0:01:51.200
+En utilisant une fonction implicite, nous pouvons faire de multiples prédictions
+
+0:01:51.200,0:01:55.119
+implicitement en ayant en gros une fonction qui donne
+
+0:01:55.119,0:01:58.159
+une énergie plus faible pour des valeurs multiples de y pour une valeur donnée de x
+
+0:01:58.159,0:02:02.399
+et c'est un peu ce qui est représenté sur la gauche.
+
+0:02:02.399,0:02:06.399
+Vous pouvez considérer cela comme une sorte de
+
+0:02:06.399,0:02:10.000
+paysage montagneux où les points de données
+
+0:02:10.000,0:02:14.720
+sont dans les vallées et tout le reste, à la taille de la variété des données,
+
+0:02:14.720,0:02:18.000
+a une énergie plus élevée, de sorte que la déduction dans ce contexte procède par…
+
+0:02:21.840,0:02:24.640
+En gros, trouver un y ou un ensemble de y qui
+
+0:02:24.640,0:02:30.080
+minimise F(x,y) pour un x donné. Donc ce n'est pas encore un apprentissage.
+
+0:02:30.080,0:02:33.599
+L’apprentissage consiste à façonner F mais ici nous parlons juste d’inférence
+
+0:02:33.599,0:02:37.280
+donc il est très important de pouvoir faire la différence entre
+
+0:02:37.280,0:02:40.800
+le processus d'inférence consistant à minimiser la fonction énergie pour
+
+0:02:40.800,0:02:43.200
+trouver y et ensuite le processus d'apprentissage qui est
+
+0:02:43.200,0:02:46.160
+minimiser une fonction de perte et non la fonction énergie
+
+0:02:46.160,0:02:49.519
+en respectant les paramètres de la fonction énergie. C’est deux choses différentes.
+
+0:02:49.519,0:02:51.840
+Et dans le cas 
+
+0:02:56.400,0:03:00.560
+inconditionnel vous n'avez pas de x et donc vous ne saisissez que
+
+0:03:00.560,0:03:07.360
+les dépendances mutuelles entre les y. Nous avons parlé de modèles à variables latentes
+
+0:03:07.360,0:03:10.319
+et la raison pour laquelle nous parlons de modèles à variables latentes est qu'il s'agit d'un
+
+0:03:10.319,0:03:14.319
+manière particulière de représenter ou de construire l'architecture de la
+
+0:03:14.319,0:03:17.599
+fonction énergie de manière à ce qu'elle puisse avoir de
+
+0:03:17.599,0:03:22.720
+multiple y pour un x donné. Donc en gros une variable latente est une
+
+0:03:22.720,0:03:26.319
+variable supplémentaire z dont personne ne vous donne la valeur mais
+
+0:03:26.319,0:03:29.040
+la première chose que vous faites quand vous voyez un z est de minimiser votre fonction
+
+0:03:29.040,0:03:33.040
+énergie par rapport à ce z. Cela vous donne une fonction 
+
+0:03:33.040,0:03:35.200
+énergie qui ne dépend plus de z.
+
+0:03:35.200,0:03:40.959
+Si vous voulez faire de l’inférence avec un modèle à variable
+
+0:03:40.959,0:03:44.000
+latente, je vous donne un x et vous trouvez la combinaison de y et z
+
+0:03:44.000,0:03:46.640
+qui minimise l'énergie et puis vous me donnez y.
+
+0:03:46.640,0:03:50.400
+C'est le processus d'inférence. Ces deux façons de faire
+
+0:03:50.400,0:03:54.159
+l'inférence par rapport à une variable que vous n'observez pas, hum, l'une d'entre elles consiste à
+
+0:03:54.159,0:03:58.640
+minimiser sur cela comme je viens de l'indiquer. L'autre est de marginaliser sur cela
+
+0:03:58.640,0:04:03.680
+si vous êtes un probabiliste. Mais même dans les autres cas.
+
+0:04:03.680,0:04:08.239
+Il existe une formule simple pour passer de l'une à l'autre.
+
+0:04:08.239,0:04:12.799
+C’est en gros le logarithmique d’une somme d’exponentielle sur toutes les valeurs possibles de z et ceci
+
+0:04:12.799,0:04:14.799
+peut être insoluble, donc nous ne faisons pas souvent.
+
+0:04:14.799,0:04:17.120
+Ok donc l’entraînement d'un modèle basé sur l'énergie
+
+0:04:20.880,0:04:24.800
+consiste à paramétrer la fonction énergie
+
+0:04:24.800,0:04:28.639
+en recueillant bien sûr un tas d'échantillons d’entraînement, un tas de x et de y
+
+0:04:28.639,0:04:31.840
+dans le cas conditionnel ou juste un tas de y dans un cas
+
+0:04:31.840,0:04:37.000
+Inconditionnel. Cela consiste ensuite à modeler la fonction énergie de manière à ce que
+
+0:04:37.000,0:04:42.000
+vous donnez une faible énergie aux bonnes combinaisons de x et de y et une plus grande énergie à une mauvaise
+
+0:04:42.000,0:04:46.400
+combinaison de x et y. Donc pour un x observé donné
+
+0:04:46.400,0:04:51.440
+vous essayez de faire F(y) pour le y correspondant qui correspond à
+
+0:04:51.440,0:04:54.240
+x le plus bas possible, mais vous devez également rendre
+
+0:04:54.240,0:04:58.560
+l'énergie F(x,y) plus grande pour toutes les autres valeurs de y, toutes les
+
+0:04:58.560,0:05:02.560
+autres valeurs possibles de y. Et c'est probablement une bonne idée de garder
+
+0:05:02.560,0:05:05.520
+cette fonction énergie lisse si vous êtes dans un espace continu. Si y est une
+
+0:05:05.520,0:05:09.199
+variable continue, cela va faciliter l’inférence.
+
+0:05:09.199,0:05:11.440
+Vous pourrez ensuite utiliser la descente de gradient,
+
+0:05:11.440,0:05:15.120
+des méthodes d'inférence ou peut-être d'autres méthodes.
+
+0:05:15.120,0:05:20.960
+Il y a donc deux classes d'algorithmes d'apprentissage, comme nous en avons parlé la dernière fois.
+
+0:05:20.960,0:05:26.400
+La première classe est celle des méthodes contrastives qui consistent en gros à baisser
+
+0:05:26.400,0:05:30.080
+l'énergie des échantillons d’entraînement afin
+
+0:05:30.080,0:05:34.479
+d'obtenir un échantillon d’entraînement x[i] y[i]. Vous le branchez sur votre énergie
+
+0:05:34.479,0:05:36.800
+et ensuite vous réglez les paramètres de la
+
+0:05:36.800,0:05:38.880
+fonction énergie pour que cette énergie diminue
+
+0:05:38.880,0:05:43.039
+et vous pouvez faire ça avec la rétropropagation
+
+0:05:43.039,0:05:48.960
+si votre fonction énergie est une sorte de réseau neuronal avec d'autres éléments dedans.
+
+0:05:48.960,0:05:50.960
+Tant qu'il s'agit d'une fonction différenciable, vous
+
+0:05:50.960,0:05:56.560
+pouvez-vous faire cela mais alors ce que vous devez faire aussi
+
+0:05:56.560,0:05:58.400
+c'est de choisir d'autres points qui sont en dehors de la variété
+
+0:05:58.400,0:06:01.680
+des données, puis de faire monter leur énergie
+
+0:06:01.680,0:06:04.880
+pour que l'énergie prenne la bonne forme.
+
+0:06:04.880,0:06:08.319
+Il s'agit donc des méthodes contrastives. Puis il y a les méthodes architecturales.
+
+0:06:08.319,0:06:12.319
+Les méthodes architecturales consistent en gros à construire F(x,y)
+
+0:06:12.319,0:06:17.440
+de telle sorte que le volume de l'espace que peut prendre
+
+0:06:17.440,0:06:22.720
+l'énergie est limitée. Peut-être minimisée d'une certaine manière.
+
+0:06:22.720,0:06:26.319
+Donc si vous baissez l'énergie de certains points, automatiquement le reste
+
+0:06:26.319,0:06:29.600
+sera haut car
+
+0:06:29.600,0:06:31.680
+le volume des choses qui peuvent consommer peu d'énergie est
+
+0:06:31.680,0:06:35.840
+Limité. J'ai fait une liste ici. C'est
+
+0:06:39.280,0:06:44.800
+une diapositive importante que vous avez vu la dernière fois.
+
+0:06:44.800,0:06:48.560
+Il existe une liste de diverses méthodes dont vous avez peut-être entendu parler.
+
+0:06:48.560,0:06:52.080
+Certaines sont contrastives, d'autres sont architecturales. Je dois dire que
+
+0:06:52.080,0:06:55.840
+ces deux catégories de méthodes ne sont pas nécessairement incompatibles entre elles.
+
+0:06:55.840,0:06:59.039
+Vous pouvez très bien utiliser une combinaison des deux
+
+0:06:59.039,0:07:04.560
+mais la plupart des méthodes n'en utilisent qu'une. Donc des choses comme le maximum de vraisemblance si vous
+
+0:07:04.560,0:07:07.360
+êtes probabiliste consiste à pousser vers le bas l'énergie des données des
+
+0:07:07.360,0:07:09.520
+points, puis pousser vers le haut partout ailleurs
+
+0:07:09.520,0:07:14.479
+pour chaque autre valeur de y, proportionnellement à la faible énergie que vous consommez. Donc vous augmentez
+
+0:07:14.479,0:07:18.720
+plus difficilement si l'énergie est plus faible, de sorte qu'au final, vous obtenez
+
+0:07:18.720,0:07:23.759
+la bonne forme. Le maximum de vraisemblance ne se préoccupe d'ailleurs que
+
+0:07:23.759,0:07:27.199
+des différences d'énergie. Il ne se soucie pas des valeurs absolues des
+
+0:07:27.199,0:07:31.759
+énergies. Ce qui est un point important. Ensuite
+
+0:07:31.759,0:07:34.479
+il existe d'autres méthodes comme la divergence contrastive,
+
+0:07:34.479,0:07:38.720
+l'apprentissage métrique, le « ratio matching », la « noise contrastive estimation », le « min probability flow »,
+
+0:07:38.720,0:07:42.400
+des choses comme ça. Les réseaux génératifs antagonistes
+
+07:42.400,0:07:45.759
+sont également basés sur l'idée 
+
+0:07:45.759,0:07:52.560
+d'augmenter l'énergie des points de données en dehors de la variété des données.
+
+0:07:54.720,0:08:00.639
+Ensuite il y a des méthodes similaires : les auto-encodeurs débruiteurs que nous
+
+0:08:00.639,0:08:04.400
+allons aborder dans une minute. Comme nous l'avons vu la dernière fois ils ont été
+
+0:08:04.400,0:08:08.479
+extrêmement performants pour les systèmes de traitement du langage naturel.  
+
+0:08:08.479,0:08:12.400
+Un système comme BERT par exemple, est en gros un auto-encodeur d’un
+
+0:08:12.400,0:08:15.199
+type particulier. Ensuite il y a les méthodes architecturales
+
+0:08:15.199,0:08:18.400
+et la dernière fois, nous avons parlé un peu de l'ACP et des k-means.
+
+0:08:18.400,0:08:22.720
+Nous allons parler de quelques autres
+
+0:08:22.720,0:08:28.800
+aujourd'hui particulièrement le codage épars et quelque chose appelé LISTA.
+
+0:08:29.360,0:08:32.959
+Je ne vais pas parler des autres.
+
+0:08:32.959,0:08:37.039
+Il s'agit donc d'un rappel de quelque chose dont nous avons parlé la dernière fois,
+
+0:08:37.039,0:08:40.959
+la semaine dernière. C’est un modèle à variables latentes très simple pour
+
+0:08:40.959,0:08:45.440
+l'apprentissage non supervisé k-means dont je suis sûr que vous avez tous entendu parler.
+
+0:08:45.440,0:08:49.360
+Dans ce cas, la fonction énergie est simplement l'erreur de reconstruction carrée entre
+
+0:08:49.360,0:08:53.600
+le vecteur de données et le produit d'une matrice prototype,
+
+0:08:53.600,0:08:56.720
+multiplié par un vecteur de variable latente. Ce
+
+0:08:56.720,0:09:00.959
+vecteur de variable latente est contraint d'être un vecteur one-hot. En d'autres termes, il
+
+0:09:00.959,0:09:03.120
+sélectionne une des colonnes de W lorsque vous
+
+0:09:03.120,0:09:08.399
+le multipliez par W. Vous obtenez ainsi au final
+
+0:09:08.399,0:09:11.920
+la distance carrée entre le
+
+0:09:11.920,0:09:17.600
+le vecteur de données et la colonne de W qui est la plus proche.
+
+0:09:17.600,0:09:20.480
+Une fois que vous avez fait la minimisation par rapport à z, ce qui signifie en
+
+0:09:20.480,0:09:24.160
+cherchant quelle colonne W est la plus proche de y. Donc cette fonction énergie
+
+0:09:24.160,0:09:28.800
+qui est l'algorithme d'inférence, recherche le prototype le plus proche et 
+
+0:09:28.800,0:09:32.640
+la fonction énergie est bien sûr nulle partout où il existe un prototype
+
+0:09:32.640,0:09:36.000
+et croît de façon quadratique à mesure que l'on s'éloigne du prototype
+
+0:09:36.000,0:09:39.440
+jusqu'à ce que vous vous rapprochiez d'un autre prototype, auquel cas l'énergie
+
+0:09:39.440,0:09:42.640
+descend à nouveau à mesure que l'on se rapproche du deuxième prototype.
+
+0:09:42.640,0:09:48.399
+Donc si vous entraînez k-means sur un ensemble de données où les échantillons d’entraînement sont générés
+
+0:09:48.399,0:09:52.160
+selon cette petite spirale
+
+0:09:52.160,0:09:57.360
+ici en bas. Avec k = 20 
+
+0:09:57.360,0:10:01.440
+dans ce cas, vous obtenez ces petites zones sombres qui indiquent
+
+0:10:01.440,0:10:03.760
+les minima de la fonction énergie. Et il y a
+
+0:10:03.760,0:10:08.640
+crête au milieu où vous connaissez le type d'énergie 
+
+0:10:08.640,0:10:11.600
+c'est comme si vous saviez que l'énergie se dissipe
+
+0:10:11.600,0:10:18.800
+des deux côtés. C'est comme une crête. Voici une méthode qui est devenue
+
+0:10:18.800,0:10:22.800
+très populaire ces derniers mois et elle est très récente.
+
+0:10:22.800,0:10:26.240
+Les premiers papiers sur ce sujet remontent en réalité à longtemps. Il y a certains de
+
+0:10:26.240,0:10:31.519
+mes papiers qui datent du début des années 90 et du milieu des années 2000. Ils s'appelaient
+
+0:10:31.519,0:10:34.560
+réseaux siamois ou apprentissage métrique à l'époque.
+
+0:10:34.560,0:10:40.720
+L'idée est de construire une sorte de modèle basé sur l'énergie si vous voulez
+
+0:10:40.720,0:10:44.000
+en ayant deux copies du même réseau ou
+
+0:10:44.000,0:10:47.600
+deux réseaux différents. Très souvent ces deux copies du même réseau.
+
+0:10:47.600,0:10:52.959
+Vous donnez x au premier réseau et y au deuxième réseau.
+
+0:10:52.959,0:10:56.320
+Vous leur demandez de calculer un vecteur de caractéristique sur la sortie h et h prime.
+
+0:10:56.320,0:10:59.519
+Ensuite vous comparez ces deux vecteurs de caractéristiques en utilisant
+
+0:10:59.519,0:11:03.279
+certaines méthodes, certaines manières de calculer une similarité ou une dissimilarité
+
+0:11:03.279,0:11:06.399
+entre les vecteurs. Cela peut être un produit scalaire ou un cosinus,
+
+0:11:06.399,0:11:10.320
+une similitude, quelque chose de ce type.
+
+0:11:10.320,0:11:14.480
+Ce que vous faites pour entraîner le système, c'est que
+
+0:11:14.480,0:11:18.320
+vous l'entraînez avec un point de données qui est en gros une paire
+
+0:11:18.320,0:11:23.440
+de x et y. Vous indiquez donc l'emplacement de la
+
+0:11:23.440,0:11:26.399
+variété des données au système en lui disant en gros
+
+0:11:26.399,0:11:30.480
+voici un exemple x
+
+0:11:30.480,0:11:33.839
+donne-moi un autre échantillon qui a en gros
+
+0:11:33.839,0:11:38.880
+le même contenu que x mais qui est différent. Bien sûr vous ne demanderez jamais
+
+0:11:38.880,0:11:41.440
+au système de vous donner l’échantillon que vous allez générer
+
+0:11:41.440,0:11:44.800
+pour l’entraîner à l'aide de cet échantillon.
+
+0:11:44.800,0:11:48.880
+Donc il y a deux paires positives. Les paires sont compatibles
+
+0:11:48.880,0:11:51.600
+les unes avec les autres, ce qui est toute une idée de modèles à base d’énergie.
+
+0:11:51.600,0:11:55.360
+Une paire compatible ou une paire positive si vous voulez,
+
+0:11:55.360,0:12:00.480
+consiste en ce que x est une image et y une transformation de cette image
+
+0:12:00.480,0:12:05.360
+qui ne change pas fondamentalement son contenu. Ainsi c'est toujours le même contenu
+
+0:12:05.360,0:12:10.480
+dans l'image. Vous voulez en gros des représentations
+
+0:12:10.480,0:12:12.880
+extraites par ces deux réseaux soient très similaires
+
+0:12:12.880,0:12:16.000
+car ces images sont similaires et c'est exactement ce que vous allez faire.
+
+0:12:16.000,0:12:19.360
+Vous allez donner ces deux images à ces deux réseaux
+
+0:12:19.360,0:12:23.519
+et vous allez avoir une fonction de perte qui dit de minimiser l'énergie. Ce qui
+
+0:12:23.519,0:12:27.200
+signifie minimiser la distance ou la mesure de similarité entre h et h prime,
+
+0:12:27.200,0:12:32.399
+entre les sorties des deux réseaux. C'est donc la partie positive. C'est
+
+0:12:32.399,0:12:38.480
+un moyen de réduire l'énergie pour les échantillons d'entraînement.
+
+0:12:38.480,0:12:41.600
+Ensuite vous devez générer
+
+0:12:41.600,0:12:45.760
+des échantillons négatifs aléatoires. La façon dont vous les générez est
+
+0:12:45.760,0:12:50.320
+la suivante. Vous choisissez un échantillon pour x et ensuite vous choisissez une autre image que
+
+0:12:50.320,0:12:52.160
+vous savez différente, qui n'a rien à voir avec
+
+0:12:52.160,0:12:56.320
+x, qui est incompatible avec elle. Qu'elle soit très différente.
+
+0:12:56.320,0:12:59.600
+Ensuite ce que vous faites, c'est que vous donnez ces deux images à ces deux réseaux
+
+0:12:59.600,0:13:05.760
+et vous essayez d'éloigner h et h prime l'un de l'autre.
+
+0:13:05.760,0:13:11.680
+Donc, en gros, vous essayez de faire en sorte que la matrice de similarité C(h,h’)
+
+0:13:11.680,0:13:15.680
+soit grande pour ces deux échantillons.
+
+0:13:15.680,0:13:18.959
+La fonction objectif ici va prendre en compte
+
+0:13:18.959,0:13:24.240
+la fonction énergie pour une partie similaire
+
+0:13:24.240,0:13:27.040
+et la fonction énergie pour les paires dissemblables.
+
+0:13:27.040,0:13:30.240
+Elle va pousser vers le bas la fonction énergie pour des paires similaires pousser vers le haut
+
+0:13:30.240,0:13:36.560
+la fonction énergie pour les paires dissemblables. Ok ? 
+
+0:13:36.560,0:13:39.680
+Donc il y a eu un certain nombre de papiers…
+
+0:13:39.680,0:13:42.720
+Les gens utilisent depuis longtemps l'apprentissage métrique pour diverses choses depuis longtemps,
+
+0:13:42.720,0:13:46.399
+en images par exemple, pour
+
+0:13:46.399,0:13:50.000
+la reconnaissance des caractéristiques, pour des choses comme ça.
+
+0:13:50.000,0:13:53.120
+Mais ce n'est qu'au cours des derniers mois qu'il y a eu
+
+0:13:53.120,0:13:57.120
+quelques travaux qui ont montré qu'il est possible d’utiliser ces méthodes pour
+
+0:13:57.120,0:14:00.399
+apprendre de bonnes caractéristiques pour la reconnaissance d’objets.
+
+0:14:00.399,0:14:03.760
+Ce sont vraiment les premiers papiers qui produisent des caractéristiques
+
+0:14:03.760,0:14:08.560
+de manière non supervisée ou autosupervisée, qui peuvent rivaliser avec 
+
+0:14:08.560,0:14:11.839
+les caractéristiques obtenues par apprentissage supervisé.
+
+0:14:11.839,0:14:16.240				                                                                                          
+Les trois documents en question sont donc PIRL [Pretext-Invariant Representation Learning],
+
+0:14:16.240,0:14:20.079
+par Isha Misra et
+
+0:14:20.079,0:14:23.440
+Lawrence Van Der Maaten de Facebook New York,
+
+0:14:23.440,0:14:27.680
+MoCo par KamingHe et ses collaborateurs de Facebook Menlo Park
+
+0:14:27.680,0:14:30.880
+et le troisième, apparu plus récemment, s'appelle SimCLR
+
+0:14:30.880,0:14:36.399
+par un groupe de Google : Chen et al. Le dernier auteur étant
+
+0:14:36.399,0:14:39.120
+Jeffrey Hinton. 
+
+0:14:45.519,0:14:49.199
+Il y a eu d'autres travaux utilisant ce genre de méthodes. [Alfredo : je pense qu'il y a une
+
+0:14:49.199,0:14:51.839
+question]. Ce n'était pas une question, c'était mon
+
+0:14:51.839,0:14:57.440
+téléphone qui s’est activé car j'ai dit « Google » [Alfredo : oh je vois]. Ok et donc il y a des caractéristiques
+
+0:14:57.440,0:15:00.240
+dont nous parlerons plus tard, qui sont
+
+0:15:00.240,0:15:05.680
+un peu similaires. Ok donc voici des exemples de résultats
+
+0:15:05.680,0:15:09.199
+qui sont obtenus avec MoCo. Ils montrent en gros que même avec
+
+0:15:09.199,0:15:12.959
+un très grand modèle, une version de resnet50,
+
+0:15:12.959,0:15:15.839
+que vous entraînez en utilisant une méthode contrastive
+
+0:15:15.839,0:15:19.839
+vous avez une performance décente. C'est je crois 
+
+0:15:19.839,0:15:24.399
+Performance top-5 sur ImageNet.
+
+0:15:24.399,0:15:27.760
+PIRL fonctionne un peu mieux que le MoCo.
+
+0:15:27.760,0:15:35.199
+C’est la précision top-1 cette fois avec des réseaux de différentes tailles.
+
+0:15:35.199,0:15:39.600
+Donc ici il y a plusieurs scénarios. Le scénario principal est,
+
+0:15:39.600,0:15:44.079
+vous prenez tout ImageNet, vous prenez un échantillon auquel vous appliquez une distorsion
+
+0:15:44.079,0:15:49.680
+et cela vous donne une paire positive
+
+0:15:49.680,0:15:53.440
+Vous exécutez vos deux réseaux et entraîner le réseau à
+
+0:15:53.440,0:15:57.440
+produire des résultats similaires. Les deux réseaux sont en gros identiques.
+
+0:15:57.440,0:16:01.920
+En fait, pour MoCo et PIRL, c'est le même réseau.
+
+0:16:01.920,0:16:06.560
+Ensuite prenez des paires dissemblables et repousser les sorties l'une de l'autre en utilisant une
+
+0:16:06.560,0:16:11.360
+fonction de coût particulière que nous verrons dans une minute.
+
+0:16:11.920,0:16:17.360
+Puis vous devez faire cela plusieurs fois. Vous devez aussi être intelligent concernant
+
+0:16:17.360,0:16:20.720
+la façon dont vous cachez les échantillons négatifs car
+
+0:16:20.720,0:16:24.160
+la plupart des échantillons sont déjà très différents au moment où ils arrivent à la sortie
+
+0:16:24.160,0:16:28.000
+du réseau. Il faut donc être intelligent sur la façon dont
+
+0:16:28.000,0:16:32.399
+vous choisissez en quelque sorte les bons négatifs. Le type de fonction objectif
+
+0:16:32.399,0:16:36.399
+qui est utilisée par PIRL est appelée « noise
+
+0:16:36.399,0:16:40.000
+contrastive estimator ». C’est utilisé dans des
+
+0:16:40.000,0:16:42.959
+articles précédents. Ce n'est pas leur invention.
+
+0:16:42.959,0:16:47.519
+La métrique de similarité est la similarité cosinus
+
+0:16:47.519,0:16:51.519
+qui mesure les sorties des ConvNets.
+	
+0:16:51.519,0:16:57.040
+Puis ce que vous calculez, c'est une sorte de fonction softmax
+
+0:16:57.040,0:17:00.959
+qui calcule l'exponentielle de la métrique de similarité
+
+0:17:00.959,0:17:04.000
+de deux sorties pour des paires similaires, divisé par
+
+0:17:04.000,0:17:08.319
+la somme de la métrique de similarité exponentielle pour des paires similaires et de la
+
+0:17:08.319,0:17:12.959
+somme de paires dissemblables, de sorte que vous avez un lot où vous avez une paire similaire
+
+0:17:12.959,0:17:16.480
+et un tas de paires dissemblables. Et vous calculez ce genre de softmax.
+
+0:17:16.480,0:17:22.240
+Si vous minimisez la fonction de coût softmax, cela va pousser la
+
+0:17:22.240,0:17:25.120
+métrique de similarité de la paire similaire à être
+
+0:17:25.120,0:17:29.600
+aussi grande que possible et la métrique de similitude (similarité cosinus)
+
+0:17:29.600,0:17:34.160
+des paires dissemblables doit être aussi petite que possible. 
+
+0:17:34.160,0:17:39.360
+[Question : pourquoi utilisons-nous séparément la fonction LNCE
+
+0:17:39.360,0:17:42.080
+alors que nous aurions probablement pu directement
+
+0:17:42.080,0:17:47.840
+calculer les lois en utilisant la transformation h(v(I),v(I)t), 
+
+0:17:47.840,0:17:51.679
+la probabilité que nous avons en prenant le logarithme négatif de cette probabilité.
+
+0:17:51.679,0:17:55.520
+Donc quel avantage apporte LNCE ?
+
+0:17:55.520,0:18:00.000
+C’est à dire ne pas prendre directement le log négatif de la
+
+0:18:00.000,0:18:05.120
+probabilité que nous avons avec h ?] C'est une bonne question. Ce n'est pas
+
+0:18:05.120,0:18:09.600
+tout à fait clair pour moi pourquoi. Je pense, ce qui s'est passé ici, c’est que
+
+0:18:09.600,0:18:12.080
+les gens ont essayé beaucoup, beaucoup de choses différentes
+
+0:18:12.080,0:18:14.799
+et c'est ce qui a fini par fonctionner le mieux.
+
+0:18:14.799,0:18:19.120
+Il y a dans le papier d’Hinton une chose similaire où
+
+0:18:19.120,0:18:22.720
+ils ont essayé différents types de fonction objectif.
+
+0:18:22.720,0:18:26.160
+Il a constaté qu'un dispositif comme le NCE fonctionne en fait assez bien.
+
+0:18:26.160,0:18:30.799
+C'est donc une question empirique et je n'ai pas une bonne démonstration pour savoir pourquoi
+
+0:18:30.799,0:18:34.320
+vous avez besoin de ce terme en plus du 
+
+0:18:34.320,0:18:39.679
+dénominateur dans h. J'espère que ceci répond à votre question
+
+0:18:39.679,0:18:43.039
+bien que je regrette de n'avoir pas de réponse précise.
+	
+0:18:43.039,0:18:47.039
+[Question : pourquoi utiliser la similarité cosinus au lieu de la norme L2 ?]
+
+0:18:47.039,0:18:50.400
+Au lieu de la norme L2 ou au lieu de… Ok c'est car
+
+0:18:50.400,0:18:53.679
+que vous voulez normaliser. Il est très facile de faire deux vecteurs
+
+0:18:53.679,0:18:57.360
+similaires en les rendant très courts ou de faire deux vecteurs très
+
+0:18:57.360,0:19:03.360
+dissemblables en les rendant très longs. En faisant la similitude cosinus
+
+0:19:03.360,0:19:06.160
+vous normalisez. Vous de calculez un produit scalaire mais
+
+0:19:06.160,0:19:10.000
+vous normalisez ce produit scalaire. Donc vous rendez la mesure indépendante
+
+0:19:10.000,0:19:15.600
+de la longueur des vecteurs. Donc cela force
+
+0:19:15.600,0:19:18.400
+le système à trouver une bonne solution au problème sans
+
+0:19:18.400,0:19:23.919
+tricher en rendant les vecteurs soit courts soit longs.
+
+0:19:23.919,0:19:27.520
+Cela supprime également une instabilité qui
+
+0:19:27.520,0:19:30.799
+pourrait être dans le système. La conception de cette fonction
+
+0:19:30.799,0:19:34.320
+contrastive est en fait un peu de la magie noire.
+
+0:19:34.320,0:19:38.080
+Ok donc ce qu'ils font dans PIRL c’est qu'ils 
+
+0:19:38.080,0:19:44.480
+n'utilisent pas directement la sortie du ConvNet
+
+0:19:44.480,0:19:48.240
+pour la fonction objectif. Ils ont différentes têtes.
+
+0:19:48.240,0:19:52.160
+Donc, fondamentalement, le ConvNet a différents types de têtes f et g
+
+0:19:52.160,0:19:55.600
+qui sont différentes pour les deux réseaux.
+
+0:19:55.600,0:19:59.200
+C'est ce qu'ils utilisent dans le cadre de cet apprentissage contractif et 
+
+0:19:59.200,0:20:01.440
+une autre tête pour
+
+0:20:01.440,0:20:05.440
+la tâche ultime de classification.
+
+0:20:05.440,0:20:09.039
+Ces fonctions f et g peuvent donc être considérées comme une sorte de couches
+
+0:20:09.039,0:20:12.559
+supplémentaires qui sont en quelque sorte au-dessus du réseau.
+
+0:20:12.559,0:20:16.240
+Qui sont différentes pour les deux réseaux.
+
+0:20:16.240,0:20:18.080
+Voici les résultats obtenus
+
+0:20:18.080,0:20:22.640
+par PIRL. C’est une
+
+0:20:22.640,0:20:26.480
+expérience particulière dans laquelle vous avez pré-entraîné le système en utilisant
+
+0:20:26.480,0:20:32.960
+PIRL sur le jeu d’entraînement ImageNet. 
+
+0:20:32.960,0:20:37.200
+Ensuite vous affinez le système en utilisant soit 1% ou 10%
+
+0:20:37.200,0:20:40.000
+des échantillons étiquetés et vous mesurez 
+
+0:20:40.000,0:20:43.799
+les cinq meilleures performances en matière de précision. Ou la meilleure précision.
+
+0:20:43.799,0:20:48.800
+Ce papier a donc été publié en janvier sur Arxiv [décembre 2019 en réalité].
+
+0:20:48.800,0:20:56.080
+Puis il y a quelques semaines, ce papier est apparu. Appelé SimCLR par Chen et al. provenant d’une équipe de Google.
+
+0:20:56.080,0:21:01.360
+Ils ont une méthode de corruption ou d'augmentation des données très sophistiquée pour générer des
+
+0:21:01.360,0:21:05.600
+paires similaires et ils entraînent pendant beaucoup beaucoup
+
+0:21:05.600,0:21:11.039
+de temps sur de nombreux TPU et ils deviennent des résultats vraiment 
+
+0:21:11.039,0:21:16.559
+Intéressants, bien meilleurs que ceux de PIRL ou MoCo.
+
+0:21:16.559,0:21:20.159
+En utilisant de très grands modèles, ils peuvent atteindre un pourcentage de 75%
+
+0:21:22.640,0:21:26.480
+de précision top-1 sur ImageNet par
+
+0:21:26.480,0:21:30.080
+pré-entraînement en autosupervisé et en finetunant
+
+0:21:30.080,0:21:33.520
+avec seulement 1%
+
+0:21:33.520,0:21:39.919
+des autres échantillons. Donc en fait la diapositive précédente est un
+
+0:21:39.919,0:21:42.400
+scénario différent où vous n’entraînez qu'un classifieur linéaire
+
+0:21:42.400,0:21:46.400
+sur le dessus du réseau. C'est le
+
+0:21:46.400,0:21:49.919
+scénario dans lequel vous entraînez avec 1 ou 10% d’échantillons 
+
+0:21:49.919,0:21:54.159
+étiquetés et vous obtenez 85% sur
+
+0:21:54.159,0:21:58.080
+le top 5 avec 1% des labels. Ce qui est 
+
+0:21:58.080,0:22:02.240
+des résultats assez étonnants dans une certaine mesure. Je pense que
+
+0:22:02.240,0:22:06.080
+cela montre les limites des méthodes contrastives, car la quantité de
+
+0:22:06.080,0:22:10.159
+le calcul et l’entraînement nécessaires à cette fin sont absolument gigantesques.
+
+0:22:10.159,0:22:13.200
+C'est vraiment énorme. Voici un scénario où vous
+
+0:22:13.200,0:22:17.440
+entraînez un classifieur linéaire sur le dessus pour que vous figiez les caractéristiques
+
+0:22:17.440,0:22:21.280
+produites par le système qui a été pré-entraîné en utilisant 
+
+0:22:21.280,0:22:24.320
+l'apprentissage autosupervisé. Puis il suffit d’entraîner un classifieur linéaire au sommet.
+
+0:22:24.320,0:22:26.880
+Vous mesurez la performance top 1 ou top 5
+
+0:22:26.880,0:22:31.039
+sur ImageNet en ayant entraîné de manière supervisée sur ImageNet au complet.
+
+0:22:31.039,0:22:34.320
+Et là encore, les chiffres sont vraiment impressionnants.
+
+0:22:34.320,0:22:38.080
+Cependant je pense que cela montre une fois de plus les limites des méthodes contrastives. Le
+
+0:22:38.080,0:22:41.840
+principal problème des méthodes contrastives est qu'il y en a beaucoup beaucoup beaucoup
+
+0:22:41.840,0:22:45.039
+de lieux dans un espace de grande dimension où
+
+0:22:45.039,0:22:49.280
+il faut augmenter l'énergie pour s'assurer qu'elle est effectivement plus élevée
+
+0:22:49.280,0:22:54.320
+partout que sur la variété des données.
+
+0:22:54.320,0:22:58.080
+Et donc à mesure que vous augmentez la dimension de la représentation
+
+0:22:58.080,0:23:02.559
+il faut de plus en plus d'échantillons négatifs pour s'assurer que l'énergie est plus élevée
+
+0:23:02.559,0:23:06.720
+où cela doit être plus élevé. D'accord, parlons d'une
+
+0:23:06.720,0:23:11.280
+autre série de méthodes contrastives appelées « auto-encodeur débruiteur »
+
+0:23:11.280,0:23:14.400
+qui est devenue vraiment importante
+
+0:23:14.400,0:23:17.440
+depuis environ un an et demi en
+
+0:23:17.440,0:23:21.600
+traitement du langage naturel. Donc l'idée de l’auto-encodeur débruiteur
+
+0:23:21.600,0:23:24.640
+est que vous prenez un y et la façon dont vous générez x est
+
+0:23:24.640,0:23:27.760
+de corrompre y. Donc cela ressemble un peu à l’inverse de ce que nous
+
+0:23:27.760,0:23:31.520
+faisions avec des méthodes contrastives.
+
+0:23:31.520,0:23:35.679
+En gros, vous prenez une image propre. Vous la corrompez d'une manière ou d'une autre en supprimant un bout d’elle
+
+0:23:35.679,0:23:38.320
+par exemple. Ou vous prenez un morceau de texte et vous
+
+0:23:38.320,0:23:43.919
+supprimer certains des mots ou en masquer une partie. Un cas particulier est
+
+0:23:43.919,0:23:48.480
+l’auto-encodeur masqué où la corruption consiste à masquer un sous-ensemble
+
+0:23:48.480,0:23:51.200
+de l'entrée. Ensuite vous le faites passer par un auto-encodeur
+
+0:23:51.200,0:23:57.200
+qui est en gros un encodeur ou
+
+0:23:57.200,0:24:02.159
+qu’on appelle prédicteur ici, un décodeur et peut-être 
+
+0:24:02.159,0:24:05.840
+vous connaissez les dernières couches qui peuvent avoir 
+
+0:24:05.840,0:24:09.840
+un softmax dans le contexte du texte ou pas si vous ne savez rien si c’est
+
+0:24:09.840,0:24:13.440
+une image. Et vous calculez ensuite. Vous comparez le résultat
+
+0:24:13.440,0:24:17.600
+y̅ avec les données observées y.
+
+0:24:17.600,0:24:19.840
+Donc quel est le principe ?
+
+0:24:24.960,0:24:27.919
+Le principe est le suivant
+
+0:24:27.919,0:24:31.360
+et vous pouvez remercier Alfredo pour ces belles photos.
+
+0:24:31.360,0:24:34.480
+[Alfredo : nous avons vu ça en classe mardi dernier].
+
+0:24:34.480,0:24:39.039
+C'est vrai, donc, c'est juste un rappel.
+
+0:24:39.039,0:24:42.480
+Vous prenez un point de données qui est un de ceux
+
+0:24:42.480,0:24:47.279
+en rose et vous le corrompez pour obtenir un des points
+
+0:24:47.279,0:24:54.240
+qui sont en marron. Ensuite vous entraînez l’auto-encodeur à
+
+0:24:54.240,0:24:57.520
+à partir des points marrons, produire les points roses.
+
+0:24:57.520,0:25:01.600
+Les points rose originaux. Qu'est-ce que cela signifie ?
+
+0:25:01.600,0:25:05.120
+La fonction énergie qui est l'erreur de reconstruction va être
+
+0:25:05.120,0:25:07.520
+égale à la différence entre le
+
+0:25:07.520,0:25:10.640
+point rose original, le carré de la distance
+
+0:25:10.640,0:25:14.559
+si C est la distance euclidienne…
+
+0:25:14.559,0:25:18.559
+Donc C(y,y̅) va être, si vous pensez que cela a été bien entraîné,
+
+0:25:18.559,0:25:22.880
+va être la distance entre le point corrompu marron
+
+0:25:22.880,0:25:29.200
+x et le point rose dont vous êtes parti : y.
+
+0:25:29.200,0:25:31.760
+Ok donc en gros cela
+
+0:25:31.760,0:25:35.840
+entraîne le système à produire une fonction énergie qui se développe
+
+0:25:35.840,0:25:42.320
+quadratiquement en s'éloignant de la variété des données.
+
+0:25:42.320,0:25:46.080
+Donc c'est un exemple de méthode contrastive car vous augmentez
+
+0:25:46.080,0:25:48.880
+l'énergie des points qui sont en dehors de la variété des données, vous dites en gros
+
+0:25:48.880,0:25:50.640
+votre énergie doit être la distance au carré
+
+0:25:50.640,0:25:54.159
+par rapport à la variété des données ou au moins par rapport au point qui a été utilisé
+
+0:25:54.159,0:26:00.080
+avant la corruption.
+
+0:26:00.799,0:26:05.120
+Cependant le problème est qu'une fois de plus, dans un espace continu en grandes dimensions
+
+0:26:05.120,0:26:08.320
+il existe de nombreuses façons de corrompre
+
+0:26:08.320,0:26:13.760
+une donnée et il n'est pas tout à fait clair que vous allez pouvoir
+
+0:26:13.760,0:26:17.600
+modeler la fonction énergie de la bonne façon en augmentant l’énergie à
+
+0:26:17.600,0:26:21.360
+différents endroits. Cela fonctionne avec le texte car le texte est
+
+0:26:21.360,0:26:24.480
+discret. Cela ne fonctionne pas si bien avec les images. Des personnes
+
+0:26:24.480,0:26:27.679
+ont utilisé cela dans le contexte de la peinture d'image par exemple. La corruption
+
+0:26:27.679,0:26:31.039
+consiste à masquer un morceau de l'image et à entraîner ensuite un système
+
+0:26:31.039,0:26:34.960
+pour la reconstruire. La raison pour laquelle cela ne fonctionne pas est
+
+0:26:34.960,0:26:38.559
+car les gens ont tendance à entraîner le système sans variables latentes.
+
+0:26:38.559,0:26:42.240
+Dans mon petit diagramme ici, il y a une variable latente mais 
+
+0:26:42.240,0:26:47.039
+en fait dans les versions de ceci qui sont utilisées
+
+0:26:47.039,0:26:52.320
+dans le contexte des images il n'y a pas de réelle variable latente. C'est très
+
+0:26:52.320,0:26:54.080
+difficile pour le système de se contenter d'imaginer
+
+0:26:54.080,0:26:57.679
+une solution unique au problème de peinture ici.
+
+0:26:57.679,0:27:00.799
+C'est une variété multimodale
+
+0:27:00.799,0:27:04.000
+je veux dire que c'est une variété. Ce n'est probablement pas
+
+0:27:04.000,0:27:10.400
+juste un point. Il y a plusieurs façons de compléter l'image ici
+
+0:27:10.400,0:27:14.880
+en remplissant la partie masquée.
+
+0:27:14.880,0:27:19.120
+Et donc sans variable latente, le système produit des prédictions floues et
+
+0:27:19.120,0:27:23.679
+n'apprend pas de caractéristiques particulièrement bonnes. [Question : La partie multimodale est-elle aussi la raison
+
+0:27:23.679,0:27:28.000
+pour laquelle nous avons cette zone interne violette dans la spirale ? Car chacun
+
+0:27:28.000,0:27:31.600
+de ces points ont deux prédictions juste entre les deux branches de la
+
+0:27:31.600,0:27:34.000
+spirale ?] C’est le problème supplémentaire
+
+0:27:34.000,0:27:39.039
+que si vous ne faites pas attention
+
+0:27:39.039,0:27:42.960
+les points qui se trouvent au milieu et pourraient être le
+
+0:27:42.960,0:27:48.080
+résultat d'une corruption d’un point rose sur un côté de la
+
+0:27:48.080,0:27:50.720
+variété ou un point rose sur un autre côté de la variété.
+
+0:27:50.720,0:27:53.760
+Les points situés en plein milieu ne savent pas où aller car la moitié
+
+0:27:53.760,0:27:58.159
+du temps qu'ils sont entraînés pour aller à une partie de la variété et l'autre
+
+0:27:58.159,0:28:00.960
+moitié du temps, ils essaient d'aller dans l'autre partie de la variété.
+
+0:28:00.960,0:28:07.360
+Donc cela pourrait créer des sortes de points plats dans la fonction énergie qui ne sont
+
+0:28:07.360,0:28:11.200
+pas bons. Il y a des moyens d'y remédier, mais ils ne fonctionnent
+
+0:28:11.200,0:28:15.600
+pas complètement à moins que vous n'utilisiez des modèles
+
+0:28:15.600,0:28:18.960
+à variables latentes. Ok d’autres méthodes contrastives sur lesquelles
+
+0:28:18.960,0:28:22.799
+nous passons juste pour votre savoir personnel. Il y a
+
+0:28:22.799,0:28:28.159
+des choses comme la divergence contrastive et d'autres que je ne vais pas développer.
+
+0:28:28.159,0:28:33.200
+La divergence contrastive est une idée très simple. Vous choisissez un échantillon d’entraînement
+
+0:28:33.200,0:28:36.720
+vous réduisez l'énergie à ce point.
+
+0:28:36.720,0:28:41.360
+Ensuite, à partir de cet échantillon, vous utilisez une sorte de processus basé sur le gradient.
+
+0:28:41.360,0:28:46.000
+Vous vous déplacez sur la variété de l'énergie avec du bruit.
+
+0:28:46.000,0:28:49.840
+Donc en partez de l'échantillon et déterminez comment changer l’échantillon, comment changer le y
+
+0:28:49.840,0:28:55.120
+de telle manière que
+
+0:28:55.120,0:28:59.039
+le modèle actuel basé sur l'énergie produise une énergie plus faible que celle que je viens
+
+0:28:59.039,0:29:04.240
+de mesurer pour cet échantillon. Donc en gros, vous essayez de trouver
+
+0:29:04.240,0:29:08.000
+un autre point de l'espace d'entrée qui a une énergie inférieure au
+
+0:29:08.000,0:29:11.279
+point d’entraînement que vous venez d'alimenter. Vous pouvez donc considérer cela comme
+
+0:29:11.279,0:29:16.159
+une sorte de façon intelligente de corrompre un échantillon d’entraînement
+
+0:29:16.159,0:29:20.720
+car vous ne le corrompez au hasard. 
+
+0:29:20.720,0:29:26.320
+Vous le corrompez en le modifiant pour trouver un point
+
+0:29:26.320,0:29:30.320
+dans l'espace auquel votre modèle donne déjà une faible énergie, de sorte qu'il
+
+0:29:30.320,0:29:33.440
+est un point que vous voudriez augmenter car
+
+0:29:33.440,0:29:38.080
+votre modèle consomme peu d'énergie et vous ne voulez pas qu'il consomme peu d'énergie.
+
+0:29:38.080,0:29:43.200
+Vous le poussez vers le haut et je vais… [Question : Professeur est-ce que des gens ont essayé 
+
+0:29:43.200,0:29:48.240
+des méthodes contrastives avec la méthode d'incrustation de cette image « inpainting » et
+
+0:29:48.240,0:29:52.480
+comment faire pour que cela fonctionne vraiment si on fait cela ensemble ?]
+
+0:29:52.480,0:29:57.039
+L'impainting est donc une méthode contrastive. Vous prenez une image,
+
+0:29:57.039,0:30:02.240
+vous la corrompez en bloquant une partie
+
+0:30:02.240,0:30:08.799
+et ensuite vous entraînez un réseau neuronal, en gros un auto-encodeur, pour générer
+
+0:30:08.799,0:30:11.679
+l'image complète. Ensuite vous comparez cette reconstruction
+
+0:30:11.679,0:30:15.840
+de l'image avec l'image originale non corrompue et c'est votre fonction énergie.
+
+0:30:15.840,0:30:21.600
+C'est donc une méthode contrastive.
+
+0:30:21.600,0:30:28.559
+[Question : donc si nous utilisons la perte NCE avec cette impainting perte
+
+0:30:28.559,0:30:34.320
+est-ce utile ?]  Vous pouvez utiliser la perte de NCE parce que
+
+0:30:34.320,0:30:40.880
+NCE repose en quelque sorte sur le fait que vous avez un nombre limité
+
+0:30:40.880,0:30:46.240
+d’échantillons négatifs. Ici vous générez en quelque sorte artificiellement
+
+0:30:46.240,0:30:50.640
+des échantillons négatifs et donc c'est vraiment un
+
+0:30:50.640,0:30:53.200
+scénario différent. Je ne pense pas que
+
+0:30:53.200,0:30:56.720
+vous pourriez utiliser quelque chose de similaire à NCE
+
+0:30:56.720,0:31:00.240
+ou du moins pas de manière significative. Ok c'est l'espace des y.
+
+0:31:05.919,0:31:13.200
+y1, y2 et disons que votre variété de données
+
+0:31:13.919,0:31:16.960
+est quelque chose comme ça. Disons que votre fonction énergie
+
+0:31:22.000,0:31:24.640
+est quelque chose comme ça. Alors je dessine ici
+
+0:31:27.679,0:31:33.840
+la région de basse énergie et je trace les lignes de
+
+0:31:40.159,0:31:45.919
+coût égal. Ok donc l'énergie semble bien en bas à gauche à droite. Vous avez des données ici
+
+0:31:45.919,0:31:49.840
+pour lesquelles que votre modèle donne une faible énergie.
+
+0:31:49.840,0:31:53.919
+Mais votre modèle n'est pas bon parce qu’en bas à droite il donne
+
+0:31:53.919,0:31:56.640
+une énergie basse aux régions qui ne disposent pas de données et 
+
+0:31:56.640,0:32:00.000
+en haut, vous avez des points de données pour lesquels votre modèle donne une grande énergie.
+
+0:32:00.000,0:32:03.679
+Voici comment une divergence contrastive pourrait fonctionner.
+
+0:32:03.679,0:32:09.919
+Vous prenez un échantillon d'entraînement. Prenons ce point. Par descente de gradient
+
+0:32:09.919,0:32:13.600
+vous descendez la variété de l'énergie
+
+0:32:13.600,0:32:21.600
+à un point qui a peu d'énergie. C'était un exemple d’entraînement y.
+
+0:32:21.600,0:32:26.559
+Celui que vous obtenez maintenant est un échantillon contrastif y̅.
+
+0:32:26.960,0:32:30.880
+Ce que vous faites maintenant, c'est que vous changez les paramètres de votre fonction énergie
+
+0:32:30.880,0:32:35.519
+pour rendre l'énergie de y plus petite et l'énergie de y̅ plus grande.
+
+0:32:35.519,0:32:38.640
+Ok utilisez une sorte de fonction de perte qui
+
+0:32:38.640,0:32:42.159
+baisse sur l'un et augmente sur l'autre. La fonction de perte que vous utilisez
+
+0:32:42.159,0:32:47.760
+est un matériau dont vous avez juste besoin d'une qui fera la bonne chose.
+
+0:32:47.760,0:32:51.120
+Donc ce que j'ai décrit ici est une sorte de version déterministe de la
+
+0:32:51.120,0:32:54.000
+divergence contrastive mais en fait la divergence contrastive est une sorte de
+
+0:32:54.000,0:32:58.080
+version probabiliste de cela. Ce que vous faites est
+
+0:32:58.080,0:33:02.399
+une sorte de descente basée sur un gradient, une sorte de
+
+0:33:02.399,0:33:07.440
+recherche d’un point de faible énergie mais vous le faites avec un certain niveau d'aléa,
+
+0:33:07.440,0:33:11.279
+Avec un certain bruit en elle. Donc une façon de faire cela dans un
+
+0:33:11.279,0:33:15.760
+un espace comme celui-ci est que vous donnez un coup aléatoire.
+
+0:33:15.760,0:33:20.720
+Vous considérez votre point de données ici comme une sorte de bille
+
+0:33:20.720,0:33:24.720
+qui va descendre à la surface de l'énergie. Vous lui donnez un coup
+
+0:33:24.720,0:33:28.960
+dans une direction aléatoire. Disons celle-ci. Vous laissez le système
+
+0:33:31.360,0:33:34.240
+suivre le gradient et vous vous arrêtez quand vous êtes fatigué. Vous
+
+0:33:37.120,0:33:40.240
+n'attendez pas qu'il descend tout. Vous vous arrêtez juste quand
+
+0:33:40.240,0:33:44.559
+vous êtes fatigué. Il y a une règle pour choisir si vous gardez le point ou non.
+
+0:33:44.559,0:33:48.559
+C'est votre y̅. [Question : pourquoi le coup est nécessaire ?]
+
+0:33:53.440,0:33:57.760
+Le coup est nécessaire pour que vous puissiez franchir les barrières énergétiques qui seraient
+
+0:33:57.760,0:34:01.919
+entre vous et les zones d'énergie plus faibles.
+
+0:34:01.919,0:34:08.399
+C'est pourquoi vous avez besoin du coup. Maintenant si vous avez
+
+0:34:08.399,0:34:13.440
+un espace y qui n'est pas continu mais discret
+
+0:34:13.440,0:34:17.359
+vous pouvez toujours faire cette minimisation d'énergie en faisant
+
+0:34:17.359,0:34:21.520
+quelque chose appelée annéliation simulé. Donc
+
+0:34:21.520,0:34:25.040
+si y est une variable discrète, vous la perturbez de manière aléatoire.
+
+0:34:25.040,0:34:28.159
+Si l'énergie que vous obtenez par cette perturbation est plus faible, alors vous la gardez.
+
+0:34:28.159,0:34:30.480
+Si elle est plus élevée, alors vous la gardez avec une certaine probabilité
+
+0:34:30.480,0:34:34.079
+et puis vous continuez à faire cela. Finalement l'énergie va baisser. 
+
+0:34:34.079,0:34:38.000
+Il s'agit donc d'un algorithme d'optimisation non basé sur le gradient,
+
+0:34:38.000,0:34:42.079
+un algorithme d'optimisation à gradient libre si vous le voulez, auquel vous devez recourir lorsque
+
+0:34:42.079,0:34:45.839
+l'espace est discret et vous ne pouvez pas utiliser d'informations issues du gradient.
+
+0:34:45.839,0:34:50.000
+Cette technique que je viens de décrire de donner un coup dans
+
+0:34:50.000,0:34:53.040
+une bille qui simule le roulement de
+
+0:34:53.040,0:34:57.599
+l'énergie s'appelle « Hamiltonian Monte Carlo » : HNC.
+
+0:34:57.599,0:35:01.599
+Vous pourriez voir cela dans d'autres contextes,
+
+0:35:01.599,0:35:05.359
+c'est donc une autre façon de générer des échantillons négatifs. Hamiltonian Monte
+
+0:35:05.359,0:35:07.680
+Carlo. Certains appellent cela parfois « Hybrid Monte Carlo ».
+
+0:35:07.680,0:35:10.160
+Certains d'entre vous ont entendu parler de
+
+0:35:12.079,0:35:14.720
+quelque chose appelée « machine de Boltzmann restreinte ».
+
+0:35:14.720,0:35:18.320
+C’est un modèle basé sur l'énergie dans lequel l'énergie
+
+0:35:18.320,0:35:21.760
+est très simple. C'est écrit en bas ici.
+
+0:35:21.760,0:35:25.920
+L'énergie de y et z… donc y est en gros un vecteur de données d'entrée et z
+
+0:35:25.920,0:35:30.240
+est c'est une variable latente. La fonction énergie est moins
+
+0:35:30.240,0:35:35.359
+Z transposée W Y où y où W est une matrice non nécessairement carrée
+
+0:35:35.359,0:35:40.400
+parce que Z et Y peuvent avoir des dimensions différentes.
+
+0:35:40.400,0:35:44.480
+Généralement Z et Y sont toutes deux des variables binaires
+
+0:35:44.480,0:35:50.160
+enfin plutôt des vecteurs binaires donc les composants sont des variables binaires.
+
+0:35:50.160,0:35:56.480
+Ce modèle était assez populaire au milieu des années 2000, mais je ne vais pas
+
+0:35:56.480,0:36:02.720
+passer beaucoup de temps dessus parce qu’ils 
+
+0:36:02.720,0:36:06.160
+ne sont plus très populaires.
+
+0:36:06.160,0:36:11.119
+C’est juste pour vous donner donne une référence de ce que ce que cela signifie. Il y a des
+
+0:36:11.119,0:36:14.079
+affinements de la divergence contrastive. L'un d'entre eux est appelé « persistant
+
+0:36:14.079,0:36:17.680
+divergence contrastive » et consiste à utiliser un tas de
+
+0:36:17.680,0:36:21.760
+particules. Vous pouvez vous rappeler la position donc
+
+0:36:21.760,0:36:26.640
+ils ont des sortes de positions persistantes permanentes si vous voulez.
+
+0:36:26.640,0:36:30.079
+Alors vous jetez un tas de billes dans votre
+
+0:36:30.079,0:36:35.839
+paysage énergétique et vous continuez à les faire rouler
+
+0:36:35.839,0:36:40.400
+avec un peu de bruit ou de coups et ensuite vous gardez leur position.
+
+0:36:40.400,0:36:44.320
+Donc vous ne changez pas la position de la bille en fonction
+
+0:36:44.320,0:36:47.599
+des nouveaux échantillons d'entraînement. Il suffit de garder les billes là où elles sont
+
+0:36:47.599,0:36:51.760
+et elles finiront par trouver des endroits à faible consommation d'énergie 
+
+0:36:51.760,0:36:55.200
+dans votre variété d'énergie et les fera remonter
+
+0:36:55.200,0:36:58.320
+car c'est ce qui se passe
+
+0:36:58.320,0:37:00.960
+pendant l’entraînement. Mais cela ne s'étend pas très bien.
+
+0:37:04.640,0:37:09.119
+Des choses comme les RBMs qui deviennent très très chers à entraîner
+
+0:37:09.119,0:37:12.400
+en grandes dimensions. Ok donc maintenant les
+
+0:37:17.920,0:37:23.119
+modèles basé sur l'énergie à variable latente [LV-EBMs] qui
+
+0:37:23.119,0:37:27.760
+est mon type de modèle préféré actuellement. Nous avons donc parlé de l'idée de
+
+0:37:34.320,0:37:37.920
+construire un modèle prédictif en ayant une variable latente afin d'avoir
+
+0:37:37.920,0:37:40.880
+la variable observée x. Vous l'exécutez dans un prédicteur qui extrait quelques
+
+0:37:40.880,0:37:44.720
+représentations des variables observées. Ensuite cela
+
+0:37:44.720,0:37:48.240
+va dans un décodeur qui produit la prédiction. Mais si vous voulez que votre décodeur
+
+0:37:48.240,0:37:50.800
+puisse faire des prédictions multiples
+
+0:37:50.800,0:37:54.079
+vous lui donnez une variable latente et à mesure que vous variez
+
+0:37:54.079,0:37:57.599
+la valeur de cette variable latente la prédiction variera sur un ensemble.
+
+0:37:57.599,0:38:01.359
+Sur la variété des données
+
+0:38:01.359,0:38:05.839
+dans l'espace des y qui sont compatibles avec x.
+
+0:38:06.079,0:38:09.520
+Donc cette architecture est ici… la formule pour l'énergie peut être
+
+0:38:09.520,0:38:14.160
+écrit comme à gauche ici : C(y)
+
+0:38:14.160,0:38:18.160
+C est une fonction de coût qui compare ces deux arguments donc vous
+
+0:38:18.160,0:38:22.720
+comparer y, le vecteur de données, avec le résultat de l'application du décodeur à la
+
+0:38:22.720,0:38:25.200
+sortie du prédicteur qui prend en compte x.
+
+0:38:25.200,0:38:29.119
+Le décodeur prend également en compte z.
+
+0:38:30.880,0:38:37.760
+Le problème qui se pose est, si z est trop puissant, autrement dit si z a
+
+0:38:37.760,0:38:42.800
+trop de capacité alors il va toujours
+
+0:38:42.800,0:38:46.000
+produire un y̅ qui va être exactement égale à y.
+
+0:38:46.000,0:38:50.960
+Rappelez-vous que l'algorithme d'inférence ici est que vous donnez un x et
+
+0:38:50.960,0:38:54.000
+un y et vous trouvez ensuite un z qui minimise C(y, y̅).
+
+0:38:54.000,0:38:58.079
+C'est comme ça que vous
+
+0:38:58.079,0:39:03.040
+faites l'inférence de la variable latente dans un LV-EBM.
+
+0:39:03.040,0:39:06.400
+Si l'on donne un x et un y, on trouve le z qui minimise l'énergie.
+
+0:39:06.400,0:39:11.200
+Donc si z par exemple a la même dimension que y
+
+0:39:11.200,0:39:16.160
+et le décodeur est suffisamment puissant pour représenter la fonction identité
+
+0:39:16.160,0:39:20.640
+alors pour tout y il y aura toujours un z qui produit y̅ qui est
+
+0:39:20.640,0:39:24.079
+exactement égal à y. Si le décodeur est la fonction identité
+
+0:39:24.079,0:39:27.920
+qui ignore h, voir une fonction identité
+
+0:39:27.920,0:39:32.560
+de z à y à y̅ alors vous venez de mettre
+
+0:39:32.560,0:39:40.079
+z égal à y et l'énergie est nulle. Cela serait un modèle à base d’énergie terrible
+
+0:39:40.079,0:39:43.119
+car il ne donnerait pas beaucoup d'énergie aux choses
+
+0:39:43.119,0:39:46.480
+en dehors de la variété des données. Il donnerait peu d'énergie à tout.
+
+0:39:46.480,0:39:52.560
+Il donnerait une énergie nulle à tout. Donc la façon d'empêcher le système
+
+0:39:52.560,0:39:57.440
+de donner une faible énergie aux points situés en dehors de la multitude de données
+
+0:39:57.440,0:40:00.400
+est de limiter la capacité d'information de
+
+0:40:00.400,0:40:03.280
+la variable latente z. Pour être plus précis, si z ne peut prendre que
+
+0:40:06.880,0:40:13.119
+disons 10 valeurs différentes, ce que cela signifie c'est que vous contraignez z à
+
+0:40:13.119,0:40:17.040
+ne prendre que dix valeurs différentes possibles. Disons que z est
+
+0:40:17.040,0:40:22.480
+un vecteur « one hot » de dimension dix comme dans k-means. Alors il ne va 
+
+0:40:22.480,0:40:29.119
+Y avoir que 10 points dans l'espace y qui auront une énergie nulle parce que
+
+0:40:29.119,0:40:33.200
+soit y est égal à l'un des y̅ qui est produit à partir de l'une de ces dix
+
+0:40:33.200,0:40:36.800
+z ou pas. Si c'est le cas, alors l'énergie vaut
+
+0:40:36.800,0:40:40.480
+zéro. Si ce n'est pas le cas, l'énergie devra être supérieure à zéro.
+
+0:40:40.480,0:40:43.359
+En fait, elle va croître de façon quadratique à mesure que vous vous éloignerez de
+
+0:40:43.359,0:40:47.359
+ce z et c'est exactement l'idée des k-means.
+
+0:40:47.359,0:40:51.839
+Que faire si vous trouvez d'autres moyens de limiter les informations
+
+0:40:51.839,0:40:57.200
+contenu de z ? Cela semble être une sorte de petit
+
+0:40:57.200,0:41:02.160
+problème technique, mais à mon avis la
+
+0:41:02.160,0:41:05.599
+question de savoir comment limiter le contenu informatif d'une variable latente
+
+0:41:05.599,0:41:10.640
+dans un modèle de ce type est la question la plus importante en matière d'IA aujourd’hui.
+
+0:41:10.640,0:41:14.640
+Je ne plaisante pas.
+
+0:41:14.640,0:41:19.680
+Je pense que le principal problème auquel nous sommes confrontés est de savoir comment faire
+
+0:41:19.680,0:41:23.760
+l'apprentissage autosupervisé correctement. Les méthodes contrastives ont montré leurs
+
+0:41:23.760,0:41:27.760
+limites et nous devons donc trouver des alternatives. Les alternatives sont
+
+0:41:27.760,0:41:32.000
+les modèles à variable latente régularisée. Il pourrait y avoir d'autres idées que personne n'a eues
+
+0:41:32.000,0:41:34.960
+jusqu'à présent, mais ce sont les deux seuls que je connaisse.
+
+0:41:34.960,0:41:37.760
+Le principal problème technique que nous devons résoudre est
+
+0:41:37.760,0:41:41.520
+comment limiter le contenu informatif de la variable latente afin de limiter
+
+0:41:41.520,0:41:45.040
+le volume de l'espace y qui peut prendre peu d'énergie
+
+0:41:45.040,0:41:48.720
+et nous fabriquons automatiquement l'énergie en dehors de la
+
+0:41:48.720,0:41:52.319
+la variété des données où nous entraînons le système à avoir une faible énergie.
+
+0:41:52.319,0:41:56.000
+Nous rendons automatiquement l'énergie extérieure plus élevée.
+
+0:41:56.000,0:41:59.440
+Je vais donc passer en revue quelques exemples de systèmes qui fonctionnent réellement
+
+0:41:59.440,0:42:02.560
+et les choses que les gens ont fait 
+
+0:42:02.560,0:42:10.240
+il y a plus de 20 ans dans certains cas. Donc l'idée ici,
+
+0:42:10.240,0:42:14.960
+une des idées, consiste à ajouter un régulariseur
+
+0:42:14.960,0:42:18.800
+dans l'énergie. Ce régulariseur prend des valeurs basses
+
+0:42:18.800,0:42:22.480
+sur une petite partie de l'espace de z.
+
+0:42:22.480,0:42:25.520
+Le système choisira donc de préférence les valeurs de z
+
+0:42:25.520,0:42:31.599
+qui se trouvent dans ce type d'ensemble restreint où R prend une petite valeur.
+
+0:42:31.599,0:42:37.440
+Et si z doit sortir de cet ensemble pour faire
+
+0:42:37.440,0:42:41.760
+une bonne reconstruction, vous en payez le prix en termes d’énergie.
+
+0:42:41.760,0:42:45.599
+Ok donc le volume
+
+0:42:45.599,0:42:51.119
+de l'espace de z qui est déterminé par R. Il limite en gros
+
+0:42:51.119,0:42:55.920
+le volume de espace des y qui peuvent prendre peu d'énergie.
+
+0:42:55.920,0:42:59.760
+Le compromis est contrôlé par un coefficient lambda que vous
+
+0:42:59.760,0:43:04.400
+pouvez adapter pour faire que le
+
+0:43:04.400,0:43:09.200
+volume de l'espace y qui prend peu d'énergie soit aussi petit que possible
+
+0:43:09.200,0:43:15.119
+ou pas si petit que ça. Voici donc quelques exemples de R(z).
+
+0:43:15.119,0:43:19.839
+Certains d'entre eux sont en quelque sorte
+
+0:43:19.839,0:43:22.880
+utiles car ils sont différenciables par rapport à z et certaines d'entre eux ne sont
+
+0:43:22.880,0:43:26.720
+pas si utiles car ils ne sont pas différenciables. Vous devez regarder
+
+0:43:26.720,0:43:31.200
+à faire une recherche discrète. Un exemple repose sur la dimensionalité de
+
+0:43:31.200,0:43:36.240
+z. Donc ce que vous pouvez faire est de décider qu’a priori z a
+
+0:43:36.240,0:43:38.960
+trois dimensions, quatre dimensions, cinq dimensions, six dimensions, etc. Vous entraînez votre modèle
+
+0:43:38.960,0:43:42.160
+pour les différentes dimensions de z. Il existe un ensemble de dimensions,
+
+0:43:42.160,0:43:44.960
+une dimension pour laquelle la prédiction est bonne et
+
+0:43:44.960,0:43:48.480
+en même temps la dimension de z serait minimisée.
+
+0:43:48.480,0:43:52.720
+Ce que vous aurez trouvé, c'est en gros le plus bas enchâssement de
+
+0:43:52.720,0:43:57.440
+dimension de votre espace. Imaginez par exemple que votre jeu de données
+
+0:43:57.440,0:43:59.599
+se compose de nombreuses photos de
+
+0:44:02.079,0:44:04.720
+quelqu'un qui fait des grimaces devant une caméra.
+
+0:44:04.720,0:44:09.520
+Nous savons que la dimension effective de la surface de tous les visages d'une
+
+0:44:09.520,0:44:12.560
+personne est quelque chose comme 60, moins de 100,
+
+0:44:12.560,0:44:16.400
+parce que c’est limité par le nombre de muscles de votre visage.
+
+0:44:16.400,0:44:20.079
+Et donc il doit y avoir un z de dimension
+
+0:44:20.079,0:44:25.920
+50 ou 60 ou quelque chose comme ça, de sorte que lorsque vous le passez par un
+
+0:44:25.920,0:44:31.200
+ConvNet, vous générerez tous les cas possibles
+
+0:44:31.200,0:44:36.800
+du visage de cette personne. Ok c'est la surface du visage pour
+
+0:44:36.800,0:44:39.760
+cette personne si vous voulez. Donc ce que vous pouvez faire c'est
+
+0:44:42.560,0:44:45.760
+une méthode super coûteuse qui consiste à essayer toutes sortes de
+
+0:44:45.760,0:44:50.800
+dimensions différentes de z. Une façon de formuler cela
+
+0:44:50.800,0:44:55.280
+mathématiquement, c'est de minimiser la norme L0 de z.
+
+0:44:55.280,0:44:59.200
+C'est en fait une chose légèrement différente.
+
+0:44:59.200,0:45:02.720
+Ce que vous pouvez faire c'est choisir un z qui est relativement élevé
+
+0:45:02.720,0:45:05.599
+mais pour tout échantillon donné, vous minimisez
+
+0:45:05.599,0:45:10.720
+le nombre de composantes de z qui sont non nulles. Ok c’est que l'on appelle la
+
+0:45:10.720,0:45:17.119
+norme L0. C'est juste le compte du nombre de composantes qui sont non nulles.
+
+0:45:17.119,0:45:22.640
+Il est très difficile de minimiser cette norme parce que ce n'est
+
+0:45:22.640,0:45:27.520
+pas différenciable, c’est très discret. Donc les gens utilisent un
+
+0:45:27.520,0:45:31.760
+l'assouplissement de cette norme appelée la norme L1. Donc la norme L1 est
+
+0:45:31.760,0:45:34.079
+la somme des valeurs absolues des
+
+0:45:34.079,0:45:39.920
+composantes de z. C'est ce que vous utilisez pour R et z. La
+
+0:45:39.920,0:45:43.200
+somme des valeurs absolues des composantes de z.
+
+0:45:43.200,0:45:48.400
+Lorsque vous ajoutez ceci à votre fonction énergie
+
+0:45:48.400,0:45:51.440
+ce que le système essaie de faire, c'est de trouver un z
+
+0:45:51.440,0:45:57.000
+qui reconstruit le y parce qu'il doit minimiser C(y, y̅).
+
+0:45:57.000,0:46:01.119
+Il essaie également de minimiser le nombre de ses composantes qui sont non nulles car
+
+0:46:01.119,0:46:04.079
+c'est la meilleure façon de minimiser la norme L1.
+
+0:46:04.079,0:46:10.319
+C'est ce qu'on appelle un codage épars et ça marche
+
+0:46:10.319,0:46:14.800
+vraiment bien. Je vais vous montrer quelques exemples.
+
+0:46:14.800,0:46:18.319
+Avant ça, je veux juste mentionner que, et nous en parlerons un peu
+
+0:46:18.319,0:46:21.760
+plus, l'idée qu'ajouter du bruit à z
+
+0:46:21.760,0:46:26.319
+limitera également le contenu informatif de z.
+
+0:46:26.319,0:46:32.079
+Nous y reviendrons dans une minute. Alors voici l'idée
+
+0:46:32.079,0:46:35.760
+du codage épars. Le codage épars est une version inconditionnelle
+
+0:46:35.760,0:46:38.800
+des modèles à base d’énergie. Il n'y a donc pas x mais seulement y
+
+0:46:38.800,0:46:44.960
+et un z. La fonction énergie est y moins Wz où W est une
+
+0:46:44.960,0:46:48.400
+matrice de dictionnaire très similaire à la matrice prototype dans
+
+0:46:48.400,0:46:52.160
+k-means. z est un vecteur généralement de dimension
+
+0:46:52.160,0:46:56.160
+supérieure à y et vous mesurez donc le carré de la distance,
+
+0:46:56.160,0:47:00.400
+la distance euclidienne, entre y et Wz. Donc, en gros, votre décodeur ici est
+
+0:47:00.400,0:47:05.680
+Linéaire. C'est juste une matrice et vous ajoutez un terme lambda multiplié par
+
+0:47:05.680,0:47:10.640
+L1 norme de z qui est représentée par ces deux barres.
+
+0:47:10.640,0:47:14.079
+C'est la fonction énergie pour un codage épars ok. Vous pouvez imaginer cela
+
+0:47:14.079,0:47:18.400
+comme un cas particulier du système, de l’architecture
+
+0:47:18.400,0:47:22.640
+que j'ai montré précédemment sauf que ce n'est pas conditionnel.
+
+0:47:22.640,0:47:28.880
+Il n'y a pas de x. Maintenant qu'est-ce que cela fait ?
+
+0:47:28.880,0:47:32.559
+Alfredo vous dira que la photo que je montre ici à gauche
+
+0:47:32.559,0:47:35.280
+est inappropriée car elle est en fait générée avec un
+
+0:47:35.280,0:47:41.040
+modèle différent mais c'est une bonne sorte de
+
+0:47:41.040,0:47:45.760
+représentation de ce que le codage épars tente de faire.
+
+0:47:45.760,0:47:48.800
+Qui est de se rapprocher de la variété des données
+
+0:47:48.800,0:47:52.559
+par une approximation linéaire par morceaux en gros.
+
+0:47:52.559,0:47:58.160
+Alors imaginez que vous avez cette matrice de W ok. Quelqu'un
+
+0:47:58.160,0:48:02.319
+vous l'a donné ou vous l'avez appris d'une manière ou d'une autre.
+
+0:48:02.319,0:48:06.160
+Maintenant vous décidez a priori qu'un certain
+
+0:48:06.160,0:48:10.640
+nombre de composantes de z sont non nulles ok. La plupart des composantes de z sont nulles.
+
+0:48:10.640,0:48:13.920
+Un petit nombre de composantes de z sont non nulles.
+
+0:48:13.920,0:48:18.480
+Et vous faites varier la valeur de ces éléments.
+
+0:48:18.800,0:48:22.800
+sur un intervalle de l'ensemble des vecteurs que vous allez générer.
+
+0:48:22.800,0:48:25.599
+L'ensemble des y̅ que vous allez générer
+
+0:48:25.599,0:48:30.800
+seront des y̅ qui se trouvent dans le sous-espace linéaire couvert par
+
+0:48:30.800,0:48:36.800
+les colonnes correspondantes de la matrice W. Pour chaque valeur de z
+
+0:48:36.800,0:48:39.520
+qui ne sont pas nulles, vous calculez une
+
+0:48:39.520,0:48:42.880
+combinaison des colonnes correspondantes de W.
+
+0:48:42.880,0:48:46.079
+Donc vous vous déplacez en gros sur un
+
+0:48:46.079,0:48:52.160
+sous-espace linéaire de l'espace y. Donc y̅ va être en gros le long d’un
+
+0:48:52.160,0:48:56.960
+espace de faible dimension, un sous-espace linéaire de faible dimension.
+
+0:48:56.960,0:49:01.520
+La dimension de cet espace sera le nombre de composantes non nulles de z.
+
+0:49:01.520,0:49:06.559
+Ok donc pour un y particulier quand vous trouvez le z
+
+0:49:06.559,0:49:10.240
+qui minimise l'énergie. Un certain nombre de composantes seront
+
+0:49:10.240,0:49:15.040
+non nulles. Et comme vous bougez
+
+0:49:15.040,0:49:18.960
+lentement ces composantes non nulles, cela va changer la valeur mais vous allez rester sur le
+
+0:49:18.960,0:49:23.599
+même sous-espace linéaire jusqu'à ce que y change
+
+0:49:23.599,0:49:25.839
+trop. Et puis tout d'un coup vous avez besoin d'un
+
+0:49:25.839,0:49:30.480
+ensemble différent de z non nuls pour faire une meilleure reconstruction. Maintenant
+
+0:49:30.480,0:49:36.079
+vous passez à un autre plan. Parce qu'un autre ensemble de z, de
+
+0:49:36.079,0:49:42.240
+z composantes deviennent non nulles. Donc maintenant vous déplacez y à nouveau et
+
+0:49:42.240,0:49:45.920
+là encore, les coefficients de z continuent de changer de valeur, sauf pour ceux
+
+0:49:45.920,0:49:50.160
+qui sont zéro qui restent zéro et tout d'un coup, cela change à nouveau.
+
+0:49:50.160,0:49:53.760
+Cela va à un autre [plan]. Donc c'est en quelque sorte bien symbolisé par
+
+0:49:53.760,0:49:56.559
+l'image de gauche où l'on voit que la variété
+
+0:49:56.559,0:50:00.559
+des données est approximée par un ensemble de
+
+0:50:00.559,0:50:05.760
+sous-espace linéaire, dans ce cas les lignes. La raison pour laquelle il est difficile de
+
+0:50:05.760,0:50:09.920
+représenter le codage épars en 2D est parce qu'il
+
+0:50:09.920,0:50:13.200
+dégénère en 2D. Donc une question est de savoir comment entraîner un
+
+0:50:13.200,0:50:15.760
+système comme celui-ci. Afin d’entraîner un système comme celui-ci
+
+0:50:15.760,0:50:20.079
+notre fonction de perte va juste être la moyenne
+
+0:50:20.079,0:50:23.920
+d'énergie que notre modèle donne à nos échantillons d’entraînement.
+
+0:50:23.920,0:50:27.040
+La fonction de perte est donc juste l'énergie moyenne en gros. La moyenne f.
+
+0:50:27.040,0:50:34.000
+Et souvenez-vous que f(y) est égal au minimum sur z de E(y,z).
+
+0:50:34.000,0:50:38.720
+Donc nous allons prendre la moyenne de f sur tous nos échantillons d’entraînement
+
+0:50:38.720,0:50:42.480
+et minimisez cette moyenne en ce qui concerne les paramètres
+
+0:50:42.480,0:50:46.960
+du modèle. Ces paramètres sont les coefficients de la matrice W.
+
+0:50:46.960,0:50:51.359
+Encore une fois, on l'appelle la matrice dictionnaire. Alors comment faire ? Nous prenons un échantillon y,
+
+0:50:51.359,0:50:55.280
+on trouve le z qui minimise l'énergie ok. La somme des deux termes que vous
+
+0:50:55.280,0:50:59.520
+voyez ici. Puis nous faisons un pas de gradient
+
+0:50:59.520,0:51:03.040
+en W. Nous calculons donc le gradient de
+
+0:51:03.040,0:51:06.000
+l'énergie par rapport à W, ce qui est très simple car c'est une fonction quadratique
+
+0:51:06.000,0:51:10.079
+de W. Et nous faisons un pas de gradient stochastique.
+
+0:51:10.079,0:51:14.880
+Maintenant nous prenons le y suivant et recommençons.
+
+0:51:14.880,0:51:19.119
+Minimiser à nouveau par rapport à z et ensuite, pour cette valeur de z, calculer le
+
+0:51:19.119,0:51:22.800
+gradient par rapport à W et faire un pas dans le gradient négatif.
+
+0:51:22.800,0:51:26.960
+Vous continuez faire cela. Maintenant si vous faites juste ça, ça ne marche pas.
+
+0:51:26.960,0:51:30.640
+Cela ne fonctionne pas car le résultat est que W
+
+0:51:30.640,0:51:34.480
+continue à grossir et z à rapetisser.
+
+0:51:34.480,0:51:36.880
+Le problème est que le
+
+0:51:36.880,0:51:38.800
+système ne résoudra pas réellement le problème.
+
+0:51:38.800,0:51:44.400
+Il faut donc normaliser la matrice W pour qu'elle ne puisse pas grossir
+
+0:51:44.400,0:51:48.640
+indéfiniment et permettre à z de réduire en conséquence.
+
+0:51:48.640,0:51:52.160
+La façon de le faire est que, en gros, après
+
+0:51:52.160,0:51:57.040
+chaque mise à jour de la matrice W, vous normalisez la somme des carrés
+
+0:51:57.040,0:52:01.200
+des termes dans chaque colonne de W.
+
+0:52:01.200,0:52:06.079
+Donc normaliser les colonnes de W après chaque mise à jour.
+
+0:52:06.720,0:52:12.079
+Cela empêchera les termes W d'exploser et les termes z de disparaitre.
+
+0:52:12.079,0:52:15.359
+Cela obligera le système à réellement
+
+0:52:15.359,0:52:20.160
+trouver une matrice W raisonnable et ne pas s'en tirer en se contentant de faire z
+
+0:52:20.160,0:52:24.800
+plus court. Ok donc c'est le codage épars. 
+
+0:52:24.800,0:52:28.880
+Cet algorithme d'apprentissage a été inventé par
+
+0:52:28.880,0:52:34.559
+deux spécialistes des neurones informatiques, Bruno Olshausen et David Field, en 1997.
+
+0:52:34.559,0:52:37.520
+Cela remonte à loin. Ok alors voici le problème avec le codage épars.
+
+0:52:37.520,0:52:39.520
+L'algorithme d'inférence est en quelque sorte
+
+0:52:39.520,0:52:45.599
+cher vous.. oups…  Ce que vous devez faire est 
+
+0:52:45.599,0:52:50.319
+que pour un y donné, c'est en quelque sorte minimiser la somme de ces deux termes
+
+0:52:50.319,0:52:52.079
+dont l'un est L2 deux l'autre est L1.
+
+0:52:52.079,0:52:55.760
+Il existe un très grand nombre d'articles en mathématiques appliquées
+
+0:52:55.760,0:53:00.400
+qui expliquent comment le faire efficacement.
+
+0:53:00.400,0:53:04.880
+En particulier un algorithme pour le faire est appelé ISTA qui signifie
+
+0:53:04.880,0:53:10.559
+« Iterative Shrinkage and Thresholding Algorithm” [rétrécissement itératif et algorithme de seuillage]
+
+0:53:10.559,0:53:14.480
+et je vais vous décrire ce qu'est l'ISTA dans une minute.
+
+0:53:14.480,0:53:20.400
+Il consiste en gros à alterner une sorte de
+
+0:53:20.400,0:53:25.839
+minimisation par rapport à z du premier terme
+
+0:53:25.839,0:53:33.280
+et ensuite le second terme. Alternativement. Voici donc un type de forme abstraite
+
+0:53:33.280,0:53:36.720
+de l'algorithme ISTA. Il existe une version rapide de celui-ci
+
+0:53:36.720,0:53:44.800
+appelé FISTA en bas de la diapositive.
+
+0:53:44.800,0:53:47.680
+En fait je me rends compte qu'il me manque la référence pour l'algorithme 
+
+0:53:47.680,0:53:50.880
+ISTA. Elle n'est pas dans l’une des références que je montre ici.
+
+0:53:50.880,0:53:55.520
+Son premier auteur est Deboulid : d-e-b-o-u-l-i-d.
+
+0:53:55.520,0:54:00.079
+Peu importe, voici l'algorithme. Vous commencez par z égal à zéro
+
+0:54:00.079,0:54:03.440
+et ensuite vous appliquez l’itération ici.
+
+0:54:03.440,0:54:10.559
+L'avant-dernière formule. De sorte que la chose
+
+0:54:10.559,0:54:14.079
+qui se trouve entre parenthèses est en fait un pas de gradient dans l'erreur quadratique
+
+0:54:14.079,0:54:17.119
+l'erreur de reconstruction quadratique. Donc si vous calculez le gradient ou
+
+0:54:17.119,0:54:21.200
+l'erreur de reconstruction quadratique et vous faites un pas de gradient, 
+
+0:54:21.200,0:54:24.800
+on obtient cette formule où 1/L est 
+
+0:54:24.800,0:54:29.280
+la taille du pas du gradient.
+
+0:54:29.280,0:54:35.040
+Ok donc en gros nous mettons à jour z avec le
+
+0:54:35.040,0:54:39.599
+négatif du gradient de l'erreur de reconstruction carrée.
+
+0:54:39.599,0:54:43.280
+La prochaine opération que vous faites est une opération de rétraction. Donc vous prenez
+
+0:54:43.280,0:54:47.440
+chaque composante du vecteur z résultant
+
+0:54:47.440,0:54:51.040
+et vous les réduisez tous vers zéro. Donc vous soustrayez
+
+0:54:51.040,0:54:54.880
+si la composante de z est positive, vous lui soustrayez une constante
+
+0:54:54.880,0:54:58.640
+et si elle est négative, vous lui ajoutez la même constante.
+
+0:54:58.640,0:55:02.960
+Si vous vous approchez trop de zéro, vous
+
+0:55:02.960,0:55:09.280
+mettez à zéro. Donc en gros c'est une fonction qui
+
+0:55:09.280,0:55:14.880
+est plate autour de zéro et ensuite grandit comme la fonction d'identité au-dessus d'un
+
+0:55:14.880,0:55:20.640
+certain seuil et en dessous d'un certain seuil.
+
+0:55:20.640,0:55:25.839
+Ok, cela réduit vers zéro. Si vous continuez à itérer cet algorithme pour
+
+0:55:25.839,0:55:31.760
+les valeurs propres de L et lambda, le z
+
+0:55:31.760,0:55:35.040
+convergera vers la solution du
+
+0:55:35.040,0:55:39.200
+problème de minimisation de l'énergie, qui est le minimum
+
+0:55:39.200,0:55:45.760
+de l'énergie ici : E(y,z) par rapport à z. Ok et cela suggère…
+
+0:55:45.760,0:55:49.760
+Gardez cela à l'esprit. Maintenant voici un problème. Cet algorithme est
+
+0:55:49.760,0:55:53.119
+un peu cher. Si vous voulez l’exécuter
+
+0:55:53.119,0:55:57.599
+sur une image ou sur tous les patchs d'une image ou quelque chose comme ça,
+
+0:55:57.599,0:55:59.839
+vous ne pourrez pas le faire
+
+0:55:59.839,0:56:04.880
+en temps réel sur de grandes images. Voici donc une autre idée. Elle consiste
+
+0:56:04.880,0:56:07.280
+à entraîner un réseau de neurones afin de prévoir
+
+0:56:07.280,0:56:11.200
+quelle est la solution au problème de la minimisation de l'énergie.
+
+0:56:11.200,0:56:14.400
+Ok donc vous voyez le diagramme ici à droite
+
+0:56:14.400,0:56:20.720
+où nous entraînons un encodeur qui prend la valeur y… Pour le moment
+
+0:56:20.720,0:56:23.839
+on peut ignorer la pièce qui dépend de x. 
+
+0:56:23.839,0:56:25.599
+x passe par un prédicteur prédisant
+
+0:56:25.599,0:56:29.119
+h et ensuite h alimente l’encodeur du décodeur. Vous pouvez ignorer cette partie pour le moment.
+
+0:56:29.119,0:56:34.079
+Dans la version inconditionnelle vous avez juste y qui va à un encodeur
+
+0:56:34.079,0:56:38.640
+qui produit une prédiction de la valeur optimale de la variable z
+
+0:56:38.640,0:56:41.280
+appelée z̅. Ensuite la variable z elle-même va dans
+
+0:56:43.599,0:56:46.640
+le décodeur qui régularise puis
+
+0:56:46.640,0:56:51.599
+produit une reconstruction y̅. Ce que vous faites ici, c'est que vous trouvez
+
+0:56:51.599,0:56:55.359
+la valeur z qui minimise l'énergie.
+
+0:56:55.359,0:57:00.559
+Mais l'énergie maintenant est toujours la
+
+0:57:00.559,0:57:04.079
+somme de ces deux termes C(y, y̅) et R(z).
+
+0:57:04.079,0:57:07.920
+Alors ce que nous allons faire, c'est entraîner l'encodeur
+
+0:57:07.920,0:57:15.119
+à prédire cette valeur optimale de z obtenue par minimisation.
+
+0:57:15.119,0:57:17.440
+Il va être entraîné en minimisant
+
+0:57:17.440,0:57:20.640
+ce terme D(z,z̅). Fondamentalement il considère
+
+0:57:20.640,0:57:25.119
+z comme la valeur cible et vous l'entrainez par rétropropagation,
+
+0:57:25.119,0:57:29.760
+par descente de gradient pour faire une prédiction qui est le plus proche 
+
+0:57:29.760,0:57:36.400
+possible de z. C'est une forme de cette idée.
+
+0:57:37.520,0:57:41.599
+Une autre forme de cette idée un peu plus sophistiquée
+
+0:57:41.599,0:57:45.200
+est que lorsque vous faites la minimisation par rapport à z de
+
+0:57:45.200,0:57:48.319
+l'énergie par rapport à z. Vous tenez compte du fait que vous
+
+0:57:48.319,0:57:52.640
+ne voulez pas que z s'éloigne trop de z̅. Donc, en gros
+
+0:57:52.640,0:57:56.720
+votre fonction énergie a maintenant trois termes. Elle a l'erreur de reconstruction, elle a
+
+0:57:56.720,0:58:00.880
+la régularisation, mais il y a aussi la différence entre
+
+0:58:00.880,0:58:04.480
+la z̅ qui est la prédiction de l'encodeur
+
+0:58:04.480,0:58:07.200
+et la valeur actuelle de la variable z.
+
+0:58:07.200,0:58:12.160
+La fonction énergie actuelle s'écrit donc ici E(x, y, z).
+
+0:58:12.160,0:58:18.000
+C’est égal à la fonction C qui compare y et la sortie du
+
+0:58:18.000,0:58:20.960
+décodeur appliqué à z. C'est le décodeur inconditionnel ici.
+
+0:58:20.960,0:58:24.079
+Vous avez un deuxième terme qui est
+
+0:58:24.079,0:58:27.839
+la fonction D qui mesure en quelque sorte la distance entre z et
+
+0:58:27.839,0:58:31.520
+l’encodeur appliqué à y. Il ne devrait pas y avoir de x.
+
+0:58:31.520,0:58:37.359
+Et vous régularisez aussi z. Ok donc en gros vous dites au
+
+0:58:37.359,0:58:40.480
+système de trouver une valeur pour la variable latente qui reconstruit,
+
+0:58:40.480,0:58:48.640
+qui est éparse. Si R est une norme L1 ou ne l'est pas, 
+
+0:58:48.720,0:58:51.599
+ne dispose pas de trop d'informations mais n'est pas non plus trop éloigné de tout.
+
+0:58:51.599,0:58:56.400
+C'est que l’encodeur a prédit. Une idée spécifique est appelée
+
+0:58:56.400,0:59:00.240
+LISTA pour « Learning » ISTA et elle façonne
+
+0:59:00.240,0:59:05.680
+l'architecture de l’auto-encodeur de sorte que cela ressemble beaucoup à l’algorithme ISTA.
+
+0:59:05.680,0:59:08.880
+Donc si nous revenons à l'algorithme ISTA,
+
+0:59:08.880,0:59:15.280
+à l'avant-dernière formule ici. 
+
+0:59:15.280,0:59:21.280
+On dirait une mise à jour du vecteur avec une matrice,
+
+0:59:21.280,0:59:25.200
+c'est comme une étape linéaire d'un réseau de neurones si vous voulez.
+
+0:59:25.200,0:59:28.400
+Ensuite une certaine non-linéarité qui se trouve être un rétrécissement qui est une sorte de
+
+0:59:28.400,0:59:32.640
+double valeur si vous voulez. Quand vous augmentez,
+
+0:59:32.640,0:59:36.799
+une autre valeur baisse. Et donc si vous regardez le diagramme de
+
+0:59:36.799,0:59:40.480
+tout cet algorithme, cela ressemble au
+
+0:59:40.480,0:59:45.839
+le schéma fonctionnel que j'ai dessiné ici. Cela commence par y ,
+
+0:59:45.839,0:59:48.960
+multiplié par une certaine matrice et ensuite réduction
+
+0:59:48.960,0:59:53.440
+du résultat. Cela vous donne le prochain z auquel on applique une autre matrice pour l'ajouter à
+
+0:59:53.440,0:59:57.520
+la valeur précédente de z que vous aviez réduite.
+
+0:59:57.520,1:00:00.319
+Vous multipliez la matrice à nouveau, ajoutez à la valeur précédente que vous avez réduite
+
+1:00:00.319,1:00:05.920
+et ainsi de suite. Vous avez donc ici deux matrices We et S.
+
+1:00:05.920,1:00:09.680
+En bas si vous définissez We comme 1/Wd
+
+1:00:09.680,1:00:13.680
+et si vous définissez S comme l'identité moins 1/Wd
+
+1:00:13.680,1:00:17.200
+transposeé Wd, où Wd est la matrice de décodage
+
+1:00:17.200,1:00:20.319
+alors ce diagramme met en gros en œuvre ISTA.
+
+1:00:20.319,1:00:25.839
+L'idée d’un de mes anciens postdocs, Karol Gregor,
+
+1:00:25.839,1:00:29.680
+a été de bien dire pourquoi nous ne traitons pas cela comme un réseau récurrent
+
+1:00:29.680,1:00:33.040
+et pourquoi ne pas entraîner ces matrices W
+
+1:00:33.040,1:00:37.280
+et S afin de d’obtenir une bonne approximation
+
+1:00:37.280,1:00:40.400
+du codage épars optimal le plus rapidement possible.
+
+1:00:40.400,1:00:45.040
+Ok donc nous allons construire notre réseau d'encodeurs
+
+1:00:45.040,1:00:48.480
+avec cette architecture qui est copiée sur ISTA.
+
+1:00:48.480,1:00:52.160
+Nous savons pertinemment qu'il y aura une solution
+
+1:00:52.160,1:00:56.000
+où le système apprend la valeur
+
+1:00:56.000,1:01:03.040
+de We et S qui correspond à celle qu’elle devrait être. Mais en fait
+
+1:01:03.040,1:01:07.440
+le système apprend quelque chose d'autre.
+
+1:01:07.440,1:01:10.799
+C’est une autre représentation de ça, ici en bas à gauche. Nous avons la fonction de rétrécissement
+
+1:01:10.799,1:01:14.000
+et ensuite cette matrice S, puis vous ajoutez
+
+1:01:14.000,1:01:16.880
+y multiplié par We à la matrice S,
+
+1:01:16.880,1:01:19.839
+puis rétrécissent à nouveau et ainsi de suite. C'est le
+
+1:01:19.839,1:01:21.760
+réseau récurrent que nous allons essayer d’entraîner
+
+1:01:21.760,1:01:26.319
+avec We et S. [Question : mais l'objectif d’ISTA…
+
+1:01:26.319,1:01:29.520
+pouvez-vous répéter quel est l'objectif ? Je pense avoir manqué ce point].
+
+1:01:29.520,1:01:33.680
+L'objectif de l’entraînement de cet encodeur.
+
+1:01:33.680,1:01:36.960
+Ok donc l'encodeur dans ce diagramme à droite ici.
+
+1:01:36.960,1:01:40.480
+L'architecture de l’encodeur est celle que vous voyez en bas à gauche.
+
+1:01:40.480,1:01:44.880
+L'objectif de l’entraînement
+
+1:01:44.880,1:01:54.240
+est la moyenne de D(z, z̅). Donc la procédure
+
+1:01:54.240,1:01:57.359
+dans le cas où il n'y a pas de x, mais avoir un x ne fait pas beaucoup
+
+1:01:57.359,1:02:01.839
+différence, prenez un y. Pour ce y particulier, trouvez la valeur de
+
+1:02:01.839,1:02:05.440
+z qui minimise l'énergie. L'énergie est la somme de
+
+1:02:05.440,1:02:11.200
+trois termes : C(y, y̅), R(z) et D(z, z̅). Ok donc trouver un z
+
+1:02:11.200,1:02:16.240
+qui reconstruit une capacité minimale mais n'est pas non plus
+
+1:02:16.240,1:02:18.799
+trop loin de la sortie de l’encodeur.
+
+1:02:18.799,1:02:22.720
+Une fois que vous avez le z, calculez le gradient
+
+1:02:22.720,1:02:26.559
+de l'énergie par rapport aux poids du décodeur,
+
+1:02:26.559,1:02:29.599
+de l'encodeur et du prédicteur si vous en avez un.
+
+1:02:29.599,1:02:33.440
+Par rétropropagation. Donc ce qui est intéressant, c'est que le
+
+1:02:33.440,1:02:37.680
+seul gradient que vous obtiendrez pour l’encodeur est le gradient de D(z, z̅).
+
+1:02:37.680,1:02:42.160
+Donc l'encodeur va juste s'entraîner à minimiser
+
+1:02:42.160,1:02:44.240
+z, z̅, c'est-à-dire qu’il va
+
+1:02:44.240,1:02:48.640
+s'entraîner à prédire au mieux le z optimal que vous
+
+1:02:48.640,1:02:51.920
+obtenez par minimisation. Le décodeur va
+
+1:02:51.920,1:02:55.520
+s'entraîner à reconstruire y
+
+1:02:55.520,1:02:59.200
+aussi bien que possible avec le z qui est donné.
+
+1:02:59.200,1:03:01.520
+Si vous avez un prédicteur, vous allez obtenir un gradient pour le prédicteur et il va
+
+1:03:01.520,1:03:05.280
+essayer de produire une sorte de h utile
+
+1:03:05.280,1:03:10.640
+aussi bien que possible. Est-ce clair ? [oui, merci].
+
+1:03:12.640,1:03:17.200
+Ok donc voici l'architecture. C’est en gros juste un
+
+1:03:17.200,1:03:23.200
+joli [???]. Cela fonctionne très bien dans le sens
+
+1:03:23.200,1:03:28.559
+qu'au fur et à mesure
+
+1:03:28.720,1:03:32.799
+des itérations de cet algorithme ISTA
+
+1:03:32.799,1:03:38.319
+ou par ce réseau neuronal qui est conçu pour
+
+1:03:38.480,1:03:44.319
+approximer cette solution. Ce que vous faites, est que vous pouvez entraîner le système
+
+1:03:44.319,1:03:47.359
+pour produire par exemple la meilleure solution possible
+
+1:03:47.359,1:03:52.400
+après seulement trois itérations. Il connait la valeur optimale car
+
+1:03:52.400,1:03:55.920
+il a été exécutez avec ISTA. Quand on l’entraîne, il s’entraîne
+
+1:03:55.920,1:04:00.720
+lui-même à produire la meilleure approximation de cette valeur avec seulement trois itérations.
+
+1:04:00.720,1:04:04.000
+Ce que nous constatons, c'est qu'après trois itérations, il produit un
+
+1:04:04.000,1:04:06.319
+meilleure approximation que l'ISTA que nous produisons en
+
+1:04:10.319,1:04:13.839
+trois itérations. Donc ce que vous voyez ici est le nombre
+
+1:04:16.400,1:04:21.280
+en fonction du nombre d'itérations de l'algorithme ISTA ou LISTA. C’est
+
+1:04:21.280,1:04:24.559
+l'erreur de reconstruction.
+
+1:04:24.559,1:04:28.000
+En entraînant un encodeur à prédire le résultat de l'optimisation,
+
+1:04:28.000,1:04:30.240
+vous obtenez un meilleur résultat que si vous exécutez réellement
+
+1:04:30.240,1:04:32.960
+l'optimisation pour un même nombre d'itérations.
+
+1:04:32.960,1:04:37.119
+Donc cela accélère beaucoup l’inférence. Voici ce que le codage épars
+
+1:04:37.119,1:04:41.280
+vous donne avec ou sans un encodeur.
+
+1:04:41.280,1:04:44.720
+Vous obtenez à peu près les mêmes résultats ici quand vous vous entraînez sur MNIST.
+
+1:04:44.720,1:04:51.359
+Ce sont… En gros, c’est un décodeur linéaire.
+
+1:04:51.359,1:04:56.400
+L'espace de code ici, le vecteur z est de taille 256.
+
+1:04:56.400,1:05:00.640
+Vous prenez donc ce vecteur 256 multiplié par la matrice
+
+1:05:00.640,1:05:04.480
+et vous reconstruisez un chiffre. Ce que vous voyez ici sont les colonnes
+
+1:05:07.359,1:05:11.359
+de cette matrice représentée sous forme d'images. Donc chaque
+
+1:05:11.359,1:05:15.039
+colonne a la même dimension qu'un chiffre MNIST.
+
+1:05:15.039,1:05:20.480
+Chaque colonne de W. Ainsi vous pouvez représenter chacun d'eux comme une image.
+
+1:05:20.480,1:05:26.160
+Voici les 256 colonnes de W. Ce que vous voyez c'est qu’elles
+
+1:05:26.160,1:05:30.000
+représentent en gros des parties de caractères, comme des petits morceaux
+
+1:05:30.000,1:05:33.760
+de traits. La raison de cela est que vous pouvez
+
+1:05:33.760,1:05:37.200
+reconstituer tout caractère, tous ces chiffres,
+
+1:05:37.200,1:05:41.280
+par une combinaison linéaire d'un petit nombre de ces traits.
+
+1:05:41.280,1:05:47.280
+Et c'est donc assez beau parce que ce système
+
+1:05:47.280,1:05:51.839
+trouve les parties constitutives des objets
+
+1:05:51.839,1:05:54.960
+de manière totalement non supervisée. C'est un peu ce que vous voulez
+
+1:05:54.960,1:05:58.079
+en apprentissage non supervisé. Vous voulez
+
+1:05:58.079,1:06:02.799
+les composants ou les parties qu'ils peuvent expliquer à quoi ressemblent les données.
+
+1:06:02.799,1:06:06.400
+Donc cela fonctionne vraiment très bien pour MNIST.
+
+1:06:06.400,1:06:11.000
+Cela marche très bien aussi pour les patchs d'images naturelles. 
+
+1:06:11.000,1:06:14.720
+C’est censé être une animation ici, mais vous ne la voyez pas évidemment
+
+1:06:14.720,1:06:18.559
+car c'est un pdf. Le résultat est ceci.
+
+1:06:18.559,1:06:21.200
+L'animation montre l'algorithme pendant l'apprentissage.
+
+1:06:21.200,1:06:26.319
+Là encore, ce sont les colonnes de la matrice de décodage
+
+1:06:26.319,1:06:30.319
+d'un système de codage épars avec régularisation L1 qui a été entraîné sur
+
+1:06:30.319,1:06:33.200
+des patchs d'images naturelles.
+
+1:06:33.200,1:06:37.200
+Les patchs ont été blanchis, ce qui signifie qu'ils ont été en quelque sorte normalisés
+
+1:06:37.200,1:06:39.839
+d'une manière ou d'une autre. Vous savez, annuler la moyenne et normaliser
+
+1:06:39.839,1:06:45.520
+la variance. Vous obtenez un joli petit…
+
+1:06:45.520,1:06:49.839
+ce que l'on appelle des filtres de Gabor, en gros des petits détecteurs de bord pour diverses
+
+1:06:49.839,1:06:54.160
+Orientations, lieux et tailles.
+
+1:06:54.160,1:06:58.079
+La raison pour laquelle ce système a été inventé par les neuroscientifiques est que
+
+1:06:58.079,1:07:01.359
+cela ressemble beaucoup à ce que vous observez 
+
+1:07:01.359,1:07:04.480
+dans la zone primaire du cortex visuel lorsque vous
+
+1:07:04.480,1:07:10.240
+vous piquez des électrodes dans le cortex visuel de
+
+1:07:10.240,1:07:15.440
+la plupart des animaux. Vous déterminez pour quels motifs, cela réagit le plus.
+
+1:07:15.440,1:07:21.039
+Cela répond aux bords orientés. C'est aussi ce que vous observez lorsque vous
+
+1:07:21.039,1:07:25.039
+entraînez un réseau convolutif sur ImageNet. Les caractéristiques de la première couche
+
+1:07:25.039,1:07:28.720
+ressemblent beaucoup à cela aussi. Sauf qu'elles sont convolutives. Celles-ci
+
+1:07:28.720,1:07:32.400
+ne sont pas convolutives. Elles sont entraînées sur des patchs d'image, mais il y
+
+1:07:32.400,1:07:35.359
+n'a pas une convolution ici. Donc c'est bien, car ce qu’avec
+
+1:07:37.119,1:07:39.920
+un algorithme d'apprentissage non supervisé très simple, nous obtenons
+
+1:07:39.920,1:07:44.079
+qualitativement les mêmes caractéristiques que celles que nous obtiendrions
+
+1:07:44.079,1:07:47.039
+via l’entraînement d'un grand réseau convolutif supervisé.
+
+1:07:47.039,1:07:53.280
+Cela vous donne un aperçu. Voici la version convolutive.
+
+1:07:53.280,1:07:58.319
+La version convolutive dit en gros que vous avez une image…
+
+1:07:58.640,1:08:02.079
+Ce que vous faites est que vous prenez les
+
+1:08:04.400,1:08:11.839
+cartes de caractéristiques. Disons quatre ici, mais
+
+1:08:17.279,1:08:21.359
+ça pourrait être plus. Puis vous allez vous occuper de chacune de ces
+
+1:08:21.359,1:08:25.440
+cartes de caractéristiques avec un noyau.
+
+1:08:25.440,1:08:29.040
+Donc une carte de caractéristiques, appelons cela, zk.
+
+1:08:29.040,1:08:36.640
+Nous avons un noyau ici. 
+
+1:08:36.640,1:08:40.560
+Appelons-le plutôt zi car je vais utiliser k pour le noyau.
+
+1:08:40.560,1:08:46.319
+ki. Cela va être une reconstruction y.
+
+1:08:47.440,1:08:51.359
+Notre reconstruction va tout simplement être
+
+1:08:51.359,1:08:56.159
+la somme sur i de zi convolué
+
+1:09:00.239,1:09:07.359
+avec ki. Ok. C’est différent du codage original épars où
+
+1:09:07.359,1:09:15.440
+y̅ était égal à la somme sur les colonnes d'une
+
+1:09:15.440,1:09:21.520
+matrice W 
+
+1:09:28.080,1:09:31.120
+multiplié par un coefficient zi qui n'est pas un scalaire.
+
+1:09:31.120,1:09:37.199
+Dans le codage original épars vous avez une somme pondérée de colonnes
+
+1:09:37.199,1:09:40.960
+où les poids sont des coefficients scalaires de zi
+
+1:09:40.960,1:09:44.480
+En codage convolutif épars, c'est à nouveau une opération linéaire mais la
+
+1:09:44.480,1:09:48.480
+matrice du dictionnaire est maintenant un ensemble de noyaux convolutifs.
+
+1:09:48.480,1:09:51.759
+La variable latente est un ensemble de cartes de caractéristiques.
+
+1:09:51.759,1:09:55.199
+Vous faites une convolution de chaque carte de caractéristiques avec
+
+1:09:55.199,1:09:59.760
+chaque noyau et sommez les résultats. Voici ce que vous obtenez. Donc ici
+
+1:10:02.560,1:10:05.440
+c'est un de ces systèmes qui a un
+
+1:10:05.440,1:10:08.800
+décodeur et un encodeur. L'encodeur est très simple ici. Il s'agit 
+
+1:10:08.800,1:10:12.320
+juste d’un réseau à une seule couche avec une non-linéarité et ensuite
+
+1:10:12.320,1:10:14.880
+il y a une simple couche après cela. Une
+
+1:10:14.880,1:10:17.280
+couche diagonale pour modifier les gains.
+
+1:10:17.280,1:10:20.960
+C'est très très simple. Les filtres dans les encodeurs…
+
+1:10:20.960,1:10:24.719
+l'encodeur et le décodeur se ressemblent beaucoup, c'est pourquoi l'encodeur est
+
+1:10:24.719,1:10:27.920
+juste une convolution puis une certaine non-linéarité. Je crois que c'était
+
+1:10:27.920,1:10:32.080
+une tangente hyperbolique dans ce cas. Ensuite une tangente qui équivaut en gros à une
+
+1:10:32.080,1:10:36.400
+couche diagonale qui change juste l'échelle.
+
+1:10:36.400,1:10:39.679
+Puis le décodeur... Il y a une éparsité
+
+1:10:39.679,1:10:42.400
+sur le code. Le décodeur est juste
+
+1:10:42.400,1:10:47.040
+un décodeur linéaire convolutif et la reconstruction n'est qu'une distance 
+
+1:10:47.040,1:10:50.480
+carré. Donc si vous imposez qu'il n'y a qu'un
+
+1:10:50.480,1:10:54.640
+Filtre, le filtre ressemble à celui qui se trouve en haut à gauche, mais n'est qu'un
+
+1:10:54.640,1:10:57.760
+filtre de type « center-surround ». Si vous autorisez deux filtres, vous obtenez 
+
+1:10:57.760,1:11:01.280
+deux filtres de forme bizarre. Si vous laissez quatre filtres, ce qui est
+
+1:11:01.280,1:11:05.600
+la troisième ligne, vous obtenez des bords orientés horizontaux et verticaux
+
+1:11:05.600,1:11:09.280
+mais vous obtenez deux polarités pour chacun des filtres.
+
+1:11:09.280,1:11:12.400
+Pour huit filtres, vous obtenez des bords orientés à huit orientations
+
+1:11:12.400,1:11:16.800
+Différentes. Pour seize filtres vous obtenez plus d'orientations et
+
+1:11:16.800,1:11:19.679
+vous obtenez également le « center-surround ». A mesure que vous augmentez le nombre de
+
+1:11:19.679,1:11:26.159
+Filtres, vous obtenez des sortes de filtres plus divers et pas seulement 
+des détecteurs de bord.
+
+1:11:26.159,1:11:29.679
+Également des détecteurs de différentes orientations, « center-surround », etc.
+
+1:11:29.679,1:11:32.960
+C'est très intéressant car
+
+1:11:32.960,1:11:36.880
+c'est le genre de choses que l'on voit dans le cortex visuel. Donc là encore, c'est une
+
+1:11:36.880,1:11:40.159
+indication que vous pouvez apprendre de très bonnes caractéristiques
+
+1:11:40.159,1:11:44.080
+de manière totalement non supervisée. Voici mauvaises nouvelles. Si vous prenez
+
+1:11:44.080,1:11:47.120
+des caractéristiques et les reliez à un réseau convolutif
+
+1:11:47.120,1:11:49.840
+et vous l’entraînez pour certaines tâches,
+
+1:11:49.840,1:11:52.239
+vous n’aurez pas nécessairement de meilleurs résultats que si vous
+
+1:11:52.239,1:11:56.320
+entraîner sur ImageNet à partir de zéro, mais il y a quelques cas où cela
+
+1:11:58.159,1:12:02.719
+a contribué à améliorer les performances. En particulier dans les cas où le nombre
+
+1:12:02.719,1:12:06.000
+d'échantillons d'étiquettes n'est pas très grand ou le nombre de catégories est petit.
+
+1:12:06.000,1:12:09.040
+Donc en entraînant de manière purement supervisée, vous obtenez 
+
+1:12:09.040,1:12:14.800
+des caractéristiques dégénérés. Voici un autre exemple ici. Même
+
+1:12:14.800,1:12:19.120
+chose. Encore une fois c'est un codage convolutif épars.
+
+1:12:19.120,1:12:22.320
+Ici le noyau de décodage est sur des images couleur.
+
+1:12:22.320,1:12:28.320
+Les noyaux de décodage sont 9x9 et appliqués de manière convolutionnelle
+
+1:12:28.320,1:12:31.760
+sur une image. Ce que vous voyez à gauche ici sont
+
+1:12:31.760,1:12:37.440
+les codes épars que vous avez ici.
+
+1:12:37.440,1:12:42.480
+64 cartes de caractéristiques. Vous pouvez voir que le vecteur z
+
+1:12:42.480,1:12:46.080
+est extrêmement épars, car seuls quelques éléments sont
+
+1:12:46.080,1:12:49.360
+soit blanc ou noir ou non gris si vous voulez.
+
+1:12:49.360,1:12:53.199
+C'est à cause de l’éparsité. Dans les dernières minutes, nous allons
+
+1:12:56.719,1:12:59.520
+parler des auto-encodeurs variationnels et je suppose
+
+1:12:59.520,1:13:02.840
+vous avez entendu un peu de cela [Alfredo : nous allons couvrir cela
+
+1:13:02.840,1:13:06.560
+demain avec les bulles, le code et tout ce qu'il faut.
+
+1:13:06.560,1:13:12.480
+Demain on fera une heure de cela] Bien. Voici donc
+
+1:13:12.480,1:13:16.880
+un aperçu sur  comment les auto-encodeurs variationnels [abrégé en VAE dans la suite] fonctionnent.
+
+1:13:16.880,1:13:19.840
+Ok donc les VAE sont fondamentalement de la même architecture que
+
+1:13:19.840,1:13:24.159
+celle que j'ai montré précédemment. Basiquement, un auto-encodeur
+
+1:13:24.159,1:13:26.800
+ignore la partie conditionnelle, la partie qui est
+
+1:13:26.800,1:13:30.719
+conditionné à x pour l'instant. Cela pourrait être une version conditionnée
+
+1:13:30.719,1:13:33.520
+de l’auto-encodeur mais pour l'instant nous allons juste avoir une version basique de l’auto-encodeur.
+
+1:13:33.520,1:13:37.600
+Donc c'est un auto-encodeur où 
+
+1:13:37.600,1:13:40.880
+vous prenez la variable y, vous la passez à un encodeur,
+
+1:13:40.880,1:13:44.320
+qui pourrait être un ConvNet multicouche si vous voulez,
+
+1:13:44.320,1:13:47.760
+il produit une prédiction pour le code épars z̅.
+
+1:13:47.760,1:13:51.280
+C’est un terme de la fonction énergie qui mesure
+
+1:13:51.280,1:13:54.880
+la distance euclidienne au carré entre la variable latente z
+
+1:13:54.880,1:14:00.640
+et z̅. Il y a aussi une
+
+1:14:00.640,1:14:03.679
+autre fonction de coût ici qui est la
+
+1:14:03.679,1:14:08.000
+norme L2 de z̅. En fait généralement c'est plus le z autonome qui
+
+1:14:08.000,1:14:10.560
+serait plus précis, mais cela ne fait pas beaucoup de
+
+1:14:10.560,1:14:14.960
+Différence. Puis z passe par un décodeur qui
+
+1:14:14.960,1:14:18.640
+reconstruit y et c'est votre erreur de reconstruction.
+
+1:14:18.640,1:14:22.640
+Ok maintenant la différence avec la précédente… Donc ceci
+
+1:14:22.640,1:14:26.560
+ressemble beaucoup au type d'auto-encodeur dont nous venons de parler,
+
+1:14:26.560,1:14:30.719
+sauf qu'il n'y a pas d’éparsité ici. La raison pour laquelle il n'y a pas d’éparsité est
+
+1:14:30.719,1:14:34.239
+que les VAE utilisent un autre moyen pour limiter le contenu informatif 
+
+1:14:34.239,1:14:38.480
+du code. Basiquement, en rendant le code bruyant.
+
+1:14:38.480,1:14:43.760
+OK, alors voici l'idée.
+
+1:14:43.760,1:14:47.600
+La façon dont vous calculez z n'est pas en minimisant
+
+1:14:47.600,1:14:51.520
+la fonction énergie par rapport à z mais en échantillonnant z
+
+1:14:51.520,1:14:55.199
+aléatoirement selon une distribution dont le logarithme
+
+1:14:55.199,1:15:01.520
+est le coût qui le relie à z̅.
+
+1:15:01.520,1:15:05.360
+Donc en gros, l’encodeur produit un z̅
+
+1:15:05.360,1:15:09.040
+et ensuite il y a une fonction énergie qui mesure la
+
+1:15:09.040,1:15:13.120
+la distance entre z et z̅. Vous pouvez imaginer cela comme le logarithme
+
+1:15:13.120,1:15:18.800
+d'une distribution de probabilité. Donc si cette distance est le carré
+
+1:15:18.800,1:15:20.800
+distance euclidienne, cela signifie que la
+
+1:15:20.800,1:15:24.239
+la distribution de z va être une gaussienne conditionnelle
+
+1:15:24.239,1:15:29.840
+où la moyenne est z̅. Ok donc nous allons
+
+1:15:29.840,1:15:34.000
+échantillonner une valeur aléatoire de z en fonction de cette distribution. En gros
+
+1:15:34.000,1:15:38.719
+une gaussienne dont la moyenne est z̅ ok. Cela signifie ajouter juste un peu de
+
+1:15:38.719,1:15:43.679
+bruit gaussien à z̅. C'est ce que R(z) va être.
+
+1:15:43.679,1:15:48.080
+Vous exécuter ça sur le décodeur. Donc lorsque vous entraînez un système
+
+1:15:48.080,1:15:53.840
+comme ça, ce que le système veut faire, c'est en gros
+
+1:15:54.320,1:16:00.880
+rendre z̅ aussi large que possible. Rendre le vecteur de z̅ aussi large que possible
+
+1:16:00.880,1:16:05.120
+afin que l'effet du bruit gaussien sur z soit aussi faible que possible.
+
+1:16:05.120,1:16:08.159
+Relativement parlant. Si la variance
+
+1:16:08.159,1:16:12.480
+du bruit sur z est 1 et vous faites le vecteur z̅
+
+1:16:12.480,1:16:18.159
+très très long comme la norme 100, alors l'importance du bruit
+
+1:16:18.159,1:16:22.080
+serait de 1 % par rapport à z. Donc si vous entraînez
+
+1:16:22.080,1:16:25.679
+un auto-encodeur comme celui-ci en ignorant le fait que vous avez du bruit,
+
+1:16:25.679,1:16:30.719
+par simple rétropropagation, vous obtiendrez des vecteurs z̅
+
+1:16:30.719,1:16:33.280
+qui deviennent de plus en plus importants. Les poids de l’encodeur vont augmenter et
+
+1:16:33.280,1:16:35.840
+le vecteur z̅ va devenir de plus en
+
+1:16:35.840,1:16:38.159
+plus grand. Donc quelle est l'astuce dans les VAE ?
+
+1:16:40.560,1:16:45.199
+[Question rapide, d'où vient ce z ?
+
+1:16:45.199,1:16:48.239
+Est-ce une variable latente jamais observée ?]
+
+1:16:48.239,1:16:51.440
+Il s'agit d'une variable latente que nous échantillonnons et que nous ne minimisons pas.
+
+1:16:51.440,1:16:54.719
+Donc dans les cas précédents, nous avons minimisez
+
+1:16:54.719,1:16:58.400
+en ce qui concerne la variable z. Minimisez l'énergie en ce qui concerne
+
+1:16:58.400,1:17:00.560
+la variable trouvant le z qui minimise
+
+1:17:00.560,1:17:07.280
+la somme de C, D et R. Donc ici nous ne minimisons pas.
+
+1:17:07.280,1:17:10.159
+Nous faisons que de l’échantillonnage. Nous observons l'énergie
+
+1:17:10.159,1:17:13.120
+comme une distribution, comme le log d'une distribution
+
+1:17:13.120,1:17:17.600
+et nous échantillonnons z de cette distribution. Très bien, alors imaginez que notre
+
+1:17:17.600,1:17:23.199
+encodeur produit les points suivants pour les échantillons d'entraînement.
+
+1:17:23.199,1:17:27.460
+Donc c’est le vecteur z, les vecteurs z̅ produits par l’encodeur.
+
+1:17:27.460,1:17:31.360
+A un moment donné dans l’entraînement.
+
+1:17:31.360,1:17:38.000
+Alors quel est l'effet de cet échantillonnage de z ?
+
+1:17:38.000,1:17:41.679
+En gros cela va tourner chacun de ces
+
+1:17:41.679,1:17:50.080
+échantillons d’entraînement en une balle floue. Parce que nous prenons un échantillon,
+
+1:17:50.080,1:17:53.600
+nous y ajoutons du bruit et donc, en gros, nous avons
+
+1:17:53.600,1:17:57.360
+un vecteur de code unique en une sorte de boule floue.
+
+1:17:57.360,1:18:00.800
+Le décodeur doit maintenant être capable de reconstruire
+
+1:18:00.800,1:18:07.520
+l'entrée de n'importe quel code qui est donné et donc si deux
+
+1:18:07.520,1:18:13.679
+de ces boules floues se croisent alors il y a une certaine probabilité
+
+1:18:13.679,1:18:16.960
+pour le décodeur de se tromper.
+
+1:18:16.960,1:18:21.920
+De confondre les deux échantillons, confondre un échantillon avec l'autre.
+
+1:18:21.920,1:18:25.679
+Donc l'effet de l’entraînement du système, si vous
+
+1:18:25.679,1:18:29.199
+ajouter des boules floues, si vous faites de chacun de vos codes
+
+1:18:29.199,1:18:34.480
+une boule floue, est que ces boules vont s’éloigner l'une des autres.
+
+1:18:35.199,1:18:38.719
+Comme je l'ai déjà dit, c'est la même chose que j’ai déjà présenté mais d’une
+
+1:18:38.719,1:18:41.520
+manière différente. Cela va rendre les poids de l’encodeur très importants 
+
+1:18:41.520,1:18:45.440
+donc les vecteurs de code deviennent très longs et ils s'éloignent l’un
+
+1:18:45.440,1:18:49.920
+de l'autre. Le bruit de ces boules floues n'a plus d'importance.
+
+1:18:49.920,1:18:52.480
+Ok donc ici si les boules floues ne se croisent pas.
+
+1:18:52.480,1:18:56.159
+Le système sera en mesure de reconstruire parfaitement chaque échantillon que vous lui donnez.
+
+1:18:56.159,1:18:59.280
+[Question : ma question porte sur quelques diapositives, mais toujours sur le même sujet.
+
+1:18:59.280,1:19:03.440
+Il y a quelques diapositives, qu’entendez-vous exactement par 
+
+1:19:03.440,1:19:07.360
+caractéristiques dégénérées lorsque vous compariez
+
+1:19:07.360,1:19:11.120
+l’autosupervisé et le supervisé ?]
+
+1:19:11.120,1:19:15.360
+Je vois ok, c'est une bonne question. Ce que je disais c'est
+
+1:19:15.360,1:19:18.800
+quelque chose que j'ai déjà dit à plusieurs reprises. C'est le fait que si
+
+1:19:18.800,1:19:21.040
+vous entraînez un classifieur, disons
+
+1:19:21.040,1:19:24.719
+un réseau convolutif, sur un problème qui a très peu de
+
+1:19:24.719,1:19:29.679
+catégories, disons la détection des visages où vous n'avez que deux catégories,
+
+1:19:29.679,1:19:33.520
+la représentation des visages que l'on sort du réseau convolutif est très dégénérée.
+
+1:19:33.520,1:19:38.080
+Au sens qu'elles ne représentent pas toutes les images correctement.
+
+1:19:38.080,1:19:42.560
+Elles vont en quelque sorte faire s'effondrer beaucoup d'images différentes en
+
+1:19:42.560,1:19:46.159
+une sorte de représentations communes identiques.
+
+1:19:46.159,1:19:49.780
+Car la seule chose que le système doit faire est de discriminer
+
+1:19:49.780,1:19:53.360
+des visages avec des non-visages. Donc il
+
+1:19:53.360,1:19:57.760
+n'a pas besoin de produire de bonnes représentations de
+
+1:19:57.760,1:20:01.679
+l'espace entier. Il doit juste vous dire s'il s'agit
+
+1:20:01.679,1:20:05.040
+d'un visage ou d'un autre visage. Par exemple les caractéristiques que vous obtiendrez 
+
+1:20:05.040,1:20:10.000
+pour deux visages différents seront probablement assez identiques.
+
+1:20:10.000,1:20:13.199
+Donc c'est ce que j'entends par « caractéristiques dégénérées ».
+
+1:20:13.199,1:20:17.040
+Ce que vous voulez, ce sont des caractéristiques, fondamentalement
+
+1:20:17.040,1:20:21.120
+des vecteurs de caractéristiques qui sont différents pour des objets différents, indépendamment de
+
+1:20:21.120,1:20:26.820
+si vous les avez entraînés à être différents ou non. Si par exemple vous entraînez sur ImageNet, vous avez 1000 catégories.
+
+1:20:26.820,1:20:31.760
+Donc parce que vous avez beaucoup de catégories, vous obtenez des caractéristiques qui sont
+
+1:20:31.760,1:20:35.760
+assez diverses. Elles couvrent une grande partie de l'espace des images possibles.
+
+1:20:35.760,1:20:39.120
+Je veux dire qu'elles sont encore assez spécialisées, mais pas complètement
+
+1:20:39.120,1:20:42.080
+dégénérées car vous avez de nombreuses catégories.
+
+1:20:42.080,1:20:46.560
+Vous avez beaucoup d'échantillons. Plus vous avez d'échantillons et de catégories,
+
+1:20:46.560,1:20:50.400
+plus vos caractéristiques sont en fait meilleures. 
+
+1:20:50.400,1:20:53.920
+Un auto-encodeur
+
+1:20:53.920,1:20:57.280
+est un réseau neuronal dans lequel chaque échantillon d’entraînement est
+
+1:20:57.280,1:21:01.840
+est sa propre catégorie. Parce que vous dites en gros au
+
+1:21:01.840,1:21:06.239
+système de produire un résultat différent pour chaque échantillon que vous lui montrez.
+
+1:21:06.239,1:21:13.040
+Vous entraînez donc un système à représenter chaque objet d’une façon différente.
+
+1:21:13.040,1:21:16.719
+Mais cela peut être dégénéré d'une autre manière
+
+1:21:16.719,1:21:19.600
+car le système peut apprendre la fonction d'identité
+
+1:21:19.600,1:21:23.920
+et encoder tout ce que vous voulez. Si vous pensez aux réseaux siamois,
+
+1:21:23.920,1:21:29.040
+le système d'apprentissage métrique, les méthodes contrastives, MoCo, PIRL 
+
+1:21:29.040,1:21:36.400
+et SimCLR dont j'étais en train de vous parler, c'est un peu
+
+1:21:36.400,1:21:40.639
+la même chose. Ils essaient
+
+1:21:40.639,1:21:44.239
+d'apprendre des caractéristiques non dégénératives en disant au système :
+
+1:21:44.239,1:21:47.440
+voici deux objets que je sais être les mêmes et voici deux objets que je
+
+1:21:47.440,1:21:50.320
+sais être différents, produit
+
+1:21:50.320,1:21:52.480
+des vecteurs de caractéristiques pour des objets dont je sais qu'ils
+
+1:21:52.480,1:21:56.800
+sont sémantiquement différents. Ok c'est une sorte de façon
+
+1:21:56.800,1:22:01.520
+de vous assurer d'obtenir des représentations de vecteurs de caractéristiques qui
+
+1:22:01.520,1:22:05.600
+sont différentes pour des choses qui sont différentes.
+
+1:22:05.600,1:22:08.320
+Cependant on n'obtient pas cela en entraînant un
+
+1:22:08.320,1:22:11.199
+ConvNet sur un problème à deux classes ou un problème à dix classes.
+
+1:22:11.199,1:22:15.920
+Vous avez besoin d'autant de classes que vous pouvez vous le permettre.
+
+1:22:17.600,1:22:22.560
+Donc une pré-entraînement utilisant en gros l'apprentissage auto-supervisé
+
+1:22:22.560,1:22:25.600
+aide à rendre les caractéristiques plus génériques
+
+1:22:25.600,1:22:31.120
+et moins dégénérées pour le problème. OK donc revenons aux VAE avec ces
+
+1:22:31.120,1:22:34.639
+boules floues. Donc encore une fois si vous entraînez votre auto-encodeur 
+
+1:22:34.639,1:22:37.280
+avec ces boules floues, elles vont s’éloigner les unes des autres.
+
+1:22:37.280,1:22:41.679
+Ce que vous voulez vraiment, c'est que ces boules soient en quelque sorte
+
+1:22:41.679,1:22:45.199
+autour d'une sorte de variété des données. Vous voulez
+
+1:22:45.199,1:22:48.639
+en fait les garder le plus près possible les unes des autres.
+
+1:22:48.639,1:22:53.840
+Comment pouvez-vous le faire ?
+
+1:22:54.800,1:23:03.520
+En gros en les reliant tous à l'origine par un ressort.
+
+1:23:03.520,1:23:09.600
+Donc en gros le ressort veut amener tous ces points vers
+
+1:23:09.600,1:23:14.639
+l'origine, le plus proche possible de l'origine.
+
+1:23:14.639,1:23:17.760
+Ce faisant, le système va essayer de tasser
+
+1:23:17.760,1:23:22.400
+ces boules floues aussi proches que possible de l'origine.
+
+1:23:22.400,1:23:28.080
+Cela va les faire se chevaucher et s'interpénétrer.
+
+1:23:28.080,1:23:32.000
+Mais bien sûr, si elles s'interpénètrent trop,
+
+1:23:32.000,1:23:35.520
+si deux sphères pour deux échantillons très différents
+
+1:23:35.520,1:23:40.159
+s'interpénètrent trop, alors ces deux échantillons vont être confondus
+
+1:23:40.159,1:23:45.360
+par le décodeur et l'énergie de reconstruction va devenir importante.
+
+1:23:45.360,1:23:48.560
+Donc ce que le système finit par faire, c'est de laisser
+
+1:23:48.560,1:23:53.600
+deux sphères se chevaucher si les deux échantillons sont très similaires.
+
+1:23:53.920,1:23:58.000
+En gros, le système trouve une sorte de
+
+1:23:58.000,1:24:02.400
+la représentation de la surface, il met
+
+1:24:02.400,1:24:09.040
+ces vecteurs de code le long d'une surface, s'il y en a un.
+
+1:24:09.360,1:24:13.520
+C’est l'idée de base du VAE. Maintenant vous pouvez dériver ceci
+
+1:24:13.520,1:24:17.760
+avec les mathématiques. Cela ne
+
+1:24:17.760,1:24:22.080
+rend pas plus simple à comprendre, en fait c'est beaucoup plus abstrait.
+
+1:24:22.080,1:24:25.280
+Mais c'est en gros ce qu'il fait au final. Donc il y a
+
+1:24:25.280,1:24:31.120
+quelques autres trucs dans l’idée
+
+1:24:31.280,1:24:35.360
+du VAE et vous obtiendrez quelques détails avec Alfredo
+
+1:24:35.360,1:24:44.080
+demain. Par exemple, vous pouvez adapter la taille de ces boules floues
+
+1:24:44.080,1:24:48.400
+Vous pouvez donc demander à l'encodeur de calculer la taille optimale de la 
+
+1:24:48.400,1:24:51.520
+boule dans chaque direction. Et ce que vous devez faire, c'est de vous assurer
+
+1:24:53.520,1:24:55.520
+que les boules ne deviennent pas trop petites.
+
+1:24:55.520,1:24:59.600
+Vous mettez donc une fonction de pénalité qui tente de rendre
+
+1:24:59.600,1:25:04.880
+la variance de ces boules, la taille dans chaque dimension si vous voulez,
+
+1:25:04.880,1:25:09.760
+aussi proche que possible de 1. Elles peuvent devenir un peu plus petites, elles peuvent devenir plus grandes
+
+1:25:09.760,1:25:13.360
+qu’elles veulent, mais il y a un coût pour les rendre
+
+1:25:13.360,1:25:18.719
+Différentes de 1. Maintenant le truc, le problème que vous
+
+1:25:18.719,1:25:23.760
+avec ça est d'ajuster l'importance relative
+
+1:25:23.760,1:25:30.000
+de la force de ce ressort. Si la force du ressort est trop grande,
+
+1:25:30.000,1:25:32.719
+si la force du ressort est trop forte, alors les
+
+1:25:32.719,1:25:35.280
+les boules floues vont toutes s'effondrer au centre.
+
+1:25:35.280,1:25:38.880
+Le système ne pourra pas reconstruire correctement.
+
+1:25:38.880,1:25:43.679
+Si elle est trop faible alors les boules floues vont s’éloigner les unes des autres
+
+1:25:43.679,1:25:45.840
+et le système va pouvoir reconstruire
+
+1:25:45.840,1:25:50.880
+tout et n'importe quoi. Il faut donc trouver un équilibre entre les deux et
+
+1:25:50.880,1:25:52.840
+c'est un peu la difficulté avec les VAE.
+
+1:25:52.840,1:25:56.480
+Si vous augmentez la force du ressort un peu trop,
+
+1:25:56.480,1:25:59.120
+c'est un terme appelé divergence KL [Kullback-Leibler]
+
+1:26:01.040,1:26:05.040
+dans le système. Il s'agit d'une divergence KL entre
+
+1:26:05.040,1:26:09.280
+la gaussienne en gros. Cela
+
+1:26:09.280,1:26:14.560
+s'effondre. Toutes les boules floues
+
+1:26:14.560,1:26:19.280
+se rendent au centre et le système ne le modélise pas correctement.
+
+1:26:19.280,1:26:23.760
+[Question : j'ai une question à propos d'une des conférences précédentes si c’est possible]
+
+1:26:23.760,1:26:28.560
+Bien sûr. [Suite : quand vous parliez de
+
+1:26:28.560,1:26:32.560
+la linéarisation, quand vous disiez que l'empilage
+
+1:26:32.560,1:26:36.080
+de couches linéaires l'une après l'autre sans avoir de non-linéarités
+
+1:26:36.080,1:26:40.679
+est fondamentalement redondant car nous pouvons avoir une couche linéaire pour le faire,
+
+1:26:40.679,1:26:45.679
+mais je me souviens que vous avez également mentionné qu'il y a une raison particulière pour laquelle on
+
+1:26:45.679,1:26:47.840
+pourrait vouloir le faire. Où il suffit d'empiler des
+
+1:26:47.840,1:26:51.679
+couches linéaires après cela et vous avez bien dit qu'il y a une raison mais
+
+1:26:51.679,1:26:55.120
+vous n'avez pas évoqué cette raison, alors je me demandais s'il y avait quelque chose
+
+1:26:55.120,1:26:59.280
+d'important derrière ça] La situation que je décrivais est :
+
+1:26:59.280,1:27:04.800
+imaginez que vous avez un grand réseau neuronal
+
+1:27:04.800,1:27:09.440
+et il produit un vecteur de caractéristique d'une certaine taille.
+
+1:27:09.440,1:27:13.120
+Votre sortie est alors extrêmement grande car
+
+1:27:13.120,1:27:16.639
+peut-être que vous avez de nombreuses catégories. Peut-être que vous faites
+
+1:27:16.639,1:27:20.159
+une classification des phonèmes pour un système de reconnaissance vocale. 
+
+1:27:20.159,1:27:26.080
+Donc le nombre de catégories ici est de 10 000 ou quelque chose comme ça.
+
+1:27:27.520,1:27:33.760
+Ok je dois dessiner lentement. Donc si votre vecteur de caractéristique est 
+
+1:27:33.760,1:27:40.560
+lui-même quelque chose comme 10 000, la matrice pour aller d'ici à ici
+
+1:27:40.560,1:27:43.920
+sera de 100 millions. Et c'est probablement un peu trop.
+
+1:27:49.440,1:27:53.280
+Ce que les gens font, c'est qu'ils disent que nous allons factoriser
+
+1:27:53.280,1:27:59.199
+cette matrice en le produit de deux petites matrices
+
+1:27:59.440,1:28:02.560
+où la dimension intermédiaire est disons 1000.
+
+1:28:02.560,1:28:05.760
+Vous avez 10k sur l'entrée, vous avez
+
+1:28:05.760,1:28:08.960
+10k sur la sortie et ensuite celle du milieu
+
+1:28:08.960,1:28:12.159
+est de 1k. Donc si vous n'avez pas celle du milieu
+
+1:28:12.159,1:28:15.360
+alors le nombre de paramètres dont vous disposez est de 10^8.
+
+1:28:15.360,1:28:19.040
+Si vous avez le milieu, c'est est 2 fois
+
+1:28:19.040,1:28:24.960
+10^7. Ok donc vous obtenez un facteur de
+
+1:28:24.960,1:28:27.679
+10. Si vous faites 100, vous avez 10^6.
+
+1:28:27.679,1:28:32.239
+Elle devient plus gérable. Donc en gros, vous obtenez un rang de
+
+1:28:32.239,1:28:37.120
+factorisation inférieur. Donc les matrices globales ici que vous
+
+1:28:37.120,1:28:40.480
+pouvez appeler W ne seront pas le produit de
+
+1:28:40.480,1:28:44.560
+deux matrices plus petites U et V.
+
+1:28:44.560,1:28:48.960
+Et parce que U et V…  La dimension du milieu si vous voulez,
+
+1:28:48.960,1:28:52.560
+de U et V est plus petite, disons 100, le rang
+
+1:28:52.560,1:28:56.400
+de la matrice W correspondante sera plus petite.
+
+1:28:56.400,1:29:00.639
+Il y a des gens qui font sans préciser la dimension de la couche
+
+1:29:00.639,1:29:04.320
+intermédiaire, en faisant ce que l'on appelle une minimisation de la norme 
+
+1:29:04.320,1:29:08.560
+nucléaire, ce qui est équivalent. Mais je ne veux pas m'étendre sur ce sujet. 
+
+1:29:08.560,1:29:11.360
+Ce serait une sorte de situation où vous pourriez vouloir
+
+1:29:11.360,1:29:17.760
+décomposer une matrice en un produit de deux matrices afin de sauvegarder les paramètres,
+
+1:29:17.760,1:29:21.760
+en gros votre calcul de sauvegarde. Il y a aussi un autre
+
+1:29:21.760,1:29:25.280
+phénomène intéressant qui est que l'apprentissage
+
+1:29:25.280,1:29:28.320
+et la généralisation sont en fait tous deux meilleurs
+
+1:29:28.320,1:29:31.679
+quand vous faites ce genre de factorisation.
+
+1:29:31.679,1:29:36.320
+Même si l'optimisation actuelle par rapport à cette matrice devient
+
+1:29:36.320,1:29:39.920
+non convexe, cela converge en fait plus rapidement en utilisant le
+
+1:29:39.920,1:29:44.800
+gradient stochastique. Il y a une série de papiers par 
+
+1:29:44.800,1:29:49.679
+Nadav si cela vous intéresse.
+
+1:29:50.239,1:29:53.840
+Nadav Cohen. Je pense que ça date de 2018.
+
+1:29:58.320,1:30:03.520
+Il est son co-auteur avec Sanjiv Arora
+
+1:30:07.520,1:30:10.320
+de Princeton. Nadav était en postdoc avec Sanjiv Arora.
+
+1:30:14.560,1:30:20.480
+Ils ont fait une série d'articles sur ça qui explique pourquoi même 
+
+1:30:20.480,1:30:23.840
+les réseaux linéaires convergent en fait plus rapidement. Ils utilisent
+
+1:30:23.840,1:30:27.679
+ça également pour 
+
+1:30:28.719,1:30:32.719
+étudier la dynamique de l'apprentissage , une sorte d’optimisation non 
+
+1:30:32.719,1:30:38.400
+Convexe, ainsi que les propriétés de généralisation.
+
+1:30:38.400,1:30:42.800
+[Question : quelle est l'importance d'avoir une sorte de « matching » dans un VAE ?
+
+1:30:42.800,1:30:46.840
+A quel point il est important d'avoir une architecture encodeur/décodeur qui « match » ?]
+
+1:30:46.840,1:30:50.400
+Il n'y a pas de raison que les deux
+
+1:30:50.400,1:30:55.920
+architectures « match ». Il arrive très souvent que
+
+1:30:55.920,1:31:01.440
+le décodage est beaucoup plus facile que l'encodage, donc si vous prenez l'exemple du
+
+1:31:01.440,1:31:07.280
+codage épars dont j'ai parlé… dans le codage épars
+
+1:31:07.280,1:31:10.800
+l'encodeur est
+
+1:31:10.800,1:31:14.840
+en fait assez compliqué alors que le décodeur est linéaire.
+
+1:31:14.840,1:31:18.080
+C'est un cas particulier parce que
+
+1:31:18.080,1:31:21.120
+le code est de grande dimension et peu dense.
+
+1:31:21.120,1:31:25.679
+Des codes épars de si haute dimension… Toute fonction d'un
+
+1:31:25.679,1:31:29.440
+code épars en grandes dimensions à n'importe quel endroit peut être
+
+1:31:29.440,1:31:37.360
+quasi-linéaire. Une façon de rendre une fonction linéaire est de
+
+1:31:37.360,1:31:40.400
+représenter cette variable d'entrée dans un espace à haute dimension en utilisant une
+
+1:31:40.400,1:31:44.639
+transformation non linéaire. Nous en avons parlé. Nous avons discuté
+
+1:31:44.639,1:31:48.239
+de savoir ce qu’est une bonne caractéristique. Les bonnes caractéristiques
+
+1:31:48.239,1:31:52.239
+consistent généralement en une sorte d'élargissement de la dimension de la
+
+1:31:52.239,1:31:56.800
+représentation de façon non linéaire. Et rendre cette représentation éparse.
+
+1:31:56.800,1:32:00.560
+La raison de ça est que vous rendez votre fonction linéaire.
+
+1:32:00.560,1:32:04.719
+Vous pourriez très bien avoir un codeur très complexe et un
+
+1:32:04.719,1:32:08.320
+décodeur éventuellement linéaire, tant que votre
+
+1:32:08.320,1:32:13.199
+code est de grande dimension. Si vous avez un code en basse dimension
+
+1:32:13.199,1:32:16.239
+l'auto-encodeur avec la couche intermédiaire est très étroit,
+
+1:32:16.239,1:32:20.159
+lorsque la couche de code est très étroite, cela peut devenir très compliqué de faire
+
+1:32:20.159,1:32:23.679
+le décodage. Cela peut devenir une très grande fonction non linéaire.
+
+1:32:23.679,1:32:27.760
+Pour effectuer le décodage. Vous pouvez donc avoir besoin de plusieurs couches.
+
+1:32:27.760,1:32:31.280
+Il n'y a plus de raison de penser que l'architecture du
+
+1:32:31.280,1:32:35.600
+décodeur doit être similaire à l'architecture de l’encodeur.
+
+1:32:35.760,1:32:39.040
+Maintenant, il pourrait y avoir…
+
+1:32:39.040,1:32:42.080
+Ok cela dit qu'il pourrait y avoir une bonne raison pour cela.
+
+1:32:42.080,1:32:47.280
+En fait il y a des modèles dont je n'ai pas parlé
+
+1:32:47.280,1:32:52.080
+parce qu'ils ne sont pas prouvés, qui sont appelés auto-codeurs empilés
+
+1:32:52.080,1:32:57.760
+où fondamentalement, vous avez cette idée.
+
+1:32:57.760,1:33:00.000
+Vous avez en gros un auto-encodeur où vous avez une
+
+1:33:02.800,1:33:06.560
+erreur de reconstruction. Je vais en effacer ceci.
+
+1:33:06.560,1:33:10.000
+L’auto-encodeur dont nous avons
+
+1:33:10.000,1:33:13.360
+parlé, a une sorte de coût pour rendre la variable latente,
+
+1:33:13.360,1:33:17.120
+Ici, différente de la sortie de l’encodeur.
+
+1:33:17.120,1:33:23.199
+Donc c'est z̅ et c'est z, si vous voulez.
+
+1:33:23.199,1:33:28.880
+C'est un auto-encodeur dessiné d'une manière amusante. Donc ici c'est y
+
+1:33:28.880,1:33:31.840
+Et là c'est y̅ en bas. Maintenant je peux empiler
+
+1:33:35.760,1:33:40.960
+un autre de ces gars au sommet. Ok. Maintenant je vais devoir appeler ça
+
+1:33:47.199,1:33:51.100
+z1 et je vais appeler cela z2.
+
+1:34:09.040,1:34:13.600
+Ok, je vais appeler ça y̅ et ceci y.
+
+1:34:13.600,1:34:19.840
+Maintenant ce qui est intéressant à propos de… Ok je vais appeler le bas x.
+
+1:34:19.840,1:34:23.040
+Je change le nom. Si vous regardez, si
+
+1:34:27.440,1:34:31.280
+vous ignorez la partie droite du système et regardez la partie gauche
+
+1:34:31.280,1:34:35.760
+vous allez à y. Cela ressemble beaucoup à un reconnaisseur classique
+
+1:34:35.760,1:34:40.080
+où x est l'entrée, y̅ est une prédiction pour
+
+1:34:40.080,1:34:42.719
+la sortie, y est la sortie souhaitée et il y a une fonction de coût qui
+
+1:34:42.719,1:34:49.040
+mesure la différence entre les deux. L'autre branche qui va de
+
+1:34:49.040,1:34:52.639
+y à x, c'est un peu comme un décodeur où y est
+
+1:34:52.639,1:34:55.360
+le code, mais vous avez des codes tout au long
+
+1:34:55.360,1:34:58.639
+au milieu car c'est une sorte d'auto-encodeur empilé. Donc
+
+1:34:58.639,1:35:02.159
+chaque paire de couches, chaque paire d’encodeurs/décodeurs est comme un
+
+1:35:02.159,1:35:04.400
+petit auto-encodeur. Et vous les empilez les uns sur les autres.
+
+1:35:04.400,1:35:08.159
+Ce que vous aimeriez, c'est trouver un moyen d’entraîner le système
+
+1:35:08.159,1:35:11.119
+de telle sorte que si vous n'avez pas d'étiquette pour les échantillons,
+
+1:35:11.119,1:35:15.119
+vous ne connaissez pas y, par exemple, vous ne faites qu'entraîner ça
+
+1:35:15.119,1:35:20.239
+comme un auto-encodeur. Mais si vous avez un y, alors vous 
+
+1:35:20.239,1:35:23.840
+sérrez y à sa valeur désirée et ce
+
+1:35:23.840,1:35:28.880
+système devient maintenant une combinaison de prédicteur et de reconnaisseur
+
+1:35:28.880,1:35:33.760
+et un auto-encodeur. Il y a un léger problème avec cette image,
+
+1:35:33.760,1:35:36.800
+un certain nombre de problèmes différents. Le premier
+
+1:35:36.800,1:35:39.679
+problème est que si z1, par exemple, a assez de
+
+1:35:43.199,1:35:46.880
+capacité, et vous n’entraînez que sur des échantillons
+
+1:35:46.880,1:35:51.040
+non étiquetés, le système va uniquement transmettre les informations par z1 et
+
+1:35:51.040,1:35:53.360
+il va ignorer complètement les couches supérieures.
+
+1:35:53.360,1:35:56.880
+Car il n'y a pas assez de capacité en z1 pour faire une reconstruction parfaite.
+
+1:35:56.880,1:36:01.760
+Donc il va juste mettre toutes les informations sur z1 et
+
+1:36:01.760,1:36:05.440
+alors tous les autres z2  et y seront constants.
+
+1:36:05.440,1:36:09.119
+Parce que le système n'en aura pas besoin. Donc encore une fois vous devrez
+
+1:36:09.119,1:36:15.040
+régulariser z pour l'empêcher
+
+1:36:15.040,1:36:18.400
+de capturer toutes les informations. La même chose pour les autres couches peut-être.
+
+1:36:22.719,1:36:29.199
+L'autre chose est est-ce que cette chose doit être
+
+1:36:29.199,1:36:32.719
+linéaire ou non linéaire et cela dépend de la taille relative des z.
+
+1:36:32.719,1:36:36.960
+Donc si vous passez d’une dimension basse à une dimension élevée,
+
+1:36:36.960,1:36:40.480
+vous avez besoin de quelque chose de non linéaire. Mais si vous passez de d’une dimension élevée à une basse
+
+1:36:43.600,1:36:46.960
+vous pouvez probablement le faire avec une dimension linéaire.
+
+1:36:46.960,1:36:50.000
+Un peu comme un codage épars. Donc vous verrez que le système
+
+1:36:53.920,1:36:58.639
+peut avoir une alternance
+
+1:36:58.639,1:37:05.440
+d'étapes linéaires et non linéaires, en sorte de phase opposée si vous voulez.
+
+1:37:05.440,1:37:09.520
+Car il faut être linéaire pour aller d’une dimension élevée
+
+1:37:09.520,1:37:13.440
+à une basse, puis non linéaire pour passer d’une dimension basse
+
+1:37:13.440,1:37:17.520
+à une élevée. Puis à nouveau linéaire pour revenir à dimension 
+
+1:37:17.520,1:37:23.119
+basse. C’est la façon inverse.
+
+1:37:23.920,1:37:27.679
+Des gens ont proposé des choses comme ça, mais pas
+
+1:37:27.679,1:37:29.679
+vraiment un entraînement à grande échelle.
+
+1:37:29.679,1:37:33.040
+Donc il y a beaucoup de questions ouvertes autour de ces choses.
+
+1:37:33.040,1:37:36.159
+Si vous êtes curieux un papier sur lequel
+
+1:37:36.159,1:37:43.040
+j'ai travaillé avec mon ancien élève, Jake Zhao,
+
+1:37:43.119,1:37:51.119
+est un système appelé « stacked what where »
+
+1:37:51.119,1:37:54.080
+auto-encodeur. C'est un système un peu de ce type mais
+
+1:37:56.719,1:37:59.840
+il y a une sorte de variables supplémentaires qui vont
+
+1:37:59.840,1:38:04.400
+de cette façon. C’est en gros la position des
+
+1:38:04.400,1:38:07.280
+changements dans le pooling. Je ne veux pas entrer dans les détails mais
+
+1:38:07.280,1:38:10.800
+si vous cherchez un papier sur l’empilement des auto-encodeurs, vous trouverez deux papiers.
+
+1:38:10.800,1:38:14.800
+Un par Jake et moi-même, et un autre par un
+
+1:38:14.800,1:38:20.960
+groupe de l'université du Michigan qui
+
+1:38:20.960,1:38:25.040
+en gros l'a amélioré en entraînant sur ImageNet et a obtenu
+
+1:38:25.040,1:38:29.119
+des résultats décents. Donc ce sont des architectures que vous pouvez utiliser pour faire
+
+1:38:29.119,1:38:33.760
+l'apprentissage auto-supervisé. [Question : juste pour clarifier les paramètres du
+
+1:38:33.760,1:38:37.119
+ressort, c’est pour le terme de la divergence KL dans la perte ?]
+
+1:38:37.119,1:38:40.800
+Oui. Donc le terme de la divergence KL 
+
+1:38:40.800,1:38:44.159
+dans la perte… [Alfredo : nous allons voir cela demain les gars.
+
+1:38:44.159,1:38:47.280
+Nous allons passer en revue l'équation et tous ces 
+
+1:38:47.280,1:38:51.600
+détails. Je couvre cela demain. Je vous verrai demain
+
+1:38:51.600,1:38:55.119
+avec la vidéo, espérons-le. Si la
+
+1:38:55.119,1:38:58.800
+la bande passante le supporte je vais mettre l'enregistrement
+
+1:38:58.800,1:39:03.040
+de ce cours en ligne dès que c’est faisable pour moi.
+
+1:39:03.040,1:39:06.800
+Je l'ajouterai à la plateforme de streaming de la NYU.
+
+1:39:06.800,1:39:11.040
+Je vais essayer de nettoyer la vidéo autant que possible
+
+1:39:11.040,1:39:18.400
+et je l’ajouterai sur YouTube plus tard. Donc merci encore. Restez chez vous, rester au chaud
+
+1:39:18.400,1:39:27.760
+Je vous vois demain, soyez prudents. Soyez prudents.

@@ -1,0 +1,1619 @@
+0:00:00.030,0:00:03.920
+Donc les fondements de l’apprentissage profond.
+
+0:00:03.920,0:00:09.080
+Encore moi. N’hésitez pas à m’interrompre comme d’habitude. Cela sera le dernier cours que nous aurons en présentiel.
+
+0:00:09.080,0:00:12.750
+Nous avons une très mauvaise situation, surtout en Italie.
+
+0:00:12.750,0:00:16.529
+Des gens meurent, il n’y a plus de lits dans les hôpitaux ni de médecins.
+
+0:00:16.529,0:00:21.449
+Les médecins travaillent 24 heures sur 24, 7 jours sur 7, et ils rentrent chez eux
+
+0:00:21.449,0:00:25.260
+et infectent leur propre famille. C’est donc une situation vraiment mauvaise en ce moment
+
+0:00:25.260,0:00:30.810
+et il semble que nous serons dans une situation semblable ici dans deux semaines.
+
+0:00:30.810,0:00:38.129
+Lavez-vous les mains. Essayez de ne pas aller dans des endroits très fréquentés. Restez en bonne santé.
+
+0:00:38.129,0:00:42.950
+Commençons le cours. Apprentissage autosupervisé / non supervisé.
+
+0:00:46.789,0:00:50.520
+Les capacités des modèles générateurs. Donc je vais vous donner des bonbons
+
+0:00:50.520,0:00:54.870
+de sorte que cela vous donne faim et que je puisse vous nourrir avec la première partie
+
+0:00:54.870,0:00:58.199
+de cette leçon. Cette leçon va être divisée en deux parties. La première aujourd'hui
+
+0:00:58.199,0:01:06.360
+l’autre sera en ligne via Zoom. Levez la main ceux qui pense que l’image
+
+0:01:06.360,0:01:13.250
+de gauche est réelle. Ok. Maintenant, levez la main ceux qui pense que la
+
+0:01:18.299,0:01:29.970
+la photo de droite est réelle. Ok. Qui pense que les deux sont réels ? Qui
+
+0:01:29.970,0:01:37.290
+pense que celle-là est fausse ? Qui pense que celle-là est fausse ? Qui pense que
+
+0:01:37.290,0:01:44.299
+les deux sont fausses ? Ok. Vous avez raison. Ces deux images ont été générées par
+
+0:01:44.299,0:01:51.210
+un modèle que nous avons entraînés. En faites, cette personne, Karras, a entraîné. Donc si vous allez sur le
+
+0:01:51.210,0:01:57.060
+site web « this person does not exist », vous pouvez trouver plusieurs très bons exemples
+
+0:01:57.060,0:02:02.310
+de personnes n’existant pas. Si vous continuez à cliquer parfois vous allez
+
+0:02:02.310,0:02:06.780
+trouver une personne avec un trou dans le visage, c’est alors très facile de
+
+0:02:06.780,0:02:13.130
+reconnaître qu'il ne s’agit pas d'une personne réelle. Mais sinon toutes les autres
+
+0:02:13.130,0:02:27.730
+ont l'air assez réelles. Vous pouvez remarquer qu'elles ont de très belles dents, de très belles joues… Je ne sais pas trop comment vous appelez ça en anglais.
+
+0:02:25.730,0:02:29.990
+Cependant vous pouvez clairement dire ici si vous vérifiez l’arrière-plan
+
+0:02:29.990,0:02:34.000
+que le réseau ne produit pas un arrière-plan très précis bien que les visages semblent très bons.
+
+0:02:34.000,0:02:40.130
+Pourquoi ça ? Car le réseau a eu comme entrée de nombreux échantillons de faces.
+
+0:02:40.130,0:02:45.770
+Et la chose qui n’est pas constante, c’est le fond. L’arrière-plan
+
+0:02:45.770,0:02:49.880
+est variable ici et donc vous ne pouvez pas apprendre tous les fonds 
+
+0:02:49.880,0:02:01.520
+possibles. Le fond ressemble à un truc bizarre car il est beaucoup plus variable que les apparences de visages possibles.
+
+0:03:01.520,0:03:07.370
+Etant donné un visage humain, de combien de façons pouvez-vous le déformer ?
+
+0:03:07.370,0:03:12.230
+Combien de degrés de liberté un visage a-t-il ?
+
+0:03:12.230,0:03:19.790
+Vous connaissez la réponse, nous avons déjà couvert ce sujet en classe. [Etudiante]
+
+0:03:19.790,0:03:27.490
+Elle a dit huit. [Etudiant] 1050 ? Ah 50. C’est correct.
+
+0:03:27.490,0:03:32.480
+Vous avez environ une cinquantaine de muscles plus la rotation, les inclinaisons, etc.
+
+0:03:32.480,0:03:37.820
+Toutes ces possibilités… C'est juste une surface en 50 dimensions.
+
+0:03:37.820,0:03:42.230
+Tout le reste ne compte pas car à l’extérieure de la surface. 
+
+0:03:42.230,0:03:50.310
+Cette image est de plusieurs mégapixels donc chaque point vit dans cet immense espace dimensionnel bien que toutes les variations
+
+0:03:50.330,0:03:55.740
+possibles sont limitées à un sous-espace. Donc c’est la surface de données. 
+
+0:03:55.740,0:04:02.270
+Consultez le site web. Ok donc nous avons ici un très mignon chien
+
+0:04:02.270,0:04:10.910
+et de l'autre côté un oiseau moins mignon. Désolé ouais. Si vous faites une interpolation 
+
+0:04:10.910,0:04:15.860
+linéaire entre le chien et l'oiseau, qu’attendez-vous à voir au milieu ?
+
+0:04:15.860,0:04:21.760
+Je vais éteindre la lumière et la rallumerez plus tard.
+
+0:04:21.760,0:04:28.129
+[Etudiant] Répétez. Une image floue. Que voulez-vous dire ?
+
+0:04:28.129,0:04:32.440
+Qu'espérez-vous obtenir ici à peu près ?
+
+0:04:33.879,0:04:45.590
+Vous pouvez répondre. Donc je vais faire 100% de celui-là + 0%. 90% de celui-là
+
+0:04:45.590,0:04:50.659
++10%. 80% de celui-là + 20% celui-ci. Donc qu'est-ce que tu seras vu ici ?
+
+0:04:50.659,0:04:56.300
+Vous devriez deviner. Vous êtes moins que d'habitude, donc vous devez vraiment 
+
+0:04:56.300,0:05:01.500
+parler plus qu’habituellement. [Etudiant] Un écureuil volant ? Non. Donc vous avez un chien
+
+0:05:03.710,0:05:07.699
+et un oiseau. Si je fais une interpolation linéaire de ces deux images dans
+
+0:05:07.699,0:05:16.789
+un espace de pixels qu'obtenez-vous ? [Etudiant] Répétez. [Etudiant] Oui, une superposition.
+
+0:05:16.789,0:05:20.090
+Vous obtenez quelque chose qui ressemble à ceci. Une superposition
+
+0:05:20.090,0:05:24.770
+de la première image avec la deuxième image. Alors revenons ici et faisons
+
+0:05:24.770,0:05:28.849
+plutôt une interpolation dans l'espace latent du réseau. Donc j’entre ces
+
+0:05:28.849,0:05:33.620
+deux images, j'obtiens les deux représentations de ces couches cachées.
+
+0:05:33.620,0:05:37.490
+Je fais une interpolation linéaire entre les couches cachées et ensuite je fais le décodage.
+
+0:05:37.490,0:05:46.909
+Qu’attendez-vous à voir ici ? Vous devez encore me répondre. [Etudiant]
+
+0:05:46.909,0:05:53.090
+Criez. [Etudiant] Le fond est toujours en désordre mais que sera le sujet ? 
+
+0:05:53.090,0:06:00.440
+[Etudiant] Bien donc vous allez commencer à voir un chien oiseau puis un 
+
+0:06:00.440,0:06:08.960
+oiseau chien. Un oiseau chien et un chien oiseau.
+
+0:06:08.960,0:06:13.819
+C’est un réseau qui a fait ça.
+
+0:06:13.819,0:06:18.169
+C’est atroce, un blasphème. Vous devriez regarder Fullmetal Alchemist.
+
+0:06:18.169,0:06:23.960
+L’épisode où le père prend sa fille et le chien et fait quelque chose de
+
+0:06:23.960,0:06:35.699
+similaire. C'était très intéressant. Si vous regardez les animes, voyez Brotherhood qui est la deuxième adaptation. [Etudiant]
+
+0:06:35.689,0:06:40.430
+Je ne sais pas car c'est beaucoup de vert. Donc je suppose qu'il s'en est débarrassé. Je ne sais pas.
+
+0:06:40.430,0:06:44.189
+Oui je ne sais pas. Bonne question et bons yeux.
+
+0:06:44.189,0:06:49.169
+Laissez-moi vous en montrer d'autres provenant de l'article de Brock.
+
+0:06:49.169,0:06:58.490
+Sur la première ligne, vous avez une petite version de ces images et nous partons de quelque chose qui ressemble à un
+
+0:06:58.490,0:07:04.879
+requin ou une raie manta, puis ce truc ressemble à un « polypus »… comment
+
+0:07:04.879,0:07:11.599
+appelez-vous ça en anglais ? [Etudiant] Une pieuvre ? Quelque chose comme une pieuvre.
+
+0:07:11.599,0:07:16.039
+La pieuvre devient comme un singe puis ressemble à un chien. Donc vous
+
+0:07:16.039,0:07:20.629
+pouvez voir le requin devenir une pieuvre qui devient un singe qui devient un chien.
+
+0:07:20.629,0:07:24.529
+C’est intéressant la façon dont on peut changer de race en ayant seulement les deux derniers
+
+0:07:24.529,0:07:28.340
+points fixes puis vous vous promenez dans l'espace latent. Vous en avez un 
+
+0:07:28.340,0:07:33.969
+autre ici. Vous allez d’un chien vers un oiseau. Donc encore une fois vous avez un genre d’écureuil oiseau ou
+
+0:07:33.969,0:07:38.539
+peu importe, puis vous avez un oiseau et de l'autre côté vous avez un chien.
+
+0:07:38.539,0:07:45.440
+Dans celui-ci vous avez cet animal qui sent. Comment vous appelez ça ? [Etudiant] Une moufette [skunk en anglais] Merci.
+
+0:07:45.440,0:07:50.900
+Oh c’est de là l’expression « you smell like a skunk ». C’est la même chose.
+
+0:07:50.900,0:07:55.159
+Donc si vous avez une moufette ici et vous arrivez à un chien. Cela ressemble en fait à
+
+0:07:55.159,0:08:03.319
+beaucoup de chiens différents après cette chose. Puis enfin, on a un oiseau transformer en mouche.
+
+0:08:03.319,0:08:08.419
+Je pense que ce sont des exemples assez impressionnants. Cela devrait vous donner faim de telle sorte que
+
+0:08:08.419,0:08:19.310
+je puisse vous nourrir avec la deuxième partie du cours. [Etudiant] Vous avez cette image
+
+0:08:19.310,0:08:22.430
+d'un côté, vous avez cette image de l'autre. Vous obtenez les enchâssements 
+
+0:08:22.430,0:08:25.699
+et faites une interpolation des enchâssements. Vous pouvez regarder le papier
+
+0:08:25.699,0:08:30.439
+pour plus de détails. Il s'agit ici de vous montrer que la différence
+
+0:08:30.439,0:08:35.120
+entre l'interpolation dans l'espace des pixels et l'espace latent.
+
+0:08:35.120,0:08:43.090
+Donc l'espace latent capture la sémantique de base d'une image. Donc vous
+
+0:08:43.090,0:08:48.250
+passez de l'espace des pixels, qui n'est pas vraiment compatible avec nos
+
+0:08:48.250,0:08:54.790
+outils pour créer un espace mieux adapté étant la représentation cachée
+
+0:08:54.790,0:08:59.050
+interne des données du réseau. Là encore, il s'agit juste de vous donner
+
+0:08:59.050,0:09:04.660
+de l'appétit. Je ne suis pas formel du tout ici. Qu’avons-nous ensuite ?
+
+0:09:04.660,0:09:08.720
+Vous pouvez zoomer sur les chiens. Vous pouvez déplacer sur X, sur Y. 
+
+0:09:08.720,0:09:13.870
+Vous pouvez changer la luminosité. Ce qui est intéressant ici, c'est que lorsque vous changez
+
+0:09:13.870,0:09:18.610
+la luminosité, vous passer du jour à la nuit ou de la nuit au jour car c’est
+
+0:09:18.610,0:09:23.770
+à cela que ressemble le changement de luminosité le plus normal dans les images.
+
+0:09:23.770,0:09:26.830
+Chaque fois que vous changez de luminosité, vous changez en fait l'heure de la journée.
+
+0:09:26.830,0:09:31.510
+Vous avez aussi les rotations 2D ou 3D. C’est très intéressant car cela signifie que
+
+0:09:31.510,0:09:36.190
+le réseau a d'une manière ou d'une autre, une représentation interne du monde 3D.
+
+0:09:36.190,0:09:41.800
+C'est quelque chose que Yann a mentionné hier. Si vous vous déplacez un peu
+
+0:09:41.800,0:09:52.120
+vous voyez ce genre de parallaxe. La façon la plus simple d'exprimer ce phénomène est de dire qu’il y a un monde en 3D. [Etudiant]
+
+0:09:52.120,0:10:02.430
+Donc dans ce cas, ils ont entraîné le réseau afin de pouvoir gérer
+
+0:10:02.430,0:10:08.710
+une transformation spécifique. Il faut que j’ajoute la référence de ce papier.
+
+0:10:08.710,0:10:16.210
+Encore une fois, je vous donne juste quelques bonbons pour les yeux, je ne
+
+0:10:16.210,0:10:21.220
+vais pas vous donner plus de choses formelles pour le moment. Dans ce cas 
+
+0:10:21.220,0:10:29.590
+que j’aime beaucoup, vous pouvez obtenir la version animée de votre photo.
+
+0:10:29.590,0:10:34.430
+Essayer ça, mais pas avec du hentai. Nous ne voulons pas faire ces choses. [rires]
+
+0:10:34.430,0:10:38.590
+Ok donc certains d'entre vous connaissent ces choses. Intéressant. [rires] 
+
+0:10:38.590,0:10:44.470
+Ce qui ne connaissent pas. C’est ok, oubliez tout ça.
+
+0:10:44.470,0:10:54.139
+Voici d'autres trucs qui sont plutôt cool. Vous pouvez passer d’une image en basse résolution à haute résolution.
+
+0:10:54.459,0:10:58.449
+Voici un autre exemple mais c'est bien sûr c’est noir sur blanc
+
+0:10:58.449,0:11:01.839
+donc c'est beaucoup plus facile de faire ce genre de choses et c'est la même chose pour les zèbres.
+
+0:11:01.839,0:11:05.230
+Il s'agit d'une technique d'apprentissage préalable, donc ils utilisaient 
+
+0:11:05.230,0:11:09.879
+un modèle hiérarchique. Néanmoins, cela fonctionne assez bien. 
+
+0:11:09.879,0:11:16.209
+Quelques années plus tard Garcia vous donne… c'est comme
+
+0:11:16.209,0:11:20.619
+créer des échantillons par interpolation linéaire.
+
+0:11:20.619,0:11:24.879
+La troisième image est celle générée par le réseau neuronal et
+
+0:11:24.879,0:11:29.679
+la dernière est en fait l'image réelle. A la troisième ligne, vous pouvez voir clairement que
+
+0:11:29.679,0:11:39.759
+l'homme asiatique est devenu européen. Pourquoi ça ? [Etudiant] Les biais. Correct.
+
+0:11:39.759,0:11:43.899
+Le réseau a vu beaucoup de personnes blanches et donc le moyen le plus simple 
+
+0:11:43.899,0:11:49.929
+de reconstruire les caractéristiques d’un visage inconnu et de se brancher 
+
+0:11:49.929,0:11:55.299
+sur un visage de personne blanche. Cette dame a l'air d'avoir un accident vasculaire cérébral
+
+0:11:55.299,0:12:00.910
+car nous n'avons pas beaucoup d’images de vues de côté. Cette dame a
+
+0:12:00.910,0:12:05.740
+changé de sexe en bas. Cet homme semble avoir eu un accident car là encore,
+
+0:12:05.740,0:12:10.869
+nous n'avons pas beaucoup d’images de personnes avec des lunettes dans l'ensemble de données.
+
+0:12:10.869,0:12:15.369
+Donc le réseau a vu une chose très sombre et a sorti quelqu'un
+
+0:12:15.369,0:12:22.240
+venant de se faire frapper très fort, Mais encore une fois, c'est très vieux.
+
+0:12:22.240,0:12:26.290
+Cela date d’il y a quatre ans. C’étaient les premiers résultats. Cela vous
+
+0:12:26.290,0:12:32.079
+permet de tirer parti des données réelles afin de combler les trous.
+
+0:12:32.079,0:12:36.360
+Les trous sont en fait des détails réels. Nous avons de très très nombreux
+
+0:12:36.360,0:12:40.509
+nouveaux résultats récents, mais c’étaient les résultats pionniers.
+
+0:12:40.509,0:12:47.230
+Un de plus. Ici vous bloquez le visage avec un carré gris et vous
+
+0:12:47.230,0:12:52.820
+demandez ensuite au réseau de reconstruire le visage pour qu'il vous donne
+
+0:12:52.820,0:12:57.680
+le plus beau point. Donc vous prenez une image qui reste sur 
+
+0:12:57.680,0:13:03.950
+la surface d’entraînement. Vous mettez un patch sur le visage. Ce patch fera s'éloigner 
+
+0:13:03.950,0:13:08.210
+l'image de la surface d’entraînement. Puis vous pouvez faire par exemple une descente de gradient
+
+0:13:08.210,0:13:13.430
+dans cet espace énergétique de telle sorte que l'on puisse trouver le point le plus proche,
+
+0:13:13.430,0:13:17.570
+le point ayant l’énergie la plus faible associée à cette image initiale spécifique.
+
+0:13:17.570,0:13:21.110
+Donc vous obtenez une image, vous la perturbez, la rendant éloignée de la
+
+0:13:21.110,0:13:24.650
+surface d’entraînement. Puis vous pouvez alors faire une descente de gradient
+
+0:13:24.650,0:13:29.710
+dans le paysage énergétique de telle sorte que vous puissiez choisir 
+
+0:13:29.710,0:13:33.860
+l'échantillon le plus proche sur la surface d’entraînement. C'est ce que Yann
+
+0:13:33.860,0:13:38.090
+a dit hier à propos des modèles à base d'énergie. Lorsque vous apprenez
+
+0:13:38.090,0:13:41.780
+une énergie vous pouvez réellement l’utiliser pour faire de l'inférence. Pour faire de l'inférence
+
+0:13:41.780,0:13:45.740
+il faut en fait minimiser l'énergie. Donc la minimisation de l'énergie 
+
+0:13:45.740,0:13:49.560
+signifie l'inférence. Pas l’entraînement. L’entraînement c’est autre chose.
+
+0:13:49.560,0:13:52.850
+Nous couvrirons plus en détail les modèles à base d'énergie dans les cours
+
+0:13:52.850,0:13:58.010
+suivants. Ici vous avez d'autres exemples, dont l'un utilise un auto-encodeur variationnel [VAE dans la suite].
+
+0:13:58.010,0:14:04.460
+et un autre utilisant un GAN [voir practinum 09]. Il s'agit d'un exemple
+
+0:14:04.460,0:14:10.520
+de Reed. C'est fou car vous pouvez passer de la description en anglais au
+
+0:14:10.520,0:14:15.980
+dessin de ce que la description en anglais décrit. Donc vous partez d'une séquence
+
+0:14:15.980,0:14:20.600
+vers un vecteur qui est comme le concept. Puis à partir du concept vous
+
+0:14:20.600,0:14:24.850
+utilisez un décodeur. C'est donc un réseau génératif qui va décoder votre sortie spécifique.
+
+0:14:24.850,0:14:33.800
+C'était à peu près tout pour les bonbons pour les yeux. Cela devrait vous
+
+0:14:33.800,0:14:39.400
+avoir donné faim pour la deuxième partie de la classe. Vous avez faim ? 
+
+0:14:39.400,0:14:48.230
+[Etudiants] Oui, je n'ai pas dîné non plus. Donc les auto-encodeurs [A-E dans la suite].
+
+0:14:48.230,0:14:51.470
+Qu'est-ce que ces choses ? Apprentissage non supervisé. C'est donc le premier modèle
+
+0:14:51.470,0:14:55.760
+dans lequel nous allons plonger pour voir comment nous pouvons entraîner un réseau
+
+0:14:55.760,0:15:03.440
+sans cibles ou étiquettes. Que sont les cibles ? Quelle est la différence 
+
+0:15:03.440,0:15:09.860
+entre cible et étiquette ? [Etudiant] Vous savez déjà tout. Quelqu'un d'autre. [Etudiant]
+
+0:15:09.860,0:15:18.480
+Prédiction signifie ? [Etudiant] Les deux sont en fait des annotations.
+
+0:15:18.480,0:15:25.080
+[Etudiant] Merci. Les étiquettes sont catégoriques. Vous pouvez étiqueter
+
+0:15:25.080,0:15:29.970
+les choses : ceci est une chaise, ceci une table, ça une porte. Les cibles
+
+0:15:29.970,0:15:37.230
+sont la cible. Donc nous allons observer comment nous pouvons entraîner
+
+0:15:37.230,0:15:43.590
+ce modèle sans avoir réellement d'objectifs ou d'étiquettes. C'est donc le
+
+0:15:43.590,0:15:48.690
+premier réseau qui est l'architecture avec laquelle nous allons jouer. 
+
+0:15:48.690,0:15:53.370
+C’est très similaire à ce que nous avons observé jusqu'à présent, mais la grande différence est que nous partons
+
+0:15:53.370,0:15:58.200
+du fond rose et nous savons déjà pourquoi. On arrive à la couche cachée intermédiaire en vert,
+
+0:15:58.200,0:16:05.340
+puis allez en haut vers… l’entrée. La sortie du réseau va donc être
+
+0:16:05.340,0:16:09.510
+la prédiction de l'entrée. Il y a aussi d’autre type de représentation.
+
+0:16:09.510,0:16:17.880
+Ce sont les équations. Les couches cachées vont être la rotation et l’écrasement de mon entrée.
+
+0:16:17.880,0:16:22.830
+La sortie est la version écrasée de la rotation de la couche cachée
+
+0:16:22.830,0:16:27.450
+où rotation signifie transformations affines. Nous avons quelques
+
+0:16:27.450,0:16:32.480
+dimensionnalités. Donc on tire vers d mais x et x̂ vivent dans ℝⁿ.
+
+0:16:32.480,0:16:40.580
+La deuxième partie est notre réseau génératif. Celui qui va de h à x̂. Cela va être mon réseau générateur.
+
+0:16:40.580,0:16:44.850
+Ici vous avez un diagramme différent qui fait essentiellement la même chose 
+
+0:16:44.850,0:16:48.840
+et que certaines personnes préfèrent où les transformations se trouvent
+
+0:16:48.840,0:16:53.550
+dans des boîtes. Donc vous avez des gens qui disent que c'est un réseau neural à deux couches
+
+0:16:53.550,0:17:01.680
+bien que nous savons qu'il s'agit d'un réseau neural à… Combien de couches
+
+0:17:01.680,0:17:08.580
+a ce réseau de neurones ? [Etudiant] Trois couches fantastique. C’est ma convention.
+
+0:17:08.580,0:17:14.070
+Si vous utilisez la notation de Yann, alors nous avons aussi… Oh attendez. Vous pouvez 
+
+0:17:14.070,0:17:17.620
+avoir aussi des poids légers pour essayer de reproduire une ACP
+
+0:17:17.620,0:17:24.970
+bien que vous n'ayez pas de garanties sur l'ordre des différents bases.
+
+0:17:24.970,0:17:34.690
+Mais si nous utilisons la notation de Yann, nous allons aussi ajouter ce genre de petits projectiles qui représentent la transformation.
+
+0:17:34.690,0:17:41.100
+Donc pourquoi utilisons-nous des auto-encodeurs ? Quel est l'intérêt de
+
+0:17:41.100,0:17:51.940
+prévoir l’entrée ? Disons que j'utilise une matrice identité. Je fournis 
+
+0:17:51.940,0:17:56.170
+une entrée qui est un vecteur. Je multiplie la matrice identité par mon 
+
+0:17:56.170,0:18:04.720
+Vecteur. Je reçois le même vecteur. C’est l’auto-encodeur. Donc vous
+
+0:18:04.720,0:18:18.760
+obtenez la même chose qu’en entrée. Pourquoi diable faisons-nous cela ? [Etudiant] Vous n'avez pas l'entrée
+
+0:18:18.760,0:18:22.750
+quand vous prédisez mais je peux juste apprendre la matrice d'identité.
+
+0:18:22.750,0:18:26.750
+J'ai une matrice d'identité. J’ai mis quelque chose dedans et je sors quelque chose.
+
+0:18:26.750,0:18:31.630
+J'ai mis quelque chose dedans, je mets quelque chose dehors. La même chose en entrée qu’en sortie.  
+
+0:18:31.630,0:18:36.040
+La chose la plus triviale à apprendre pour un réseau est la matrice identité.
+
+0:18:36.040,0:18:40.870
+La chose que je mets à l'intérieur en ressort. C'est ainsi que nous nous entraînons ce truc.
+
+0:18:40.870,0:18:53.020
+[Etudiant] Répétez. [Etudiant] Si d est moins ? OK il y a un premier point.
+
+0:18:53.020,0:19:00.400
+Donc si nous avons une… Si vous avez une dimension intermédiaire d inférieure à n
+
+0:19:00.400,0:19:05.830
+nous pouvons commencer à voir à quoi peut servir ce truc. Par exemple il
+
+0:19:05.830,0:19:09.429
+peut être utilisé pour la compression. Donc si j'ai une représentation intermédiaire
+
+0:19:09.429,0:19:13.900
+qui prend moins de place que ma représentation d'entrée, je peux utiliser l’encodeur 
+
+0:19:13.900,0:19:18.940
+comme un compresseur. Puis j'ai ma représentation cachée, mon code adressant
+
+0:19:18.940,0:19:23.350
+quelle entrée spécifique il s’agit. Et cela prend moins de place. Je peux
+
+0:19:23.350,0:19:31.090
+m’en servir comme compresseur d'images par exemple. C'était mon idée initiale pour les AEs.
+
+0:19:31.090,0:19:36.960
+Mais ce n'est qu'un type d’applications. Ce n’est pas la façon correcte de penser à ce modèle.
+
+0:19:36.960,0:19:44.760
+Une tâche de l’AE est donc de reconstruire les données qui vivent sur la
+
+0:19:44.760,0:19:51.970
+surface de données. Donc nous avons une surface de données, nous obtenons quelques points de données et
+
+0:19:51.970,0:19:57.070
+j'utilise ces points pour l’entraînement de mon système. J'aimerais que mon AE soit capable
+
+0:19:57.070,0:20:01.600
+de ne reconstruire sur les données que les choses qui vivent sur la surface
+
+0:20:01.600,0:20:06.160
+des données. Donc c'est la tâche des AEs.
+
+0:20:06.160,0:20:10.480
+Seulement reconstruire un petit sous-ensemble… et je perds mon micro…
+
+0:20:10.480,0:20:16.230
+Une seconde. Je devrais… Ok c’est trop court.
+
+0:20:16.230,0:20:26.140
+Nous devrions seulement pouvoir reconstruire un petit ensemble d'entrées possibles. Cela devient intéressant
+
+0:20:26.140,0:20:31.300
+car si vous ne pouvez reconstruire qu'un petit ensemble d'entrées alors
+
+0:20:31.300,0:20:36.400
+vous ne pouvez pas reconstruire des choses qui sont au loin. Par exemple
+
+0:20:36.400,0:20:44.110
+je vous ai montré des photos avec une boîte grise sur le visage.
+
+0:20:44.110,0:20:48.370
+Donc je prends mon point et l’éloigne de ma surface d’entraînement.
+
+0:20:48.370,0:20:52.780
+Si j'essaie de le reconstruire et que le réseau ne peut reconstruire que les choses qui sont sur
+
+0:20:52.780,0:20:57.670
+la surface, il reconstruira quelque chose qui est ici. Et qui n'a pas ce
+
+0:20:57.670,0:21:04.030
+patch sur le visage. Vous voyez ou pas ? Donc si vous êtes seulement contraint à
+
+0:21:04.030,0:21:08.140
+reconstituer les choses qui ont été observées pendant l’entraînent, toute variation
+
+0:21:08.140,0:21:14.850
+que vous appliquez aux nouvelles entrées plus tard au moment où vous utilisez ce réseau, va être supprimé.
+
+0:21:14.850,0:21:25.110
+Car le réseau sera insensible à ce genre de perturbations. Voyons ça un peu plus de détails. Est-ce clair jusqu'à présent ?
+
+0:21:25.110,0:21:33.340
+Oui ? Non ? Ok. Alors voyons les pertes de reconstruction que nous pouvons utiliser.
+
+0:21:33.340,0:21:42.640
+La première la perte classique que nous avons pour l'ensemble des données est la moyenne de mes pertes par échantillon.
+
+0:21:42.640,0:21:55.720
+Il y a deux pertes par échantillon. La première est l'entropie croisée binaire qui est très pénalisante si vous faites une erreur.
+
+0:21:55.720,0:22:04.090
+Donc la sortie, les objectifs sont 0 ou 1. Donc j'ai une distribution catégorielle.
+
+0:22:04.090,0:22:08.410
+Puis votre sortie va être quelque chose qui vit aussi entre 0 et 1.
+
+0:22:08.410,0:22:12.280
+Donc vous avez une fonction non linéaire de type sigmoïde à la fin puis
+
+0:22:12.280,0:22:17.380
+vous essayez de minimiser ce type ici. Autrement si vous avez de vraies valeurs
+
+0:22:17.380,0:22:22.900
+d’entrées et sorties qui sont par exemple des images en couleur, vous 
+
+0:22:22.900,0:22:37.030
+pouvez vouloir utiliser la MSC. Donc comme quelqu'un, votre ami, l’a mentionné avant, c'est assez évident 
+
+0:22:37.030,0:22:41.409
+de penser à une couche cachée sous-complète. Une couche cachée sous-complète
+
+0:22:41.409,0:22:48.280
+a une dimensionnalité inférieure à la taille de l'entrée.
+
+0:22:48.280,0:22:54.400
+Dans ce cas, le réseau ne peut peut-être pas copier ou utiliser la matrice d'identité car vous
+
+0:22:54.400,0:23:01.539
+avez une représentation intermédiaire qui est plus petite et vous devez ensuite étendre celle-là pour revenir à la dimension initiale.
+
+0:23:01.539,0:23:06.309
+Vous pouvez utiliser un AE avec couche cachée sous-complète pour faire de la compression par exemple.
+
+0:23:06.309,0:23:12.070
+C’est assez standard. Cela fait sens jusqu'à présent ? Ok donc nous jouerons 
+
+0:23:12.070,0:23:17.380
+avec cela dans une seconde avec un notebook. Néanmoins je dirai que j'aime 
+
+0:23:17.380,0:23:24.880
+celui-là encore plus. Et vous allez me dire pourquoi. Vous avez 
+
+0:23:24.880,0:23:34.440
+tous les ingrédients. C’est la sixième ou septième semaine… La septième.
+
+0:23:34.450,0:23:41.730
+Pourquoi je veux une représentation intermédiaire plus importante ?
+
+0:23:41.730,0:24:31.870
+[Etudiant] Tout le monde l’a entendu ? Non. C’est la bonne intuition. Répétez ça juste plus fort. [Etudiant]
+
+0:24:31.870,0:24:37.520
+Nous avons toujours dit que plus on va dans la représentation intermédiaire, 
+
+0:24:37.520,0:24:42.049
+plus l’optimisation est facile. Donc, bien que les informations sont
+
+0:24:42.049,0:24:47.000
+contenues dans la première couche et dans la couche cachée ce sera la même.
+
+0:24:47.000,0:24:51.620
+Je ne peux pas ajouter d'informations. Mais c'est beaucoup plus facile maintenant 
+
+0:24:51.620,0:24:57.919
+pour le réseau de jouer avec une représentation qui a plus de dimensions.
+
+0:24:57.919,0:25:01.820
+Nous pouvons maintenant simplement apprendre la matrice d'identité et 
+
+0:25:01.820,0:25:06.409
+copier tout. Vous copiez le premier gars dans le premier endroit puis
+
+0:25:06.409,0:25:09.740
+le deuxième type que vous copiez ici, le troisième que vous copiez ici. 
+
+0:25:09.740,0:25:13.480
+Vous copiez tout à travers. Vous n'avez rien appris, que l'identité.
+
+0:25:13.480,0:25:19.549
+Nous devons appliquer d'autres types de contraintes pour l'information.
+
+0:25:19.549,0:25:29.330
+Nous devons donc introduire un goulot d'étranglement en matière d'information. Bien que nous élargissions la
+
+0:25:29.330,0:25:33.500
+représentation intermédiaire, nous devons contraindre la représentation, 
+
+0:25:33.500,0:25:40.640
+limiter les configurations possibles que la couche cachée peut prendre en compte.
+
+0:25:40.640,0:25:45.110
+La couche d’entrée peut prendre autant de configurations que vous le souhaitez. La couche cachée ne doit
+
+0:25:45.110,0:25:49.360
+contenir que la configuration possible que la surface des données 
+
+0:25:49.360,0:25:53.630
+d’entraînement peut avoir. Donc l'entrée peut être tout ce que vous voulez
+
+0:25:53.630,0:25:58.549
+mais vous ne pouvez-vous entraîner qu'avec des données qui se trouvent sur la surface de données.
+
+0:25:58.549,0:26:03.270
+Donc la couche cachée doit seulement pouvoir modéliser, capturer les 
+
+0:26:03.270,0:26:11.970
+variabilités dans les données d’entraînement et être insensible à tout ce qui est en dehors. Donc nous pouvons avoir une reconstruction
+
+0:26:11.970,0:26:18.240
+sélective d'un sous-ensemble du très grand espace d’entrée. Etes-vous avec moi ?
+
+0:26:18.240,0:26:28.230
+Oui ? Non ? [Etudiant] Nous allons voir maintenant comment éviter le surentraînement.
+
+0:26:28.230,0:26:33.210
+Il y a donc plusieurs façons de procéder pour faire fonctionner la chose
+
+0:26:33.210,0:26:37.800
+à droite mais pouvez avoir la même justification pour le type à gauche.
+
+0:26:37.800,0:26:48.900
+Donc disons que j'ai un décodeur super génial. Mon encodeur pourrait juste mettre toutes mes données d’entraînement comme :
+
+0:26:48.900,0:26:52.830
+première donnée d’entraînement pour le premier point. Deuxième donnée d’entraînement pour le deuxième point.
+
+0:26:52.830,0:26:57.510
+Troisième donnée d’entraînement pour le troisième point. Donc je peux associer chacun de
+
+0:26:57.510,0:27:02.760
+mes données de d’entraînement à un nombre : 1, 2, 3, 4, 5, peu importe.
+
+0:27:02.760,0:27:06.390
+Puis vous avez le décodeur qui a mémorisé tous les points d’entraînement.
+
+0:27:06.390,0:27:11.400
+Il suffit alors de sortir le point d’entraînement que vous souhaitez de ce sélecteur.
+
+0:27:11.400,0:27:16.190
+Donc vous n'avez peut-être besoin que d'une seule boule ici, un seul neurone
+
+0:27:16.190,0:27:20.820
+dans la couche cachée afin d'avoir un réseau qui ne surentraîne pas. 
+
+0:27:20.820,0:27:23.280
+Tant que le décodeur et l'encodeur sont très puissants.
+
+0:27:23.280,0:27:27.360
+Donc le point que votre collègue a mentionné : comment éviter le surentraînement ?
+
+0:27:27.360,0:27:33.270
+Cette chose peu surentraîner aussi. Cette chose va surentraîner à moins
+
+0:27:33.270,0:27:37.890
+d’être prudent sur la façon dont nous concevons ces choses.
+
+0:27:37.890,0:27:46.770
+Il existe différentes méthodes : les méthodes contrastives, les méthodes régularisées et les méthodes architecturales. 
+
+0:27:46.770,0:27:51.460
+Nous avons vu hier des choses. Nous allons couvrir quelques-unes d'entre elles 
+
+0:27:51.460,0:27:57.560
+et avons 20 minutes pour ça. Oui ? [Etudiant] C’est la diapositive suivante.
+
+0:28:05.650,0:28:12.520
+Auto-encodeur débruiteur. Comment ça marche ? Je prends 
+
+0:28:12.520,0:28:22.210
+mon entrée en rose. Je l'éloigne de mon point original. Donc voici ma surface de données.
+
+0:28:22.210,0:28:26.530
+Chacun de ces points est un échantillon pour l’entraînement.
+
+0:28:26.530,0:28:32.890
+Je prends mon point et le déplace aléatoirement.
+
+0:28:32.890,0:28:37.810
+Maintenant je force le réseau à reconstruire ce point initial. 
+	
+0:28:37.810,0:28:42.730
+Ceci est donc un auto-encodeur débruiteur [DAE dans la suite d’après le sigle anglais].
+
+0:28:42.730,0:28:46.800
+Vous prenez un point de votre surface d’entraînement, vous l’éloignez puis
+
+0:28:46.800,0:28:52.780
+vous forcez le réseau à le ramener ici. Je prends le même point, 
+
+0:28:52.780,0:28:56.200
+je l’éloigne dans l'autre direction et je le remets ici. Je prends le même
+
+0:28:56.200,0:29:02.400
+point, je l’éloigne dans une autre direction et je le remets ici. Ok alors qu'est-ce que nous apprenons ?
+
+0:29:02.400,0:29:07.030
+Nous apprendrons un champ vectoriel qui ramène tout à ce point.
+
+0:29:07.030,0:29:12.550
+Puis je commence à me déplacer dans ma surface d’entraînement et j'ai
+
+0:29:12.550,0:29:17.020
+tous ces genre de champs vectoriels pointant vers l’échantillon
+
+0:29:17.020,0:29:21.790
+d’entraînement. Si vous avez un échantillon d’entraînement ici et un
+
+0:29:21.790,0:29:25.690
+autre ici, ce gars va essayer d'attirer ici. L’autre va essayer d’attirer là.
+
+0:29:25.690,0:29:41.070
+Donc les choses qui sont sur la surface restent là. Les choses à l'extérieur de la surface vont s'effondrer vers la surface. Des questions ?
+
+0:29:41.110,0:29:47.640
+Il y a une mise en garde [Alfredo demande la prononciation du mot « caveat »]
+
+0:29:47.640,0:29:52.630
+Merci. Nous supposons que nous injectons la même distribution de bruit
+
+0:29:52.630,0:29:57.850
+que nous allons observer dans la réalité. De cette façon, nous pouvons apprendre
+
+0:29:57.850,0:30:06.070
+comment redresser de manière robuste. Donc si nous supposons que nous avons accès au type de perturbations que nous allons observer plus tard lors
+
+0:30:06.070,0:30:10.240
+de l’inférence, nous pouvons entraîner le modèle à être insensible à ces 
+
+0:30:10.240,0:30:15.090
+types de perturbations et c'est une très grande supposition.
+
+0:30:15.090,0:30:21.880
+Oh belle image. Donc voici mes données d’entraînement. Mes points roses.
+
+0:30:21.880,0:30:30.570
+Je vais éteindre les lumières. Donc ici j’ai mes points roses
+
+0:30:30.570,0:30:36.160
+qui vous semblent blancs. J'ai aussi les points orange qui sont
+
+0:30:36.160,0:30:40.690
+les points déplacés. Donc ils sont originaires de ces points ici puis
+
+0:30:40.690,0:30:44.260
+je les déplace dans toutes ces directions différentes. Ensuite j’entraîne
+
+0:30:44.260,0:30:49.150
+pour ramener tous ces points oranges aux points de départ initiaux.
+
+0:30:49.150,0:30:55.240
+Voici donc la sortie du réseau. J'entre ce nuage de points orange dans
+
+0:30:55.240,0:31:00.160
+le réseau. J’entraîne mon réseau à sortir les points sur la spirale
+
+0:31:00.160,0:31:04.390
+et ces points bleus sont les reconstructions du réseau.
+
+0:31:04.390,0:31:09.130
+Donc si les points sont déjà sur la surface, ils ne bougent pas.
+
+0:31:09.130,0:31:15.040
+Si les points sont éloignés de la surface, ils bougent beaucoup.
+
+0:31:15.040,0:31:20.380
+Je peux mesurer de combien ils ont bougé et c’est l’énergie. A quel point c'est cool ?
+
+0:31:20.380,0:31:25.480
+Ok peut-être que vous n'avez pas encore compris. Donc dans ce cas pour être un peu
+
+0:31:25.480,0:31:31.730
+plus minutieux, j'envoie toutes les combinaisons x,y possibles de ce plan à l'intérieur de mon réseau.
+
+0:31:31.730,0:31:35.410
+Donc ici vous avez cette ligne car tout ce coin à gauche en bas
+
+0:31:35.410,0:31:40.270
+a été écrasé ici. Vous pouvez voir ici que les points sont assez épars et
+
+0:31:40.270,0:31:44.050
+il y en a un très très grand nombre qui occupent densément la surface.
+
+0:31:44.050,0:31:49.900
+Cependant, il y a quelques points ici. Donc ceci vous montre en couleur
+
+0:31:49.900,0:31:55.570
+quelle est la distance que ces points ont parcourue. Donc les points ici 
+
+0:31:55.570,0:32:00.390
+dans le coin en bas à gauche ont voyagé d’une unité et sont arrivés ici.
+
+0:32:00.390,0:32:07.300
+Les points par ici ont voyagé de 0,9 quelque chose et sont descendus ici.
+
+0:32:07.300,0:32:15.970
+Les points sur cette deuxième branche sont allés nulle part. Pourquoi ça ?
+
+0:32:15.970,0:32:20.760
+Ils sont attirés à la fois par les deux points de ce côté et
+
+0:32:20.760,0:32:26.430
+de ce côté, en moyenne pendant l’entraînement. Néanmoins si vous
+
+0:32:26.430,0:32:30.180
+oubliez d’avoir des choses qui se « curlent » sur elles-mêmes, tout tombe ici.
+
+0:32:30.180,0:32:38.940
+Devinez quoi, je peux mettre les points qui viennent de bouger un peu
+
+0:32:38.940,0:32:43.740
+à l'intérieur de l'AE et je peux continuer à faire cela un peu
+
+0:32:43.740,0:32:49.680
+jusqu'à ce que ces points s'effondrent au niveau de la surface.
+
+0:32:49.680,0:32:55.500
+Ou je peux faire quelque chose de cool. Je suis cool mais il y a un truc. Que fais-je ici ?
+
+0:32:55.500,0:33:00.120
+C'est mon DAE qui me permet d'arriver au point initial d’où commence
+
+0:33:00.120,0:33:03.870
+mon déplacement. Donc j'ai obtenu mon point de départ, j’ai déplacé
+
+0:33:03.870,0:33:08.450
+et ensuite forcé le réseau à revenir au point initial.
+
+0:33:08.450,0:33:15.570
+Que s'est-il passé ici ? Comment ai-je pu réparer ça ? Comment pouvez-vous réparer cette crête ici,
+
+0:33:15.570,0:33:27.150
+cette région sombre ? Des suppositions ? [Etudiant] Vous pouvez les envoyer au hasard ou… [Etudiant] Attendez quelqu'un
+
+0:33:27.150,0:33:32.280
+la haut à droite veut parler [Etudiant] Pousser vers l’extérieur. Comment je pousser vers l'extérieur ? Oh ok le pousser vers le haut serait aussi
+
+0:33:32.280,0:33:34.950
+très bien. Donc j'essaie aussi de pousser vers le haut tout ce qui
+
+0:33:34.950,0:33:38.720
+n'est pas sur la surface. Cela n’a pas tout à fait fonctionné. C’est un hack.
+
+0:33:42.960,0:33:48.000
+Ce n'est pas élégant. Ce n’est pas faisable dans un espace en grandes dimensions. Donc ce que j'ai
+
+0:33:48.000,0:33:52.920
+fait ici, c’est de faire tomber le point vers le plus proche de la surface.
+
+0:33:52.920,0:33:57.000
+J'ai donc fait une recherche exhaustive du point le plus proche de la surface et j'ai
+
+0:33:57.000,0:34:01.230
+forcé mon réseau à ce que mes points tombent toujours sur le point le plus proche
+
+0:34:01.230,0:34:04.860
+bien qu'elles puissent être générées à partir d'un autre point initial. 
+
+0:34:04.860,0:34:09.900
+Donc si ce point par ici est initialement originaire d'ici, il tombera 
+
+0:34:09.900,0:34:21.310
+toujours dans cette direction. Seuls quelques points, là dans le milieu, ne tomberont nulle part. [Etudiant]
+
+0:34:24.210,0:34:31.060
+Dans plus de dimensions tout est éloignés. Donc cela ne fonctionne pas tout à fait.
+
+0:34:31.060,0:34:34.330
+Nous n’avons pas encore vu le notebook. Je vous montrerais ça la prochaine 
+
+0:34:34.330,0:34:41.050
+fois ou quand on pourra. [Etudiant] Oui dans ce cas, j’ai un DAE et ai
+
+0:34:41.050,0:34:45.730
+obtenu que le point déplacé tombe sur le point le plus proche de la surface.
+
+0:34:45.730,0:34:50.679
+J'ai donc fait une recherche exhaustive. C'est simple car j'ai 150 points
+
+0:34:50.679,0:34:57.730
+ici mais c'est un hack. Vous ne pouvez pas faire cela en pratique. Mais
+
+0:34:57.730,0:35:02.080
+Peu importe, c’est pour développer une sorte de compréhension de ça.
+
+0:35:02.080,0:35:06.280
+C’estt quelque chose que Yann aime beaucoup mais je ne suis pas encore en mesure de le faire fonctionner.
+
+0:35:06.280,0:35:13.720
+Je suppose que je ne suis pas encore assez intelligent. Dans ce cas, c’est un AE régularisé.
+
+0:35:13.720,0:35:20.859
+Ici j’ai un terme de coût de régularisation L1 sur ma représentation cachée. Donc je force mon
+
+0:35:20.859,0:35:25.630
+réseau pour trouver des représentations cachées qui sont courtes et
+
+0:35:25.630,0:35:30.369
+de quelques dimensions. Donc si j'ai une régularisation L1 de ma
+
+0:35:30.369,0:35:36.640
+représentation cachée, je n'aurai que quelques éléments actifs à un moment donné.
+
+0:35:36.640,0:35:40.630
+Le problème est que si vous mettez tous ces autres éléments à 0, vous avez
+
+0:35:40.630,0:35:45.070
+des gradients nuls à rétropropager. Donc vous pouvez utiliser à la place des rétropropagations de cible et
+
+0:35:45.070,0:35:52.580
+d'autres jolies choses mais je travaille toujours sur ce sujet. Donc je n'ai aucune idée de comment faire fonctionner ça.
+
+0:35:52.580,0:35:59.859
+Le point est qu’il s'agit du terme de régularisation. Donc la pénalité L1, sur la représentation cachée. Cette zone sombre ici
+
+0:35:59.859,0:36:05.589
+devrait en fait s'étendre tout autour. A nouveau, c'est très difficile pour le moment pour moi
+
+0:36:05.589,0:36:09.339
+de le faire fonctionner. Je ne dis pas que c'est impossible mais simplement que je suis
+
+0:36:09.339,0:36:14.619
+pas assez malin. Auto-encodeur contrastif [CAE dans la suite]. Nous verrons juste après le notebook.
+
+0:36:14.619,0:36:28.710
+Laissez-moi rallumer la lumière… ou peut-être pas. Je ne sais pas. Devrais-je ? J’ai l’obscurité. Ok, peu importe.
+
+0:36:28.940,0:36:37.800
+De retour sur la caméra 😉. A nouveau, la surface de données des points d’entraînement. 
+
+0:36:37.800,0:36:46.260
+Que fait le CAE ? ce truc ici, est simplement le terme de reconstruction plus cette chose ici. Qu'est-ce que c'est ?
+
+0:36:46.260,0:36:54.540
+Le gradient de ma représentation cachée par rapport à l’entrée, norme carrée
+
+0:36:54.540,0:36:59.609
+de la perte globale. Donc ma perte globale essaiera de minimiser la
+
+0:36:59.609,0:37:05.430
+variation de ma couche cachée en fonction des variations de l'entrée.
+
+0:37:05.430,0:37:09.630
+Donc nous voulons avoir une représentation pour l'entrée qui ne change pas tant que cela
+
+0:37:09.630,0:37:16.980
+quand je tortille mon entrée. Donc ce CAE rend essentiellement insensible…
+
+0:37:16.980,0:37:23.880
+Désolé… insensible à la reconstruction, pénalise l’insensibilité
+
+0:37:23.880,0:37:35.400
+aux directions de reconstruction. Donc vous pouvez reconstruire les choses sur la surface mais cela rendra par ailleurs insensible à toute
+
+0:37:35.400,0:37:39.830
+autre direction possible. Donc nous n'avons pas d'hypothèse sur la
+
+0:37:39.830,0:37:43.589
+perturbation que j'applique. Je suis juste insensible à tout mais ensuite
+
+0:37:43.589,0:37:49.980
+j’ai encore beaucoup de points ici. Donc vous devez minimiser la reconstruction quand
+
+0:37:49.980,0:38:02.099
+je fournis des échantillons différents. Donc la flèche verte : « pénalisée et insensible » et l’orange : « pénalisée ».
+
+0:38:02.099,0:38:06.050
+Et finalement… ok il reste dix minutes.
+
+0:38:06.050,0:38:13.440
+Enfin, qu'est-ce que fais l’AE ? Comme vous pouvez le voir, je peux utiliser très bien matplotlib.
+
+0:38:13.440,0:38:21.210
+Nous avons ici la surface d’entraînement qui est une chose unique se 
+
+0:38:21.210,0:38:27.750
+déplaçant dans trois dimensions. Et ici j'ai tous ces points de données.
+
+0:38:27.750,0:38:38.730
+Donc le x vit sur cet ensemble de données, dans ℝⁿ. Ce qu'un AE doit faire 
+
+0:38:38.730,0:38:44.500
+c'est essentiellement d'allonger cette boucle dans une direction.
+
+0:38:44.500,0:38:48.850
+Donc vous avez là votre z qui dans ce cas s'appelle l'espace latent.
+
+0:38:48.850,0:38:53.170
+Donc vous obtenez le premier là et ensuite le second.
+
+0:38:53.170,0:39:02.590
+Le fait est : comment puis-je passer de ça à ça ? Je sais que si je suis
+
+0:39:02.590,0:39:06.730
+dans ce premier lieu je peux retourner à ce lieu. Je sais que si je suis
+
+0:39:06.730,0:39:11.800
+ici, je peux retourner là. Je ne suis pas tout à fait sûr de ce qui se passe ici.
+
+0:39:11.800,0:39:18.670
+Je n'ai que des échantillons d’entraînement. Donc je n'ai que la correspondance
+
+0:39:18.670,0:39:24.580
+entre des points dans l'espace d'entrée et des points dans l'espace latent. Je n'ai pas
+
+0:39:24.580,0:39:29.140
+de correspondance entre les régions de l'espace d'entrée et les régions de
+
+0:39:29.140,0:39:37.320
+l’espace latent. Donc vous savez seulement comment connecter l'entrée à
+
+0:39:37.320,0:39:41.770
+des régions dans l'espace latent et comment y revenir. Nous avons appris 
+
+0:39:41.770,0:39:46.530
+que l’DAE prend l'entrée, la secoue et avons forcé à revenir au même point.
+
+0:39:46.530,0:39:50.170
+Ensuite vous retournez à d’autres endroits pour définir un endroit.
+
+0:39:50.170,0:39:58.300
+Donc vous prenez celui-ci, vous le secouez, il ira toujours là puis revenez au bon endroit.
+
+0:39:58.300,0:40:40:08.890
+Pour le contrastif, pour l’entrée, vous essayez de pénaliser chaque déhanchement de celui-ci lorsque vous déhanchez celui-là.
+
+0:40:08.890,0:40:15.990
+Ok, c’est le AEC. Néanmoins comment puis-je commencer à partir d'ici, bouger
+
+0:40:15.990,0:40:21.400
+et obtenir quelque chose qui ressemble à une sortie décente ? Si je traduis :
+
+0:40:21.400,0:40:26.770
+si j'ai un chien ici et un oiseau ici, l’espace latent,
+
+0:40:26.770,0:40:33.070
+si je me déplace sur cette ligne, comment puis-je assurer que les choses sur cette
+
+0:40:33.070,0:40:38.890
+ligne ici ressembleront à des transformations significatives ici ?
+
+0:40:38.890,0:40:42.850
+Nous ne savons pas. Nous savons seulement que cette image est liée à ce point,
+
+0:40:42.850,0:40:47.080
+cette image est liée à ce point. Nous n'avons pas connaissance sur
+
+0:40:47.080,0:40:54.220
+quel genre de comportement, sur comment se comporte cet espace
+
+0:40:54.220,0:40:59.740
+lorsque je me déplace dans l’espace, comment ça se répercute ici. Donc nous ne savons pas comment ce décodeur,
+
+0:40:59.740,0:41:05.410
+qui va de l'espace latent à l'espace d'entrée, se comporte quand nous ne sommes pas
+
+0:41:05.410,0:41:10.150
+exactement dans les points. Donc pour l'instant nous avons des points à associer. La prochaine fois
+
+0:41:10.150,0:41:15.910
+nous allons observer, nous allons apprendre à associer les régions de l'espace d'entrée
+
+0:41:15.910,0:41:21.700
+avec des régions de l'espace caché. Pour le moment nous allons seulement de point en point.
+
+0:41:21.700,0:41:28.950
+Donc le notebook pour les sept dernières minutes. Merci de rester avec moi.
+
+0:41:28.950,0:41:55.65
+Oui je bouge trop. Donc cd Work Github pDL, conda activate pDL, jn.
+
+0:41:59.410,0:42:14.580
+Donc le notebook « 10-autoencoder ». C'est invisible pour vous mais c'est le numéro dix. Donc je vais juste exécuter des trucs.
+
+0:42:15.900,0:42:24.339
+Ok, d'accord, alors que faisons-nous ici ?
+
+0:42:24.339,0:42:28.590
+Vous voyez bien ? Oui. Plaignez-vous si vous ne voyez pas bien les choses. 
+
+0:42:28.590,0:42:33.190
+Je ne peux pas vérifier trop de choses. Donc nous importons certains trucs. Nous avons une routine de conversion d'image
+
+0:42:33.190,0:42:42.130
+qui consiste simplement à ajouter +1 et à multiplier par 0,5 car
+
+0:42:42.130,0:42:47.109
+quand je reçois mes données, j'essaie de les ramener à une moyenne nulle
+
+0:42:47.109,0:42:52.000
+et j'ai aussi une fourchette de -0,5 à +0,5. Donc c'est centré.
+
+0:42:52.000,0:42:56.830
+Pour récupérer, j’additionne 1 au lieu d'être une moyenne nulle, cela va à
+
+0:42:56.830,0:43:07.640
+une moyenne de 0,5 et ensuite j'ai…  Cela va de -1 à +1. Puis j’ajoute 1. Donc ça va de 0 à 2 puis avec le fois 0,5, cela va de 0 à 1.
+
+0:43:07.640,0:43:13.720
+C'est une routine d'affichage. Ok je vous montre que je soustrais
+
+0:43:13.720,0:43:19.970
+0,5 et je divise par 0,5 mes données. Ce sont les chiffres MNIST de Yann.
+
+0:43:19.970,0:43:25.420
+Ici, nous configurons le « device » pour faire tourner sur CPU ou GPU.
+
+0:43:25.420,0:43:31.040
+Ici, nous avons des images qui sont les chiffres que nous avons vu lorsque nous avons entraînés les
+
+0:43:31.040,0:43:36.320
+ConvNets. Elles sont de taille 28 par 28 pixels et dans ce cas je vais
+
+0:43:36.320,0:43:41.510
+créer un AE qui a une couche cachée intermédiaire à 30 dimensions.
+
+0:43:41.510,0:43:48.980
+Donc on passe de 784 à 30 et puis on revient à 784.
+
+0:43:48.980,0:43:53.500
+Donc c’est mon modèle d’AE. Juste une couche linéaire, une transformation affine
+
+0:43:53.500,0:43:58.610
+de 28² à d. Puis tangente hyperbolique. Et ensuite j'ai le décodeur qui est 
+
+0:43:58.610,0:44:03.280
+mon modèle génératif partant de l'espace caché, l'espace latent, qui est d
+
+0:44:03.280,0:44:08.360
+vers 28². Puis j'ai de nouveau une tangente hyperbolique pour limiter ma
+
+0:44:08.360,0:44:15.470
+sortie entre -1 et +1. Ma phase arrière est simplement envoyé par le biais
+
+0:44:15.470,0:44:19.850
+de l’encodeur et du décodeur. Donc je créé mon modèle puis mon critère
+
+0:44:19.850,0:44:26.090
+qui est la perte MSE. Puis le taux d'apprentissage et Adam.
+
+0:44:26.090,0:44:29.930
+Donc c’est la partie entraînement. Je fais 20 époques. 
+
+0:44:29.930,0:44:35.330
+La première partie va être l'envoi des images à travers le modèle.
+
+0:44:35.330,0:44:48.83
+C’est l’étape 1. L’étape 2 va être le calcul de la perte qui est la ligne numéro 15. Le troisième point va nettoyer le gradient sinon on accumule.
+
+0:44:48.830,0:44:53.600
+C’est la ligne 17. Puis on fait de la rétropropagation,
+
+0:44:53.600,0:44:57.230
+le calcul de la dérivée partielle ou de la perte finale par rapport aux poids.
+
+0:44:57.230,0:45:02.420
+C’est la ligne 18. Enfin nous faisons un pas en arrière dans la direction…
+
+0:45:02.420,0:45:07.970
+C’est la direction du gradient, et vous reculez. Je parle beaucoup car
+
+0:45:07.970,0:45:13.790
+l'ordinateur fait l'entraînement. Donc vous pouvez voir ici que nous avons 
+
+0:45:13.790,0:45:23.150
+fait 20 époques et laissez-moi vous montrer à quoi ils ressemblent.
+
+0:45:23.150,0:45:28.430
+Ce sont les reconstructions de mon réseau. Ce sont les sorties du réseau
+
+0:45:28.430,0:45:32.480
+étant donné que nous les compressons dans cette représentation intermédiaire 
+
+0:45:32.480,0:45:39.980
+à 30 dimensions. Je vais vous montrer les vrais dans une seconde. Laissez-moi changer celui-ci en un DAE. Donc ici je crée un module 
+
+0:45:39.980,0:45:45.500
+de dropout qui éteint les neurones au hasard. Je crée mon masque de bruit
+
+0:45:45.500,0:45:50.090
+puis je crée mes mauvaises images qui multiplient ces images par ce masque 
+
+0:45:50.090,0:45:56.510
+binaire. Puis j'envoie au réseau ces mauvaises images, les images altérées,
+
+0:45:56.510,0:46:01.010
+et je ré-entraîne ce truc. Nous aimons aussi arriver à 500 dimensions, donc
+
+0:46:01.010,0:46:06.560
+c’est une couche cachée sur-complète et ensuite nous nous entraînons.
+
+0:46:06.560,0:46:14.780
+Et c'est l’entraînement. Alors récapitulons la différence l’entraînement
+
+0:46:14.780,0:46:19.040
+précédent et l’entraînement actuel. Donc nous avons vu qu’avant,
+
+0:46:19.040,0:46:24.590
+nous utilisions juste un AE sous-complet. Donc nous étions
+
+0:46:24.590,0:46:30.220
+passés de 784 dimensions en entrée à une couche cachée de 30 dimensions. 
+
+0:46:30.220,0:46:36.980
+Maintenant nous utilisons un AE sur-complet. J’utilise 500 ici, ce qui est moins que 784.
+
+0:46:36.980,0:46:46.160
+Donc une bonne question serait de savoir pourquoi 500 dimensions ?
+
+0:46:46.160,0:46:51.230
+Pourquoi un AE avec des couches cachées de dimensions 500 est considéré ou
+
+0:46:51.230,0:46:56.090
+peut être considéré comme sur-complet ? Pensez au nombre de pixels qui sont
+
+0:46:56.090,0:47:01.130
+en moyenne noir par exemple dans ces images. Donc nous avons déjà exécuté cette partie.
+
+0:47:01.130,0:47:06.500
+Donc passons à l’entraînement. Comment l’entraînement change-t-il ?
+
+0:47:06.500,0:47:12.500
+J'ai un masque de dropout ici qui me permet d’introduire quelques
+
+0:47:12.500,0:47:17.660
+perturbations sur les images originales. Puis j'ai mon bruit qui est
+
+0:47:17.660,0:47:22.619
+simplement en appliquant un masque de dropout sur un vecteur « ones ».
+
+0:47:22.619,0:47:27.479
+Cela va être utile pour des visualisations ultérieures. Puis je crée mes mauvaises images,
+
+0:47:27.479,0:47:32.009
+les images perturbées qui sont simplement la multiplication de mes images
+
+0:47:32.009,0:47:38.429
+par ce bruit. Si nous n'avions pas de neurones en moins, le bruit serait
+
+0:47:38.429,0:47:42.799
+juste « ones » et vous obtenez 1 fois l'image. Donc vous avez la même image.
+
+0:47:42.799,0:47:47.640
+Sinon, lorsque les neurones sont mis à 0 avec le dropout, l'image est
+
+0:47:47.640,0:47:52.410
+multipliée par 0 pour des valeurs spécifiques de pixels. Donc l’image se 
+
+0:47:52.410,0:47:59.569
+retrouve avec des points noirs. Puis je rentre ces mauvaises images dans mon modèle.
+
+0:47:59.569,0:48:06.739
+Puis le critère est la distance entre la sortie et l'image originale.
+
+0:48:06.739,0:48:16.650
+Donc avant, ici nous entrions les images perturbées à l'intérieur du modèle, donc ce sont des points qui sont en dehors 
+
+0:48:16.650,0:48:21.390
+de la surface d’entraînement mais ensuite je force à aller au point original.
+
+0:48:21.390,0:48:25.140
+Donc vous avez le point d'origine, vous le perturbez donc l’éloignez, 
+
+0:48:25.140,0:48:28.919
+puis vous forcez le réseau à ce qu’il sorte celui-ci. Donc il essaie de
+
+0:48:28.919,0:48:35.159
+contraster tout type de perturbation qui arrive à ce point initial.
+
+0:48:35.159,0:48:40.499
+Tout le reste est identique : « zero_grad », « backward », « step » et l’entrainement.
+
+0:48:40.499,0:48:47.130
+Nous pouvons vérifier à quoi ressemble cette reconstruction et si je regarde
+
+0:48:47.130,0:48:52.679
+l'itération précédente, ils ont l'air beaucoup plus propres car nous 
+
+0:48:52.679,0:48:58.799
+utilisons une couche cachée beaucoup plus grande. Mais avant nous ne pouvions pas utiliser 
+
+0:48:58.799,0:49:01.999
+une couche cachée car cela aurait surentraîné. Si vous essayiez de
+
+0:49:01.999,0:49:05.669
+reconstruire des choses qui sont toujours au même point, vous pouvez simplement les copier.
+
+0:49:05.669,0:49:09.569
+Dans ce cas, vous ne pouvez pas copier car l'entrée n'est pas ce point mais
+
+0:49:09.569,0:49:13.799
+est en fait le point déplacé. Vous apprenez donc un champ vectoriel qui
+
+0:49:13.799,0:49:20.039
+vous ramène à la position initiale sur la surface d’entraînement.
+
+0:49:20.039,0:49:28.890
+Descendons et visualisons les filtres précédents que je ne vous ai pas montrés. Donc ce sont les filtres de l’AE
+
+0:49:28.890,0:49:37.850
+avec une couche cachée sous-complète. Donc vous pouvez voir ici qu’il y a des motifs dans la zone centrale de ces filtres.
+
+0:49:37.850,0:49:43.280
+Donc ce sont les filtres qui sont simplement mes lignes de mes métriques W
+
+0:49:43.280,0:49:48.640
+qui ont été remodelés en une image que je peux visualiser.
+
+0:49:48.640,0:49:52.400
+Dans ce cas, dans ce notebook, nous n'utilisons aucun ConvNet.
+
+0:49:52.400,0:49:59.210
+Nous n'utilisons que les images qui ont été enroulées dans un vecteur, et comparées, multipliées
+
+0:49:59.210,0:50:05.420
+comme le produit scalaire contre les vecteurs, de ma matrice.
+
+0:50:05.420,0:50:09.200
+Donc les lignes de ma matrice ont été remodelées de manière à ce que vous puissiez
+
+0:50:09.200,0:50:13.430
+donner un sens à ce qu'elles représentent. Ici par exemple il semble y avoir
+
+0:50:13.430,0:50:18.470	
+comme un détecteur d’une boucle supérieure. Pas un détecteur car c’est violet,
+
+0:50:18.470,0:50:24.320
+donc, les sorties seraient négatives. Vous avez ici comme un 0, ici quelque 
+
+0:50:24.320,0:50:34.130
+chose qui ressemble à un 8 ou un 3. Et vous avez ce genre de noyau ici qui n'a pratiquement rien appris ou…
+
+0:50:34.130,0:50:39.320
+C’est le seul qui n'a pas appris grand-chose. Vous pouvez remarquer que 
+
+0:50:39.320,0:50:43.490
+tous ces points en dehors de la région où le numéro apparait ou des choses
+
+0:50:43.490,0:50:47.150
+Intéressantes apparaissent sont multipliés par une constante.
+
+0:50:47.150,0:50:52.150
+Car c’est en dehors d'un chiffre et donc les choses ne changent pas.
+
+0:50:52.150,0:51:03.109
+Ces noyaux bruyants, en moyenne, produisent un score de 0. Donc le réseau
+
+0:51:03.109,0:51:08.300
+ne se soucie pas de donner une valeur particulière à ces points/pixels
+
+0:51:08.300,0:51:19.300
+car à nouveau, en moyenne, ils ne contribuent pas au score final. Que se passe t’il maintenant ? Quand nous entrons
+
+0:51:19.300,0:51:27.440
+les données qui ont une quantité variable de pixels mis à 0, ces points
+
+0:51:27.440,0:51:32.930
+comptent à présent car la valeur de l'image n'est plus continue.
+
+0:51:32.930,0:51:39.590
+Donc si je vous montre les nouveaux noyaux. A quel point est-ce cool ?
+
+0:51:39.590,0:51:47.450
+C’est complètement différent. Ici vous avez encore un certain motif mais dans la majorité de ces noyaux,
+
+0:51:47.450,0:51:51.150
+si vous ne considériez pas ceux qui n'a rien appris comme celui-ci,
+
+0:51:51.150,0:51:59.700
+les noyaux ont appris une sorte de filtre de bord spécifique ou des caractéristiques spécifiques de forme,
+
+0:51:59.700,0:52:07.110
+des filtres de forme. Tous les pixels extérieurs ont maintenant été mis à 
+
+0:52:07.110,0:52:11.940
+0 ou à une valeur qui est uniforme car, encore une fois, les images 
+
+0:52:11.940,0:52:17.250
+d'entrée ne sont plus constantes dans les zones hors des chiffres.
+
+0:52:17.250,0:52:26.540
+Donc les valeurs des pixels… les valeurs du noyau dans ces régions spécifiques comptent désormais. C'est une grande différence.
+
+0:52:26.540,0:52:34.050
+Encore une fois, cette carte ici, ce noyau n'a rien appris.
+
+0:52:34.050,0:52:44.369
+Comparons maintenant notre DAE avec les algorithmes de l’état de l’art pour le débruitage d’images. Donc nous allons
+
+0:52:44.369,0:52:55.650
+importer certaines fonctions de la librairie opencv : les algorithmes de Navier-Stokes et Telea. Donc importons les et
+
+0:52:55.650,0:53:01.530
+voyons à quoi ils ressemblent. Donc la première image est l'image bruitée. Celles que nous avons générée
+
+0:53:01.530,0:53:05.630
+avant sont celles où nous avons fait du dropout sur certaines
+
+0:53:05.630,0:53:11.700
+valeurs pour les mettre à 0. Donc dans ce cas le jaune est 1 et le violet 0.
+
+0:53:11.700,0:53:22.859
+La deuxième partie est les mauvaises images, ce qui signifie que le violet est – 1, le jaune + 1 et le vert 0.
+
+0:53:22.859,0:53:28.460
+Donc tous ces points noirs, les points violets de la première rangée, sont 
+
+0:53:28.460,0:53:32.940
+ici représentés en vert. Ce sont donc les valeurs qui sont mises à 0, les
+
+0:53:32.940,0:53:40.650
+valeurs masquées. Nous avons les images originales et les reconstructions 
+
+0:53:40.650,0:53:46.230
+de notre AE qui semble raisonnablement bon si vous pensez au fait que la 
+
+0:53:46.230,0:53:51.390
+moitié des pixels est manquante. Donc seule la moitié des pixels sont
+
+0:53:51.390,0:54:00.119
+fourni au réseau, puis le réseau reconstruit ce à quoi ressemble l'image originale, plus ou moins. Cool cool.
+
+0:54:00.119,0:54:06.510
+Voyons maintenant ce que les algorithmes de l’état de l’art produisent.
+
+0:54:06.510,0:54:13.130
+Donc nous pouvons commencer par Telea puis Navier-Stokes. Donc voici Telea
+
+0:54:13.130,0:54:19.730
+et ceci est Navier-Stokes. Comme vous pouvez le constater ici, la qualité de 
+
+0:54:19.730,0:54:25.640
+notre modèle est clairement supérieure en termes de qualité.
+
+0:54:25.640,0:54:30.360
+Néanmoins remarquez que ce modèle fonctionne juste pour ce genre de
+
+0:54:30.360,0:54:33.660
+perturbation spécifique que nous avons introduite et appris à
+
+0:54:33.660,0:54:41.070
+contrecarrer. Donc encore une fois l’AE que nous avons entraîné en une
+
+0:54:41.070,0:54:45.270
+minute fonctionne bien mieux que les algorithmes de vision par ordinateur 
+
+0:54:45.270,0:54:51.660
+de pointe lorsque les données sont disponibles. Donc je pense que c'est tout
+
+0:54:51.660,0:54:55.500
+pour aujourd'hui. Merci de m'avoir écouté, abonnez-vous à ma chaîne et cliquez
+
+0:54:55.500,0:55:03.500
+sur la cloche des notifications si vous souhaitez avoir des informations sur les dernières vidéos et suivez-moi sur Twitter. Paix. Bye bye.

@@ -35,7 +35,7 @@ okay so so so so what are we talking today about
 graph convolutional networks exploiting domain sparsity right
 
 0:00:58.399,0:01:04.239
-well like yesterday we saw that also xavier mentioned the three property
+well like yesterday we saw that also Xavier mentioned the three property
 
 0:01:04.239,0:01:10.320
 of natural signals that are locality stationarity and
@@ -74,7 +74,7 @@ a quick recap right we talk about
 self-attention in self-attention we had this set of
 
 0:01:51.920,0:01:58.159
-axes right so x we can go x1 x2 and so on until xt
+axes right so x we can go x1, x2, and so on until xt
 
 0:01:58.159,0:02:02.320
 and they you can you know stack these x's one after each other you get that
@@ -83,7 +83,7 @@ and they you can you know stack these x's one after each other you get that
 capital x right matrix uh each small x x
 
 0:02:07.439,0:02:11.280
-is the size of rn and then my hidden layer
+is the size of ℝⁿ and then my hidden layer
 
 0:02:11.280,0:02:15.760
 for the whatever x i take in consideration
@@ -224,13 +224,13 @@ actually connected and so we draw a set of arrows
 and so right now basically we're going to have that my capital a my my sorry my
 
 0:05:37.759,0:05:42.160
-vector a is going to be having components alpha j
+vector a is going to be having components αj
 
 0:05:42.160,0:05:45.919
 which are equal to 1 whenever there is an incoming
 
 0:05:45.919,0:05:52.800
-arrow from vector v j to myself okay so
+arrow from vector vj to myself okay so
 
 0:05:52.800,0:05:56.960
 if you think about how we were doing this before for the attention
@@ -395,7 +395,7 @@ uh looking like a neural network what do we add
 yeah you know linear function of course right
 
 0:09:52.560,0:09:58.160
-relu sigmoid and h whatever okay uh we said that we have like several of
+ReLU sigmoid and tanh whatever okay uh we said that we have like several of
 
 0:09:58.160,0:10:01.839
 these vertices right we don't have just one vertex right we don't just have one
@@ -407,7 +407,7 @@ x we have many of these guys right so we had a set of
 vertices or set of inputs right for i that goes from one to t and this leads
 
 0:10:12.640,0:10:17.040
-therefore to this matrix notation right so you just stack multiple h's
+therefore to this matrix notation right so you just stack multiple edges
 
 0:10:17.040,0:10:22.480
 you get a matrix by stacking multiple x's you know you rotate multiple x's you
@@ -512,7 +512,7 @@ or is the other which is the vj okay and so
 here you have two terms one is taking care of the v
 
 0:12:38.639,0:12:42.959
-red v the other one is taking care of the v j
+red v the other one is taking care of the vj
 
 0:12:42.959,0:12:46.880
 final question the agency matrix does not
@@ -581,7 +581,7 @@ how you represent the node uh so x is a vector right of dimension n
 and this is your set of vectors right this is your set of inputs
 
 0:14:28.320,0:14:31.920
-you have one to t this is from self attention
+you have 1 to t this is from self attention
 
 0:14:31.920,0:14:35.040
 vector self analysis self attention set right
@@ -617,7 +617,7 @@ is no magic here like we were telling you suppose you
 have a graph whose no vote dices are labeled one two three
 
 0:15:24.639,0:15:30.720
-four five so how do you convert from label one to x one
+four five so how do you convert from label 1 to x1
 
 0:15:30.720,0:15:34.800
 but each of these is gonna be just a number right whatever
@@ -638,7 +638,7 @@ it can be just one linear image you know or you can have you know whatever to a
 normal image so these are just the values the one
 
 0:15:54.720,0:15:58.880
-that we called uh in the domain in an rc
+that we called uh in the domain in ℝᶜ
 
 0:15:58.880,0:16:01.920
 right whenever we are mapping the mapping the
@@ -728,7 +728,7 @@ a color we're going to have an edge representation for the input layer
 x and for the hidden layer right so we're going to have
 
 0:17:57.039,0:18:03.360
-e x and then e h so what are the update equations for
+ex and then eh so what are the update equations for
 
 0:18:03.360,0:18:08.720
 this receivable gated graph convolutional network so
@@ -809,16 +809,16 @@ modulating the amplitude of this incoming rotated vertex
 with this gate right again this gate it's
 
 0:20:04.080,0:20:09.440
-a function of the e j so what is e j let's figure out the equation so we have
+a function of the ej so what is ej let's figure out the equation so we have
 
 0:20:09.440,0:20:14.159
-e j is going to be a rotation of my initial
+ej is going to be a rotation of my initial
 
 0:20:14.159,0:20:18.240
 edge representation that is populated with the input data so
 
 0:20:18.240,0:20:25.440
-e x is going to be my input data that is living on the edge and so i rotate that
+ex is going to be my input data that is living on the edge and so i rotate that
 
 0:20:25.440,0:20:32.000
 i sum the rotated representation of my incoming feature x j
@@ -827,10 +827,10 @@ i sum the rotated representation of my incoming feature x j
 and then i sum as well a rotation of my own
 
 0:20:35.840,0:20:41.200
-feature e x right x is my own feature i rotate it with the matrix e
+feature ex right x is my own feature i rotate it with the matrix E
 
 0:20:41.200,0:20:47.760
-sweet so this is my e j representation and then eta is going to be the
+sweet so this is my ej representation and then eta is going to be the
 
 0:20:47.760,0:20:51.600
 following so it's a sort of similar
@@ -872,7 +872,7 @@ for the hidden layer the next layer uh edge representation we're gonna have
 a residual connection so it's gonna be my
 
 0:21:52.559,0:21:59.440
-initial value e x plus the positive part of this ej again this
+initial value ex plus the positive part of this ej again this
 
 0:21:59.440,0:22:03.280
 may blow up because you're going to be summing always positive
@@ -893,7 +893,7 @@ we compare to what we were seeing before before we had that my hidden
 representation was some non-linear function in this
 
 0:22:31.520,0:22:36.240
-case we chose the uh the relu the positive part
+case we chose the uh the ReLU the positive part
 
 0:22:36.240,0:22:43.280
 right so in this case we have f is going to be the positive part here
@@ -902,7 +902,7 @@ right so in this case we have f is going to be the positive part here
 of my rotated representation of myself plus this term over here which is
 
 0:22:52.240,0:22:56.880
-so this exad minus one it means take the average
+so this Xad⁻¹ it means take the average
 
 0:22:56.880,0:23:00.240
 of the incoming axis right because a was equal
@@ -980,7 +980,7 @@ do we compute the representation for the second hidden layer so we can call x
 hl so it's going to be my layer l representation and therefore
 
 0:24:52.799,0:24:58.559
-the x j becomes h l j and so all we have to do now is going to
+the xj becomes hlj and so all we have to do now is going to
 
 0:24:58.559,0:25:04.159
 be basically saying that my age at layer l plus 1 is going to be
@@ -1013,7 +1013,7 @@ yeah yeah yeah sure so this gating part here uh the point is that
 all these different uh vertices here they don't have ordering right i don't
 
 0:25:54.080,0:25:58.320
-know which one is v1 v2 i mean i know the order but this guy
+know which one is v1, v2, i mean i know the order but this guy
 
 0:25:58.320,0:26:02.640
 here this red vertex doesn't know how many neurons sorry how
@@ -1220,7 +1220,7 @@ me to to print a very pretty uh very pretty
 charts okay i set some default oh you can see
 
 0:30:55.440,0:30:59.600
-now we are using pi torch so first of all we're gonna be showing
+now we are using PyTorch so first of all we're gonna be showing
 
 0:30:59.600,0:31:02.559
 seeing these so this is mini graph classification data set
@@ -1412,7 +1412,7 @@ matrices and therefore whenever i start my module
 which is going to be just a neural network module from
 
 0:35:40.800,0:35:44.000
-torch by torch right we're going to be initializing
+PyTorch right we're going to be initializing
 
 0:35:44.000,0:35:50.320
 uh four uh different matrices so a b c and d e are n dot linear so
@@ -1460,7 +1460,7 @@ vertices but where i can specify the uh
 relationship now between which vertex is connected to
 
 0:36:52.320,0:36:55.920
-which so i have capital x and then capital e x
+which so i have X and then E_X
 
 0:36:55.920,0:36:59.760
 right which is the all those edges so we can have like a
@@ -1481,7 +1481,7 @@ on the g n data i'm going to be defining the variable h which i just
 give all my initial representation and then i'm going to have
 
 0:37:21.520,0:37:27.200
-ax bx dx and ex which are going to be the matrix
+AX, BX, DX and EX which are going to be the matrix
 
 0:37:27.200,0:37:29.599
 multiplying all these columns right so you're going
@@ -1493,7 +1493,7 @@ to get the rotation of all the columns which are simply obtained by passing the
 capital x not the collection of all the x's to my
 
 0:37:39.760,0:37:46.720
-matrix a b d and e okay whereas c c was multiplying
+matrix A, B, D and E okay whereas C ? C was multiplying
 
 0:37:46.720,0:37:50.800
 it was rotating just the edge representation right so we have that
@@ -1628,22 +1628,22 @@ my message function and reduce function right
 so message function we are going to be first
 
 0:41:06.480,0:41:12.160
-extracting the bx j so the the edge is going to be
+extracting the Bx_j so the the edge is going to be
 
 0:41:12.160,0:41:16.400
-connecting my v j to my v and so i'm extracting
+connecting my vj to my v and so i'm extracting
 
 0:41:16.400,0:41:20.960
-here the representation that lives on v j right so my
+here the representation that lives on vj right so my
 
 0:41:20.960,0:41:27.760
-bx j is going to be the bx associated to my vertex j
+Bx_j is going to be the bx associated to my vertex j
 
 0:41:27.760,0:41:35.839
-right so this guy here b x j cool then i have that my edge
+right so this guy here Bx_j cool then i have that my edge
 
 0:41:35.839,0:41:40.240
-ej is going to be the summation of the rotated
+e_j is going to be the summation of the rotated
 
 0:41:40.240,0:41:47.520
 edge of this edge right the rotated source right
@@ -1658,19 +1658,19 @@ so you have the edge representation like c
 rotation c c rotation of e x right now we have the d of the source so
 
 0:42:06.160,0:42:11.599
-d x j and then finally e x for the destination so which is e x
+Dx_j and then finally E_x for the destination so which is E_x
 
 0:42:11.599,0:42:16.560
 right cool then i actually store
 
 0:42:16.560,0:42:21.040
-this ej in this capital e so that we're going to be ending up with all the
+this e_j in this E so that we're going to be ending up with all the
 
 0:42:21.040,0:42:24.720
 representation for later usage because later we're going to
 
 0:42:24.720,0:42:30.079
-be using this ej over here on the bottom right okay so now we have
+be using this e_j over here on the bottom right okay so now we have
 
 0:42:30.079,0:42:35.599
 computed the message and therefore so after the message
@@ -1700,13 +1700,13 @@ so the message function sent a message through the uh through the edge and
 now at the receiving end we get a message right so
 
 0:43:13.440,0:43:16.800
-we check the mailbox and we receive this bx
+we check the mailbox and we receive this Bx_j.
 
 0:43:16.800,0:43:23.920
-j right uh so here we got bxj then i also listen and we have the
+Right uh so here we got Bx_j then i also listen and we have the
 
 0:43:23.920,0:43:28.240
-representation ej right so that's coming too then i
+representation e_j right so that's coming too then i
 
 0:43:28.240,0:43:32.079
 compute the sigmoid here i have the sigmoid for the
@@ -1748,7 +1748,7 @@ then we sum uh all these guys right so we have the
 summation of this scaled
 
 0:44:28.240,0:44:31.599
-bj which is then also normalized by the sum
+Bj which is then also normalized by the sum
 
 0:44:31.599,0:44:35.359
 of all the sigmas and that's it so we have now

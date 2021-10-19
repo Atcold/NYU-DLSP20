@@ -1,0 +1,2001 @@
+0:00:00.939,0:00:03.029
+Le premier point est que nous avons à présent un site web.
+
+0:00:03.030,0:00:09.149
+Vous pouvez le trouver en allant sur le dépôt de mon GitHub. En cliquant sur le lien vous êtes
+
+0:00:09.340,0:00:15.059
+redirigés vers le site où vous pouvez trouver les résumés du cours et du cas pratique précédent.
+
+0:00:15.059,0:00:17.489
+Il est donc de votre devoir d'examiner ces
+
+0:00:18.580,0:00:20.470
+résumés avant le cours.
+
+0:00:20.470,0:00:23.010
+Sinon, si je prends les 15 premières minutes
+
+0:00:23.920,0:00:28.139
+pour récapituler ce que nous avons vu la dernière fois, nous perdons 15 minutes pour voir de nouvelles choses, ok ?
+
+0:00:28.630,0:00:31.890
+C'est très difficile quand on n'a que 50 minutes le mardi.
+
+0:00:33.190,0:00:39.419
+Néanmoins, commençons par une question. Disons que j'aimerais faire une classification entre des images de chiens et de chats.
+
+0:00:40.230,0:00:44.489
+Si c'est l'image de mon chat, où sera l'image de mon chien ?
+
+0:00:46.420,0:00:50.399
+Pres de ce point. Donc comment pouvons-nous les différencier ?
+
+0:00:51.280,0:00:54.960
+Tout d'abord, si ceci est le zéro, je devrais…
+
+0:00:57.190,0:01:02.850
+Vous êtes supposé parler. Qu'est-ce que je fais ici ? [Etudiant] Translation. Comment je la réalise ?
+
+0:01:03.460,0:01:08.460
+[Etudiant] Multiplication matricielle
+
+0:01:10.540,0:01:12.929
+Que fait la multiplication matricielle ?
+
+0:01:13.729,0:01:17.729
+[Etudiant] Réflexion, rotation
+
+0:01:18.880,0:01:23.519
+mise à l’échelle et le shearing. 
+
+0:01:23.750,0:01:28.880
+Comment pouvez-vous faire la mise à l'échelle ? Aussi pourquoi les scalaires sont-ils appelés scalaires ?
+
+0:01:31.450,0:01:33.450
+Car…
+
+0:01:34.479,0:01:36.479
+ils « scalent ».
+
+0:01:36.610,0:01:42.540
+Vous pouvez toujours penser à une matrice. Vous pouvez juste la normaliser de telle sorte que vous ayez un déterminant à 1.
+
+0:01:43.270,0:01:46.380
+Vous avez alors un scalaire qui modifie 
+
+0:01:46.750,0:01:52.139
+la taille. Je considère généralement les matrices comme une rotation.
+
+0:01:52.140,0:01:57.269
+Et donc je dis que nous faisons tourner les choses dans n'importe quel espace dimensionnel.
+
+0:01:57.850,0:02:02.460
+Puis nous faisons une autre opération avec des réseaux neuronaux qui vont écraser.
+
+0:02:02.560,0:02:05.970
+Vous allez donc me faire répéter ça de très nombreuses fois.
+
+0:02:06.520,0:02:13.450
+Les réseaux neuronaux sont simplement des rotations et des écrasements. Rotation et écrasement. Que vient ensuite ? [Etudiant]
+
+0:02:13.930,0:02:15.850
+Une rotation et ensuite ? [Etudiant : écrasement]
+
+0:02:15.850,0:02:21.989
+Fantastique. Alors commençons. Juste parce que j'aime la publicité,
+
+0:02:22.560,0:02:25.560
+j’ai mis mon @ : @alfcnz.
+
+0:02:25.810,0:02:29.910
+Et encore une fois, si vous avez besoin de dire quoi que ce soit, dites-moi : « Alf, je n’ai aucune idée de ce qui se passe,
+
+0:02:29.910,0:02:36.779
+peux-tu répéter ? ». Si vous ne savez pas qui est ce type, vous pouvez jeter un coup d'œil aux séries télévisées des années 90.
+
+0:02:36.950,0:02:40.970
+Oh, ANN [Artificial Neural Network]
+
+0:02:41.050,0:02:42.700
+Qu'est-ce que c'est ?
+
+0:02:42.700,0:02:45.869
+Réseaux de neurones artificiels, je suppose. Apprentissage supervisé.
+
+0:02:46.000,0:02:50.100
+Classification. Il va y avoir une sorte de rappel des choses déjà vues
+
+0:02:50.100,0:02:57.239
+avant mais d'une manière beaucoup plus jolie car j'ai passé toute la journée à faire ce truc pour vous.
+
+0:02:57.610,0:02:58.320
+Très bien,
+
+0:02:58.320,0:03:05.399
+nous avons ce type que nous avons vu la dernière fois. Disons que ce sont
+
+0:03:05.739,0:03:07.739
+simplement trois branches d'une spirale.
+
+0:03:08.110,0:03:12.959
+Dans ce cas, où vont vivre mes données ?
+
+0:03:13.900,0:03:18.500
+Où sont les données si je vous montre ces choses ici ? [Etudiant]
+
+0:03:18.940,0:03:24.160
+Ces branches sont faites de points et ces points vivent dans quel espace ? [Etudiant]
+
+0:03:24.400,0:03:30.910
+R². C’est le plan. Donc tous ces points se déplacent autour de ce plan. Pourquoi ai-je des couleurs ? [Etudiant]
+
+0:03:31.720,0:03:35.669
+Ce sont les étiquettes. Donc 3 classes différentes, 3 étiquettes différentes.
+
+0:03:36.640,0:03:42.089
+Vous pouvez faire ce dessin avec Matplotlib en Python et NumPy.
+
+0:03:43.209,0:03:43.989
+De l'autre côté…
+
+0:03:43.989,0:03:50.249
+Oh, oui, donc nous avons un t va de 0 à 1 et puis c va être la classe de 1 à
+
+0:03:51.250,0:03:53.250
+C majuscule dans ce cas.
+
+0:03:53.380,0:03:56.459
+Rendons les choses un peu plus épicées. Ajoutons donc un peu de
+
+0:03:57.880,0:04:00.509
+bruit. Donc nous avons davantage
+
+0:04:01.239,0:04:04.229
+de données de mauvaise qualité. C'est comme si on a des données réelles.
+
+0:04:05.200,0:04:06.859
+Ok
+
+0:04:06.859,0:04:08.859
+Qu'est-ce que la classification ?
+
+0:04:08.989,0:04:16.298
+Si vous voulez faire de la classification, utilisez par exemple la
+
+0:04:18.470,0:04:24.820
+régression logistique. Que fait la régression logistique ici dans ce cas ?
+
+0:04:25.789,0:04:34.989
+Elle va donc faire quelque chose comme ça, c'est-à-dire des plans linéaires pour séparer les données. Quel est le principal problème ici ? [Etudiant]
+
+0:04:35.360,0:04:37.100
+Répétez. [Etudiant]
+
+0:04:37.250,0:04:42.970
+Ce n'est pas séparable de façon linéaire, mais quel est le principal problème ici ? Comment définiriez-vous le problème ici ?
+
+0:04:42.970,0:04:45.639
+Oui, ils ne sont pas séparables linéairement, donc
+
+0:04:46.340,0:04:48.340
+vous avez [Etudiant]
+
+0:04:49.759,0:04:54.459
+Oui, mais qu'est-ce qui ne vous plaît pas dans ce dessin ?
+
+0:04:54.700,0:05:02.400
+[Etudiant]
+
+0:05:02.690,0:05:07.779
+Dans une région, vous avez plusieurs classes, n'est-ce pas ?
+
+0:05:07.789,0:05:13.239
+Cela signifie que ces branches franchissent les limites de mes décisions, qui sont linéaires.
+
+0:05:13.880,0:05:15.880
+Alors, comment pouvons-nous régler ce problème ?
+
+0:05:16.000,0:05:21.000
+[Etudiant]
+
+0:05:21.409,0:05:23.409
+D'accord, parce que vous avez déjà regarder ma
+
+0:05:24.470,0:05:28.949
+vidéo de la semaine dernière. Donc, généralement, les gens rendent ces
+
+0:05:29.300,0:05:33.760
+limites de décision non linéaires. C'est ce que font les autres professeurs.
+
+0:05:33.760,0:05:38.409
+Donc je fais en sorte que les données soient séparables de façon linéaire.
+
+0:05:38.409,0:05:40.929
+C'était juste une perspective différente pour voir les mêmes choses.
+
+0:05:41.180,0:05:47.680
+Quoi qu'il en soit, le principal problème ici est que nous avons une intersection entre ces limites de décision et les données.
+
+0:05:48.919,0:05:55.179
+Donc je vais essayer de faire ça. Vous avez déjà vu la vidéo de la dernière fois donc ce n’est pas une chose nouvelle.
+
+0:05:55.249,0:05:57.849
+Mais la chose qui pourrait vous être plus utile est
+
+0:05:58.220,0:06:04.089
+de voir comment la limite de décision essaye de s'adapter lors de l’entraînement
+
+0:06:05.509,0:06:10.929
+à la répartition de ces données ici. Nous observons les choses de bas en haut.
+
+0:06:10.930,0:06:16.810
+Donc vous avez votre réseau où la première couche est en bas et la dernière couche en haut. Si vous
+
+0:06:16.810,0:06:24.579
+dessinez des réseaux dans l'autre sens, vous aurez un point en moins. L'entrée se fera donc… [Etudiant] 
+
+0:06:24.610,0:06:26.610
+en bas. Pourquoi ?
+
+0:06:28.509,0:06:33.179
+Pourquoi avons-nous des données en bas ? Quelqu’un peut deviner ? [Etudiant]
+
+0:06:35.039,0:06:38.800
+Oui, pourquoi le réseau neuronal [Etudiant]
+
+0:06:39.069,0:06:40.469
+C'est exact.
+
+0:06:40.469,0:06:43.979
+Nous avons des caractéristiques de bas niveau dans la partie inférieure du réseau
+
+0:06:43.979,0:06:49.949
+et quand on monte dans la hiérarchie, on veut essentiellement dessiner ce réseau de la façon dont il est fait, ok ?
+
+0:06:49.949,0:06:52.859
+Vous avez donc, dans la partie supérieure, un rang élevé dans la hiérarchie.
+
+0:06:52.860,0:06:58.319
+Si vous mettez un classifieur, vous le mettrez au-dessus, n'est-ce pas ?
+
+0:06:58.319,0:07:01.139
+La première fois que j’ai lu un article de Geoffrey
+
+0:07:01.719,0:07:06.419
+Il y avait du blabla puis « J'ai mis un classifieur au sommet
+
+0:07:07.090,0:07:13.560
+du réseau ». Je me suis demandais quel est le sommet d'un réseau ? Je n'en avais aucune idée.
+
+0:07:13.560,0:07:17.969
+Donc les réseaux sont donc dessinés de bas en haut, avec la première couche en bas où vous avez les données qui arrivent.
+
+0:07:18.279,0:07:23.559
+Les caractéristiques de niveau inférieur puis vous montez et vous avez le sommet. 
+
+0:07:23.560,0:07:28.619
+Si vous avez plusieurs sorties, c'est ce qu'on appelle un réseau à têtes multiples. Comme une hydre.
+
+0:07:29.440,0:07:35.940
+Nous allons maintenant découvrir dans cette leçon comment nous pouvons faire ces choses. Vous savez comment faire ces choses ?
+
+0:07:37.690,0:07:42.209
+Non ? Oui ? Ok. Vous devriez car vous avez dû assister au cours sur l'apprentissage machine.
+
+0:07:43.000,0:07:49.049
+Mais peut-être ce n’est pas linéairement séparable. Il suffit d'ajouter une couche supplémentaire pour que les choses commencent à fonctionner.
+
+0:07:49.839,0:07:52.319
+Les données d’entraînement. Donc la semaine
+
+0:07:52.319,0:07:58.468
+dernière, nous avons vu qu'un réseau neuronal, lorsqu'il est initialisé, subit une sorte de transformation.
+
+0:07:58.900,0:08:05.250
+Donc, nous donnons ce genre de nuages… C'était un échantillon d'une distribution gaussienne avec une
+
+0:08:06.310,0:08:11.399
+matrice identité comme matrice de covariance et la moyenne à zéro. Quelle était l'approximation
+
+0:08:12.669,0:08:14.908
+du rayon moyen de ce nuage de points ?
+
+0:08:14.908,0:08:16.000
+[Etudiant]
+
+0:08:16.100,0:08:18.270
+3. Vous vous en souvenez. Très bien.
+
+0:08:20.169,0:08:27.269
+Donc les choses étaient dans un rayon de 3 et ce genre de forme circulaire
+
+0:08:27.800,0:08:30.199
+était donnée à l'intérieur du réseau et celui-ci
+
+0:08:30.780,0:08:34.729
+vous donne n'importe quelle transformation arbitraire, ce qui était très joli.
+
+0:08:35.789,0:08:38.088
+Oui, c'était très joli.
+
+0:08:39.120,0:08:41.120
+Mais la transformation n'a pas été
+
+0:08:41.550,0:08:47.450
+instrumentale pour faire tout. Aujourd'hui, nous allons donc voir comment, en utilisant les données, nous pouvons faire respecter
+
+0:08:47.970,0:08:53.839
+une sorte de signification à ce type de transformation qu'un réseau effectue par lui-même.
+
+0:08:54.240,0:08:58.820
+Les données constituent la partie la plus importante. Donc, ici, nous allons avoir…
+
+0:08:59.519,0:09:01.519
+Cela devrait être en rose.
+
+0:09:01.950,0:09:06.769
+C'est trop lumineux ici. Mais peu importe. Donc le X est mes données d'entrée
+
+0:09:06.769,0:09:15.079
+C'est en gras parce que cela représente un vecteur et ce truc vit dans R^N. Combien vaut n dans notre cas ? [Etudiant]
+
+0:09:15.089,0:09:17.089
+Deux car ? [Etudiant]
+
+0:09:17.490,0:09:20.029
+Car les points vivent sur cet espace, comme la spirale.
+
+0:09:20.640,0:09:28.459
+Ok, fantastique. Ce sera mon échantillon i. J'ai plusieurs échantillons. Cela prend assez longtemps à dessiner.
+
+0:09:29.519,0:09:31.849
+Vous avez plusieurs échantillons : des vecteurs
+
+0:09:32.190,0:09:37.219
+lignes, et je les empile les uns sur les autres. J'en ai m.
+
+0:09:37.220,0:09:40.040
+Quelle est la taille de cette matrice ? [Etudiant]
+
+0:09:42.270,0:09:48.619
+Criez plus fort. n par m fantastique. J'ai donc n colonnes et m dans la hauteur.
+
+0:09:49.140,0:09:57.140
+Si j'utilisais ces mesures pour effectuer certaines opérations, quelle est la dimension vers laquelle je « tire » ? [Etudiant]
+
+0:09:57.990,0:09:59.130
+Essayer à nouveau. [Etudiant]
+
+0:09:59.130,0:10:00.209
+m
+
+0:10:00.209,0:10:05.749
+Car la hauteur de la matrice est la dimension où vous tirez et la largeur de la matrice est la
+
+0:10:05.750,0:10:12.000
+dimension d’où vous tirez, car vous multipliez ligne par colonnes. Ok ?
+
+0:10:12.500,0:10:13.009
+Très bien, cool.
+
+0:10:14.520,0:10:18.499
+Nous avons Cᵢ qui va être mes différentes classes pour chacun de ces
+
+0:10:19.470,0:10:21.060
+points dans le plan 2D.
+
+0:10:21.060,0:10:27.409
+Ici ces Ci seront égales de 1 à K. J’appelais ça C précédemment, il faut
+
+0:10:27.410,0:10:29.410
+que je corrige la diapositive.
+
+0:10:30.120,0:10:32.659
+Combien vaut K ici ? [Etudiant]
+0:10:33.750,0:10:35.750
+3 car ? [Etudiant]
+
+0:10:36.660,0:10:43.180
+nous avons 3 couleurs. Fantastique. Donc si j'empile toutes les Cᵢ, combien en ai-je ? [Etudiant]
+
+0:10:45.650,0:10:52.809
+Répétez. [Etudiant] m. Donc, vous devez empiler m vecteurs. Vous obtenez un… [Etudiant]
+
+0:10:53.420,0:10:55.420
+Un vecteur colonne ici c
+
+0:10:55.880,0:10:58.479
+qui est de hauteur de m.
+
+0:10:58.910,0:11:03.100
+Mais le problème avec ce genre de notation comme 1, 2, 3, peu importe…
+
+0:11:03.560,0:11:10.780
+C’est que ça introduit une sorte d’ordre. La classe 1 vient avant la classe 2 qui vient juste avant la classe 3.
+
+0:11:11.630,0:11:15.580
+Cela n'a aucun sens, n'est-ce pas ? Ce sont des couleurs. Donc c'est une distribution catégorielle.
+
+0:11:15.580,0:11:20.439
+Je ne veux pas avoir quelque chose qui a un ordre. Donc je vais utiliser cette représentation alternative.
+
+0:11:21.020,0:11:28.419
+Je convertis ces choses en vecteurs de la taille de mon K.
+
+0:11:28.420,0:11:35.020
+Donc le nombre de classes. Puis je vais avoir un 1 correspondant à la classe qui est indexée par
+
+0:11:36.680,0:11:38.680
+le Cᵢ spécifique, ok ?
+
+0:11:38.810,0:11:44.440
+Supposons que Cᵢ soit égal à 1, vous le premier gars ici.
+
+0:11:44.440,0:11:48.640
+Comme nous parlons de mathématiques, je peux compter depuis 1 : 1, 2, 3.
+
+0:11:48.640,0:11:51.489
+Si nous parlons en Python ou
+
+0:11:51.950,0:11:58.210
+C++ ou quoi que ce soit, vous comptez à partir de 0. Pour les mathématiques vous comptez à partir de 1.
+
+0:11:59.870,0:12:08.049
+Donc, si vous empilez tous ces Cᵢ convertis en cette représentation, qu’est-ce que vous obtenez ? [Etudiant]
+
+0:12:08.960,0:12:10.960
+Nous n'avons pas de chiffres, nous utilisons juste des lettres.
+
+0:12:12.860,0:12:14.919
+Vous avez la matrice m par K.
+
+0:12:14.920,0:12:21.400
+C’est donc ma matrice Y. Donc K nombre de colonnes K et m lignes.
+
+0:12:22.070,0:12:26.499
+Chacun de ces types ici va être un vecteur
+
+0:12:27.440,0:12:28.760
+{0,1}ᴷ
+
+0:12:28.760,0:12:37.330
+où un seul élément est fixé à 1. Donc vous pouvez dire que la norme zéro est égale à 1.
+
+0:12:38.540,0:12:44.680
+De plus, vous pouvez également penser à cette notation comme une masse de probabilités
+
+0:12:45.470,0:12:47.390
+qui est complètement
+
+0:12:47.390,0:12:54.489
+concentrée dans un endroit précis, n'est-ce pas ? Vous avez donc trois endroits possibles : les trois classes possibles. Vous mettez 100% de
+
+0:12:55.310,0:12:58.060
+vos paris sur cette catégorie spécifique.
+
+0:12:59.000,0:13:06.849
+Le réseau va essayer de s'en rapprocher. Il ne peut pas le faire, mais c'est ainsi que nous entraînons un réseau avec ce genre d'étiquettes.
+
+0:13:08.240,0:13:10.240
+Des questions ?
+
+0:13:10.610,0:13:15.099
+Désolé, c'était des exercices. Des questions ? Suis-je trop lent ?
+
+0:13:16.550,0:13:19.000
+Oui ? Un peu ? Non ? Ok.
+
+0:13:19.760,0:13:23.289
+Aimez-vous la police de caractères et les couleurs ? Ok, merci.
+
+0:13:23.959,0:13:25.790
+Cela prend une éternité.
+
+0:13:25.790,0:13:27.790
+Le Latex.
+
+0:13:28.250,0:13:30.140
+C'est pourquoi nous sommes passés Markdown, non ?
+
+0:13:30.140,0:13:35.169
+Très bien. Quoi qu'il en soit, il s'agit du premier exercice. Vous aurez quelque chose de similaire dans vos premiers devoirs.
+
+0:13:35.240,0:13:37.690
+Nous passons cette question pour le moment car elle sera vue dans deux semaines.
+
+0:13:37.690,0:13:41.979
+En gros, si cela avait été un tutoriel, il aurait fallu taper des trucs maintenant.
+
+0:13:42.110,0:13:42.730
+Très bien.
+
+0:13:43.310,0:13:52.950
+Voyons comment fonctionne un réseau entièrement connecté et à quoi il ressemble. Donc qu’est-ce qui est en bas ? [Etudiant]
+
+0:13:53.089,0:13:55.089
+Répétez. [Etudiant]
+
+0:13:55.910,0:13:57.910
+L'entrée est en bas, pourquoi ? [Etudiant]
+
+0:13:58.760,0:14:01.089
+Une caractéristique de niveau inférieur fantastique. Quelle est la couleur du x ?
+
+0:14:01.880,0:14:04.929
+Rose, je veux dire, oui, c'est exact. [rires]
+
+0:14:05.870,0:14:11.440	
+Ensuite, nous obtenons une transformation affine qui est indiquée par la flèche. Puis nous entrons dans ce f vert
+
+0:14:11.959,0:14:15.039
+où f est une non-linéarité.
+
+0:14:16.160,0:14:22.060
+La sortie de f va s'appeler h, représentant la couche cachée [caché => hidden en anglais].
+
+0:14:22.060,0:14:27.130
+h est donc quelque chose qui se trouve à l'intérieur d'un réseau et que je ne peux pas voir de l'extérieur. C'est donc ce qu'on appelle caché.
+
+0:14:27.860,0:14:29.860
+C'est en gras car c'est un vecteur.
+
+0:14:31.640,0:14:33.759
+De plus, j'ai une autre transformation affine.
+
+0:14:33.760,0:14:39.760
+Vous ne voyez que la matrice ici. Elle correspond à g qui est une autre transformation non linéaire.
+
+0:14:39.760,0:14:42.849
+Et enfin vous avez le résultat final qui est ŷ.
+
+0:14:42.850,0:14:49.269
+La couleur de sortie est… Ne dites pas blanc, quelle est la couleur de la bulle de sortie ?
+
+0:14:50.060,0:14:56.500
+Bleu bien et la couche cachée verte. Ce sera toujours constant. Très bien, voici les seules équations
+
+0:14:57.170,0:14:59.170
+que vous allez voir dans ce cours.
+
+0:14:59.779,0:15:05.229
+Vous avez la couche cachée h, un vecteur, qui est une
+
+0:15:05.850,0:15:16.000
+fonction non linéaire éléments par élément de transformation affine de l'entrée x.
+
+0:15:16.350,0:15:20.509
+Plus le biais. Donc, c'est un opérateur linéaire plus le biais.
+
+0:15:20.509,0:15:23.899
+C'est une transformation affine et f est votre cartographie non linéaire.
+
+0:15:24.990,0:15:29.689
+Encore une fois, vous avez votre ŷ qui est la sortie du réseau.
+
+0:15:30.689,0:15:32.989
+Ma sortie est une fonction non linéaire que
+
+0:15:33.060,0:15:39.019
+j’applique à chaque élément de ce vecteur ici. Ce vecteur est en gros une
+
+0:15:39.269,0:15:43.818
+transformation affine de la couche cachée. Ok, c'est tout ce que vous obtenez dans un réseau de neurones.
+
+0:15:44.850,0:15:47.480
+Transformation affine. Je les appelle généralement « rotations ».
+
+0:15:47.750,0:15:57.100
+Les fonctions non linéaires je les appelle quant à elles « écrasement ». Et donc vous ne faites que répéter une séquence de rotation/écrasement, rotation/écrasement, rotation/écrasement… [Etudiants : rotation/écrasement]
+
+0:15:57.300,0:16:05.240
+Fantastique, merci. Très bien, c'est donc très facile jusqu'à présent. Non vous avez une question ?
+
+0:16:05.259,0:16:09.259
+Posez là. Qu'est-ce qu'il y a ?
+
+0:16:09.259,0:16:12.300
+[Etudiante]
+
+0:16:12.689,0:16:17.689
+Oui, f et g sont des fonctions non linéaires arbitraires que vous pouvez utiliser comme bon vous semble.
+
+0:16:17.689,0:16:19.689
+[Etudiante]
+
+0:16:20.309,0:16:26.299
+Ce n'est qu'une couche cachée, ma couche de sortie sera mon truc bleu. 
+
+0:16:26.730,0:16:28.399
+Vous pouvez voir le ŷ au sommet,
+
+0:16:28.399,0:16:31.698
+donc c’est la sortie. Et le x est votre entrée en bas.
+
+0:16:31.709,0:16:37.849
+J'appelle ça un réseau neuronal à trois couches. Yann semble appeler ça un réseau à deux couches.
+
+0:16:38.100,0:16:42.709
+Je dis que ça a trois couches car il y a un neurone d'entrée en bas.
+
+0:16:42.709,0:16:50.239
+Il y a un neurone caché au centre et la sortie. Donc 1, 2, 3. Mais il compte à partir de zéro [rires]
+
+0:16:52.540,0:17:00.149
+comme les programmeurs. Donc deux couches mais non trois. Combien de transformation affine possède un réseau neuronal à 3 couches ?
+
+0:17:00.149,0:17:01.570
+[Etudiant: 2]
+
+0:17:01.570,0:17:03.809
+Fantastique, combien de couches de neurones avez-vous ?
+
+0:17:05.920,0:17:08.580
+3 ok, cool. Oui, question.
+
+0:17:08.580,0:17:12.200
+[Etudiant]
+
+0:17:12.460,0:17:17.159
+Et bien une transformation affine, donc il y a aussi la translation.
+
+0:17:17.159,0:17:20.100
+[Etudiant]
+
+0:17:21.130,0:17:28.380
+Car j'aime généralement extraire le scalaire de la matrice et ensuite j'ai mon déterminant unité,
+
+0:17:28.500,0:17:30.999
+le déterminant de la matrice. C’est en gros
+
+0:17:30.200,0:17:34.500
+la rotation des choses et puis vous avez l'autre qui est le scalage.
+
+0:17:34.540,0:17:38.639
+Il y a aussi le retournement si le déterminant est négatif.
+
+0:17:39.370,0:17:43.770
+Habituellement, la matrice est juste un truc rotatif. C'est un peu difficile de penser en grandes dimensions.
+
+0:17:43.770,0:17:50.790
+Je dis juste que les matrices font tourner les choses car elles appliquent le même type de mouvement à tout. Donc c'est un peu comme
+
+0:17:51.310,0:17:53.310
+une opération globale.
+
+0:17:53.800,0:17:55.800
+D’autres questions ?
+
+0:17:56.530,0:17:58.530
+Très bien, voici
+
+0:17:58.570,0:18:02.909
+quelques exemples de fonctions non linéaires. La première est la partie positive.
+
+0:18:03.220,0:18:10.530
+En gros si c’est positif, vous prenez la valeur associée, si c'est négatif, vous prenez 0. Des personnes l'appellent ReLU [Rectified Linear Unit]
+
+0:18:11.140,0:18:13.140
+il y a d’autres noms que je ne sais pas.
+
+0:18:14.140,0:18:25.479
+Peu importe. J'aime « partie positive » car c’est les mathématiques. Ensuite, il y a une sigmoïde qui est 1/(1+ e⁻ˣ) quel que soit x. 
+
+0:18:25.810,0:18:28.859
+La tangente hyperbolique qui n'est qu'une version redimensionnée de la sigmoïde.
+
+0:18:28.860,0:18:31.950
+Nous l'avons vu la dernière fois. Il y a la soft(arg)max.
+
+0:18:32.320,0:18:33.730
+Vous allez l'appeler ainsi
+
+0:18:33.730,0:18:38.490
+car c’est une version plus douce d'une argmax. Argmax donne que des 0
+
+0:18:38.490,0:18:41.760
+sauf un indice égal à 1, correspondant à 
+
+0:18:42.610,0:18:45.120
+la valeur la plus élevée. Softmax
+
+0:18:45.120,0:18:52.530
+donne quelque chose comme ça avec presque 1 sur la valeur la plus élevée et presque 0 partout ailleurs.
+
+0:18:52.530,0:18:54.839
+Si vous avez 2 gars à la même hauteur, vous
+
+0:18:54.840,0:18:58.800
+avez la moitié, l'autre moitié et le reste plutôt 0.
+
+0:18:58.800,0:19:04.800
+[Etudiant]
+
+0:19:05.550,0:19:08.550
+Je suppose que c'est une bonne dérivée.
+
+0:19:09.730,0:19:15.150
+Ce truc est facile à utiliser pour l’entraînement. Je pense que vous pourriez utiliser
+
+0:19:15.910,0:19:17.910
+ce type de normalisation.
+
+0:19:18.550,0:19:21.329
+La question était de savoir pourquoi on n'utilisait pas un
+
+0:19:22.000,0:19:24.000
+redimensionnement, pourquoi on n’utilisait
+
+0:19:24.160,0:19:27.010
+pas automatiquement quelque chose pour
+
+0:19:27.010,0:19:30.780
+pour que le résultat doit se situer dans une fourchette de 0 à 1.
+
+0:19:30.780,0:19:35.550
+Je suppose que cela va dépendre de la sortie. Vous devez tout le temps la changer
+
+0:19:35.550,0:19:41.550
+avec mise à l'échelle. Avec ça, vous faites un unique changement d’échelle pour tout. Je suppose que ça pourrait être la réponse.
+
+0:19:42.700,0:19:44.700
+Très bien, donc ah oui
+
+0:19:44.740,0:19:51.449
+cela a pris cinq heures de dessin. Nous avons notre x sur le côté gauche avec cinq éléments.
+
+0:19:52.720,0:19:55.140
+Voici par exemple votre première couche cachée.
+
+0:19:55.300,0:20:02.339
+Je peux avoir une deuxième couche cachée, une troisième couche cachée, et enfin ma couche de sortie. Combien de couches ce réseau a-t-il donc ?
+
+0:20:02.339,0:20:10.300
+[Etudiant]
+
+0:20:10.780,0:20:13.379
+Combien de colonnes pouvez-vous compter ici ?
+
+0:20:14.230,0:20:16.230
+[Etudiants : 5] Ok, fantastique.
+
+0:20:16.840,0:20:20.800
+Combien d’écarts entre les colonnes pouvez-vous compter ? [Etudiants : 4]
+
+0:20:21.010,0:20:25.080
+C’est les rotations que vous avez. Très bien, donc nous partons de la première
+
+0:20:25.630,0:20:29.640
+couche, qui est aussi appelée a⁽¹⁾ pour l'activation de la couche 1.
+
+0:20:30.250,0:20:34.170
+On passe à l'activation de la couche 2 et ainsi de suite : a⁽³⁾, a⁽⁴⁾
+
+0:20:34.840,0:20:37.649
+jusqu'à a⁽ᴸ⁾ la dernière couche.
+
+0:20:38.320,0:20:43.830
+Nous obtenons de l'activation de la couche 1 à la couche 2, la matrice W⁽¹⁾.
+
+0:20:46.270,0:20:53.879
+Vous avez W⁽²⁾, W⁽³⁾ et ainsi de suite. Alors, comment obtenir ce premier neurone ? Vous voyez quelque chose ?
+
+0:20:54.760,0:20:57.989
+Voyons si je peux faire en sorte que ce ne soit pas trop sombre.
+
+0:21:00.340,0:21:02.340
+Est-ce mieux ?
+
+0:21:02.920,0:21:10.560
+Faisons plutôt ça : boom. Quelqu'un prend des notes sur papier ? [rires]
+
+0:21:10.560,0:21:12.130
+[Etudiants : oui]
+
+0:21:12.130,0:21:13.930
+Désolé, ok.
+
+0:21:15.550,0:21:19.619
+Après je rallume. Alors comment obtenir les valeurs pour ce type ici ?
+
+0:21:19.620,0:21:25.030
+Ce type est le neurone j de ma quelle couche ? [Etudiant]
+
+0:21:26.140,0:21:31.710
+Deuxième couche donc aⱼ⁽²⁾. Donc cela est ma fonction non linéaire f
+
+0:21:32.680,0:21:39.239
+où j'ai ce W⁽ʲ⁾, la j-ème ligne de la matrice W(1) qui est multiplié par x.
+
+0:21:39.670,0:21:44.180
+J'ai donc une ligne multipliée par un vecteur, vous obtenez… [Etudiant], un scalaire merci.
+
+0:21:45.460,0:21:50.210
+Puis plus bⱼ. Qu'est-ce que bⱼ ? [Etudiant]
+
+0:21:50.410,0:21:52.410
+C'est un scalaire. Oui, c'est exact.
+
+0:21:52.780,0:21:57.899
+Aussi appelé biais. Quel choix de mots. Désolé.
+
+0:21:58.570,0:22:04.870
+Cela est en gros la somme des multiplications des scalaires.
+
+0:22:04.870,0:22:12.180
+Donc comment obtenir ça ? Vous obtenez ces types, vous les multipliez par
+
+0:22:12.790,0:22:15.389
+les poids et ensuite vous obtenez le premier gars.
+
+0:22:17.500,0:22:23.390
+Ensuite, pour le second vous essayez de copier-coller mais cela ne fonctionne pas. Donc vous dessiner à nouveau toutes ces lignes. [rires]
+
+0:22:24.890,0:22:28.900
+Puis vous commencez à réaliser que vous avez pris une très mauvaise décision [rires]
+
+0:22:31.280,0:22:38.720
+en dessinant tout le reste. Ok. Alors, où sont ces poids ? [Etudiant]
+
+0:22:39.320,0:22:43.090
+Dans w⁽¹⁾. Ok fantastique.  Maintenant on avance rapidement.
+
+0:22:43.910,0:22:45.910
+Avance rapide.
+
+0:22:45.920,0:22:49.389
+Oui, comme c'est joli non ? C’est des compétences PowerPoint ninja.
+
+0:22:50.360,0:22:55.560
+Ok, je devrais faire de la publicité et me faire payer par Microsoft.
+
+0:22:55.640,0:22:59.320
+Très bien. Donc, c'est le réseau. C'est joli, non ? [Etudiant]
+
+0:23:00.470,0:23:02.470
+Merci. [rires]
+
+0:23:04.070,0:23:06.399
+Ok, je vous rends la lumière.
+
+0:23:08.300,0:23:14.379
+Il faut juste allumer tout je suppose. Vous savez si on peut éteindre la première ligne de lumière ?
+
+0:23:14.810,0:23:17.950
+Bon, il faut s'en douter la prochaine fois. Très bien, donc nous
+
+0:23:18.950,0:23:25.539
+utilisons juste cette représentation où chacune des couches sont condensées
+
+0:23:25.910,0:23:29.440
+en une boule. Donc dans ce cas, h est un vecteur, n'est-ce pas ?
+
+0:23:29.440,0:23:33.610
+Un vecteur quel que soit le nombre d'éléments. C’est simplement représenté à l'écran.
+
+0:23:34.550,0:23:41.080
+Et c'est la même chose pour le y. Donc ici vous avez ces matrices qui tirent les bonnes directions, les bonnes dimensionnalités.
+
+0:23:41.840,0:23:44.590
+Et là, vous avez les fonctions non linéaires
+
+0:23:45.380,0:23:49.720
+Vous pouvez penser à mon ŷ ici. Ce type est
+
+0:23:50.210,0:23:54.939
+une sorte de fonction ŷ de mon entrée x.
+
+0:23:54.940,0:24:01.269
+Donc x, le gars rose, est donné au réseau et celui me donne une sorte de 
+
+0:24:01.270,0:24:03.879
+prédiction de sortie attendue.
+
+0:24:04.400,0:24:11.560
+On peut donc penser à une fonction de ℝⁿ → ℝᶜ, où C est le nombre de classes. C'est K,
+
+0:24:11.560,0:24:13.560
+je suppose que j'ai dû corriger cette diapo.
+
+0:24:14.330,0:24:16.720
+Donc vous pouvez les considérer comme des cartographiques d’entrées vers
+
+0:24:17.600,0:24:19.600
+les prédictions finales.
+
+0:24:20.060,0:24:22.330
+En général, il est préférable de penser différemment.
+
+0:24:22.850,0:24:26.469
+Ce qui se passe, c'est que vous faites ℝⁿ → ℝᵈ qui est un certain niveau intermédiaire de
+
+0:24:27.020,0:24:32.440
+la représentation et ensuite ℝᵈ → ℝᴷ, les dimensions finales de la classification.
+
+0:24:32.540,0:24:36.789
+d, la dimension de la couche interne est beaucoup plus grande que les
+
+0:24:37.520,0:24:42.999
+dimensions d'entrée et de sortie. Pourquoi ? Car à chaque fois que vous allez dans un espace à dimensions très élevées,
+
+0:24:44.179,0:24:46.179
+tout est loin.
+
+0:24:46.400,0:24:48.729
+Genre vraiment vraiment vraiment vraiment très loin.
+
+0:24:49.789,0:24:53.750
+Donc si les choses sont très loin, c’est très facile de faire une rotation.
+
+0:24:53.750,0:25:01.460
+Les choses bougeront un peu. Si vous allez dans un tout petit petit espace et essayez de bouger les choses,
+
+0:25:01.460,0:25:07.449
+tout bouge ensemble. Mais si vous allez dans cet espace intermédiaire où tout est si éloigné,
+
+0:25:07.450,0:25:12.220
+vous pouvez tout simplement faire bouger les choses. C'est beaucoup plus facile. 
+
+0:25:12.250,0:25:21.649
+Donc, aller à une représentation dimensionnelle intermédiaire, c'est vraiment vraiment utile.
+
+0:25:22.730,0:25:29.439
+Potentiellement, vous pouvez avoir un très gros réseau. Vous avez une très grosse couche cachée d'entrée. Juste une sortie, la partie la plus cool est 
+
+0:25:29.990,0:25:32.799
+que si j'ai une centaine de neurones dans ma couche cachée, je
+
+0:25:33.409,0:25:36.309
+peut simplement utiliser 2 couches cachées de
+
+0:25:37.039,0:25:43.089
+10 neurones. Cela va avoir à peu près les mêmes performances. Donc, au lieu d'avoir cette très très grosse couche intermédiaire,
+
+0:25:43.090,0:25:50.260
+je peux décider d'empiler quelques couches cachées. Le nombre de combinaisons de ces neurones
+
+0:25:50.809,0:25:52.059
+croît de manière exponentielle.
+
+0:25:52.059,0:25:58.658
+Donc, si vous voulez une couche de 1 000 neurones, vous pouvez avoir 3
+
+0:25:59.030,0:26:01.030
+couches cachées de 10, ok ?
+
+0:26:01.030,0:26:06.900
+[Etudiant]
+
+0:26:07.039,0:26:11.529
+Dans le deuxième cas où vous avez une cascade de choses, vous aurez des 
+
+0:26:11.750,0:26:14.079
+dépendances dans les données et vous devrez attendre les gars.
+
+0:26:14.630,0:26:20.530
+Il faut avoir fini avant de commencer la prochaine opération. Donc, par définition, plus vous empilez de couches, plus vous êtes lent.
+
+0:26:21.140,0:26:27.640
+Dans l'autre cas, vous devez disposer de beaucoup plus d'unités afin de 
+
+0:26:28.669,0:26:33.459
+d’être aussi bon que vous l'êtes en empilant quelques-unes de ces couches.
+
+0:26:33.679,0:26:38.259
+Dans d'autres cas, vous devrez également effectuer de nombreux calculs. Si vous disposez d'un logiciel et du matériel
+
+0:26:38.260,0:26:42.369
+Pour faire de la parallélisation, vous pouvez préférer les grandes
+
+0:26:43.010,0:26:45.280
+versions, mais je n'opterais pas pour celles-ci.
+
+0:26:45.280,0:26:50.900
+[Etudiant]
+
+0:26:51.140,0:26:56.559
+Oui, c'est exact, c'est mauvais. Cela prend aussi beaucoup plus d'espace en mémoire. Quelle heure est-il ?
+
+0:26:57.260,0:26:59.260
+Rah, ça fait du bruit.
+
+0:26:59.750,0:27:01.750
+Ok, je ne peux pas regarder ma montre.
+
+0:27:02.179,0:27:04.130
+Peu importe.
+
+0:27:04.130,0:27:06.070
+Très bien, alors, ok.
+
+0:27:06.070,0:27:08.559
+Dans ce cas, mon entrée vit dans un espace bidimensionnel.
+
+0:27:08.900,0:27:12.939
+Ma couche cachée vit dans un espace à cent dimensions 
+
+0:27:13.130,0:27:16.780
+et ma sortie vit dans un espace tridimensionnel.
+
+0:27:18.950,0:27:24.160
+Cela devrait être la partie où on commence à coder des choses avec l’ordinateur, mais nous sommes en classe, nous n'avons pas le temps.
+
+0:27:24.160,0:27:26.160
+Donc réseaux de neurones, entraînement.
+
+0:27:26.510,0:27:30.699
+Comment cela fonctionne-t-il ? Donc on utilise ce truc, le soft(arg)max.
+
+0:27:30.700,0:27:33.730
+La version « soft » du argmax.
+
+0:27:35.179,0:27:40.899
+C’est simplement l'exponentielle divisée par la somme de toutes les exponentielles des autres éléments, ok ?
+
+0:27:40.900,0:27:45.489
+Nous l'avons déjà vu hier. Pourquoi est-ce que j'écris ces choses vivent entre zéro et un ?
+
+0:27:48.799,0:27:51.879
+Pourquoi n'ai-je pas utilisé les crochets ?
+
+0:27:51.879,0:27:55.900
+[Etudiant]
+
+0:27:56.270,0:27:59.919
+La réponse est que c’est très peu probable, même impossible, pourquoi c'est impossible ?
+
+0:28:01.610,0:28:04.939
+Car la fonction exponentielle du numérateur est… [Etudiant]
+
+0:28:05.840,0:28:08.350
+strictement positive. Pourquoi elle ne pas en atteindre 1 ?
+
+0:28:08.350,0:28:12.600
+[Etudiant]
+
+0:28:12.710,0:28:17.949
+Car l'exponentielle est strictement positive. C'était la réponse.
+
+0:28:19.400,0:28:23.229
+Le dénominateur est toujours légèrement plus grand que le numérateur.
+
+0:28:25.460,0:28:26.110
+Très bien
+
+0:28:26.110,0:28:32.229
+L'entrée de la couche soft(arg)max est appelée logit. Les logits sont la sortie linéaire du réseau.
+
+0:28:35.120,0:28:37.070
+Ici, nous allons avoir notre
+
+0:28:37.070,0:28:39.580
+perte totale. La perte pour tout le
+
+0:28:40.130,0:28:47.079
+jeu de données dont nous disposons. C’est une fonction Ŷ, la prédiction du réseau pour l'ensemble des entrées
+
+0:28:47.240,0:28:52.059
+et le vecteur C qui est ce vecteur d'étiquettes.
+
+0:28:52.340,0:29:00.160
+Cela est simplement la moyenne de ce l, qui est en fait la perte par échantillon.
+
+0:29:00.740,0:29:03.160
+Yann utilise le L pour cette chose.
+
+0:29:04.100,0:29:11.290
+Dans ce cas, si je fais de la classification, ma perte par échantillon est – log
+
+0:29:11.870,0:29:18.190
+de la sortie de la soft(arg)max à la bonne classe c.
+
+0:29:19.520,0:29:23.440
+c va être ma classe correcte, celle de l'indice one-hot.
+
+0:29:24.410,0:29:28.479
+En fait, c est le cardinal.
+
+0:29:29.480,0:29:34.570
+Le y bleu est le « one hot encoding » et ŷ est la sortie du réseau,
+
+0:29:34.760,0:29:41.349
+la sortie du soft(arg)max. Donc ma perte par échantillon est – log de ce
+soft(arg)max 
+
+0:29:44.630,0:29:46.839
+à la correcte classe k.
+
+0:29:47.510,0:29:53.379
+Comprenez-vous ce que j'ai dit ? Oui, alors pour tester votre compréhension, vous allez me dire ce qu'il faut faire ensuite.
+
+0:29:53.600,0:29:58.810
+Cette perte est aussi appelée entropie croisée ou log-vraisemblance négative.
+
+0:29:59.750,0:30:03.560
+Disons que mon x rose qui a l'air blanc est ici
+
+0:30:03.830,0:30:11.199
+et que ma classe c orange vaut 1. Quel sera mon y bleu,
+
+0:30:12.080,0:30:14.259
+l’encodage one hot de la classe c ? [Etudiant]
+
+0:30:17.660,0:30:19.660
+1 0 0. Fantastique
+
+0:30:19.730,0:30:23.560
+Ok alors disons que je donne ces x à mon réseau.
+
+0:30:24.230,0:30:30.790
+Je vais donc calculer ces y… il manque un y, désolé, c'est ma faute. Donc, voici un y.
+
+0:30:32.270,0:30:34.359
+ŷ de ce point ici.
+
+0:30:35.750,0:30:39.520
+Donc pourquoi est-ce que j'écris presque ? Ah non, désolé, désolé, désolé.
+
+0:30:39.620,0:30:46.209
+Donc je mets ces x ici dans ce ŷ et la sortie du réseau va être ce presque 1 presque 0 presque 0.
+
+0:30:46.210,0:30:48.210
+Qu'est-ce que presque 1 ?
+
+0:30:48.210,0:30:51.300
+[Etudiant]
+
+0:30:51.500,0:30:53.530
+Est-ce 1⁺ ou 1⁻ ?
+
+0:30:53.530,0:30:55.900
+[Etudiants : -]
+
+0:30:56.420,0:30:58.420
+Qu'est-ce que le presque 0 ? [Etudiant]
+
+0:30:59.330,0:31:02.319
+0+ très bien. Qu'en est-il du dernier ?
+
+0:31:04.040,0:31:07.749
+0+. Bien, d'accord, donc si j'ai ce type ici.
+
+0:31:08.540,0:31:12.159
+Quel est ma perte par échantillon ? Ma perte par échantillon est ces
+
+0:31:13.070,0:31:22.080
+sorties : presque 1, presque 0, presque 0 et ensuite la classe numéro 1. Donc qu'est-ce que j'obtiens ici ? [Etudiant]
+
+0:31:22.850,0:31:27.969
+Ici vous allez calculer… Qu’est ŷ de c ?
+
+0:31:29.840,0:31:31.840
+Cela va être… [Etudiant]
+
+0:31:33.890,0:31:39.670
+Attendez, oui. Donc ŷ de c va être presque 1. 1⁻
+
+0:31:41.270,0:31:43.869
+Donc alors vous avez le log de 1-
+
+0:31:43.869,0:31:49.900
+[Etudiant]
+
+0:31:50.150,0:31:53.150
+Donc, ce sera… [Etudiant]
+
+0:31:53.840,0:31:55.870
+0⁻ . Vous avez le moins devant
+
+0:31:57.800,0:32:02.649
+donc vous obtenez 0+. Très bien. En gros, si vous mettez ce
+
+0:32:03.170,0:32:09.459
+x en entrée du réseau, la classe attendue pour cette entrée est 1 et mon réseau dit
+
+0:32:10.309,0:32:12.309
+1 0 0.
+
+0:32:12.320,0:32:18.490
+La perte est essentiellement la pénalité pour avoir dit n’importe quoi.
+
+0:32:18.490,0:32:20.490
+Cela sera « oh pas de pénalité vous avez
+
+0:32:20.990,0:32:27.670
+juste ». Voyons plutôt ce qui se passe si mon réseau dit : « oh non, l’échantillon est 0 1 0 ».
+
+0:32:28.630,0:32:37.609
+Ma perte par échantillon de 0 1 0 et 1 est donc quoi ? Qu’est-ce que ŷ de c ? [Etudiant]
+
+0:32:38.390,0:32:44.969
+Presque 0, quel genre de presque 0 ? 0+. Qu'est-ce que le log de 0+ ? [Etudiant]
+
+0:32:45.290,0:32:49.009
+- l’infini. Cela donne quoi avec le moins devant ?
+
+0:32:49.100,0:32:52.780
+Ce type s'approche donc de +∞.
+
+0:32:52.780,0:32:57.399
+C'est pourquoi il y a un plus ici. Si vous écrivez simplement ∞, ce n'est pas bon pour moi. D'accord ?
+
+0:32:57.920,0:33:03.119
++∞, -∞, ∞ sont trois choses différentes.
+
+0:33:04.000,0:33:05.630
+Ok, cela fait sens ?
+
+0:33:05.630,0:33:12.549
+Donc si vos réseaux disent des conneries, vous allez dire +∞. Un très mauvais réseau. Si le réseau dit
+
+0:33:13.190,0:33:18.010
+une sorte de bonne réponse. Vous dites juste. D'accord, tu te débrouilles bien. Oui, question ?
+
+0:33:18.010,0:33:24.900
+[Etudiant]
+
+0:33:25.040,0:33:26.000
+Désolé répétez.
+
+0:33:26.000,0:33:32.100
+[Etudiant]
+
+0:33:32.210,0:33:34.160
+L’équation de ŷ
+
+0:33:34.160,0:33:40.150
+que vous ne pouvez pas voir, enfin très mal en gris, dit que ŷ est 
+
+0:33:40.340,0:33:42.340
+une fonction de votre entrée x.
+
+0:33:42.860,0:33:50.500
+Via deux rotations et deux écrasements. Un écrasement étant la partie positive et l'autre écrasement étant le softargmax.
+
+0:33:50.750,0:33:57.429
+Si vous utilisez ces pertes par échantillon sur le dessus de votre softargmax, vous obtenez
+
+0:33:57.980,0:34:04.059
+ce terme d'entropie croisée. Si vous calculez ce qui est écrit ici, vous obtenez en gros ceci.
+
+0:34:04.430,0:34:09.940
+Si vous entrez un x et que votre réseau est correct, vous dites : « bon réseau, bon garçon ».
+
+0:34:10.460,0:34:16.119
+Si vous votre réseau dit des conneries. Alors vous allez dire : « mauvais réseau ».
+
+0:34:16.790,0:34:18.790
+Cela fait sens ?
+
+0:34:18.790,0:34:23.500
+[Etudiant]
+
+0:34:23.600,0:34:29.110
+Donc ŷ est un vecteur et je choisis les c.
+
+0:34:29.690,0:34:35.039
+Vous pouvez penser à ça comme est ŷ indice c.
+
+0:34:36.710,0:34:41.019
+Mais le c est 1, 2 ou 3, n'est-ce pas ?
+
+0:34:41.150,0:34:48.910
+C’est donc essentiellement ŷ(1) ou ŷ(2), ŷ(3). Donc l'un des 3 éléments de ŷ.
+
+0:34:49.580,0:34:52.120
+C'est logique ? Non ? Oui ? Vous pouvez dire non.
+
+0:34:54.230,0:34:57.530
+Ai-je répondu à votre question ? [Etudiant]
+
+0:34:57.860,0:35:02.920
+Donc, ŷ est un vecteur de 3 éléments…
+
+0:35:02.920,0:35:06.900
+[Etudiant]
+
+0:35:07.029,0:35:11.789
+Oui, c'est ça. ŷ en gris, est la sortie du réseau.
+
+0:35:13.450,0:35:15.130
+Oui k classes.
+
+0:35:16.829,0:35:20.519
+Ce type ici à l'intérieur, est le logit de la sortie linéaire.
+
+0:35:20.710,0:35:23.609
+Puis vous appliquez ce g qui est le soft(arg)max.
+
+0:35:24.549,0:35:33.679
+Cela revient à normaliser les sorties entre 0 et 1 et la somme de tous les éléments de la sortie vaut 1.
+
+0:35:33.680,0:35:46.900
+[Etudiant]
+
+0:35:47.049,0:35:50.500
+Donc pourquoi ne pas utilisez
+
+0:35:50.500,0:35:54.299
+l’erreur quadratique moyenne, je crois que Yann a abordé ça hier.
+
+0:35:54.549,0:36:01.589
+En fait, il l’a écrit sur le notebook.
+
+0:36:02.109,0:36:06.929
+C’est la fonction de perte que nous utilisons pour la classification et elle donne quelque chose qui fonctionne.
+
+0:36:07.990,0:36:10.649
+D'autres pertes peuvent ne pas être optimales.
+
+0:36:10.650,0:36:17.520
+Lorsque vous souhaitez effectuer une classification, nous utilisons cette entropie croisée. Elle a également d'autres propriétés statistiques
+
+0:36:17.520,0:36:19.510
+dont je ne vais pas parler ici.
+
+0:36:19.510,0:36:22.709
+Ok donc je voudrais passer en revue d’autres choses
+
+0:36:23.500,0:36:26.039
+et les notebooks donc je vais essayer d'accélérer un peu.
+
+0:36:29.079,0:36:31.169
+Alors l’entraînement comment ça marche ?
+
+0:36:31.420,0:36:38.970
+Donc je reçois tous les paramètres, toutes les matrices de biais et de poids. J'obtiens un ensemble de ces
+
+0:36:39.279,0:36:45.449
+poids que j’appelle ici Θ (thêta majuscule). C’est la collection de l'ensemble de tous mes paramètres entraînables.
+
+0:36:46.750,0:36:49.469
+Je peux maintenant écrire mon J(Θ)
+
+0:36:50.380,0:36:53.770
+qui est définie comme la perte.
+
+0:36:53.770,0:36:56.729
+C'est donc la même chose. Pourquoi ai-je changé la notation ?
+
+0:37:00.520,0:37:06.639
+Que pouvez-vous remarquer ici ? Qui a t’il à l'intérieur de cette fonction ? C’est une fonction de
+
+0:37:06.970,0:37:10.740
+paramètres alors que cette fonction ici, la perte, est fonction de la
+
+0:37:12.130,0:37:12.630
+sortie du réseau, n'est-ce pas ?
+
+0:37:12.990,0:37:18.999
+Ce Ŷ est la sortie du réseau. Dans ce cas, c’est en majuscules pour indiquer que c’est l’ensemble du batch.
+
+0:37:19.119,0:37:25.078
+C'est donc la façon dont nous utilisons la perte. Vous dites simplement :
+
+0:37:25.079,0:37:30.448
+« J va être ma fonction objectif pour un problème d'optimisation ». Nous allons voir ça tout de suite.
+
+0:37:30.789,0:37:36.599
+Alors comment ça marche ? On peut penser à J comme ce type violet qui ressemble à ça.
+
+0:37:37.239,0:37:47.248
+Là, j'utilise un θ (thêta minuscule), qui est en fait un scalaire. Pensez qu'à un seul paramètre. Donc si j'ai J
+
+0:37:48.309,0:37:53.758
+sur l'axe des y, je vais avoir θ sur l'axe des x. Alors comment entraîner ces réseaux ?
+
+0:37:53.759,0:37:58.109
+En général, vous commencez avec un réseau initialisé de façon aléatoire, ce qui signifie
+
+0:37:58.109,0:38:02.998
+vous choisissez juste une valeur initiale θ₀. A ce point précis vous pouvez voir que le
+
+0:38:03.849,0:38:07.408
+J qui va être appelé perte d'entraînement
+
+0:38:08.079,0:38:12.568
+a une valeur spécifique qui va être mon J au point θ₀.
+
+0:38:13.509,0:38:18.269
+Vous pouvez calculer la dérivée que vous ne pouvez même pas voir. C'est une ligne verte qui
+
+0:38:19.329,0:38:21.329
+est parallèle. Vous ne pouvez pas voir :/
+
+0:38:24.489,0:38:26.489
+Encore pardon.
+
+0:38:26.859,0:38:31.948
+Comme c'est joli. Vous avez la pente verte qui vous montre la dérivée à ce point.
+
+0:38:31.949,0:38:39.779
+C'est donc la dérivée de ma fonction J par rapport au paramètre thêta calculé au point θ₀.
+
+0:38:40.659,0:38:43.138
+Il ne vous reste plus qu'à faire un pas.
+
+0:38:44.949,0:38:52.239
+Vers la gauche. Cette variable est-elle positive ou négative ? [Etudiant]
+
+0:38:53.770,0:38:57.249
+Donc vous êtes d’accord, la dérivée est… [Etudiant]
+
+0:38:57.369,0:39:00.689
+Positive. Fantastique. Je fais un pas vers la gauche et
+
+0:39:01.390,0:39:04.650
+mais comment faire ça ? [Etudiant]
+
+0:39:05.320,0:39:07.320
+Exactement, vous mettez un -
+
+0:39:07.750,0:39:09.750
+Ok. Fantastique.
+
+0:39:10.089,0:39:15.359
+Comment appelle t’on ceci ? [Etudiant]
+
+0:39:15.550,0:39:20.580
+C'est donc la descente de gradient. Comment entraîner son propre réseau ?
+
+0:39:20.869,0:39:24.849
+[Etudiant : par descente de gradient] Oui.
+
+0:39:24.849,0:39:31.679
+Attendez un peu, j'ai entendu un autre mot ici. Qui a dit rétropropagation ?
+
+0:39:33.070,0:39:40.259
+Je veux dire que je n'ai pas encore mentionner la rétropropagation. Alors, comment entraîner un réseau ?
+
+0:39:42.790,0:39:45.209
+La méthode du gradient. Ok cool.
+
+0:39:46.660,0:39:52.619
+Comment calculer ces gradients ? Qu'est-ce que c'est le J dans le W(y) ?
+
+0:39:54.700,0:39:57.510
+Ce type va donc être mon J dans le Y
+
+0:39:57.510,0:40:02.280
+qui est la dérivée partielle par rapport à la sortie, multipliée par le Y dans ∂W.
+
+0:40:02.500,0:40:06.540
+De même, quelle est la dérivée partielle de… Quel est
+
+0:40:07.119,0:40:11.999
+le jacobien de ma cible dans ma fonction objective par rapport à Wₕ ? C’est
+
+0:40:12.250,0:40:18.810
+la dérivée partielle de la sortie du coût par rapport à la sortie du réseau multipliée par le jacobien de la
+
+0:40:20.560,0:40:22.679
+sortie du réseau par rapport à la couche cachée.
+
+0:40:22.680,0:40:28.169
+Et enfin la dérivée partielle de la cachée par rapport à ∂W. Comment cela s'appelle-t-il ?
+
+0:40:32.109,0:40:36.539
+La rétropropagation. Ok. Donc qu'est-ce que la rétropropagation ?
+
+0:40:39.070,0:40:42.330
+Des calculs de dérivées. Comment entraîner le réseau ?
+
+0:40:44.320,0:40:50.919
+Ok, si vous vous trompez sur ça à l’examen de mi-parcours, je vous fais échouer.
+
+0:40:51.679,0:40:58.300
+[Etudiant]
+
+0:40:58.410,0:41:06.170
+C’est un exercice. Pourquoi il y a un plus ici ? Dans la perte… Combien de temps avons-nous ?
+
+0:41:08.160,0:41:10.160
+5 minutes. Vraiment ?
+
+0:41:10.470,0:41:13.649
+Oh 9 minutes, c'est beaucoup de temps.
+
+0:41:13.710,0:41:17.960
+Nous allons donc voir deux notebooks.
+
+0:41:18.130,0:41:27.440
+Terminal : cd work github pytorch
+[possibilité d’avancer jusqu’à 42’17’’ le temps qu’Alfredo réussisse à partager son écran]
+
+0:41:28.450,0:41:32.450
+conda activate minicourses
+
+0:41:33.810,0:41:36.889
+Cela marche.
+
+0:41:38.220,0:41:40.220
+jupyter notebook
+
+0:41:44.130,0:41:50.839
+Ok, comment puis-je partager mon écran ? Hum si je fais ça je ne vois plus mon écran.
+
+0:41:54.390,0:41:56.390
+Arrangement mirror, ok.
+
+0:41:59.670,0:42:01.670
+Vous pouvez voir ? Non :/
+
+0:42:03.450,0:42:07.250
+Nous allons donc passer en revue la classification en spirale. 
+
+0:42:13.470,0:42:17.030
+Donc… Oh vous pouvez voir l’écran, je n'ai pas besoin d'éteindre la lumière.
+
+0:42:17.210,0:42:21.210
+Ok, donc ici j’importe des librairies :
+
+0:42:21.560,0:42:30.169
+random, torch, nn et optim de torch, ipython comme vous pouvez voir. J'utilise ma super configuration
+
+0:42:30.839,0:42:36.559
+par defaut. Nous avons un device. À quoi sert le device ? [Etudiant]
+
+0:42:36.780,0:42:43.399
+Quel que soit le device que vous voulez faire fonctionner, vous ne voulez que ce qui est nécessaire. Cela a de l’importance.
+
+0:42:44.220,0:42:50.539
+Ici, je viens de mettre les même que vous avez vu avant. Vous devriez être capable de comprendre ce genre de choses et de le faire vous-même.
+
+0:42:51.020,0:42:55.219
+Cela fait partie des devoirs.
+
+0:42:58.410,0:43:03.920
+Ok, je visualise les données et obtiens ça. Vous n’êtes pas surpris :/ 
+
+0:43:04.560,0:43:07.909
+Il s'agit donc des points de départs. Les points ont deux coordonnées
+
+0:43:07.910,0:43:13.160
+x et y. Puis vous avez une couleur pour la classe différente. Je ne vais pas trop vite.
+
+0:43:13.160,0:43:15.920
+Vous n'êtes pas censé lire le code maintenant.
+
+0:43:15.920,0:43:19.520
+Lisez le plus tard et jouez avec le notebook pendant au moins une heure.
+
+0:43:19.520,0:43:24.469
+Nous parcourons le code juste pour voir s’il fonctionne bien car on ne sait jamais. [rires]. C'est un projet open source.
+
+0:43:26.520,0:43:33.080
+Les modèles linéaires. J’entraîne ici. Donc je crée un « Sequential » qui est un conteneur.
+
+0:43:33.080,0:43:38.959
+Je n'ai pas besoin de l'utiliser, mais c'est plus facile. J’ai mis « Linear » là. Qu'est-ce que linéaire ?
+
+0:43:39.810,0:43:43.310
+C'est sur une transformation affine. Qu'est-ce qu'une transformation affine ? Cinq choses.
+
+0:43:44.130,0:43:47.359
+Elles vont être à l’examen de mi-parcours.
+
+0:43:48.330,0:43:54.860
+Je vais de D à H, où D est l'espace d'entrée et H va être la couche cachée. Ensuite de H à la sortie.
+
+0:43:55.980,0:44:02.080
+Juste des couches linéaires. Alors, comment sont les frontières de décision ici ? [Etudiant]
+
+0:44:02.520,0:44:10.159
+Nulles. Correct. C'est linéaire. Donc je commence l'entraînement et je vous montre le résultat.
+
+0:44:11.910,0:44:15.410
+Rien de bon. Mauvais réseau.
+
+0:44:17.340,0:44:26.539
+Pourquoi ces limites de décision sont-elles mises dans cette configuration ? Pourquoi elles ne le sont pas tournées ?
+
+0:44:30.150,0:44:37.900
+Pourquoi la zone jaune se trouve-t-elle à gauche et non à l'autre bout de l'écran ? [Etudiant]
+
+0:44:38.610,0:44:46.249
+Il essaie de faire au mieux. Ma précision est de 0,5 comme vous pouvez le voir. Donc qu'est-ce que 0,5 ? [Etudiant]
+
+0:44:48.060,0:44:50.060
+Ok, qui a dit aléatoire ? [rires]
+
+0:44:56.099,0:44:59.149
+Peut-être que vous avez besoin de revoir vos cours de probabilités.
+
+0:45:00.630,0:45:02.689
+1 divisé par 3.
+
+0:45:07.349,0:45:10.548
+Pas beaucoup de temps. Je voulais ajouter une chose.
+
+0:45:12.150,0:45:16.549
+Nous n'avons pas de perte d'entraînement ici. Quelle est la première valeur de la perte d'entraînement ?
+
+0:45:17.519,0:45:23.419
+Ici c’est la dernière valeur que j'ai obtenue, c'est ma perte finale : 0,86.
+
+0:45:24.209,0:45:26.899
+Mais quelle est la première valeur de ma perte ?
+
+0:45:36.450,0:45:38.450
+Aucune idée ?
+
+0:45:39.210,0:45:42.230
+Ah vous voyez mon écran, bon sang, je ne peux même pas… 
+
+0:45:43.019,0:45:48.019
+Ok, trouvez quel est le premier numéro que vous obtenez ici et 
+
+0:45:49.920,0:45:52.490
+pourquoi. Si vous ne trouvez pas, je vous le dirai la semaine prochaine.
+
+0:45:52.490,0:45:57.029
+Mais vous devriez trouver. Essayez d'utiliser votre cerveau aussi parfois.
+
+0:45:57.900,0:46:02.869
+Faisons quelque chose ici. J’ajoute cette partie positive au centre.
+
+0:46:03.390,0:46:06.799
+Donc j'ajoute juste un petit
+
+0:46:08.009,0:46:13.339
+0 pour les chiffres négatifs, ok ? Tout le reste est identique. Je ne change rien, mais je
+
+0:46:13.890,0:46:19.009
+supprime les nombres négatifs avec le « zook ». Je ne connais pas le nom anglais.
+
+0:46:22.380,0:46:27.259
+Précision. Ohhhhhhh
+
+0:46:30.930,0:46:38.809
+Etes-vous excités par ce qui arrive ? Vous dormez un peu. Tada. Ohhhhh
+
+0:46:43.049,0:46:45.049
+Ok, cool.
+
+0:46:46.079,0:46:53.449
+Il reste deux minutes pour essayer de changer le nombre de couches cachées. Essayez de changer la
+
+0:46:54.000,0:46:55.589
+dimension de la couche cachée.
+
+0:46:55.589,0:46:57.569
+Voir ce qui se passe.
+
+0:46:57.569,0:47:02.809
+Si vous utilisez 2 neurones dans la couche cachée. Ou bien 5 neurones.
+
+0:47:03.539,0:47:05.899
+Essayez de jouer avec ça et regardez ce qui se passe.
+
+0:47:08.549,0:47:11.959
+Vous pouvez commenter sur Piazza, parler et avoir des conversations.
+
+0:47:13.680,0:47:17.059
+Nous vous encourageons vivement à jouer
+
+0:47:17.789,0:47:23.149
+avec ces notebooks et trouvez des solutions. Dans les 30 dernières secondes, nous passons à un autre notebook.
+
+0:47:27.480,0:47:29.480
+Ici on a la même chose.
+
+0:47:32.609,0:47:35.598
+Dans ce cas, mes points ressemblent à ça.
+
+0:47:36.960,0:47:38.819
+Vous voyez quelque chose ?
+
+0:47:38.819,0:47:42.469
+Donc vous voyez ce genre de banane. Ce n'est pas une banane, c’est plus
+
+0:47:43.410,0:47:50.379
+un double symbole Nike. Donc j’entraîne ici mon réseau linéaire.
+
+0:47:52.640,0:47:54.640
+J’entraîne tout.
+
+0:47:55.099,0:48:02.379
+J’explique à présent, ne vous inquiétez pas. Donc j'ai entraîné mon réseau linéaire, le même qu'avant.
+
+0:48:02.879,0:48:06.619
+J'ai un « Sequential », un conteneur où je mets mes deux
+
+0:48:06.950,0:48:08.950
+Qu'est-ce que c'est ?  [Etudiants]
+
+0:48:09.319,0:48:13.239
+Transformations affines. Oui, c'est exact. J'ai envoyé au device.
+
+0:48:14.329,0:48:16.689
+Comment entraîner un réseau ?
+
+0:48:16.690,0:48:22.000
+Donc, pour entraîner un réseau, vous avez votre entrée X qui est tous mes points.
+
+0:48:22.000,0:48:24.399
+Je la donne au réseau, à l'intérieur du « model ».
+
+0:48:24.559,0:48:31.149
+Le modèle me donne y_pred. La définition du modèle est ce conteneur-là. 
+
+0:48:32.660,0:48:35.980
+Nous avons le modèle, nous lui donnons tous les x et nous obtenons y_pred.
+
+0:48:36.289,0:48:39.489
+Ensuite, je calcule la perte qui sera mon critère.
+
+0:48:39.980,0:48:48.700
+Elle est calculée sur mes prédictions et les y. Les y sont les classes. Les y_pred sont les sorties du réseau.
+
+0:48:48.710,0:48:52.599
+Dans ce cas, le critère écrit ici est la perte MSE.
+
+0:48:53.089,0:48:55.719
+Avant nous utilisons une entropie croisée :
+
+0:48:56.000,0:48:59.169
+- log du softargmax.
+
+0:48:59.240,0:49:03.849
+Nous utilisons à présent une MSE car nous sommes dans un problème de régression.
+
+0:49:03.980,0:49:09.730
+Nous calculons donc la perte qui est la distance quadratique entre votre sortie et la cible.
+
+0:49:10.160,0:49:16.930
+En régression on parle de cible. En classification, on parle de classe et d’étiquettes.
+
+0:49:17.269,0:49:20.119
+Donc les étiquettes pour la classification
+
+0:49:20.119,0:49:25.119
+Cibles pour la régression.
+
+0:49:25.990,0:49:33.669
+Nous avons donc calculé la perte ici. Là j'ai dû nettoyer ce qui s'était passé avant. Je dis à mon optimiseur de
+
+0:49:34.430,0:49:39.639
+nettoyer tous les restes de l'opération précédente. C’est ce « zero_grad ».
+
+0:49:40.190,0:49:47.359
+Ensuite, je rétropropage. Qu'est-ce que la rétropropagation ? [Etudiant]
+
+0:49:47.540,0:49:53.680
+Le calcul des dérivées partielle de… [Etudiant]
+
+0:49:54.620,0:49:56.620
+Répétez.
+
+0:49:56.770,0:49:59.860
+Dérivée partielle de… [Etudiant]
+
+0:50:00.950,0:50:02.950
+la perte par rapport au
+
+0:50:03.260,0:50:09.910
+paramètre. La rétropropagation est juste la règle de la chaîne. Elle calcule toutes les dérivées partielles de votre perte finale, 
+
+0:50:09.910,0:50:16.809
+dans le cas ici la MSE, pour chacun des paramètres de votre modèle. Enfin, « step ».
+
+0:50:17.990,0:50:21.969
+On fait un pas en arrière dans la direction du gradient. Ok ?
+
+0:50:22.640,0:50:28.299
+Donc nous entraînons ce réseau, qui n'a pas de non-linéarité et fait quelque chose.
+
+0:50:28.300,0:50:31.120
+Je ne sais pas comment interpréter cette perte.
+
+0:50:31.170,0:50:35.960
+Et ça, c’est la sortie de mon réseau. Qu'est-ce que c'est ? [Etudiant]
+
+0:50:36.440,0:50:38.440
+Une régression linéaire.
+
+0:50:39.920,0:50:46.749
+Ennuyeux. Donc maintenant je vais faire des réseaux profonds. Des choses super excitantes. Qu'est-ce que je change ?
+
+0:50:49.310,0:50:52.749
+Je ne fais que supprimer les valeurs négatives.
+
+0:50:53.390,0:50:59.259
+C'est cool, non ? J'enlève les valeurs négatives parfois ici : ReLU.
+
+0:50:59.260,0:51:04.989
+Parfois, je n'utilise qu'une tangente hyperbolique. J’ai séparé en deux pour que vous puissiez voir la comparaison.
+
+0:51:05.900,0:51:07.900
+J’entraîne cette chose.
+
+0:51:10.370,0:51:17.200
+Regardons la prédiction avant d’entraîner. Donc avant d’entraîner, vous allez obtenir ce genre de prédictions.
+
+0:51:21.680,0:51:25.930
+On tire en quelque sorte vers le zéro. Une sorte de ligne horizontale. 
+
+0:51:26.480,0:51:28.810
+La ligne verte représente la variance.
+
+0:51:29.480,0:51:35.650
+Là où se trouve mon curseur, la variance est de 0. Donc la variance est de 0,2 environ entre toutes ces prédictions.
+
+0:51:36.320,0:51:40.870
+Descendons et regardons comment le réseau a modifié sa prédiction finale
+
+0:51:41.510,0:51:45.459
+étant donné que nous avons utilisé la perte.
+
+0:51:46.070,0:51:51.940
+Nous nous sommes déplacés contre… Donc nous sommes dans la montagne, il y a du brouillard et on ne voit pas où se trouve la vallée.
+
+0:51:51.940,0:51:54.219
+C'est juste marcher vers la
+
+0:51:54.260,0:51:57.789
+la chose qui descend vers la vallée.
+
+0:51:58.540,0:52:01.959
+Après avoir effectué cette procédure à plusieurs reprises,
+
+0:52:03.020,0:52:05.650
+êtes-vous impatients de voir comment ce réseau fonctionne ?
+
+0:52:07.430,0:52:11.290
+Je ne vous entends pas. [Etudiants : oui] Ok. Merci. Donc boum.
+
+0:52:14.120,0:52:24.400
+Devinez lequel utilise la partie positive et lequel utilise la tangente hyperbolique ? [Etudiant]
+
+0:52:24.410,0:52:26.410
+Ok, parce que vous avez vu le titre…
+
+0:52:28.040,0:52:37.410
+Ok, donc vous pouvez voir comment mon réseau approximise mon entrée. Comment appelle t’on cette chose ?
+
+0:52:38.660,0:52:43.719
+Pouvez-vous voir quelque chose ? Peut-être que non. A quoi cela ressemble ?
+
+0:52:46.640,0:52:49.569
+Cela ressemble à une ligne droite.
+
+0:52:50.720,0:52:56.440
+Mon réseau sort une approximation linéaire par morceaux de l’entrée.
+
+0:52:56.450,0:53:01.240
+C'est parce que je viens de supprimer les choses négatives.
+
+0:53:02.570,0:53:06.570
+Si à la place vous utilisez [cf. le geste d’Alfredo]
+
+0:53:06.571,0:53:08.750
+Qu'est-ce que c'est ? [Etudiants]
+
+0:53:08.750,0:53:10.750
+Une tangente parabolique. Oui.
+
+0:53:11.480,0:53:14.439
+Vous obtenez quelque chose de doux.
+
+0:53:15.110,0:53:19.929
+Ok, pourquoi j'ai fait ça ? C'est plus sympa, je pense non ?
+
+0:53:21.530,0:53:25.250
+Tout d'abord, vous pouvez voir la chose jaune qui est l'écart-type qui
+
+0:53:25.340,0:53:33.069
+a l'air tordu ici et moins tordu à gauche. C’est l'écart-type très tordu.
+
+0:53:33.440,0:53:37.990
+Si vous entraînez un ensemble de réseaux, ces réseaux ne seront pas d'accord.
+
+0:53:39.440,0:53:46.690
+Comme vous pouvez voir. Laissez-moi changer une ligne de code. Mettons 4 ici.
+
+0:53:47.420,0:53:50.000
+Je vais donc maintenant examiner les
+
+0:53:50.030,0:53:54.820
+données en dehors de ma région d’entraînement. Je vais regarder ce qui se passe à gauche et à droite.
+
+0:53:55.220,0:54:04.300
+Qu'espérez-vous voir ? Qu'attendez-vous de ces réseaux lorsque vous testez en dehors de la région d’entraînement ?
+
+0:54:04.300,0:54:10.600
+[Etudiant]
+
+0:54:10.809,0:54:12.809
+Ok, bonne intuition. Quelque chose de similaire.
+
+0:54:12.819,0:54:19.019
+Ce réseau ne fonctionnera donc pas, car il ne sera capable de généraliser
+
+0:54:20.619,0:54:26.939
+que sur les données qui se situent dans une fourchette similaire. Si vous demandez à votre réseau qui a été entraîné sur ces données,
+
+0:54:28.270,0:54:32.099
+Comment interpréter les choses qui sont ici ?
+
+0:54:32.740,0:54:35.309
+Il dira qu’il ne sais pas.
+
+0:54:35.920,0:54:45.510
+Malheureusement, le problème principal est qu’il s’agit de réseaux de régression. Donc ils ne vous diront pas à quel point ils sont confiants.
+
+0:54:48.430,0:54:52.740
+Ils ne vous diront pas à quel point ils sont confiants, ok ? Ils disent simplement
+
+0:54:53.349,0:54:56.548
+un nombre. Voyons voir ce qui se passe maintenant.
+
+0:55:01.059,0:55:05.129
+Que se passe t’il ici ? Je vous montre juste un peu plus.
+
+0:55:06.460,0:55:08.460
+Le jaune est l'écart type
+
+0:55:08.500,0:55:12.750
+et le vert est la variance. Vous pouvez voir sur le côté gauche, la
+
+0:55:13.960,0:55:18.299
+ReLU, la fonction de la partie positive,
+
+0:55:18.670,0:55:23.250
+conserve les dernières branches en gardant la même pente.
+
+0:55:24.130,0:55:30.029
+Alors que celui avec la tangente hyperbolique fini par saturer.
+
+0:55:32.980,0:55:38.730
+Vous devez savoir que ce réseau aura des effets secondaires. Le choix d'une fonction non linéaire aura un effet secondaire.
+
+0:55:39.339,0:55:42.089
+Surtout si vous allez en dehors de la région du domaine d’entraînement.
+
+0:55:42.670,0:55:44.670
+Heureusement, vous pouvez utiliser cette technique,
+
+0:55:45.069,0:55:49.889
+la prédiction/estimation de la variance des n symboles afin d'estimer d'une manière ou d'une autre
+
+0:55:50.500,0:55:52.109
+l'incertitude avec laquelle la prédiction est faite.
+
+0:55:52.109,0:55:56.909
+C'est vraiment très important en termes de recherche.
+
+0:55:56.910,0:56:02.670
+Si votre réseau fait une régression, vous n'avez aucune idée de sa propre confiance. Si vous entraîner un
+
+0:56:02.770,0:56:06.989
+groupe de réseaux qui ont des valeurs initiales différentes, vous les entraînez tous avec la même procédure et
+
+0:56:06.990,0:56:09.779
+vous pouvez calculer l'écart afin d'estimer
+
+0:56:10.839,0:56:12.989
+l’incertitude avec laquelle une prévision donnée est faite.
+
+0:56:15.549,0:56:19.289
+C'était tout pour aujourd'hui. Merci de m'avoir écouté et à la semaine prochaine, bye-bye.
+
+0:56:24.339,0:56:26.079
+Questions ?
+
+0:56:26.079,0:56:32.429
+Ok des questions. Attendez, attendez, attendez une seconde. Tout d'abord, le ciel éclate.
+
+0:56:33.670,0:56:35.879
+Ils doivent faire attention à ce qu'ils écrivent.
+
+0:56:36.849,0:56:41.308
+Les notes seront ajoutées sur le site web d'ici dimanche.
+
+0:56:42.160,0:56:46.920
+Comme ça vous pouvez réviser le contenu avant le cours. Si vous venez en classe sans réviser le contenu
+
+0:56:47.710,0:56:53.099
+Vous ne serez peut-être pas complètement réceptif à tout ce dont parle.
+
+0:56:56.260,0:56:58.619
+C'est tout, je crois. Merci.

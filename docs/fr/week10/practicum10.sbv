@@ -1,0 +1,1754 @@
+0:00:00.500,0:00:07.230
+[Etudiant : avez-vous été à Isoldi à New York ? J'adore leurs lasagnes] Non, je n'ai pas été à Isoldi.
+
+0:00:07.230,0:00:15.470
+Je me rends habituellement à deux endroits, l'un s'appelle Norma sur la 33ème et la 3ème avenue.
+
+0:00:15.470,0:00:20.279
+C'est juste sicilien, très authentique j'adore.
+
+0:00:20.279,0:00:28.170
+L'autre, qui a absolument la meilleure pizza du monde, s'appelle Sorbillo, c’est très
+
+0:00:28.170,0:00:34.410
+près de la NYU. La pizza est comme à Naples et vous ne pouvez pas trouver
+
+0:00:34.410,0:00:39.329
+meilleur sur cette planète. Donc vous devriez aller à Sorbillo. Et si
+
+0:00:39.329,0:00:45.500
+vous mentionnez mon nom, vous obtenez une réduction. Oui, j'ai un pouvoir spécial.
+
+0:00:45.500,0:00:51.989	
+La pizza de Chicago n'est pas une pizza, c'est une tarte. Donc si vous l'appelez
+
+0:00:51.989,0:00:58.820
+tarte de Chicago, c'est fantastique, mais ce n'est pas une pizza. La pizza de Naples est la seule.
+
+0:00:58.820,0:01:04.920
+Donc de quoi parlons-nous aujourd'hui ? Nous parlons de quelque chose
+
+0:01:04.920,0:01:10.830
+appelée le « Truck Backer-Upper ». Qu'essayons-nous de faire aujourd'hui dans ce cours ?
+
+0:01:10.830,0:01:14.340
+Alors c'est le premier cours où vous allez m'aider, en lisant en gros
+
+0:01:14.340,0:01:20.280
+un document qui nous permet de déterminer si les choses ont un sens.
+
+0:01:20.280,0:01:25.530
+C'est ainsi que nous nous éduquons dans le monde de la recherche, vous n'avez pas
+
+0:01:25.530,0:01:31.079
+nécessairement Yann à vos côtés tout le temps, donc vous devez lire des papiers et 
+
+0:01:31.079,0:01:35.490
+donner un sens à ce qui y est écrit. Habituellement, je les transcris
+
+0:01:35.490,0:01:41.729
+avec Typora, juste pour fixer les principaux sujets dans mon esprit
+
+0:01:41.729,0:01:45.540
+de m'engager dans le temps pour pouvoir vérifier
+
+0:01:45.540,0:01:51.509
+plus tard ce qui se passe. Alors, commençons. Quel est ce dispositif ?
+
+0:01:51.509,0:01:56.969
+Qu'essayons-nous de faire ici ? Nous essayons de concevoir, par l'auto-apprentissage, un
+
+0:01:56.969,0:02:01.590
+contrôleur non linéaire pour contrôler la direction d'un camion avec remorque pendant
+
+0:02:01.590,0:02:07.170
+qu’il recule vers un quai de chargement à partir d'une position initiale arbitraire. Seul le recul
+
+0:02:07.170,0:02:11.819
+est autorisé. Qu'est-ce que cela signifie ? Ce que nous essayons de faire, c'est
+
+0:02:11.819,0:02:17.760
+apprendre à conduire un camion. Ce qui n'est peut-être pas si compliqué si
+
+0:02:17.760,0:02:25.020
+vous avancez, mais nous essayons de garer un camion, donc il va uniquement en arrière.
+
+0:02:25.020,0:02:31.110
+Si vous essayez de garer votre voiture en créneau, c'est
+
+0:02:31.110,0:02:37.080
+peut-être un peu compliqué parfois et vous ne pouvez pas toujours le faire 
+
+0:02:37.080,0:02:44.180
+en une seule manœuvre. Si vous avez un camion avec une remorque attachée dans votre dos, c'est le bordel.
+
+0:02:44.180,0:02:51.870
+Nous allons le découvrir très bientôt. Alors comment ce camion-remorque
+
+0:02:51.870,0:02:58.830
+fonctionne ? Nous avons deux éléments, nous avons un « cab » qui se trouve en haut à droite.
+
+0:02:58.830,0:03:04.110
+Donc un angle de la cabine par rapport à l'axe des x, et ensuite nous avons
+
+0:03:04.110,0:03:09.209
+les coordonnées x et y de l'articulation entre la cabine et la remorque.
+
+0:03:09.209,0:03:16.470
+Dans la partie ci-dessous, nous avons la remorque et nous avons l'emplacement
+
+0:03:16.470,0:03:21.540
+x et y de l'arrière de la remorque, puis nous avons le thêta de la remorque,
+
+0:03:21.540,0:03:25.500
+qui nous dit quel est l'angle de ce camion-remorque par rapport à l’axe
+
+0:03:25.500,0:03:33.150
+des x. Notre objectif est de faire reculer ce type jusqu'à l'arrière de la
+
+0:03:33.150,0:03:38.970
+la remorque atteigne l'emplacement du quai qui est représenté par les 
+
+0:03:38.970,0:03:46.380
+coordonnées xdock et ydock. De plus, nous aimerions que le thêta
+
+0:03:46.380,0:03:52.440
+qui est l'angle de la remorque, soit 0 de telle sorte que la remorque soit
+
+0:03:52.440,0:03:58.739
+orthogonale au quai. Et en gros la partie arrière du… la partie
+
+0:03:58.739,0:04:02.310
+arrière, c’est bien l’« arrière », n'est-ce pas ?
+
+0:04:02.310,0:04:06.269
+Je parle anglais, je suppose que c'est correct. Donc, la partie arrière de
+
+0:04:06.269,0:04:13.019
+la remorque doit être parallèle au quai et aussi proche que possible de
+
+0:04:13.019,0:04:21.690
+l'emplacement du quai. Jusqu'à présent, c'est logique ? Ok, très bien.
+
+0:04:21.690,0:04:36.240
+Lisons un peu plus ce papier. Donc on a quelques variables d'état, au nombre de six. Ce n'est peut-être pas correct,
+
+0:04:36.240,0:04:41.580
+nous allons bientôt le découvrir. Les variables d'état sont donc θcab
+
+0:04:41.580,0:04:47.760
+qui est l'angle du camion. Puis, xcab et ycab, les coordonnées
+
+0:04:47.760,0:04:54.360
+cartésiennes de la sellette, qui est la partie située derrière la cabine. Et puis vous avez xtrailer et
+
+0:04:54.360,0:05:00.000
+ytrailer qui est la position de l'arrière de la remorque, plus θtrailer
+
+0:05:00.000,0:05:08.400
+qui est l'angle de la remorque. Ok. Donc, en gros, la procédure entière à suivre est la suivante :
+
+0:05:08.400,0:05:12.980
+le camion fait marche arrière jusqu'à ce qu'il atteigne le quai, puis il s'arrête.
+
+0:05:12.980,0:05:18.120
+L'objectif est de faire reculer la remorque pour qu'elle soit parallèle au quai de chargement.
+
+0:05:18.120,0:05:21.930
+Le but est donc de faire en sorte que l'arrière de la remorque
+
+0:05:21.930,0:05:27.150
+soit parallèle au quai. Et ensuite, avoir xtrailer et ytrailer, 
+
+0:05:27.150,0:05:33.450
+l'emplacement de l'arrière de la remorque, le plus près possible de xdock
+
+0:05:33.450,0:05:37.770
+et ydock. Vous me suivez jusqu'ici ?
+
+0:05:37.770,0:05:42.450
+La position initiale est fixée de manière aléatoire et nous devons reculer
+
+0:05:42.450,0:05:49.830
+jusqu'à ce que nous atteignions le quai avec l'arrière de la remorque
+
+0:05:49.830,0:05:57.240
+et sommes exactement orthogonaux. D'accord ? Il y a quelques
+
+0:05:57.240,0:06:04.410
+difficultés avec cela, et nous allons les découvrir dès à présent.
+
+0:06:04.410,0:06:15.540
+Donc cd Work/GitHub/pDL. Et maintenant, conda active pDL et jn.
+
+0:06:15.540,0:06:30.090
+Donc, nous allons passer en revue le notebook « 14- truck_backer-upper ». Quelque chose que j'aime vraiment faire dans
+
+0:06:30.090,0:06:39.419
+les notebooks est d’utiliser l'unicode, puisque nous utilisons Python 3, on peut utiliser l'unicode et donc avoir π.
+
+0:06:39.419,0:06:44.970
+Pour avoir pi, je dois juste taper \pi et presser tab j’obtiens π. De même
+
+0:06:44.970,0:06:55.290
+vous pouvez faire \alpha \beta \gamma. Ce n'est pas du codage, c’est le notebook. Pour pouvoir
+
+0:06:55.290,0:07:01.980
+faire des choses comme ça. Donc je viens d'initialiser quelques librairies. 
+
+0:07:01.980,0:07:09.500
+C'est notre installation. J'initialise un objet ici dont on ne se préoccupe past pour l'instant et on commence 
+
+0:07:09.500,0:07:14.670
+en visualisant ce type-là. Et je crois que je dois zoomer un peu car vous
+
+0:07:14.670,0:07:25.350
+ne pouvez pas voir. Voilà, c'est cool. Bon, maintenant nous commençons la partie interactive. Nous aimerions
+
+0:07:25.350,0:07:32.160
+pour dessiner ce type, disons avec un angle de braquage nul,
+
+0:07:32.160,0:07:38.820
+et je continue à exécuter. Donc ce gars-là continue
+
+0:07:38.820,0:07:48.360
+et ce qui se passe ici après l'étape suivante, c'est que mon ordinateur
+
+0:07:48.360,0:07:53.910
+se plaint. Et voilà. Vous obtenez le camion est en portefeuille.
+
+0:07:53.910,0:07:59.160
+Qu'est-ce que cela signifie que le camion a été mis en portefeuille ? Que vous avez simplement cassé votre camion
+
+0:07:59.160,0:08:03.750
+car vous êtes rentré en vous-même. C'est très intéressant, vous pouvez
+
+0:08:03.750,0:08:11.850
+conduire dans vous-même avec ces camions. Laissez-moi donc réinitialiser l'état avec
+
+0:08:11.850,0:08:17.820
+quelque chose d'un peu décent, peut-être comme... ok des volontaires ? 
+
+0:08:17.820,0:08:24.150
+Quel est l'angle dont vous voudriez que je dirige la roue ? Vous pouvez me donner ce que vous voulez
+
+0:08:24.150,0:08:29.910
+de 0 à 45 degrés, je crois. -10. Ok alors je vais à -10, je tourne donc
+
+0:08:29.910,0:08:39.140
+vers la droite de 10 degrés et je fais 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 pas. 
+
+0:08:39.140,0:08:44.400
+Si je continue, je serais bientôt en portefeuille. Donc que devrais-je
+
+0:08:44.400,0:08:53.310
+faire ? Quelqu'un d'autre ? Ou peut-être encore vous. +15. Ok, essayons +15 degrés.
+
+0:08:53.310,0:09:00.880
+On fait 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. Hmm ok. Quelle est la prochaine étape ?
+
+0:09:00.880,0:09:05.260
+Dois-je continuer ? Oui, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. Nous allons
+
+0:09:05.260,0:09:12.160
+disparaître de l'écran. Peut-être en alternant les plus et les moins ? Puis, vous allez tout droit, non ?
+
+0:09:12.160,0:09:22.750
+Si je continue comme ça, vous pouvez voir que ce camion va sortir, et perdre. Donc vous n'ayez pas de permis de conduire.
+
+0:09:22.750,0:09:28.420
+Donc -15. Vous êtes tous d'accord ? Dois-je aller à -15 ?
+
+0:09:28.420,0:09:37.660
+-15. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. Ok, maintenant nous ne pouvons plus avancer.
+
+0:09:37.660,0:09:43.860
++45. On a foiré. Non non je ne pense pas que vous ayez foiré, je pense que c'est toujours bon.
+
+0:09:43.860,0:09:50.050
+0. Ok quelqu'un a dit 0. Essayons avec 0. Pas encore, ok. Que voulez-vous faire ?
+
+0:09:50.050,0:10:04.450
++45. Ok, +45. Je peux continuer mais après on va juste... oh oh,
+
+0:10:04.450,0:10:17.050
+Je ne peux pas continuer. Une de plus. -45. Ok -45 deux fois, puis deux fois de plus,
+
+0:10:17.050,0:10:22.540
+Puis 6 de plus pour être à 10 : 1, 2, 3, 4, 5, 6.
+
+0:10:22.540,0:10:27.250
+Donc si je continue comme ça, on va quitter l'écran. Donc je...
+
+0:10:27.250,0:10:32.870
+Je pense que vous avez compris. Est-ce que c'est deux fois plus ?... Ok c’est un vieux message.
+
+0:10:32.870,0:10:37.030
+Ok, le fait est que ce truc est un peu délicat.
+
+0:10:37.030,0:10:45.700
+Vous pouvez prendre le coup de main et peut-être que la solution finale sera quelque chose où l'on va comme ceci puis
+
+0:10:45.700,0:10:51.940
+nous allons dans l'autre sens pour tourner, quelque chose comme +10.
+
+0:10:51.940,0:11:01.360
+Et puis ça va se rentrer dedans ici, donc plus peut-être 25 ou peut-être
+
+0:11:01.360,0:11:03.930
+voyons voir... Peut-être +20. Nous pouvons nous retourner et maintenant
+
+0:11:11.420,0:11:21.529
+nous devons défaire cette chose. Donc, si je fais disons +40, et voilà.
+
+0:11:21.529,0:11:30.079
+Et on peut aller tout droit. 
+
+0:11:30.079,0:11:39.350
+Quelque chose comme +20 peut-être ? Et puis on peut aller jusqu'à 0… J'ai enseigné ça
+
+0:11:39.350,0:11:45.769
+toujours donc je peux vraiment conduire ce truc. Donc voilà.
+
+0:11:45.769,0:11:51.110
+Alf est chauffeur de camion. Et voilà, vous voyez ? Oh mon Dieu, je suis en train de réussir.
+
+0:11:51.110,0:11:57.050
+Nous devons réparer un peu. Klaxonnez, klaxonnez. J'avais mon klaxon là.
+
+0:11:57.050,0:12:05.110
+Donc nous avons… Ohhhhhhh non non non. Ok désolé.
+
+0:12:07.170,0:12:13.149
+Donc, c'est en fait considéré comme un succès. Ok, mon ordinateur se
+
+0:12:13.149,0:12:17.439
+plaint car il y a un certain lag. J'aurais dû tourner un peu avant.
+
+0:12:17.439,0:12:26.170
+Quoi qu'il en soit, le fait est que de la manière de conduire ce type n'est 
+
+0:12:26.170,0:12:30.759
+pas tout à fait simple à comprendre. Car c'est très non linéaire. Donc nous
+
+0:12:30.759,0:12:36.540
+Devons comprendre comment implémenter un système hautement non linéaire. Comment inverser un modèle cinématique 
+
+0:12:36.540,0:12:41.470
+hautement non linéaire. Donc si nous avons un modèle cinématique, vous savez comment
+
+0:12:41.470,0:12:45.730
+le véhicule se comporte en fonction d'une action. Si vous inversez le modèle cinématique
+
+0:12:45.730,0:12:50.019
+vous déterminez les mesures que vous souhaitez prendre pour conduire
+
+0:12:50.019,0:12:54.999
+vers une destination finale. Mais comme nous ne savons pas comment faire cela de manière analytique,
+
+0:12:54.999,0:12:59.470
+ou nous ne le savions pas dans les années 90, nous pouvons entraîner un réseau 
+
+0:12:59.470,0:13:11.079
+et ensuite simplement déterminer si nous pouvons apprendre à faire marche arrière. Ok, vous êtes excités ?
+
+0:13:11.079,0:13:15.819
+Vous êtes intéressé de savoir comment nous pouvons faire cela ? Oui ? Non ?
+
+0:13:15.819,0:13:27.209
+Oui ! ok, laissez-moi réfléchir.  
+
+0:13:27.209,0:13:36.009
+L'objectif ici va être : étant donné une position initiale dans cette carte ici, 
+
+0:13:36.009,0:13:40.600
+j'aimerais savoir quelle séquence d'actions,
+
+0:13:40.600,0:13:47.620
+en gros quelle séquence d'angle de braquage pour les roues, je dois appliquer dans
+
+0:13:47.620,0:13:52.899
+cet espace en six dimensions. Donc ce n'est pas seulement en 2D.
+
+0:13:52.899,0:13:57.370
+L'écran ici est en 2D mais vous avez six valeurs, ok ? Vous avez
+
+0:13:57.370,0:14:02.019
+le (x, y) de la cabine, le (x, y) de la remorque et les deux angles, donc vous avez un espace
+
+0:14:02.019,0:14:06.699
+en 6 dimensions. Et puis dans cet espace à six dimensions vous souhaitez inférer…
+
+0:14:06.699,0:14:14.050
+Obtenir un réseau qui vous dit : pour cette configuration spécifique du camion ou de la remorque, vous devez
+
+0:14:14.050,0:14:18.899
+produire cette valeur spécifique. Il s'agit en quelque sorte d'un réseau de régression.
+
+0:14:18.899,0:14:24.029
+Il va produire un scalaire qui va de -45 à +45.
+
+0:14:24.029,0:14:32.759
+Oui, je pense que c'est la fourchette. Pour chaque position.
+
+0:14:32.759,0:14:37.139
+Notre objectif sera donc d’entraîner un réseau neuronal qui va de points
+
+0:14:37.139,0:14:42.209
+dans cet espace à six dimensions vers un scalaire, qui est le scalaire
+
+0:14:42.209,0:14:48.749
+qui me permet d'obtenir… Une séquence de scalaires, enfin plutôt un
+
+0:14:48.749,0:14:54.809
+scalaire à la fois, de sorte que vous voulez faire reculer ce camion jusqu'à
+
+0:14:54.809,0:14:59.369
+la destination finale. Ai-je été logique ? Est-ce que cela a un sens ?
+
+0:14:59.369,0:15:06.029
+J'étais peut-être un peu confus. Est-ce que ça va ? Ok, alors trouvons comment faire
+
+0:15:06.029,0:15:12.990
+pour que ça se fasse. Retour aux diapositives. L’entraînement.
+
+0:15:12.990,0:15:18.420
+L’entraînement comporte deux étapes. La première consiste à entraîner un
+
+0:15:18.420,0:15:24.449
+un réseau neuronal, pour être un émulateur de la cinématique du camion et de la remorque. C'est ainsi que les gens dans
+
+0:15:24.449,0:15:21.379
+le papier ont fait. Ce n'est pas la seule option mais c'est ce que nous allons faire.
+
+0:15:218.379,0:15:33.569
+Ensuite, une deuxième étape consiste à entraîner un réseau
+
+0:15:33.569,0:15:36.870
+contrôleur pour contrôler l'émulateur. Il va faire en gros
+
+0:15:36.870,0:15:40.920
+la tâche que nous avons fait lorsque nous avons mis une valeur
+
+0:15:40.920,0:15:47.040
+d'angle de braquage de manière à atteindre notre destination.
+
+0:15:47.040,0:15:50.839
+La destination, le succès est déterminé par deux facteurs :
+
+0:15:50.839,0:15:59.100
+la proximité avec le quai et l'orientation de la remorque. Il s'agit donc 
+
+0:15:59.100,0:16:03.689
+du schéma général. Vous allez avoir un réseau neuronal, un contrôleur, qui était moi
+
+0:16:03.689,0:16:07.920
+en suivant vos suggestions par le biais du chat, qui vous fournit un signal
+
+0:16:07.920,0:16:14.009
+à l'intervalle de temps discret k. Ensuite, nous avons la
+
+0:16:14.009,0:16:18.329
+cinématique du camion-remorque qui sont les équations qui m'ont permis 
+
+0:16:18.329,0:16:24.389
+de dire quelle est la prochaine configuration du camion. 
+
+0:16:24.389,0:16:28.860
+Donner l'état suivant, étant donné que vous fournissez l'état précédent à l'intérieur et
+
+0:16:28.860,0:16:32.900
+puis le signal de direction. Et ce delta ici est tout simplement
+
+0:16:32.900,0:16:37.700
+un délai qui vous indique qu'il s'agit de l'état suivant et ici du précédent.
+
+0:16:37.700,0:16:54.140
+Ce sont des diagrammes d’électronique, des schémas de génie électrique, car à l'époque, il n'y avait pas de « computer science ». 
+
+0:16:54.140,0:17:01.520
+Donc un état k est transmis au contrôleur qui fournit un signal de direction k
+
+0:17:01.520,0:17:08.240
+entre -1 dans ce cas et +1 pour le camion. Ils utilisent une sorte de Tanh
+
+0:17:08.240,0:17:15.110
+à la sortie. L'indice de temps est k. À chaque cycle de temps, le camion fait marche arrière d'un
+
+0:17:15.110,0:17:21.200
+petite distance. Voici donc les équations pour le camion-remorque avec
+
+0:17:21.200,0:17:27.860
+plusieurs camions. Vous avez l'emplacement des x et y de la cabine, et puis, 
+
+0:17:27.860,0:17:32.900
+étant donné que vous connaissez la distance, la longueur de la cabine et 
+
+0:17:32.900,0:17:39.100
+aussi de la remorque, vous pouvez estimer la variation
+
+0:17:39.100,0:17:47.450
+de l'angle en fonction de l'entrée ϕ. Le ϕ est cet angle négatif
+
+0:17:47.450,0:17:53.150
+car il se trouve sur la droite. Nous avons donc s qui est le signe de la vitesse 
+
+0:17:53.150,0:17:57.350
+pour que vous puissiez avancer et reculer. Puis ϕ est cet angle de direction négatif.
+
+0:17:57.350,0:18:01.450
+Les angles positifs se trouvant sur le côté droit, c'est comme échangé.
+
+0:18:01.450,0:18:08.680
+Et puis x et y est l'emplacement ici, à l'arrière de la cabine.
+
+0:18:08.680,0:18:15.710
+Remarquez maintenant qu'en gros, la position x et y de la remorque est
+
+0:18:15.710,0:18:21.860
+déterminée par la position x et y de la cabine et la distance d1
+
+0:18:21.860,0:18:27.950
+et θ1. Avant, je vous ai dit que nous avons six valeurs pour l'état,
+
+0:18:27.950,0:18:33.710
+mais comme vous pouvez le constater, il ne nous faut que quatre valeurs.
+
+0:18:33.710,0:18:38.930
+Vous avez le x et le y, et vous avez le θ0 qui est
+
+0:18:38.930,0:18:43.280
+l'angle de la cabine et θ1 qui est l'angle de la remorque.
+
+0:18:43.280,0:18:49.400
+Vous n'avez donc que quatre valeurs indépendantes. Ici, x et y de la
+
+0:18:49.400,0:18:55.180
+remorque sont entièrement déterminés compte tenu de ces autres valeurs.
+
+0:18:55.180,0:19:04.070
+Question : ne s'agit-il pas de vitesses ? Ce sont les équations… donc c'est
+
+0:19:04.070,0:19:08.210
+comment la position change, donc ce sont des vitesses, mais chaque fois que vous
+
+0:19:08.210,0:19:14.690
+avez un état, l'état dans ce cas est x, y, θ0, θ1, chaque fois 
+
+0:19:14.690,0:19:17.270
+que vous aimeriez écrire l'équation du mouvement,
+
+0:19:17.270,0:19:22.100
+vous allez écrire la variation dans le temps.
+
+0:19:22.100,0:19:28.010
+La vitesse de x, la vitesse sur y, la vitesse angulaire sur ce type, et la
+
+0:19:28.010,0:19:32.690
+vitesse angulaire de l'autre type exprimées par ces équations en temps
+
+0:19:32.690,0:19:36.650
+continu. Nous allons ensuite les discrétiser car nous utilisons un
+
+0:19:36.650,0:19:42.380
+ordinateur. Mais c'est ainsi que nous exprimerons un modèle dynamique,
+
+0:19:42.380,0:19:48.770
+un modèle qui évolue dans le temps. Très bien, nous avons donc les équations. Nous allons
+
+0:19:48.770,0:19:53.300
+comprendre maintenant comment nous entraînons ces réseaux. Voici donc comment nous entraînons le
+
+0:19:53.300,0:19:58.370
+réseau d'émulation de la cinématique camion-remorque. A gauche
+
+0:19:58.370,0:20:02.540
+nous donnons une entrée aléatoire qui va être une valeur
+
+0:20:02.540,0:20:09.650
+initiale aléatoire pour l'angle de braquage et nous donnons ensuite cet
+
+0:20:09.650,0:20:14.990
+angle de braquage aléatoire à la dynamique du camion qui va me le dire : 
+
+0:20:14.990,0:20:20.090
+étant donné l'état précédent, quel sera l'état suivant ? Et ensuite, sur la
+
+0:20:20.090,0:20:24.110
+partie inférieure, je vais avoir mon premier réseau qui va être entraîné 
+
+0:20:24.110,0:20:28.040
+comme un régresseur et va essayer de minimiser la différence
+
+0:20:28.040,0:20:34.130
+entre l'état réel suivant et l'état prévu.
+
+0:20:34.130,0:20:40.100
+Puis, la différence entre la prédiction et la vérité réelle est utilisée pour…
+
+0:20:40.100,0:20:46.730
+le terme qu'ils utilisent dans l'article est « adapted »
+
+0:20:46.730,0:20:53.450
+le poids de ce réseau, qui est en gros entraîner le réseau.
+
+0:20:53.450,0:20:58.340
+Donc comment mettre à jour les poids du réseau ? Les poids du réseau
+
+0:20:58.340,0:21:02.330
+sont mis à jour en utilisant cette erreur. La question pour vous est : 
+
+0:21:02.330,0:21:06.590
+Quel type de fonction de perte utilisent-ils ici ?
+
+0:21:06.590,0:21:12.950
+Puisque le signal utilisé pour mettre à jour ces poids est en fait
+
+0:21:12.950,0:21:18.830
+la différence entre l'objectif et la prévision réelle.
+
+0:21:18.830,0:21:24.049
+Vous devriez pouvoir me le dire. C'est l’une des questions de l'examen. 
+
+0:21:24.049,0:21:34.090
+MSE. Pourquoi les MSE ? Parce que si vous calculez les dérivées de la MSE, vous obtenez la différence 
+
+0:21:34.979,0:21:40.799
+entre votre prédiction et votre cible.
+
+0:21:40.799,0:21:53.909
+Donc cette différence, qui est ici échangée, est en fait utilisée ici pour changer les valeurs. Dans le cours, nous effectuons
+
+0:21:53.909,0:21:58.049
+la descente de gradient. Donc vous obtenez le delta positif, vous avez
+
+0:21:58.049,0:22:02.340
+prédiction - vérité. Et vous utilisez ça pour calculer les dérivées partielles
+
+0:22:02.340,0:22:07.619
+puis vous soustrayez cela au paramètre, de sorte que vous entrez
+
+0:22:07.619,0:22:11.309
+dans la direction opposée. Ici, ils utilisent en fait le signe inversé,
+
+0:22:11.309,0:22:16.619
+cette prédiction moins la vérité est un facteur d'adaptation,
+
+0:22:16.619,0:22:20.999
+qui change, ces paramètres. C'est en gros la même chose.
+
+0:22:20.999,0:22:28.169
+Il y a une question : pourquoi entraînons-nous l'émulateur si vous avez 
+
+0:22:28.169,0:22:32.419
+déjà un modèle pour le mouvement du camion ? C'est une très bonne question.
+
+0:22:32.419,0:22:37.590
+Car dans ce cas, nous avons des équations et nous pouvons donc obtenir des
+
+0:22:37.590,0:22:42.840
+dérivées partielles par ces équations. Mais dans d’autres vous n'avez peut-être pas
+
+0:22:42.840,0:22:47.970
+d'équations. Disons que vous avez un système beaucoup plus complexe, vous pouvez
+
+0:22:47.970,0:22:55.799
+observer plusieurs experts qui conduisent dans des systèmes complexes et 
+
+0:22:55.799,0:23:00.929
+ensuite à travers cette séquence de trajectoires,
+
+0:23:00.929,0:23:06.570
+séquence de variables d'état, vous pouvez apprendre un réseau
+
+0:23:06.570,0:23:12.299
+qui est capable d'émuler la cinématique de ce système. Ok ?
+
+0:23:12.299,0:23:18.899
+C'était la réponse pour Joseph. Très bien, cool.
+
+0:23:18.899,0:23:24.269
+Alors maintenant, voyons comment continuer, ou peut-être… 
+
+0:23:24.269,0:23:30.960
+Laissez-moi plutôt revenir à ce type.
+
+0:23:30.960,0:23:39.950
+Commençons à entraîner ce genre de choses. Donc, on importe torch, et puis 
+
+0:23:36.989,0:23:39.950
+on fait tourner cette boucle au début.
+
+0:23:39.950,0:23:44.540
+Et donc ce qui se passe ici c’est que nous fournissons des angles initiaux aléatoires
+
+0:23:44.540,0:23:50.270
+et utilisons ensuite le modèle cinématique pour apprendre le lien
+
+0:23:50.270,0:23:54.500
+entre l'état précédent et l'état suivant. A chaque fois que le camion va
+
+0:23:54.500,0:24:00.560
+à l'extérieur, nous le tuons. Et cela continue jusqu'à ce que nous avons
+
+0:24:00.560,0:24:05.960
+suffisamment de points pour pouvoir entraîner ce réseau à l'émuler la
+
+0:24:05.960,0:24:10.040
+cinématique du camion-remorque. Là encore, dans ce cas, ce n’est pas nécessaire
+
+0:24:10.040,0:24:13.670
+car nous avons les équations. Mais supposons que nous les n'avons pas,
+
+0:24:13.670,0:24:18.260
+que nous n'avons que des observations du monde réel,
+
+0:24:18.260,0:24:22.610
+Donc vous devez apprendre ces fonctions pour pouvoir les
+
+0:24:22.610,0:24:29.180
+différencier et les faire passer à travers des gradients. Donc, si nous continuons
+
+0:24:29.180,0:24:34.400
+comme ça, mon ordinateur va planter. Pour l'instant, vous pouvez voir que
+
+0:24:34.400,0:24:38.750
+cela prend une éternité. Pourquoi cela prend-il une éternité ? Car il y a cette visualisation.
+
+0:24:38.750,0:24:44.480
+Dans ce cas, j'éteins la visualisation pour ne pas dessiner le camion.
+
+0:24:44.480,0:24:49.790
+Je peux maintenant exécuter 10 000 fois. Oh ok, et
+
+0:24:49.790,0:24:54.410
+c'est arrivé parce que j'ai interrompu le scénario.
+
+0:24:54.410,0:25:03.540
+C’est charmant. Ok boum. C'est assez rapide car on n’affiche pas le graphique.
+
+0:25:03.540,0:25:14.690
+[Etudiante : avec l’émulateur vous imitez ce que feraient les joueurs de ce jeu ?] L'émulateur ici
+
+0:25:14.690,0:25:19.690
+essaye de savoir quel est le prochain état par rapport à l'état précédent
+
+0:25:19.690,0:25:25.370
+étant donné que je fournis un signal de direction aléatoire spécifique. Donc, étant donné un
+
+0:25:25.370,0:25:30.680
+état et en me donnant un angle de direction, j'essaie d'apprendre quel est l'état suivant.
+
+0:25:30.680,0:25:36.230
+Et cela vient de la vérité du terrain qui est cette boîte ici. Ce n'est pas
+
+0:25:36.230,0:25:40.160
+RNN, c'est juste un réseau normal. Vous avez une entrée qui est
+
+0:25:40.160,0:25:45.080
+l'état plus l'action, et le résultat est alors une simple action. Il n'y a
+
+0:25:45.080,0:25:51.850
+pas de récurrence. Les signaux sont toujours aléatoires à chaque étape ?
+
+0:25:51.850,0:25:57.340
+Le signal de direction est aléatoire. L'état, je collecte toute la trajectoire
+
+0:25:57.340,0:26:04.420
+pendant que je saisis un angle de braquage aléatoire. Ok, très longue question : 
+
+0:26:04.420,0:26:10.150
+Est-ce que cela importe que les données que vous collectez sont un peu
+
+0:26:10.150,0:26:14.920
+différentes de l'action de test humaine ? Les données que vous
+
+0:26:14.920,0:26:21.250
+collectez changent de directions rapidement et fréquemment.
+
+0:26:21.250,0:26:26.380
+Il n'y a pas de temps. Mon entraînement… Nous n'avons pas encore parlé d’entraînement.
+
+0:26:26.380,0:26:33.550
+Il s'agit donc d'un réseau neuronal normal qui, compte tenu d'un état 
+
+0:26:33.550,0:26:41.080
+d’entrée va le faire correspondre à l'état de sortie en donnant un angle spécifique pour les roues.
+
+0:26:41.080,0:26:47.680
+Il n'y a pas de temps. Donc, vous avez un état, vous avez un angle c’est
+
+0:26:47.680,0:26:56.550
+la sortie. Pas de temps pour l'instant. Ok, donc voici mes entrées et les
+
+0:26:56.550,0:27:01.600
+mes sorties résultats, comme ce que j'ai collectés sur ces trajectoires. 
+
+0:27:01.600,0:27:08.410
+Donc si vous vérifiez ici, je n'ai que l'état initial. Je reçois l'état du 
+
+0:27:08.410,0:27:13.690
+camion, puis j'ai un ϕ qui est mon angle étant
+
+0:27:13.690,0:27:19.930
+quelque chose au hasard moins 0.5, donc de -45 à +45.
+
+0:27:19.930,0:27:27.850
+Ensuite, j'ai mon entrée qui est l'état plus l'angle et alors la sortie est celle du camion
+
+0:27:27.850,0:27:34.630
+qui a un pas avec angle ϕ. Donc nous avons ce truc ici.
+
+0:27:34.630,0:27:43.140
+Je peux créer mon réseau et ensuite commencer à entraîner mon réseau.
+
+0:27:43.250,0:27:49.460
+Et cela va continuer jusqu'à l'éternité, mais alors en gros
+
+0:27:49.460,0:27:54.980
+ici nous essayons d'obtenir un réseau qui n'est constitué que de quelques couches.
+
+0:27:54.980,0:28:00.320
+Ici donc :  linéaire, ReLU, linéaire. Nous partons de « sterring_size » 
+
+0:28:00.320,0:28:06.110
+qui est de 1 plus la taille de l'état qui est 6 :
+
+0:28:06.110,0:28:14.030
+le x, le y et l'angle pour à la fois le camion et la remorque. 
+
+0:28:14.030,0:28:27.250
+Puis vous avez un certain nombre d'unités cachées qui sont décrites dans le papier, puis une ReLU, et ensuite une sortie linéaire finale. MSE et SGD.
+
+0:28:32.900,0:28:42.220
+Retournons à la présentation. Donc, la figure 3, qui est celle-ci, montre 
+
+0:28:42.220,0:28:49.160
+comment entraîner l'émulateur. Le camion recule donc au hasard et
+
+0:28:49.160,0:28:53.540
+l'émulateur apprend à générer le prochain vecteur d'état de position étant donné le vecteur
+
+0:28:53.540,0:28:58.850
+d'état présent et le signal de direction. Et vous pouvez entendre le ventilateur de mon ordinateur
+
+0:28:58.850,0:29:05.540
+qui tournent car il entraîne bien. Désolé pour le mauvais son. Très bien, voici donc 
+
+0:29:05.540,0:29:09.730
+comment nous entraînons ce système, le contrôleur. C'est donc le diagramme 
+
+0:29:09.730,0:29:15.350
+de transition d'état. C représente le contrôleur. C'est donc un autre réseau neuronal.
+
+0:29:15.350,0:29:20.960
+T représente l'émulateur du camion et de la remorque. Donc toute la cinématique 
+
+0:29:20.960,0:29:29.240
+du camion ou l'émulateur de remorque, l’un ou l’autre. Alors, comment fonctionne cette chose ?
+
+0:29:29.240,0:29:35.450
+Comment le temps est-il maintenant ajouté au système ? Nous commençons par
+
+0:29:35.450,0:29:43.100
+ce contrôleur C. Que fournit-il ? L'angle de braquage du camion ou
+
+0:29:43.100,0:29:50.690
+l'émulateur du camion. Le contrôleur fournit donc un angle donné qui est alimenté par
+
+0:29:50.690,0:29:57.140
+l'état initial, que l'on peut appeler h[k-1].
+
+0:29:57.140,0:30:03.800
+Et si nous fournissons ces états précédents au contrôleur
+
+0:30:03.800,0:30:09.980
+et au camion, le camion obtient en gros l'état suivant. Donc vous pouvez penser à
+
+0:30:09.980,0:30:19.030
+ces deux types comme un seul élément d'un réseau récurrent qui n’a pas
+
+0:30:19.030,0:30:24.050
+d'entrée. Il pourrait y avoir une entrée mais elle n'est pas connectée.
+
+0:30:24.050,0:30:28.610
+Il s'agit donc d'une des multiples cellules que nous voyons habituellement dans un réseau
+
+0:30:28.610,0:30:34.300
+récurrent, mais il y a un schéma différent à l'intérieur. Alors comment entraîner ?
+
+0:30:34.300,0:30:40.070
+Vous connaissez déjà la réponse. Donc vous obtenez celui-ci ici.
+
+0:30:40.070,0:30:44.390
+Nous n'avons pas d'entrée en bas et puis vous empilez
+
+0:30:44.390,0:30:47.900
+un autre, et un autre, et continuez jusqu'à ce que vous commencez
+
+0:30:47.900,0:30:52.910
+de l'emplacement initial du camion, qui est l'état initial caché.
+
+0:30:52.910,0:30:58.300
+Ou est en gros l'emplacement et la configuration initiale du camion. 
+
+0:30:58.300,0:31:09.020
+Et puis, sur la droite, vous continuez jusqu'à la fin, où l'on atteint le point final.
+
+0:31:09.020,0:31:14.360
+La condition finale peut être l'une des suivantes : être à court de pas, être en portefeuille ou
+
+0:31:14.360,0:31:19.070
+toucher un des bords. Puis je vérifie quelle est la 
+
+0:31:19.070,0:31:24.560
+distance entre votre remorque et le quai et vérifie votre angle,
+
+0:31:24.560,0:31:30.830
+l'orientation du camion devant être horizontale.
+
+0:31:30.830,0:31:36.860
+Voilà donc les réponses à la question : quels sont les conditions de fin ?
+
+0:31:36.860,0:31:42.470
+Il existe trois conditions de fin : mise en portefeuille, épuisement des
+
+0:31:42.470,0:31:49.550
+pas ou frapper un bord. Et chaque fois que vous frappez un bord vous essayer de…
+
+0:31:49.550,0:31:54.200
+Vous voulez minimiser en fait quelle est la distance entre le
+
+0:31:54.200,0:31:59.990
+quai et minimiser l'angle que vous obtenez pour la remorque.
+
+0:31:59.990,0:32:07.629
+Cool. Donc figure 5 : l'entraînement du contrôleur avec la rétropropagation.
+
+0:32:07.629,0:32:16.710
+Comme vous l'avez déjà vu dans le précédent diagramme où nous entraînons l'émulateur, nous avons
+
+0:32:16.710,0:32:23.009
+quelque chose de similaire à cette boucle de rétroaction. Après avoir
+
+0:32:23.009,0:32:28.230
+terminé toute cette trajectoire, l'état final se terminera avec une
+
+0:32:28.230,0:32:33.480
+configuration spécifique. J'applique cet état final pour être aussi proche que possible
+
+0:32:33.480,0:32:39.389
+de mon état cible, ce qui signifie que vous voulez que le xtrailer soit aussi proche
+
+0:32:39.389,0:32:44.200
+que possible du xdock et le ytrailer le plus près possible de ydock
+
+0:32:44.200,0:32:49.200
+et que l'angle final de la remorque soit horizontal donc égal à 0.
+
+0:32:49.200,0:32:55.620
+Puis vous faites la différence et vous la rétropropagez pour adapter
+
+0:32:55.620,0:33:00.299
+ces poids, mais bien sûr, ce n'est pas seulement une ligne, tout passe par
+
+0:33:00.299,0:33:05.190
+la règle de la chaîne habituelle. Donc, cela passe en fait par
+
+0:33:05.190,0:33:10.409
+tous les modules T et C précédents. La visualisation montre que seuls les C,
+
+0:33:10.409,0:33:16.139
+les blocs de contrôle, sont mis à jour proportionnellement à l’erreur finale.
+
+0:33:16.139,0:33:20.610
+Ce qui implique une perte MSE, la chose que nous avons trouvée avant.
+
+0:33:20.610,0:33:27.210
+Cool. Donc la position initiale est fixée au hasard, le camion recule
+
+0:33:27.210,0:33:34.220
+jusqu'à ce qu'il s'arrête. L'erreur finale est utilisée par rétropropagation.
+
+0:33:34.220,0:33:40.519
+Il s'agit d'une rétropropagation dans le temps avec une période de déroulement variable k. 
+
+0:33:40.519,0:33:46.110
+Les variations de poids dans C, le contrôleur, sont donc considérées comme la somme
+
+0:33:46.110,0:33:53.190
+des changements provisoires. Que veut dire cette phrase ? Vous pouvez maintenant, vous
+
+0:33:53.190,0:34:02.790
+peut-être comprendre pourquoi PyTorch accumule les gradients à chaque fois.
+
+0:34:02.790,0:34:08.790
+Vous en voyez l'utilité ? Dans ce cas, vous obtenez ce gradient qui va du
+
+0:34:08.790,0:34:14.540
+futur vers le passé, et alors la chose porteuse de sens accumule
+
+0:34:14.540,0:34:19.500
+tous ces gradients. Car nous avons réutilisé le même module plusieurs
+
+0:34:19.500,0:34:25.230
+fois. Quand vous faites la rétropropagation, celle-ci somme
+
+0:34:25.230,0:34:33.270
+les choses, autant de fois que nous avons parcouru ce module.
+
+0:34:33.270,0:34:36.570
+C'est pourquoi PyTorch accumule les gradients chaque fois
+
+0:34:36.570,0:34:41.460
+que vous calculez la rétropropagation. S'il s'agissait simplement de les calculer
+
+0:34:41.460,0:34:45.110
+et remplacer ce qu'ils étaient avant, alors vous avez juste les gradients 
+
+0:34:45.110,0:34:51.350
+de la plus ancienne itération, celle qui remonte le plus loin dans le passé.
+
+0:34:51.350,0:34:57.570
+Au lieu de cela, dans ce cas, ce qui est écrit ici, dit que tous les
+
+0:34:57.570,0:35:02.550
+changements provisoires sont additionnés, ce qui signifie que vous accumulez
+
+0:35:02.550,0:35:09.840
+le gradient dans le temps. Ok. Enfin, répétez une autre position initiale
+
+0:35:09.840,0:35:15.720
+jusqu'à ce qu'il s'arrête. Donc, les détails du réseau.
+
+0:35:15.720,0:35:21.870
+Il s’agit de schémas d'architecture de réseaux des années 90.
+
+0:35:21.870,0:35:27.150
+On commence par 6 valeurs pour l'état x, y et θ, pour les deux éléments
+
+0:35:27.150,0:35:34.050
+[camion et remorque], puis vous passez ces éléments appelés ici des
+
+0:35:34.050,0:35:40.020
+potentiomètres qui sont en gros des résistances variables représentant
+
+0:35:40.020,0:35:44.460
+ces poids variables. Les poids variables sont des poids pouvant
+
+0:35:44.460,0:35:48.810
+être finetunés donc des poids dans un réseau neuronal.
+
+0:35:48.810,0:35:52.350
+Mais là encore, c'est le symbole pour un poids, une résistance finetunable. 
+
+0:35:52.350,0:35:59.280
+Vous avez 25 de ces trucs. Donc de 6 on passe à 25 et puis de 25 on passe
+
+0:35:59.280,0:36:04.430
+à 1 qui est un signal de direction. Donc d'abord l'écrasement de la transformation affine,
+
+0:36:04.430,0:36:09.300
+deuxième écrasement de transformation affine et ensuite ce type va être le
+
+0:36:09.300,0:36:16.790
+émulateur. Donc vous passez de 7, 6 de l'état plus l'angle de direction,
+
+0:36:16.790,0:36:23.310
+à 45. Vous avez donc un écrasement de transformation fine, et puis de ces 
+
+0:36:23.310,0:36:28.980
+45, vous avez une transformation affine, pour passer à 6 qui est l'état final.
+
+0:36:28.980,0:36:42.240
+Cool. Donc analogue à un réseau neuronal ayant un nombre de transformations affines égal à 4 fois le
+
+0:36:42.240,0:36:48.990
+nombre d’étapes de recul. Ainsi, pour chaque trajectoire, nous entraînons 
+
+0:36:48.990,0:36:55.620
+un réseau qui a une durée dépendant du nombre de pas de temps qu’un
+
+0:36:55.620,0:37:11.790
+camion spécifique a pris pour atteindre l’un des conditions d’arrêt. 
+
+0:37:11.790,0:37:19.410
+Le nombre de pas varie en fonction de la position initiale du camion et de la remorque.
+
+0:37:19.410,0:37:26.040
+Vous entraînez donc l'élément central de ce réseau, qui compte plusieurs
+
+0:37:26.040,0:37:33.300
+étapes/couches. La longueur de ces réseaux change en fonction de chaque épisode spécifique
+
+0:37:33.300,0:37:39.480
+et ensuite nous nous entraînons ce truc avec la rétropropagation et chaque
+
+0:37:39.480,0:37:42.360
+module est le même que celui qui a été reproduit plusieurs fois.
+
+0:37:42.360,0:37:47.520
+Donc les gradients doivent donc être additionnés au fur et à mesure, c'est 
+
+0:37:47.520,0:37:55.260
+ce que PyTorch fait. Cela fait sens ? Cool. Voici donc quelques exemples : 
+
+0:37:55.260,0:38:00.420
+vous commencez par cette position initiale, puis, après quelques étapes, le réseau
+
+0:38:00.420,0:38:06.210
+parvient à atteindre la destination. Un autre est ici. Ils ont commencé avec la
+
+0:38:06.210,0:38:12.450
+remorque s'éloignant du quai et vous pouvez voir ici comment elle parvient 
+
+0:38:12.450,0:38:16.980
+à faire un manœuvrer et revenir au bon endroit.
+
+0:38:16.980,0:38:21.390
+L'état final est horizontal, il semble presque horizontal.
+
+0:38:21.390,0:38:26.340
+Avec cet exemple, vous commencez orthogonalement dans une position en portefeuille.
+
+0:38:26.340,0:38:39.530
+C'est vraiment dur mais néanmoins le réseau peut comprendre comment résoudre cette configuration très difficile.
+
+0:38:39.530,0:38:43.560
+Et puis. C'est aussi très ennuyeux, mais un réseau ne se plaint pas.
+
+0:38:43.560,0:38:49.460
+Soyez comme un réseau neuronal... non, je plaisante.
+
+0:38:54.910,0:39:01.720
+Des ressources supplémentaires. Une démo complète et fonctionnelle est proposée ici sur ce lien.
+
+0:39:01.720,0:39:06.880
+Je vais vous la montrer parce que dans le notebook, le code s'arrête là.
+
+0:39:06.880,0:39:22.349
+Je vous montre comment entraîner l'émulateur et nous avons une perte MSE à une valeur très très minime : 0,00... etc.
+
+0:39:22.349,0:39:35.559
+Vous pouvez lire ce numéro. Et c'est ma valeur pour l'ensemble test, ce qui signifie qu'il s'agira de 38 micro MSE.
+
+0:39:35.559,0:39:42.700
+Ici, si quelqu'un veut une note supplémentaire peut-être, vous pouvez ajouter
+
+0:39:42.700,0:39:50.559
+le code pour l’entraînement du contrôleur. Ce n'est pas si trivial car… 
+
+0:39:50.559,0:39:56.829
+nous couvrons la façon de le faire fonctionner en classe, mais c’est un peu délicat. Donc je montre juste
+
+0:39:56.829,0:40:05.200
+une version finale. Vous pouvez même la copier à partir d'ici si vous le souhaitez.
+
+0:40:05.200,0:40:11.769
+Si vous pouvez soumettre un code ça serait bien, vous pouvez obtenir une belle récompense.
+
+0:40:11.769,0:40:18.609
+Ici, nous commençons par une position aléatoire et puis vous pouvez conduire en utilisant le contrôleur.
+
+0:40:18.609,0:40:25.720
+Augmentons la vitesse. Ok. Boum ! Une autre position aléatoire.
+
+0:40:25.720,0:40:32.440
+Trop facile. Faisons quelque chose d'un peu dur. Pour la remorque disons
+
+0:40:32.440,0:40:40.720
+180° et prenons celui-ci à 0°. Changez d'angle.
+
+0:40:40.720,0:40:48.770
+Donc c'est vraiment ennuyeux. C’est parti. 
+
+0:40:49.790,0:40:56.060
+Et voilà, boum. Donc ici le code s'entraîne dans votre navigateur.
+
+0:40:56.060,0:41:00.740
+Vous pouvez aussi aller au bas de cette page et voir le lien GitHub.
+
+0:41:00.740,0:41:09.230
+Vous pouvez ou du moins êtes encouragez à convertir ce projet ici qui est 
+
+0:41:09.230,0:41:16.040
+écrit en JavaScript en PyTorch. C’est un très bon exercice pour afin
+
+0:41:16.040,0:41:22.850
+d'apprendre. Cela permettrait d’avoir un notebook fonctionnant en entier. C’est laissé comme un
+
+0:41:22.850,0:41:30.770
+exercice pour vous. Vous pourriez obtenir une note supplémentaire, je suppose.
+
+0:41:30.770,0:41:36.320
+Et c'était tout pour aujourd'hui. J'espère que vous avez apprécié. Laissez-moi voir s'il y a des questions.
+
+0:41:36.320,0:41:42.620
+Que se passe-t-il si nous entraînons un gradient politique ? Oui, nous n’avons pas vu 
+
+0:41:42.620,0:41:45.620
+l'apprentissage par renforcement [RL dans la suite]
+
+0:41:45.620,0:41:52.820
+Je ne connais rien au RL, désolé. [Etudiante : je suis encore confuse à propos de l'architecture, pouvons-nous
+
+0:41:52.820,0:41:59.630
+regardez à nouveau le schéma ?] Oui, bien sûr. Donc, en gros, on
+
+0:41:59.630,0:42:08.290
+passe de 6 à 25, puis de 25 à 1. Ils utilisent une sorte de
+
+0:42:08.290,0:42:17.360
+tanh pour l’activation. Donc 6 à 25, 25 à 1 et voici le contrôleur.
+
+0:42:17.360,0:42:23.270
+Et pour l'émulateur du camion-remorque, on passe de 7, qui est 6 :
+
+0:42:23.270,0:42:32.420
+X, y et l'angle multiplié par 2 donc 6, plus 1 égal à 7. Puis on passe de
+
+0:42:32.420,0:42:38.660
+7 à 45 et ensuite de 45 à 6. Voici donc mon modèle prédictif, le modèle
+
+0:42:38.660,0:42:43.610
+qui prédit l'avenir compte tenu du passé dans l'action d'entrée. Et c'est
+
+0:42:43.610,0:42:49.370
+comment j'ai implémenté celui-ci ici. J'ai donc la taille de mon état qui est de 6 : x, y et
+
+0:42:49.370,0:42:57.080
+thêta fois 2, et la direction est 1 car c'est juste l'angle. Nous disons que nous avons 45 unités,
+
+0:42:57.080,0:43:02.780
+nous avons donc 45 unités ici. Donc nous passons de la taille de la direction plus la taille de l’état
+
+0:43:02.780,0:43:07.280
+donc 7 au total à ce 45, puis j'ai une ReLU.
+
+0:43:07.280,0:43:12.470
+Dans le papier on dirait qu'ils ont utilisé une tanh. Donc ici vous pouvez écrire tanh.
+
+0:43:12.470,0:43:17.990
+Puis vous avez une linéaire qui va de 45 à la taille de l'état, qui
+
+0:43:17.990,0:43:23.150
+est de 6, ce qui est la prochaine sortie ici. Il y a donc une fonction
+
+0:43:23.150,0:43:27.320
+linéaire, et là encore c'est aussi quelque chose que nous venons de mettre dans l’examen
+
+0:43:27.320,0:43:30.800
+de mi-parcours. Je veux dire que je vous donne la réponse de l’examen en ce moment même.
+
+0:43:30.800,0:43:38.540
+[Etudiante : que faites-vous pour que l'émulateur émule réellement ?... La façon dont le 
+
+0:43:38.540,0:43:44.540
+simulateur fonctionne ?] Oui, donc l’entraînement de l’émulateur. 
+
+0:43:44.540,0:43:49.880
+Je ne vous ai pas montré ce code, vous avez raison. Donc, ici, j'ai juste
+
+0:43:49.880,0:43:53.780
+la longueur de l’entrée d’entraînement et j'ai une permutation aléatoire, 
+
+0:43:53.780,0:43:59.750
+prise au hasard. J'ai donc mon ϕ, mon angle, et l'état qui est
+
+0:43:59.750,0:44:04.280
+les 7 coordonnées, sont choisis à partir du i-ème emplacement de ces
+
+0:44:04.280,0:44:08.930
+des entrées d’entraînement. Et ces entrées viennent d'ici,
+
+0:44:08.930,0:44:13.160
+chaque fois que j'extrais. Donc vous avez des entrées qui sont ajoutées
+
+0:44:13.160,0:44:19.190
+à cette liste d'entrée. Vous ajoutez le ϕ,
+
+0:44:19.190,0:44:24.170
+qui est l'angle de braquage, puis l'état initial qui provient du camion.
+
+0:44:24.170,0:44:37.130
+C'est donc mon entrée et la sortie est mon état de sortie du camion. Donc, si vous retournez ici,
+
+0:44:37.130,0:44:44.450
+vous obtenez le ϕ, l'angle, et l'état qui sont ce premier élément de
+
+0:44:44.450,0:44:48.830
+l’entrée d’entraînement. Désolé, à l'endroit i-ème. Le i-ème élément de l'entrée en cours.
+
+0:44:48.830,0:44:52.130
+Vous obtenez alors la prédiction d'état suivante qui est le résultat de
+
+0:44:52.130,0:44:57.230
+cet émulateur, qui a une couche linéaire comme sortie.
+
+0:44:57.230,0:45:02.390
+Ensuite, vous avez l'état suivant qui est la sortie du i-ème emplacement
+
+0:45:02.390,0:45:09.190
+et vous avez une perte, le critère, qui est la MSE.
+
+0:45:09.190,0:45:20.130
+Vous avez donc la MSE entre la prochaine prédiction de l'état qui est là et l'état suivant. Le véritable état suivant.
+
+0:45:20.130,0:45:28.230
+Donc je fais en gros des descentes stochastiques. Je nettoie le gradient... [Etudiante : je vois, donc
+
+0:45:28.230,0:45:31.110
+vous entraînez l'émulateur avant d’entraîner le reste]
+
+0:45:31.110,0:45:38.010
+Avant j’ai seulement entraîné l'émulateur… Donc nous entraînons deux modèles. Avec le premier modèle vous
+
+0:45:38.010,0:45:46.990
+entraînez l'émulateur. Puis chaque fois que l'émulateur est entraîné, vous entraînez le contrôleur qui pilote l'émulateur.
+
+0:45:46.990,0:45:57.970
+Mais l'émulateur n'est plus entraîné. L'émulateur n'est entraîné qu'une seule fois avant et nous utilisons le réseau afin d’entraîner le contrôleur.
+
+0:45:57.970,0:46:01.890
+[Etudiante : donc, vous entraînez d'abord l'émulateur et ensuite vous
+
+0:46:01.890,0:46:04.830
+utilisez le réseau que vous avez pré-entraîné comme une sorte de contrôle]
+
+0:46:04.830,0:46:11.640
+Oui c’est ça. Donc chaque fois que je suis ici, j'ai déjà entraîné l'émulateur de la remorque.
+
+0:46:11.640,0:46:15.990
+Donc, pour entraîner l'émulateur, je vous ai montré le code mais je peux
+
+0:46:15.990,0:46:20.160
+aussi vous montrer cette diapositive. Il s'agit de l’entraînement de
+
+0:46:20.160,0:46:25.550
+l'émulateur. La cinématique. Vous avez l'état suivant étant donné l'état précédent et
+
+0:46:25.550,0:46:31.680
+l'angle. Puis vous appliquez cet émulateur pour apprendre, pour faire une
+
+0:46:31.680,0:46:37.320
+régression. Et vous essayez de copier la sortie. Une fois que vous avez 
+
+0:46:37.320,0:46:42.180
+terminé vous allez entraîner le contrôleur. Pour entraîner le contrôleur
+
+0:46:42.180,0:46:48.090
+vous avez cette chaîne de blocs, qui est le contrôleur et
+
+0:46:48.090,0:46:53.940
+le réseau du camions-remorques. Puis vous obtenez une trajectoire.
+
+0:46:53.940,0:47:00.240
+Vous faites en sorte que l'emplacement et l'orientation définitifs de
+
+0:47:00.240,0:47:07.590
+cette trajectoire, donnent un angle de 0 avec le quai. 
+
+0:47:07.590,0:47:12.540
+Puis vous faites une rétropropagation à travers cette chaîne de choses. Donc une rétropropagation
+
+0:47:12.540,0:47:17.790
+à travers le temps afin d'adapter, les auteurs utilisant le terme « adapter » dans le papier,
+
+0:47:17.790,0:47:25.050
+le poids du contrôleur pour qu'il parvienne à faire correspondre
+
+0:47:25.050,0:47:29.930
+la position initiale aléatoire avec cette position l'orientation cible finale.
+
+0:47:29.930,0:47:34.820
+C’est appelé configuration. Nous commençons donc par une
+
+0:47:34.820,0:47:41.030
+configuration initiale aléatoire qui correspond à la position et à l’angle
+
+0:47:41.030,0:47:47.270
+et ensuite vous faites en sorte que la sortie finale de cette séquence
+
+0:47:47.270,0:47:53.990
+de modules vous donne un angle de 0 entre la remorque et le quai. 
+
+0:47:53.990,0:48:01.790
+Il y a donc deux parties pour l’entraînement. Vous entraînez d'abord
+
+0:48:01.790,0:48:08.180
+l'émulateur. Une fois fini, vous entraînez le contrôleur afin 
+
+0:48:08.180,0:48:13.670
+d'atteindre un objectif spécifique. Le nombre de cases rouges ici varie et
+
+0:48:13.670,0:48:19.550
+dépend de chaque épisode. Car vous ne savez pas combien de pas seront 
+
+0:48:19.550,0:48:27.680
+nécessaires pour que vous puissiez atteindre votre destination, compte tenu de l'état initial.
+
+0:48:27.680,0:48:34.730
+J'ai dit beaucoup de mots, oh mon Dieu, est-ce que ça a un sens ? [Etudiante : oui] Ok, très bien.
+
+0:48:34.730,0:48:41.810
+Question suivante. [Etudiant : quelqu'un a demandé pourquoi devons-nous entraîner l’émulateur
+
+0:48:41.810,0:48:48.680
+au lieu de se contenter d'utiliser le modèle ?] La réponse était que
+
+0:48:48.680,0:48:56.510
+chaque fois que vous n’avez pas toujours les équations de la cinématique.
+
+0:48:56.510,0:49:04.910
+Et je pense que je parlerais plus en détails de ça dans la prochaine leçon où je vais vous parler de mes propres recherches. J'aimerais comprendre
+
+0:49:04.910,0:49:10.370
+quel est le comportement des autres voitures lorsque vous roulez sur l'autoroute. Mais je ne peux pas
+
+0:49:10.370,0:49:15.740
+contrôler d'autres voitures. Je n'ai aucune idée du comportement des autres voitures.
+
+0:49:15.740,0:49:23.580
+Donc la seule façon d'apprendre comment les autres voitures réagissent à mes actions est par le biais d'observations.
+
+0:49:23.580,0:49:29.900
+Nous avons donc des caméras installées sur un bâtiment de 30 étages qui regardent l'autoroute
+
+0:49:29.900,0:49:39.290
+et ensuite, vous découvrez en gros les interactions entre les véhicules. Et nous avons donc dû apprendre ces modèles de pointe
+
+0:49:39.290,0:49:43.000
+appelé modèle prédictif, qui consiste à déterminer la réaction
+
+0:49:43.000,0:49:49.130
+d'autres véhicules compte tenu de vos propres actions. Donc, dans ce cas, 
+
+0:49:49.130,0:49:56.030
+vous n'avez pas besoin de l'émulateur. Mais entraîner cet émulateur de telle sorte est
+
+0:49:56.030,0:50:02.180
+plus générique. Vous n'avez pas besoin d'avoir des équations différentiables.
+
+0:50:02.180,0:50:08.890
+[Etudiant : ok, je vois. Une autre question, quand vous avez dit que la longueur de 
+
+0:50:08.890,0:50:14.540
+ce réseau est variable, le fait qu'il soit de comme quatre fois la
+
+0:50:14.540,0:50:23.330
+longueur du nombre d’étapes ou quelque chose comme ça. Pourriez-vous donner
+
+0:50:23.330,0:50:27.980
+plus de détail sur ce point ?] Donc ici nous supposons que chaque longueur 
+
+0:50:27.980,0:50:35.090
+de chaque épisode est K. Donc le k minuscule est l’index
+
+0:50:35.090,0:50:40.760
+où vous avez 0, 1, 2, 3, 4, 5 ou peu importe. Donc chaque épisode
+
+0:50:40.760,0:50:47.150
+a n'importe quel nombre de pas en majuscule K. Ainsi, le K est
+
+0:50:47.150,0:50:56.390
+différent pour chaque épisode. Donc chacun de ces deux éléments ici, ce 
+
+0:50:56.390,0:51:00.740
+type ici a deux transformations affines, et ce type ici a deux
+
+0:51:00.740,0:51:07.370
+transformations affines. Donc globalement le réseau que vous voyez ici a quatre transformations affines fois K.
+
+0:51:07.270,0:51:18.160
+[Etudiant : oh, je vois, d'accord]. C'est en gros un réseau de neurones. Donc un réseau de neurones qui n’est
+
+0:51:18.160,0:51:22.850
+même pas un réseau neuronal récurrent. C'est juste un réseau neuronal feed-forward
+
+0:51:22.850,0:51:29.780
+avec quatre fois K nombre de transformations affines. Et vous entraînez
+
+0:51:29.780,0:51:34.400
+avec la rétropropagation afin d'atteindre toujours la même cible.
+
+0:51:34.400,0:51:40.190
+C'est vraiment drôle de voir ça de cette façon. Vous avez donc un réseau de neurones dont les étiquettes ou
+
+0:51:40.190,0:51:45.800
+cibles sont toujours les mêmes. Mais le réseau peut alors changer la longueur
+
+0:51:45.800,0:51:50.810
+et l’entrée peut être différente. Vous avez donc un réseau, 
+
+0:51:50.810,0:51:56.090
+vous entrez différentes choses, vous pouvez changer la longueur, la hauteur,
+
+0:51:56.090,0:52:00.890
+la profondeur du réseau mais vous avez toujours la même cible ici.
+
+0:52:00.890,0:52:05.510
+En général, lorsque vous faites une régression ou une classification, nous avons un réseau fixe,
+
+0:52:05.510,0:52:10.850
+vous introduisez différentes entrées ici et ensuite vous avez différentes cibles ici.
+
+0:52:10.850,0:52:16.760
+Cibles ou classes si vous faites de la classification. Des étiquettes.
+
+0:52:16.760,0:52:23.359
+Dans ce cas, vous avez des entrées différentes. La cible est toujours fixée et vous 
+
+0:52:23.359,0:52:31.040
+avez des longueurs différentes. Vous entraînez donc un réseau, un réseau à profondeur variable avec
+
+0:52:31.040,0:52:36.000
+des entrées variables et une cible fixe. C'est cool, non ?
+
+0:52:36.000,0:52:42.590
+[Etudiant : est-ce qu'on applique comme une longueur maximale…] Oui, bien sûr,
+
+0:52:42.590,0:52:49.280
+sinon vous pouvez… Avons-nous besoin d'un émulateur pour entraîner le réseau neuronal de
+
+0:52:49.280,0:52:53.750
+l'émulateur ? L'intérêt d'avoir un émulateur de réseau neuronal est-il d'avoir une chose différentiable…
+
+0:52:53.750,0:52:56.810
+Oui, c'est le but. Le but est d'avoir un émulateur
+
+0:52:56.810,0:53:04.310
+différentiable, ce qui n'est pas toujours le cas. Si vous avez juste
+
+0:53:04.310,0:53:08.990
+des observations alors vous n'avez pas de gradients. Vous avez juste des observations.
+
+0:53:08.990,0:53:12.410
+Vous voulez apprendre un réseau qui permette de vous dire ce que va être le
+
+0:53:12.410,0:53:18.900
+Jacobien en revenant en arrière. D'autres questions ? [Etudiant : j'ai une question
+
+0:53:18.900,0:53:24.600
+liée à l’implémentation. Il semble que pour entraîner le contrôleur,
+
+0:53:24.600,0:53:30.630
+nous gelons les poids pour t mais nous devons encore passer le gradient
+
+0:53:30.630,0:53:35.570
+afin de mettre à jour chacune des cellules. Donc, j’imagine
+
+0:53:35.570,0:53:40.870
+que lorsque nous définissons notre optimiseur, nous donnons simplement
+
+0:53:40.870,0:53:45.450
+les paramètres du contrôleur, mais lorsque nous avons rétropropageons 
+
+0:53:45.450,0:53:49.160
+tout est toujours connecté au même réseau ?]
+
+0:53:49.160,0:54:00.180
+Donc, c’est exactement… [cherche PyTorch exemple sur internet]… ce que nous avons vu
+
+0:54:00.180,0:54:15.510
+la semaine dernière quand nous avons parcouru le « DC GAN » [cf. l’écran d’Alfredo]. Donc vous avez un optimiseur...
+
+0:54:15.510,0:54:24.000
+attendez, où est-il ? Vous avez donc un optimiseur pour un réseau 
+
+0:54:24.000,0:54:27.930
+et un optimiseur pour l'autre réseau. C'est tout. Dès que vous entraînez
+
+0:54:27.930,0:54:31.830
+vous avez en fait deux entraînements distincts. En l'occurrence lorsque vous entraînez un GAN
+
+0:54:31.830,0:54:36.930
+vous avez les deux réseaux qui font partie de la même boucle.
+
+0:54:36.930,0:54:40.920
+Mais vous pouvez entraîner une première chose, vous commencez par le premier réseau,
+
+0:54:40.920,0:54:45.630
+puis, plus tard, en dessous, vous avez l'autre réseau. 
+
+0:54:45.630,0:54:53.730
+Vous avez donc deux optimiseurs qui « adaptent », si vous utilisez le mot dans le papier, les poids à différents temps.
+
+0:54:53.730,0:54:58.050
+Il s'agit en fait de deux réseaux différents qui n'entraînent même pas
+
+0:54:58.050,0:55:01.860
+en même temps. Vous commencez donc par entraîner le modèle prédictif.
+
+0:55:01.860,0:55:12.520
+Une fois terminé, vous l’utilisez comme un moyen de renvoyer les gradients du futur. Comment choisir le K ?
+
+0:55:12.810,0:55:18.540
+K est le nombre d'itérations qui vous est nécessaire pour atteindre un bord.
+
+0:55:18.540,0:55:25.560
+Vous reculez jusqu'à ce que vous touchiez quelque chose. Chaque fois que vous touchez
+
+0:55:25.560,0:55:32.310
+quelque chose, c'est le K. Donc, chaque fois que nous avançons, nous
+
+0:55:32.310,0:55:36.900
+utilisons le modèle cinématique de manière à obtenir un emplacement final 
+
+0:55:36.900,0:55:40.410
+véridique. Mais pour renvoyer les gradients, vous allez
+
+0:55:40.410,0:55:45.510
+utiliser le réseau de l’émulateur. Donc bous utilisez le modèle cinématique pour la phase avant
+
+0:55:45.510,0:55:50.420
+et utilisez le réseau émulateur pour la phase arrière.
+
+0:55:50.420,0:55:54.960
+Je pense que cela pourrait être mieux fait avec le gradient politique et des modèles de RL.
+
+0:55:54.960,0:56:00.780
+Ok, nous ne savons rien du RL. Pour nous, le RL n'a pas de sens.
+
+0:56:00.780,0:56:06.240
+Je répète simplement ce que dit le patron. Vous pouvez essayer, vous pouvez certainement essayer
+
+0:56:06.240,0:56:10.320
+et voir si cela fonctionne. Encore une fois, ce genre de choses a été fait dans les années 90.
+
+0:56:10.320,0:56:20.370
+C'est un vieux truc mais c'est toujours pertinent.
+
+0:56:20.370,0:56:30.270
+D'autres questions ? [Étudiante : salut Alfredo, je suis encore confuse sur l’entraînement du contrôleur et de
+
+0:56:30.270,0:56:36.090
+l'émulateur. L’émulateur est entraîné à chaque étape de temps car nous 
+
+0:56:36.090,0:56:42.720
+comparons l'état prédit à la vérité..]  Celui-là, non ? 
+
+0:56:42.720,0:56:48.960
+[Oui. A chaque pas de temps, nous mettons à jour les paramètres pour chaque pas de temps ?]
+
+0:56:48.960,0:56:53.760
+[Eh bien, vous pouvez aussi faire un batch si vous voulez, mais vous pouvez faire un gradient stochastique.
+
+0:56:53.760,0:56:56.610
+C'est ok. Vous pouvez donc fournir un nouvel échantillon
+
+0:56:56.610,0:57:00.330
+puis vous mettez à jour votre modèle, etc. Ou vous pouvez en fait 
+
+0:57:00.330,0:57:06.980
+pas après plusieurs pas de temps. [Ok, et quand on frappe K
+
+0:57:06.980,0:57:12.720
+on a juste..] Il ne s'agit pas de l'émulateur, il n'y a pas de K ici.
+
+0:57:12.720,0:57:20.010
+[Oh. Je suis confuse car nous entraînons d'abord l'émulateur et
+
+0:57:20.010,0:57:25.200
+ensuite lorsque nous avons l'état final, nous rétropropageons pour
+
+0:57:25.200,0:57:32.780
+le contrôleur] Donc, d'abord, vous entraînez ce réseau. Terminé. Deuxième étape : vous
+
+0:57:32.780,0:57:37.680
+entraînez le contrôleur, le réseau suivant. Donc vous entraînez d'abord le premier réseau,
+
+0:57:37.680,0:57:41.519
+celui-ci, avec des nombres aléatoires, avec un signal de direction aléatoire,
+
+0:57:41.519,0:57:47.069
+il n'y a pas de contrôleur ici, n'est-ce pas ? [Oui] Ok, cool. Donc vous entraînez
+
+0:57:47.069,0:57:53.549
+d’abord cet émulateur pour qu'il puisse reproduire ces dynamiques. [Ok]
+
+0:57:53.549,0:57:57.869
+Ensuite, la deuxième partie va être l’entraînement du contrôleur. Il est entraîné
+
+0:57:57.869,0:58:04.559
+de cette manière. Vous fournissez l'état initial, vous le faites avancer 
+
+0:58:04.559,0:58:08.909
+vous vous retrouvez avec une trajectoire, h[k],
+
+0:58:08.909,0:58:15.839
+jusqu'à ce que vous atteigniez l'une des trois conditions finales, qui sont
+
+0:58:15.839,0:58:20.399
+la mise en portefeuille, manquer d’étapes ou heurter un mur.
+
+0:58:20.399,0:58:25.439
+Si vous heurtez un mur, alors vous faites la rétropropagation dans ce réseau et
+
+0:58:25.439,0:58:29.999
+faites une descente de gradient. [Maintenant vous faites une descente de gradient
+
+0:58:29.999,0:58:36.269
+en ce qui concerne le contrôleur] Oui, oui, oui, seulement C. [Ok, d'accord, je l'ai,
+
+0:58:36.269,0:58:43.949
+merci]. Ok, c'est génial. C'est tout, je crois.
+
+0:58:43.949,0:58:48.449
+Vous avez tenu jusqu'à la fin de la leçon. Félicitations. Comment pouvez-vous
+
+0:58:48.449,0:58:53.130
+mieux comprendre ce que nous avons couvert aujourd'hui ? Il y a donc plusieurs choses
+
+0:58:53.130,0:58:59.099
+que vous pouvez faire pour continuer. Compréhension. Vous avez des questions ?
+
+0:58:59.099,0:59:04.319
+Posez-les simplement dans la section « Commentaires » ci-dessous, nous répondrons à chacune d'entre elles. Nouvelles. Si vous
+
+0:59:04.319,0:59:08.819
+suivez @alfcnz sur Twitter, vous pourrez obtenir les dernières informations
+
+0:59:08.819,0:59:13.409
+mises en ligne. Mises à jour. Si vous êtes abonné à la chaîne et que vous activez les notifications,
+
+0:59:13.409,0:59:17.989
+vous ne louperez aucune des vidéos que je publie ici.
+
+0:59:17.989,0:59:22.229
+Appréciation. Encore une fois, si vous aimez cette vidéo et le contenu et tout ce que je fais,
+
+0:59:22.229,0:59:27.839
+j'apprécierais vraiment que vous mettiez un « J’aime » sur la vidéo. Recherche. 
+
+0:59:27.839,0:59:32.159
+Chaque vidéo a une transcription anglaise qui peut être consultée et vous
+
+0:59:32.159,0:59:35.029
+la trouver dans la description vidéo ci-dessous.
+
+0:59:35.029,0:59:40.439 
+Langues. Sei parla italiano ? hablas español ? 你会说中文吗 ? Parlez-vous coréen ?
+
+0:59:40.439,0:59:44.369
+Nous avons même le turc maintenant ! Toutes ces traductions sont maintenant disponibles pour vous.
+
+0:59:44.369,0:59:51.569
+Je prévois d'ajouter d'autres langues, car nous avons des volontaires. PyTorch. Si vous souhaitez
+
+0:59:51.569,0:59:56.730
+avoir une compréhension concrète et mieux digérer ce sujet, je vous
+
+0:59:56.730,1:00:01.830
+recommande fortement d'essayer d’entraîner vous-même le contrôleur, et s'il 
+
+1:00:01.830,1:00:07.440
+fonctionne soumettre une PR. C’est d’ailleurs le point suivant.
+
+1:00:07.440,1:00:11.790
+Contribuer. De telle sorte que nous aurons un notebook qui aura un
+
+1:00:11.790,1:00:16.800
+Contrôleur. C’est ce qui vous est laissé comme un exercice pour que vous 
+
+1:00:16.800,1:00:22.350
+puissiez maîtriser réellement ce sujet. Merci de m'avoir écouté, à bientôt.

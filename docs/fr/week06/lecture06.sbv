@@ -1,0 +1,3287 @@
+0:00:04.960,0:00:08.970
+Je veux donc faire deux choses. Parler de…
+
+0:00:09.019,0:00:14.909
+Parler un peu de diverses manières d'utiliser les réseaux convolutifs. 
+
+0:00:16.119,0:00:18.539
+Ce que je n'ai pas fait la dernière fois.
+
+0:00:19.630,0:00:21.630
+Et…
+
+0:00:22.689,0:00:24.689
+Et je vais aussi
+
+0:00:26.619,0:00:29.518
+parler des différents types d'architectures qui
+
+0:00:30.820,0:00:33.389
+pour certaines d'entre elles sont de conception très récente.
+
+0:00:34.059,0:00:35.710
+Et d’autres pour lesquelles les gens 
+
+0:00:35.710,0:00:40.320
+ont joué avec pendant un certain temps.
+
+0:00:43.660,0:00:47.489
+La dernière fois [cours n°3] que nous avons parlé des réseaux convolutifs, nous nous sommes arrêtés avec
+
+0:00:47.890,0:00:54.000
+l'idée que nous pouvons utiliser des ConvNets avec une sorte de coulissement que nous faisons sur les grandes images. Cela consiste à juste
+
+0:00:54.550,0:00:56.550
+appliquer des convolutions sur des grandes images,
+
+0:00:57.070,0:01:01.559
+ce qui est une méthode très générale. Donc nous allons
+
+0:01:03.610,0:01:06.900
+voir quelques choses supplémentaires sur la façon d'utiliser les ConvNets et
+
+0:01:07.659,0:01:08.580
+dans une certaine mesure
+
+0:01:08.580,0:01:09.520
+je vais
+
+0:01:09.520,0:01:16.020
+m'appuyer les papiers historiques et d’autres choses comme ça pour expliquer les formes simples de toutes ces idées.
+
+0:01:17.409,0:01:21.269
+Donc, comme je l'ai dit la dernière fois
+
+0:01:21.850,0:01:27.720
+j'ai cet exemple où il y a plusieurs caractères sur une image et vous pouvez… vous avez un réseau convolutif
+
+0:01:28.360,0:01:32.819
+dont la sortie est également une convolution comme l'air de tous les jours est une convolution, de sorte que vous pouvez interpréter la sortie comme
+
+0:01:33.250,0:01:40.739
+le fait de donner un score pour chaque catégorie et pour chaque fenêtre sur l'entrée. Le cadrage de la fenêtre dépend de…
+
+0:01:41.860,0:01:47.879
+les fenêtres que le système observe  vous rétropropagez pour ma sortie particulière,
+
+0:01:49.000,0:01:54.479
+des types d'étapes par la quantité totale de sous-échantillonnage que vous avez dans un réseau.
+
+0:01:54.640,0:01:59.849
+Ainsi, si vous avez deux couches qui sous-échantillonnent par un facteur de deux, vous avez deux couches de pooling par exemple.
+
+0:01:59.850,0:02:02.219
+C'est un facteur de deux par rapport à l'ensemble.
+
+0:02:02.920,0:02:07.199
+Le rapport de sous-échantillonnage est de 4 et cela signifie que chaque sortie est…
+
+0:02:07.509,0:02:14.288
+En gros, on va regarder une fenêtre sur l'entrée et les sorties successives vont regarder les fenêtres qui sont séparées par quatre pixels.
+
+0:02:14.630,0:02:17.350
+Ok, c'est juste un produit de toutes les couches de sous-échantillonnage
+
+0:02:20.480,0:02:21.500
+Donc
+
+0:02:21.500,0:02:24.610
+c'est bien, mais il va falloir que vous donniez un sens à
+
+0:02:25.220,0:02:30.190
+tout ce qui se trouve sur l'entrée. Comment repérer les objets qui
+
+0:02:31.310,0:02:33.020
+se chevauchent,
+
+0:02:33.020,0:02:38.949
+etc. Une chose que vous pouvez faire pour cela est appelée « suppression non maximale » [normal no maximum suppression].
+
+0:02:41.180,0:02:43.480
+C'est ce que les gens utilisent pour la détection d'objets.
+
+0:02:44.750,0:02:47.350
+En gros, cela signifie que si vous avez
+
+0:02:49.160,0:02:53.139
+des sorties qui sont plus ou moins au même endroit
+
+0:02:53.989,0:02:58.749
+ou aussi comme des endroits qui se chevauchent, et l'une d'entre elles vous dit qu’elle voit un ours
+
+0:02:58.910,0:03:02.199
+et l'autre vous dit qu’elle voit un cheval ; l'une d'elles gagne.
+
+0:03:02.780,0:03:07.330
+D'accord, c'est probablement un qui se trompe. Et vous ne pouvez pas avoir un ours sur un cheval au même moment et au même endroit.
+
+0:03:07.330,0:03:10.119
+Vous faites donc ce qu'on appelle la suppression non maximale.
+
+0:03:10.700,0:03:11.959
+Vous pouvez regarder laquelle
+
+0:03:11.959,0:03:15.429
+des deux a le score le plus élevé et vous choisissez cette sortie-là. Ou vous pouvez regarder si
+
+0:03:15.500,0:03:19.660
+tout voisin reconnaît un ours ou un cheval et que vous faites en quelque sorte un
+
+0:03:20.360,0:03:24.999
+vote si vous voulez. Un vote local. Je vais entrer dans les détails car 
+
+0:03:25.760,0:03:28.719
+ces idées sont encore approximatives. Tout ceci est
+
+0:03:29.930,0:03:34.269
+déjà implémenté dans un code que vous pouvez télécharger et c'est aussi un peu le sujet d'un
+
+0:03:35.030,0:03:37.509
+cours complet sur la vision par ordinateur.
+
+0:03:38.239,0:03:42.939
+Nous faisons donc ici allusion à la façon dont nous utilisons l'apprentissage approfondi pour ce type d'application.
+
+0:03:46.970,0:03:48.970
+Voyons voir, voici donc
+
+0:03:50.480,0:03:55.750
+Pour revenir à l'histoire, voici quelques idées sur la façon d'utiliser
+
+0:03:56.049,0:03:59.999
+des réseaux neuronaux ou des ConvNets
+
+0:04:00.500,0:04:04.690
+pour reconnaître des chaînes de caractères, ce qui est un peu le même programme que la reconnaissance d'objets multiples.
+
+0:04:05.450,0:04:12.130
+Donc si vous avez une image qui contient l'image du haut… « deux, trois deux, zéro, six »
+
+0:04:12.130,0:04:15.639
+Il s'agit d'un code postal et les caractères se touchent. Vous ne savez donc pas comment les séparer à l'avance.
+
+0:04:15.979,0:04:22.629
+Il suffit donc d'appliquer un réseau convolutif à l'ensemble de la chaîne, mais vous ne savez pas à l'avance quelle sera la largeur des caractères et donc
+
+0:04:24.500,0:04:30.739
+ce que vous voyez ici sont quatre ensembles différents de sorties
+
+0:04:31.170,0:04:33.170
+du réseau convolutif.
+
+0:04:33.300,0:04:36.830
+Chacune d'entre elles comporte dix lignes et les dix lignes correspondent à chacune des dix catégories.
+
+0:04:38.220,0:04:43.489
+Donc si vous regardez le haut par exemple, le bloc du haut,
+
+0:04:44.220,0:04:46.940
+les carrés blancs représentent les catégories les mieux notées.
+
+0:04:46.940,0:04:53.450
+Donc, ce que vous voyez à gauche, c'est que le numéro 2 est reconnu. Donc la fenêtre qui est regardée par les
+
+0:04:54.120,0:04:59.690
+unités de sortie qui sont sur la première colonne, sur le côté gauche de l'image, détecte un 2
+
+0:05:00.330,0:05:03.499
+car vous connaissez leur ordre 0, 1, 2, 3, 4, etc.
+
+0:05:03.810,0:05:07.160
+Vous voyez donc un carré blanc qui correspond à la détection d'un 2.
+
+0:05:07.770,0:05:09.920
+ensuite comme la fenêtre est
+
+0:05:11.400,0:05:13.400
+décalée sur l'entrée,
+
+0:05:14.310,0:05:19.549
+C’est un 3 ou un 3 faible qui est vu puis le 2 à nouveau. Il y a trois caractères,
+
+0:05:19.550,0:05:24.980
+trois détecteurs qui voient ce 2 et puis rien. Puis le 0 et puis le 6.
+
+0:05:26.670,0:05:28.670
+Maintenant, ce premier
+
+0:05:29.580,0:05:32.419
+système examine une fenêtre assez étroite et…
+
+0:05:35.940,0:05:40.190
+Ou peut-être que c'est une fenêtre large. Je pense que c'est une fenêtre large donc il regarde une fenêtre assez large
+
+0:05:41.040,0:05:42.450
+et…
+
+0:05:42.450,0:05:44.450
+lorsqu'elle examine
+
+0:05:45.240,0:05:50.030
+les deux qui sont à gauche par exemple, il voit en fait un morceau des trois avec.
+
+0:05:50.030,0:05:55.459
+C'est donc un peu dans la fenêtre. Les différentes séries de sorties correspondent ici à différentes tailles
+
+0:05:55.830,0:06:01.009
+du noyau de la dernière couche. Donc la deuxième ligne, le deuxième bloc…
+
+0:06:01.890,0:06:05.689
+la taille du noyau est de 4 dans la dimension horizontale.
+
+0:06:07.590,0:06:11.869
+La suivante est 3 et la suivante est 2. Cela permet au système de regarder
+
+0:06:13.380,0:06:19.010
+des régions de différentes largeurs sur l'entrée sans être trop confus par les caractères qui sont sur le côté.
+
+0:06:19.500,0:06:20.630
+Ainsi, par exemple
+
+0:06:20.630,0:06:28.189
+le zéro est très élevé sur la
+
+0:06:29.370,0:06:36.109
+deuxième, troisième et quatrième carte, mais pas très élevé sur la carte du haut. De même, le 3 est assez bien noté sur la
+
+0:06:37.020,0:06:38.400
+deuxième, troisième et quatrième carte
+
+0:06:38.400,0:06:41.850
+mais pas sur la première car le 3 chevauche avec le 2 et ainsi
+
+0:06:42.009,0:06:45.059
+il veut vraiment regarder dans notre fenêtre pour pouvoir le reconnaître.
+
+0:06:45.639,0:06:47.639
+Ok, oui ? [Question inaudible d’un étudiant].
+
+0:06:51.400,0:06:55.380
+C'est la taille du carré blanc qui indique le score.
+
+0:06:57.759,0:07:02.038
+Alors, regardez cette colonne ici, vous avez un zéro très élevé
+
+0:07:03.009,0:07:06.179
+ici, car c'est la première ligne correspondant à la catégorie zéro.
+
+0:07:06.430,0:07:10.079
+Mais ce n'est pas si bien scoré en haut car
+
+0:07:10.150,0:07:15.750
+l'unité de sortie examine une entrée assez large et elle est embrouillée par les éléments qui se trouvent sur le côté.
+
+0:07:16.479,0:07:17.910
+Ok, donc vous avez quelque chose comme ça.
+
+0:07:17.910,0:07:23.579
+Il faut maintenant lui donner un sens et extraire la meilleure interprétation de cette séquence.
+
+0:07:24.760,0:07:31.349
+C'est vrai pour les codes postaux, mais c'est vrai pour presque tous les textes. Toutes les combinaisons de caractères ne sont pas possibles.
+
+0:07:31.599,0:07:36.149
+Ainsi, lorsque vous lisez un texte anglais, il y a, vous savez, un dictionnaire de grammaire anglaise et
+
+0:07:36.699,0:07:40.919
+toutes les combinaisons de caractères ne sont pas possibles, de sorte que vous pouvez avoir un modèle linguistique qui
+
+0:07:41.470,0:07:42.610
+tente de
+
+0:07:42.610,0:07:48.720
+vous dire quelle est la séquence de caractères la plus probable étant donné qu'il s'agit de l'anglais ou d'une autre langue.
+
+0:07:49.510,0:07:54.929
+Ou étant donné qu'il s'agit d'un code postal. Tous les codes postaux ne sont pas possibles. Donc, cette possibilité de correction d'erreur.
+
+0:07:56.949,0:08:00.719
+Comment en tenir compte ? J'y reviendrai dans une seconde mais
+
+0:08:03.460,0:08:06.930
+ici, ce que nous devons faire, c'est 
+
+0:08:08.169,0:08:10.169
+de proposer une interprétation cohérente.
+
+0:08:10.389,0:08:15.809
+Il y a évidemment un 3, il y a évidemment un 2, un 3, un 0 quelque part
+
+0:08:16.630,0:08:19.439
+un autre 2, etc. Comment retourner 
+
+0:08:20.110,0:08:22.710
+cet ensemble de scores en une
+
+0:08:23.470,0:08:25.470
+interprétation. [Question inaudible d’un étudiant].
+
+0:08:28.610,0:08:31.759
+C’est la largeur horizontale du
+
+0:08:33.180,0:08:35.180
+noyau de la dernière couche.
+
+0:08:35.400,0:08:36.750
+Ok.
+
+0:08:36.750,0:08:44.090
+Ce qui signifie que lorsque vous rétropropagez sur l'entrée, la fenêtre de visualisation sur l'entrée qui influence cette unité particulière,
+
+0:08:44.550,0:08:48.409
+a une taille variable selon l'unité que vous regardez. Oui ? [Question inaudible d’un étudiant].
+
+0:08:52.500,0:08:54.500
+La largeur du bloc oui. [L’étudiant poursuit sa phrase].
+
+0:08:56.640,0:08:58.070
+Cela correspond…
+
+0:08:58.070,0:08:58.890
+C'est comment
+
+0:08:58.890,0:09:05.090
+l'image d'entrée est divisée par 4 car la question de fond est 4. Donc vous obtenez une de ces colonnes pour chaque quatre pixels.
+
+0:09:05.340,0:09:11.660
+Alors souvenez-vous que nous avions cette façon d'utiliser un réseau convolutif qui essentiellement rend
+
+0:09:12.240,0:09:17.270
+chaque convolution plus grande et vous considérez la dernière couche comme une convolution également. Vous obtenez des sorties multiples.
+
+0:09:17.790,0:09:23.119
+Ok. Donc ce que je représente ici sur la diapositive, est ce que vous venez de voir.
+
+0:09:23.760,0:09:30.470
+Le tableau 2D où chaque ligne correspond aux catégories,
+
+0:09:31.320,0:09:35.030
+et chaque colonne correspond à un endroit différent de l'entrée.
+
+0:09:39.180,0:09:41.750
+Et je vous ai montré ces exemples.
+
+0:09:42.300,0:09:50.029
+Il s'agit d'une représentation différente où le caractère est affiché juste avant la barre de titre,
+
+0:09:50.030,0:09:56.119
+indiquant la catégorie gagnante. Je n'affiche pas les scores de chaque catégorie. J'affiche juste la catégorie gagnante ici.
+
+0:09:57.180,0:09:58.260
+Mais chaque
+
+0:09:58.260,0:10:04.640
+sortie regarde une fenêtre 32 par 32 et la suivante regarde une fenêtre 32 par 32 décalée de 4 pixels.
+
+0:10:04.650,0:10:06.650
+Ok, etc.
+
+0:10:08.340,0:10:14.809
+Alors comment transformer cette séquence de caractères en une séquence de 3 5 ou de 5 3 ?
+
+0:10:29.880,0:10:33.979
+Ok, donc ici la raison pour laquelle nous en avons quatre est que la dernière couche…
+
+0:10:34.800,0:10:36.270
+cette différente…
+
+0:10:36.270,0:10:42.889
+cette différente dernière couche si vous voulez. Ces quatre différentes dernières couches entraînées à reconnaître les dix catégories.
+
+0:10:43.710,0:10:50.839
+Et ces dernières couches ont une largeur de noyau différente, donc elles regardent essentiellement une fenêtre de largeur différente sur l'entrée.
+
+0:10:53.670,0:10:59.510
+Vous voulez donc que certaines regardent de larges fenêtres pour pouvoir reconnaître des sortes de gros caractères et d'autres regardent
+
+0:10:59.510,0:11:02.119
+des fenêtres étroites afin qu'elles puissent reconnaître les caractères étroits sans être
+
+0:11:03.210,0:11:05.210
+perturbés par les caractères voisins.
+
+0:11:09.150,0:11:14.329
+Donc, si vous savez a priori qu'il y a cinq caractères ici car c'est un code postal,
+
+0:11:16.529,0:11:18.529
+vous pouvez utiliser une astuce.
+
+0:11:20.010,0:11:22.010
+Il existe quelques astuces spécifiques que
+
+0:11:23.130,0:11:27.140
+je peux vous expliquer, mais je vais plutôt vous expliquer une sorte d'astuce générale.
+
+0:11:27.959,0:11:30.619
+Je ne voulais pas en parler, du moins pas maintenant.
+
+0:11:31.709,0:11:37.729
+Voici donc une astuce générale.
+
+0:11:38.370,0:11:40.609
+Oups, je ne sais pas comment il change de diapositive.
+
+0:11:43.890,0:11:50.809
+Je sais que j'ai des cinq caractères dans ce mot, il y a…
+
+0:11:57.990,0:12:01.760
+C'est donc l'un de ces tableaux qui produit des scores. Pour chaque catégorie,
+
+0:12:03.060,0:12:07.279
+disons que nous en avons quatre ici, pour chaque endroit
+
+0:12:11.339,0:12:18.049
+il y a un score. Disons que je sais que je veux cinq caractères.
+
+0:12:20.250,0:12:27.469
+Je vais les dessiner verticalement : un, deux, trois, quatre et cinq. Parce que c'est un code postal.
+
+0:12:29.579,0:12:34.279
+La question que je vais poser maintenant est de savoir quel est le meilleur caractère que je puisse mettre dans
+
+0:12:35.220,0:12:37.220
+ce créneau, dans le premier créneau.
+
+0:12:38.699,0:12:43.188
+Pour ce faire, je vais dessiner un tableau.
+
+0:12:48.569,0:12:50.569
+Et sur celui-ci
+
+0:12:54.120,0:13:01.429
+je vais indiquer le score ici à chaque intersection du tableau.
+
+0:13:07.860,0:13:11.659
+Quel est le score de mettre
+
+0:13:12.269,0:13:17.899
+un caractère particulier ici à cet endroit étant donné le score que j'ai à la sortie de mon réseau neuronal ?
+
+0:13:19.560,0:13:21.560
+D'accord, disons que…
+
+0:13:24.480,0:13:28.159
+Ce que je vais devoir décider, c'est que j'ai moins de caractères
+
+0:13:29.550,0:13:32.539
+en ce qui concerne la sortie vers le système, cinq.
+
+0:13:33.329,0:13:39.919
+Ensuite, j'ai des fenêtres de visualisation et des scores produits par le système. Je vais devoir trouver laquelle je laisse tomber
+
+0:13:40.949,0:13:42.949
+Et
+
+0:13:43.860,0:13:47.689
+ce que je peux faire, c’est construire ce tableau
+
+0:13:55.530,0:13:57.530
+Et
+
+ce que je dois faire, c'est aller d'ici à ici en trouvant un chemin à travers ce tableau.
+
+0:14:15.740,0:14:17.859
+De telle sorte que j'ai exactement cinq
+
+0:14:20.420,0:14:24.640
+étapes si vous voulez, avec chaque étape correspondant à un caractère.
+
+0:14:25.790,0:14:31.630
+Le score global d'une chaîne particulière est la somme de tous les scores qui
+
+0:14:33.050,0:14:37.060
+sont sur ce chemin. En d'autres termes, si j'obtiens…
+
+0:14:39.560,0:14:41.560
+trois…
+
+0:14:41.930,0:14:47.890
+trois endroits où j'ai obtenu un score élevé pour cette catégorie particulière, qui est la catégorie 1. D'accord, disons que c'est 0.
+
+0:14:48.440,0:14:50.440
+Donc 1, 2, 3.
+
+0:14:51.140,0:14:54.129
+Je vais dire que c'est le même gars et que c'est un 1.
+
+0:14:55.460,0:14:57.460
+Ici si j'ai
+
+0:14:58.160,0:15:03.160
+deux gars et que j'ai un score élevé pour 3, je vais dire c’est un 3.
+
+0:15:03.160,0:15:08.800
+Et si je n'ai qu'un seul gars qui a un score élevé pour 2. Donc c'est un 2 etc.
+
+0:15:11.930,0:15:13.370
+Donc
+
+0:15:13.370,0:15:15.880
+ce chemin doit être en quelque sorte continu.
+
+0:15:16.580,0:15:23.080
+Je ne peux pas passer d'une position à l'autre car ce serait en quelque sorte rompre l'ordre des caractères. D'accord ?
+
+0:15:24.650,0:15:31.809
+Et je dois trouver un chemin qui passe par des cellules à haut score si vous voulez que cela corresponde à
+
+0:15:33.500,0:15:36.489
+des scores élevés de catégories sur ce chemin. C'est une façon de
+
+0:15:37.190,0:15:39.190
+Dire, si j'ai
+
+0:15:39.950,0:15:43.150
+ces trois cellules ici ou
+
+0:15:44.000,0:15:47.530
+donnez-moi le même caractère. Ce n'est qu'un seul caractère. Je vais juste en produire
+
+0:15:48.440,0:15:50.799
+un ici qui correspond à ceci.
+
+0:15:51.380,0:15:57.189
+Ok, ces trois gars ont un score élevé. Je reste sur celui-là, sur celui-là et puis je fais la transition
+
+0:15:57.770,0:16:02.379
+au deuxième caractère. Je vais maintenant remplir ce créneau et ce type a un score élevé pour trois.
+
+0:16:02.750,0:16:06.880
+Je vais donc en mettre trois ici et ce type a un score élevé pour deux.
+
+0:16:07.400,0:16:08.930
+Donc deux.
+
+0:16:08.930,0:16:10.930
+Etc.
+
+0:16:14.370,0:16:19.669
+Le principe pour trouver ce chemin est un algorithme de chemin le plus court.
+
+0:16:19.670,0:16:25.190
+Vous pouvez considérer cela comme un graphe où je peux passer de la cellule inférieure gauche à la cellule supérieure droite
+
+0:16:25.560,0:16:27.560
+en allant soit à gauche,
+
+0:16:28.410,0:16:32.269
+ou en montant et en allant à gauche.
+
+0:16:35.220,0:16:38.660
+Pour chacune de ces transitions il y a un coût et pour chaque fait de
+
+0:16:39.060,0:16:45.169
+mettre un caractère à cet endroit, il y a aussi un coût ou un score si vous voulez.
+
+0:16:47.460,0:16:49.460
+Ainsi, l'ensemble des
+
+0:16:50.700,0:16:57.049
+scores de celui du bas serait le score combiné des trois endroits qui détectent ce dernier.  
+
+0:16:59.130,0:17:01.750
+Et car c'est plutôt ces trois qui sont
+
+0:17:02.730,0:17:04.730
+contribuant à prouver que c’est un 1.
+
+0:17:06.720,0:17:08.959
+Lorsque vous contraignez le chemin à avoir 5 étapes
+
+0:17:10.530,0:17:14.930
+il doit aller du bas à gauche vers le haut à droite et
+
+0:17:15.930,0:17:18.169
+cela comporte 5 étapes, donc il doit passer par 5 étapes.
+
+0:17:18.750,0:17:24.290
+Il n'y a pas le choix. C'est comme ça que vous forcez le système à vous donner 5 caractères en gros.
+
+0:17:24.810,0:17:28.909
+Et parce que le chemin ne peut aller que de gauche à droite et de haut en bas,
+
+0:17:30.330,0:17:33.680
+il doit vous donner les caractères dans l'ordre dans lequel ils apparaissent dans l'image.
+
+0:17:34.350,0:17:41.240
+C'est donc une façon d'imposer l'ordre du caractère et d'imposer qu'il y en a cinq dans la chaîne. Oui ? 
+
+0:17:42.840,0:17:48.170
+Oui, à l'arrière. [Question inaudible de l’étudiant]. 
+
+0:17:52.050,0:17:55.129
+Alors, si nous avons juste la chaîne d'un vous devez avoir
+
+0:17:55.680,0:18:02.539
+entraîné le système à l'avance afin que lorsqu'il se trouve entre deux caractères, quels qu'ils soient, il ne dise rien.
+
+0:18:02.540,0:18:04.540
+Il n'y a rien de ce qui précède.
+
+0:18:04.740,0:18:06.740
+Sinon, vous pouvez dire.
+
+0:18:07.140,0:18:11.359
+[Réponse à une question coupée au montage]. Oui, un système comme celui-ci doit pouvoir vous dire que ce n'est pas le cas. Ce n'est pas un caractère.
+
+0:18:11.360,0:18:16.160
+C'est un morceau de caractère. Ou je suis au milieu de deux caractères. Ou j'ai deux caractères sur le côté.
+
+0:18:16.160,0:18:17.550
+Mais rien au milieu.
+
+0:18:17.550,0:18:19.550
+Oui, absolument. [Question/remarque d’un étudiant].
+
+0:18:24.300,0:18:26.300
+C'est une forme de suppression non maximale.
+
+0:18:26.300,0:18:31.300
+Vous pouvez donc considérer cela comme une forme intelligente de suppression non maximale où vous dites que pour chaque endroit,
+
+0:18:31.300,0:18:33.950
+vous ne pouvez avoir qu’un caractère.
+
+0:18:33.990,0:18:40.370
+Et l'ordre dans lequel vous produisez les cinq caractères doit correspondre à l'ordre dans lequel ils apparaissent sur l'image.
+
+0:18:41.640,0:18:47.420
+Ce que vous ne savez pas, c'est comment les faire se croiser. D'accord. Alors comment savoir combien
+
+0:18:48.210,0:18:53.780
+de détecteurs vont voir le numéro deux. Il se peut qu'il y en ait trois et nous allons décider qu'ils sont tous les mêmes.
+
+0:19:00.059,0:19:02.748
+Le truc est, pour l’ensemble d'entre vous qui
+
+0:19:03.629,0:19:06.469
+est en computer science, ce qui n'est pas le cas de tout le monde.
+
+0:19:07.590,0:19:12.379
+La façon dont vous calculez ce chemin est juste un algorithme de chemin le plus court. Vous faites cela avec la programmation dynamique.
+
+0:19:13.499,0:19:15.090
+Ok.
+
+0:19:15.090,0:19:21.350
+Trouver le chemin le plus court pour aller du bas à gauche au haut à droite en passant par en prenant seulement
+
+0:19:22.080,0:19:25.610
+la transition vers la droite ou en diagonale et
+
+0:19:26.369,0:19:28.369
+en minimisant les
+
+0:19:28.830,0:19:31.069
+coûts. Donc si vous pensez que chaque
+
+0:19:31.710,0:19:38.659
+est rempli par un coût ou la maximisation du score si vous pensez qu’il s’agit de scores, des probabilités, par exemple,
+
+0:19:38.789,0:19:41.479
+c'est juste un algorithme de chemin le plus court dans un graphe.
+
+0:19:54.840,0:19:56.840
+Ce type de méthode était d'ailleurs…
+
+0:19:57.090,0:20:04.730
+De nombreuses méthodes de reconnaissance de la parole fonctionnent de cette manière, mais pas avec des réseaux neuronaux. Nous avons en quelque sorte extrait manuellement des caractéristiques,
+
+0:20:05.909,0:20:13.189
+mais il s'agirait essentiellement de faire correspondre la séquence de vecteurs extraits d'un signal vocal à un pochoir de mot et ensuite 
+
+0:20:13.409,0:20:17.809
+essayer de voir comment vous déformez le temps pour qu'il correspond au
+
+0:20:19.259,0:20:24.559
+mot à reconnaître. Vous aviez un pochoir pour chaque mot sur une taille fixe.
+
+0:20:25.679,0:20:32.569
+C'est ce qu'on a appelé le DTW [Dynamic Time Working]. Il en existe une version plus sophistiquée appelée modèles cachés de Markov, mais c’est très similaire.
+
+0:20:33.600,0:20:35.600
+Les gens le font encore dans une certaine mesure.
+
+0:20:43.000,0:20:44.940
+Ok.
+
+0:20:44.940,0:20:49.880
+Donc la détection. Si vous voulez appliquer un ConvNet pour la détection
+
+0:20:50.820,0:20:55.380
+cela fonctionne très bien, et c’est étonnamment simple.
+
+0:20:56.020,0:20:57.210
+Ce que vous devez faire…
+
+0:20:57.210,0:20:59.210
+Il faut dire que vous voulez faire de la détection faciale.
+
+0:20:59.440,0:21:05.130
+Ce qui est un problème très facile. La reconnaissance est l’un des premiers problèmes que la vision par ordinateur a commencé à résoudre vraiment bien.
+
+0:21:05.500,0:21:07.500
+Vous collectez un ensemble de données
+
+0:21:08.260,0:21:11.249
+des images avec des visages et des images sans visages et
+
+0:21:12.160,0:21:13.900
+vous entraînez un
+
+0:21:13.900,0:21:19.379
+un ConvNet avec une fenêtre d'entrée de taille par exemple 20 par 20 ou 30 par 30 pixels.
+
+0:21:19.870,0:21:21.959
+Pour vous dire s'il y a un visage ou non.
+
+0:21:22.570,0:21:28.620
+Maintenant, vous prenez ce réseau convolutif, vous l'appliquez sur une image et s'il y a un visage qui se trouve être à peu près
+
+0:21:29.230,0:21:31.230
+30 par 30 pixels,
+
+0:21:31.809,0:21:35.699
+le contenu s'illuminera.
+
+0:21:36.460,0:21:38.460
+Et il ne s'éclairera pas quand il n'y a pas de visage.
+
+0:21:39.130,0:21:41.999
+Il y a cependant deux problèmes, le premier est
+
+0:21:42.940,0:21:47.370
+il existe de nombreuses façons dont un morceau d'image d’être un non visage.
+
+0:21:48.130,0:21:53.489
+Et pendant votre entraînement, vous ne les avez probablement pas tous vus. Vous n'avez même pas vu un ensemble représentatif d'entre eux.
+
+0:21:53.950,0:21:56.250
+Votre système va donc avoir beaucoup de faux positifs.
+
+0:21:58.390,0:22:04.709
+C'est le premier problème. Le deuxième problème est que tous les visages ne sont pas de 30 par 30 pixels. Alors comment gérer
+
+0:22:05.380,0:22:10.229
+la variation de taille ? Une façon de gérer la variation de taille, qui est très simple
+
+0:22:10.230,0:22:14.010
+mais il est surtout inutile dans les versions modernes,
+
+0:22:14.860,0:22:16.860
+ou du moins, qui n'est pas complètement nécessaire,
+
+0:22:16.929,0:22:22.499
+est une approche à plusieurs échelles. Vous prenez votre image, vous faites fonctionner votre détecteur dessus. Il tire quand il veut.
+
+0:22:23.440,0:22:27.299
+Vous détecterez que les petits visages puis vous réduirez l'image
+
+0:22:27.850,0:22:30.179
+d’une certaine échelle. Dans ce cas, disons que
+
+0:22:30.179,0:22:31.419
+je prends la racine carrée de deux.
+
+0:22:31.419,0:22:36.599
+Vous appliquez à nouveau le réseau convolutif sur cette image plus petite et maintenant il va pouvoir détecter des visages qui sont
+
+0:22:38.350,0:22:45.750
+étaient plus grands dans l'image originale car ce qui était de 30 par 30 pixels est maintenant d'environ 20 par 20 pixels.
+
+0:22:47.169,0:22:48.850
+Ok
+
+0:22:48.850,0:22:53.309
+Mais il peut y avoir des visages plus grands. Donc, vous redimensionnez l'image par un facteur racine carrée de 2.
+
+0:22:53.309,0:22:57.769
+Maintenant, les images ont la taille de l'original et vous faites à nouveau tourner le réseau convolutif.
+
+0:22:57.770,0:23:01.070
+Il va détecter les visages qui étaient de 60 par 60 pixels
+
+0:23:02.190,0:23:06.109
+dans l'image originale, mais qui sont maintenant 30 par 30 car vous réduisez la taille de moitié.
+
+0:23:07.800,0:23:10.369
+Vous pensez peut-être que c'est cher, mais ce n'est pas le cas. 
+
+0:23:11.220,0:23:15.439
+La dépense est la moitié du redimensionnement final.
+
+0:23:16.080,0:23:18.379
+La somme des dépenses combinées des autres réseaux 
+
+0:23:19.590,0:23:21.859
+est à peu près la même que celle du redimensionnement final.
+
+0:23:26.070,0:23:29.720
+C'est parce que la taille du réseau est 
+
+0:23:29.720,0:23:33.019
+de l’ordre de la racine carré de la taille de l'image sur un côté.
+
+0:23:33.020,0:23:38.570
+Vous réduisez donc l'image par une racine carrée de 2 : le réseau que vous devez gérer est plus petit d'un facteur 2.
+
+0:23:40.140,0:23:45.619
+D'accord, le coût global est donc de 1 plus 1/2 plus 1/4 plus 1/8 plus 1/16 etc.
+
+0:23:45.990,0:23:51.290
+Ce qui revient à dire que vous gaspillez un facteur de 2 en faisant du multi-échelle, ce qui est très petit. Ok.
+
+0:23:51.290,0:23:53.290
+Vous pouvez vous permettre un facteur 2.
+
+0:23:54.570,0:23:59.600
+Il s'agit d'un système de détection des visages tout à fait ancien, datant du début des années 90 et
+
+0:24:00.480,0:24:02.600
+les cartes que vous voyez ici sont toutes sortes de
+
+0:24:03.540,0:24:05.540
+cartes qui indiquent des sortes de scores
+
+0:24:06.120,0:24:13.160
+de détecteurs de visages. Le détecteur de visages ici est je pense de 20 par 20 pixels. C'est donc une très faible résolution.
+
+0:24:13.890,0:24:19.070
+C'est un grand désordre. Vous voyez des zones de score élevé, mais ce n'est pas vraiment très précis.
+
+0:24:19.710,0:24:21.710
+Mais vous voyez des choses
+
+0:24:22.530,0:24:24.150
+plus précises
+
+0:24:24.150,0:24:26.720
+ici en bas. Donc, vous voyez
+
+0:24:27.780,0:24:33.290
+une tache blanche ici, une tache blanche ici, une tache blanche ici, une tache blanche ici et  même ici. Vous voyez une goutte blanche ici, une goutte blanche ici et
+
+0:24:34.020,0:24:35.670
+Ce sont des visages.
+
+0:24:35.670,0:24:41.060
+C’est là vous devez maintenant faire une suppression maximale pour obtenir ces
+
+0:24:41.580,0:24:46.489
+petits carrés rouges qui sont en quelque sorte les catégories gagnantes. Les endroits gagnants où vous avez un visage.
+
+0:24:50.940,0:24:52.470
+Donc
+
+0:24:52.470,0:24:57.559
+Suppression non maximale, signifie que j'ai une tache blanche très importante ici.
+
+0:24:57.560,0:25:01.340
+Donc qu'il y a probablement un visage en dessous qui fait environ 20 sur 20.
+
+0:25:01.370,0:25:06.180
+C'est un autre visage dans une fenêtre de 20 par 20. Cela signifie que l'un de ces deux visages est faux.
+
+0:25:06.250,0:25:10.260
+Je vais donc prendre le meilleur score dans la fenêtre de 20 sur 20 et
+
+0:25:10.600,0:25:15.239
+supprimer tous les autres : supprimer les autres à cet endroit à cette échelle.
+
+0:25:15.240,0:25:22.410
+Je veux dire cet endroit proche à cette échelle mais aussi à d'autres échelles. Ok, donc vous choisissez le plus haut score.
+
+0:25:23.680,0:25:25.680
+Tache si vous voulez.
+
+0:25:26.560,0:25:28.560
+Pour chaque lieu, chaque échelle.
+
+0:25:28.720,0:25:34.439
+Et chaque fois que vous en choisissez un, vous supprimez les autres qui pourraient être en conflit avec lui, soit
+
+0:25:34.780,0:25:37.500
+car ils sont d'une échelle différente au même endroit, soit
+
+0:25:37.960,0:25:39.960
+à la même échelle mais à proximité.
+
+0:25:44.350,0:25:46.350
+Ok, donc c'est le
+
+0:25:46.660,0:25:53.670
+premier problème et le deuxième problème est le fait que, comme je l'ai dit, il y a de nombreuses façons de se différencier d’un visage.
+
+0:25:54.730,0:25:59.820
+Il est fort probable que votre jeu d’entraînement ne comporte pas tous les éléments qui ne sont pas des visages qui ressemblent à des visages.
+
+0:26:00.790,0:26:06.249
+La façon dont les gens gèrent cette situation est de faire ce qu'on appelle du « negative mining » [pêche à l'exemple négatif].
+
+0:26:06.390,0:26:09.390
+Donc vous parcourez une grande collection d'images
+
+0:26:09.460,0:26:14.850
+dont vous savez pertinemment qu'il n'y a pas de visage et vous faites fonctionner votre détecteur. Vous gardez tous les
+
+0:26:16.720,0:26:19.139
+patchs où votre détecteur s’allume.
+
+0:26:21.190,0:26:26.580
+Vous vérifiez qu'il n'y a pas de visages dans ces images et s'il n'y en a pas, vous les ajoutez à votre ensemble d’images négatives.
+
+0:26:27.610,0:26:31.830
+Ensuite vous ré-entraînez votre détecteur, vous l’utilisez pour faire la même chose.
+
+0:26:31.990,0:26:35.580
+Vous passez à nouveau en revue un vaste ensemble d'images où vous savez
+
+0:26:35.580,0:26:40.710
+qu’il n'y a pas de visage et chaque fois que votre détecteur fait feu, ajoutez cela comme un échantillon négatif.
+
+0:26:41.410,0:26:43.410
+Vous faites cela quatre ou cinq fois et
+
+0:26:43.840,0:26:50.129
+en fin de compte, vous disposez d'un détecteur de visage très robuste qui n'est pas victime des échantillons négatifs.
+
+0:26:53.080,0:26:56.669
+Ce sont toutes des choses qui ressemblent à des visages dans les images naturelles mais qui ne sont pas des visages.
+
+0:27:03.049,0:27:05.049
+Cela fonctionne très bien.
+
+0:27:10.380,0:27:17.209
+Voici un travail qui a plus de 15 ans. C’est le mariage de mes grands-parents.
+
+0:27:18.480,0:27:20.480
+Leur mariage.
+
+0:27:22.410,0:27:24.410
+Ok.
+
+0:27:24.500,0:27:29.569
+Voici une autre utilisation intéressante des réseaux convolutifs. C’est pour
+
+0:27:30.299,0:27:34.908
+la segmentation sémantique. Ce qu'on appelle la segmentation sémantique, j'y ai fait allusion dans le premier cours.
+
+0:27:36.390,0:27:44.239
+La segmentation sémantique est le problème de l'attribution d'une catégorie à chaque pixel d'une image.
+
+0:27:46.020,0:27:49.280
+Chaque pixel sera étiqueté avec une catégorie de l'objet auquel il appartient.
+
+0:27:50.250,0:27:55.429
+C’est très utile si vous voulez conduire un robot dans la nature. Ici, il s'agit donc d'un
+
+0:27:56.039,0:28:00.769
+projet de robotique sur lequel j'ai travaillé, mes étudiants et moi, il y a longtemps.
+
+0:28:01.770,0:28:07.520
+Et ce qui vous aimeriez faire, c'est d'étiqueter l'image pour indiquer les régions sur lesquelles 
+
+0:28:08.820,0:28:10.820
+le robot peut rouler
+
+0:28:10.860,0:28:15.199
+et les zones qui constituent des obstacles pour que le robot ne s'y rende pas. Ok.
+
+0:28:15.200,0:28:22.939
+Ainsi, les zones vertes sont des objets sur lesquels le robot peut rouler et les zones rouges sont des obstacles comme les herbes hautes dans ce cas.
+
+0:28:28.049,0:28:34.729
+La façon dont vous entraînez un réseau convolutif à faire ce genre de segmentation sémantique est donc très similaire à ce que je viens
+
+0:28:35.520,0:28:38.659
+de vous décrire. Vous prenez un patch de l'image.
+
+0:28:39.360,0:28:41.360
+Dans le cas présent, je crois que les patchs étaient
+
+0:28:42.419,0:28:44.719
+20 par 40 ou quelque chose comme ça, ils sont petits.
+
+0:28:46.080,0:28:51.860
+Vous connaissez le pixel central, s'il est traversable ou non, s'il est vert ou rouge.
+
+0:28:52.470,0:28:56.390
+Cela a été étiqueté manuellement, soit le label a été obtenu d'une autre manière.
+
+0:28:57.570,0:29:00.110
+Vous faites fonctionner un ConvNet sur ce terrain et vous le formez. Vous demandez de vous indiquer
+
+0:29:00.110,0:29:02.479
+si c’est vert ou rouge.
+
+0:29:03.000,0:29:05.000
+Si cette zone praticable ou non.
+
+0:29:05.970,0:29:09.439
+Et une fois que le système est entraîné, vous l'appliquez sur toute l'image et vous savez
+
+0:29:09.440,0:29:14.540
+il met le vert ou le rouge selon l'endroit où il se trouve. En fait, dans ce cas particulier, il y avait cinq catégories.
+
+0:29:14.830,0:29:18.990
+Il y a le super vert, le vert, le violet qui est le pied d'un objet,
+
+0:29:19.809,0:29:24.269
+le rouge qui est un obstacle que vous connaissez bien, et le super rouge, qui est comme un obstacle définitif.
+
+0:29:25.600,0:29:30.179
+Ici nous ne montrons que trois couleurs. Dans ce projet,
+
+0:29:31.809,0:29:37.319
+les étiquettes ont été collectées automatiquement. Il n’y a pas eu besoin de le faire manuellement.
+
+0:29:39.160,0:29:44.160
+Ce qui a été fait, c’est que nous faisons tourner le robot, puis
+
+0:29:44.890,0:29:49.379
+par la vision stéréoscopique déterminons si un pixel 
+
+0:29:51.130,0:29:53.669
+correspond à un objet qui dépasse du sol ou qui se trouve sur le sol.
+
+0:29:55.540,0:29:59.309
+La colonne du milieu indique les étiquettes stéréo.
+
+0:30:00.309,0:30:05.789
+Les étiquettes, donc la couleur verte ou rouge est calculée à partir de la vision stéréo d'une reconstruction en 3D.
+
+0:30:06.549,0:30:08.639
+Donc vous avez deux caméras.
+
+0:30:09.309,0:30:15.659
+Elles peuvent estimer la distance de chaque pixel en comparant essentiellement les patchs. C'est relativement cher, mais ça marche.
+
+0:30:15.730,0:30:17.819
+Ce n'est pas complètement fiable, mais cela fonctionne en quelque sorte.
+
+0:30:18.820,0:30:21.689
+Donc, pour chaque pixel, vous avez une profondeur, la distance de la caméra.
+
+0:30:22.360,0:30:25.890
+Ce qui signifie que vous connaissez la position de ce pixel en 3D.
+
+0:30:25.890,0:30:30.030
+S'il dépasse du sol ou s'il est au sol car vous pouvez y installer un plan.
+
+0:30:30.880,0:30:33.900
+Ok, donc les pixels verts sont ceux qui sont essentiellement
+
+0:30:34.450,0:30:37.980
+près du sol et les rouges sont ceux qui sont en haut.
+
+0:30:39.280,0:30:42.479
+Donc maintenant vous avez des labels que vous pouvez essayer un ConvNet
+
+0:30:43.330,0:30:44.919
+pour prédire ces étiquettes.
+
+0:30:44.919,0:30:49.529
+Vous me direz alors pourquoi entraîner un réseau convolutif à cette fin si vous pouvez le faire en stéréo ?
+
+0:30:50.260,0:30:53.760
+Et la réponse est que la stéréo ne fonctionne que jusqu'à dix mètres.
+
+0:30:54.669,0:30:59.789
+Au-delà de dix mètres, on ne peut pas utiliser la vision binoculaire et la vision stéréo, on ne peut pas vraiment bien estimer la distance.
+
+0:30:59.790,0:31:04.799
+Et donc, cela ne fonctionne que jusqu'à une dizaine de mètres et conduire un robot en ne regardant que
+
+0:31:05.200,0:31:07.770
+dix mètres devant vous n'est pas une bonne idée.
+
+0:31:08.950,0:31:13.230
+C'est comme conduire une voiture dans le brouillard, non ? Ce n'est pas très efficace.
+
+0:31:14.380,0:31:21.089
+Donc, ce que vous faisiez auparavant, c'était d'étiqueter chaque pixel de l'image jusqu'à l'horizon.
+
+0:31:21.790,0:31:23.790
+Essentiellement.
+
+0:31:24.130,0:31:30.239
+D'accord, ce qui est bien avec ce système, c'est que, comme je l'ai dit, les étiquettes ont été collectées automatiquement. Mais aussi
+
+0:31:32.080,0:31:33.730
+le robot
+
+0:31:33.730,0:31:38.849
+s’adapte au fur et à mesure car il collectionne constamment les étiquettes stéréo.
+
+0:31:39.340,0:31:43.350
+Il peut constamment ré-entraîner son réseau neuronal pour s'adapter à l'environnement.
+
+0:31:43.360,0:31:49.199
+Dans le cas particulier de ce robot, il ne fera que ré-entraîner la dernière couche.
+
+0:31:49.540,0:31:53.879
+Ainsi, les N-1 couches du ConvNet ont été fixées, ont été entraîné en laboratoire.
+
+0:31:53.880,0:32:01.499
+La dernière couche a été en quelque sorte adaptée au fur et à mesure que le robot fonctionnait, ce qui lui a permis de gérer les environnements
+
+0:32:01.500,0:32:02.680
+Qu’il n'avait jamais vu auparavant.
+
+0:32:02.680,0:32:04.120
+Essentiellement.
+
+0:32:04.120,0:32:06.120
+Vous avez encore une vision à long terme.
+
+0:32:10.000,0:32:17.520
+L’entrée du ConvNet est essentiellement des vues multi-échelles de sortes de bandes de l'image autour de l'horizon.
+
+0:32:18.700,0:32:20.700
+Pas besoin d'entrer dans les détails.
+
+0:32:21.940,0:32:25.710
+C’est un très petit réseau neuronal selon les normes actuelles, mais c'est ce que nous pouvions nous permettre.
+
+0:32:27.070,0:32:29.970
+J’ai une vidéo. Je ne suis pas sûr que ça va marcher, mais je vais essayer.
+
+0:32:31.990,0:32:33.990
+Oui, ça marche.
+
+0:32:41.360,0:32:45.010
+Je devrais vous parler un peu des personnes ici. 
+
+0:32:47.630,0:32:49.630
+[Question inaudible d’un étudiant].
+
+0:32:51.860,0:32:53.860
+Vous ne voulez pas l'audio.
+
+0:32:55.370,0:32:59.020
+Pierre Semanet et Raia Hadsell étaient donc deux étudiants
+
+0:32:59.600,0:33:02.560
+travaillant avec moi sur ce projet, deux étudiants en doctorat.
+
+0:33:03.170,0:33:08.200
+Pierre Sermanet est à Google Brain. Il travaille sur la robotique et Raia Hadsell est le directeur commercial de Robotics à DeepMind.
+
+0:33:09.050,0:33:11.050.
+Marco Scoffier est à Nvidia
+
+0:33:11.150,0:33:15.249
+Matt Grimes est à DeepMind. Jan Ben est à Mobile Eye qui est maintenant Intel.
+
+0:33:15.920,0:33:17.920
+Ayse Erkan est à
+
+0:33:18.260,0:33:20.260
+Twitter et
+
+0:33:20.540,0:33:22.540
+Urs Muller travaille toujours avec nous. Il est
+
+0:33:22.910,0:33:29.139
+actuellement à la tête d'un grand groupe qui travaille sur la conduite autonome à Nvidia et il collabore avec nous.
+
+0:33:30.800,0:33:32.800
+En fait…
+
+0:33:33.020,0:33:38.020
+Nos travaux ultérieurs sur ce projet, il s'agit donc d'un robot.
+
+0:33:39.290,0:33:44.440
+Il peut rouler à peu près à la même vitesse que vous, une sorte de vitesse de marche rapide.
+
+0:33:46.310,0:33:48.999
+Et il est censé se conduire lui-même dans la nature.
+
+0:33:50.720,0:33:55.930
+Il a donc cette masse à quatre yeux, il y a deux paires stéréo à deux paires de caméras stéréo.
+
+0:33:57.020,0:34:02.320
+Il a trois ordinateurs dans le ventre. Il est donc complètement autonome. Il ne parle pas au réseau ou à quoi que ce soit.
+
+0:34:03.200,0:34:05.200
+Et ces trois ordinateurs…
+
+0:34:07.580,0:34:10.120
+Je suis à gauche. C'est là que j'avais une queue de cheval.
+
+0:34:13.640,0:34:19.659
+Ok, donc ici le système, le réseau neuronal, est paralysé. Nonc nous n'avons pas activé les réseaux neuronaux.
+
+0:34:19.659,0:34:22.029
+Il n'utilise que la vision stéréo et maintenant il utilise le réseau neuronal.
+
+0:34:22.130,0:34:26.529
+Il est donc assez éloigné de cette barrière, mais il la voit et va donc directement à
+
+0:34:27.169,0:34:31.599
+Côté. Il veut aller vers un but, une coordonnée GPS. C'est derrière ça. Pareil ici.
+
+0:34:31.600,0:34:33.429
+Il veut aller à une coordonnée GPS derrière
+
+0:34:33.429,0:34:37.689
+et il voit tout de suite qu'il y a ce mur de personnes qu'il ne peut pas franchir.
+
+0:34:38.360,0:34:43.539
+Le gars à droite est Marco Scoffier. Il tient le transmetteur, il ne conduit pas le robot mais tient le bouton d'arrêt d'urgence [rires].
+
+0:34:48.849,0:34:50.849
+Et donc
+
+0:34:51.039,0:34:54.689
+c'est à cela que ressemble le réseau convolutif.
+
+0:34:55.659,0:34:57.659
+Vraiment petit par rapport aux normes actuelles
+
+0:35:00.430,0:35:02.430
+Et…
+
+0:35:03.700,0:35:05.700
+Et il produit pour 
+
+0:35:06.400,0:35:08.400
+chaque emplacement chaque patch sur l'entrée.
+
+0:35:08.829,0:35:13.859
+L'avant-dernière couche est un vecteur à 100 dimensions qui va dans un classificateur qui classe en cinq catégories.
+
+0:35:14.650,0:35:16.650
+Donc une fois que le système classifie
+
+0:35:16.779,0:35:20.189
+chacune de ces cinq catégories de l'image, vous pouvez déformer l'image
+
+0:35:20.349,0:35:25.979
+en une carte qui est centrée sur le robot. Et vous pouvez faire une planification dans cette carte pour savoir comment éviter
+
+0:35:25.980,0:35:31.379
+des obstacles et des choses comme ça. Voilà donc ce que fait cette chose. C'est une carte particulière appelée carte hyperbolique, mais
+
+0:35:33.999,0:35:36.239
+ce n'est pas important pour l'instant.
+
+0:35:38.380,0:35:40.380
+Maintenant que…
+
+0:35:40.509,0:35:42.509
+Parce que c'était en
+
+0:35:42.970,0:35:50.859
+2007 et les ordinateurs étaient lents. Il n'y avait pas de GPU donc nous pouvions faire fonctionner ce réseau neuronal seulement à environ une image par seconde.
+
+0:35:50.859,0:36:01.329
+Comme vous pouvez le voir ici, la mise à jour se fait à raison d'une image par seconde.
+
+0:35:54.640,0:35:59.609
+Donc si quelqu'un marche devant le robot, celui-ci ne le verra pas une seconde et l’écrasera.
+
+0:36:01.329,0:36:07.079
+C'est pourquoi nous avons un deuxième système de vision ici au sommet. Celui-ci est stéréo. Il n'utilise pas de réseau neuronal.
+
+0:36:09.039,0:36:13.949
+L'odométrie… je pense que nous nous moquons de savoir que c'est. Le contrôleur qui est aussi appris, mais nous nous en moquons.
+
+0:36:15.730,0:36:21.989
+C'est le système ici encore, sa vision est paralysée, ils ne peuvent voir que jusqu'à deux mètres et demi.
+
+0:36:21.989,0:36:23.989
+C'est donc très court.
+
+0:36:24.099,0:36:26.099
+Mais il fait en quelque sorte un travail décent.
+
+0:36:28.000,0:36:34.109
+Ici c’est pour tester les systèmes de vision à réaction rapide avec ici Pierre-Simon qui a sauté devant et
+
+0:36:34.420,0:36:40.950
+le robot s'arrête immédiatement. Maintenant c’est le système complet avec vision à longue distance et
+
+0:36:41.950,0:36:43.950
+des étudiants qui s’ennuyent.
+
+0:36:49.370,0:36:52.150
+C'est une sorte d'abandon.
+
+0:37:03.970,0:37:06.149
+Ok, oups
+
+0:37:08.649,0:37:12.690
+Donc c'est ce qu'on appelle de la segmentation sémantique.
+
+0:37:12.690,0:37:18.329
+Mais la véritable forme de segmentation sémantique est celle dans laquelle vous donnez une catégorie d'objet pour chaque lieu.
+
+0:37:18.729,0:37:21.599
+C'est de ce genre de problème qu'il s'agit ici.
+
+0:37:22.569,0:37:25.949
+Chaque pixel est soit un bâtiment, soit le ciel, soit
+
+0:37:26.769,0:37:28.769
+la rue, une voiture ou quelque chose comme ça.
+
+0:37:29.000,0:37:37.409
+Vers 2010, quelques jeux de données ont commencé à apparaître avec des milliers d'images sur lesquels il est possible d’entraîner les systèmes de vision à le faire.
+
+0:37:39.940,0:37:42.059
+La technique est donc la suivante…
+
+0:37:42.849,0:37:44.849
+C’est essentiellement identique à celle que j'ai décrite.
+
+0:37:45.309,0:37:47.309
+C’est également à plusieurs échelles.
+
+0:37:48.130,0:37:52.920
+Vous avez donc une image d'entrée, vous avez un réseau convolutif
+
+0:37:53.259,0:37:57.959
+qui a une série de sorties que vous connaissez. Une pour chaque catégorie
+
+0:37:58.539,0:38:01.258
+d’objets pour lesquels vous avez une étiquette, qui ici est au nombre de 33.
+
+0:38:02.680,0:38:05.879
+Lorsque vous rétropropagez une sortie du réseau convolutif sur l'entrée
+
+0:38:06.219,0:38:11.249
+cela correspond à une fenêtre d'entrée de 46 par 46 fenêtres. Il s'agit donc d'utiliser un contexte de 46
+
+0:38:12.309,0:38:16.889
+par 46 pixels pour prendre la décision à propos du seul pixel. C'est au moins le
+
+0:38:17.589,0:38:19.589
+réseau neuronal en bas.
+
+0:38:19.900,0:38:24.569
+Mais 46 par 46 n'est pas suffisant si vous voulez décider ce qu'est un bon pixel gris.
+
+0:38:24.569,0:38:27.359
+Est-ce la chemise de la personne ? Est-ce la rue ? Est-ce le
+
+0:38:28.119,0:38:31.679
+nuage ou un pixel sur la montagne ? Vous devez regarder un
+
+0:38:32.650,0:38:34.650
+contexte pour pouvoir prendre cette décision.
+
+0:38:35.529,0:38:39.179
+Nous utilisons à nouveau ce type d'approche multi-échelle où la même image est
+
+0:38:39.759,0:38:45.478
+réduite d'un facteur 2 et d'un facteur 4 et vous faites passer ces deux images supplémentaires au même ConvNet.
+
+0:38:45.479,0:38:47.789
+Même poids, même noyau, même tout.
+
+0:38:48.940,0:38:54.089
+Sauf pour la dernière carte de caractéristiques, vous l’agrandissez pour qu'elle ait la même taille que l'originale.
+
+0:38:54.089,0:38:58.859
+Et maintenant, vous prenez ces cartes combinées et les envoyez à quelques couches d'un classifieur.
+
+0:38:59.410,0:39:01.410
+Le classifieur doit donc maintenant prendre sa décision.
+
+0:39:01.749,0:39:07.738
+Il dispose de quatre fenêtres 46 par 46 sur des images qui ont été redimensionnées et la taille
+
+0:39:08.289,0:39:12.718
+du contexte actuel est de 184 par 184 car
+
+0:39:13.269,0:39:15.269
+l'échelle de base
+
+0:39:15.610,0:39:17.910
+du réseau s'intéresse essentiellement à l’intégralité de cette
+
+0:39:19.000,0:39:21.870
+image.
+
+0:39:24.310,0:39:30.299
+Ensuite, vous pouvez le nettoyer de différentes manières. Je ne vais pas entrer dans les détails, mais ça fonctionne assez bien.
+
+0:39:33.970,0:39:36.330
+Voici donc le résultat.
+
+0:39:37.870,0:39:40.140
+Le type qui a fait ça dans mon laboratoire est Clément Farabet.
+
+0:39:40.170,0:39:46.319
+Il est vice-président de Nvidia. Il est responsable de l'infrastructure d'apprentissage machine et de la conduite autonome.
+
+0:39:47.080,0:39:49.080
+Ce n'est pas surprenant.
+
+0:39:51.100,0:39:57.959
+Et donc ce système… c'est le Washington Square Park au fait, donc c'est le campus de l'université de New York.
+
+0:39:59.440,0:40:02.429
+Ce n'est pas parfait, loin de là. 
+
+0:40:03.220,0:40:06.300
+Identification de certaines zones de la rue comme étant du sable
+
+0:40:07.330,0:40:09.160
+ou le désert alors
+
+0:40:09.160,0:40:12.479
+Qu’il n'y a pas de plage à Washington Square Park.
+
+0:40:13.750,0:40:15.750
+Et
+
+0:40:16.480,0:40:17.320
+Mais 
+
+0:40:17.320,0:40:22.469
+à l'époque, ce type de système était très peu développé au regard du nombre d'échantillons d’entraînement.
+
+0:40:22.470,0:40:24.400
+C'était quelque chose
+
+0:40:24.400,0:40:27.299
+de l’ordre de 2 000 ou 3 000 images. [Question d’un étudiant coupée au montage].
+
+0:40:31.630,0:40:34.410
+Vous prenez une image en pleine résolution.
+
+0:40:36.220,0:40:42.689
+Vous exécutez sur les N-2 premières couches de votre ConvNet, ce qui vous donne vos cartes de caractéristiques.
+
+0:40:42.970,0:40:45.570
+Ensuite, vous réduisez l'image d'un facteur de deux et recommencez.
+
+0:40:45.570,0:40:50.009
+Vous obtenez un tas de cartes de caractéristiques qui sont plus petites puis vous exécutez à nouveau en réduisant par un facteur quatre.
+
+0:40:50.320,0:40:51.900
+Vous obtenez des cartes de caractéristiques plus petites.
+
+0:40:51.900,0:40:52.420
+Maintenant
+
+0:40:52.420,0:40:57.420
+vous prenez la petite carte de caractéristiques et vous la redimensionnez. Vous l'échantillonnez pour qu'elle soit de la même taille que la première.
+
+0:40:57.420,0:41:00.089
+Pareil pour la seconde. Vous empilez toutes ces cartes de caractéristiques.
+
+0:41:00.880,0:41:07.199
+Ok. Là vous alimentiez deux couches pour un classifieur pour chaque patch.
+
+0:41:07.980,0:41:14.240
+Le document a été rejeté par CVPR en 2012 même si les résultats battez tous les records. 
+
+0:41:14.710,0:41:17.520
+Il était aussi plus rapide que la meilleure méthode 
+
+0:41:18.400,0:41:20.400
+concurrente d’un facteur 50.
+
+0:41:20.950,0:41:26.920
+Même en fonctionnant sur du matériel standard. Mais nous avons également fait une implémentation sur du matériel spécial qui était incroyablement rapide.
+
+0:41:27.130,0:41:34.600
+Les gens ne savaient pas ce qu'était le réseau convolutif à l'époque et les examinateurs n'ont donc pas pu comprendre que
+
+0:41:35.660,0:41:37.359
+la méthode dont ils n'avaient jamais entendu parler pouvait fonctionner
+
+0:41:37.359,0:41:40.899
+tellement bien. Il y a beaucoup plus à dire sur les réseaux convolutifs.
+
+0:41:40.900,0:41:44.770
+Je vous encourage à suivre un cours de vision par ordinateur pour en savoir plus.
+
+0:41:45.950,0:41:49.540
+Ce jeu de données que nous avons utilisé
+
+0:41:51.590,0:41:57.969
+est un recueil d'images de rue qui a été collecté principalement par Antonio Torralba du MIT.
+
+0:42:02.690,0:42:04.130
+Il avait 
+
+0:42:04.130,0:42:08.530
+une sorte d'outil d'étiquetage. Vous pouvez
+
+0:42:09.140,0:42:12.100
+dessiner le contour de l'objet, puis étiqueter l'objet.
+
+0:42:12.650,0:42:18.129
+Cela pouvait en quelque sorte, vous savez, remplir l'objet. La plupart des segmentations ont été faites par sa mère
+
+0:42:20.030,0:42:22.030
+qui est en Espagne.
+
+0:42:22.310,0:42:24.310
+Elle avait beaucoup de temps à
+
+0:42:25.220,0:42:27.220
+consacrer pour faire cela.
+
+0:42:27.380,0:42:29.300
+[Question d’un étudiant]
+
+0:42:29.300,0:42:34.869
+Sa mère, oui, a étiqueté ce genre de choses. C'était à la fin des années 2000.
+
+0:42:37.190,0:42:41.530
+Bon, parlons maintenant d'un tas d'architectures différentes.
+
+0:42:43.400,0:42:45.520
+Comme je l'ai déjà dit
+
+0:42:45.950,0:42:51.159
+l'idée de l'apprentissage profond est que vous disposez d’un catalogue de modules que vous pouvez assembler sous forme de différents graphes et
+
+0:42:52.040,0:42:54.879
+de leur donner différentes fonctions.
+
+0:42:56.210,0:42:58.210
+Toute l’expertise
+
+0:42:58.430,0:43:03.280
+en apprentissage profond consiste à concevoir ces architectures pour faire quelque chose en particulier.
+
+0:43:03.619,0:43:06.909
+C'est un peu comme aux débuts de l'informatique.
+
+0:43:08.180,0:43:11.740
+La mise au point d'un algorithme pour écrire un programme était une sorte de nouveau concept.
+
+0:43:12.830,0:43:14.830
+Réduire un
+
+0:43:15.560,0:43:19.209
+problème en un type d’ensemble d'instructions pouvant être exécutées sur un ordinateur.
+
+0:43:19.210,0:43:21.580
+C'était quelque chose de nouveau et ici c'est le même problème.
+
+0:43:21.830,0:43:26.109
+Il faut imaginer comment réduire une fonction complexe en une sorte de
+
+0:43:26.500,0:43:29.560
+graphe, éventuellement un graphique dynamique de
+
+0:43:29.560,0:43:36.100
+modules fonctionnels dont vous n'avez pas besoin de connaître complètement la fonction mais que vous allez suivre et dont la fonction sera finalisée par l'apprentissage.
+
+0:43:36.109,0:43:38.199
+L'architecture est super importante, bien sûr.
+
+0:43:38.920,0:43:43.359
+Comme nous l'avons vu avec les réseaux convolutifs. La première catégorie importante est celle des réseaux récurrents.
+
+0:43:44.180,0:43:47.379
+Nous avons vu quand nous avons parlé de la rétropropagation
+
+0:43:48.140,0:43:50.140
+qu’une condition importante
+
+0:43:50.510,0:43:58.029
+était que le graphe de l'interconnexion du module ne puisse pas avoir de boucles. Que ce soit un
+
+0:43:59.299,0:44:04.059
+pour lequel il existe une sorte d'ordre au moins partiel du module afin que vous puissiez calculer les
+
+0:44:04.819,0:44:09.489
+modules de telle sorte que lorsque vous calculez la sortie d'un module, toutes ses entrées sont disponibles.
+
+0:44:11.240,0:44:13.299
+Mais le réseau récurrent est un réseau dans lequel vous avez des boucles.
+
+0:44:14.480,0:44:15.490
+Comment faire face à cette situation ?
+
+0:44:15.490,0:44:18.459
+Voici donc un exemple d'architecture de réseau récurrent
+
+0:44:18.920,0:44:25.210
+où vous avez une entrée qui varie dans le temps, X(t), qui passe par le premier réseau neuronal. Appelons cela un encodeur.
+
+0:44:25.789,0:44:29.349
+Cela produit une représentation de l'entrée
+
+0:44:29.349,0:44:32.679
+que nous appelons H(t) et elle va dans une couche récurrente.
+
+0:44:32.680,0:44:38.409
+Cette couche récurrente est une fonction G qui dépend de paramètres entraînables W. Ces paramètres entraînables également pour l’encodeur
+
+0:44:38.410,0:44:40.410
+mais je ne l'ai pas mentionné.
+
+0:44:41.150,0:44:42.680
+Et
+
+0:44:42.680,0:44:46.480
+la couche récurrente prend en compte H(t), qui est la représentation de l'entrée
+
+0:44:46.480,0:44:49.539
+mais il prend également en compte Z(t-1), qui est 
+
+0:44:50.150,0:44:55.509
+une sorte d'état caché, qui est sa sortie à un pas de temps précédent. Sa propre sortie à un pas de temps précédent.
+
+0:44:56.299,0:44:59.709
+Cette fonction G peut être un réseau neuronal très compliqué à l'intérieur.
+
+0:45:00.000,0:45:07.519
+Un réseau convolutif, tout ce qui peut être aussi compliqué que vous le souhaitez. Mais ce qui est important, c'est que l'une de ses entrées est
+
+0:45:08.000,0:45:10.869
+sa sortie à une étape temporelle précédente.
+
+0:45:11.630,0:45:13.160
+Ok.
+
+0:45:13.160,0:45:15.049
+Z(t-1)
+
+0:45:15.049,0:45:21.788
+C'est pourquoi ce retard [« delay » sur la diapositive] est indiqué ici. L'entrée de G au temps t est en fait Z(t-1)
+
+0:45:21.789,0:45:24.459
+qui est la sortie une étape temporelle précédente.
+
+0:45:27.230,0:45:32.349
+Ok, alors la sortie de ce module récurrent va dans un décodeur qui produit essentiellement une sortie.
+
+0:45:32.450,0:45:35.710
+Il transforme une représentation cachée Z en une sortie.
+
+0:45:39.859,0:45:41.979
+Alors, comment gérer cela ? Vous déroulez la boucle.
+
+0:45:44.230,0:45:47.439
+C'est le même schéma, mais je l'ai déroulé dans le temps.
+
+0:45:49.160,0:45:56.170
+Ok, donc au moment 0 j'ai X(0) qui passe par l’encodeur qui produit H(0) et ensuite j'applique
+
+0:45:56.170,0:46:00.129
+la fonction G. Je commence par un Z arbitraire, peut-être 0 ou quelque chose comme ça.
+
+0:46:01.160,0:46:05.980
+Et j'applique la fonction et j'obtiens Z(0) et cela va dans le décodeur qui produit une sortie.
+
+0:46:06.650,0:46:08.270
+Ok
+
+0:46:08.270,0:46:09.740
+et ensuite
+
+0:46:09.740,0:46:16.479
+maintenant qu'il y a Z(0) au premier pas de temps, je peux utiliser le Z(0)  comme sortie précédente pour le pas de temps. Ok.
+
+0:46:17.570,0:46:22.570
+Maintenant la sortie est X(1) et le temps 1. Je passe par l'encodeur. Je passe par la couche récurrente
+
+0:46:22.570,0:46:24.570
+qui n'est désormais plus récurrente.
+
+0:46:24.890,0:46:28.510
+Et je passe par le décodeur, puis le pas de temps suivant, etc.
+
+0:46:29.810,0:46:34.269
+Ok, ce réseau qui est impliqué dans le temps n'a plus de boucles.
+
+0:46:37.130,0:46:39.040
+Ce qui veut dire que je peux faire de la rétropropagation.
+
+0:46:39.040,0:46:44.259
+Donc, si j'ai une fonction objectif qui dit que la dernière sortie doit être celle-là
+
+0:46:45.020,0:46:48.609
+ou peut-être que la trajectoire devrait être une des sorties particulières. 
+
+0:46:49.730,0:46:51.760
+Je peux rétropropager le gradient à travers cette chose.
+
+0:46:52.940,0:46:55.510
+Il s'agit d'un réseau standard avec un
+
+0:46:56.900,0:46:59.980
+une caractéristique particulière, qui est que chaque bloc
+
+0:47:01.609,0:47:03.609
+partage les mêmes poids.
+
+0:47:04.040,0:47:07.509
+Ok, donc les trois instances de l'encodeur,
+
+0:47:08.150,0:47:11.379
+il s'agit du même encodeur à trois pas de temps différents
+
+0:47:11.380,0:47:20.869
+et ont donc les mêmes poids. Les mêmes fonctions G ont les mêmes poids, les trois décodeurs ont les mêmes poids. Oui ? [Question d’un étudiant].
+
+0:47:20.990,0:47:23.260
+Cela peut être variable. Je dois décider à l'avance,
+
+0:47:25.160,0:47:27.399
+mais cela dépend de la longueur de votre séquence d'entrée.
+
+0:47:28.579,0:47:30.109
+Essentiellement.
+
+0:47:30.109,0:47:33.159
+Vous pouvez le faire fonctionner aussi longtemps que vous le voulez.
+
+0:47:33.890,0:47:38.290
+Vous savez, c'est les mêmes poids en plus, donc vous pouvez juste répéter l'opération.
+
+0:47:40.130,0:47:46.390
+Cette technique de déroulement puis de propagation dans le temps s'appelle
+
+0:47:46.391,0:47:49.999
+BTT [Backpropagation through time : rétropropagation à travers le temps].
+
+0:47:50.000,0:47:52.000
+C'est assez évident.
+
+0:47:53.470,0:47:55.470
+C'est tout ce qu'il y a à dire.
+
+0:47:56.710,0:48:01.439
+Malheureusement, ils ne fonctionnent pas très bien, du moins pas dans leur forme naïve.
+
+0:48:03.910,0:48:06.000
+Sous la forme naïve…
+
+0:48:07.360,0:48:11.519
+Une forme simple de réseau récurrent est une forme dans laquelle l’encodeur est linéaire.
+
+0:48:11.770,0:48:16.560
+La fonction G est linéaire avec une tangente hyperbolique ou une sigmoïde ou peut-être une ReLU.
+
+0:48:17.410,0:48:22.680
+Le décodeur est également linéaire - quelque chose comme ça, peut-être avec une ReLU ou quelque chose comme ça -, donc cela pourrait être très simple.
+
+0:48:23.530,0:48:24.820
+Et
+
+0:48:24.820,0:48:27.539
+cela vous pose un certain nombre de problèmes. L’un des problèmes est
+
+0:48:29.290,0:48:32.969
+appelé « disparition du gradient » ou bien « explosion du gradient ».
+
+0:48:34.060,0:48:38.640
+Cela vient du fait que si vous avez une longue séquence, disons 50 pas de temps,
+
+0:48:40.060,0:48:44.400
+chaque fois que vous rétropropagez les gradients…
+
+0:48:45.700,0:48:52.710
+Les gradients qui sont multipliés par la matrice de poids de la fonction G. D'accord à chaque pas de temps
+
+0:48:54.010,0:48:58.560
+les gradients sont multipliés par la matrice de poids. Imaginez que la matrice de poids a
+
+0:48:59.110,0:49:00.820
+de petites valeurs en elle.
+
+0:49:00.820,0:49:07.049
+Cela signifie que chaque fois que vous prenez votre gradient, vous le multipliez par la transposition de cette matrice pour obtenir le gradient pour le précédent
+
+0:49:07.050,0:49:08.290
+pas de temps.
+
+0:49:08.290,0:49:10.529
+Vous obtenez un vecteur plus court, vous obtenez un vecteur plus petit.
+
+0:49:11.200,0:49:14.520
+Le vecteur devient de plus en plus court de manière exponentielle.
+
+0:49:14.980,0:49:18.449
+C'est ce qu'on appelle le problème de la disparition du gradient. Vous arrivez au 50ème
+
+0:49:19.210,0:49:23.100
+pas de temps, qui est en fait le premier pas de temps. Vous n'obtenez pas de gradient.
+
+0:49:28.660,0:49:32.970
+Inversement, si la matrice de poids est vraiment grande et que votre non-linéarité et votre
+
+0:49:33.760,0:49:36.120
+couche récurrente n'est pas saturée,
+
+0:49:36.670,0:49:41.130
+vos gradients peuvent exploser si la matrice de poids est grande chaque fois que vous multipliez le
+
+0:49:41.650,0:49:43.650
+gradient par la transposition de la matrice.
+
+0:49:43.660,0:49:46.920
+Le vecteur s'agrandit et explose, ce qui signifie que
+
+0:49:47.290,0:49:51.810
+vos poids vont diverger lorsque vous faites un pas de gradient ou vous allez devoir utiliser un minuscule taux d'apprentissage pour que ça
+
+0:49:51.810,0:49:53.810
+Fonctionne.
+
+0:49:54.490,0:49:56.290
+Donc
+
+0:49:56.290,0:49:58.529
+il faut utiliser beaucoup d'astuces pour que ces choses fonctionnent.
+
+0:49:59.860,0:50:04.620
+Il y a un autre problème. La raison pour laquelle vous voudriez utiliser un réseau récurrent, pourquoi vous voudriez utiliser un réseau récurrent…
+
+0:50:05.690,0:50:12.639
+Le prétendu avantage du réseau récurrent est qu'ils peuvent se souvenir de choses éloignées dans passé.
+
+0:50:13.850,0:50:15.850
+Ok.
+
+0:50:16.970,0:50:24.639
+Si, par exemple, vous imaginez que les X sont nos caractères que vous entrez un par un…
+
+0:50:25.940,0:50:31.300
+Les caractères viennent d'un programme en C ou quelque chose comme ça…
+
+0:50:33.300,0:50:37.870
+Et ce que votre système est censé vous dire à la fin… Vous savez,
+
+0:50:37.870,0:50:42.699
+il lit quelques centaines de caractères correspondant au code source d'une fonction et à la fin
+
+0:50:43.730,0:50:49.090
+vous voulez entraîner votre système pour qu'il produise 1 si c'est un programme syntaxiquement correct et
+
+0:50:49.910,0:50:51.910
+-1 si ce n'est pas bon.
+
+0:50:52.430,0:50:54.320
+Problème hypothétique.
+
+0:50:54.320,0:50:57.489
+Les réseaux récurrents n'y parviendront pas. Du moins pas avec nos astuces.
+
+0:50:59.180,0:51:02.500
+Il y a ici une chose qui est en cause. 
+
+0:51:03.860,0:51:07.599
+Ce programme doit, entre autres, comporter des accolades et des parenthèses équilibrées.
+
+0:51:09.110,0:51:10.280
+Donc
+
+0:51:10.280,0:51:13.540
+il doit avoir un moyen de se souvenir du nombre de parenthèses ouvertes.
+
+0:51:13.540,0:51:20.350
+Qu'il puisse vérifier que vous les fermez toutes ou combien il y a d’accolades ouvertes pour qu'il les ferme bien.
+
+0:51:21.620,0:51:24.939
+Que ces informations puissent éventuellement être stockées.
+
+0:51:27.380,0:51:29.410
+Essentiellement dans son état caché Z.
+
+0:51:29.410,0:51:32.139
+Il doit stocker comme le nombre d’accolades et
+
+0:51:32.630,0:51:37.240
+de parenthèses étaient ouvertes si il veut pouvoir dire à la fin qu'elles ont toutes été fermées.
+
+0:51:38.620,0:51:41.040
+Il doit donc avoir une sorte de compteur à l'intérieur.
+
+0:51:43.180,0:51:45.080
+[Question/Remarque d’un étudiant] Oui.
+
+0:51:45.080,0:51:47.840
+Ce sera un sujet de discussion demain.
+
+0:51:51.050,0:51:56.750
+Maintenant, si le programme est très long, cela signifie que Z doit en quelque sorte préserver les informations pendant une longue période.
+
+0:51:56.750,0:52:02.800
+Les réseaux récurrents, vous donnent l'espoir qu'un système comme celui-ci peut peut-être y parvenir, mais à cause du problème de la disparition du gradient
+
+0:52:02.810,0:52:05.259
+mais en fait non. Pas les
+
+0:52:07.280,0:52:09.280
+réseaux récurrents
+
+0:52:09.440,0:52:11.440
+de ce type que je viens de décrire.
+
+0:52:12.080,0:52:14.080
+Il faut donc recourir à un tas d'astuces.
+
+0:52:14.200,0:52:18.460
+Ce sont des astuces du laboratoire de Yoshua Bengio mais il y en a un tas d’autres qui ont été publiées par diverses personnes,
+
+0:52:19.700,0:52:22.090
+comme Thomas Mikolov et diverses autres personnes.
+
+0:52:24.050,0:52:27.789
+Ainsi, pour éviter d'exploser les gradients, vous pouvez simplement les couper.
+
+0:52:27.790,0:52:30.279
+Si les gradients deviennent trop importants, il suffit de les écraser,
+
+0:52:30.950,0:52:32.950
+de les normaliser [« clipping gradients » sur la diapositive]
+
+0:52:35.180,0:52:41.800
+Leaky integration, Momentum. Une bonne initialisation des matrices de poids de manière à ce qu’elles
+
+0:52:42.380,0:52:44.380
+préservent plus ou moins la norme.
+
+0:52:44.660,0:52:49.180
+Il s'agit en fait de tout un tas d'articles à ce sujet sur les réseaux neuronaux orthogonaux et l'inversion
+
+0:52:49.700,0:52:51.700
+de réseaux récurrents.
+
+0:52:54.770,0:52:56.770
+Mais l'astuce la plus importante est la suivante : les
+
+0:52:57.470,0:53:04.630
+LSTMs et les GRUs. D'accord. Alors, avant de parler de cela, je vais parler des modules multiplicatifs.
+
+0:53:06.410,0:53:09.470
+Que sont donc les modules multiplicatifs ?
+
+0:53:09.500,0:53:11.000
+Ce sont essentiellement
+
+0:53:11.000,0:53:14.709
+des modules dans lesquels vous pouvez multiplier les choses ensemble.
+
+0:53:14.710,0:53:20.590
+Ainsi, au lieu de calculer simplement une somme pondérée d'entrées, vous calculez les produits des entrées et ensuite la somme pondérée de ces entrées.
+
+0:53:20.600,0:53:23.110
+Vous avez un exemple de ceci en haut à gauche…
+
+0:53:23.720,0:53:25.040
+en haut…
+
+0:53:25.040,0:53:29.080
+Donc la sortie d'un système est ici juste une somme pondérée
+
+0:53:30.080,0:53:32.080
+des poids et des entrées.
+
+0:53:32.240,0:53:37.810
+C’est classique, mais les poids sont en fait eux-mêmes des sommes pondérées de poids et d'entrées.
+
+0:53:38.780,0:53:43.149
+ok, donc le Wij ici, qui est le ij-ème terme dans la matrice de poids du
+
+0:53:43.820,0:53:46.479
+module que nous considérons est en fait lui-même
+
+0:53:47.270,0:53:49.270
+une somme pondérée de
+
+0:53:50.060,0:53:53.439
+trois tenseurs de troisième ordre Uijk
+
+0:53:54.410,0:53:56.560
+pondérés par les variables Zk.
+
+0:53:58.220,0:54:02.080
+Donc en gros, ce que vous obtenez, c'est que Wij est une sorte de somme pondérée de
+
+0:54:04.160,0:54:06.160
+matrices
+
+0:54:06.800,0:54:08.800
+Uk
+
+0:54:09.020,0:54:13.419
+pondérées par un coefficient Zk et les Zk peuvent changer. Il y a des variables d'entrée de la même manière.
+
+0:54:13.460,0:54:17.230
+Donc, en fait, c'est comme avoir un réseau de neurones
+
+0:54:18.260,0:54:22.600
+avec la matrice de poids W qui est elle-même calculée par un autre réseau neuronal.
+
+0:54:24.710,0:54:30.740
+Il existe une forme générale de ce phénomène où l'on ne se contente pas de multiplier des matrices, mais où l'on dispose d'un réseau neuronal qui a une fonction complexe
+
+0:54:31.650,0:54:33.650
+transformant X en S.
+
+0:54:34.859,0:54:40.819
+Une certaine fonction générique. Ok, un ConvNet ou autre. Et les poids de ces réseaux neuronaux
+
+0:54:41.910,0:54:44.839
+ne sont pas des variables que vous apprenez directement. Elles sont la sortie d’un
+
+0:54:44.970,0:54:48.800
+autre neurone qui prend peut-être en compte une autre entrée, ou peut-être la même entrée.
+
+0:54:49.830,0:54:55.069
+Certains appellent ces architectures des « hyper-réseaux ». Des réseaux dont les poids sont calculés par un autre réseau.
+
+0:54:56.160,0:54:59.270
+Mais ici, c’est une forme simple de ça, qui est en quelque sorte une forme bilinéaire
+
+0:54:59.970,0:55:01.740
+ou une forme 
+
+0:55:01.740,0:55:03.180
+quadratique.
+
+0:55:03.180,0:55:05.810
+Ok, donc dans l'ensemble, quand vous écrivez tout :
+
+0:55:06.570,0:55:13.339
+Si est égal à la somme sur j et k de Uijk Zk Xj. Il s'agit d'une double somme.
+
+0:55:15.750,0:55:18.169
+Les gens appelaient cela des unités Sigma Pi. Oui ? [Question d’un étudiant].
+
+0:55:22.890,0:55:27.290
+Nous y viendrons dans une seconde. En gros
+
+0:55:31.500,0:55:33.500
+si vous voulez un réseau neuronal qui puisse
+
+0:55:34.740,0:55:36.740
+effectuer une transformation
+
+0:55:37.440,0:55:41.929
+d’un vecteur en un autre et que cette transformation doit être programmable,
+
+0:55:42.990,0:55:50.089
+vous pouvez faire calculer cette transformation par un réseau de neurones. Mais les poids de ce réseau de neurones seraient eux-mêmes la sortie
+
+0:55:50.090,0:55:54.200
+d’un autre réseau neuronal qui détermine la nature de la transformation.
+
+0:55:55.349,0:56:01.399
+C'est en quelque sorte la forme la plus générale. Plus particulièrement, c’est très utile si vous souhaitez acheminer
+
+0:56:03.359,0:56:08.389
+des signaux à travers un réseau neuronal de différentes manières, en fonction des données.
+
+0:56:10.980,0:56:16.669
+Donc, c'est exactement ce qui est mentionné ci-dessous. Le module d'attention est un cas particulier de cela.
+
+0:56:17.460,0:56:20.510
+Ce n'est pas une couche quadratique. C'est un type différent. C'est un
+
+0:56:21.510,0:56:23.510
+type particulier
+
+0:56:25.140,0:56:26.849
+d’architecture qui
+
+0:56:26.849,0:56:28.849
+calcule essentiellement une
+
+0:56:29.339,0:56:32.029
+combinaison linéaire convexe d'un ensemble de vecteurs.
+
+0:56:32.790,0:56:34.849
+Donc x₁ et x₂ sont ici des vecteurs
+
+0:56:37.770,0:56:42.499
+et w₁ et w₂ sont des scalaires.
+
+0:56:45.540,0:56:47.870
+Ce que le système calcule ici est une somme pondérée de
+
+0:56:49.590,0:56:55.069
+x₁ et x₂ pondérés par w₁ et w₂ pondérés par w₁ w₂. De nouveau w₁ et w₂ sont des scalaires dans ce cas.
+
+0:56:56.910,0:56:58.910
+Voici la somme à la sortie.
+
+0:56:59.730,0:57:01.020
+Donc
+
+0:57:01.020,0:57:07.999
+imaginez que ces deux poids w₁ w₂ sont compris entre 0 et 1 et somment à 1. C'est ce qu'on appelle une combinaison linéaire convexe.
+
+0:57:10.260,0:57:13.760
+Ainsi, en changeant w₁ w₂… Essentiellement
+
+0:57:15.480,0:57:18.139
+si cette somme est égale à 1, on obtient la sortie d'une softmax.
+
+0:57:18.810,0:57:23.629
+Ce qui signifie que w₂ est égal à 1 – w₁ ok ? C'est en quelque sorte la conséquence directe.
+
+0:57:27.450,0:57:29.450
+Donc, fondamentalement, en changeant
+
+0:57:29.790,0:57:34.340
+la taille de w₁ w₂, vous pouvez modifier la sortie pour
+
+0:57:34.530,0:57:39.860
+être soit x₁ ou x₂. Ou une combinaison linéaire des deux, une certaine interpolation entre les deux.
+
+0:57:41.610,0:57:43.050
+Ok
+
+0:57:43.050,0:57:47.179
+Vous pouvez avoir plus que x₁ et x₂, vous pouvez avoir tout un tas de vecteurs x.
+
+0:57:48.360,0:57:50.360
+Et le système
+
+0:57:50.730,0:57:54.800
+choisira une combinaison linéaire.
+
+0:57:55.140,0:58:02.210
+Ceci est appelé mécanisme d'attention car il permet à un réseau neuronal de concentrer son attention sur une entrée particulière et d'ignorer les autres.
+
+0:58:02.880,0:58:05.240
+Le choix de celle-ci est fait par une autre variable Z
+
+0:58:05.790,0:58:09.679
+qui pourrait être la sortie d’un autre réseau neuronal qui examine les X par exemple.
+
+0:58:10.740,0:58:12.270
+Ok, et
+
+0:58:12.270,0:58:18.409
+c'est devenu un type de fonction extrêmement important, qui est utilisé dans de nombreuses situations différentes aujourd'hui.
+
+0:58:19.440,0:58:22.700
+Il est notamment utilisé dans LSTM et GRU.
+
+0:58:26.730,0:58:30.020
+Presque tous les systèmes de traitement du langage naturel utilisent aujourd'hui
+
+0:58:31.830,0:58:37.939
+soit les architectures de type transformers, soit tous les types d'attention. Ils utilisent tous ce genre de choses.
+
+0:58:43.280,0:58:46.570
+Ok, donc vous avez un vecteur Z qui vous passez à une softmax.
+
+0:58:46.570,0:58:52.509
+Vous obtenez un tas de nombres entre 0 et 1 qui somment à 1. Utilisez-les comme coefficient pour calculer une somme pondérée
+
+0:58:52.700,0:58:54.560
+d'un groupe de vecteurs X.
+
+0:58:54.560,0:58:56.589
+Les xᵢ. Et vous obtenez la somme pondérée
+
+0:58:57.290,0:59:00.070
+par ces coefficients dépendant des données.
+
+0:59:00.890,0:59:02.890
+Parce que Z dépend des données.
+
+0:59:05.390,0:59:07.390
+Très bien, donc
+
+0:59:09.800,0:59:13.659
+voici un exemple de la façon dont d’utiliser ça. Vous avez un symbole ici.
+
+0:59:15.530,0:59:17.859
+Ce cercle avec la croix au milieu.
+
+0:59:20.510,0:59:26.739
+C’est une multiplication composante par composante de deux vecteurs que certains appellent produit de Hadamard.
+
+0:59:29.660,0:59:34.629
+C'est une multiplication tour par tour. Il s'agit donc d'une
+
+0:59:36.200,0:59:41.020
+une sorte de module fonctionnel.
+
+0:59:43.220,0:59:47.409
+GRUs [Gates Recurrent Units] est un réseau proposé par Kyunghyun Cho qui est professeur ici.
+
+0:59:50.420,0:59:51.880
+Et il tente
+
+0:59:51.880,0:59:54.430
+de résoudre les problèmes qui se posent naturellement dans les
+
+0:59:54.560,0:59:58.479
+réseaux récurrents. Le fait que le gradient puisse exploser, le fait que
+
+1:00:00.050,1:00:04.629
+les réseaux récurrents ne se souviennent pas vraiment de leur état pendant très longtemps. Ils ont tendance à oublier très rapidement.
+
+1:00:05.150,1:00:07.540
+Il s'agit donc essentiellement d'une cellule de mémoire.
+
+1:00:08.060,1:00:14.080
+C'est la deuxième grande famille de
+
+1:00:16.820,1:00:20.919
+réseaux récurrents avec mémoire. La première est les LSTMs, mais je vais en parler juste après.
+
+1:00:21.650,1:00:23.650
+C’est parce que celui-ci est un peu plus simple.
+
+1:00:24.950,1:00:27.550
+Les équations sont écrites ici en bas.
+
+1:00:28.280,1:00:30.280
+Donc en gros, il y a un
+
+1:00:31.280,1:00:32.839
+un
+
+1:00:32.839,1:00:34.839
+vecteur de porte Z
+
+1:00:35.720,1:00:37.550
+qui est
+
+1:00:37.550,1:00:41.919
+simplement l’application d'une fonction non linéaire, la fonction sigmoïde,
+
+1:00:42.950,1:00:44.089
+à
+
+1:00:44.089,1:00:49.119
+deux couches linéaires et un biais. Ces deux couches linéaires tiennent compte de l'entrée X(t) et
+
+1:00:49.400,1:00:54.389
+l'état précédent qu’ils ont appelé H dans leur cas. Non pas Z comme je l'ai fait.
+
+1:00:55.930,1:01:01.889
+Ok, donc vous prenez X vous prenez H. Vous calculez les matrices.
+
+1:01:02.950,1:01:04.140
+Vous passez un résultat.
+
+1:01:04.140,1:01:07.440
+Vous ajoutez les résultats. Vous les faites passer par les fonctions sigmoïdes et vous obtenez un tas de valeurs
+
+1:01:07.539,1:01:11.939
+comprises entre 0 et 1 car la sigmoïde est compris entre 0 et 1. Vous donne un coefficient et
+
+1:01:14.140,1:01:16.140
+vous utilisez ces coefficients.
+
+1:01:16.660,1:01:20.879
+Vous voyez la formule en bas, le Z est utilisé pour calculer une combinaison linéaire
+
+1:01:21.700,1:01:24.210
+de deux entrées. Si Z est égal à 1,
+
+1:01:25.420,1:01:28.379
+vous ne regardez que H(t-1). Si Z 
+
+1:01:29.859,1:01:35.669
+est égal à 0 alors 1 - Z est égal à 1 et vous regardez ceci.
+
+1:01:36.400,1:01:38.109
+L'expression ici.
+
+1:01:38.109,1:01:43.528
+Cette expression est une matrice de poids multipliée par l'entrée passée par une fonction tangente hyperbolique.
+
+1:01:43.529,1:01:46.439
+Il pourrait s'agir d'une ReLU, mais il s'agit d'une tangente hyperbolique dans ce cas.
+
+1:01:46.839,1:01:49.528
+Et c’est combiné avec d'autres choses ici que nous pouvons ignorer pour l'instant.
+
+1:01:50.829,1:01:58.439
+D'accord. En gros, la valeur Z indique au système qu'il suffit de copier si Z est égal à 1, il suffit de copier son
+
+1:01:58.440,1:02:00.440
+l'état précédent et ignorer l'entrée.
+
+
+1:02:00.789,1:02:04.978
+Ok, donc il agit essentiellement comme une mémoire. Il ne fait que copier son état précédent sur sa sortie.
+
+1:02:06.430,1:02:08.430
+Et si Z égal à 0,
+
+1:02:09.549,1:02:17.189
+alors l'état actuel est oublié et vous voulez juste lire l'entrée.
+
+1:02:19.450,1:02:24.629
+Ok. Multipliée par une matrice quelconque afin de modifier l'état du système. [Question d’un étudiant]
+
+1:02:28.960,1:02:35.460
+Oui, vous faites ça composante par composante. Vecteur 1. Oui. Exactement. [Question d’un étudiant]
+
+1:02:47.500,1:02:53.459
+Eh bien, c'est comme le nombre de multiplications indépendantes. Quel est le dérivé d’une
+
+1:02:54.880,1:02:59.220
+fonction objectif par rapport à l’entrée d'un produit ? Elle est égale à la
+
+1:03:01.240,1:03:07.829
+dérivée de cette fonction objectif par rapport au produit, multiplié par l'autre terme. C'est aussi simple que cela. [Question d’un étudiant].
+
+1:03:18.039,1:03:20.039
+C'est parce que par défaut
+
+1:03:20.529,1:03:22.529
+essentiellement à moins que Z ne soit…
+
+1:03:23.619,1:03:25.509
+Votre Z est
+
+1:03:25.509,1:03:30.689
+plus moins par défaut égal à 1 et donc par défaut le système ne fait que copier son état précédent.
+
+1:03:33.039,1:03:35.999
+Et s'il y a un peu moins que 1, 
+
+1:03:37.210,1:03:42.539
+cela apporte un peu d’entrée à l’état mais ne change pas de manière significative l'état. Ce que cela signifie c’est que
+
+1:03:43.630,1:03:44.799
+ça conserve
+
+1:03:44.799,1:03:46.919
+la norme, il préserve l'information. Ok ?
+
+1:03:48.940,1:03:53.099
+Puisque fondamentalement avec la cellule mémoire vous pouvez changer continuellement. [Question d’un étudiant]
+
+1:04:00.480,1:04:04.159
+Eh bien, parce qu'il faut quelque chose entre 0 et 1, c'est un coefficient.
+
+1:04:04.160,1:04:07.789
+Il faut donc que ce soit entre 0 et 1, c'est ce que nous faisons avec les sigmoïdes. [Question d’un étudiant]
+
+1:04:11.850,1:04:16.850
+Vous avez besoin d'une fonction monotone qui va de 0 à 1.
+
+1:04:17.970,1:04:20.059
+Monotone et différenciable.
+
+1:04:20.730,1:04:22.849
+Il y a beaucoup de fonctions sigmoïdes, mais
+
+1:04:24.000,1:04:26.000
+pourquoi pas.
+
+1:04:26.100,1:04:29.779
+Je veux dire qu'il y a des arguments pour en utiliser d'autres, mais vous savez, cela ne fait pas une grande
+
+1:04:30.540,1:04:32.540
+Différence.
+
+1:04:32.700,1:04:37.009
+Dans la forme complète des GRUs, il y a aussi une porte de réinitialisation. Donc, la porte de réinitialisation est
+
+1:04:37.650,1:04:44.989
+Cette chose-là. R est donc un autre vecteur qui est également calculé comme une combinaison linéaire des entrées et de l'état précédent.
+
+1:04:45.660,1:04:51.319
+Il sert à multiplier l'état précédent. Ainsi, si R est égal à 0, l'état précédent est…
+
+1:04:52.020,1:04:54.410
+Si R vaut 0 et Z vaut 1,
+
+1:04:55.950,1:05:00.499
+le système est en fait complètement remis à zéro, car c'est 0.
+
+1:05:01.350,1:05:03.330
+Il ne s'intéresse donc qu'à l'entrée.
+
+1:05:03.330,1:05:09.950
+Il s'agit en fait d'une version simplifiée d'un document publié plus tôt en 1997 et intitulé
+
+1:05:10.260,1:05:12.260
+LSTM : Long Short-term Memory.
+
+1:05:13.050,1:05:14.820
+Qui est une tentative
+
+1:05:14.820,1:05:19.519
+de résoudre le même problème : les réseaux récurrents perdent la mémoire pendant quand la séquence est trop longue.
+
+1:05:19.520,1:05:21.520
+Et donc vous construisez ces réseaux comme
+
+1:05:22.860,1:05:26.120
+des cellules de mémoire par défaut. Et par défaut, elles conserveront les informations.
+
+1:05:26.760,1:05:28.430
+C'est essentiellement la même idée ici.
+
+1:05:28.430,1:05:33.979
+Les détails sont légèrement différents ici. Il n'y a pas de croix au milieu de la forme ronde ici pour le produit
+
+1:05:33.980,1:05:35.610
+mais c'est la même chose.
+
+1:05:35.610,1:05:41.539
+Et il y a un peu plus de pièces mobiles. En fait, cela ressemble plus à un « run sale ».
+
+1:05:41.540,1:05:44.060
+C'est donc une sorte de volte-face qu'ils peuvent préserver
+
+1:05:44.430,1:05:48.200
+l’information. Il y a des fuites que vous pouvez avoir. Vous pouvez les remettre à 0 ou à 1.
+
+1:05:48.810,1:05:50.810
+C'est assez compliqué.
+
+1:05:52.050,1:05:59.330
+Heureusement, les gens de Nvidia, Facebook, Google et d'autres sites ont des implémentations très efficaces de ces outils, ce qui vous évite de
+
+1:05:59.550,1:06:01.550
+devoir trouver comment rédiger le
+
+1:06:01.620,1:06:03.710
+code CUDA pour ceci ou écrire la rétropropagation.
+
+1:06:05.430,1:06:07.430
+Cela fonctionne très bien.
+
+1:06:07.500,1:06:12.689
+C'est cependant de moins en moins utilisé car
+
+1:06:13.539,1:06:15.539
+les gens utilisent des réseaux récurrents.
+
+1:06:16.150,1:06:18.210
+Les gens avaient l'habitude d'utiliser des réseaux récurrents pour le traitement du langage naturel
+
+1:06:19.329,1:06:21.220
+principalement,
+
+1:06:21.220,1:06:25.949
+et pour des choses comme la reconnaissance de la parole. La reconnaissance de la parole s'oriente vers l'utilisation de réseaux convolutifs, de
+
+1:06:27.490,1:06:29.200
+réseaux conditionnels temporels.
+
+1:06:29.200,1:06:34.109
+Tandis que le traitement du langage naturel évolue vers l'utilisation de ce que l'on appelle les transformers.
+
+1:06:34.630,1:06:36.900
+Dont nous entendrons beaucoup parler demain.
+
+1:06:37.630,1:06:38.950
+Non ?
+
+1:06:38.950,1:06:40.950
+Quand ?
+
+1:06:41.109,1:06:43.109
+Dans deux semaines, d'accord.
+
+1:06:46.599,1:06:48.599
+Ce que sont les transformers…
+
+1:06:49.119,1:06:51.119
+Bon, je ne vais pas parler des transformers pour l'instant.
+
+1:06:51.759,1:06:56.219
+Mais les transformers sont une sorte de généralisation, une
+
+1:06:57.009,1:06:58.619
+utilisation généralisée de l'attention si vous voulez.
+
+1:06:58.619,1:07:02.038
+Les grands réseaux neuronaux qui utilisent l'attention,
+
+1:07:02.039,1:07:06.329
+chaque bloc de neurone utilise l'attention et cela a tendance à fonctionner assez bien.
+
+1:07:06.329,1:07:09.538
+Tellement bien que les gens abandonnent en quelque sorte tout le reste pour en traitement du langage naturel.
+
+1:07:10.869,1:07:12.869
+Le problème est que
+
+1:07:13.269,1:07:15.299
+les systèmes comme les LSTMs ne sont pas très bons à cet égard.
+
+1:07:16.599,1:07:20.219
+Donc les transformers sont bien meilleurs. Les plus gros transformers ont des milliards de paramètres.
+
+1:07:21.430,1:07:30.000
+Le plus grand en a 15 milliards, quelque chose dans cet ordre de grandeur, le T5 de Google [au moment de l’enregistrement de cette vidéo].
+
+1:07:30.460,1:07:36.779
+C'est une énorme quantité de mémoire et c'est à cause du type particulier d'architecture utilisé dans les transformers.
+
+1:07:36.779,1:07:40.319
+Ils peuvent en fait stocker beaucoup de connaissances si vous voulez.
+
+1:07:41.289,1:07:43.559
+C'est donc ce que les gens utilisent pour
+
+1:07:44.440,1:07:47.069
+des systèmes de réponse aux questions,
+
+1:07:47.769,1:07:50.099
+des systèmes de traduction, etc. Ils utiliseront des transformers.
+
+1:07:52.869,1:07:54.869
+Ok.
+
+1:07:57.619,1:08:01.778
+Donc les LSTMs étaient en quelque sorte l'une des premières
+
+1:08:02.719,1:08:04.958
+architectures récurrentes qui a fonctionné.
+
+1:08:05.929,1:08:11.408
+Les gens ont essayé de les utiliser pour des choses que l'on pourrait croire folles au début mais qui se sont avérées efficaces.
+
+1:08:12.109,1:08:16.689
+La traduction en est un exemple. Elle est appelée traduction automatique neuronale.
+
+1:08:17.509,1:08:19.509
+Il y avait donc un papier d’Ilya Sutskever.
+
+1:08:19.639,1:08:22.149
+à NIPS 2014 où il
+
+1:08:22.969,1:08:29.799
+a entraîné cette LSTM géante multicouche. Qu'est-ce qu'une LSTM multicouches ? C'est une LSTM où vous avez…
+
+1:08:30.589,1:08:36.698
+C'est la version dépliée ici. En bas, vous avez donc une LSTM qui est ici déplié pour trois étapes.
+
+1:08:36.699,1:08:41.618
+Mais il doit être déplié pour la longueur d'une phrase que vous voulez traduire. Disons une
+
+1:08:42.000,1:08:43.969
+phrase en français.
+
+1:08:45.529,1:08:48.038
+Et ensuite, vous prenez les états cachés
+
+1:08:48.289,1:08:53.709
+à chaque étape de cette LSTM et vous l'introduisez dans une seconde LSTM.
+
+1:08:53.929,1:08:55.150
+Je pense que dans son réseau
+
+1:08:55.150,1:08:58.329
+il en avait en fait quatre couches, donc vous pouvez considérer cela comme une
+
+1:08:58.639,1:09:02.139
+LSTM empilée. Chacun est récurrent dans le temps,
+
+1:09:02.139,1:09:05.589
+mais ils sont en quelque sorte empilés comme les couches d'un réseau de neurones.
+
+1:09:06.670,1:09:14.769
+Donc à la dernière étape de la dernière couche, vous avez un vecteur ici, qui est censé représenter le sens entier de cette phrase.
+
+1:09:16.309,1:09:18.879
+D'accord, il pourrait donc s'agir d'un vecteur assez important.
+
+1:09:19.849,1:09:24.819
+Ensuite vous le donnez à une autre LSTM multicouches. 
+
+1:09:27.319,1:09:31.028
+Vous savez, vous passez un nombre indéterminé d'étapes.
+
+1:09:32.119,1:09:37.209
+Le rôle de cette LSTM est de produire des mots dans une langue cible si vous faites une traduction, disons en allemand.
+
+1:09:38.869,1:09:40.839
+Ok
+
+1:09:40.839,1:09:44.499
+Il s'agit de l'état que vous passez à travers les deux premières couches de la LSTM.
+
+1:09:44.630,1:09:48.849
+Produisez un mot, puis prenez ce mot et l'introduisez dans l'étape suivante.
+
+1:09:49.940,1:09:52.359
+Donc vous pouvez générer du texte de manière séquentielle. Ok ?
+
+1:09:52.909,1:09:58.899
+Passez ce produit, prenez un autre mot, ramenez-le à l'entrée et continuez. Il s'agit donc d'un…
+
+1:10:00.619,1:10:02.619
+Si vous faites cela pour la traduction, vous obtenez ce gigantesque
+
+1:10:03.320,1:10:07.480
+réseau neuronal, vous l’entraînez et voilà le système de ce type
+
+1:10:07.480,1:10:12.010
+que Sutskever a représenté à NIPS 2014. Cela a été le premier système
+
+1:10:13.130,1:10:19.209
+neuronal de traduction dont les performances pouvaient rivaliser avec des approches plus classiques non basées sur des réseaux de neurones.
+
+1:10:21.350,1:10:23.950
+Les gens étaient vraiment surpris que pouvoir obtenir de tels résultats.
+
+1:10:26.840,1:10:28.840
+Ce succès a été de très courte durée. [Question d’un étudiant coupée au montage].
+
+1:10:31.280,1:10:33.280
+Oui, le problème est
+
+1:10:34.340,1:10:37.449
+que le mot que vous allez dire à un moment donné dépend du mot que vous venez de dire.
+
+1:10:38.180,1:10:41.320
+Et si vous demandez au système de ne produire un mot,
+
+1:10:42.800,1:10:45.729
+puis vous ne donnez pas ce mot à l'entrée
+
+1:10:45.730,1:10:49.120
+le système pourrait produire un autre mot qui n’est pas cohérent avec le précédent que vous avez produit. [Question d’un étudiant].
+
+1:10:55.790,1:10:57.790
+Cela devrait mais non.
+
+1:10:58.760,1:11:05.590
+Je veux dire, pas assez bien pour que ça marche. C'est donc une sorte de production séquentielle qui est plus ou moins nécessaire.
+
+1:11:07.790,1:11:09.790
+En principe, vous avez raison.
+
+1:11:10.910,1:11:12.910
+Ce n'est pas très satisfaisant.
+
+1:11:13.610,1:11:19.089
+Il y a un problème avec cela qui est que le sens entier de la phrase doit être en quelque sorte comprimé.
+
+1:11:19.430,1:11:22.419
+Cet état caché qui se trouve entre l’encodeur et le décodeur.
+
+1:11:24.530,1:11:29.829
+C'est un problème. Le deuxième problème est que, bien que les LSTMs soient conçus pour préserver les informations,
+
+1:11:31.040,1:11:36.010
+ce sont essentiellement des cellules de mémoire, elles ne conservent en fait pas les informations pendant plus de 20 mots environ.
+
+1:11:36.860,1:11:40.299
+Donc, si votre phrase compte plus de 20 mots à la fin de la phrase
+
+1:11:40.520,1:11:43.270
+votre état caché aura oublié le début.
+
+1:11:43.640,1:11:49.269
+La solution pour résoudre cela est un énorme hack appelé Bi-LSTM.
+
+1:11:50.060,1:11:54.910
+C'est une idée complètement triviale qui consiste à faire fonctionner deux LSTMs dans des directions opposées.
+
+1:11:56.210,1:11:59.020
+Ok. Vous obtenez deux codes : un qui est
+
+1:11:59.720,1:12:04.419
+en exécute la LSTM du début à la fin de la phrase, c'est un vecteur. Et le deuxième vecteur est d’exécuter
+
+1:12:04.730,1:12:09.939
+une LSTM dans l'autre sens, vous obtenez un deuxième vecteur. C'est le sens de votre phrase.
+
+1:12:10.280,1:12:16.809
+Vous pouvez pratiquement doubler la durée de votre phrase sans perdre trop d'informations de cette façon. Mais ce n'est pas une solution très satisfaisante.
+
+1:12:17.120,1:12:19.450
+Si vous voyez Bi-LSTM, c'est ce que c'est.
+
+1:12:22.830,1:12:29.179
+Comme je l'ai dit, le succès a été de courte durée car, en fait, avant que le papier ne soit publié à NIPS,
+
+1:12:30.390,1:12:32.390
+il y a eu un autre papier de
+
+1:12:34.920,1:12:37.969
+Dzmitry Bahdanau, Kyunghyun Cho et Yoshua Bengio
+
+1:12:38.000,1:12:43.319
+qui a été publié sur Arxiv le 14 septembre [d’après Arxiv, il s’avère que c’est plutôt le 1er septembre 2014 que le 14] et qui disait
+
+1:12:43.560,1:12:47.209
+nous pouvons utiliser l'attention. Le mécanisme d'attention que j'ai mentionné plus tôt.
+
+1:12:49.320,1:12:51.300
+Au lieu d'avoir ces gigantesques
+
+1:12:51.300,1:12:54.890
+réseaux et de compresser tout le sens d'une phrase dans ce petit vecteur,
+
+1:12:55.800,1:12:58.190
+il serait plus logique pour la traduction si
+
+1:12:58.710,1:13:03.169
+à chaque fois que l'on dit, on veut produire un mot en français correspondant à une phrase en anglais…
+
+1:13:04.469,1:13:08.509
+Si l'on regarde l'emplacement dans la phrase anglaise qui contient ce mot.
+
+1:13:09.390,1:13:10.620
+Ok.
+
+1:13:12.000,1:13:17.540
+Donc notre décodeur va produire des mots français un par un et quand il s'agit de produire un mot
+
+1:13:18.449,1:13:21.559
+qui a un équivalent dans la phrase d'entrée en anglais, il
+
+1:13:21.960,1:13:29.750
+va concentrer son attention sur ce mot. Alors la traduction du français à l'anglais de ce mot serait simple.
+
+1:13:30.360,1:13:32.300
+Ce n'est peut-être pas un seul mot.
+
+1:13:32.300,1:13:34.050
+Il pourrait s'agir d'un groupe de mots.
+
+1:13:34.050,1:13:39.590
+Car très souvent, il faut transformer un groupe de mots en anglais en un groupe de mots en français pour dire à peu près la même chose.
+
+1:13:39.590,1:13:41.590
+Si c'est de l'allemand vous devez
+
+1:13:42.150,1:13:43.949
+mettre le
+
+1:13:43.949,1:13:47.479
+verbe à la fin de la phrase alors qu'en anglais, il pourrait être au début.
+
+1:13:48.060,1:13:51.109
+Donc, en gros, vous utilisez ce mécanisme d'attention.
+
+1:13:51.110,1:13:57.440
+Ce module d'attention est donc celui que j'ai montré quelques diapositives plus tôt et qui décide essentiellement
+
+1:13:58.739,1:14:04.428
+quel pas de temps de la représentation cachée, pour quel autre mot de la phrase d'entrée il va se concentrer.
+
+1:14:06.570,1:14:12.259
+Pour produire une sorte de représentation qui va produire le mot courant à un moment particulier.
+
+1:14:12.260,1:14:15.320
+Nous voici donc à l'étape numéro trois. Nous allons produire un troisième mot
+
+1:14:16.140,1:14:21.829
+et nous allons devoir décider lequel des mots d'entrée correspond à ceci et nous allons avoir ce mécanisme d'attention.
+
+1:14:21.830,1:14:23.830
+Donc essentiellement, nous allons avoir un
+
+1:14:25.140,1:14:28.759
+petit morceau de réseau neuronal qui va examiner les entrées de ce côté.
+
+1:14:31.809,1:14:35.879
+Sa sortie va passer par une softmax qui va produire un tas de
+
+1:14:35.979,1:14:42.269
+Coefficients entre 0 et 1 et qui somment à 1. Ils vont calculer une combinaison linéaire des états à différents pas de temps.
+
+1:14:43.719,1:14:48.899
+Ok, en fixant un de ces coefficients à 1 et les autres à 0, on va attirer l'attention du système sur
+
+1:14:48.900,1:14:50.900
+un mot en particulier.
+
+1:14:50.949,1:14:56.938
+La magie de la chose est que c’est le réseau de neurones qui décide en exécutant une softmax, décide les coefficients en fait,
+
+1:14:57.159,1:14:59.159
+pouvant être entraîné par rétropropagation.
+
+1:14:59.590,1:15:03.420
+C’est juste i, ensemble de poids dans un réseau neuronal et vous n'avez pas besoin de le construire à la main.
+
+1:15:06.550,1:15:10.979
+Cela a complètement révolutionné le domaine de la traduction automatique neurale, au sens que…
+
+1:15:11.889,1:15:13.889
+en quelques mois,
+
+1:15:14.050,1:15:20.309
+l'équipe de Stanford a remporté une grande compétition en battant toutes les autres méthodes.
+
+1:15:22.119,1:15:28.199
+Et puis, en l'espace de trois mois, toutes les grandes entreprises qui travaillent dans le domaine de la traduction ont déployé des systèmes basés sur ça.
+
+1:15:29.289,1:15:31.469
+Cela a donc tout changé.
+
+1:15:33.189,1:15:40.349
+Et puis les gens ont commencé à faire attention à l'attention. Faire plus attention à l'attention.
+
+1:15:41.170,1:15:44.879
+Et puis il y a eu un article écrit par un groupe de personnes de Google
+
+1:15:45.729,1:15:52.529
+qui a pour « Attention is all you need » [en 2017 par Vaswani et al] et il s’agit d'un papier qui résolvait un tas de tâches de traitement du langage naturel
+
+1:15:53.050,1:15:59.729
+en utilisant un réseau de neurones où chaque couche, chaque groupe de neurones mettait en œuvre l'attention. C'est ce
+
+1:16:00.459,1:16:03.149
+s'appelle l'auto-attention. C'est ce qu'est un transformer. [Question d’un étudiant].
+
+1:16:08.829,1:16:15.449
+Oui, vous pouvez avoir un nombre important de sorties ou d'entrées sur lesquelles concentrer votre attention.
+
+1:16:18.340,1:16:20.849
+Je vais maintenant parler des réseaux mémoire.
+
+1:16:35.450,1:16:40.309
+Cela découle du travail sur Facebook qui a été lancé par Antoine Bordes
+
+1:16:41.970,1:16:43.970
+datant de 2014 de mémoire,
+
+1:16:45.480,1:16:47.480
+par
+
+1:16:49.650,1:16:51.799
+Sainbayar Sukhbaatar, je
+
+1:16:55.000,1:16:58.999
+crois en 2015 ou 2016 [Note : c’est en 2015]
+
+1:16:59.040,1:17:01.040
+avec le papier « End-to-end Memory Networks ».
+
+1:17:01.520,1:17:06.890
+Sainbayar sukhbaatar est étudiant en doctorat ici. Il était stagiaire chez Facebook lorsqu'elle a travaillé sur ça
+
+1:17:07.650,1:17:10.220
+avec un tas d'autres personnes de Facebook.
+
+1:17:10.860,1:17:12.090
+L'idée du réseau mémoire
+
+1:17:12.090,1:17:17.800
+est que vous aimeriez avoir une mémoire à court terme, vous aimeriez que votre réseau neuronal ait une mémoire à court terme ou une mémoire de travail.
+
+1:17:18.300,1:17:23.930
+Ok. Si je vous raconte une histoire :
+
+1:17:25.410,1:17:27.410
+John va à la cuisine
+
+1:17:28.170,1:17:30.170
+John prend le lait
+
+1:17:34.440,1:17:36.440
+Jane va à la cuisine
+
+1:17:37.290,1:17:40.910
+Et puis John va dans la chambre et y dépose le lait.
+
+1:17:41.430,1:17:44.899
+Puis il retourne à la cuisine et vous demande : où est le lait ?
+
+1:17:44.900,1:17:47.720
+A chaque fois que je vous ai dit une phrase, vous avez en quelque sorte
+
+1:17:48.330,1:17:50.330
+mis à jour dans votre esprit un
+
+1:17:50.340,1:17:52.340
+état actuel du monde si vous voulez.
+
+1:17:52.920,1:17:56.870
+Et donc, en vous racontant l'histoire, vous avez maintenant une représentation de l'état du monde et si je vous pose une
+
+1:17:56.870,1:17:59.180
+question sur l'état du monde, vous pouvez y répondre. Ok
+
+1:18:00.270,1:18:02.270
+Vous stockez tout cela dans une mémoire à court terme.
+
+1:18:03.720,1:18:06.769
+Vous ne l'avez pas stocké… Il y a 
+
+1:18:06.770,1:18:10.399
+plusieurs parties différentes dans votre cerveau. Il y en a deux qui sont importantes. L'une est le cortex
+
+1:18:10.470,1:18:13.279
+Le cortex est l'endroit où vous avez la mémoire à long terme. C'est là que vous…
+
+1:18:15.120,1:18:17.120
+vous…
+
+1:18:17.700,1:18:22.129
+Où toute votre réflexion se fait et tout cela et il y a un,
+
+1:18:24.720,1:18:26.460
+vous savez,
+
+1:18:26.460,1:18:28.879
+un morceau de neurones appelé hippocampe qui est en quelque sorte
+
+1:18:29.100,1:18:32.359
+deux formations au milieu du cerveau qui envoient
+
+1:18:34.320,1:18:36.650
+des fils électriques à peu près partout dans le cortex.
+
+1:18:37.110,1:18:44.390
+On pense que l'hippocampe sert de mémoire à court terme. Il peut donc simplement vous permettre de vous souvenir de choses pendant un temps relativement court.
+
+1:18:45.950,1:18:47.450
+La théorie prévalente
+
+1:18:47.450,1:18:53.530
+est que lorsque vous dormez et que vous rêvez, il y a beaucoup d'informations qui sont transférées de votre
+
+1:18:53.810,1:18:56.800
+l'hippocampe à votre cortex pour être solidifié dans la mémoire à long terme.
+
+1:18:59.000,1:19:01.090
+Car l'hippocampe a une capacité limitée.
+
+1:19:04.520,1:19:08.859
+Quand on devient sénile, très vieux, très souvent, l'hippocampe se rétrécit.
+
+1:19:09.620,1:19:13.570
+Et vous n'avez plus de mémoire à court terme. Vous continuez donc à répéter les mêmes histoires aux mêmes personnes.
+
+1:19:14.420,1:19:16.420
+D'accord, c'est très courant.
+
+1:19:19.430,1:19:25.930
+Ou bien vous allez dans une pièce pour faire quelque chose et le temps que vous arriviez dans la pièce, vous avez oublié ce pour quoi vous étiez là.
+
+1:19:29.450,1:19:31.869
+En fait, cela commence à se produire à 50 ans.
+
+1:19:36.290,1:19:40.390
+Donc, je ne me souviens pas de ce que j'ai dit la semaine dernière, il y a deux semaines.
+
+1:19:41.150,1:19:44.950
+Mais peu importe. Alors le réseau de mémoire. Voici l'idée du réseau mémoire.
+
+1:19:46.340,1:19:50.829
+Vous avez une entrée dans le réseau mémoire. Appelons-le X et considérons-le comme une adresse
+
+1:19:51.770,1:19:53.770
+de la mémoire.
+
+1:19:53.930,1:19:56.409
+Ce que vous allez faire, c'est comparer ce X
+
+1:19:58.040,1:20:03.070
+avec un tas de vecteurs, nous allons les appeler K.
+
+1:20:08.180,1:20:10.180
+Donc k₁ k₂ k₃.
+
+1:20:12.890,1:20:18.910
+Vous comparez ces deux vecteurs et la façon dont vous le faite est par produit scalaire. C’est très simple.
+
+1:20:28.460,1:20:33.460
+Ok, donc maintenant vous avez les produits scalaires points des K avec le X.
+
+1:20:34.730,1:20:37.990
+Ce sont des valeurs scalaires. Vous les brancher sur une softmax.
+
+1:20:47.630,1:20:50.589
+Vous obtenez donc trois chiffres entre 0 et 1 qui somment à 1.
+
+1:20:53.840,1:20:59.259
+Vous avez alors 3 autres vecteurs que j’appelle V
+
+1:21:00.680,1:21:02.680
+v₁, v₂ et v₃
+
+1:21:03.770,1:21:07.120
+Et ce que vous faites, c'est que vous multipliez
+
+1:21:08.990,1:21:13.570
+ces vecteurs par ces scalaires. Cela ressemble beaucoup au mécanisme d'attention dont nous venons de parler.
+
+1:21:17.870,1:21:20.950
+D'accord, et vous les sommez.
+
+1:21:27.440,1:21:34.870
+Ok, donc prenez un X. Comparez X avec chacun des K. Chacun des K s'appelle des clés [« keys » en anglais sur la diapositive].
+
+1:21:39.170,1:21:44.500
+Vous obtenez un ensemble de coefficients entre 0 et 1 qui somment à 1, puis vous calculez une combinaison linéaire des valeurs.
+
+1:21:45.260,1:21:47.260
+Ce sont des vecteurs valeur [« values » en anglais sur la diapositive].
+
+1:21:50.510,1:21:51.650
+Et
+
+1:21:51.650,1:21:53.150
+sommez-les.
+
+1:21:53.150,1:22:00.400
+Ok, alors imaginez qu'une des clés corresponde exactement à X. Vous aurez un grand coefficient ici et de petits coefficients là.
+
+1:22:00.400,1:22:06.609
+Ainsi, le résultat du système sera essentiellement v2, si k2 correspond à X. Le résultat sera essentiellement v2.
+
+1:22:08.060,1:22:09.500
+Ok.
+
+1:22:09.500,1:22:11.890
+Il s'agit donc d'une mémoire associative adressable.
+
+1:22:12.620,1:22:19.419
+La mémoire associative est exactement cela : où vous avez des clés avec des valeurs et si votre entrée correspond à une clé, vous obtenez la valeur ici.
+
+1:22:19.420,1:22:21.420
+C'est une sorte de version douce et différenciable de ça.
+
+1:22:26.710,1:22:28.710
+Vous pouvez donc,
+
+1:22:29.019,1:22:34.559
+vous pouvez rétropropager, vous pouvez écrire dans cette mémoire en changeant les vecteurs V ou
+
+1:22:34.929,1:22:38.609
+même en changeant les vecteurs K. Vous pouvez changer les vecteurs V par descente de gradient.
+
+1:22:39.489,1:22:45.598
+Ok, donc si vous voulez que la sortie de la mémoire soit quelque chose en particulier, en rétropropageant le gradient à travers ça,
+
+1:22:47.019,1:22:52.259
+vous allez changer le V actif pour tout ce qu’il faut 
+
+1:22:53.530,1:22:55.530
+pour la sortie.
+
+1:22:56.050,1:22:58.050
+Ainsi, dans ces papiers,
+
+1:22:59.800,1:23:02.460
+ce qu'ils ont fait, c’est…
+
+1:23:03.969,1:23:06.299
+Je veux dire, qu'il y a une série de papiers sur chaque réseau, mais
+
+1:23:08.409,1:23:11.879
+ce qu'ils ont fait, c'est exactement le scénario que je viens d'expliquer. 
+
+1:23:12.909,1:23:16.319
+Où vous racontez une histoire à un système en lui donnant une séquence de phrases.
+
+1:23:17.530,1:23:22.800
+Ces phrases sont encodées en vecteurs en passant par un réseau neuronal qui n'est pas pré-entraîné. 
+
+1:23:25.269,1:23:29.279
+Il suffit d’entraîner l'ensemble du système pour qu'il comprenne comment encoder ça.
+
+1:23:30.039,1:23:35.009
+Ensuite ces phrases sont écrites dans la mémoire de ce type.
+
+1:23:35.829,1:23:41.129
+Puis, lorsque vous posez une question au système, vous encodez la question à l'entrée d'un réseau neuronal et le réseau neuronal produit
+
+1:23:41.130,1:23:44.999
+un X pour la mémoire. La mémoire renvoie une valeur.
+
+1:23:47.000,1:23:49.480
+Et puis, vous utilisez cette valeur
+
+1:23:49.480,1:23:54.329
+et l'état antérieur du réseau pour en quelque sorte réaccéder à la mémoire. Vous pouvez le faire plusieurs fois et
+
+1:23:54.550,1:23:58.139
+vous entraînez l'ensemble de ce réseau à produire ou à répondre à votre question.
+
+1:23:59.139,1:24:03.748
+Et si vous avez beaucoup, beaucoup de scénarios, beaucoup, beaucoup de questions ou aussi beaucoup de réponses,
+
+1:24:04.119,1:24:10.169
+il est possible de générer artificiellement des histoires, des questions et des réponses.
+
+1:24:11.440,1:24:12.940
+Cette chose en fait
+
+1:24:12.940,1:24:15.989
+apprend à stocker des histoires et
+
+1:24:16.780,1:24:18.760
+répondre aux questions.
+
+1:24:18.760,1:24:20.409
+Ce qui est assez étonnant.
+
+1:24:20.409,1:24:22.409
+C'est donc le réseau mémoire. [Question d‘un étudiant]
+
+1:24:27.110,1:24:29.860
+Ok, donc la première étape est de calculer
+
+1:24:32.210,1:24:34.300
+αi est égal à
+
+1:24:36.590,1:24:43.899
+ki transposé x. C’est juste un produit scalaire. D'accord. Ensuite vous calculez
+
+1:24:48.350,1:24:51.519
+ci ou le vecteur c je devrais dire.
+
+1:24:54.530,1:24:57.579
+C’est la fonction softmax
+
+1:25:00.320,1:25:02.979
+appliquée au vecteur des alphas.
+
+1:25:02.980,1:25:07.840
+Les C sont donc compris entre 0 et 1 et somment à 1. Puis la sortie du système
+
+1:25:09.080,1:25:11.080
+est
+
+1:25:11.150,1:25:13.360
+somme sur i de
+
+1:25:14.930,1:25:16.930
+ci
+
+1:25:17.240,1:25:21.610
+vi où vi sont les vecteurs de valeur. D'accord. C'est la mémoire. [Question d’un étudiant].
+
+1:25:30.420,1:25:34.489									 
+Oui, absolument. [L’étudiant poursuit]
+
+1:25:37.140,1:25:38.640									       
+Pas vraiment.
+
+1:25:38.640,1:25:41.869									 
+Non, je veux dire qu'il suffit que tout soit encodé en tant que vecteurs.
+
+1:25:42.660,1:25:48.200									 
+Donc en l’exécutant pour votre ConvNet préféré, vous obtenez un vecteur qui représente l'image et vous pouvez ensuite faire la phase de question/réponse.
+
+1:25:50.880,1:25:52.880									 
+Oui, je veux dire…
+
+1:25:53.490,1:25:57.050							                   
+vous pouvez imaginer de nombreuses applications de cela.
+
+1:25:58.110,1:26:00.110								               
+En particulier une application est…
+
+1:26:00.690,1:26:02.690					                                
+Je veux dire, vous pouvez
+
+1:26:06.630,1:26:09.109									 
+considérez cela comme une sorte de mémoire.
+
+1:26:11.160,1:26:14.000						                        
+Et puis vous pouvez avoir une sorte de réseau neuronal
+
+1:26:16.020,1:26:16.970								                  
+Qui prend une
+
+1:26:16.970,1:26:24.230 							            
+entrée et produit ensuite une adresse pour la mémoire. Récupère une valeur et
+
+1:26:25.050,1:26:27.739 						                      
+continue à croître et finit par produire un résultat.
+
+1:26:28.830,1:26:30.830 								  
+Cela ressemblait beaucoup à un ordinateur.
+
+1:26:31.050,1:26:33.650						                      
+Ok. Le réseau neuronal ici est
+
+1:26:34.920,1:26:37.099 						                          
+le CPU, l'ALU, le CPU.
+
+1:26:37.680,1:26:43.099 							                 
+Et la mémoire est juste une mémoire externe à laquelle vous pouvez accéder quand vous en avez besoin, ou dans laquelle vous pouvez écrire si vous le souhaitez.
+
+1:26:43.890,1:26:49.040 							              
+C'est un réseau récurrent dans ce cas. Vous pouvez le dérouler dans le temps. C’est ce que ces types ont fait.
+
+1:26:51.330,1:26:52.650									        
+Et puis,
+
+1:26:52.650,1:26:58.009 							                   
+il y a des gens qui ont imaginé que l'on pourrait en fait construire des sortes d'ordinateurs différenciables à partir de cela.
+
+1:26:58.410,1:27:03.530 							                     
+Quelque chose qui s’appelle une machine de Turing neurale, qui est essentiellement une forme de cela où la mémoire n’est pas de ce type.
+
+1:27:03.530,1:27:07.040 							              
+C'est une sorte de bande souple comme dans une machine de Turing ordinaire.
+
+1:27:07.890,1:27:14.030								            
+C'est un truc venant de DeepMind. Il y a une histoire intéressante à ce sujet. Les gens de chez Facebook ont mis
+
+1:27:14.760,1:27:19.909						                        
+l'article sur le réseau mémoire sur Arxiv et trois jours plus tard
+
+1:27:22.110,1:27:24.110								              
+Deepmind publiait un papier
+
+1:27:25.290,1:27:30.679 								          
+à propos de la machine de Turing neurale. La raison est que chez DeepMind, ils travaillaient sur la machine de Turing et
+
+1:27:31.350,1:27:32.640 						                 
+dans leur
+
+1:27:32.640,1:27:37.160							                
+tradition [leur façon de travailler], ils gardent leurs projets secrets jusqu’à pouvoir en faire une grosse annonce.
+
+1:27:37.770,1:27:40.699									 
+Mais là, ils se sont fait avoir et ils ont mis le papier sur Arxiv. 
+
+1:27:45.060,1:27:50.539 						                  
+Ils ont fait une grande annonce avec un autre papier, mais c'était un an plus tard environ.
+
+1:27:52.230,1:27:54.230 							           
+Que s'est-il passé depuis cela ?
+
+1:27:55.020,1:28:01.939								            
+Les gens ont en quelque sorte pris ce module, cette idée de comparer les entrées aux clés afin
+
+1:28:02.550,1:28:04.550 							            
+d’avoir des coefficients pour
+
+1:28:04.950,1:28:07.819 								     
+produire des valeurs,
+
+1:28:08.520,1:28:09.990 							                
+comme
+
+1:28:09.990,1:28:14.449 								          
+module essentiel dans pour les réseaux de neurones. Et c'est là que se trouve le transformer.
+
+1:28:15.060,1:28:18.049 							              
+Ainsi, un transformer est essentiellement un réseau neuronal dans lequel
+
+1:28:19.290,1:28:21.290 							                
+chaque groupe de neurones est cela.
+
+1:28:21.720,1:28:29.449 							         
+C'est un tas de mémoires. Essentiellement. Il y a un peu plus de choses dedans, mais c'est un peu l'idée de base.
+
+1:28:32.460,1:28:34.460							                 
+Mais vous entendrez parler de ceci
+
+1:28:34.980,1:28:36.750 							         
+dans une semaine.
+
+1:28:36.750,1:28:38.250 					                       
+Dans deux semaines ?
+
+1:28:38.250,1:28:40.140									       
+Ok dans une semaine.
+
+1:28:40.140,1:28:42.140								          
+D'autres questions ?
+
+1:28:44.010,1:28:46.640
+Cool. Très bien. Merci beaucoup

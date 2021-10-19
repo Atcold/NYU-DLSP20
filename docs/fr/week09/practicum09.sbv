@@ -1,0 +1,2261 @@
+0:00:00.030,0:00:07.609
+Aujourd'hui, nous allons parler des « Generative adversarial networks » [Réseaux génératifs antagonistes en français, abrégés  en GANs dans la suite]
+
+0:00:07.609,0:00:11.750
+La manière de les faire proprement. 
+
+0:00:11.750,0:00:17.850
+Donc GAN, apprentissage non supervisé / modèles génératifs. Donc à nouveau les modèles génératifs sont des modèles
+
+0:00:17.850,0:00:23.330
+qui vous permettent d'obtenir quelque chose qui se trouve dans l'espace d'entrée. La plupart du temps
+
+0:00:23.330,0:00:28.439
+ce qui se passe dans ce domaine, c'est que nous supposons qu'il y a
+
+0:00:28.439,0:00:35.880
+une distribution de probabilité sur ces échantillons. Cela n'a pas à le faire.
+
+0:00:35.880,0:00:42.329
+Par exemple, un décodeur dans un auto-encodeur classique peut être considéré comme un modèle génératif.
+
+0:00:42.329,0:00:47.190
+De mon point de vue et aussi de celui de Yann. Beaucoup sont en désaccord. Ils disent qu’un modèle génératif
+
+0:00:47.190,0:00:53.640
+doit avoir comme une entrée suivant une distribution spécifique. Nous sommes
+
+0:00:53.640,0:00:59.929
+dans le domaine de l'apprentissage non supervisé donc nous n'avons pas d'étiquettes.
+
+0:00:59.929,0:01:03.230
+Et donc commençons avec les GANs.
+
+0:01:03.310,0:01:11.120
+Alors qu'est-ce que c'est que ce truc ? Vous devriez le savoir. C’est l’auto-encodeur variationnel [VAE dans la suite].
+
+0:01:11.120,0:01:14.110
+Le VAE est comme un AE normal
+
+0:01:14.110,0:01:19.930
+où l’encodeur, dans ce cas, nous fournit les paramètres pour une
+
+0:01:19.930,0:01:25.660
+distribution à partir de laquelle nous échantillonnons notre entrée latente z.
+
+0:01:25.660,0:01:31.240
+La seule différence avec le normal est l'échantillonneur qui va donner un coup à un
+
+0:01:31.240,0:01:36.700
+échantillon aléatoire. Donc au lieu d'avoir un simple code qui est comme un point,
+
+0:01:36.700,0:01:40.840
+vous avez une entrée ici, vous avez un code ici. Maintenant à la place vous 
+
+0:01:40.840,0:01:46.840
+allez avoir un certain volume. Donc chaque point similaire dans ce volume est associé
+
+0:01:46.840,0:01:53.350
+au point de départ. C’est une partie très importante sur le VAE.
+
+0:01:53.350,0:01:57.970
+Voyons donc à quoi ressemble ces GANs.
+
+0:01:57.970,0:02:06.040
+Donc a ce truc qui est… Hum ! C'est la même chose.
+
+0:02:06.040,0:02:12.690
+Que se passe t’il ici ? Nous avons le même générateur dans le même échantillonneur.
+
+0:02:12.690,0:02:19.959
+Puis qu’avons-nous ? Nous avons une autre entrée là. L'entrée avant
+
+0:02:19.959,0:02:23.590
+était à gauche en bas, maintenant elle est à mi-chemin.
+
+0:02:23.590,0:02:30.340
+La sortie est aussi à mi-chemin. Nous obtenons ce genre de commutateur.
+
+0:02:30.340,0:02:35.170
+Et au-dessus de ce commutateur, nous avons un réseau de coût. Généralement
+
+0:02:35.170,0:02:41.590
+dans la définition/formulation d'un GAN, nous avons un
+
+0:02:41.590,0:02:46.720
+discriminateur. Le discriminateur est une mauvaise option
+
+0:02:46.720,0:02:53.590
+si on suit les suggestions de Yann avec lesquelles je suis d'accord.
+
+0:02:53.590,0:03:00.450
+Nous verrons bientôt pourquoi cela dans un peu plus de détails. Maintenant concentrons-nous sur le fait que
+
+0:03:00.450,0:03:06.730
+nous avons ce réseau de coût. Donc nous avons des modèles fondamentalement similaires.
+
+0:03:06.730,0:03:10.690
+Un échantillonneur à droite, un échantillonneur à gauche.
+
+0:03:10.690,0:03:15.639
+Un décodeur sur le côté gauche qui génère en gros quelque chose
+
+0:03:15.639,0:03:20.950
+mais comme le z est considéré comme un code, nous avons une étape de décodage alors que sur le côté
+
+0:03:20.950,0:03:25.120
+droite, puisque z n'est pas un code mais une simple entrée, nous avons un générateur.
+
+0:03:25.120,0:03:30.310
+Il s'agit simplement par exemple d'un échantillon d'une distribution 
+
+0:03:30.310,0:03:34.060
+gaussienne, une distribution normale.
+
+0:03:34.060,0:03:40.329
+Puis x̂ est généré par ce réseau initialement non entraîné.
+
+0:03:40.329,0:03:46.989
+Le réseau de coût doit plutôt se rendre compte que le coût doit être élevé si nous donnons ce
+
+0:03:46.989,0:03:54.819
+x̂ en bleu car nous voulons dire : « c’est un mauvais échantillon ». 
+
+0:03:54.819,0:04:00.159
+A la place, si nous commutons sur l’échantillon rose
+
+0:04:00.159,0:04:09.260
+nous devrons avoir un faible coût car cela nous permet de nous rendre compte que nous avons un bon échantillon.
+
+0:04:09.489,0:04:14.980
+Donc pour résumer la séquence d’opérations que nous avons, il y a le
+
+0:04:14.980,0:04:21.039
+Générateur qui associe mon ensemble d'entrée z dans ℝⁿ qui est l'espace des entrées.
+
+0:04:21.039,0:04:25.630	
+Nous avons dilaté les entrées en orange et mises en correspondance avec les
+
+0:04:25.630,0:04:31.870
+entrées originales. Nous avons donc ce z orange associé au x̂ en bleu.
+
+0:04:31.870,0:04:38.620
+Celui du haut est plutôt un réseau de coût qui associe l'entrée pouvant être,
+
+0:04:38.620,0:04:45.849
+soit le x rose soit le x̂ bleu, avec mon coût. Donc dans ce cas
+
+0:04:45.849,0:04:51.550
+ce module de coût est un « Cost ». Dans le diagramme
+
+0:04:51.550,0:04:57.340
+de Yann, c’est un carré qui renvoie un scalaire. Ce scalaire
+
+0:04:57.340,0:05:03.159
+sera une valeur élevée, un grand nombre positif, si l'entrée est fausse
+
+0:05:03.159,0:05:10.389
+et un chiffre bas, on espère 0, si nous avons l’entrée provenant
+
+0:05:10.389,0:05:17.740
+de la partie rose, la partie réelle. Comment entraîner ce système ?
+
+0:05:17.740,0:05:23.259
+Il est entraîné avec des gradients différents.
+
+0:05:23.259,0:05:28.000
+Le réseau de coût est entraîné afin d'avoir un faible coût pour
+
+0:05:28.000,0:05:33.970
+les entrées roses et un coût élevé pour les entrées bleues.
+
+0:05:33.970,0:05:47.270
+Donc par exemple, si vous avez un discriminateur dans ce cas, vous pouvez penser à ça comme un problème de classification à deux classes.
+
+0:05:47.320,0:05:55.900
+Vous essayez d'obtenir un 0 pour les x roses et un 1 pour les x bleus. Nous parlerons
+
+0:05:55.900,0:06:03.520
+un peu de la raison pour laquelle il est mauvais d'utiliser cette sortie 0-1 dans une seconde.
+
+0:06:03.520,0:06:09.250
+Sinon, nous voulons juste que ce réseau apprenne ce coût. Donc trouvons
+
+0:06:09.250,0:06:13.660
+comment cela fonctionne via un diagramme. Vous rappelez-vous comment nous avons commencé 
+
+0:06:13.660,0:06:17.620
+avec un VAE ? Avec un VAE nous partions de la gauche.
+
+0:06:17.620,0:06:21.970
+Nous choisissions une entrée et nous nous
+
+0:06:21.970,0:06:27.250
+déplacions vers l'espace latent. Nous déplacions ce point car nous
+
+0:06:27.250,0:06:31.300
+ajoutions un peu de bruit et nous revenions alors au point de départ.
+
+0:06:31.300,0:06:34.950
+Nous essayions de rendre ces points proches en utilisant la reconstruction.
+
+0:06:34.950,0:06:41.020
+Puis nous avons essayé de mettre en place une certaine structure dans l'espace latent en utilisant
+
+0:06:41.020,0:06:49.710
+le terme d'entropie relative. Pour les GANs, nous commençons par la droite.
+
+0:06:49.710,0:06:56.290
+Nous choisissons un échantillon, un nombre aléatoire, disons 42, que nous donnons à un générateur
+
+0:06:56.290,0:07:03.120
+et nous obtenons ce x̂ bleu là-bas. Puis nous entraînons
+
+0:07:03.120,0:07:10.240
+un autre réseau afin d'obtenir une valeur plus élevée pour cet
+
+0:07:10.240,0:07:15.370
+échantillon bleu. Ensuite nous choisissons un autre x, disons un x rose 
+
+0:07:15.370,0:07:20.530
+en bas à droite de la spirale, et va être forcé à avoir un coût faible.
+
+0:07:20.530,0:07:28.230
+Il s'agit donc d'un premier aperçu général de la manière dont ces systèmes
+
+0:07:28.230,0:07:35.650
+fonctionnent. Laissez-moi vous donner deux autres interprétations. 
+
+0:07:35.650,0:07:42.430
+C’est des sortes de définitions : définition mathématique et
+
+0:07:42.430,0:07:46.720
+définition visuelle. Maintenant essayons donner quelques interprétations
+
+0:07:46.720,0:07:52.810
+que j'aime bien. Je vais passer pour un idiot mais j’en suis un 
+
+0:07:52.810,0:07:59.020
+donc allons-y. Vous pouvez penser au générateur comme étant un Italien.
+
+0:07:59.020,0:08:05.800
+Donc je vais utiliser un accent italien approprié, d'accord ?
+
+0:08:05.800,0:08:10.240
+Je suis un vrai Italien maintenant, du sud de l'Italie, et je vais essayer
+
+0:08:10.240,0:08:17.290
+de faire de la fausse monnaie. Car nous sommes très doués pour ça généralement.
+
+0:08:17.290,0:08:22.870
+On fait de la fausse monnaie puis allons en Allemagne pour acheter quelque chose.
+
+0:08:22.870,0:08:27.250
+On va en Allemagne avec cette fausse monnaie et puis il y a ces Allemands 
+
+0:08:27.250,0:08:34.360
+qui nous regardent : « Oh putain d’Italiens, c’est de la fausse monnaie ». 
+
+0:08:34.360,0:08:41.320
+Et donc nous ne pouvons pas acheter quoi que ce soit. Mais nous sommes
+
+0:08:41.320,0:08:45.220
+Italiens, nous avons des espions. Nous avons des espions... Oh il y a des
+
+0:08:45.220,0:08:52.720
+questions. Peut-être que j'offense des personnes. Que se passe-t-il dans le chat ?
+
+0:08:52.720,0:08:59.050
+Oh vous appréciez la performance. Cool. Je n'ai offensé personne. Fantastique.
+
+0:08:59.050,0:09:05.860
+Nous avons donc un espion en Allemagne puis celui-ci revient à la maison :
+
+0:09:05.860,0:09:12.520
+« Mama mia ! Tu nous as donné de l'argent mal contrefait, il n’est pas propre,
+
+0:09:12.520,0:09:18.250
+c'est de la merde ! ». Détend toi mec. Nous sommes de retour à la maison.
+
+0:09:18.250,0:09:24.580
+[Chat : quel film est-ce ?] C’est mon propre film.
+
+0:09:24.580,0:09:30.580
+Donc nous sommes de retour en Italie. Nous sommes capables de faire du bel
+
+0:09:30.580,0:09:36.340
+art donc nous devons pouvoir être capable de faire de meilleures contrefaçons. 
+
+0:09:36.340,0:09:41.290
+Donc on essaye de réparer les choses que notre espion nous a indiqué. Donc on a une meilleure
+
+0:09:41.290,0:09:44.760
+fausse monnaie et retournons en Allemagne essayer d'acheter des choses.
+
+0:09:44.760,0:09:49.860
+Et les Allemands sont comme : « Hummm c'est mieux mais c’est faux ».
+
+0:09:49.860,0:09:55.080
+Donc l’espion revient en Italie et nous dit : "Oh, qu'est-ce que... »
+
+0:09:55.080,0:10:00.660
+Et on répond : « Je comprends, capisce » et on répare/améliore l'argent.
+
+0:10:00.660,0:10:04.440
+Nous faisons plusieurs itérations de cela. Nous essayons de faire
+
+0:10:04.440,0:10:10.620
+de meilleures versions de l'argent. Enfin nous retournons en Allemagne…
+
+0:10:10.620,0:10:13.710
+l'Allemagne car ils ont pleins de choses
+
+0:10:13.710,0:10:18.320
+qu’on peut acheter. Donc on y retourne et ils sont comme :
+
+0:10:18.320,0:10:22.980
+« Hummm ça a l'air très bien ». Je ne sais pas faire l'accent allemand, désolé.
+
+0:10:22.980,0:10:33.900
+Donc ils acceptent l'argent. Voici donc à peu près comment les GANs fonctionnent. Nous avons un générateur :
+
+0:10:33.900,0:10:37.770
+les Italiens du Sud qui font de la fausse monnaie et nous essayons
+
+0:10:37.770,0:10:41.190
+d'acheter quelque chose en Allemagne. Les Allemands étant le discriminateur.
+
+0:10:41.190,0:10:50.700
+Ils sont très strictes… vous savez Allemands quoi. Pas très politiquement correct mais
+
+0:10:50.700,0:10:54.300
+peu importe. Et nous avons un espion. Quel est cet espion ?
+
+0:10:54.300,0:10:59.100
+Quelqu'un peut-il comprendre l'analogie avec l'espionnage dont nous n'avons pas encore parlé ici ?
+
+0:10:59.100,0:11:07.380
+[Chat : la fonction de perte, la rétropropagation, le discriminateur, … le retour d'information]
+
+0:11:07.380,0:11:14.570
+Il s'agit du retour d'information. Comment ce retour d'information se fait-il ?
+
+0:11:14.570,0:11:19.380
+Chaque fois que nous entraînons le discriminateur ou le réseau de coût, nous avons des
+
+0:11:19.380,0:11:27.900
+gradients. Ces gradients me permettent de faire deux choses. Je peux soit
+
+0:11:27.900,0:11:35.460
+baisser la valeur finale et ainsi ajuster mes paramètres de la fonction de coût.
+
+0:11:35.460,0:11:39.420
+Permettez-moi de revenir à la fonction de coût. Donc nous avons quelques 
+
+0:11:39.420,0:11:50.220
+gradients du coût final par rapport aux paramètres du réseau. Donc généralement quand j’entraîne
+
+0:11:50.220,0:11:55.320
+le réseau de coût, j’essaie de régler les paramètres pour
+
+0:11:55.320,0:12:00.870
+avoir une perte finale plus faible. C'est un réseau de coût et il y a
+
+0:12:00.870,0:12:07.890
+une perte au sommet du réseau de coût. C'est un peu confus. Donc nous
+
+0:12:07.890,0:12:12.149
+essayons d'optimiser les paramètres du réseau de coût pour obtenir
+
+0:12:12.149,0:12:18.450
+de bons résultats et donc avoir une perte très faible. De la même manière nous pouvons utiliser
+
+0:12:18.450,0:12:23.970
+ces gradients, qui sont calculés par rapport à ce réseau… Vous voyez ma
+
+0:12:23.970,0:12:30.330
+Souris ? Donc j’ai ma perte finale en haut ici. On descend avec les
+
+0:12:30.330,0:12:35.160
+gradients et puis vous avez ici quelques gradients.
+
+0:12:35.160,0:12:41.880
+Si vous changez ce x̂, vous savez comment ces pertes finales changent.
+
+0:12:41.880,0:12:48.360
+Donc vous pouvez entraîner ce générateur avec ces gradients
+
+0:12:48.360,0:12:53.940
+afin d'augmenter cette perte finale. Donc lorsque nous entraînons ce réseau de coût, nous
+
+0:12:53.940,0:12:59.070
+aimerions minimiser la perte finale étant donné que nous introduisons ces deux entrées différentes.
+
+0:12:59.070,0:13:04.830
+Mais nous aimerions aussi augmenter cette perte finale, nous 
+
+0:13:04.830,0:13:11.640
+aimerions rendre ce réseau moins bon en améliorant le générateur.
+
+0:13:11.640,0:13:17.279
+Ces informations qui descendent ici et là, correspondant à la passe
+
+0:13:17.279,0:13:22.560
+arrière, le gradient d'entrée, sont utilisées pour régler le paramètre du générateur
+
+0:13:22.560,0:13:29.279
+de telle sorte qu'il a réussi à tromper le réseau de coût. C'est donc
+
+0:13:29.279,0:13:37.370
+l'analogie avec l'espion en Allemagne. [Etudiant : est-ce que la distribution de z est fixe ?]
+
+0:13:37.370,0:13:43.260
+Oui. z a une distribution normale.
+
+0:13:43.260,0:13:48.870
+Je n’ai en fait rien à dire sur cette distribution.
+
+0:13:48.870,0:13:54.050
+Tant que vous choisissez votre distribution,
+
+0:13:54.050,0:13:59.630
+le générateur va l’associer à une certaine distribution de x̂
+
+0:13:59.630,0:14:07.620
+qui, espérons-le, correspondra à la distribution des x roses.
+
+0:14:07.620,0:14:12.480
+[Etudiant : donc même si la distribution de z est fixe nous ne pouvons pas
+
+0:14:12.480,0:14:17.459
+être sûr que nous pouvons changer le générateur de manière à minimiser la
+
+0:14:17.459,0:14:24.889
+fonction de coût] Même si la distribution de z est fixe, le générateur
+
+0:14:24.889,0:14:30.600
+va appliquer ce type de distribution de telle sorte
+
+0:14:30.600,0:14:35.130
+que cela va en gros se fondre dans quelque chose qui ressemble
+
+0:14:35.130,0:14:41.790
+au x rose. C’est ce qu’on espère. Je ne vous ai pas parlé des
+
+0:14:41.790,0:14:48.060
+pièges de ce système, mais nous espérons avoir une distribution
+
+0:14:48.060,0:14:54.510
+de ces x̂ bleus de telle sorte qu'ils ressemblent à la distribution 
+
+0:14:54.510,0:14:58.769
+originale à gauche dans le rose. Ai-je répondu à votre question ?
+
+0:14:58.769,0:15:05.850
+[Oui. Ça fait sens]. Pourquoi le x produit par le générateur est le
+
+0:15:05.850,0:15:13.050
+nouvel argent amélioré ? Oui merci, je n’ai pas fini d’expliquer ça.
+
+0:15:13.050,0:15:18.510
+En rose ce sont les vrais euros que nous utilisons en Europe et les
+
+0:15:18.510,0:15:24.410
+x̂ bleu sont l'argent que nous gagnons en Italie. Mama mia.
+
+0:15:24.410,0:15:30.930
+D’autres questions ? [Etudiante : je pensais qu’un générateur était censé donner des 
+
+0:15:30.930,0:15:38.970
+échantillons négatifs] Il y a donc deux étapes ici.
+
+0:15:38.970,0:15:44.010
+Nous fournissons des échantillons négatifs qui sont ces x̂ au réseau de coût.
+
+0:15:44.010,0:15:50.490
+Le réseau de coût est entraîné afin d'obtenir des valeurs faibles sur les entrées roses et des valeurs 
+
+0:15:50.490,0:15:55.949
+plus élevées sur les entrées bleues. Donc si le réseau de coût fonctionne bien,
+
+0:15:55.949,0:16:02.430
+alors la perte finale ici au sommet sera très faible. Donc si le réseau
+
+0:16:02.430,0:16:06.810
+de coût est très performant, alors vous avez une perte finale
+
+0:16:06.810,0:16:13.769
+faible ici.  Néanmoins, le générateur est entraîné afin d'augmenter
+
+0:16:13.769,0:16:20.790
+cette perte car nous voudrions tromper ces Allemands. Cela fait sens ?
+
+0:16:20.790,0:16:25.230
+[Etudiant : pourriez-vous clarifier ce qu'est l'espion dans cette analogie ?]
+
+0:16:25.230,0:16:30.330
+L'espion est le gradient d'entrée. Ici j'ai mon réseau de coût et pour
+
+0:16:30.330,0:16:34.350
+l’entraîner, je vais avoir une dernière couche ici en haut.
+
+0:16:34.350,0:16:41.910
+Disons que c'est une MSE par exemple. MSE valant 0 chaque fois que j’ai
+
+0:16:41.910,0:16:50.190
+une entrée x rose ou une certaine valeur, disons +10 dans ce cas, pour les entrées bleues.
+
+0:16:50.190,0:16:55.560
+Nous essayons un nombre pour le moment. Donc mon coût
+
+0:16:55.560,0:16:59.940
+est un réseau de régression. Vous pouvez considérer cela comme
+
+0:16:59.940,0:17:05.460
+une seule couche linéaire. Comme une transformation affine de l'entrée.
+
+0:17:05.460,0:17:12.120
+Puis, en gros, ces valeurs finales, je les fixe à 0 pour l'entrée rose.
+
+0:17:12.120,0:17:15.960
+J’ai une MSE entre la sortie du réseau et 0
+
+0:17:15.960,0:17:21.750
+chaque fois que j'introduis l'entrée rose. Et disons que je choisis 
+
+0:17:21.750,0:17:27.960
+une valeur arbitraire de 10 pour refléter le fait que l'entrée est la bleue. Donc nous avons
+
+0:17:27.960,0:17:33.030
+un réseau de coût qui produit une valeur scalaire unique.
+
+0:17:33.030,0:17:40.020
+Cette valeur scalaire va dans le module MSE ici en haut. Laissez-moi l’écrire
+
+0:17:40.020,0:17:49.380
+peut-être pour que nous puissions tous voir ce qui se passe. Donc j'ai ici ma MSE,
+
+0:17:49.380,0:17:53.640
+ma fonction de perte. Donc ne vous trompez pas entre la perte et le coût
+
+0:17:53.640,0:18:02.340
+ce sont deux choses différentes. J'ai ma MSE ici et si j'ai ce type ici, 
+
+0:18:02.340,0:18:11.190
+ma cible sera 0. Mon yc pour celui-ci. Et si à la place
+
+0:18:11.190,0:18:16.860
+si j’entre ce type ici dans le réseau de coûts, je m’attends à avoir, 
+
+0:18:16.860,0:18:22.980
+une valeur arbitraire valant +10 ici. Ma MSE dans ce cas est donc
+
+0:18:22.980,0:18:27.450
+l'erreur quadratique moyenne entre la sortie du réseau de coût et 0.
+
+0:18:27.450,0:18:33.779
+Dans l'autre cas j’ai la MSE entre la sortie du réseau et 10.
+
+0:18:33.779,0:18:38.279
+Si j'entraîne juste… Disons qu'on oublie tout ça. On a juste quelques
+
+0:18:38.279,0:18:42.359
+échantillons. Pensons pour le moment que le générateur ne s’améliore pas.
+
+0:18:42.359,0:18:47.940
+Nous avons donc plusieurs échantillons roses et plusieurs échantillons bleus.
+
+0:18:47.940,0:18:52.739
+Puis vous entraînez un réseau tel que, si je mets l'entrée rose, vous obtenez
+
+0:18:52.739,0:18:57.059
+0 dans la sortie. Si vous mettez le bleu à la place, vous allez
+
+0:18:57.059,0:19:01.649
+forcer le réseau à apprendre 10. Vous faites quelques étapes de descente
+
+0:19:01.649,0:19:06.299
+de gradient dans l'espace des paramètres. De telle sorte que dans un cas vous obtenez 0, dans l'autre cas 10,
+
+0:19:06.299,0:19:12.119
+chaque fois que vous fournissez plusieurs échantillons.
+
+0:19:12.119,0:19:17.969
+Nous avons donc ce réseau de coût. Vous pouvez penser qu’avoir le réseau 
+
+0:19:17.969,0:19:26.099
+de coût est en fait la perte pour le générateur. Donc si j'ai mon
+
+0:19:26.099,0:19:30.479
+générateur qui sort quelque chose et ce réseau de coût dit : « Oh c'est un
+
+0:19:30.479,0:19:36.149
+coût très élevé », alors en essayant de minimiser ce coût, vous essaierez
+
+0:19:36.149,0:19:41.549
+de générer quelque chose qui, au départ, fait que le réseau de coût
+
+0:19:41.549,0:19:48.779
+vous donne une valeur faible. Cela fait sens ? [Pouvez-vous clarifier 
+
+0:19:48.779,0:19:51.690
+rapidement la différence entre le coût et la perte ?]
+
+0:19:51.690,0:19:59.039
+La perte est ce que nous utilisons pour entraîner quelque chose. Donc ma 
+
+0:19:59.039,0:20:11.279
+perte dans ce cas est la MSE. Pour entraîner mon réseau de coût, j’ai une
+
+0:20:11.279,0:20:20.389
+fonction de perte, la MSE donc, que je minimise afin d’entraîner le réseau de coût.
+
+0:20:20.389,0:20:28.440
+La partie foireuse vient et je vais dire que pour mon générateur, la fonction
+
+0:20:28.440,0:20:35.820
+de perte que je veux minimiser est le réseau de coût. Donc pour ce générateur,
+
+0:20:35.820,0:20:43.519
+la perte est le coût. Et j'essaie de minimiser la sortie de ce type. Donc c'est aussi
+
+0:20:43.519,0:20:47.650
+relié à ce que Yann enseigne à propos des modèles à base d'énergie. Vous avez des énergies
+
+0:20:47.650,0:20:54.049
+et essayons d'avoir des énergies basses en minimisant une fonction de perte.
+
+0:20:54.049,0:20:59.419
+La fonction de perte est ce que vous utilisez pour entraîner les paramètres d'un réseau.
+
+0:20:59.419,0:21:08.120
+Donc c'est la différence.
+
+0:21:08.120,0:21:15.130
+Un autre point est qu'un coût est comme une évaluation de la performance d'un réseau.
+
+0:21:15.130,0:21:23.090
+Si mon générateur produit un mauvais x, qui n'est pas très beau, alors
+
+0:21:23.090,0:21:30.140
+vous aurez un coût élevé. Comme une énergie élevée. Mais pour minimiser
+
+0:21:30.140,0:21:34.610
+cette énergie, vous devez généralement minimiser ces pertes. Là encore,
+
+0:21:34.610,0:21:39.380
+la définition que nous aimons utiliser est que la perte est ce que vous minimisez pour
+
+0:21:39.380,0:21:48.110
+entraîner les paramètres d'un réseau. Un coût lui peut considérer comme :
+
+0:21:48.110,0:21:54.350
+je prends une action et j’ai un coût pour avoir pris cette
+
+0:21:54.350,0:22:00.159
+action spécifique. Donc vous prenez une action comme écrire un courriel
+
+0:22:00.159,0:22:05.360
+pour changer des choses et le coût est alors recevoir des plaintes.
+
+0:22:05.360,0:22:12.200
+C'est logique non ? Vous apprenez toujours quelque chose de nouveau.
+
+0:22:12.200,0:22:18.030
+D’autres questions jusqu'à présent ? [Etudiante : désolée, mais je suis toujours
+
+0:22:18.030,0:22:23.190
+confuse au sujet du coût et du générateur. Donc pour le générateur qui génère le x bleu
+
+0:22:23.190,0:22:27.750
+nous voulons augmenter le coût mais vous venez de mentionner que nous voulons minimiser.
+
+0:22:27.750,0:22:32.730
+Le coût est comme la fonction de perte pour le générateur. Et nous voulons minimiser
+
+0:22:32.730,0:22:38.310
+la perte. Donc voulons-nous augmenter ou diminuer le coût pour le générateur ?]
+
+0:22:38.310,0:22:44.700
+Pour le générateur, vous souhaitez minimiser le coût. Nous entraînons le générateur
+
+0:22:44.700,0:22:53.760
+par une minimisation de la valeur du réseau de coût. Donc il y a deux
+
+0:22:53.760,0:22:58.200
+parties pour ce truc. Permettez-moi de changer de couleur. Donc la première partie
+
+0:22:58.200,0:23:03.000
+est l’entraînement de ce type ici. L’entraînement du réseau de coûts est réalisé
+
+0:23:03.000,0:23:09.240
+par la minimisation de la MSE. C’est la perte pour le réseau de coût.
+
+0:23:09.240,0:23:17.580
+La MSE ici est donc comprise entre 0, chaque fois que j’entre une entrée
+
+0:23:17.580,0:23:30.720
+rose et 10 dans cet exemple, chaque fois que j’entre un échantillon bleu.
+
+0:23:30.720,0:23:35.280
+Nous effectuons plusieurs étapes de descente de gradient dans l'espace des paramètres du réseau de coût
+
+0:23:35.280,0:23:42.240
+de manière à minimiser ces pertes. Donc maintenant nous avons un réseau ici
+
+0:23:42.240,0:23:48.360
+qui va sortir 0 si je mets une entrée rose et sort 10 si j’entre
+
+0:23:48.360,0:23:56.100
+une entrée bleue. Vous me suivez jusqu'à présent ? [Oui. Donc c'est comme si le coût ne donne pas 
+
+0:23:56.100,0:24:00.810
+de coût pour générer une valeur élevée pour le x bleu]. Oui, c'est ce que à quoi
+
+0:24:00.810,0:24:06.780
+nous entraînons ce coût. Donc ce réseau de coût doit générer des valeurs larges,
+
+0:24:06.780,0:24:13.530
+dans ce cas, 10 si je saisis un gars bleu. Et doit générer une valeur 
+
+0:24:13.530,0:24:20.490
+petite/nulle si je mets une entrée rose. Pour ce faire nous procédons
+
+0:24:20.490,0:24:26.640
+par la minimisation de perte MSE. C’est la première partie. Jusque là
+
+0:24:26.640,0:24:31.870
+vous êtes avec moi ? [Oui] Fantastique. Maintenant la deuxième partie
+
+0:24:31.870,0:24:37.240
+est la version mignonne qu’aime Yann et que vous ne trouverez pas en ligne.
+
+0:24:37.240,0:24:42.220
+Il s’agit de la suivante. Donc ce réseau de coût vous donne 
+
+0:24:42.220,0:24:48.550
+des valeurs proches de zéro chaque fois que vous entrez quelque chose
+
+0:24:48.550,0:24:56.440
+qui a l'air correct. Sinon il y a une sortie élevée, disons un nombre d’une
+
+0:24:56.440,0:25:04.540
+valeur de 10, si vous entrez des entrées pourries. Alors comment pouvons-nous
+
+0:25:04.540,0:25:08.429
+entrainer ce générateur ? Le générateur est entraîné
+
+0:25:08.429,0:25:15.550
+par la minimisation du réseau de coût. Donc le réseau de coût dit 10 ici.
+
+0:25:15.550,0:25:22.630
+Donc cette sortie bleue là est méchante. Donc si le générateur change
+
+0:25:22.630,0:25:28.929
+légèrement ce x pour faire quelque chose qui ressemble à ce type ici,
+
+0:25:28.929,0:25:36.070
+vous passez de 10 à 0. Donc vous avez minimiser la valeur de la
+
+0:25:36.070,0:25:42.460
+sortie de ce réseau de coût. Nous utilisons donc le réseau de coût comme
+
+0:25:42.460,0:25:51.309
+la perte pour d’entraînement du générateur. [Etudiante : qu’entendez-vous par avoir le x bleu
+
+0:25:51.309,0:25:59.800
+plus proche du x rose ?] Donc mon générateur produit ces x bleus.
+
+0:25:59.800,0:26:05.140
+Par exemple une mauvaise image ou bien la fausse monnaie qui a vraiment
+
+0:26:05.140,0:26:13.210
+l'air fausse. Comment créer une monnaie qui semble vraie ? Le réseau de coût
+
+0:26:13.210,0:26:20.800
+va vous donner une valeur scalaire pour chaque sortie de votre générateur. 
+
+0:26:20.800,0:26:25.300
+Vous pouvez alors calculer les dérivées partielles, calculer le gradient de
+
+0:26:25.300,0:26:44.309
+cette valeur de coût. Je veux calculer la dérivée partielle de ∂c/∂x̂.
+
+0:26:44.309,0:26:58.950
+Désolé c’est difficile d’écrire proprement, c’est vraiment moche. Et ici c’est un c minuscule pas un majuscule.
+
+0:26:58.950,0:27:13.110
+Donc je calcule ∂c/∂x̂. Donc j’ai un gradient qui me permet de me déplacer et me rendre compte
+
+0:27:13.110,0:27:19.820
+si le coût va augmenter ou diminuer. Donc c'est une sorte de façon 
+
+0:27:19.820,0:27:26.940
+un peu non standard. Hier Yann parlait de ça.
+
+0:27:26.940,0:27:37.169
+Vous avez des entrées dans votre réseau, vous pouvez décider de faire une descente de gradient dans l’espace d’entrée. Par exemple, il y a une
+
+0:27:37.169,0:27:42.090
+une architecture qui n'a pas de générateur du tout. Vous commencez par un échantillon
+
+0:27:42.090,0:27:46.860
+ici et vous effectuez une descente de gradient dans cet espace d’échantillon.
+
+0:27:46.860,0:27:52.100
+Puis vous déplacez ces échantillons de manière à obtenir une valeur basse pour le réseau de coûts.
+
+0:27:52.100,0:27:59.730
+De cette manière, vous pouvez avoir une entrée qui ressemble à une bonne
+
+0:27:59.730,0:28:05.429
+entrée rose. Cela fait sens ? Me suis-je bien exprimé ou est-ce encore
+
+0:28:05.429,0:28:10.289
+bizarre ? [Etudiante : c’est beaucoup plus clair, merci] Vous êtes sûre ?
+
+0:28:10.289,0:28:16.740
+[Oui oui, c'est comme prendre des gradients dans l’espace d’entrée et les déplacer
+
+0:28:16.740,0:28:22.110
+pour diminuer le coût. Ce qui signifie que l’entrée s'améliore comme
+
+0:28:22.110,0:28:27.480
+pour la fausse monnaie qui s’améliore] Bien. Vous pouvez aussi utiliser
+
+0:28:27.480,0:28:33.030
+celui-ci, comme votre gradient descendant ici. Donc maintenant vous pouvez
+
+0:28:33.030,0:28:40.890
+calculer avec la règle de la chaîne la dérivée partielle ∂c/∂Wg.
+
+0:28:40.890,0:28:46.870
+Wg étant les paramètres du générateur.
+
+0:28:46.870,0:28:51.940
+Donc dans ce cas je peux entraîner le générateur. J’ai les dérivées partielles
+
+0:28:51.940,0:28:59.290
+du cout sur les paramètres. Je peux alors modifier les valeurs des paramètres
+
+0:28:59.290,0:29:05.710
+du générateur afin d’améliorer le réseau.
+
+0:29:05.710,0:29:18.120
+[Etudiante : ok, tout fait sens] [Etudiant : Alfredo, est-ce que c’est entraîné simultanément ou l’un après l’autre ?]
+
+0:29:18.120,0:29:26.110
+Les gens ont essayé les deux. Ils disent qu'il est parfois préférable d'en garder un fixe pendant que vous
+
+0:29:26.110,0:29:29.920
+changez dans l'autre car sinon vous avez toujours une cible mouvante.
+
+0:29:29.920,0:29:35.500
+Il y a des preuves contradictoires. Nous allons regarder le code source
+
+0:29:35.500,0:29:40.330
+après que nous ayons couvert les principaux pièges. Je reviendrais à votre question
+
+0:29:40.330,0:29:48.340
+dans quelques minutes. [Chat : nous n’avons pas besoin d'une régularisation comme une distance KL pour z dans les GANs
+
+0:29:48.340,0:29:55.630
+car nous échantillons directement à partir d’une normale]
+
+0:29:55.630,0:30:03.730
+Vous échantillonnez le gars orange ici à partir d’une distribution normale. Donc c’est tout.
+
+0:30:03.730,0:30:08.260
+Vous avez un échantillon, comme un nombre aléatoire, vous l’envoyez dans
+
+0:30:08.260,0:30:13.140
+le générateur. Et c'est tout. Et ma « Google Home » vient de s’activer.
+
+0:30:13.140,0:30:18.070
+J’ai répondu à votre question je crois. D’autres questions ? Nous allons voir les pièges
+
+0:30:18.070,0:30:22.870
+puis regarderons le code source. [Etudiant : il semble que nous remplaçons
+
+0:30:22.870,0:30:31.630
+cette perte de reconstruction par le réseau différenciateur. En quoi cela
+
+0:30:31.630,0:30:35.830
+aide exactement ? Pourquoi c’est mauvais de simplement utiliser la perte
+
+0:30:35.830,0:30:41.830
+de reconstruction ? Oh qu'est-ce…] Ok, ok, ok. C'est une très très bonne question.
+
+0:30:41.830,0:30:46.350
+Je veux dire que c'est quelque chose que j'ai complètement oublié de dire.
+
+0:30:51.740,0:30:56.000
+Donc dans le VAE, nous partions toujours d'un certain point puis nous
+
+0:30:56.000,0:30:59.419
+revenions dans cet espace. Nous déplacions un peu ce point de sorte de
+
+0:30:59.419,0:31:03.020
+couvrir une certaine zone et ensuite retournions de l'autre côté. Maintenant vous 
+
+0:31:03.020,0:31:07.610
+essayez de faire en sorte que ces deux-là se rapprochent. Mais dans notre cas,
+
+0:31:07.610,0:31:11.750
+avec les GANs, nous partons en fait du côté droit.
+
+0:31:11.750,0:31:15.399
+Donc dans les GANs, vous partez de la droite. Il n'y a pas de connexion
+
+0:31:15.399,0:31:21.919
+entre ce type ici et ce type-là. Tout ce que vous avez est un réseau de coût
+
+0:31:21.919,0:31:28.159
+qui vous dit si vous êtes sur ce genre de choses ici.
+
+0:31:28.159,0:31:35.450
+Il y a un réseau de coût qui va vous dire, dans ce cas, + 10 ici
+
+0:31:35.450,0:31:41.899
+et ensuite va vous dire disons 0 ici. Dans l'autre cas vous avez un
+
+0:31:41.899,0:31:47.000
+un réseau génératif ici qui permet de faire le lien entre ces entrées ici et ici.
+
+0:31:47.000,0:31:52.730
+Un est entraîné pour avoir des valeurs inférieures autour de la surface 
+
+0:31:52.730,0:31:57.230
+puis des valeurs plus importantes à l'extérieur. Ensuite vous voudriez quelque chose
+
+0:31:57.230,0:32:02.960
+qui ait certains niveaux de courbe comme celui-là. Tel que quand vous vous
+
+0:32:02.960,0:32:07.899
+éloignez de plus en plus, cela continue d'augmenter. Si vous avez un discriminateur,
+
+0:32:07.899,0:32:12.860
+cela force à avoir 0 ici et 4 à l'extérieur de cette
+
+0:32:12.860,0:32:20.539
+surface. Vraiment très très proche. Cela crée de nombreux problèmes.
+
+0:32:20.539,0:32:26.919
+Laissez-moi essayer une autre analogie. Il y a une autre analogie.
+
+0:32:26.919,0:32:30.500
+Oh, il y a des questions. Laissez-moi développer l'analogie, voir si
+
+0:32:30.500,0:32:36.710
+si cela fait plus de sens. Laissez-moi me voir…
+
+0:32:36.710,0:32:44.480
+Ok je peux me voir maintenant. Donc vous avez de vrais points de données ici.
+
+0:32:44.480,0:32:49.640
+Et vous avez quelques points de données générés ici.
+
+0:32:49.640,0:32:55.149
+Générés par le générateur. Donc des points ici et des points en bas.
+
+0:32:55.149,0:33:00.200
+Supposons que nous parlons maintenant de ce discriminateur pour que je puisse
+
+0:33:00.200,0:33:04.960
+illustrer les problèmes qui se posent ici. Donc vous avez un discriminateur 
+
+0:33:04.960,0:33:11.260
+qui a ces deux types de données. Vous avez des données réelles ici et les données fausses là.
+
+0:33:11.260,0:33:15.279
+Donc que fait le discriminateur ? La limite de décision du discriminateur 
+
+0:33:15.279,0:33:22.539
+est juste une ligne ici qui coupe ce truc en deux.
+
+0:33:22.539,0:33:27.789
+Donc maintenant la deuxième étape. La deuxième étape est que vous activez
+
+0:33:27.789,0:33:32.529
+la gravité sur cette frontière de décision. Donc les points qui sont ici
+
+0:33:32.529,0:33:38.260
+tombent. Les points ici sont attirés par la frontière de décision.
+
+0:33:38.260,0:33:43.169
+Nous entraînons donc en premier le discriminateur et obtenons une frontière de décision
+
+0:33:43.169,0:33:47.710
+puis nous entraînons le générateur. Ces points ici s’effondrent.
+
+0:33:47.710,0:33:54.190
+Donc vous êtes dans une nouvelle situation. Vous avez les vraies données ici 
+
+0:33:54.190,0:33:58.360
+et les fausses données ici. Vous entraînez à nouveau le discriminateur. Dans ce cas vous
+
+0:33:58.360,0:34:03.010
+avez une limite de décision qui est de moitié. Vous activez la gravité
+
+0:34:03.010,0:34:07.029
+de telle sorte que ces points ici s’effondrent là.
+
+0:34:07.029,0:34:11.440
+Vous itérez ce processus. Ce truc va se rapprocher de plus en plus
+
+0:34:11.440,0:34:17.230
+des vraies données. Vous avez donc ces points qui s’approchent
+
+0:34:17.230,0:34:27.970
+et arrivent à l'emplacement des données réelles. Disons maintenant
+
+0:34:27.970,0:34:32.800
+vous utilisez votre discriminateur. Vous avez la perte d’entropie croisée 
+
+0:34:32.800,0:34:41.050
+binaire pour l’entraînement. Quel est le problème ? Disons que je fais un
+
+0:34:41.050,0:34:46.810
+échange. J'apporte mes vraies données ici de telle sorte que nous puissions voir ce qui arrive.
+
+0:34:46.810,0:34:51.609
+Vous avez les données réelles ici et les données générées là, elles se superposent. 
+
+0:34:51.609,0:34:57.880
+Maintenant vous avez un discriminateur qui coupe ici. Donc les échantillons
+
+0:34:57.880,0:35:02.589
+se chevauchent, et ce discriminateur ignore ce qu’il doit faire.
+
+0:35:02.589,0:35:07.960
+Vous allez commencer par avoir des erreurs de classification
+
+0:35:07.960,0:35:12.490
+car vous pensiez que vous convergez…. Nous convergeons réellement mais
+
+0:35:12.490,0:35:19.760
+si vous pensez au fait que mes vraies données sont ici, mes données générées là et se chevauchent.
+
+0:35:19.760,0:35:27.230
+J'ai donc réussi à atteindre la convergence. Maintenant mon discriminateur 
+
+0:35:27.230,0:35:35.530
+a aucun indice sur la façon de séparer ces choses.
+
+0:35:35.530,0:35:45.320
+Donc nous ne convergeons pas. Ou quand nous convergeons nous avons des problèmes.
+
+0:35:45.320,0:35:49.790
+[Chat : je pense que le discriminateur ne distingue que deux classes]
+
+0:35:49.790,0:35:53.869
+Le discriminateur ne peut pas distinguer les deux classes car ces données 
+
+0:35:53.869,0:36:00.290
+ne sont plus séparées. Elles vont être comme… Si vous arrivez à avoir que
+
+0:36:00.290,0:36:05.660
+le générateur réalise de très très bons échantillons, alors ces bons
+
+0:36:05.660,0:36:10.340
+échantillons ne peuvent être distingués des échantillons réels.
+
+0:36:10.340,0:36:17.450
+Le discriminateur n'a aucune idée de la manière de dire fondamentalement. Comment les séparer.
+
+0:36:17.450,0:36:26.570
+Donc lorsque le générateur fonctionne, le discriminateur ne fonctionne pas. Hum… comme c'est bien.
+
+0:36:26.570,0:36:32.119
+Un autre problème : disons encore une fois que vous avez les fausses données ici, les vraies ici
+
+0:36:32.119,0:36:39.020
+et avez un parfait et incroyable discriminateur. Tel qu’ici c’est
+
+0:36:39.020,0:36:43.810
+absolument 0 et là absolument 1. Donc vous avez en gros comme une
+
+0:36:43.810,0:36:50.480
+« step function ». Vous n'avez pas de sigmoïde. Que va être le gradient ? qui ne sera pas le
+
+0:36:50.480,0:36:55.910
+Il est saturé. Il est soit nul, soit 1. Il n'y a plus de gradient.
+
+0:36:55.910,0:37:01.430
+Ces points ne se déplaceront jamais. Donc la gravité que je vous montrais
+
+0:37:01.430,0:37:06.680
+avant qui attirait les données générées sur la frontière de décision
+
+0:37:06.680,0:37:12.070
+était essentiellement les gradients. Les gradients de la sortie
+
+0:37:12.070,0:37:17.420
+du discriminateur ou du réseau de coûts par rapport aux échantillons
+
+0:37:17.420,0:37:24.770
+générés par le générateur. Mais maintenant si ce discriminateur
+
+0:37:24.770,0:37:33.329
+est parfait avec 0 ici 1 ici alors c'est complètement plat. Comme ça.
+
+0:37:33.329,0:37:39.539
+Il n’y a pas de gradient ici. Donc si vous êtes par ici… Disons que nous 
+
+0:37:39.539,0:37:45.259
+avons des données sur x, en 1D. Vous avez 0 0 0 puis avez 1 1 1 1 1 1.
+
+0:37:45.259,0:37:49.890
+Mais s’il n'y a pas de gradient, ces points ne sauront jamais qu’ils doivent
+
+0:37:49.890,0:37:56.069
+aller dans cette direction. Ils diront : « oh nous sommes des méchants, nous avons une mauvaise valeur
+
+0:37:56.069,0:37:59.999
+mais nous ne savons pas dans quelle direction aller car il n'y a de
+
+0:37:59.999,0:38:04.709
+direction ». Le gradient est nul, c’est une région plate. Donc c'est un
+
+0:38:04.709,0:38:09.269
+très gros problème. Chaque fois que nous entraînons ce GAN, vous voulez
+
+0:38:09.269,0:38:16.019
+faire en sorte que ce coût augmente progressivement au fur et à mesure que vous vous déplacez
+
+0:38:16.019,0:38:22.739
+de votre région des données réelles. De sorte que s'il y a une
+
+0:38:22.739,0:38:32.579
+chose convexe, les choses montent et vous savez toujours dans quelle direction tomber pour arriver à l'endroit où sont
+
+0:38:32.579,0:38:47.009
+vos vraies données. Et ma Google Home redémarre sans cesse, je vais l’éteindre. Ok, c’est fait. Est-ce clair jusqu'ici ?
+
+0:38:47.989,0:39:00.509
+[Chat : RIP Google] Un dernier problème est : si nous avons un générateur qui a tous les points ici
+
+0:39:00.509,0:39:11.849
+associés à ce point ici… Tous les poids sont nuls et le
+
+0:39:11.849,0:39:17.249
+biais final est exactement cette valeur ici, alors c'est terminé.
+
+0:39:17.249,0:39:21.779
+Car le discriminateur ou la fonction de coût dira qu’il s’agit d’un très bon travail
+
+0:39:21.779,0:39:28.859
+et les générateurs disent « oui ». Puis le générateur ne sort qu'une image.
+
+0:39:28.859,0:39:33.749
+C'est ce qu'on appelle le « collapse mode », ce qui signifie que tous les points sont associés à
+
+0:39:33.749,0:39:40.529
+seulement un point. Et vous ne pouvez rien y faire. Donc l’histoire complète est
+
+0:39:40.529,0:39:46.430
+que si chaque point ici est associé avec ce point ici
+
+0:39:46.430,0:39:50.540
+alors le discriminateur dira : « oh c'est un faux point ».
+
+0:39:50.540,0:39:55.940
+Donc le générateur échangera et dira : « c'est la vraie sortie ».
+
+0:39:55.940,0:39:58.579
+Et quand vous entraînez le discriminateur et il dit : « oh c'est faux ».
+
+0:39:58.579,0:40:03.470
+Donc le générateur dit : « c’est lui le vrai ». Donc vous avez en gros un
+
+0:40:03.470,0:40:11.119
+réseau qui ne fait que sauter à travers les échantillons. Et vous ne pouvez pas y remédier.
+
+0:40:11.119,0:40:15.800
+A moins d’introduire une pénalité pour ne pas avoir une sorte de diversité dans la
+
+0:40:15.800,0:40:21.780
+la sortie du générateur. La disparition des gradients. Chaque fois que vous avez un discriminateur saturé.
+
+0:40:21.780,0:40:25.160
+Nous n'aimons pas le discriminateur, nous préférons apprendre
+
+0:40:25.160,0:40:32.569
+ce genre de coût lisse. Le réseau de coût. Le « collapse mode ». C'est
+
+0:40:32.569,0:40:37.160
+ce nous venons de décrire : le fait de tomber sur un point spécifique. 
+
+0:40:37.160,0:40:42.280
+La convergence instable. C’est le fait est que chaque fois que vous avez un 
+
+0:40:42.280,0:40:47.630
+générateur très mignon, le discriminateur n'a aucune idée de ce qui se passe.
+
+0:40:47.630,0:40:53.240
+Vous avez une très très grosse perte car ces points sont classés comme
+
+0:40:53.240,0:40:57.319
+celui-ci. Au contraire classé comme complètement autre chose.
+
+0:40:57.319,0:41:05.790
+Vous obtenez un très très grand gradient. Le discriminateur s'éloigne loin et la frontière de décision va devenir folle.
+
+0:41:06.589,0:41:10.190
+Et ensuite vous avez le générateur essayant de courir après
+
+0:41:10.190,0:41:18.290
+la frontière de décision. Et donc il n’y a pas de convergence.
+
+0:41:18.290,0:41:22.910
+C'est un point d'équilibre instable ce qui est très difficile à attraper.
+
+0:41:22.910,0:41:30.829
+[Etudiante : je comprends que nous avons une sorte de problème minimax
+
+0:41:30.829,0:41:36.020
+ici avec un générateur et un coût mais en général quand vous optimisez cela,
+
+0:41:36.020,0:41:40.490
+je ne sais pas s'il existe vraiment des moyens simples de s'assurer que 
+
+0:41:40.490,0:41:45.530
+vous convergez vers un bon point] Je ne suis pas sûr de savoir comment
+
+0:41:45.530,0:41:50.180
+vous convergez vers un bon point mais vous pouvez le voir grâce à l'examen visuel des sorties
+
+0:41:50.180,0:41:57.109
+du générateur. Ou vous pouvez en entraîner plusieurs GANs puis entraîner 
+
+0:41:57.109,0:42:04.670
+un discriminateur sur un ensemble de données d'images et classifier,
+
+0:42:04.670,0:42:12.020
+évaluer la qualité de l'image. Donc c'est comme une sorte de mauvaise
+
+0:42:12.020,0:42:18.619
+métrique que nous n'aimons pas mais c'est ce qui a été fait. Cela s’appelle l’« inception score ».
+
+0:42:18.619,0:42:23.000
+Vous entraînez un réseau, disons le réseau Inception, c'est pour cela que
+
+0:42:23.000,0:42:29.090
+ça s’appelle l’« inception score », sur jeu de données d'image et puis vous pouvez
+
+0:42:29.090,0:42:35.420
+essayez de voir si ces générateurs vous donnent des images qui ressemblent 
+
+0:42:35.420,0:42:43.190
+à quelque chose  du jeu d’entraînement. Encore une fois, ce n'est pas vraiment une
+
+0:42:43.190,0:42:49.040
+bonne mesure, mais certains essaient d’utiliser ça pour évaluer les
+
+0:42:49.040,0:42:55.359
+modèles génératifs. Avant de passer au noteboook, 
+
+0:42:55.359,0:43:01.190
+voyons un exemple concret pour entraîner la perte de ces deux
+
+0:43:01.190,0:43:08.210
+réseaux que nous venons de voir. Donc la fonction de perte pour mon réseau
+
+0:43:08.210,0:43:17.390
+de coût étant donné l'entrée x et l'entrée latente z en orange peut être est la suivante.
+
+0:43:17.390,0:43:27.980
+Donc égale à mon coût C compte tenu de mon entrée rose x + cette partie.
+
+0:43:27.980,0:43:35.270
+La partie positive de d’une marge M moins le coût que je vais
+
+0:43:35.270,0:43:41.990
+donner à une entrée générée. Entrée qui est sortie par mon générateur 
+
+0:43:41.990,0:43:45.740
+auquel on a donné en entrée z, un nombre aléatoire.
+
+0:43:45.740,0:43:54.410
+Donc G(z) me donne une fausse entrée. C devra me donner un coût et aussi longtemps
+
+0:43:54.410,0:44:01.970
+que ce coût sera inférieur à m, cette partie ici sera une partie positive. 
+
+0:44:01.970,0:44:07.220
+Dès que C, le réseau de coût, me donne un coût pour cette
+
+0:44:07.220,0:44:15.550
+entrée générée qui est supérieure à m, alors cette partie sera un nombre négatif.
+
+0:44:15.550,0:44:23.270
+Puisque je prends la partie positive, cela passe à 0. Donc cette partie de la perte passe à 0 chaque fois que
+
+0:44:23.270,0:44:29.300
+le réseau de coûts me donne un résultat supérieur à m pour une entrée
+
+0:44:29.300,0:44:34.670
+fourni par mon générateur. De l'autre côté, ici, nous avons simplement le 
+
+0:44:34.670,0:44:39.920
+coût associé à la bonne entrée rose. Donc pour passer ça à 0,
+
+0:44:39.920,0:44:46.100
+il suffit que votre réseau de coût produise un 0 chaque fois que
+
+0:44:46.100,0:44:53.060
+l'entrée est la bonne. Donc dans l'exemple qui a été fait avant,
+
+0:44:53.060,0:45:00.710
+je disais que m = 10 et que le réseau est donc encouragé à produire un
+
+0:45:00.710,0:45:06.590
+scalaire d’au moins 10. Pour les entrées provenant du générateur,
+
+0:45:06.590,0:45:11.270
+le coût = 0 est promue par ce terme ici.
+
+0:45:11.270,0:45:17.900
+Il s'agit donc d'un exemple possible de perte que nous pouvons utiliser pour entraîner le réseau de coûts.
+
+0:45:17.900,0:45:25.580
+Cela a été fait dans ce papier ici par Jake, Michael et Yann en 2016. 
+
+0:45:25.580,0:45:30.980
+Comment entraînons-nous le générateur ? C’est un très simple car vous avez
+
+0:45:30.980,0:45:39.290
+simplement la perte pour entraîner le générateur qui est égale au coût que 
+
+0:45:39.290,0:45:45.140
+le réseau de coûts donne pour un échantillon généré donné.
+
+0:45:45.140,0:45:53.620
+Donc mon générateur va simplement essayer d'obtenir un coût bas et c'est si joli.
+
+0:45:53.620,0:46:01.100
+Encore une fois, pouvons-nous être plus précis ?
+
+0:46:01.100,0:46:06.350
+Je n’ai pas encore parlé des choix spécifiques que vous pouvez faire pour
+
+0:46:06.350,0:46:11.000
+créer un réseau qui vous donne ce scalaire basé sur l'entrée.
+
+0:46:11.000,0:46:19.100
+Mais je pense que vous avez peut-être déjà quelques idées sur la façon dont ce réseau peut être fait.
+
+0:46:19.100,0:46:27.260
+Un choix possible pour ce réseau va être le suivant :
+
+0:46:27.260,0:46:40.500
+la MSE, la différence quadratique entre le décodage de l'encodage de l'entrée spécifique. Il s'agit donc de la reconstruction
+
+0:46:40.500,0:46:49.140
+d'un AE - l'entrée elle-même. Au carré. Donc comment cela fonctionne ?
+
+0:46:49.140,0:46:57.210
+Si l’AE est entraîné uniquement sur des échantillons roses, il ne
+
+0:46:57.210,0:47:03.480
+pourra reconstruire que des échantillons roses. Donc la distance entre
+
+0:47:03.480,0:47:09.330
+mon entrée rose et la reconstruction de l'AE lorsque je fourni l'entrée
+
+0:47:09.330,0:47:13.950
+rose sera très petite, espérons-le. Si nous entraînons ça correctement. 
+
+0:47:13.950,0:47:20.340
+Mais que se passe t’il maintenant si je mets ici une entrée qui est loin de 
+
+0:47:20.340,0:47:24.990
+tout qui se trouve sur la surface des données ? Mon AE a été entraîné à 
+
+0:47:24.990,0:47:30.810
+produire des choses qui restent sur la surface des données et donc il y a
+
+0:47:30.810,0:47:36.300
+une différence substantielle entre mon entrée réelle et ce que mon AE
+
+0:47:36.300,0:47:43.110
+peut donner. La partie agréable de ce spécifique de choix de réseau de coût est
+
+0:47:43.110,0:47:48.450
+que vous pouvez entraîner cet AE sans le générateur. Vous pouvez
+
+0:47:48.450,0:47:54.130
+simplement entraîner un AE. Vous pouvez avoir des couches sur ou sous-complète,
+
+0:47:54.130,0:47:58.850
+utilisez une sorte de régularisation, une restriction d'information.
+
+0:47:58.850,0:48:03.630
+Mais vous pouvez néanmoins entraîner ce gars sans avoir un
+
+0:48:03.630,0:48:09.150
+générateur. Celui-ci vous permettra simplement d'apprendre ce qu'est la
+
+0:48:09.150,0:48:14.820
+surface des données et vous pouvez l'utiliser comme un proxy pour établir
+
+0:48:14.820,0:48:19.350
+la différence/distance entre votre entrée actuelle et ce que le réseau
+
+0:48:19.350,0:48:26.550
+pense que l’entrée la plus proche sur la surface d’entraînement pourrait être.
+
+0:48:26.550,0:48:31.890
+Continuons. Dans les cinq dernières minutes s'il n'y a pas de questions, nous allons
+
+0:48:31.890,0:48:38.640
+lire ensemble le code source des exemples de PyTorch. Je pense que c'est
+
+0:48:38.640,0:48:41.560
+la première fois que nous lisons un code
+
+0:48:41.560,0:48:47.260
+de programmeur/développeur. Je ne suis pas un programmeur. Donc ce que vous 
+
+0:48:47.260,0:48:51.870
+avez vu jusqu'à présent avec mes notebooks, c’est une sorte de contenu
+
+0:48:51.870,0:48:57.760
+pédagogique/éducatif qui a été massé de manière à être agréable et joli,
+
+0:48:57.760,0:49:02.230
+à avoir de belles sorties. Maintenant vous allez lire
+
+0:49:02.230,0:49:08.230
+un beau code écrit par des gens dont c’est le travail.
+
+0:49:08.230,0:49:13.570
+On va sur GitHub. On ne va pas sur « PyTorch Deep Learning », on va sur 
+
+0:49:13.570,0:49:30.850
+« PyTorch examples. » Ok donc zoomons un peu.
+
+0:49:30.850,0:49:40.540
+Ici nous avons le « dcgan ». Donc passons sur les choses principales 
+
+0:49:40.540,0:49:45.220
+de ce code. On commence par importer des librairies comme d'habitude.
+
+0:49:45.220,0:49:49.360
+Vous avez un « parser » d'arguments qui vous permet de choisir
+
+0:49:49.360,0:49:55.900
+des commandes spécifiques, des paramètres spécifiques dans la ligne de la console. Ceci permet d’afficher toutes les
+
+0:49:55.900,0:50:02.470
+options pour la configuration. Cette ligne tente de créer un répertoire.
+
+0:50:02.470,0:50:10.600
+Ici vous avez la configuration de la graine que vous pouvez choisir manuellement afin d’avoir des résultats reproductibles.
+
+0:50:10.600,0:50:19.210
+« cudnn.benchmark = True » vous permet d’avoir une routine GPU plus rapide.
+
+0:50:19.210,0:50:27.280
+Si vous n'avez pas CUDA vous allez prendre une éternité pour entraîner.
+
+0:50:27.280,0:50:33.370
+« dataroot » quel que soit… « dataset ». Donc ici
+
+0:50:33.370,0:50:38.950
+vous allez charger les jeux de données « Imaginet », « Folder » ou « lfw ».
+
+0:50:38.950,0:50:47.290
+Ici c'est des choses que nous savons déjà. Donc « ngpu » est le nombre de
+
+0:50:47.290,0:50:55.210
+GPU, « nz » est la taille de la variable latente, « ngf » et « ndf »
+
+0:50:55.210,0:51:03.849
+sont le nombre de caractéristiques du générateur et
+
+0:51:03.849,0:51:08.520
+le nombre de caractéristiques du discriminateur
+
+0:51:08.520,0:51:15.970
+Nous avons une initialisation des poids qui aide à démarrer un entraînement propre.
+
+0:51:15.970,0:51:20.950
+Puis regardons ce générateur. Ok donc c'est une sous-classe
+
+0:51:20.950,0:51:27.250
+classique d’un générateur. Vous n'avez pas besoin de ces trucs si
+
+0:51:27.250,0:51:34.270
+vous utilisez Python 3. Donc nous avons un « Sequential ». Le générateur 
+
+0:51:34.270,0:51:38.740
+est échantillonné de telle sorte que, comme vous l'avez vu lors du dernier
+
+0:51:38.740,0:51:43.030
+devoir, vous voulez passer d'une petite dimension à une plus grande. 
+
+0:51:43.030,0:51:48.190
+Vous utilisez ce module. Puis il y a de la batch normalisation, une ReLU,
+
+0:51:48.190,0:51:54.369
+une convolution transposée, une batch norm, une ReLU et vous continuez. Et à la fin on a une tanh.
+
+0:51:54.369,0:52:00.220
+Une tanh car la sortie dans ce cas va se situer entre -1 et +1.
+
+0:52:00.220,0:52:07.240
+« forward » c’est simplement que vous envoyez l’entrée dans le « main ».
+
+0:52:07.240,0:52:14.049
+Le « main », étant le module principal ici. C’est pour paralléliser
+
+0:52:14.049,0:52:19.869
+les calculs si vous voulez utiliser plusieurs GPU. Et voici comment
+
+0:52:19.869,0:52:25.930
+vous initialisez avec l'initialisation spécifique définie plus haut.
+
+0:52:25.930,0:52:30.940
+Donc en gros pour voir ce que cette chose fait. Vous entrez quelque chose
+
+0:52:30.940,0:52:38.280
+ici de taille nz avec nz la taille de la latente, valant 100.
+
+0:52:38.280,0:52:45.549
+Donc vous entrez un vecteur de taille 100. C'est un tenseur 1D
+
+0:52:45.549,0:52:51.880
+avec une taille de 100. Chaque fois que vous entrez ce vecteur 
+
+0:52:51.880,0:52:59.380
+de taille 100, la sortie est quelque chose de taille 64 par 64 fois le
+
+0:52:59.380,0:53:04.950
+nombre de canaux dans le cas où vous avez une image en couleur ou pas.
+
+0:53:05.560,0:53:13.180
+« nc » est le nombre de canaux de l'image d'entrée.
+
+0:53:13.180,0:53:17.980
+Cela devrait être clair jusqu'à présent. Rien de bien fou pour le moment. Voyons la dernière partie
+
+0:53:17.980,0:53:23.230
+puis comment entraîner. Donc pour le discriminateur on a la même chose :
+
+0:53:23.230,0:53:28.120
+un « sequential ». Dans ce cas, l’entrée est quel que soit le nombre de canaux fois 64 fois 64.
+
+0:53:28.120,0:53:33.760
+Puis vous avez une « LeakyReLU ». C’est quelque chose d’important.
+
+0:53:33.760,0:53:37.750
+« LeakyReLU » dans le discriminateur s'assure que vous n'allez pas tuer le
+
+0:53:37.750,0:53:41.680
+gradient si vous êtes dans une région négative. C'est vraiment très
+
+0:53:41.680,0:53:45.660
+important. Si vous n'avez pas de gradients ici, alors vous ne pouvez pas
+
+0:53:45.660,0:53:50.500
+entraîner le générateur. Vous continuez comme ça et ensuite finalement
+
+0:53:50.500,0:53:55.150
+ils utilisent une sigmoïde car ils entraînent ce truc comme un classifieur
+
+0:53:55.150,0:54:01.210
+à deux classes. Pour le « forward » vous envoyez simplement ces choses
+
+0:54:01.210,0:54:08.200
+par l'intermédiaire du « main ». Et ils initialisent ce réseau. Donc on « netD » et « netG ».
+
+0:54:08.200,0:54:13.300
+[Etudiant : cette implémentation est légèrement différente de celle de
+
+0:54:13.300,0:54:19.030
+ce que vous avez montrez précédemment. Car le discriminateur est juste
+
+0:54:19.030,0:54:29.950
+un…  il sort via une sigmoïde…] La seule différence est cette ligne ici. 
+
+0:54:29.950,0:54:35.800
+Dans les choses dont nous avons parlé juste avant, nous n’avions pas de
+
+0:54:35.800,0:54:40.920
+sigmoïde. Nous avions juste cette dernière couche de convolution. [Ok]
+
+0:54:40.920,0:54:46.870
+La deuxième différence est que nous n'utiliserions pas une perte
+
+0:54:46.870,0:54:55.360
+d’entropie croisée binaire. C'est la source de tous les maux. BCE + sigmoïde 
+
+0:54:55.360,0:55:02.580
+est une mauvaise façon d’entraîner un GAN, un générateur.
+
+0:55:02.580,0:55:06.810
+Nous nous en tenons néanmoins à la formulation principale ici. Donc voyons 
+
+0:55:06.810,0:55:10.680
+comment cela fonctionne. « fixed_noise » crée des choses aléatoires
+
+0:55:10.680,0:55:16.200
+avec une mauvaise taille de batch et une bonne taille ici. Nous avons deux
+
+0:55:16.200,0:55:20.910
+optimiseurs : un optimiseur pour le discriminateur, l’autre pour le générateur.
+
+0:55:20.910,0:55:27.060
+Voyons quelles sont les cinq étapes que vous devriez tous connaître.
+
+0:55:27.060,0:55:33.390
+Nous commençons par mettre à zéro les gradients du discriminateur.
+
+0:55:33.390,0:55:41.880
+Donc maintenant nous avons les vraies données qui sont « data[] »
+
+0:55:41.880,0:55:52.500
+venant du « dataloader ». Donc nous avons de vraies données ici et puis 
+
+0:55:52.500,0:55:58.340
+nous avons un ensemble d’étiquettes qui sont les véritables étiquettes.
+
+0:55:58.340,0:56:04.490
+Nous avons le réseau du discriminateur auquel on donne l’entrée réelle.
+
+0:56:04.490,0:56:08.930
+Ensuite nous avons une sortie réelle. Puis vous calculez
+
+0:56:08.930,0:56:12.500
+la première partie qui est le critère, l'entropie croisée
+
+0:56:12.500,0:56:17.660
+binaire entre la sortie, pour chaque fois que nous mettons
+
+0:56:17.660,0:56:24.530
+l'entrée réelle, et l'étiquette réelle. Nous effectuons alors la première étape.
+
+0:56:24.530,0:56:30.770
+Donc on effectue une propagation arrière dans ce critère qui est le calcul de la dérivée partielle
+
+0:56:30.770,0:56:34.849
+de cette entropie croisée binaire par rapport aux poids du
+
+0:56:34.849,0:56:40.970
+discriminateur lorsque nous donnons les données réelles au discriminateur et que nous
+
+0:56:40.970,0:56:45.740
+essayons de faire correspondre les étiquettes qui sont les véritables étiquettes. C’est le premier point.
+
+0:56:45.740,0:56:51.790
+Garder le à l'esprit. La deuxième partie est que vous avez du bruit.
+
+0:56:51.790,0:56:59.510
+Vous donnez ce bruit au réseau du générateur.
+
+0:56:59.510,0:57:05.089
+Vous obtenez alors une fausse sortie. Là j’ai mes étiquettes
+
+0:57:05.089,0:57:10.310
+qui sont remplies avec de fausses étiquettes. Vous donnez ce truc,
+
+0:57:10.310,0:57:18.680
+ces fausses données, au discriminateur. Mais nous « detach ». C’est
+
+0:57:18.680,0:57:24.080
+important. Donc pour l'instant nous donnons les fausses données mais nous les détachons
+
+0:57:24.080,0:57:29.119
+du générateur. Puis nous entraînons à nouveau. Donc on a le critère,
+
+0:57:29.119,0:57:33.740
+on calcule la perte entre la sortie du discriminateur et les étiquettes pour
+
+0:57:33.740,0:57:39.260
+les classes fausses. Puis nous faisons une autre phase arrière. Donc maintenant nous avons
+
+0:57:39.260,0:57:42.920
+deux propagations en arrière : une ici et une autre là. Et nous avons
+
+0:57:42.920,0:57:49.369
+calculé la dérivée partielle de ces critères dans le cas où nous entrions
+
+0:57:49.369,0:57:56.300
+de vraies données et dans le cas où nous entrions de fausses données.
+
+0:57:56.300,0:58:00.710
+Donc vous calculez « backward » ici et ici. Nous ne nettoyons pas le gradient.
+
+0:58:00.710,0:58:04.400
+C’est une partie importante. On appelle « clear_gradient » qu’au début.
+
+0:58:04.400,0:58:09.349
+Nous calculons d'abord le gradient pour les données réelles, puis
+
+0:58:09.349,0:58:15.680
+gradients pour les fausses. Maintenant nous pouvons calculer celui-ci. Donc on « step »
+
+0:58:15.680,0:58:20.660
+dans l'optimiseur. Nous avons donc calculé la partie « backward », les dérivées partielles.
+
+0:58:20.660,0:58:26.150
+Également les dérivées partielles et maintenant on « step ». Enfin nous entraînons le générateur
+
+0:58:26.150,0:58:31.999
+et on aura terminé. Comment entraîner le générateur ? Vous remplissez
+
+0:58:31.999,0:58:39.349
+les étiquettes avec les vraies étiquettes. Mais vous nourrissez toujours le discriminateur avec les
+
+0:58:39.349,0:58:44.630
+fausses données, celles générées par mon générateur. Ce discriminateur devrait
+
+0:58:44.630,0:58:50.210
+dire : « Oh ce sont de fausses données ». Mais nous disons : « Non, non ! Ce sont de vraies données ».
+
+0:58:50.210,0:58:54.749
+Donc en gros, on échange la chose. Quand nous calculons ces
+
+0:58:54.749,0:58:59.210
+rétropropagations, nous avons ces gradients qui vont dans la direction opposée.
+
+0:58:59.210,0:59:05.359
+Ils essaient de rendre le réseau moins performant. Mais ensuite nous
+
+0:59:05.359,0:59:10.160
+allons juste faire un pas avec le générateur. Donc celui-ci calcule les
+
+0:59:10.160,0:59:14.029
+dérivées partielles pour tout le monde. Dérivées partielles par rapport 
+
+0:59:14.029,0:59:18.499
+aux poids du discriminateur et aux poids du générateur.
+
+0:59:18.499,0:59:24.229
+Mais nous ne faisons un pas que pour le générateur. Donc le
+
+0:59:24.229,0:59:30.410
+générateur essaie de baisser le critère. Le critère ayant l’étiquette
+
+0:59:30.410,0:59:35.719
+échangée. Ce sont de vraies étiquettes chaque fois que nous donnons de 
+
+0:59:35.719,0:59:41.660
+fausses données au discriminateur. Donc celui-ci fonctionne en fait contre le discriminateur.
+
+0:59:41.660,0:59:48.920
+Et c’est tout. Donc vous avez une rétropropagation ici, une autre ici et
+
+0:59:48.920,0:59:55.309
+une autre là. Des questions jusqu’à présent ? [Etudiante :
+
+0:59:55.309,0:59:59.599
+Attendez, quelle est la différence entre les deux premiers « backward » car ils sont tous les deux sur le même objet]
+
+0:59:59.599,1:00:06.190
+Donc la première rétropropagation ici quand le discriminateur,
+
+1:00:06.190,1:00:12.499
+le réseau de coût, reçoit les données réelles. Le « label » ici
+
+1:00:12.499,1:00:18.410
+contient les vraies étiquettes. Donc c'est la première partie
+
+1:00:18.410,1:00:23.150
+de la rétropropagation. Vous avez la vraie classe et ensuite la classe
+
+1:00:23.150,1:00:27.860
+de la fausse classe. Dans ce cas, je génère mes fausses données par le biais du
+
+1:00:27.860,1:00:33.910
+générateur qui est alimenté par du bruit. Puis je donne ça à mon discriminateur.
+
+1:00:33.910,1:00:40.190
+Mais j'ai arrêté de rétropropager le gradient dans le générateur.
+
+1:00:40.190,1:00:47.210
+Ce critère tente de rendre la sortie du discriminateur proche de
+
+1:00:47.210,1:00:56.040
+l'étiquette. L'étiquette dans ce cas étant les fausses. Celles associées au bruit.
+
+1:00:56.600,1:01:01.340
+Peut être qu’on peut appeler ça des étiquettes bruitées. Ok c'est des fausses étiquettes. 
+
+1:01:01.340,1:01:07.490
+« fake » sont les x̂ bleus générés par le générateur. Puis quand je 
+
+1:01:07.490,1:01:12.920
+mets ces x̂ ici à l'intérieur du discriminateur,
+
+1:01:12.920,1:01:17.990
+je dis au discriminateur : « celui-ci devrait être étiqueté comme un faux ».
+
+1:01:17.990,1:01:20.540
+Donc vous avez ce critère.
+
+1:01:20.540,1:01:26.660
+Dans cette rétropropagation, vous allez obtenir ces dérivées partielles de 
+
+1:01:26.660,1:01:33.680
+la fonction de perte par rapport aux paramètres. Dans le cas où nous
+
+1:01:33.680,1:01:39.710
+donnons les fausses données et essayons de les étiqueter comme fausses…
+
+1:01:39.710,1:01:45.470
+fausses étiquettes. Nous avons des fausses cibles. Fausses étiquettes. Dans l'autre partie
+
+1:01:45.470,1:01:51.110
+ici, nous entrons de vraies données à l'intérieur du discriminateur et
+
+1:01:51.110,1:01:56.030
+disons au réseau : tu as une perte entre la sortie et les étiquettes
+
+1:01:56.030,1:02:00.580
+qui sont censées être les vraies étiquettes. Donc dans la première partie 
+
+1:02:00.580,1:02:05.780
+vous obtenez les dérivées partielles correspondantes à la perte calculée
+
+1:02:05.780,1:02:11.120
+lorsque des données réelles ont été données au discriminateur. Dans la deuxième partie,
+
+1:02:11.120,1:02:16.670
+vous avez la perte par rapport à la sortie du réseau quand
+
+1:02:16.670,1:02:22.370
+nous avons donné de fausses données au réseau. Donc ici nous faisons simplement une autre rétropropagation.
+
+1:02:22.370,1:02:26.570
+Dans ce cas, cette ligne ici et cette ligne ici
+
+1:02:26.570,1:02:30.440
+vous donnent… accumulent. Car par défaut, PyTorch accumule
+
+1:02:30.440,1:02:34.730
+à chaque fois que vous faites une rétropropagation. Donc dans la première partie cela s'accumule
+
+1:02:34.730,1:02:38.119
+pour la première moitié du batch et ensuite la deuxième fois que vous avez accumulé….
+
+1:02:38.119,1:02:41.750
+En gros, vous avez la dérivée partielle pour la deuxième partie du batch.
+
+1:02:41.750,1:02:46.160
+La première partie du batch est les vraies données. La deuxième partie est
+
+1:02:46.160,1:02:51.140
+les fausses données. Dans l’ensemble, vous avez les dérivées partielles
+
+1:02:51.140,1:02:54.950
+des vraies et fausses données. Ensuite nous utilisons ce gradient
+
+1:02:54.950,1:03:01.579
+afin de régler, modifier les paramètres du discriminateur.
+
+1:03:01.579,1:03:07.010
+Cela fait sens jusqu'à présent ? [Etudiante : oui, c'est logique, mais 
+
+1:03:07.010,1:03:12.349
+un l’augmente et l’autre le diminue] Donc celui-ci jusqu'à présent essaient
+
+1:03:12.349,1:03:16.790
+tous les deux de diminuer le critère. C’est ce que vous pouvez voir ici.
+
+1:03:16.790,1:03:23.420
+Le critère a d’une part la sortie du discriminateur qui a été alimenté
+
+1:03:23.420,1:03:28.190
+avec les vraies données du CPU et d’autre part les vraies étiquettes.
+
+1:03:28.190,1:03:36.130
+Le critère essaye d’apparier les vraies données et les vraies étiquettes.
+
+1:03:36.130,1:03:43.570
+C’est ok jusqu'à présent ? [Oui]. Dans la deuxième partie vous avez le réseau ici qui essaie d’apparier
+
+1:03:43.570,1:03:49.480
+les fausses données avec les fausses étiquettes. Car la sortie provient de ce discriminateur
+
+1:03:49.480,1:03:55.660
+a qui on a donné de fausses données. Puis cela force le réseau à dire 
+
+1:03:55.660,1:04:00.670
+« Oh, ce sont des fausses étiquettes ». Donc dans le premier vous avez ce
+
+1:04:00.670,1:04:07.510
+critère agissant sur des données vraies avec des étiquettes qui vous disent :
+
+1:04:07.510,1:04:13.930
+« ce sont des données réelles ». Puis vous entrainez et dans le deuxième 
+
+1:04:13.930,1:04:18.670
+vous avez la perte mais cette fois-ci pour les fausses données. 
+
+1:04:18.670,1:04:24.370
+Donc on essaie toujours de minimiser ces critères.
+
+1:04:24.370,1:04:29.110
+Donc chaque fois que vous effectuez l'étape de l'optimiseur, cette étape tente de réduire
+
+1:04:29.110,1:04:35.440
+à la fois celui-ci et celui-là. Une autre façon de faire ça serait d'avoir
+
+1:04:35.440,1:04:41.080
+la somme entre celui-ci et celui-là. Vous n'effectuez alors qu'une seule étape de descente de gradient.
+
+1:04:41.080,1:04:45.700
+L'alternative, si vous comprenez ce que j'ai dit, serait… 
+
+1:04:45.700,1:04:54.930
+cette ligne 226 plus la 235.
+
+1:04:54.930,1:05:01.900
+Donc actuellement nous faisons celle-là « .backward » et celle-là « .backward ».
+
+1:05:01.900,1:05:16.570
+Et donc l’alternative serait plutôt « (226 + 235).backward »
+
+1:05:16.5700,1:05:21.640
+Donc c'est une alternative qui fait exactement la même chose qu’actuellement.
+
+1:05:21.640,1:05:26.830
+Si vous faites deux rétropropagations, une sur les deux critères différents, c'est exactement 
+
+1:05:26.830,1:05:29.950
+comme sommer les deux critères et faire une seule rétropropagation.
+
+1:05:29.950,1:05:37.000
+Puis en dessous, chaque fois que nous entraînons le générateur ici, nous échangeons les étiquettes.
+
+1:05:37.000,1:05:42.220
+Dans ce cas, nous essayons d’entraîner…. De….
+
+1:05:42.220,1:05:48.640
+Donc on « step » avec l'optimiseur de générateur de telle sorte que nous 
+
+1:05:48.640,1:05:52.569
+essayons d'induire le réseau à sortir de vraies étiquettes
+
+1:05:52.569,1:05:56.019
+quand nous donnons des données qui sont de fausses données.
+
+1:05:56.019,1:06:01.269
+Donc cette étape ici ne vise pas à dé-entraîner le discriminateur mais
+
+1:06:01.269,1:06:06.159
+entraîner le générateur de manière à ce qu'il tente que le discriminateur
+
+1:06:06.159,1:06:13.899
+ne fonctionne pas bien. [Etudiante : donc le générateur génère nos fausses données,
+
+1:06:13.899,1:06:17.229
+ne voulons-nous pas faire un pas dans l'autre direction pour ça ?]
+
+1:06:17.229,1:06:20.769
+Donc vous voulez faire un pas dans l'autre direction pour le générateur.
+
+1:06:20.769,1:06:26.079
+[Etudiante : non pour les fausses données. Nous voulons pouvoir dire qu'elles sont fausses]
+
+1:06:26.079,1:06:31.929
+C'est ce vous le faites ici. Si vous avez de fausses données et les mettez 
+
+1:06:31.929,1:06:35.469
+à l'intérieur du discriminateur, vous dites aussi que ces 
+
+1:06:35.469,1:06:40.179
+étiquettes sont fausses. « fake_label » ne signifie pas qu'elles sont fausses.
+
+1:06:40.179,1:06:48.279
+Cela indique qu’il s’agit des étiquettes pour les fausses données. C’est peut-être un peu bizarre.
+
+1:06:48.279,1:06:53.669
+Donc il s’agit des vraies étiquettes, pas des fausses. Il s’agit des vraies étiquettes pour les fausses données.
+
+1:06:53.669,1:07:00.749
+Je suppose que c'est ce que je n'aime pas chez les autres personnes qui écrivent du code.
+
+1:07:00.749,1:07:06.130
+Cela fait sens ? Dans ce cas-ci, pour le discriminateur,
+
+1:07:06.130,1:07:11.769
+nous essayons de réduire ce critère. Et ces deux lignes
+
+1:07:11.769,1:07:18.219
+tentent de faire correspondre les vraies données avec les vraies étiquettes.
+
+1:07:18.219,1:07:25.419
+Et dans ce cas, vous devez essayer de faire correspondre les données générées avec les
+
+1:07:25.419,1:07:31.089
+étiquettes générées. Donc ces deux parties essaient d’entraîner le
+
+1:07:31.089,1:07:35.619
+discriminatoire de manière à pouvoir distinguer les deux choses.
+
+1:07:35.619,1:07:39.849
+[Etudiant : afin de clarifier, par exemple, si « return » produit des images de chats, alors le générateur
+
+1:07:39.849,1:07:43.989
+produit « Oh j'ai essayé de faire une image de chat ici » et une étiquette dit
+
+1:07:43.989,1:07:48.339
+que cela devrait être chat. Pour cette image, je n'ai pas essayé de faire un chat donc
+
+1:07:48.339,1:07:52.539
+l'étiquette est 0 car je n'ai pas essayé de faire un chat] 
+
+1:07:52.539,1:07:59.289
+Alors ici que nous avons de vraies données qui sont de
+
+1:07:59.289,1:08:03.550
+très mignonnes photos de chats. Et nous allons donc dire :
+
+1:08:03.550,1:08:08.320
+« oh cette sortie devrait être nommée chat ». Car elle est très belle et
+
+1:08:08.320,1:08:14.080
+mignonne. Puis je donne un peu de bruit au générateur. Et le chat
+
+1:08:14.080,1:08:20.280
+ressemble à un monstre. Alors nous donnons cette image ressemblant à un 
+
+1:08:20.280,1:08:24.910
+monstre au discriminateur. Ensuite nous alimentons
+
+1:08:24.910,1:08:30.549
+cette perte avec le verdict, ce que dit le discriminateur, et
+
+1:08:30.549,1:08:35.980
+les étiquettes disent : « c’est un monstre ». Puis vous rétropropagez et « step ».
+
+1:08:35.980,1:08:40.390
+Ainsi vous allez entraîner le discriminateur de telle sorte qu’il
+
+1:08:40.390,1:08:47.109
+puisse différencier les chats des monstres. Première partie. La deuxième partie en dessous : nous donnons le
+
+1:08:47.109,1:08:50.710
+monstre, dans ce cas nous avons encore le gradient. Là nous le coupons. 
+
+1:08:50.710,1:08:55.299
+Faites attention à ça. Ici nous coupons le gradient et
+
+1:08:55.299,1:09:00.280
+ne descend pas dans le générateur. Dans ce cas, nous entrons les fausses
+
+1:09:00.280,1:09:03.370
+données, l’image ressemblant à un monstre, l'intérieur
+
+1:09:03.370,1:09:08.020
+du discriminateur. Et le discriminateur dit : « Oh un monstre, un monstre ! ». Mais ici nous disons :
+
+1:09:08.020,1:09:13.000
+« non, c’est une jolie photo de chat ». Et donc maintenant nous effectuons
+
+1:09:13.000,1:09:17.680
+une rétropropagation qui consiste à calculer les dérivées partielles par rapport à tout.
+
+1:09:17.680,1:09:23.140
+Puis on fait un pas pour le générateur, de telle sorte que le monstre
+
+1:09:23.140,1:09:28.080
+fabriqué par le générateur soit maintenant plus mignon.
+
+1:09:28.350,1:09:37.180
+Je ne peux pas être plus mignon que ça, désolé. [Chat : pourquoi ne pas envoyer le gradient des fausses
+
+1:09:37.180,1:09:45.340
+données au discriminateur ?] Nous le faisons dans le deuxième cas.
+
+1:09:45.340,1:09:52.900
+Donc dans ce cas-ci, quand nous rétropopageons les gradients au générateur,
+
+1:09:52.900,1:10:03.150
+nous échangeons les étiquettes correctes avec les étiquettes incorrectes. Dans ce cas nous entrons le monstre.
+
+1:10:03.150,1:10:08.680
+Le discriminateur dit que c’est un monstre mais nous disons que c’est
+
+1:10:08.680,1:10:15.190
+un beau chat. Puis nous entraînons le générateur de manière à ce que le 
+
+1:10:15.190,1:10:20.470
+monstre semble plus beau. Dans ce cas, vous ne voulez pas envoyer le 
+
+1:10:20.470,1:10:24.850
+gradient car vous essayez de minimiser la bonne classification.
+
+1:10:24.850,1:10:29.170
+Donc si vous rétropropagiez les gradients, vous auriez,
+
+1:10:29.170,1:10:34.510
+en gros, un générateur moins performant. Car vous ne voulez pas
+
+1:10:34.510,1:10:39.320
+minimiser ce critère. Vous voulez maximiser ce critère.
+
+1:10:39.320,1:10:44.710
+C’est pourquoi nous n'avons pas de gradients dans ce premier cas. Mais nous en avons ici
+
+1:10:44.710,1:10:49.390
+car nous voulons absolument calculer les gradients par rapport
+
+1:10:49.390,1:11:10.840
+au générateur de ce critère. [Etudiante : est-ce que la combinaison entre la perte BCE et la sigmoïde…
+
+1:10:58.480,1:11:06.820
+Je veux dire que c'est un problème car… ???] Le problème avec la BCE, est l'approche probabiliste.
+
+1:11:10.840,1:11:15.790
+Si vous entraînez très bien ce réseau, cette sigmoïde vous donne un
+
+1:11:15.790,1:11:21.850
+gradient de zéro. Car si vous saturez, que vous n’est pas exactement
+
+1:11:21.850,1:11:26.590
+dans le milieu mais éloignez de la frontière de décision, 
+
+1:11:26.590,1:11:31.960
+vous avez en gros soit 1 de ce côté donc un gradient nul,
+
+1:11:31.960,1:11:36.040
+soit 0 de l’autre côté donc encore un gradient nul.
+
+1:11:36.040,1:11:40.690
+Donc si vous êtes ici, vous ne savez pas où aller ni comment
+
+1:11:40.690,1:11:43.390
+descendre la colline. Car il n’y a pas de colline, c’est un plateau.
+
+1:11:43.390,1:11:48.070
+Donc c'est un premier problème. Un deuxième problème est que si vous voulez
+
+1:11:48.070,1:11:55.810
+vraiment avoir un bord très vertical ici, vous avez besoin de très
+
+1:11:55.810,1:12:00.100
+très très grands poids.
+
+1:12:00.100,1:12:04.090
+La largeur est la valeur finale à l'intérieur de la sigmoïde
+
+1:12:04.090,1:12:08.380
+et si vous voulez comme une sigmoïde saturée, vous avez comme un joli
+
+1:12:08.380,1:12:15.340
+poids important menant à ce module. Cela va faire exploser
+
+1:12:15.340,1:12:19.990
+vos poids et tout le reste. C'est pourquoi les gens font plusieurs
+
+1:12:19.990,1:12:24.190
+choses comme limiter la norme des poids, limiter la norme des gradients…
+
+1:12:24.190,1:12:29.740
+Il existe de nombreuses façons de corriger cette architecture,
+
+1:12:29.740,1:12:36.730
+mais nous ne voulons pas de patchs, nous aimerions un truc propre.
+
+1:12:36.730,1:12:41.980
+Ce qui est propre c’est essentiellement utiliser un AE
+
+1:12:41.980,1:12:49.030
+par exemple pour votre réseau de coût final. Donc si vous considérez
+
+1:12:49.030,1:12:52.660
+l'erreur de reconstruction d'un AE, cette reconstruction est
+
+1:12:52.660,1:12:57.070
+nulle ou faible si vous fournissez une donnée qui provient de la
+
+1:12:57.070,1:13:00.790
+distribution d’entraînement. Si vous fournissez un symbole qui est éloigné 
+
+1:13:00.790,1:13:04.210
+la distribution d’entraînement de la surface de la dernière fois, l’AE
+
+1:13:04.210,1:13:08.890
+fera un mauvais travail de reconstruction. Donc l'erreur de reconstruction
+
+1:13:08.890,1:13:16.710
+sera plus grande. Au lieu d'utiliser un discriminateur, vous pouvez utiliser la reconstruction d’erreur d’un AE.
+
+1:13:16.710,1:13:23.030
+Comment tirer le meilleur parti de ce cours ? Laissez-moi vous donner quelques suggestions. La première : « compréhension ».
+
+1:13:23.030,1:13:27.400
+Si quelque chose n'est toujours pas clair, posez-moi simplement la question dans la section en dessous de la vidéo.
+
+1:13:27.400,1:13:30.820
+Je répondrai à toutes les questions.
+
+1:13:30.820,1:13:36.430
+Si vous souhaitez obtenir plus d'informations sur les domaines sur lesquels je m'investis en termes de
+
+1:13:36.430,1:13:40.210
+le contenu éducatif ou des choses que je trouve intéressantes, vous pouvez me suivre sur Twitter.
+
+1:13:40.210,1:13:44.740
+Mon compte : @alfcnz. Si vous aimeriez avoir des mises à jour sur les
+
+1:13:44.740,1:13:48.400
+vidéos les plus récentes, n'oubliez pas de vous inscrire à la chaîne et d'activer
+
+1:13:48.400,1:13:52.960
+la cloche de notification. Si vous aimez cette vidéo n'oubliez pas de 
+
+1:13:52.960,1:13:56.050
+mettre un pouce en l'air. Cela aide à recommander cette vidéo
+
+1:13:56.050,1:14:00.250
+à d'autres personnes. Si vous souhaitez rechercher le contenu de cette leçon, la
+
+1:14:00.250,1:14:04.589
+transcription anglaise de cette vidéo est disponible sur le site du cours. 
+
+1:14:04.589,1:14:08.530
+Chaque titre dans la transcription est cliquable et renvoie vers la partie
+
+1:14:08.530,1:14:12.040
+de la vidéo qui vous intéresse. De la même manière chaque section de la
+
+1:14:12.040,1:14:16.100
+vidéo a le même titre dans la transcription. Vous pouvez donc revenir en arrière si besoin.
+
+1:14:16.100,1:14:21.550
+L'anglais n'est peut-être pas votre langue maternelle : Parli italiano ? ¿ Hablas español ?
+
+1:14:21.550,1:14:26.230
+你会说中文吗 ? Parlez-vous coréen ? Plusieurs traductions du cours sont
+
+1:14:26.230,1:14:31.239
+sont disponibles sur le site web. Nous cherchons aussi des traducteurs pour
+
+1:14:31.239,1:14:35.770
+d’autres langues si ça vous intéresse d’aider. Il est très important
+
+1:14:35.770,1:14:40.750
+que vous essayez de faire des exercices et jouez avec les notebooks
+
+1:14:40.750,1:14:44.530
+et le code source que nous fournissons afin d'internaliser et
+
+1:14:44.530,1:14:49.780
+mieux comprendre les concepts expliqués pendant les leçons.
+
+1:14:49.780,1:14:54.460
+Contribuer. Cela vous donne la possibilité de montrer votre contribution
+
+1:14:54.460,1:14:58.150
+si par exemple vous trouvez des fautes de frappe dans le texte ou des bugs dans les notebooks,
+
+1:14:58.150,1:15:03.790
+vous pouvez les réparer et faire partie de ce projet en envoyant une PR
+
+1:15:03.790,1:15:12.180
+sur GitHub ou me faire savoir d’une autre façon. C'est tout pour aujourd’hui. A la prochaine. Bye bye

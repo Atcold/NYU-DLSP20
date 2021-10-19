@@ -1,0 +1,3574 @@
+0:00:00.000,0:00:04.410
+Comme vous pouvez le voir aujourd'hui, nous n'avons pas Yann. Yann est ailleurs en train de
+
+0:00:04.410,0:00:09.120
+s'amuser. Salut Yann ! Aujourd'hui nous avons avec nous Aaron DeFazio.
+
+0:00:09.120,0:00:13.740
+Il est chercheur à Facebook et travaille principalement sur
+	
+0:00:13.740,0:00:16.619
+l'optimisation depuis ces trois dernières années.
+
+0:00:16.619,0:00:21.900
+Avant cela, il a été data scientist à Ambiata et était étudiant à 
+
+0:00:21.900,0:00:27.599
+l’Australian National University. Alors pourquoi ne pas applaudir notre
+
+0:00:27.599,0:00:37.350
+orateur d'aujourd'hui ? Je vais parler d'optimisation et si nous avons le temps j’aborderais à fin la
+
+0:00:37.350,0:00:42.739
+mort de l'optimisation. Voici les sujets que je vais aborder aujourd'hui.
+
+0:00:42.739,0:00:47.879
+L'optimisation est désormais au cœur de l'apprentissage machine et certaines des choses
+
+0:00:47.879,0:00:52.680
+dont nous allons parler aujourd'hui vous servirons tous les jours dans votre métier
+
+0:00:52.680,0:00:56.640
+de scientifique appliqué ou en tant que chercheur ou data scientist.
+
+0:00:56.640,0:01:01.590
+Je vais particulièrement me concentrer sur l'application de ces méthodes,
+
+0:01:01.590,0:01:05.850
+plutôt que sur la théorie qui les sous-tend. Une part de la raison est que
+
+0:01:05.850,0:01:10.260
+nous ne comprenons pas complètement toutes ces méthodes. Oubliez comment ça 
+
+0:01:10.260,0:01:15.119
+marche. Je vais beaucoup simplifier les choses. Ce que je peux
+
+0:01:15.119,0:01:22.320
+vous dire, c’est comment les utiliser, comment nous savons qu’elles fonctionnent dans certaines situations et
+
+0:01:22.320,0:01:28.320
+quelle est la meilleure méthode à utiliser pour entraîner votre réseau neuronal. Pour
+
+0:01:28.320,0:01:31.770
+vous présenter le sujet de l'optimisation, je dois commencer par la pire
+
+0:01:31.770,0:01:36.720
+la pire méthode au monde : la descente de gradient. Je vais vous expliquer pourquoi
+
+0:01:36.720,0:01:43.850
+c'est la pire méthode dans une minute. Pour commencer, nous allons utiliser la formulation 
+
+0:01:43.850,0:01:47.549
+la plus générique de l'optimisation. Les problèmes que vous allez examiner
+
+0:01:47.549,0:01:51.659
+auront plus de structure que cela, mais c’est une notation très utile pour 
+
+0:01:51.659,0:01:56.969
+débuter. Nous allons parler d'une fonction f. Essayons maintenant de prouver
+
+0:01:56.969,0:02:03.930
+les propriétés de notre optimiseur. Supposons une structure supplémentaire sur f.
+
+0:02:03.930,0:02:07.049
+En pratique la structure dans nos réseaux neuronaux n'obéit pas à des
+
+0:02:07.049,0:02:09.239
+hypothèses. Les gens ne font pas d’hypothèse en 
+
+0:02:09.239,0:02:12.030
+pratique. Je vais juste commencer avec une f générique
+
+0:02:12.030,0:02:17.070
+et nous supposons qu'elle est continue et différenciable. Il s’agit
+
+0:02:17.070,0:02:20.490
+d’hypothèses incorrectes dans la pratique car la plupart des réseaux de 
+
+0:02:20.490,0:02:25.170
+neurones de nos jours utilisent des fonctions non différenciables. A la place vous
+
+0:02:25.170,0:02:29.460
+avez un sous-différentiel équivalent que vous pouvez brancher sur tous ces
+
+0:02:29.460,0:02:33.570
+formules et vous croisez les doigts que cela marche. Il n'y a pas de 
+
+0:02:33.570,0:02:38.910
+théorie pour étayer cela. La méthode de descente en pente est présentée ici. C'est une méthode itérative
+
+0:02:38.910,0:02:44.790
+donc vous commencez à un point k = 0 et à chaque étape vous mettez à jour votre
+
+0:02:44.790,0:02:49.410
+point. Ici nous utilisons w pour représenter notre itération actuelle. 
+
+0:02:49.410,0:02:54.000
+C’est la nomenclature standard pour le point. Pour votre réseau, ce w est
+
+0:02:54.000,0:03:00.420
+une grande collection de poids. Un tenseur de poids par couche. Dans la 
+
+0:03:00.420,0:03:03.540
+notation nous avons en quelque sorte réduit le tout à un seul vecteur. Vous 
+
+0:03:03.540,0:03:09.000
+pouvez imaginer le faire itérativement en modifiant la taille de tous vos vecteurs,
+
+0:03:09.000,0:03:13.740
+tous vos tenseurs en vecteurs, puis les concaténer ensemble tout simplement. Cette méthode est
+
+0:03:13.740,0:03:17.519
+très simple. Tout ce que nous faisons est de suivre la direction du gradient négatif.
+
+0:03:17.519,0:03:24.750
+La raison de ça est assez simple. Laissez-moi vous montrer un schéma et
+
+0:03:24.750,0:03:28.410
+peut-être cela permettra-t-il d'expliquer exactement pourquoi le fait de suivre l'orientation 
+
+0:03:28.410,0:03:33.570
+du gradient négatif est une bonne idée. Donc nous n'en savons pas assez sur notre fonction pour
+
+0:03:33.570,0:03:38.760
+faire mieux. Quand nous optimisons une fonction, nous regardons le paysage,
+
+0:03:38.760,0:03:45.060
+le paysage d'optimisation, localement. Par paysage d'optimisation je parle 
+
+0:03:45.060,0:03:49.230
+du domaine de tous les poids possibles de notre réseau. Nous ne savons pas ce qu'est
+
+0:03:49.230,0:03:53.459
+si nous utilisons des poids particuliers sur votre réseau, nous ne savons pas
+
+0:03:53.459,0:03:56.930
+si ce sera mieux pour la tâche que nous essayons d’entraîner ou pire. Mais 
+
+0:03:56.930,0:04:01.530
+nous connaissons localement le point qui est ajouté et le gradient. Ce gradient
+
+0:04:01.530,0:04:05.190
+fournit des informations sur la direction que l'on peut prendre pour améliorer
+
+0:04:05.190,0:04:09.870
+les performances de notre réseau. Dans ce cas, réduire la valeur de notre
+
+0:04:09.870,0:04:14.340
+fonction que nous minimisons. Dans cette configuration générale, la
+
+0:04:14.340,0:04:19.380
+minimisation d'une fonction est essentiellement l’entraînement de votre réseau. Minimiser
+
+0:04:19.380,0:04:23.520
+la perte vous permettra d'obtenir les meilleurs résultats dans votre tâche de classification
+
+0:04:23.520,0:04:26.550
+ou quoi que vous essayiez de faire. Car nous ne regardons le monde que
+
+0:04:26.550,0:04:31.110
+localement. Ce gradient est la meilleure information dont nous disposons. Vous pouvez
+
+0:04:31.110,0:04:36.270
+pensez à cela comme à la descente d'une vallée. Vous commencez depuis quelque part d'horrible
+
+0:04:36.270,0:04:39.600
+dans le paysage comme le sommet d'une montagne par exemple et vous descendez
+
+0:04:39.600,0:04:43.590
+de là. A chaque point, vous suivez la direction près de vous qui a
+
+0:04:43.590,0:04:50.040
+la descente la plus raide. Et en fait la méthode de descente de gradient
+
+0:04:50.040,0:04:53.820
+est parfois appelée la méthode de la descente la plus raide. Cette direction
+
+0:04:53.820,0:04:57.630
+change au fur et à mesure que vous vous déplacez dans l'espace. Si vous vous déplacez localement de seulement un
+
+0:04:57.630,0:05:02.040
+montant infinitésimal, en supposant le lissage que j'ai mentionné précédemment et qui
+
+0:05:02.040,0:05:04.740
+n'est en fait pas vrai dans la pratique mais nous y viendrons, en supposant 
+
+0:05:04.740,0:05:08.280
+le lissage, cette petite étape ne changera qu'un peu le gradient. Donc la 
+
+0:05:08.280,0:05:11.820
+direction que vous prenez est au moins une bonne direction lorsque vous faites
+
+0:05:11.820,0:05:18.120
+de petits pas. Nous suivons ce chemin en prenant des pas aussi grands que 
+
+0:05:18.120,0:05:20.669
+possible, traversant le paysage jusqu'à
+
+0:05:20.669,0:05:25.229
+la vallée au fond qui est le minimiseur notre fonction. Nous pouvons en 
+
+0:05:25.229,0:05:30.690
+dire un peu plus sur certains problèmes de classes. Je vais utiliser le
+
+0:05:30.690,0:05:34.950
+problème de classe le plus simpliste que nous puissions faire. Aussi car c'est la seule 
+
+0:05:34.950,0:05:39.210
+un peu mathématique que je peux faire entrer sur une seule diapositive.
+
+0:05:39.210,0:05:44.580
+Cette classe est quadratique. Donc pour un problème d'optimisation quadratique nous
+
+0:05:44.580,0:05:51.570
+pouvons savoir pas mal de choses juste en se basant sur le gradient. Donc d'abord un gradient coupe
+
+0:05:51.570,0:05:55.440
+la moitié d'un espace. C’est illustré ici avec la ligne verte.
+
+0:05:55.440,0:06:02.130
+Nous sommes au point qui commence près de la ligne verte. Nous savons que la
+
+0:06:02.130,0:06:05.789
+solution ne peut pas se trouver dans le reste de l'espace. Ce n'est pas vrai pour
+
+0:06:05.789,0:06:09.930
+les réseaux, mais c'est quand même une bonne ligne directrice que de suivre
+
+0:06:09.930,0:06:13.710
+la direction du gradient négatif. Il pourrait y avoir de meilleures solutions ailleurs dans
+
+0:06:13.710,0:06:17.910
+l'espace, mais les trouver est beaucoup plus difficile que d'essayer de trouver la meilleure
+
+0:06:17.910,0:06:21.300
+solution proche de l'endroit où nous nous trouvons. C'est ce que nous faisons. Nous essayons de trouver la meilleure
+
+0:06:21.300,0:06:24.930
+solution proche de là où nous sommes. Vous pouvez imaginer que c'est la surface de la
+
+0:06:24.930,0:06:28.410
+terre : il y a beaucoup de collines et de vallées. Nous ne pouvons pas espérer connaître
+
+0:06:28.410,0:06:31.020
+quelque chose à propos d'une montagne de l'autre côté de la planète mais nous pouvons certainement
+
+0:06:31.020,0:06:34.559
+chercher la vallée directement sous la montagne où nous nous trouvons actuellement.
+
+0:06:34.559,0:06:39.089
+En fait, on peut considérer que ces fonctions sont représentées ici par ces
+
+0:06:39.089,0:06:44.369
+cartes topographiques. Il s'agit des mêmes que les cartes topographiques que vous utilisez et dont vous êtes
+
+0:06:44.369,0:06:50.369
+familiers : une carte où les montagnes sont représentées par des anneaux.
+
+0:06:50.369,0:06:53.309
+Ici les anneaux représentent la descente. Donc c'est le bas de la vallée
+
+0:06:53.309,0:06:57.839
+et pas le sommet d'une colline au centre. Notre gradient fait disparaître
+
+0:06:57.839,0:07:02.459
+la moitié de l'espace possible, ce qui est très raisonnable. Puis on va
+
+0:07:02.459,0:07:06.059
+dans la direction trouver ce gradient négatif parce que c'est un peu
+
+0:07:06.059,0:07:10.199
+orthogonale à cette ligne qui coupe l'espace. Vous pouvez voir que j'ai
+
+0:07:10.199,0:07:21.409
+l'indication de l’orthogonalité avec le petit la carré. Donc les propriétés 
+
+0:07:21.409,0:07:25.319
+de la descente de gradient dépendent beaucoup de la structure du
+
+0:07:25.319,0:07:28.889
+problème. Pour ces problèmes quadratiques, c'est en fait
+
+0:07:28.889,0:07:32.549
+relativement simple de caractériser ce se passe. Je vais donc vous donner
+
+0:07:32.549,0:07:35.369
+un petit aperçu ici. Je vais y consacrer quelques minutes car c'est assez
+
+0:07:35.369,0:07:38.339
+intéressant et j'espère que ceux d'entre vous qui ont une certaine expérience 
+
+0:07:38.339,0:07:42.629
+en algèbre linéaire peuvent suivre cette dérivation. Nous allons considérer 
+
+0:07:42.629,0:07:47.309
+un problème d'optimisation quadratique. Le problème est énoncé dans la boîte grise
+
+0:07:47.309,0:07:53.309
+en haut. Il s'agit d'une fonction quadratique où A est une matrice définie positive.
+
+0:07:53.309,0:07:58.769
+Nous pouvons potentiellement traiter des classes plus larges de quadratiques
+
+0:07:58.769,0:08:04.649
+mais l'analyse est la plus simple dans le cas définitif positif. Le gradient
+
+0:08:04.649,0:08:09.539
+de cette fonction est très simple : Aw - b et la solution de ce problème
+
+0:08:09.539,0:08:13.379
+a une forme fermée dans le cas des quadratiques. C’est inverse de A fois b. 
+
+0:08:13.379,0:08:20.179
+Ce que nous faisons c'est que nous prenons les pas qui sont indiqués dans la case verte et
+
+0:08:20.179,0:08:26.519
+on les branchent juste à la distance de la solution. || wₖ₊₁ – w*|| est
+
+0:08:26.519,0:08:30.479
+est la distance de la solution. Nous voulons donc voir comment cela change avec le temps.
+
+0:08:30.479,0:08:34.050
+L'idée est que si nous nous rapprochons de la solution avec le temps, la méthode est
+
+0:08:34.050,0:08:38.579
+convergente. Nous commençons donc par cette distance de la solution avec
+
+0:08:38.579,0:08:44.509
+la valeur de la mise à jour. Avec un peu de réaménagement nous pouvons
+
+0:08:45.050,0:08:50.950
+pouvons regrouper les termes ensemble et écrire b comme l’inverse de… 
+
+0:08:50.950,0:09:05.090
+Nous pouvons mettre w* à l'intérieur des parenthèses là. [3ème ligne : inverse de A par b est remplacé par w* via la formule dans le rectangle bleu] On obtient
+
+0:09:05.090,0:09:11.960
+cette expression où on a la matrice multipliée par la matrice de la distance à 
+
+0:09:11.960,0:09:16.040
+la solution précédente. Matrice multipliée par la distance précédente la solution. Nous 
+
+0:09:16.040,0:09:20.720
+ne savons pas dans quelles directions cette quadratique varie le plus.
+
+0:09:20.720,0:09:24.890
+Nous ne pouvons pas nous limiter à prendre le produit de la matrice
+
+0:09:24.890,0:09:28.850
+comme une norme, et la distance à la solution est la norme en bas. 
+
+0:09:28.850,0:09:34.070
+Lorsque vous considérez les normes matricielles, c'est
+
+0:09:34.070,0:09:39.590
+assez simple de voir que vous allez avoir une expression où les
+
+0:09:39.590,0:09:45.710
+valeurs propres de cette matrice vont être 1 moins μ γ ou de 1 moins
+
+0:09:45.710,0:09:48.950
+L γ. La façon dont j'obtiens ceci est que je regarde juste ce que sont les valeurs propres 
+
+0:09:48.950,0:09:54.050
+extrêmes de A que nous appelons μ et L. En les branchant sur l’expression,
+
+0:09:54.050,0:09:56.930
+nous pouvons voir quelles seront les valeurs propres extrêmes de cette
+
+0:09:56.930,0:10:03.050
+matrice combinée : I - γA. Vous avez cette valeur absolue ici. Vous pouvez optimiser
+
+0:10:03.050,0:10:06.320
+ceci et obtenir un taux d'apprentissage optimal pour les quadratiques. Mais
+
+0:10:06.320,0:10:09.920
+ce taux d'apprentissage optimal n'est pas robuste dans la pratique. Vous n'allez probablement pas
+
+0:10:09.920,0:10:16.910
+vouloir utiliser cela. Une valeur plus simple que vous pouvez utiliser est 1/L. L étant la plus grande
+
+0:10:16.910,0:10:22.420
+valeur propre. Cela vous donne ce taux de convergence de 1 – μ/L * réduction
+
+0:10:22.420,0:10:29.240
+de la distance à la solution à chaque étape. Y a-t-il des questions ici ?
+
+0:10:29.240,0:10:32.020
+[Question d’un étudiant] C'est une substitution dans cette boite grise.
+
+0:10:41.120,0:10:46.010
+Vous voyez du bas dans la boîte grise ? C'est juste par définition.
+
+0:10:46.010,0:10:51.230
+Nous pouvons résoudre le gradient. Donc en prenant le gradient à 0,
+
+0:10:51.230,0:10:53.060
+si vous voyez dans la deuxième ligne de l'encadré,
+
+0:10:53.060,0:10:55.720
+en partant de 0, cela a donc remplacé notre gradient par zéro. Par
+
+0:10:55.720,0:11:01.910
+réarrangement vous obtenez la solution fermée au problème ici. Donc le
+
+0:11:01.910,0:11:04.490
+problème que pose l'utilisation de cette solution de forme fermée dans la pratique est que nous devons
+
+0:11:04.490,0:11:08.420
+inverser une matrice. En utilisant la descente de gradient, nous pouvons résoudre ce problème en
+
+0:11:08.420,0:11:12.920
+ne faisant que des multiplications matricielles à la place. Je ne vous suggère pas
+
+0:11:12.920,0:11:15.560
+d’utiliser cette technique pour résoudre la matrice. Comme je l'ai déjà mentionné, 
+
+0:11:15.560,0:11:20.750
+c'est la pire méthode au monde. Le taux de convergence de cette méthode est
+
+0:11:20.750,0:11:25.100
+contrôlé par cette nouvelle quantité. Ce sont désormais des notations standard. Donc
+
+0:11:25.100,0:11:27.950
+nous passons de l'algèbre linéaire où vous parlez du min et du max des valeurs
+
+0:11:27.950,0:11:33.430
+propres à la notation typiquement utilisée dans le domaine de l'optimisation.
+
+0:11:33.430,0:11:39.380
+μ est la plus petite valeur propre et L la plus grande valeur propre. μ/L est
+
+0:11:39.380,0:11:44.570
+l'inverse du nombre de condition. Le nombre de condition étant L/μ. Ceci
+
+0:11:44.570,0:11:51.140
+vous donne une large caractérisation de la vitesse à laquelle les méthodes d'optimisation
+
+0:11:51.140,0:11:57.440
+fonctionnent sur ce problème. Ces nouveaux termes n'existent pas pour
+
+0:11:57.440,0:12:02.870
+les réseaux neuronaux. Il y a que dans les situations les plus simples qu’un L existe
+
+0:12:02.870,0:12:06.740
+et nous n'avons essentiellement jamais de μ existant. Cependant nous voulons parler
+
+0:12:06.740,0:12:10.520
+de réseaux neuronaux mal conditionnés et bien conditionnés.
+
+0:12:10.520,0:12:14.930
+« Mal conditionné » est généralement une approximation de L très grande.
+
+0:12:14.930,0:12:21.260
+Pour « bien conditionné », peut-être que le L est très proche de 1. Donc la taille du pas que nous pouvons
+
+0:12:21.260,0:12:27.770
+sélectionner dans un entraînement dépend très fortement de ces constantes. Laissez-moi
+
+0:12:27.770,0:12:30.800
+vous donner un peu d'intuition pour les tailles de pas. C'est très important
+
+0:12:30.800,0:12:34.640
+dans la pratique. Une grande partie de mon temps est consacrée de tuner le taux
+
+0:12:34.640,0:12:40.310
+d'apprentissage. Je suis sûr que vous serez impliqué dans une procédure similaire. Nous avons donc
+
+0:12:40.310,0:12:45.740
+quelques situations qui peuvent se produire. Si nous utilisons un taux d'apprentissage trop faible
+
+0:12:45.740,0:12:49.310
+nous constaterons que nous progressons régulièrement vers la solution.
+
+0:12:49.310,0:12:56.480
+En minimisant un peu la quadratique 1D, et par progrès constant, je veux dire par là qu’à chaque
+
+0:12:56.480,0:13:00.920
+itération le gradient reste dans la même direction. Vous faites des progrès
+
+0:13:00.920,0:13:05.420
+à mesure que l'on s'approche de la solution. C’est l’approche la plus lente 
+
+0:13:05.420,0:13:09.910
+possible. L'idéal serait de passer directement à la solution d'une quadratique,
+
+0:13:09.910,0:13:12.650
+surtout pour une 1D comme ici, avec une taille
+
+0:13:12.650,0:13:16.340
+de pas exacte menant jusqu'à la solution. Mais généralement, vous ne
+
+0:13:16.340,0:13:20.810
+pouvez pas faire cela. Ce que vous voulez généralement utiliser est en fait
+
+0:13:20.810,0:13:26.150
+une taille de pas un peu plus grande que la taille optimale et ce pour un certain nombre de raisons. La principale
+
+0:13:26.150,0:13:29.570
+étant que ça a tendance à être plus rapide en pratique. Nous devons être 
+
+0:13:29.570,0:13:33.800
+très très prudents car vous obtenez une divergence. Le terme divergence signifie que les 
+
+0:13:33.800,0:13:37.160
+itérations s'éloignent de la solution au lieu de s'en rapprocher. Cela se produit 
+
+0:13:37.160,0:13:42.530
+généralement quand vous utilisez des taux d'apprentissage trop importants. Malheureusement pour nous, nous voulons utiliser
+
+0:13:42.530,0:13:46.590
+des taux d'apprentissage aussi élevés que possible afin d'obtenir un apprentissage aussi rapide que possible.
+
+0:13:46.590,0:13:50.180
+Donc nous sommes toujours à la limite de la divergence. Il est très rare que vous voyiez
+
+0:13:50.180,0:13:55.400
+que les gradients suivent cette belle trajectoire où ils pointent tous
+
+0:13:55.400,0:13:58.670
+dans la même direction jusqu'à la solution. Ce qui se produit presque toujours en
+
+0:13:58.670,0:14:02.960
+pratique, en particulier avec descente de gradient invariant, est que vous 
+
+0:14:02.960,0:14:06.770
+observez ce comportement en zig zag. On ne peut pas voir le zigzag dans les 
+
+0:14:06.770,0:14:10.940
+espaces à millions de dimensions dans lesquels nous entraînons vos réseaux, mais c'est très évident dans
+
+0:14:10.940,0:14:15.680
+ces tracés 2D d'une fonction quadratique. Donc ici je montre les niveaux, 
+
+0:14:15.680,0:14:20.560
+les valeurs de la fonction indiqués dans les ensembles de niveaux. Quand
+
+0:14:20.560,0:14:27.830
+nous utilisons un taux d'apprentissage qui est bon, pas optimal mais bon, nous nous en rapprochons
+
+0:14:27.830,0:14:31.760
+de ce point bleu qui est la solution en 10 étapes. Lorsque nous utilisons un taux d'apprentissage
+
+0:14:31.760,0:14:35.450
+qui semble plus agréable dans la mesure où il n'oscille pas, il se comporte bien quand on
+
+0:14:35.450,0:14:38.330
+utilise un tel taux d'apprentissage. Nous nous éloignons en fait beaucoup plus de la solution.
+
+0:14:38.330,0:14:42.830
+Il est donc normal que nous devions faire face à ces taux d'apprentissage
+
+0:14:42.830,0:14:50.690
+qui sont très stressants. C'est un peu comme une course. Personne ne gagne
+
+0:14:50.690,0:14:55.730
+une course en conduisant en toute sécurité. Notre entraînement de réseau est être très comparable à
+
+0:14:55.730,0:15:01.940
+cela. Le sujet central dont nous allons parler est donc en fait l'optimisation 
+
+0:15:01.940,0:15:08.600
+stochastique. C'est la méthode que nous utilisons chaque jour pour l’entraînement
+
+0:15:08.600,0:15:14.660
+des réseaux de neurones en pratique. Donc l'optimisation stochastique n'est en fait pas
+
+0:15:14.660,0:15:19.190
+très différente. Nous allons remplacer les gradients de notre étape de 
+
+0:15:19.190,0:15:25.700
+descente par une approximation stochastique du gradient. Dans un réseau de
+
+0:15:25.700,0:15:29.930
+neurones, nous pouvons être un peu plus précis. Par approximation stochastique
+
+0:15:29.930,0:15:36.310
+ce que nous voulons dire, c'est que le gradient de la perte est pour un seul point de données, une seule instance.
+
+0:15:36.310,0:15:42.970
+Vous pourriez vouloir l'appeler ainsi. J'ai dans la notation ici cette fonction
+
+0:15:42.970,0:15:49.430
+L est la perte d'un point. Le point de données est indexé par i. Dans la littérature
+
+0:15:49.430,0:15:52.970
+sur l'optimisation nous écrivons cela comme la fonction fᵢ
+
+0:15:52.970,0:15:57.380
+et je vais utiliser cette notation. Vous devez imaginer fᵢ comme étant la
+
+0:15:57.380,0:16:02.390
+perte pour une seul instance i. Ici j'utilise une configuration d'apprentissage supervisé
+
+0:16:02.390,0:16:08.330
+où nous avons des points de données i, des étiquettes yᵢ. Donc des points xᵢ étiquetés par yᵢ. La totalité de
+
+0:16:08.330,0:16:14.290
+la perte pour une fonction est indiquée en haut. C'est une somme de tous les fᵢ.
+
+0:16:14.290,0:16:17.600
+Laissez-moi vous expliquer un peu plus ce que nous faisons ici. Nous remplaçons
+
+0:16:17.600,0:16:24.230
+ce gradient complet par un gradient stochastique. C’est une approximation bruitée.
+
+0:16:24.230,0:16:30.350
+Et c'est souvent expliqué comme cela dans le cadre de l'optimisation stochastique. Donc nous
+
+0:16:30.350,0:16:36.440
+avons cette fonction, le gradient et dans notre configuration sa valeur attendue est égale
+
+0:16:36.440,0:16:41.150
+au gradient complet. Donc vous pouvez considérer une étape de descente de gradient stochastique [possiblement abrégée en SGD dans la suite] comme
+
+0:16:41.150,0:16:47.210
+étant un pas de gradient complet dans ce qui est attendu. Ce n'est pas vraiment
+
+0:16:47.210,0:16:50.480
+la meilleure façon de le voir car il y a beaucoup plus de choses qui se passent. Ce n’est
+
+0:16:50.480,0:16:58.310
+juste une descente de gradient avec du bruit. Laissez-moi vous donner un peu plus de détails mais
+
+0:16:58.310,0:17:03.050
+d'abord je laisse les gens poser des questions avant de passer à autre chose.
+
+0:17:03.050,0:17:08.420
+[Etudiant] Oui je pourrais en parler un peu plus, mais oui vous avez raison.
+
+0:17:08.420,0:17:12.500
+Utiliser l'ensemble de vos données pour calculer un gradient, voici ce que j'entends par descente de gradient.
+
+0:17:12.500,0:17:17.720
+Nous appelons ça aussi descente de gradient « full batch » pour être clair. 
+
+0:17:17.720,0:17:22.280
+En apprentissage machine, nous utilisons pratiquement toujours des mini batchs pour que les gens puissent utiliser le nom
+
+0:17:22.280,0:17:24.620
+descente de gradient ou quelque chose du genre quand ils parlent vraiment de descente de 
+
+0:17:24.620,0:17:29.150
+gradient stochastique. Ce que vous avez mentionné est absolument vrai. Il y a
+
+0:17:29.150,0:17:33.920
+des difficultés lors de entraînement des réseaux de neurones en utilisant des batchs de très grande taille.
+
+0:17:33.920,0:17:37.010
+C’est compris dans une certaine mesure et je l'explique dans la prochaine
+
+0:17:37.010,0:17:39.230
+diapositive. Laissez-m’ en venir à votre point d'abord.
+
+0:17:39.230,0:17:45.679
+La réponse à votre question est le troisième point ici. Le bruit dans
+
+0:17:45.679,0:17:50.780
+la descente de gradient stochastique induit un phénomène connu sous le nom
+
+0:17:50.780,0:17:54.770
+d’ « annealing ». Le diagramme juste à droite de ce point illustre ce
+
+0:17:54.770,0:18:00.260
+phénomène. Donc les paysages de l’entraînement de votre réseau ont une structure bosselée en eux.
+
+0:18:00.260,0:18:05.330
+Il y a beaucoup de petits minima qui ne sont pas de bons minima. Ils
+
+0:18:05.330,0:18:09.320
+apparaissent sur le chemin des bons minima. La théorie à laquelle beaucoup 
+
+0:18:09.320,0:18:13.760
+de gens adhèrent est que la SGD, en particulier le bruit induit dans le gradient,
+
+0:18:13.760,0:18:18.919
+aide en fait l'optimiseur à sauter par-dessus ces mauvais minima. La théorie est
+
+0:18:18.919,0:18:22.669
+que ces mauvais minima sont assez petits dans l'espace et qu'ils sont donc faciles à sauter.
+
+0:18:22.669,0:18:27.380
+Les bons minima se traduisant par de bonnes performances pour votre propre réseau
+
+0:18:27.380,0:18:34.070
+sont plus grands et plus difficiles à sauter. Cela répond à votre question ? A côté de
+
+0:18:34.070,0:18:39.440
+ce point de vue sur l’ « annealing », il y a quelques autres raisons.
+
+0:18:39.440,0:18:45.559
+Nous avons beaucoup de redondance dans les informations que nous obtenons à chaque terme.
+
+0:18:45.559,0:18:51.679
+L'utilisation du gradient stochastique nous permet d'exploiter cette redondance. Dans beaucoup
+
+0:18:51.679,0:18:56.870
+de situations, le gradient calculé sur quelques centaines d'exemples est presque aussi bon
+
+0:18:56.870,0:19:01.460
+qu’un gradient calculé sur l'ensemble des données. Et souvent cela coûte des milliers de fois moins cher
+
+0:19:01.460,0:19:05.300
+en fonction de votre problème. Il est donc difficile de trouver une raison convaincante
+
+0:19:05.300,0:19:09.320
+d'utiliser la descente en gradient compte tenu du succès de la SGD.
+
+0:19:09.320,0:19:13.809
+C'est en partie la raison pour laquelle le gradient stochastique est l'un 
+
+0:19:15.659,0:19:19.859
+des meilleurs outils que nous avons. La descente de gradient est l'un des pires. Dans les
+
+0:19:19.859,0:19:23.580
+premières étapes, la corrélation est remarquable. Ce gradient stochastique 
+
+0:19:23.580,0:19:28.499
+peut avoir un coefficient de corrélation jusqu'à 0,999 avec le véritable
+
+0:19:28.499,0:19:33.869
+gradient lors ces premières étapes d'optimisation. Je voudrais parler 
+
+0:19:33.869,0:19:38.179
+brièvement d’un sujet que vous devez connaître. Yann a dû déjà le mentionner
+
+0:19:38.179,0:19:43.259
+brièvement. En pratique, nous n'utilisons pas les cas individuels en SGD. 
+
+0:19:43.259,0:19:48.749
+Nous utilisons les mini batchs d'instances. J'utilise ici ma propre notation.
+
+0:19:48.749,0:19:52.649
+Tout le monde utilise une notation différente pour les mini batchs, donc
+
+0:19:52.649,0:19:56.970
+il ne faut pas trop s'attacher à la notation. En gros, à chaque étape
+
+0:19:56.970,0:20:03.149
+vous avez un batch que j’appelle ici Bᵢ avec i l'étape et donc vous 
+
+0:20:03.149,0:20:09.299
+utilisez essentiellement la moyenne des gradients sur ce mini batch. C’est
+
+0:20:09.299,0:20:13.470
+un sous-ensemble de vos données plutôt qu'une seule instance ou le batch complet.
+
+0:20:13.470,0:20:19.799
+Presque tout le monde utilise ce mini batch sélectionné uniformément au hasard.
+
+0:20:19.799,0:20:23.009
+Certaines personnes utilisent avec remplacement de l’échantillonnage d'autres
+
+0:20:23.009,0:20:26.669
+utilisent sans le remplacement de l’échantillonnage. Les différences ne sont pas importantes ici,
+
+0:20:26.669,0:20:31.729
+vous pouvez utiliser l’un ou l’autre. Il y a beaucoup d'avantages à faire des mini batchs.
+
+0:20:31.729,0:20:35.220
+Il y a de bonnes raisons théoriques de ne pas faire de mini batch, mais les
+
+0:20:35.220,0:20:38.609
+raisons pratiques sont écrasantes. Une partie de ces raisons
+
+0:20:38.609,0:20:43.950
+pratiques sont computationnelles. Nous utilisons notre matériel disons à
+
+0:20:43.950,0:20:47.489
+1% d'efficacité quand nous entraînons certains réseaux sur des
+
+0:20:47.489,0:20:51.239
+instances uniques. Nous obtenons l'utilisation la plus efficace du matériel
+
+0:20:51.239,0:20:55.979
+avec des tailles de batch souvent de plusieurs centaines. Si vous entraînez 
+
+0:20:55.979,0:20:59.999
+sur ImageNet par exemple, n’utiliser pas des tailles de batch inférieures à 64
+
+0:20:59.999,0:21:08.429
+pour obtenir une bonne efficacité. Peut-être descendre à 32. Une autre
+
+0:21:08.429,0:21:13.080
+application importante est l’entraînement distribué. Cela commence à devenir une grande chose.
+
+0:21:13.080,0:21:17.309
+Comme mentionné précédemment, alors qu'il faut normalement deux jours pour 
+
+0:21:17.309,0:21:21.639
+entraîner sur ImageNet, et même une semaine il y a encore pas si longtemps, 
+
+0:21:21.639,0:21:25.779
+des gens ont réussi à entraîner en seulement une heure. La façon dont ils procédé utilise
+
+0:21:25.779,0:21:29.889
+de très grands mini batchs. En plus de l'utilisation de grands mini batchs, il y a quelques astuces
+
+0:21:29.889,0:21:34.059
+que vous devez utiliser pour que cela fonctionne. Ce n'est probablement pas quelque chose de
+
+0:21:34.059,0:21:37.149
+couvrable dans un cours d'introduction donc je vous encourage à consulter ce papier si
+
+0:21:37.149,0:21:40.409
+vous êtes intéressé. C’est « Training ImageNet in 1 Hour »
+
+0:21:40.409,0:21:45.279
+[papier de Goyal et al. (2017) de chez Facebook]
+
+0:21:45.279,0:21:51.459
+Notez qu'il existe certaines situations où vous devez procéder à une optimisation « full batchs ».
+
+0:21:51.459,0:21:54.759
+N’utilisez pas la descente de gradient dans cette situation. Je ne peux pas assez insister pour
+
+0:21:54.759,0:21:59.950
+vous dire de ne jamais utiliser la descente de gradient. Si vous avez des données « full batch », de loin
+
+0:21:59.950,0:22:03.249
+la méthode la efficace, qui est en quelque sorte « plug-and-play et pense à rien ».
+
+0:22:03.249,0:22:08.859
+Elle est connue sous le nom de LBFGS. C'est l'accumulation de 50 ans de recherche en optimisation et
+
+0:22:08.859,0:22:12.519
+ça marche vraiment bien. L’implémentation en Torch est assez bonne mais
+
+0:22:12.519,0:22:17.379
+l'implémentation de Scipy est basé sur un ancien code écrit il y a 15 ans.
+
+0:22:17.379,0:22:23.440
+Il est donc à l'épreuve des balles. Vous pouvez utiliser l’un ou l’autre.
+[Question qui a été coupée au montage]
+
+0:22:23.440,0:22:26.619
+C’est une bonne question. Classiquement, vous devez utiliser le jeu
+
+0:22:26.619,0:22:28.809
+des données entier. Maintenant l’implémentation de PyTorch supporte
+
+0:22:28.809,0:22:34.209
+Les mini bacths. C'est une zone grise au sens qu’il n’y a vraiment aucune
+
+0:22:34.209,0:22:37.899
+théorie pour soutenir l'utilisation de ce système. Il pourrait bien fonctionner pour votre
+
+0:22:37.899,0:22:43.839
+problème ou pas. Donc ça pourrait valoir la peine d'essayer. Je veux dire que vous voulez utiliser votre
+
+0:22:43.839,0:22:49.929
+jeu de données en entier pour chaque évaluation de gradient. Ou probablement plus puisqu’il
+
+0:22:49.929,0:22:52.359
+est très rare de vouloir faire cela. Il est plus probable que vous résolviez
+
+0:22:52.359,0:22:56.889
+un autre problème d'optimisation ne consistant pas à entraîner un réseau,
+
+0:22:56.889,0:23:01.869
+un problème accessoire lié à un problème d'optimisation que vous devez résoudre
+
+0:23:01.869,0:23:06.669
+sans cette structure de points de données, qui n'est pas la somme des points
+
+0:23:06.669,0:23:12.239
+des données. Il y a une autre question. [Question coupée] Yann recommande
+
+0:23:12.239,0:23:16.869
+d'utiliser des mini batchs de taille égale au nombre de classes que nous 
+
+0:23:16.869,0:23:20.079
+avons dans notre jeu de données. La question est donc pourquoi est-ce raisonnable ?
+
+0:23:20.079,0:23:23.889
+La réponse est que nous voulons que tous les vecteurs soient représentatifs de l'ensemble des données.
+
+0:23:23.889,0:23:28.329
+En règle générale, chaque classe est très distincte des autres classes dans 
+
+0:23:28.329,0:23:33.490
+ses propriétés. Donc utiliser un mini batch qui contient en moyenne une
+
+0:23:33.490,0:23:36.850
+instance de chaque classe. Nous pouvons l'appliquer explicitement bien qu’il
+
+0:23:36.850,0:23:39.820
+il n'est pas nécessaire d'avoir une taille approximativement égale.
+
+0:23:39.820,0:23:44.590
+On peut supposer qu'il a une sorte de structure d'un gradient complet. Donc vous
+
+0:23:44.590,0:23:49.870
+capturez une grande partie des corrélations dans les données que vous voyez avec le gradient complet.
+
+0:23:49.870,0:23:54.279
+C'est un bon guide. Surtout si vous utilisez un entraînement sur CPU où vous n'êtes pas
+
+0:23:54.279,0:23:58.690
+trop contraint par l'efficacité du matériel. Quand vous entraînez sur un CPU,
+
+0:23:58.690,0:24:05.080
+la taille des batchs n'est pas critique pour l'utilisation du matériel. 
+
+0:24:05.080,0:24:09.370
+Je recommanderais toujours le mini batch. Je ne pense pas que cela vaille la peine d'essayer
+
+0:24:09.370,0:24:13.899
+la taille 1 comme point de départ. Si vous essayez de réaliser de petits gains, peut-être
+
+0:24:13.899,0:24:19.779
+que vaut la peine d'être explorée. Il y avait une autre question. [Question coupée] Donc dans l'exemple de l’annealing,
+
+0:24:19.779,0:24:24.760
+la question était de savoir pourquoi le paysage perdu est si bancal. C’est
+
+0:24:24.760,0:24:31.600
+en fait, une représentation très réaliste des paysages actuels pour les
+
+0:24:31.600,0:24:37.630
+réseaux neuronaux. Ils ont vraiment beaucoup de collines et de vallées et
+
+0:24:37.630,0:24:41.860
+c'est quelque chose qui fait l'objet de recherches actives. Ce que nous
+
+0:24:41.860,0:24:47.140
+pouvons dire par exemple, c'est qu'il existe un très grand nombre de bons
+
+0:24:47.140,0:24:52.720
+minima. Donc des collines et des vallées. Nous le savons car les réseaux ont
+
+0:24:52.720,0:24:56.590
+cet aspect combinatoire quand nous reparamétrons le réseau neuronal
+
+0:24:56.590,0:25:00.309
+en déplaçant tous les poids. Vous pouvez avoir un réseau qui a comme sortie 
+
+0:25:00.309,0:25:04.750
+exactement la même sortie pour n'importe quelle tâche avec tous ces poids
+
+0:25:04.750,0:25:07.419
+qui se sont déplacés. Cela correspond essentiellement à un emplacement
+
+0:25:07.419,0:25:12.460
+différent dans l'espace des paramètres. Etant donné qu'il y a un nombre exponentiel
+
+0:25:12.460,0:25:16.270
+de ces possibilités de réarrangement des poids pour obtenir le même réseau,
+
+0:25:16.270,0:25:18.940
+vous allez vous retrouver avec un espace qui a un nombre incroyablement 
+
+0:25:18.940,0:25:24.789
+exponentiel de ces pics. La raison pour laquelle ces minima locaux apparaissent
+
+0:25:24.789,0:25:27.580
+est quelque chose qui fait encore partie de recherches actives donc je ne suis pas sûr de pouvoir vous donner
+
+0:25:27.580,0:25:32.890
+une excellente réponse. Mais ils sont observés dans la pratique. Ce que je
+
+0:25:32.890,0:25:39.000
+peux dire c’est qu'ils semblent être moins problématiques que… comme proches
+
+0:25:39.090,0:25:42.810
+proches des réseaux à l’état de l’art. Donc ces minima locaux ont été pris en compte
+
+0:25:42.810,0:25:47.940
+comme de gros problèmes il y a 15 ans, mais à l'heure actuelle les gens ne les rencontrent quasiment jamais
+
+0:25:47.940,0:25:52.350
+dans la pratique. En utilisant des paramètres recommandés et des choses
+
+0:25:52.350,0:25:55.980
+comme ça. Quand vous utilisez de très grands batchs, vous pouvez rencontrer ces problèmes.
+
+0:25:55.980,0:25:59.490
+Il est même clair que lors de l'utilisation de grands batchs, les mauvaises 
+
+0:25:59.490,0:26:03.900
+performances soient attribuables à ces minima locaux. C’est donc un gros sujet
+
+0:26:03.900,0:26:08.550
+de recherche en cours. [Question coupée] Oui le problème est que vous ne pouvez pas vraiment voir cette structure locale
+
+0:26:08.550,0:26:10.920
+car nous sommes dans cet espace à un million de dimensions. Ce n'est pas une bonne façon de
+
+0:26:10.920,0:26:15.090
+le voir. Donc oui je ne sais pas si les gens ont déjà exploré ça. Je ne 
+
+0:26:15.090,0:26:18.840
+connais pas les documents sur ce sujet, mais je parie que quelqu'un les a consultés. Vous devriez
+
+0:26:18.840,0:26:23.520
+faire une recherche sur Google pour savoir si c'est le cas. Beaucoup de progrès dans la conception des réseaux neuronaux
+
+0:26:23.520,0:26:27.420
+ont contribué à réduire cette turbulence de nombreuses façons. Cela fait partie de la
+
+0:26:27.420,0:26:30.510
+raison pour laquelle ce n'est plus considéré comme un énorme problème, 
+
+0:26:30.510,0:26:35.960
+comme dans le passé. Il y a d'autres questions ? [Question coupée] C’est
+
+0:26:35.960,0:26:41.550
+difficile à dire. Il y a certaines choses que vous pouvez faire. Rendre les
+
+0:26:41.550,0:26:46.830
+pics et les vallées plus petits. En redimensionnant certaines parties,
+
+0:26:46.830,0:26:50.010
+vous pouvez amplifier certaines directions, la courbure de certaines 
+
+0:26:50.010,0:26:54.320
+directions peut être étirée et écrasée. Une innovation particulière sont 
+
+0:26:54.320,0:27:00.000
+les connexions résiduelles. Il est très facile de voir qu'elles aplanissent
+
+0:27:00.000,0:27:03.600
+la perte en fait. Vous pouvez en quelque sorte tracer deux lignes entre deux points dans
+
+0:27:03.600,0:27:06.570
+l'espace et vous pouvez voir ce qui se passe le long de cette ligne. C'est vraiment la meilleure façon de
+
+0:27:06.570,0:27:10.170
+visualiser des millions d'espaces dimensionnels en transformant en une dimension.
+
+0:27:10.170,0:27:13.200
+Vous pouvez voir que c'est que c'est beaucoup plus agréable entre ces deux points.
+
+0:27:13.200,0:27:17.370
+Quels que soient les deux points que vous choisirez, utilisant ces connexions résiduelles. 
+
+0:27:17.370,0:27:21.570
+[Question coupée] Je parle de ça un peu plus tard. J’espère que j’y 
+
+0:27:21.570,0:27:24.870
+répondrais sans que vous ayez à la poser de nouveau. D’autres questions ?
+
+0:27:24.870,0:27:31.560
+LBFGS est une excellente méthode. Une sorte de constellation
+
+0:27:31.560,0:27:34.650
+de chercheurs en optimisation utilisent toujours SGD, une méthode inventée
+
+0:27:34.650,0:27:40.470
+dans les années 60 voir plus tôt. C’est encore à la pointe de la technologie. 
+
+0:27:40.470,0:27:44.880
+Mais il y quelques innovations qui ont vu le jour, il a seulement quelques 
+
+0:27:44.880,0:27:49.180
+années. Une de ces innovations l'innovation est « momentum ». Je parlerai
+
+0:27:49.180,0:27:54.730
+je parlerai d'autres un plus tard. Donc momentum est une astuce
+
+0:27:54.730,0:27:57.520
+que vous devriez presque toujours utiliser lorsque vous utilisez la SGD.
+
+0:27:57.520,0:28:00.880
+Cela vaut la peine d'approfondir un peu la question.
+
+0:28:00.880,0:28:04.930
+Vous devrez souvent finetuner le paramètre du momentum et votre réseau.
+
+0:28:04.930,0:28:09.340
+C’est utile pour comprendre ce qu'il fait réellement lorsque vous l’ajustez. 
+
+0:28:09.340,0:28:15.970
+Une partie du problème est que le momemtum est très mal compris. Cela peut s'expliquer
+
+0:28:15.970,0:28:18.760
+par le fait qu'il y a en fait trois façons différentes de l'écrire et qui
+
+0:28:18.760,0:28:21.790
+ont l'air complètement différentes mais s'avèrent être équivalentes. Je vais seulement
+
+0:28:21.790,0:28:25.120
+présenter deux de ces façons car la troisième n'est pas aussi bien connue 
+
+0:28:25.120,0:28:30.070
+mais est à mon avis la bonne façon de le voir [rires]. Je ne parle pas de mes recherches ici.
+
+0:28:30.070,0:28:32.470
+Donc nous allons parler de la façon dont elle est implémentée dans les packages
+
+0:28:32.470,0:28:37.390
+que vous utiliserez. Cette première forme ici est celle implémentée dans 
+
+0:28:37.390,0:28:42.040
+PyTorch et dans les autres logiciels que vous utiliserez. Ici, nous avons deux variables.
+
+0:28:42.040,0:28:47.650
+Vous verrez beaucoup de papiers utilisant des notations différentes. P est
+
+0:28:47.650,0:28:51.580
+la notation utilisée en physique pour le momentum. C’est aussi très courant de l'utiliser 
+
+0:28:51.580,0:28:55.720
+comme variable quand on parle de SGD avec momentum, donc je vais suivre
+
+0:28:55.720,0:29:01.000
+cette convention. Donc au lieu d'avoir une seule itération, nous en avons deux : p et w.
+
+0:29:01.000,0:29:06.940
+A chaque étape, nous mettons à jour les deux et il s'agit d'une mise à jour assez simple.
+
+0:29:06.940,0:29:13.060
+La mise à jour du p consiste à ajouter l'ancien p. Mais au lieu d'ajouter exactement l'ancien
+
+0:29:13.060,0:29:16.720
+p, on le réduit en le multipliant par une constante qui est inférieure à 1.
+
+0:29:16.720,0:29:21.310
+Donc réduisez l'ancien p. Ici j'utilise β̂ comme constante. En 
+
+0:29:21.310,0:29:24.880
+pratique il vaudrait probablement de 0,9, un peu d'amortissement, et nous
+
+0:29:24.880,0:29:32.650
+y ajoutons le nouveau gradient. Donc p est en quelque sorte ce tampon de gradient accumulé.
+
+0:29:32.650,0:29:38.170
+Les nouveaux gradients ont une valeur pleine et les gradients anciens 
+
+0:29:38.170,0:29:42.490
+sont réduits à chaque étape d'un certain facteur, généralement 0,9. Réduisez, 
+
+0:29:42.490,0:29:47.910
+réduisez, réduisez. Donc le tampon tend à être une sorte de somme courante 
+
+0:29:47.910,0:29:53.080
+de gradients. En gros, nous modifions cette SGD  
+
+0:29:53.080,0:29:56.440
+en utilisant ce p au lieu du gradient. En utilisant p
+
+0:29:56.440,0:30:00.260
+au lieu du gradient dans la mise à jour. C’est une formule à deux lignes.
+
+0:30:00.260,0:30:05.790
+Il est peut-être préférable de comprendre cela avec la deuxième forme que je mets ci-dessous. C'est
+
+0:30:05.790,0:30:09.600
+équivalent. Vous associez le β avec une petite transformation. Donc ce n'est pas
+
+0:30:09.600,0:30:12.750
+exactement le même β entre les deux méthodes mais c'est pratiquement le même
+
+0:30:12.750,0:30:20.300
+dans la pratique. Il s'agit en gros des mêmes reparamétrisassions.
+
+0:30:21.260,0:30:25.530
+Je pense que cette forme est plus claire. Elle est appelée « stochastic heavy ball method ».
+
+0:30:25.530,0:30:31.170
+Ici notre mise à jour comprend toujours le gradient mais nous ajoutons 
+
+0:30:31.170,0:30:40.020
+aussi une copie multipliée de la direction passée que nous avons prise 
+
+0:30:40.020,0:30:43.320
+Qu’est-ce que cela signifie ? Que faisons-nous ici ? Ce n'est pas trop 
+
+0:30:43.320,0:30:49.170
+difficile à visualiser. Je vais utiliser une visualisation d'une publication.
+
+0:30:49.170,0:30:52.710
+Vous pouvez la voir ici en bas. Je suis en désaccord avec beaucoup de choses
+
+0:30:52.710,0:30:55.620
+dont ils parlent dans ce papier mais j'aime les visualisations [rires].
+
+0:30:55.620,0:31:02.820
+J'expliquerai plus tard pourquoi je ne suis pas d'accord sur certains points.
+
+0:31:02.820,0:31:07.440
+Vous pouvez considérer le momentum comme le processus physique du momentum. 
+
+0:31:07.440,0:31:10.650
+Ceux d'entre vous qui ont suivi des cours d'introduction à la physique ont
+
+0:31:10.650,0:31:17.340
+couvert cette question. Donc le momentum est la propriété de quelque chose qui continue à avancer dans la
+
+0:31:17.340,0:31:21.330
+direction où elle se dirige actuellement. Si vous êtes familier avec les lois de Newton,
+
+0:31:21.330,0:31:24.240
+les choses veulent continuer à aller dans la direction où elles vont. Ceci est le momentum.
+
+0:31:24.240,0:31:28.860
+Et quand vous faites le lien avec la physique, le gradient est une sorte de
+
+0:31:28.860,0:31:34.020
+force qui pousse votre itération, qui dans cette analogie est une balle 
+
+0:31:34.020,0:31:39.860
+lourde… cela pousse cette balle lourde à chaque point. Donc plutôt que de 
+
+0:31:39.860,0:31:44.030
+faire des changements de direction à chaque pas comme ce qui est indiqué sur le diagramme de gauche,
+
+0:31:44.030,0:31:48.480
+donc au lieu de procéder à ces changements spectaculaires, nous allons faire
+
+0:31:48.480,0:31:51.480
+des changements un peu plus modestes. Donc lorsque nous nous rendons compte 
+
+0:31:51.480,0:31:55.740
+que nous allons dans la mauvaise direction, nous faisons en quelque sorte demi-tour au 
+
+0:31:55.740,0:31:59.440
+lieu de mettre le frein à main. C’est très efficace dans des problèmes 
+
+0:31:59.440,0:32:01.810
+pratiques. Cela vous donne une grande amélioration. Donc ici vous pouvez voir que vous vous
+
+0:32:01.810,0:32:06.280
+rapprochez de la solution à la fin avec beaucoup moins d'oscillation. Et vous
+
+0:32:06.280,0:32:10.840
+pouvez voir cette oscillation. Donc c'est une sorte de fait de la vie si vous utilisez
+
+0:32:10.840,0:32:14.650
+les méthodes de type descente de gradient, donc ici un momemtum au-dessus
+
+0:32:14.650,0:32:18.550
+d’une SGD. Dans la visualisation vous allez obtenir cette oscillation. C'est 
+
+0:32:18.550,0:32:22.240
+une propriété de la descente de gradient. Il n'y a pas moyen de s'en débarrasser sans modifier la méthode.
+
+0:32:22.240,0:32:27.490
+Nous sommes censés, dans une certaine mesure, amortir cette oscillation. 
+
+0:32:27.490,0:32:30.760
+J’ai une autre visualisation ici qui vous donnera une intuition sur la façon dont
+
+0:32:30.760,0:32:34.660
+ce paramètre β contrôle les choses. Le paramètre béta doit être plus 
+
+0:32:34.660,0:32:39.280
+grand que 0. S'il est égal à 0 vous perturbez la descente de gradient. Et 
+
+0:32:39.280,0:32:43.330
+il doit être inférieur à 1 sinon tout explose dès le départ y compris les
+
+0:32:43.330,0:32:45.970
+gradients passés avec de plus en plus de poids au fil du temps. Il doit 
+
+0:32:45.970,0:32:54.070
+être entre 0 et 1. Les valeurs typiques vont 0,25 jusqu'à 0,99.
+
+0:32:54.070,0:32:59.230
+En pratique, on peut s'approcher assez près de 1. Ce qui se passe est que
+
+0:32:59.230,0:33:09.130
+plus les valeurs sont faibles, plus vous changez de direction rapidement. 
+
+0:33:09.130,0:33:12.820
+Sur ce diagramme vous pouvez voir à gauche avec le petit β que dès que 
+
+0:33:12.820,0:33:16.120
+vous vous approchez de la solution, vous changez de direction assez rapidement.
+
+0:33:16.120,0:33:19.900
+Quand vous utilisez ces βs plus grands, il vous faut plus de temps pour
+
+0:33:19.900,0:33:23.530
+prendre ce virage dramatique. On peut le considérer comme une voiture avec un mauvais rayon de braquage.
+
+0:33:23.530,0:33:26.170
+Il vous faut beaucoup de temps pour passer ce coin de rue et vous diriger vers
+
+0:33:26.170,0:33:31.180
+cette solution. Cela peut sembler mauvais, mais en pratique, cela dépend
+
+0:33:31.180,0:33:35.110
+significativement des oscillations que vous obtenez lors de la descente de gradient.
+
+0:33:35.110,0:33:40.450
+C'est la belle propriété de ça. En termes de pratique je peux vous donner
+
+0:33:40.450,0:33:45.760
+des conseils assez clairs. Vous voudrez presque toujours utiliser momemtum. 
+
+0:33:45.760,0:33:48.820
+Il est assez difficile de trouver des problèmes où cela n'est pas vraiment bénéfique dans une certaine mesure.
+
+0:33:48.820,0:33:52.960
+Cela s'explique en partie par le fait qu'il s'agit d'un paramètre supplémentaire. Généralement
+
+0:33:52.960,0:33:55.870
+lorsque vous prenez une méthode et que vous y ajoutez simplement d'autres paramètres, vous pouvez
+
+0:33:55.870,0:34:01.000
+trouver une valeur de ce paramètre qui rend les choses légèrement meilleures. 
+
+0:34:01.000,0:34:04.330
+Souvent ces améliorations résultant de l'utilisation de momemtum sont en fait
+
+0:34:04.330,0:34:08.810
+assez substantielles. Utiliser une valeur de momentum de 0,9 est vraiment
+
+0:34:08.810,0:34:13.610
+une valeur par défaut utilisée assez souvent en apprentissage machine. Dans certaines
+
+0:34:13.610,0:34:19.010
+situations 0,99 peut être meilleure. Je vous recommande donc d'essayer les deux si vous avez le
+
+0:34:19.010,0:34:24.770
+temps. Sinon, essayez juste 0,9. Je dois faire une mise en garde sur la façon dont momemtum est
+
+0:34:24.770,0:34:29.300
+indiqué dans cette expression. Si vous l'examinez attentivement lorsque le momemtum,
+
+0:34:29.300,0:34:36.440
+nous augmentons en quelque sorte la taille de l'étape. Ce n'est pas la taille de l'étape du
+
+0:34:36.440,0:34:39.380
+gradient actuel. Celui-ci est inclus dans l'étape avec la même force.
+
+0:34:39.380,0:34:43.399
+Mais les gradients passés sont inclus dans l'étape avec une grande force
+
+0:34:43.399,0:34:48.290
+quand vous augmentez momemtum. Si vous écrivez momemtum sous d'autres formes
+
+0:34:48.290,0:34:53.179
+cela devient beaucoup plus évident. Cette forme occulte cela. Ce que vous
+
+0:34:53.179,0:34:58.820
+devrez généralement faire lorsque vous changez momemtum, vous voulez le changer de manière à ce que
+
+0:34:58.820,0:35:04.310
+vous ayez votre taille de pas divisée par 1- β. C’est votre nouvelle taille de pas. Donc si
+
+0:35:04.310,0:35:07.790
+votre ancienne taille de pas utilisait un certain β voulez-vous la faire correspondre à cette équation
+
+0:35:07.790,0:35:11.690
+puis recalculer pour obtenir la nouvelle taille de pas. Il s'agit peut-être d'un changement très modeste
+
+0:35:11.690,0:35:16.400
+mais si vous passez de momemtum 0,9 à momemtum 0,99, vous devrez peut-être réduire
+
+0:35:16.400,0:35:20.480
+votre taux d'apprentissage par un facteur de 10 environ. Donc méfiez-vous.
+
+0:35:20.480,0:35:22.850
+Vous ne pouvez pas conserver le même taux d'apprentissage et à modifier le 
+
+0:35:22.850,0:35:27.260
+paramètre de momemtum. Je voudrais maintenant entrer un peu dans les détails sur pourquoi
+
+0:35:27.260,0:35:31.880
+momemtum fonctionne. C’est très mal compris. L'explication que vous en trouverez dans
+
+0:35:31.880,0:35:38.570
+l’article de distill.pub est l’accélération [https://distill.pub/2017/momentum/]. Cela contribue certainement à la
+
+0:35:38.570,0:35:44.380
+performance de momemtum. L'accélération est un sujet… Oui vous avez une question ? [Question coupée au montage].
+
+0:35:44.380,0:35:48.170
+La question est : y a-t-il une grande différence entre l'utilisation de momemtum et
+
+0:35:48.170,0:35:54.890
+utiliser un mini batch de 2. Momemtum a des avantages pour quand vous
+
+0:35:54.890,0:35:59.150
+utilisez la descente de gradient et SGD. Cette explication de l'accélération
+
+0:35:59.150,0:36:03.110
+s'applique à la fois dans le cas stochastique et le cas non stochastique.
+
+0:36:03.110,0:36:07.520
+Donc quelle que soit la taille du batch utilisée, les avantages de momemtum
+
+0:36:07.520,0:36:13.100
+sont toujours démontrés. Il y a également des avantages dans le cas stochastique
+
+0:36:13.100,0:36:17.000
+que je vais couvrir dans une diapositive ou deux. Donc la réponse est que 
+
+0:36:17.000,0:36:19.579
+c'est distinct de la taille des batchs. Vous ne devez pas les remplir.
+
+0:36:19.579,0:36:22.459
+Vous devriez vraiment changer votre taux d'apprentissage lorsque vous changez
+
+0:36:22.459,0:36:26.239
+la taille de batch plutôt que de changer le momemtum. Pour les très grandes
+
+0:36:26.239,0:36:30.380
+tailles de batchs, il y a une relation claire entre le taux d'apprentissage et la taille des batchs.
+
+0:36:30.380,0:36:34.729
+Pour les petits batchs, ce n'est pas clair. Cela dépend du problème. D‘autres
+
+0:36:34.729,0:36:38.599
+questions avant de poursuivre sur ma lancée ? [Question coupée] Oui cela 
+
+0:36:38.599,0:36:42.979
+explose. Dans l'interprétation en physique, la conservation du momemtum
+
+0:36:42.979,0:36:48.499
+serait exactement égal à 1, ce qui n'est pas bon car si vous êtes dans
+
+0:36:48.499,0:36:51.890
+un monde sans friction et que vous lâchez une lourde balle quelque part, elle va
+
+0:36:51.890,0:36:56.479
+rouler pour toujours. Ce n'est pas une bonne chose. Nous avons besoin d'un peu de freinage. C'est là que
+
+0:36:56.479,0:37:01.069
+l'interprétation physique s'effondre. Vous avez besoin d'un peu d'amortissement/freinage. Vous pouvez
+
+0:37:01.069,0:37:05.209
+imaginer que si vous utilisez une valeur plus grande que 1, ces gradients passés sont
+
+0:37:05.209,0:37:09.410
+amplifiés à chaque étape. Donc le premier gradient que vous évaluez dans votre
+
+0:37:09.410,0:37:13.940
+réseau n'est pas pertinent en termes d'information pour l'optimisation mais
+
+0:37:13.940,0:37:16.910
+si elle est plus grande que 1, elle dominerait l'étape que vous utilisez.
+
+0:37:16.910,0:37:21.170
+Est-ce que cela répond à votre question ? Ok d’autres questions sur momemtum
+
+0:37:21.170,0:37:26.359
+avant de passer à la suite ? [Question coupée] Pour une valeur particulière de β c'est
+
+0:37:26.359,0:37:30.859
+strictement équivalent. Ce n'est pas très difficile. Cela se fait en
+
+0:37:30.859,0:37:38.359
+deux lignes si vous essayez de faire l'équivalence vous-même. [Question d’un étudiant] Non les βs ne sont
+
+0:37:38.359,0:37:40.910
+pas tout à fait les mêmes mais les γ oui. C'est pourquoi j'utilise la même
+
+0:37:40.910,0:37:45.319
+notation pour cela. [Question coupée] Oui c’est ce que j'ai mentionné. Donc quand vous changez de β
+
+0:37:45.319,0:37:48.349
+vous voulez échelonner votre taux d'apprentissage en divisant par lui-même sur 1/β.
+
+0:37:48.349,0:37:52.369
+Sous cette forme… je ne suis pas sûr que si elle apparaît sous cette forme, il pourrait s'agir d'une
+
+0:37:52.369,0:37:55.969
+erreur, mais je pense que je suis ok. Je pense que ce n'est pas dans cette formule mais oui
+
+0:37:55.969,0:37:59.269
+lorsque vous changez de β, vous devez également changer de taux d'apprentissage
+
+0:37:59.269,0:38:09.300
+pour maintenir l'équilibre. [Aldredo : quelle est la 3ème forme dont vous parliez plus tôt ?] C’est une forme avec moyenne. Cela
+
+0:38:09.300,0:38:13.830
+ne vaut probablement pas la peine, mais on peut considérer que momemtum change
+
+0:38:13.830,0:38:17.850
+le point auquel vous évaluez le gradient. Dans la forme standard vous évaluez
+
+0:38:17.850,0:38:22.230
+le gradient au point W. La forme avec moyenne, vous prenez la moyenne 
+
+0:38:22.230,0:38:25.890
+moyenne des points que vous évaluez dans la somme des gradients et vous
+
+0:38:25.890,0:38:30.630
+évaluez à ce point. Il s'agit qu’au lieu d'établir une moyenne des gradients vous faites 
+
+0:38:30.630,0:38:37.530
+une moyenne des points. [Question coupée] Oui donc l’accélération c'est
+
+0:38:37.530,0:38:43.260
+quelque chose que vous pouvez passer toute votre carrière à étudier. C'est 
+
+0:38:43.260,0:38:47.070
+un peu mal compris. Si vous essayez de lire le papier original de Nesterov…
+
+0:38:47.070,0:38:53.520
+Nesterov est en quelque sorte le grand-père de l'optimisation moderne. Pratiquement la moitié
+
+0:38:53.520,0:38:56.460
+des méthodes que nous utilisons portent son nom dans une certaine mesure. Ce qui peut prêter à confusion
+
+0:38:56.460,0:39:01.740
+à certains moments. Dans les années 80, il a trouvé cette formulation. Il ne l’a pas écrite
+
+0:39:01.740,0:39:04.650
+sous cette forme, il l'a écrite sous une autre et les gens ont réalisé un peu plus tard
+
+0:39:04.650,0:39:09.450
+que cela pourrait être écrit sous cette forme-ci. Son analyse est également très opaque.
+
+0:39:09.450,0:39:15.590
+Elle est écrite à l'origine en russe ce qui n'aide pas à la compréhension malheureusement [rires].
+
+0:39:15.590,0:39:21.180
+Des gens sympathiques à la NSA ont traduit toute la littérature russe à l'époque [rires].
+
+0:39:21.180,0:39:27.330
+Nous y avons donc accès. Il s'agit en fait d'une très petite modification 
+
+0:39:27.330,0:39:31.890
+de l'étape de momemtum mais je pense que cette petite modification rabaisse 
+
+0:39:31.890,0:39:36.600
+ce qu'elle fait. Ce n'est vraiment pas la même méthode du tout. Ce que je peux dire qu’avec le
+
+0:39:36.600,0:39:41.400
+momentum Nesterov, si vous choisissez très soigneusement ces constantes, 
+
+0:39:41.400,0:39:46.050
+vous pouvez obtenir ce que l'on appelle une convergence accélérée. Cela ne s'applique pas dans
+
+0:39:46.050,0:39:49.560
+vos réseaux. Mais pour des problèmes convexes, je n'entrerai pas dans les détails de la convexité,
+
+0:39:49.560,0:39:52.230
+certains d'entre vous savent peut-être ce que cela signifie, c'est une structure simple, mais pour les
+
+0:39:52.230,0:39:55.740
+problèmes convexes on a donc un taux de convergence radicalement amélioré grâce à cette
+
+0:39:55.740,0:39:59.940
+accélération. Cela marche seulement pour des constantes très soigneusement choisies et vous ne pouvez pas vraiment
+
+0:39:59.940,0:40:03.030
+les choisir soigneusement à l'avance. Ce qui vous obligera à effectuer une 
+
+0:40:03.030,0:40:05.640
+recherche assez vaste vos hyper paramètres pour trouver la bonne constante
+
+0:40:05.640,0:40:10.710
+pour obtenir cette accélération. Cela se produit pour les fonctions
+
+0:40:10.710,0:40:14.779
+quadratiques lors de l'utilisation d'un momemtum. Cela est confus pour beaucoup de gens.
+
+0:40:14.779,0:40:18.559
+Vous verrez donc que beaucoup de gens disent que momemtum est une méthode accélérée. C'est
+
+0:40:18.559,0:40:23.449
+accéléré seulement pour les quadratiques et même alors c'est un peu incertain. 
+
+0:40:23.449,0:40:27.529
+Je ne recommande pas d'utiliser ça pour les quadratiques. Utilisez des gradients conjugués ou de nouvelles
+
+0:40:27.529,0:40:33.499
+méthodes qui ont été développées au cours des dernières années. C'est un
+
+0:40:33.499,0:40:36.919
+un facteur qui contribue certainement à ce que le momemtum fonctionne si bien dans la pratique.
+
+0:40:36.919,0:40:42.499
+Il y a certainement une certaine accélération en cours mais cette accélération est difficile
+
+0:40:42.499,0:40:46.669
+à réaliser quand vous avez des gradients stochastiques. Quand vous regardez
+
+0:40:46.669,0:40:51.679
+ce que fait fonctionne l’accélération, le bruit la tue vraiment. C'est difficile à croire
+
+0:40:51.679,0:40:55.549
+que c'est le principal facteur qui contribue à la performance mais c'est certainement
+
+0:40:55.549,0:40:59.989
+là. L’article de distill.pub que j'ai mentionné attribue une sorte de performance à
+
+0:40:59.989,0:41:02.689
+l'accélération, mais je n'irais pas aussi loin. C'est certainement un
+
+0:41:02.689,0:41:08.390
+facteur contributif. Mais probablement des raisons pratiques et prouvant
+
+0:41:08.390,0:41:13.669
+pourquoi le momemtum aide est le lissage du bruit. Et c'est très intuitif.
+
+0:41:13.669,0:41:21.619
+Le momemtum moyenne des gradients dans un sens que nous gardons le tampon
+
+0:41:21.619,0:41:25.099
+de gradients et l’utilisons comme une étape au lieu de prendre les gradients
+
+0:41:25.099,0:41:30.259
+Individuels. Il s'agit en quelque sorte d'une forme de moyenne. Et il s'avère que lorsque vous
+
+0:41:30.259,0:41:33.229
+utilisez SGD sans momemtum pour prouver quoi que ce soit, vous devez en fait
+
+0:41:33.229,0:41:37.449
+travailler avec la moyenne de tous les points que vous avez visités. Vous
+
+0:41:37.449,0:41:42.380
+pouvez avoir des limites très faibles sur le dernier point où vous avez fini 
+
+0:41:42.380,0:41:45.349
+mais il faut vraiment travailler avec cette moyenne de points. C'est sous-optimal
+
+0:41:45.349,0:41:48.529
+comme si nous ne voulions jamais prendre cette moyenne dans la pratique. C'est lourdement
+
+0:41:48.529,0:41:52.099
+pondérée par des points que nous avons visités il y a longtemps et qui peuvent ne pas être pertinents.
+
+0:41:52.099,0:41:55.159
+En fait, cette moyenne ne fonctionne pas très bien en pratique pour les
+
+0:41:55.159,0:41:59.150
+réseaux, ce n'est important que pour les problèmes convexes. Néanmoins c'est
+
+0:41:59.150,0:42:03.380
+nécessaire pour analyser les SGD standards. L'un des faits remarquables concernant momemtum
+
+0:42:03.380,0:42:09.019
+est en fait que cette moyenne n'est plus nécessaire en théorie. Donc en gros
+
+0:42:09.019,0:42:14.509
+momemtum ajoute un lissage durant l'optimisation rendant le dernier
+
+0:42:14.509,0:42:19.459
+point que vous visitez une bonne approximation de la solution. Avec SGD
+
+0:42:19.459,0:42:23.329
+vous voulez vraiment faire la moyenne de tout un tas de derniers points que vous avez vus afin
+
+0:42:23.329,0:42:26.700
+d'obtenir une bonne approximation de la solution. Laissez-moi illustrer ça.
+
+0:42:26.700,0:42:31.190
+Voici donc un exemple très typique de ce qui se passe lors de l'utilisation de SGD.
+
+0:42:31.190,0:42:36.329
+Au début avec SGD vous faites de grands progrès. Le gradient est en gros 
+
+0:42:36.329,0:42:39.960
+presque le même que le gradient stochastique. Donc dans les premiers pas vous faites
+
+0:42:39.960,0:42:44.490
+de grands progrès vers une solution. Mais vous vous retrouvez alors dans cette boule. Rappelez-vous ici
+
+0:42:44.490,0:42:47.579
+c'est une vallée que nous descendons, donc cette boule ici est en quelque sorte le sol
+
+0:42:47.579,0:42:53.550
+de la vallée. Et vous rebondissez en quelque sorte sur ce sol. La solution
+
+0:42:53.550,0:42:56.579
+la plus commune est la suivante : si vous réduisez votre taux d'apprentissage, vous rebondissez
+
+0:42:56.579,0:43:01.290
+plus lentement. Ce n'est pas exactement une bonne solution mais c'est une façon de gérer la situation.
+
+0:43:01.290,0:43:04.710
+Quand vous utilisez SGD avec momemtum, vous pouvez en quelque sorte aplanir ce rebondissement.
+
+0:43:04.710,0:43:08.160
+Vous roulez êtes en quelque sorte. Le chemin ne sera pas toujours ce chemin
+
+0:43:08.160,0:43:12.300
+« en tire-bouchon ». C’est en fait assez aléatoire. On pourrait vaciller
+
+0:43:12.300,0:43:15.990
+à gauche et à droite, mais quand vous mettez une seed de 42, c'est ce qu'il est répandu dans la communauté,
+
+0:43:15.990,0:43:20.790
+vous obtenez généralement ce tire-bouchon. Vous obtenez ça pour cet ensemble
+
+0:43:20.790,0:43:24.660
+de paramètres. Je pense que c'est une bonne explication. Donc la combinaison
+
+0:43:24.660,0:43:27.960
+de l'accélération et du lissage du bruit est la raison pour laquelle momemtum fonctionne.
+
+0:43:27.960,0:43:33.180
+[Question coupée] Oh oui donc je dois dire que lorsque nous injectons du bruit ici, le gradient peut ne
+
+0:43:33.180,0:43:37.470
+même pas être la bonne direction à suivre. Il pourrait être à l'opposé de
+
+0:43:37.470,0:43:40.800
+l'endroit où vous voulez aller. C'est pour cela que vous rebondissez dans
+
+0:43:40.800,0:43:46.410
+la vallée. Donc en fait vous pouvez voir ici que le premier pas pour le SGD
+
+0:43:46.410,0:43:49.980
+est pratiquement orthogonal au niveau qui y est fixé. C'est parce qu'il est
+
+0:43:49.980,0:43:52.770
+une bonne étape au début, mais une fois que l'on est plus loin, cela peut 
+
+0:43:52.770,0:44:00.300
+indiquer presque toutes les directions qui sont vaguement autour de la solution.
+
+0:44:00.300,0:44:03.540
+SGD avec momemtum est actuellement une méthode d'optimisation de pointe pour beaucoup de problèmes 
+
+0:44:03.540,0:44:08.730
+d'apprentissage machine. Vous l'utiliserez donc probablement dans votre 
+cours pour beaucoup de problèmes.
+
+0:44:08.730,0:44:12.990
+Mais il y a eu d'autres innovations au fil des ans et sont particulièrement
+
+0:44:12.990,0:44:16.829
+utiles pour les problèmes mal conditionnés comme je l'ai mentionné plus tôt.
+
+0:44:16.829,0:44:19.770
+Certains problèmes ont ce genre de propriété de condition de puits que nous
+
+0:44:19.770,0:44:22.530
+ne pouvons pas vraiment caractériser pour les réseaux de neurones mais nous
+
+0:44:22.530,0:44:27.450
+peut le mesurer par le test selon lequel si le SGD fonctionne, alors cela est bien conditionné.
+
+0:44:27.450,0:44:31.470
+S’il ne fonctionne pas, la plupart des gens disent que c’est mal conditionné.
+
+0:44:31.470,0:44:34.410
+Nous avons donc d'autres méthodes que nous pouvons utiliser pour gérer cela dans certains cas.
+
+0:44:34.410,0:44:39.690
+Ces méthodes sont généralement appelées « méthodes adaptatives ».
+
+0:44:39.690,0:44:43.500
+Faites attention à ce que vous adaptez. Les gens dans la littérature utilisent
+
+0:44:43.500,0:44:51.780
+cette nomenclature pour l'adaptation des taux d'apprentissage en adaptant les paramètres de momemtum. Mais
+	
+0:44:51.780,0:44:56.339
+dans notre situation, nous parlons d'un type spécifique d'adaptabilité. Cette
+
+0:44:56.339,0:45:03.780
+adaptabilité est le taux d'apprentissage individuel. Qu’est-ce que j'entends par là ? Dans la
+
+0:45:03.780,0:45:06.869
+formulation que je vous ai déjà montré, pour le SGD j’ai utilisé un taux
+
+0:45:06.869,0:45:10.619
+d'apprentissage global. C'est-à-dire que chaque taux de votre réseau est mis à
+
+0:45:10.619,0:45:16.800
+à jour en utilisant une équation avec le même γ. Le γ pourrait varier au cours des
+
+0:45:16.800,0:45:21.720
+pas de temps, donc vous utilisez γₖ dans la notation. Mais vous utilisez souvent un
+
+0:45:21.720,0:45:26.310
+γ fixe depuis un certain temps. Pour les méthodes adaptatives, nous voulons adapter le taux
+
+0:45:26.310,0:45:30.240
+d'apprentissage pour chaque poids individuellement. Nous voulons utiliser
+
+0:45:30.240,0:45:37.109
+les informations que nous obtenons à partir des gradients pour chaque poids pour adapter cela. Cela 
+
+0:45:37.109,0:45:39.900
+semble la chose évidente à faire. Les gens ont essayé de faire fonctionner ça
+
+0:45:39.900,0:45:43.200
+pendant des décennies. Nous sommes en quelque sorte tombés sur des méthodes 
+
+0:45:43.200,0:45:48.510
+qui fonctionnent et certaines pas. Mais je veux poser des questions ici 
+
+0:45:48.510,0:45:53.040
+car des explications sont nécessaires. Ce que je peux dire c’est qu'il n'est pas tout à fait clair pourquoi vous devez
+
+0:45:53.040,0:45:56.880
+faire ça. Si votre réseau est bien conditionné, vous n'avez potentiellement 
+
+0:45:56.880,0:46:01.349
+pas besoin de le faire. Mais souvent les réseaux que nous utilisons en pratique 
+
+0:46:01.349,0:46:05.069
+ont différentes structures dans différentes parties. Par exemple les premières parties 
+
+0:46:05.069,0:46:10.619
+de votre ConvNet peuvent être des couches convolutives très peu profondes sur
+
+0:46:10.619,0:46:14.849
+de grandes images. Plus tard dans le réseau vous allez faire des convolutions
+
+0:46:14.849,0:46:18.359
+avec un grand nombre de canaux sur de petites images. Ces opérations sont très
+
+0:46:18.359,0:46:21.150
+différentes et il n'y a aucune raison de croire qu'un taux d'apprentissage 
+
+0:46:21.150,0:46:26.310
+qui fonctionne pour l'un fonctionne bien pour l'autre. C'est pourquoi les
+
+0:46:26.310,0:46:28.140
+les taux d'apprentissage adaptatifs peuvent être utiles. Des questions ?
+
+0:46:28.140,0:46:32.250
+[Question coupée] Malheureusement il n'y a pas de bonne définition pour les réseaux neuronaux. Nous
+
+0:46:32.250,0:46:35.790
+ne pouvons pas mesurer même s'il y avait une bonne définition. Donc je vais 
+
+0:46:35.790,0:46:40.109
+l'utiliser dans le sens vague car cela ne fonctionne pas vraiment et c'est 
+
+0:46:40.109,0:46:42.619
+mal conditionné. Pour le cas d'une fonction quadratique, 
+
+0:46:45.830,0:46:51.380
+il y a une définition explicite de cette condition : L/μ. L étant la plus
+
+0:46:51.380,0:46:55.910
+grande valeur propre et μ la plus petite. L’écart entre la
+
+0:46:55.910,0:47:00.140
+valeur propre la plus grande et la plus petite est la pire condition.
+
+0:47:00.140,0:47:03.320
+Cela ne convient pas dans votre réseau : μ n'existe pas dans votre réseau.
+
+0:47:03.320,0:47:07.610
+L contient encore quelques informations mais je ne dirais pas c’est un 
+
+0:47:07.610,0:47:12.800
+facteur déterminant. Il se passe beaucoup de choses. Il y a des moyens que
+
+0:47:12.800,0:47:15.619
+cela se comporte comme des problèmes simples. Mais il y a d'autres façons
+
+0:47:15.619,0:47:23.090
+où on fait juste un signe de la main et on dit qu'ils les aiment [Question coupée]
+
+0:47:23.090,0:47:25.910
+Pour ce réseau particulier : il s'agit d'un réseau qui n'est pas trop mal
+
+0:47:25.910,0:47:30.920
+conditionné. En fait c'est un VGG 16 qui était le meilleur réseau pour
+
+0:47:30.920,0:47:34.490
+entraîner avant l'invention de certains techniques pour améliorer
+
+0:47:34.490,0:47:37.369
+le conditionnement. C’est presque le meilleur conditionné que vous
+
+0:47:37.369,0:47:40.910
+pouvez avoir. Beaucoup de la structure de ce réseau est en fait
+
+0:47:40.910,0:47:45.140
+définie par ce conditionnement. On double le nombre de canaux après certaines. La raison principale étant que cela semble 
+
+0:47:45.140,0:47:48.680
+étapes car la raison principale étant que cela 
+
+0:47:48.680,0:47:53.600
+semble produire des réseaux qui sont bien conditionnés. Ce que vous pouvez dire
+
+0:47:53.600,0:47:57.170
+c’est que les poids très légers ont un effet très important sur la sortie.
+
+0:47:57.170,0:48:02.630
+Si la dernière couche ici contient 4096 poids. Il s'agit d'un très petit
+
+0:48:02.630,0:48:06.400
+nombre de poids. Ce réseau compte des millions de poids je crois. Ces 4096
+
+0:48:06.400,0:48:10.640
+poids ont un effet très important sur la sortie car ils dictent directement 
+
+0:48:10.640,0:48:14.450
+la sortie. Et pour cette raison, vous souhaitez généralement utiliser des petits 
+
+0:48:14.450,0:48:19.190
+taux d'apprentissage pour eux. Plus tôt dans le réseau certains peuvent
+
+0:48:19.190,0:48:21.770
+avoir un effet important surtout lorsque vous avez initialisé votre réseau
+
+0:48:21.770,0:48:25.910
+de manière aléatoire. Ils auront généralement un effet moindre de ces poids
+
+0:48:25.910,0:48:29.840
+plus anciens. C’est très ondulé et nous ne comprenons pas la raison
+
+0:48:29.840,0:48:33.859
+assez bien pour que je puisse vous donner une réponse. [Etudiant]
+
+0:48:33.859,0:48:41.270
+Ok 120 millions de poids dans ce réseau.
+
+0:48:41.270,0:48:47.710
+La dernière couche est comme une matrice 4096 par 4096. Des questions ?
+
+0:48:47.950,0:48:53.510
+[Question coupée] Je recommande de ne les utiliser que lorsque votre
+
+0:48:53.510,0:48:59.120
+problème n'a pas une structure qui se décompose en une grande somme de choses
+
+0:48:59.120,0:49:04.880
+similaires. C'est un peu long mais ça marche bien quand vous avez un objectif
+
+0:49:04.880,0:49:09.830
+qui est une somme où chaque terme de la somme est vaguement comparable. Donc
+
+0:49:09.830,0:49:14.990
+en apprentissage machine, chaque sous-terme de cette somme est une perte d'un
+
+0:49:14.990,0:49:18.290
+point de données et ceux-ci ont des structures très similaires dans les pertes individuelles. 
+
+0:49:18.290,0:49:21.080
+C’est un « head-wavy sense » qu'ils ont une structure très similaire car chaque
+
+0:49:21.080,0:49:25.220
+point de données pourrait être très différent. Quand votre problème n'a pas
+
+0:49:25.220,0:49:30.440
+une grosse somme comme partie principale de sa structure, alors LBFGS serait utile. C'est la
+
+0:49:30.440,0:49:35.840
+réponse générale. Je doute que vous utilisez LBFGS dans ce cours. Il peut 
+
+0:49:35.840,0:49:40.660
+être très pratique pour les petits réseaux. Vous pouvez faire des expériences
+
+0:49:40.660,0:49:44.720
+avec le réseau « LeNet 5 » ou quelque chose comme ça que vous utilisez probablement dans ce cours.
+
+0:49:44.720,0:49:51.230
+Vous pourriez probablement expérimenter avec LBFGS et avoir un certain succès.
+
+0:49:51.230,0:49:58.670
+Une technique dans l’entraînement des réseaux modernes est la RMSprop. Je
+
+0:49:58.670,0:50:03.680
+vais parler maintenant. Sur certains points, les standards pratiques dans
+
+0:50:03.680,0:50:07.640
+le domaine de la recherche en optimisation ont divergé de
+
+0:50:07.640,0:50:10.640
+ce que les gens faisaient réellement lors de l’entraînement des réseaux.
+
+0:50:10.640,0:50:14.150
+Cette RMSprop a été en quelque sorte le point de fracture où tout le monde est allé dans une direction différente.
+
+0:50:14.150,0:50:19.820
+Cette RMSprop est généralement attribué à des diapositives de Geoffrey Hinton
+
+0:50:19.820,0:50:23.380
+qu'il attribue ensuite à un document non publié de quelqu'un d'autre. C’est
+
+0:50:23.380,0:50:28.790
+vraiment insatisfaisant de citer des diapositives dans un document mais peu
+
+0:50:28.790,0:50:34.400
+importe. C'est une méthode qui n'a pas de preuve expliquant pourquoi elle marche, mais
+
+0:50:34.400,0:50:38.050
+c'est similaire aux méthodes dont vous pouvez prouver. Cela fonctionne assez
+
+0:50:38.050,0:50:43.520
+assez bien en pratique, c'est pourquoi regardons comment on l'utilise. Je 
+
+0:50:43.520,0:50:46.310
+veux vous donner une genre d'introduction avant d’expliquer réellement ce
+
+0:50:46.310,0:50:51.020
+que c’est. RMSprop signifie Root Mean Square Propogation [Propagation de la racine carrée moyenne].
+
+0:50:51.020,0:50:54.579
+Cela date de l'époque où tout ce que nous faisons avec les réseaux été
+
+0:50:54.579,0:50:58.690
+appelé propagation (rétropropagation, etc.). Maintenons nous appelons ça « deep ».
+
+0:50:58.690,0:51:02.920
+Donc cela pourrait probablement s’appeler « RMS Deep » ou quelque chose comme ça si ça voyait le jour maintenant.
+
+0:51:02.920,0:51:08.470
+C'est un peu une modification. Cela reste un algorithme en 2 lignes mais est
+
+0:51:08.470,0:51:11.200
+un peu différent. Donc je vais passer en revue ces termes car c'est
+
+0:51:11.200,0:51:19.450
+important de comprendre cela. Nous gardons autour de ce tampon v. Ce n’est 
+
+0:51:19.450,0:51:22.720
+pas un tampon de momemtum. Nous utilisons une notation différente ici. Il fait
+
+0:51:22.720,0:51:27.069
+quelque chose de différent. Je vais utiliser une notation que certaines personnes
+
+0:51:27.069,0:51:30.760
+détestent vraiment mais je pense que c’est pratique. J’écris l'élément composante par composante au
+
+0:51:30.760,0:51:36.040
+carré d'un vecteur juste en mettant le vecteur au carré. Ce qui n'est pas déroutant dans
+
+0:51:36.040,0:51:40.390
+la notation dans presque toutes les situations, mais c'est une belle façon 
+
+0:51:40.390,0:51:43.480
+de l'écrire. Donc j'écris le gradient au carré. Vous prenez tous les éléments 
+
+0:51:43.480,0:51:47.109
+dans ce vecteur. Un vecteur d’un million d'éléments, peu importe. Et je prends la racine carrée de chaque élément
+
+0:51:47.109,0:51:51.309
+individuellement. Donc cette mise à jour est ce qu'on appelle une moyenne mobile
+
+0:51:51.309,0:51:55.480
+exponentielle. Levez la main ceux qui sont familier avec les moyennes mobiles 
+
+0:51:55.480,0:51:59.890
+exponentielles. Je veux savoir si je dois en parler plus en profondeur. Il
+
+0:51:59.890,0:52:03.270
+semble que ce soit le cas. La moyenne mobile exponentielle est une méthode
+
+0:52:03.270,0:52:08.020
+standard utilisée depuis de nombreuses décennies dans de nombreux domaines
+
+0:52:08.020,0:52:14.650
+pour le maintien d'une moyenne dont les quantités peuvent changer dans le temps.
+
+0:52:14.650,0:52:19.630
+Donc quand une quantité change au fil du temps, nous devons mettre des poids plus grands sur les nouvelles values
+
+0:52:19.630,0:52:24.210
+car elles fournissent plus d'informations. L'une des façons de le faire est
+
+0:52:24.210,0:52:30.700
+de pondérer les anciennes valeurs de manière exponentielle. Quand vous le faites de manière exponentielle, vous voulez dire
+
+0:52:30.700,0:52:36.880
+que le poids d'une ancienne valeur datant d'il y a dix pas, par exemple, aura un poids α de
+
+0:52:36.880,0:52:41.109
+dix dans votre truc. C'est donc là que l'exponentiel entre en jeu dans la sortie des
+
+0:52:41.109,0:52:43.900
+dix. Ce n'est pas vraiment dans la notation. Dans la notation à chaque pas
+
+0:52:43.900,0:52:49.390
+nous mettons à jour le vecteur par cette constante α. Comme vous pouvez 
+
+0:52:49.390,0:52:53.440
+l’imaginer, des choses dans ce tampon v sont très vieilles. A chaque pas,
+
+0:52:53.440,0:52:57.760
+elles sont mises à jour par α. α ici est quelque chose entre 0 et 1. 
+
+0:52:57.760,0:53:01.359
+Donc nous ne pouvons pas utiliser des valeurs supérieures à 1.
+
+0:53:01.359,0:53:04.280
+Ces valeurs ne seront plus valables jusqu'à ce qu'elles [???] la moyenne mobile
+
+0:53:04.280,0:53:08.180
+exponentielle. Donc cette méthode maintient une moyenne mobile exponentielle
+
+0:53:08.180,0:53:12.860
+du second moment. Je veux dire le second moment non central. Nous ne
+
+0:53:12.860,0:53:18.920
+soustrayons pas de la moyenne ici. L’implémentation PyTorch comporte un commutateur où vous
+
+0:53:18.920,0:53:22.370
+pouvez lui dire de soustraire de la moyenne. Vous pouvez jouer avec ça. En
+
+0:53:22.370,0:53:25.460
+pratique cela sera probablement très similaire. Il y a un article sur ça 
+
+0:53:25.460,0:53:30.620
+bien sûr, mais la méthode originale ne soustrait pas la moyenne à cet endroit. Nous utilisons
+
+0:53:30.620,0:53:35.000
+ce deuxième moment pour normaliser le gradient. Nous le faisons élément par élément.
+
+0:53:35.000,0:53:39.560
+Toute cette notation est élément par élément. Chaque élément du gradient est divisé
+
+0:53:39.560,0:53:43.310
+par la racine carrée de la deuxième estimation du moment. Si vous pensez à 
+
+0:53:43.310,0:53:47.090
+cette racine carrée comme l'écart-type, même si ce n'est pas un moment central,
+
+0:53:47.090,0:53:50.990
+donc ce n'est pas vraiment l'écart-type mais il est utile d'y penser de 
+
+0:53:50.990,0:53:55.580
+cette façon. « Root mean square » est une sorte d’allusion à cette
+
+0:53:55.580,0:54:03.590
+division par la racine de la moyenne des carrés. Le détail technique
+
+0:54:03.590,0:54:07.820
+important ici est que vous devez ajouter ε. Pour éviter l'ennuyeux
+
+0:54:07.820,0:54:12.950
+problème : lorsque vous divisez 0 par 0, tout se brise. Donc vous avez des
+
+0:54:12.950,0:54:16.310
+zéros dans votre réseau. Il y a certaines situations où cela fait une
+
+0:54:16.310,0:54:20.060
+différence en dehors du moment où vos gradients sont nuls. Mais vous avez absolument
+
+0:54:20.060,0:54:25.310
+besoin de cet ε dans votre méthode. Vous verrez que c'est un thème récurrent dans toutes
+
+0:54:25.310,0:54:29.900
+les méthodes adaptatives. Il faut mettre un ε dans le dénominateur
+
+0:54:29.900,0:54:34.040
+pour éviter de diviser par 0. Généralement ε sera proche de
+
+0:54:34.040,0:54:38.690
+votre machine ε. Je ne sais pas si vous êtes familier avec ce terme.
+
+0:54:38.690,0:54:41.750
+C'est quelque chose comme 10^-7, parfois 10^-8, quelque chose
+
+0:54:41.750,0:54:45.710
+de cet ordre. Donc il a vraiment qu'un petit effet sur la valeur. Avant de
+
+0:54:45.710,0:54:49.790
+parler des raisons pour lesquelles cette méthode fonctionne, je veux parler
+
+0:54:49.790,0:54:53.150
+de l’innovation la plus en plus de cette méthode. C’est la méthode que nous 
+
+0:54:53.150,0:54:57.560
+utilisons réellement dans la pratique. La RMSprop est parfois encore utiliser,
+
+0:54:57.560,0:55:03.170
+mais le plus souvent nous utilisons une méthode appelée Adam. Adam signifie 
+
+0:55:03.170,0:55:10.790
+adaptatif moment estimation. Donc Adam est la RMSprop avec momemtum. J'ai passé 20 minutes à vous dire d’utiliser momemtum
+
+0:55:10.790,0:55:13.760
+donc je vais bien sur vous dire que vous devriez le mettre au-dessus d’une RMSprop.
+
+0:55:13.760,0:55:18.420
+Il est toujours possible de faire ça. Il y en a au moins une demi-douzaine
+
+0:55:18.420,0:55:21.569
+dans ce papier pour chacun d'entre eux, mais c'est Adam qui a été le plus remarqué.
+
+0:55:21.569,0:55:25.770
+La façon dont nous faisons le momemtum ici est que nous convertissons en fait la mise à jour de momemtum
+
+0:55:25.770,0:55:32.609
+à une moyenne mobile exponentielle. Cela peut sembler être une quantité de mise
+
+0:55:32.609,0:55:37.200
+à jour qualitativement différente comme faire momemtum par la moyenne mobile.
+
+0:55:37.200,0:55:40.829
+Ce que nous faisions auparavant est essentiellement équivalent où vous 
+
+0:55:40.829,0:55:44.490
+pouvez obtenir une méthode où vous utilisez une exponentielle mobile,
+
+0:55:44.490,0:55:47.760
+un momemtum moyenne mobile équivalent à celle du momemtum standard. Donc
+
+0:55:47.760,0:55:50.460
+ne considérez pas que ce momemtum moyenne mobile soit différent du momemtum
+
+0:55:50.460,0:55:54.000
+précédent. Il a une belle propriété comme quoi vous n'avez pas besoin de
+
+0:55:54.000,0:55:57.660
+changer le taux d'apprentissage lorsque vous jouez avec le β. Je pense que c’est
+
+0:55:57.660,0:56:03.780
+une grande amélioration. Nous avons ajouté un momemtum au gradient et tout 
+
+0:56:03.780,0:56:07.980
+ce qui est avant, avec la RMSprop. Nous avons cette moyenne mobile exponentielle du
+
+0:56:07.980,0:56:13.050
+gradient quadratique. En plus de cela, nous n'avons qu'à brancher ce gradient
+
+0:56:13.050,0:56:17.010
+mobile moyen là où nous avions le gradient dans la mise à jour précédente. 
+
+0:56:17.010,0:56:20.579
+Ce n’est pas trop compliqué. Si vous lisez le papier sur Adam vous verrez tout un
+
+0:56:20.579,0:56:23.880
+un tas de notations supplémentaires. L'algorithme est plutôt long : dix lignes
+
+0:56:23.880,0:56:28.859
+au lieu de trois. Et ça car ils ajoutent ce que l'on appelle une correction de biais. C'est
+
+0:56:28.859,0:56:34.260
+en fait pas nécessaire mais cela aidera un peu. Donc tout le monde l'utilise.
+
+0:56:34.260,0:56:39.780
+Cela augmente la valeur de ces paramètres au cours des premières étapes
+
+0:56:39.780,0:56:43.319
+d'optimisation. La raison pour laquelle vous le faites est que vous initialisez
+
+0:56:43.319,0:56:48.150
+le tampon du momemtum à 0. Imaginez votre initialiseur à 0 puis après la
+
+0:56:48.150,0:56:52.440
+première étape, nous allons ajouter à cela une valeur de 1 – β multipliée
+
+0:56:52.440,0:56:56.700
+par le gradient actuel. 1 - β sera généralement 0,1 car nous utilisons
+
+0:56:56.700,0:57:00.599
+souvent le momemtum 0,9. Donc quand nous faisons cela, notre étape de gradient 
+
+0:57:00.599,0:57:05.069
+utilise un taux d'apprentissage dix fois plus faible, car ce tampon a un 
+
+0:57:05.069,0:57:08.670
+dixième d'un gradient en lui. C'est indésirable. Toute la correction de biais
+
+0:57:08.670,0:57:13.890
+revient juste à multiplier par 10 l'étape dans ces premières itérations.
+
+0:57:13.890,0:57:18.420
+La formule de correction des biais est tout simplement la bonne façon de procéder pour
+
+0:57:18.420,0:57:23.030
+aboutir à une étape sans biais. Sans biais signifie ici juste que le tampon
+
+0:57:23.030,0:57:28.420
+du momemtum attendu est le gradient. Il n'y a donc rien de trop mystérieux.
+
+0:57:28.420,0:57:32.960
+Je ne pense pas que ce soit un grand ajout, mais je le papier sur Adam a
+
+0:57:32.960,0:57:37.190
+a été le premier à utiliser une correction de biais une méthode d’optimisation.
+
+0:57:37.190,0:57:40.310
+Je ne sais pas s'ils l'ont inventé, mais ont certainement été les pionniers.
+
+0:57:40.310,0:57:44.990
+de la correction des biais. Ces méthodes fonctionnent vraiment bien dans la pratique.
+
+0:57:44.990,0:57:48.590
+Voici une comparaison empirique. La quadratique que j'utilise est une
+
+0:57:48.590,0:57:52.220
+quadratique diagonale. C’est un peu tricher d’utiliser une méthode qui fonctionne bien sur des quadratiques
+
+0:57:52.220,0:57:55.060
+ou des quadratiques diagonales mais je vais le faire quand même.
+
+0:57:55.060,0:58:00.320
+Vous pouvez voir que la direction qu'ils prennent est une amélioration par rapport à la SGD.
+
+0:58:00.320,0:58:03.950
+Dans ce problème simplifié, SGD va dans la mauvaise direction au début.
+
+0:58:03.950,0:58:08.780
+RMSprop va fondamentalement dans la bonne direction mais le problème est
+
+0:58:08.780,0:58:15.140
+qu’il souffre du bruit tout comme la SGD sans bruit. Donc vous obtenez cette
+
+0:58:15.140,0:58:19.490
+situation où le rebondissement autour de l'optimum est assez significatif.
+
+0:58:19.490,0:58:24.710
+Tout comme avec la SGD avec mometum, lorsque nous ajoutons un mometum à Adam, nous obtenons la même
+
+0:58:24.710,0:58:29.210
+amélioration où l'on « spirale » vers la solution.
+
+0:58:29.210,0:58:32.240
+Ce genre de choses. Cela vous amène à la solution
+
+0:58:32.240,0:58:35.960
+plus rapidement et cela signifie que le dernier point où vous vous trouvez est une bonne estimation
+
+0:58:35.960,0:58:39.370
+de la solution. Ce n'est pas une estimation bruyante. C'est en quelque sorte la meilleure estimation dont vous disposez.
+
+0:58:39.370,0:58:45.350
+Je recommande donc généralement d'utiliser Adam au-dessus d’un RMSprop.
+
+0:58:45.350,0:58:50.750
+Pour certains problèmes, il est tout simplement impossible d'utiliser la SGD. Adam est nécessaire pour l’entraînement
+
+0:58:50.750,0:58:53.690
+de certains des réseaux comme ceux utilisant les modèles de langage. C’est
+
+0:58:53.690,0:58:57.290
+nécessaire à l’entraînement du réseau. Je vais parler de ça dans la fin de
+
+0:58:57.290,0:59:03.580
+cette présentation. Donc si je dois recommander quelque chose c’est que
+
+0:59:07.490,0:59:10.670
+vous devriez utiliser c’est SGD avec momemtum ou Adam comme méthodes
+
+0:59:10.670,0:59:14.690
+d'optimisation privilégiées pour vos réseaux.  C’est un conseil pratique
+
+0:59:14.690,0:59:19.430
+pour vous. Personnellement je déteste Adam parce que je suis un chercheur en 
+
+0:59:19.430,0:59:24.920
+optimisation et la théorie de leur document est fausse. Cela a été démontré
+
+0:59:24.920,0:59:29.360
+récemment. Donc la méthode ne converge pas en fait. Vous pouvez le montrer sur des
+
+0:59:29.360,0:59:32.430
+problèmes de test simples. Donc une des méthodes les plus utilisée en
+
+0:59:32.430,0:59:35.820
+d'apprentissage automatique moderne ne fonctionne pas dans beaucoup de
+
+0:59:35.820,0:59:40.740
+situations, ce qui n’ai pas satisfaisant. C'est une sorte de question de recherche en cours.
+
+0:59:40.740,0:59:44.670
+Trouver la meilleure façon de régler ce problème. Je ne pense pas qu'il suffise de 
+
+0:59:44.670,0:59:47.160
+modifier un peu Adam, d'essayer de le réparer. Je pense qu'il a d'autres
+
+0:59:47.160,0:59:52.620
+problèmes fondamentaux, mais je n'entrerai pas dans les détails. Il y a des
+
+0:59:52.620,0:59:56.460
+problèmes pratiques dont il faut parler. Adam est parfois connu pour donner
+
+0:59:56.460,1:00:01.140
+la pire erreur de généralisation. Je pense que Yann a parlé en détail de
+
+1:00:01.140,1:00:08.730
+l’erreur de généralisation. Dois-je la passer en revue ? L’erreur de généralisation
+
+1:00:08.730,1:00:14.100
+est l’erreur sur des données qui n’ont pas servies à l’entraînement de votre modèle. Donc vos réseaux sont
+
+1:00:14.100,1:00:17.370
+très fortement paramétrés, sur-paramétrés et si vous les entraînez à avoir
+
+1:00:17.370,1:00:22.200
+une perte nulle sur les données d’entraînement, il n’aura pas une perte nulle sur les autres
+
+1:00:22.200,1:00:27.240
+points de données qu'il n'a jamais vus auparavant. Cette erreur de généralisation est
+
+1:00:27.240,1:00:32.310
+cette erreur. La meilleure chose que nous pouvons faire est de minimiser la perte sur les données que
+
+1:00:32.310,1:00:37.080
+nous avons. Mais parfois c'est sous-optimal. Il s'avère que lorsque vous utilisez Adam, c'est
+
+1:00:37.080,1:00:40.860
+assez courant, notamment sur les problèmes d'image où vous obtenez le plus
+
+1:00:40.860,1:00:46.140
+erreur de généralisation que lorsque vous utilisez la SGD. Les gens attribuent cela à un tout
+
+1:00:46.140,1:00:50.400
+un tas de choses différentes. Il peut s'agir de trouver de mauvais minima locaux comme j’ai
+
+1:00:50.400,1:00:54.180
+mentionné avant, ceux qui sont plus petits. Il est un peu regrettable que
+
+1:00:54.180,1:00:57.840
+plus votre méthode d'optimisation est performante, plus elle a de chances de toucher les petits
+
+1:00:57.840,1:01:02.460
+minima locaux car ils sont plus proches de l'endroit où vous vous trouvez. C'est en quelque sorte
+
+1:01:02.460,1:01:06.510
+l'objectif d'une méthode d'optimisation : vous trouver les minima les plus proches en un sens,
+
+1:01:06.510,1:01:10.620
+ces méthodes d'optimisation locale que nous utilisons. Mais il y a tout un tas d'autres
+
+1:01:10.620,1:01:16.950
+raisons que vous pouvez lui attribuer. Il y a moins de bruit dans Adam peut-être. Il pourrait s'agir
+
+1:01:16.950,1:01:20.100
+d'une certaine structure. Peut-être que ces méthodes où vous redimensionnez
+
+1:01:20.100,1:01:23.070
+un espace comme celui-ci ont ce problème fondamental où ils donnent plus de
+
+1:01:23.070,1:01:26.430
+généralisation. Nous ne comprenons pas vraiment ça, mais il est important de
+
+1:01:26.430,1:01:30.390
+savoir qu'il peut y avoir un problème dans certains cas. Ce n’est pas de dire
+
+1:01:30.390,1:01:33.450
+que ça donne d'horribles performances. Vous aurez quand même un assez bon réseau qui fonctionne à
+
+1:01:33.450,1:01:37.200
+la fin. Ce que je peux vous dire, c’est que les modèles linguistiques que nous avons entraînés à
+
+1:01:37.200,1:01:41.890
+Facebook utilisent des méthodes comme Adam ou Adam lui-même. Ils donnent
+
+1:01:41.890,1:01:46.960
+de bien meilleurs résultats que si vous utilisez une SGD. Il y a une sorte de petite chose qui
+
+1:01:46.960,1:01:51.490
+ne vous affectera pas du tout, je m'y attendais, mais avec Adam, vous devez maintenir ces
+
+1:01:51.490,1:01:56.410
+trois tampons là où avec SGD vous avez deux tampons de paramètres. Cela
+
+1:01:56.410,1:01:59.230
+n’importe pas sauf quand on entraîne un modèle qui fait 12 Go. Là ça devient
+
+1:01:59.230,1:02:02.790
+vraiment un problème. Je ne pense pas que vous rencontrerez cela dans la pratique.
+
+1:02:02.790,1:02:06.280
+Et il y a sûrement un peu de doute donc il faut tuner deux paramètres au lieu d’un.
+
+1:02:06.280,1:02:13.060
+Donc oui c'est un conseil pratique d’utiliser Adam ou la SGD.
+
+1:02:13.060,1:02:18.220
+Aussi une sorte de chose essentielle. Oh désolé, vous avez une question ? [Question coupée]
+
+1:02:18.220,1:02:22.600
+Vous avez tout à fait raison mais, en général… La question était pourquoi
+
+1:02:22.600,1:02:28.000
+utiliser un petit ε dans le dénominateur résout l’explosion ? 
+
+1:02:28.000,1:02:32.440
+si le numérateur est égal à environ un, diviser par 10^-7
+
+1:02:32.440,1:02:37.900
+pourrait être catastrophique. C'est une question légitime, mais en général
+
+1:02:37.900,1:02:45.250
+pour que le tampon v ait de très petites valeurs, le gradient doit aussi
+
+1:02:45.250,1:02:48.340
+avoir eu de très petites valeurs. Vous pouvez le constater à la façon dont 
+
+1:02:48.340,1:02:53.110
+les moyennes mobiles exponentielles sont mises à jour. Donc en fait ce n'est pas un problème dans la pratique.
+
+1:02:53.110,1:02:56.860
+Quand ce v est incroyablement petit, momemtum est également très faible
+
+1:02:56.860,1:03:01.180
+et quand vous divisez une petite chose par une petite chose, vous n'avez pas une explosion. [Question coupée]
+
+1:03:01.180,1:03:08.050
+Donc la question est de savoir si j’exécute une SGD et Adam séparément au même
+
+1:03:08.050,1:03:11.860
+moment, lequel fonctionne le mieux. En fait, c'est à peu près ce que nous faisons
+
+1:03:11.860,1:03:14.620
+car nous avons beaucoup d'ordinateurs. Nous avons un ordinateur qui exécute SGD,
+
+1:03:14.620,1:03:17.890
+un ordinateur qui exécute Adam et regardons lequel fonctionne le mieux. Pour un problème donné, 
+
+1:03:17.890,1:03:21.730
+nous savons à peu prêt lequel est le meilleur choix. Pour quelque problème que ce soit
+
+1:03:21.730,1:03:24.460
+que vous ayez, peut-être que vous pouvez essayer les deux. Cela dépend de la durée que cela 
+
+1:03:24.460,1:03:27.940
+prend à entraîner. Je ne sais pas exactement ce que vous allez faire en 
+
+1:03:27.940,1:03:31.150
+termes de pratique dans ce cours. Mais c’est certainement une manière légitime de faire ça.
+
+1:03:31.150,1:03:35.020
+En fait, certaines personnes utilisent la SGD au début et passent ensuite à Adam à la fin.
+
+1:03:35.020,1:03:39.430
+C'est certainement une bonne approche. Elle ne fait que compliquer les choses et
+
+1:03:39.430,1:03:44.740
+la complexité doit être évitée si possible. [Question coupée] Oui, c'est l'une de ces questions qui restent profondément sans réponse.
+
+1:03:44.740,1:03:48.400
+Donc la question était de savoir si nous devons tester de nombreuses
+
+1:03:48.400,1:03:51.850
+initialisations et voir quelle est la meilleure solution.
+
+1:03:51.850,1:03:54.990
+C'est le cas du petit réseau neuronal où vous obtenez
+
+1:03:54.990,1:03:59.160
+différentes solutions en fonction de votre initialisation. Il y a une
+
+1:03:59.160,1:04:02.369
+propriété remarquable des grands réseaux que nous utilisons en ce moment,
+
+1:04:02.369,1:04:07.349
+ceux à l’état de l’art. Comme vous utilisez toujours une initialisation aléatoire similaire en terme
+
+1:04:07.349,1:04:11.400
+de variance de l'initialisation, vous vous retrouverez pratiquement avec
+
+1:04:11.400,1:04:16.380
+des solutions de qualité similaires et ce n'est pas bien compris. Donc oui c'est tout à fait
+
+1:04:16.380,1:04:19.319
+remarquable que votre réseau de neurones puisse s'entraîner sur 300 époques 
+
+1:04:19.319,1:04:23.550
+et vous donne une erreur de test qui est presque exactement la même que celle 
+
+1:04:23.550,1:04:26.220
+vous obtenez avec une initialisation complètement différente. Nous ne comprenons pas cela.
+
+1:04:26.220,1:04:31.800
+Si vous avez vraiment besoin de réaliser de minuscules gains de performance, 
+
+1:04:31.800,1:04:36.150
+vous pouvez en faire fonctionner plusieurs et choisir le meilleur. Il semble
+
+1:04:36.150,1:04:39.180
+que plus votre réseau est grand et plus votre problème est difficile et moins vous obtenez de gains.
+
+1:04:39.180,1:04:44.190
+[Question coupée] La question était de savoir si nous avions trois tampons 
+
+1:04:44.190,1:04:49.470
+pour chaque poids. La réponse est oui. Donc en gros en mémoire, nous
+
+1:04:49.470,1:04:53.160
+disposons d'une copie de la même taille que nos poids. Donc notre poids sera
+
+1:04:53.160,1:04:55.920
+tout un tas de tenseurs séparés, nos tenseurs de momemtum,
+
+1:04:55.920,1:05:01.849
+et tout un tas d'autres tenseurs qui sont les tenseurs du second moment.
+
+1:05:01.849,1:05:09.960
+Donc les couches de normalisation. C’est une idée intelligente.
+
+1:05:09.960,1:05:14.369
+Pourquoi avoir essayer de trouver un meilleur algorithme d’optimisation
+
+1:05:14.369,1:05:20.540
+quand nous pouvons simplement proposer un meilleur réseau. En général dans 
+
+1:05:20.960,1:05:24.960
+les réseaux de neurones modernes, nous modifions le réseau en y ajoutant
+
+1:05:24.960,1:05:32.280
+des couches supplémentaires entre celles existantes. L'objectif de ces couches est d'améliorer
+
+1:05:32.280,1:05:36.450
+l'optimisation et la généralisation des performances du réseau. La manière
+
+1:05:36.450,1:05:39.059
+de faire cela peut se faire de différentes façons. Laissez-moi vous donner un exemple.
+
+1:05:39.059,1:05:44.430
+Nous prenons une sorte de combinaisons standard, comme vous le savez dans
+
+1:05:44.430,1:05:48.930
+les réseaux modernes, nous alternons généralement des opérations linéaires
+
+1:05:48.930,1:05:52.319
+avec des opérations non linéaires que j’appelle ici fonctions d'activation. 
+
+1:05:52.319,1:05:56.069
+Nous alternons linéaire/non linéaire, linéaire/non linéaire. Ce que nous pouvons faire c'est
+
+1:05:56.069,1:06:01.819
+placer ces couches de normalisation soit entre linéaire/non linéaire, soit
+
+1:06:01.819,1:06:11.009
+avant. Donc dans ce cas, nous utilisons… C’est le type de structure que nous
+
+1:06:11.009,1:06:14.369
+avons dans de véritables réseaux où nous avons une convolution
+
+1:06:14.369,1:06:18.240
+ou des opérations linéaires suivies d'une normalisation par batchs. 
+
+1:06:18.240,1:06:20.789
+C’est un type de normalisation que je détaillerai dans une minute. Suivi
+
+1:06:20.789,1:06:28.140
+par une ReLU qui est actuellement la fonction d'activation la plus populaire. 
+
+1:06:28.140,1:06:31.230
+Nous plaçons cette normalisation entre ces couches existantes et ce que je 
+
+1:06:31.230,1:06:35.940
+veux rendre clair c’est que ces couches de normalisation affectent le flux de données. Donc elles
+
+1:06:35.940,1:06:39.150
+modifient les données qui circulent mais ne changent pas le pouvoir du réseau
+
+1:06:39.150,1:06:43.380
+au sens que vous pouvez mettre en place les poids dans le réseau d’une certaine
+
+1:06:43.380,1:06:46.769
+manière qui donnera toujours la sortie que vous aviez dans un réseau non
+
+1:06:46.769,1:06:50.220
+normalisé. Donc les couches de normalisation… Avec cela vous ne rendez pas
+
+1:06:50.220,1:06:53.670
+le fonctionnent mieux, elles l'améliorent d'autres façons. Normalement lorsque nous ajoutons des
+
+1:06:53.670,1:06:57.660
+choses à un réseau, l'objectif est de rendre le réseau neuronal plus puissant.
+
+1:06:57.660,1:07:01.740
+La couche de normalisation peut également être postérieure à l'activation ou antérieure à la couche linéaire
+
+1:07:01.740,1:07:05.009
+car nous faisons tout cela dans l'ordre, beaucoup de choses sont équivalentes.
+
+1:07:05.009,1:07:11.400
+Y a-t-il des questions ici ? [Question coupée] Oui c'est certainement vrai
+
+1:07:11.400,1:07:16.140
+mais nous voulons pas ça. Nous voulons que la ReLU nous fournisse certaines des données mais
+
+1:07:16.140,1:07:20.009
+pas trop. Ce n'est pas non plus tout à fait exact non plus car les couches de normalisation
+
+1:07:20.009,1:07:24.989
+peuvent également mettre à l'échelle et expédier les données. Ce n’est donc pas nécessairement ainsi même si
+
+1:07:24.989,1:07:28.739
+c'est certainement à l'initialisation qu'elles ne font pas cette mise à l'échelle. Donc typiquement
+
+1:07:28.739,1:07:32.460
+coupe la moitié des données. En fait si vous essayez de faire une analyse théorique de ça,
+
+1:07:32.460,1:07:37.470
+c’est très pratique que cela coupe la moitié des données. Donc la structure de ces
+
+1:07:37.470,1:07:42.239
+couches de normalisation. Elles font toutes à peu près le même type d'opération.
+
+1:07:42.239,1:07:47.640
+J’utilise une sorte de notation générique ici. Imaginez que x est une entrée
+
+1:07:47.640,1:07:54.930
+à la couche de normalisation et y est une sortie. Vous utilisez une opération
+
+1:07:54.930,1:08:00.119
+« de blanchiment » ou de normalisation où vous soustrayez une estimation de
+
+1:08:00.119,1:08:05.190
+la moyenne des données et divisez par une estimation de l’écart type. 
+
+1:08:05.190,1:08:10.259
+Rappelez-vous que j'ai déjà mentionné que nous voulons que le pouvoir
+
+1:08:10.259,1:08:12.630
+de représentation du réseau reste le même. Ce que
+
+1:08:12.630,1:08:17.430
+nous faisons pour nous assurer de ça, c’est que nous multiplions par un a 
+
+1:08:17.430,1:08:22.050
+et nous ajoutons un b. Donc c’est pour que la couche puisse toujours avoir
+
+1:08:22.050,1:08:27.120
+des valeurs de sortie sur une plage particulière. Si nous avons toujours toutes les couches
+
+1:08:27.120,1:08:30.840
+en blanc et les données, le réseau ne peut pas produire une valeur de sortie d’un million ou
+
+1:08:30.840,1:08:35.370
+quelque chose comme ça. [Se reprend plusieurs ce qui n’est pas très clair].
+
+1:08:35.370,1:08:38.520
+Cela pèserait très lourd sur la queue de la distribution. Donc
+
+1:08:38.520,1:08:41.850
+cela permet à nos couches de produire essentiellement des choses qui sont
+
+1:08:41.850,1:08:49.200
+dans la même plage qu'auparavant. [Question coupée] Les couches de normalisation ont des paramètres et
+
+1:08:49.200,1:08:51.900
+le réseau est un peu plus compliqué au sens où il a plus de paramètres. Il
+
+1:08:51.900,1:08:56.010
+il s'agit généralement d'un très petit nombre de paramètres comme l'erreur 
+
+1:08:56.010,1:09:04.290
+d'arrondi dans le compte des paramètres du réseau. Donc la complexité de ça
+
+1:09:04.290,1:09:06.840
+est que c’est un peu vague sur la façon dont vous calculez la moyenne et l’écart-type.
+
+1:09:06.840,1:09:10.170
+La raison pour laquelle je fais cela est que toutes les méthodes calculent d’une manière différente.
+
+1:09:10.170,1:09:18.210
+Je vais détailler ça dans une deuxième. Oui une question ? [Question]
+
+1:09:18.210,1:09:24.630
+b est juste un paramètre de décalage pour que les données puissent avoir une moyenne non nulle. Nous voulons que
+
+1:09:24.630,1:09:28.470
+la couche soit capable de produire des sorties avec une moyenne non nulle. 
+
+1:09:28.470,1:09:30.570
+Donc ne nous pouvons pas juste soustraire la moyenne. 
+
+1:09:30.570,1:09:34.950
+Cela ajoute un pouvoir de représentation à la couche. [Question coupée] La 
+
+1:09:34.950,1:09:40.110
+question est : ces paramètres a et b n’inversent t’ils pas la normalisation ?
+
+1:09:40.110,1:09:44.730
+Il arrive souvent que ce soit le cas. Qu’ils fassent quelque chose de similaire. Mais qu'ils se déplacent à
+
+1:09:44.730,1:09:48.750
+différentes échelles de temps donc entre les étapes ou entre les évaluations votre réseau,
+
+1:09:48.750,1:09:52.410
+la moyenne et la variance peuvent se déplacer de manière assez importante en fonction des
+
+1:09:52.410,1:09:55.320
+données que vous donnez. Mais ces paramètres a et b sont assez stables. Ils se déplacent
+
+1:09:55.320,1:10:01.260
+lentement, au fur et à mesure que vous les apprenez. Donc parce qu'ils sont plus stables, cela a des propriétés bénéfiques
+
+1:10:01.260,1:10:04.530
+que je décrirai un peu plus tard. Pour l’instant je veux parler
+
+1:10:04.530,1:10:08.610
+de savoir exactement comment vous normalisez les données. C'est le point crucial.
+
+1:10:08.610,1:10:11.760
+La première de ces méthodes a donc été la batch-norme. C’est une sorte de
+
+1:10:11.760,1:10:16.429
+de normalisation bizarre qui, je pense, est une idée horrible mais fonctionne
+
+1:10:16.429,1:10:22.460
+malheureusement fantastiquement bien. Donc cela normalise par batchs. Nous
+
+1:10:22.460,1:10:28.370
+voulons des informations d'un certain canal. Pour un ConvNet, le canal
+
+1:10:28.370,1:10:32.000
+est une de ces images latentes que vous avez dans votre réseau.
+
+1:10:32.000,1:10:34.610
+Dans des parties du réseau vous avez des données qui ne ressemble pas
+
+1:10:34.610,1:10:37.070
+vraiment à une image si vous les regardez. Mais cela une forme d’une image,
+
+1:10:37.070,1:10:41.000
+peu importe. C'est un canal. Donc nous voulons calculer une moyenne sur ce
+
+1:10:41.000,1:10:47.239
+canal mais nous n'avons qu'une petite quantité de données qui y est présente.
+
+1:10:47.239,1:10:51.380
+C'est en gros la hauteur multipliée par la largeur si c'est une image. Il
+
+1:10:51.380,1:10:56.000
+s'avère que ce n'est pas assez de données pour obtenir de bonnes estimations de ces moyennes et
+
+1:10:56.000,1:10:58.969
+des paramètres de variance. Donc ce que fait la batch-norme, c'est qu'elle 
+
+1:10:58.969,1:11:05.570
+prend une estimation de la moyenne et de la variance sur l'ensemble des cas de votre mini batch.
+
+1:11:05.570,1:11:09.890
+C'est ce qui divise le bleu. La raison pour laquelle je n'aime pas ça, c'est que ce n'est pas
+
+1:11:09.890,1:11:12.830
+plus long que la SGD si vous utilisez la normalisation par batchs. Cela 
+
+1:11:12.830,1:11:19.429
+brise donc toute la théorie sur laquelle je travaille pour gagner ma vie. [rires] Je préfère d’autres
+
+1:11:19.429,1:11:24.409
+stratégies de normalisation. Assez peu de temps après la batch-norme, les 
+
+1:11:24.409,1:11:27.409
+gens ont essayé de normaliser par toutes les autres combinaisons possibles de choses pouvant
+
+1:11:27.409,1:11:31.699
+normaliser et il s'avère que les trois suivantes marchent : instance-norme et groupe-norme.
+
+1:11:31.699,1:11:37.370
+Dans la normalisation par couche dans ce diagramme, la moyenne est calculée sur tous les canaux
+
+1:11:37.370,1:11:43.820
+et sur la hauteur et la largeur. Cela ne fonctionne pas pour tous les problèmes. Je
+
+1:11:43.820,1:11:47.000
+ne la recommande que pour un problème où on sait qu'elle fonctionne déjà.
+
+1:11:47.000,1:11:49.940
+Les gens l'utilisent généralement dans ce cas-là. Donc regardez ce que les
+
+1:11:49.940,1:11:53.989
+auteurs utilisent dans leur réseau pour savoir si c'est une bonne idée ou non. Cela dépendra. 
+
+1:11:53.989,1:11:57.140
+L’instance-norm est un très utilisé dans les modèles de langage modernes.
+
+1:11:57.140,1:12:03.380
+Vous ne faites plus de moyenne sur le batch ce qui est bien. Je ne détaillerais
+
+1:12:03.380,1:12:07.310
+pas plus que ça. Ce que je préfère utiliser en pratique 
+
+1:12:07.310,1:12:12.440
+est la groupe-norm. Donc ici nous faisons la moyenne sur un groupe
+
+1:12:12.440,1:12:16.219
+de canaux. Ce groupe est choisi arbitrairement et fixé au début.
+
+1:12:16.219,1:12:20.090
+Donc généralement nous regroupons les choses numériquement. Donc les canaux
+
+1:12:20.090,1:12:23.580
+0 à 10 serait un canal de groupe. Ceux de 10 à 20 un autre.
+
+1:12:23.580,1:12:31.110
+Assure vous que cela ne se chevauche pas. Il faut des groupes disjoints. La
+
+1:12:31.110,1:12:34.560
+taille de ces groupes est un paramètre que vous devez régler. Nous utilisons
+
+1:12:34.560,1:12:39.150
+32 dans la pratique. Vous pouvez tuner ça. Vous faites cale car il n’y a
+
+1:12:39.150,1:12:42.600
+assez d'informations sur un seul canal et utiliser tous les canaux est trop.
+
+1:12:42.600,1:12:46.170
+Donc vous utilisez juste quelque chose entre les deux. C'est vraiment une idée assez simple.
+
+1:12:46.170,1:12:50.790
+Il s'avère que cette groupe-norme fonctionne souvent mieux que la batch-norme sur beaucoup de
+
+1:12:50.790,1:12:55.410
+problèmes. Cela signifie que la théorie sur la SGD sur laquelle je travaille est toujours
+
+1:12:55.410,1:12:57.890
+donc j'aime ça. [rires] Donc pourquoi la normalisation aide ? C’est un point
+
+1:13:02.190,1:13:06.330
+de conflits. Ces dernières années, plusieurs documents ont été publiés
+
+1:13:06.330,1:13:08.790
+sur ce sujet, malheureusement les documents n’était pas d'accord entre eux
+
+1:13:08.790,1:13:13.590
+sur les raisons de son fonctionnement. Ils ont tous des explications complètement différentes. Cependant il y a
+
+1:13:13.590,1:13:16.260
+des choses qui se passent vraiment. Nous pouvons dire avec certitude que le
+
+1:13:16.260,1:13:24.120
+réseau semble être plus facile à optimiser. C'est-à-dire que vous pouvez 
+
+1:13:24.120,1:13:28.140
+utiliser de grands taux d'apprentissage dans de meilleures conditions et 
+
+1:13:28.140,1:13:31.590
+obtenez une convergence plus rapide. Cela semble être le cas quand vous
+
+1:13:31.590,1:13:35.030
+utilisez des couches de normalisation. Un autre facteur qui est un peu
+
+1:13:38.070,1:13:39.989
+contesté, mais que je pense être raisonnablement bien établi est que
+
+1:13:39.989,1:13:44.489
+vous obtenez du bruit dans les données qui passent par votre réseau lorsque vous utilisez la
+
+1:13:44.489,1:13:49.940
+normalisation. Dans la batch-norme, ce bruit provient d'autres instances dans le batch
+
+1:13:49.940,1:13:53.969
+car c'est aléatoire alors que les instances dans votre batch, quand vous
+
+1:13:53.969,1:13:57.239
+calculez la moyenne est bruitée. Ce bruit est soustrait 
+
+1:13:57.239,1:14:01.469
+de votre poids quand vous faites l’opération de
+
+1:14:01.469,1:14:06.050
+de normalisation. Donc ce bruit est en fait potentiellement utile pour la
+
+1:14:06.050,1:14:11.790
+généralisation dans votre réseau. Il y a beaucoup de papiers sur l’injection
+
+1:14:11.790,1:14:15.180
+de bruit dans le réseau pour aider à la généralisation. Donc ce n'est pas 
+
+1:14:15.180,1:14:20.370
+une idée folle que ce bruit peut être utile. En termes de considération
+
+1:14:20.370,1:14:24.030
+pratique, cette normalisation rend l'initialisation du poids que vous utilisez
+
+1:14:24.030,1:14:28.260
+beaucoup moins importante. C'était une sorte d'art noir de sélectionner l'initialisation de
+
+1:14:28.260,1:14:32.460
+votre réseau et les personnes qui ont de très bons modèles, sont celles
+
+1:14:32.460,1:14:35.340
+qui sont vraiment bonnes pour tuner leur initialisation. Et c'est juste
+
+1:14:35.340,1:14:39.540
+moins le cas maintenant lorsque nous utilisons des couches de normalisation. Cela 
+
+1:14:39.540,1:14:45.930
+donne aussi le bénéfice de pouvoir assembler des couches en toute impunité. 
+
+1:14:45.930,1:14:49.050
+Si vous vous contentez de relier entre elles deux couches possibles dans votre
+
+1:14:49.050,1:14:52.740
+réseau, cela ne fonctionnerait probablement pas. Mais si nous utilisons des couches de normalisation cela va
+
+1:14:52.740,1:14:57.900
+probablement fonctionner. Même si c'est une idée horrible. Il y a tout un
+
+1:14:57.900,1:15:02.310
+domaine de la recherche où les gens construisent des architectures où ils associent 
+
+1:15:02.310,1:15:05.940
+juste au hasard des blocs et essayent de les faire fonctionner ensemble.  
+
+1:15:05.940,1:15:09.540
+Cela n'était pas vraiment possible auparavant, car cela se traduisait généralement par un
+
+1:15:09.540,1:15:14.010
+réseau mal conditionné que vous ne pouviez pas entraîner. Avec une normalisation typiquement
+
+1:15:14.010,1:15:19.590
+vous pouvez entraîner. Quelques considérations pratiques. Le papier sur la batch-norme.
+
+1:15:19.590,1:15:23.310
+L'une des raisons pour lesquelles cela n'a pas été inventé plus tôt est dû 
+
+1:15:23.310,1:15:27.480
+à chose non évidente qui est que vous devez rétropropager le calcul de la
+
+1:15:27.480,1:15:32.160
+moyenne et de l’écart-type. Si vous ne faites pas cela tout explose. Vous 
+
+1:15:32.160,1:15:35.190
+pourrez avoir à le faire vous-même dans le cadre d’une implémentation.
+
+1:15:35.190,1:15:42.000
+[Question coupée] Je n'ai pas l'expertise pour répondre. J'ai l'impression
+
+1:15:42.000,1:15:46.060
+qu'il s'agit parfois d'une méthode que les gens aiment. 
+
+1:15:46.060,1:15:49.710
+En fait la taille de la groupe-norme
+
+1:15:49.710,1:15:53.640
+couvre les deux, donc je serais sûr que vous pourriez probablement obtenir la
+
+1:15:53.640,1:15:56.640
+même performance en utilisant la groupe-norme avec une taille de groupe choisie
+
+1:15:56.640,1:16:00.980
+soigneusement. [Question coupée] Le choix de la batch-norme affecte la
+
+1:16:00.980,1:16:06.720
+Parallélisation. Donc l’implémentation dans votre librairie CUDA, librairie 
+
+1:16:06.720,1:16:10.380
+CPU est assez efficace pour chacune d'entre elles, mais c'est compliqué quand
+
+1:16:10.380,1:16:14.820
+vous étalez vos calculs sur plusieurs machines. Vous devez en quelque sorte
+
+1:16:14.820,1:16:18.630
+synchroniser ces choses et la batch-norme est un peu pénible car
+
+1:16:18.630,1:16:23.790
+vous devez calculer une moyenne sur toutes les machines et agréger.
+
+1:16:23.790,1:16:27.540
+Alors que si vous utilisez la groupe-norme, chaque instance est sur une
+
+1:16:27.540,1:16:30.450
+machine différente. Vous pouvez simplement calculer la norme. Pour autre 
+
+1:16:30.450,1:16:34.350
+chose que ces trois, il s'agit d'une normalisation distincte pour chaque cas. 
+
+1:16:34.350,1:16:37.560
+Cela ne dépend pas des autres instances du batch, donc c'est plus agréable 
+
+1:16:37.560,1:16:40.570
+quand vous êtes la distribution. Quand les gens utilisent la batch-
+
+1:16:40.570,1:16:45.100
+norme sur un cluster ils ne synchronisent pas les statistiques entre elles, 
+
+1:16:45.100,1:16:51.250
+ce qui les rend encore moins semblables à la SGD et m’ennuie encore plus. 
+
+1:16:51.250,1:16:57.610
+La batch-norme a beaucoup de momemtum, pas dans le sens de l'optimisation
+
+1:16:57.610,1:17:01.300
+mais dans le sens de l'esprit des gens. Elle est très utilisée pour cette raison
+
+1:17:01.300,1:17:05.860
+mais je recommanderais plutôt la groupe-norme. Il y a des sortes de données
+
+1:17:05.860,1:17:09.760
+techniques avec la batch-norme. Vous ne voulez pas calculer ces moyennes et 
+
+1:17:09.760,1:17:14.950
+écarts-types sur les batchs pendant le temps d'évaluation. Par temps d'évaluation je veux dire quand vous
+
+1:17:14.950,1:17:20.170
+faites fonctionner votre réseau sur la base de données de test ou quand nous l'utilisons dans le monde réel
+
+1:17:20.170,1:17:24.370
+pour certaines applications. C'est généralement dans ces situations que vous n'avez pas de batchs.
+
+1:17:24.370,1:17:29.050
+Vous avez donc besoin d'une substitution. Dans ce cas, vous pouvez calculer
+
+1:17:29.050,1:17:33.100
+une moyenne mobile exponentielle (MME) sur ces moyennes et écarts-types 
+
+1:17:33.100,1:17:37.930
+comme nous l'avons déjà dit. Vous vous demandez peut-être pourquoi
+
+1:17:37.930,1:17:41.260
+n'utilisons-nous pas une MME dans l’implémentation de la batch-norme ?
+
+1:17:41.260,1:17:44.860
+C'est parce que cela ne fonctionne pas. Nous pensons que c'est une idée très raisonnable et
+
+1:17:44.860,1:17:48.880
+des gens ont exploré cela de manière assez approfondie, mais cela ne fonctionne pas. [Question coupée]
+
+1:17:48.880,1:17:52.900
+C'est tout à fait crucial. Des gens ont essayé de normaliser les choses dans les réseaux de neurones
+
+1:17:52.900,1:17:55.480
+avant l'invention de la batch-norme. Cependant ils ont toujours fait
+
+1:17:55.480,1:17:59.380
+l'erreur de ne pas rétropropager la moyenne et l'écart-type et la raison
+
+1:17:59.380,1:18:02.290
+pour laquelle ils n'ont pas fait cela est que les calculs sont vraiment délicats.
+
+1:18:02.290,1:18:05.650
+Si vous essayez d’implémenter ça vous-même, cela sera probablement erroné. 
+
+1:18:05.650,1:18:09.460
+Maintenant nous avons PyTorch qui calcule les gradients pour vous dans toutes les situations.
+
+1:18:09.460,1:18:12.850
+Vous pourrez effectivement le faire en pratique, juste un peu et seulement 
+
+1:18:12.850,1:18:16.780
+un peu car c'est étonnamment difficile. [Question coupée] La question est :
+
+1:18:16.780,1:18:21.070
+il y a une différence si nous appliquons la normalisation avant ou après 
+
+1:18:21.070,1:18:25.690
+la non-linéarité ? Il y aura une petite différence dans la performance de
+
+1:18:25.690,1:18:28.930
+votre réseau. Je ne peux pas vous dire qui est le meilleur car cela dépend
+
+1:18:28.930,1:18:32.110
+de la situation donnée. Dans une situation l’une fonctionne un peu mieux et dans une autre 
+
+1:18:32.110,1:18:35.350
+situation ce sera l'autre. Ce que je peux vous dire, c'est la façon dont je le dessine ici
+
+1:18:35.350,1:18:39.100
+est ce qui est utilisé dans l’implémentation PyTorch de ResNet et de la 
+
+1:18:39.100,1:18:43.330
+plupart des implémentations de ResNets. Je pense que l’on utiliserait 
+
+1:18:43.330,1:18:49.270
+l'autre forme si elle était meilleure. Cela dépend probablement du problème.
+
+1:18:49.270,1:18:51.460
+C'est une autre de ces choses où peut-être il
+
+1:18:51.460,1:18:55.420
+n’y a pas de réponse correcte. C'est juste le hasard qui fonctionne mieux. Je ne sais pas.
+
+1:18:55.420,1:19:03.190
+D’autres questions sur ce sujet avant de passer à la suite ? [Question coupée] Vous avez besoin de plus
+
+1:19:03.190,1:19:06.850
+de données pour obtenir des estimations précises de la moyenne et de l'écart-type.
+
+1:19:06.850,1:19:10.570
+La question était de savoir pourquoi il est bon de calculer sur plusieurs canaux
+
+1:19:10.570,1:19:13.450
+plutôt qu'un canal unique. Et donc c'est parce que vous avez juste plus de données pour
+
+1:19:13.450,1:19:17.800
+faire de meilleures estimations. Mais il faut veiller à ne pas avoir trop de données
+
+1:19:17.800,1:19:21.130
+car alors vous ne comprenez pas le bruit. Enregistrer le bruit est vraiment
+
+1:19:21.130,1:19:25.300
+utile. Donc en gros, la taille du groupe dans la groupe-norme est juste un ajustement
+
+1:19:25.300,1:19:28.870
+du bruit que nous avons. [Question coupée] La question est de savoir quel est le rapport avec les
+
+1:19:28.870,1:19:32.950
+groupes de convolutions. Tout cela a été mis en place avant que les bonnes convolutions ne soient
+
+1:19:32.950,1:19:38.260
+utilisées. Cela a certainement une certaine interaction avec les groupes de convolution. Vous pouvez les utiliser
+
+1:19:38.260,1:19:41.920
+mais soyez un peu prudent. Je ne sais pas exactement ce qu’est
+
+1:19:41.920,1:19:44.800
+la bonne chose à faire dans ces cas-là. Je peux vous dire d’utiliser la
+
+1:19:44.800,1:19:48.610
+normalisation dans ces situations avec probablement la batch-norme plutôt que la groupe-norme
+
+1:19:48.610,1:19:53.260
+en raison de momemtum que j'ai mentionné, c'est juste le plus populaire. [Question coupée]
+
+1:19:53.260,1:19:56.890
+La question est de savoir s'il nous arrive d'utiliser nos instances de nos mini-batch dans la groupe-norme
+
+1:19:56.890,1:20:00.310
+ou s'agit-il toujours d'une seule instance ? Nous utilisons toujours une seule instance
+
+1:20:00.310,1:20:04.450
+car il y a beaucoup d'avantages à cela. C’est tellement plus simple à implémenter
+
+1:20:04.450,1:20:08.469
+et en théorie. Vous pouvez peut-être améliorer les choses.
+
+1:20:08.469,1:20:11.530
+Je vous parie qu'il y a un papier qui fait ça quelque part car ils ont
+
+1:20:11.530,1:20:15.190
+essayé d'avoir une combinaison de ces éléments dans la pratique. Je soupçonne que si cela avait bien fonctionné
+
+1:20:15.190,1:20:19.450
+nous l'utiliserions probablement, donc cela ne fonctionne probablement pas. 
+
+1:20:19.450,1:20:24.370
+La mort de l'optimisation. Je voulais mettre quelque chose d'un peu intéressant
+
+1:20:24.370,1:20:27.610
+car vous avez assisté à une sorte de conférence assez dense. Donc c’est
+
+1:20:27.610,1:20:31.870
+quelque chose sur lequel j'ai un peu travaillé, je pense que vous pouvez
+
+1:20:31.870,1:20:36.580
+trouver cela intéressant. Vous avez peut-être vu le comics xkcd que j'ai ici
+
+1:20:36.580,1:20:42.790
+modifié. Ce n'est pas toujours ainsi. C'est en quelque sorte le point de cela fait.
+
+1:20:42.790,1:20:46.270
+Parfois, nous pouvons simplement faire irruption dans un domaine dont nous ne savons rien et améliorer
+
+1:20:46.270,1:20:50.469
+la manière dont ils font les choses actuellement, même s'il faut être un peu prudent.
+
+1:20:50.469,1:20:53.560
+Le problème dont je veux parler est celui que Yann a dû brièvement mentionnés dans
+
+1:20:53.560,1:20:58.530
+la première conférence et dont je souhaite entrer dans les détails : la reconstruction d’une IRM.
+
+1:20:58.530,1:21:04.639
+Dans le problème de la reconstruction d’une IRM, nous prenons une donnée brute d'une machine IRM, 
+
+1:21:04.639,1:21:08.540
+une machine d'imagerie médicale et nous reconstruisons une image. Il y a
+
+1:21:08.540,1:21:12.530
+un algorithme, une pipeline au milieu qui produit l'image.
+
+1:21:12.530,1:21:17.900
+L'objectif est ici de remplacer 30 ans recherche en un
+
+1:21:17.900,1:21:21.020
+algorithme utilisable avec les réseaux de neurones. C’est ce pour quoi je
+
+1:21:21.020,1:21:27.949
+suis payé [rires] Je vais vous donner quelques détails. Ces appareils
+
+1:21:27.949,1:21:31.810
+d'IRM capturent des données dans ce qu'on appelle le domaine de Fourier.
+
+1:21:31.810,1:21:34.909
+Je sais que beaucoup d'entre vous ont fait du traitement de signal. Certains d'entre vous n'ont peut-être aucune idée de
+
+1:21:34.909,1:21:42.070
+ce que c'est. Vous n'avez pas besoin de comprendre ça pour ce problème. [Remarque d’Alfredo]
+
+1:21:44.770,1:21:49.639
+Oui vous avez peut-être vu le domaine supplémentaire dans un cas unidimensionnel.
+
+1:21:49.639,1:21:54.710
+Donc, pour la reconstruction de l’IRM, nous avons un domaine de Fourier
+
+1:21:54.710,1:21:58.340
+en 2D. Ce que vous devez savoir, c'est qu'il s'agit d'une cartographie linéaire pour aller
+
+1:21:58.340,1:22:02.389
+du domaine des fluides au domaine de l'image. C'est juste linéaire et c’est très efficace.
+
+1:22:02.389,1:22:06.350
+Pour réaliser cette cartographie, il faut littéralement des millisecondes, sur les ordinateurs modernes 
+
+1:22:06.350,1:22:09.980
+quelle que soit la taille des images. Donc linéaires et faciles à convertir entre
+
+1:22:09.980,1:22:15.619
+les deux. Les machines IRM capturent en fait soit des lignes soit des colonnes de ce
+
+1:22:15.619,1:22:20.540
+domaine de Fourier comme des échantillons. Elles sont appelées échantillon dans la littérature. Donc à chaque fois
+
+1:22:20.540,1:22:25.280
+la machine calcule un échantillon qui, toutes les quelques millisecondes, obtient une colonne
+
+1:22:25.280,1:22:28.940
+de cette image. Il s'agit techniquement d'une image à valeurs complexes
+
+1:22:28.940,1:22:33.380
+mais cela n'a pas d'importance pour la discussion. Vous pouvez imaginer que 
+
+1:22:33.380,1:22:38.300
+c'est juste une image à deux canaux. Si vous imaginez un canal réel et un imaginaire, pensez juste
+
+1:22:38.300,1:22:42.830
+à eux en tant que canaux de couleur. Le problème que nous voulons résoudre est
+
+1:22:42.830,1:22:48.800
+l'accélération de l'IRM. Accélération dans le sens d'une plus grande rapidité. Donc nous voulons que les machines
+
+1:22:48.800,1:22:53.830
+tournent plus rapidement et produisent des images de qualité identique.
+
+1:22:55.400,1:23:00.050
+L'un des moyens les plus efficaces pour y parvenir est de ne pas capturer
+
+1:23:00.050,1:23:05.540
+toutes les colonnes. Nous en sautons certaines au hasard. C'est utile dans
+
+1:23:05.540,1:23:09.320
+la pratique d’aussi capturer certaines des colonnes du milieu car elles contiennent
+
+1:23:09.320,1:23:14.150
+une grande partie des informations, mais en dehors du milieu, nous ne faisons que des sélections au hasard.
+
+1:23:14.150,1:23:16.699
+Nous ne pouvons plus nous contenter d'une belle opération linéaire.
+
+1:23:16.699,1:23:20.270
+Le diagramme de droite est le résultat de cette opération linéaire appliquée
+
+1:23:20.270,1:23:23.810
+à ces données. Cela ne donne pas [???]. C’est juste un peu plus
+
+1:23:23.810,1:23:27.100
+intelligent. Des questions à ce sujet avant de passer à la suite ? [Question coupée]
+
+1:23:27.100,1:23:35.030
+Il s'agit des dimensions de fréquence et de phase. Donc dans le cas de
+
+1:23:35.030,1:23:38.510
+ce diagramme, il comporte une dimension de fréquence et une dimension de phase. La valeur
+
+1:23:38.510,1:23:44.390
+est l'amplitude d'une onde sinusoïdale ayant cette fréquence et cette phase. Donc si vous
+
+1:23:44.390,1:23:48.980
+additionnez toutes les ondes sinusoïdales et les faites osciller avec les
+
+1:23:48.980,1:23:54.620
+poids de cette image, vous obtenez l'image originale. C'est un peu plus
+
+1:23:54.620,1:23:58.429
+compliqué car c’est en deux dimensions et avec les ondes sinusoïdales vous
+
+1:23:58.429,1:24:02.030
+devez être un peu prudent. Mais en gros, chaque pixel est de la taille d'une
+
+1:24:02.030,1:24:06.230
+sinusoïdale. Si vous voulez comparer à une analogie 1D,
+
+1:24:06.230,1:24:11.960
+vous n'aurez que des fréquences. Donc l'intensité du pixel est la force de cette
+
+1:24:11.960,1:24:16.580
+fréquence. Si vous avez une note de musique, disons une note de piano, avec un do majeur comme l'une 
+
+1:24:16.580,1:24:19.340
+des fréquences, cela serait un pixel. Cette image serait la signature de
+
+1:24:19.340,1:24:24.140
+la fréquence. Une autre pourrait être un [???] ou quelque chose comme ça.  L'amplitude
+
+1:24:24.140,1:24:28.370
+de ça  est juste la force sur laquelle ils appuient sur la touche du piano. Donc vous avez une information
+
+1:24:28.370,1:24:34.370
+de fréquence. La vidéo ne fonctionne pas. Une des plus grandes percées
+
+1:24:34.370,1:24:38.750
+dans les mathématiques théoriques ont longtemps été l’invention de la
+
+1:24:38.750,1:24:41.690
+détection comprimée. Je suis sûr que certains d'entre vous ont entendu parler de la détection comprimée.
+
+1:24:41.690,1:24:45.710
+Levez la main ceux qui connaissent. Certains d'entre vous en particulier
+
+1:24:45.710,1:24:48.980
+dans les sciences mathématiques en sont conscients. Il y a
+
+1:24:48.980,1:24:53.330
+ce phénoménal papier qui a montré que nous pouvons en théorie obtenir
+
+1:24:53.330,1:24:57.770
+une reconstruction parfaite à partir de ces sous-échantillons mesurés.
+
+1:24:57.770,1:25:02.080
+Nous avons des exigences pour que cela fonctionne. Les exigences
+
+1:25:02.080,1:25:06.010
+sont nous devons procéder à un échantillonnage aléatoire. En fait c’est un
+
+1:25:06.010,1:25:10.150
+peu plus faible : il faut échantillonner de manière incohérente. En pratique
+
+1:25:10.150,1:25:14.710
+tout le monde fait des prélèvements au hasard. Donc c'est essentiellement la même chose.
+
+1:25:14.710,1:25:18.910
+Nous faisons un échantillonnage aléatoire des colonnes, mais à l'intérieur des colonnes, nous ne faisons pas d'échantillonnage aléatoire.
+
+1:25:18.910,1:25:22.330
+La raison étant que ce n'est pas plus rapide dans la machine. La machine 
+
+1:25:22.330,1:25:25.930
+peut capturer une colonne aussi rapidement que vous pouvez capturer une demi-colonne. Donc nous
+
+1:25:25.930,1:25:29.350
+capturons une colonne entière. Donc cela ne rend plus les choses aléatoires.
+
+1:25:29.350,1:25:33.760
+L’autre problème est que les hypothèses de cette théorie de la
+
+1:25:33.760,1:25:36.850
+détection comprimée sont violées par le type d'images que nous voulons
+
+1:25:36.850,1:25:41.020
+Reconstruire. A droite c’est un exemple de reconstruction avec la théorie.
+
+1:25:41.020,1:25:44.560
+C’est un grand pas en avant par rapport à ce qu'on pouvait faire avant.
+
+1:25:44.560,1:25:48.940
+Vous obteniez quelque chose qui ressemble à ça auparavant. Cela était
+
+1:25:48.940,1:25:53.020
+vraiment considéré comme le meilleur. Quand ce résultat est sorti certaines personnes 
+
+1:25:53.020,1:25:57.430
+ont dit que c'était impossible. Mais en fait non. Vous avez besoin des
+
+1:25:57.430,1:26:00.550
+hypothèses et ces hypothèses sont assez critiques. Je les mentionne ici.
+
+1:26:00.550,1:26:05.080
+Il faut donc que l'image soit. Ces images d’IRM ne sont pas éparses. Par éparses
+
+1:26:05.080,1:26:09.370
+je veux dire qu'il a beaucoup de pixels zéro ou noirs. Ce n'est clairement pas éparses mais cela
+
+1:26:09.370,1:26:13.660
+peut être représenté de manière peu ou approximativement éparse si vous faites une
+
+1:26:13.660,1:26:18.160
+décomposition en ondelettes. Je n'entrerai pas dans les détails. C’est un peu un
+
+1:26:18.160,1:26:20.920
+problème que ce soit seulement approximativement épars quand vous faites cette décomposition 
+
+1:26:20.920,1:26:24.489
+en ondelettes. C'est pourquoi il ne s'agit pas d'une reconstruction parfaite. Si elle était très
+
+1:26:24.489,1:26:28.060
+éparse dans le domaine des ondelettes et parfaitement, ce serait exactement
+
+1:26:28.060,1:26:33.160
+la même image qu’à gauche. Cette détection compressée est basée sur le domaine
+
+1:26:33.160,1:26:36.220
+de l'optimisation. Cela a en quelque sorte revitalisé beaucoup de techniques que
+
+1:26:36.220,1:26:39.550
+les gens utilisent depuis longtemps. La façon dont vous obtenez cette reconstruction est que
+
+1:26:39.550,1:26:45.130
+vous résolvez un petit problème d’optimisation. A chaque étape vous… Chaque image
+
+1:26:45.130,1:26:47.830
+vous voulez reconstruire passe dans la machine. Donc votre machine doit résoudre un
+
+1:26:47.830,1:26:51.030
+problème d'optimisation pour chaque image. Chaque fois elle résout ce petit
+
+1:26:51.030,1:26:57.340
+problème quadratique avec ce genre de terme de régularisation compliqué. 
+
+1:26:57.340,1:27:00.700
+C’est formidable pour l'optimisation, tous ces gens qui étaient mal payés
+
+1:27:00.700,1:27:03.780
+dans les universités, tout à coup leurs recherches étaient à la mode et
+
+1:27:03.780,1:27:09.370
+les entreprises avaient besoin de leur aide. C'est bien, mais nous pouvons faire mieux.
+
+1:27:09.370,1:27:13.120
+Au lieu de résoudre ce problème de minimisation à chaque étape, je vais utiliser un
+
+1:27:13.120,1:27:16.960
+réseau neuronal. J’utilise B ici arbitrairement pour représenter le « big » 
+
+1:27:16.960,1:27:24.190
+réseau. B pour Big bien sur [rires] Nous espérons apprendre dans le réseau
+
+1:27:24.190,1:27:28.000
+une complexité telle qu'elle peut essentiellement résoudre le problème 
+
+1:27:28.000,1:27:31.240
+d'optimisation en une seule étape. Cela produit une solution aussi bonne que
+
+1:27:31.240,1:27:35.200
+la solution du problème de l'optimisation. Cela aurait été considéré comme impossible
+
+1:27:35.200,1:27:39.820
+il y a 15 ans. Maintenant, nous savons mieux, donc ce n'est pas très difficile en fait. Nous
+
+1:27:39.820,1:27:44.980
+pouvons juste prendre un exemple de… Nous pouvons résoudre quelques uns de
+
+1:27:44.980,1:27:48.520
+ces cent mille problèmes d'optimisation et prendre la solution et l'entrée.
+
+1:27:48.520,1:27:53.620
+Nous allons mettre à l'épreuve un réseau de neurones pour passer de l'entrée à la solution.
+
+1:27:53.620,1:27:56.830
+C’est en fait un peu sous-optimal car nous sommes affaiblis dans certains cas, nous connaissons une
+
+1:27:56.830,1:28:00.070
+meilleure solution que la solution au problème de l'optimisation. Nous pouvons déduire
+
+1:28:00.070,1:28:04.780
+en mesurant le patient. C'est ce que nous faisons en pratique pour ne pas
+
+1:28:04.780,1:28:07.000
+essayer de résoudre le problème de l'optimisation. Nous essayons de parvenir à 
+
+1:28:07.000,1:28:11.260
+une meilleure solution et cela fonctionne très bien. Voici un exemple très simple de ça.
+
+1:28:11.260,1:28:14.740
+C'est donc ce que vous pouvez faire en utilisant la reconstruction
+
+1:28:14.740,1:28:18.580
+à l'aide d'un réseau de neurones. Ce réseau implique des astuces.
+
+1:28:18.580,1:28:23.140
+Je l'ai mentionné, donc il est entraîné en utilisant Adam, utilise des couches de normalisation 
+
+1:28:23.140,1:28:28.690
+de type groupe-norme et des ConvNets comme on vous l'a déjà enseigné. Cela
+
+1:28:28.690,1:28:33.970
+utilise une technique connue sous le nom de « U-Nets », que vous pourrez revoir plus tard dans le cours, mais je ne suis pas
+
+1:28:33.970,1:28:37.390
+sûr de cela. Ce n'est pas une modification très compliquée d'un réseau de 
+
+1:28:37.390,1:28:40.660
+neurones. C'est donc le genre de choses que vous pouvez faire et c'est très
+
+1:28:40.660,1:28:44.880
+proche des applications pratiques. Ces IRM accélérées et ces scanners arriveront
+
+1:28:44.880,1:28:49.750
+dans la pratique clinique dans quelques années seulement. Ce n'est 
+
+1:28:49.750,1:28:53.980
+pas un vaporware. Et c'est tout ce dont je voulais vous parler aujourd’hui :
+
+1:28:53.980,1:28:58.620
+l'optimisation et la mort de l'optimisation. Merci. [Applaudissements]

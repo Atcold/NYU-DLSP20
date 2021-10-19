@@ -1,0 +1,4682 @@
+0:00:00.000,0:00:03.600					                                                                                               
+Très bien, donc je suppose que nous pouvons commencer. C'est la troisième partie du cours
+
+0:00:04.400,0:00:06.400
+sur les modèles à base d’énergie.
+
+0:00:07.200,0:00:13.280
+Nous allons continuer un peu ce dont nous avons parlé la dernière fois sur le codage épars et
+
+0:00:14.639,0:00:16.000
+parler des GANs [Generative adversarial networks]
+
+0:00:16.000,0:00:19.119
+très brièvement. Vous en saurez plus demain avec de
+
+0:00:20.140,0:00:24.560
+Alfredo. Nous allons ensuite parler de l'apprentissage des modèles du monde et de choses similaires.
+
+0:00:26.080,0:00:28.399
+Egalement des algorithmes
+
+0:00:29.179,0:00:31.179
+d'apprentissage autosupervisés et non supervisés un peu exotiques. 
+
+0:00:32.000,0:00:35.040
+Ce sont des sujets de recherche actifs en ce moment.
+
+0:00:35.680,0:00:39.279
+Donc une chose dont j'ai parlé la dernière fois était le codage épars et
+
+0:00:40.079,0:00:42.079
+je vais mentionner juste un
+
+0:00:42.719,0:00:45.279
+idée très simple qui consiste en une sorte de
+
+0:00:47.660,0:00:48.800
+combinaison de
+
+0:00:49.680,0:00:54.079
+codage épars ou auto-encodeur épars avec entraînement discriminant.
+
+0:00:54.960,0:00:57.840
+Imaginez donc l'architecture que je vous montre ici.
+
+0:00:58.480,0:01:01.599
+L'encodeur si vous voulez, la première
+
+0:01:02.559,0:01:04.559
+partie à gauche
+
+0:01:04.720, 0:01:11.040
+est semblable à l'encodeur dont j'ai parlé pour la méthode LISTA.
+
+0:01:11.680,0:01:14.819
+Vous commencez donc par la variable x et vous la passez dans une matrice.
+
+0:01:16.080,0:01:20.479
+Ensuite, vous faites passer cela par une non-linéarité. Il peut s'agir d'une ReLU par exemple, c'est le cas ici.
+
+0:01:21.759,0:01:23.759
+Et puis vous prenez le résultat
+
+0:01:24.220,0:01:25.600
+multiplié par
+
+0:01:25.600,0:01:28.239
+une certaine matrice, que nous allons apprendre à cette occasion avec le
+
+0:01:29.439,0:01:36.319
+produit de l'entrée par la matrice d'encodage We et ensuite passer à une non-linéarité et vous pouvez répéter ce petit bloc.
+
+0:01:37.439,0:01:42.719
+Ce bloc vert ici plusieurs fois. Chacun d'entre eux est une couche qui consiste essentiellement en
+
+0:01:43.360,0:01:49.860
+une matrice ou un tas de convolutions, en plus de variable préexistante et une non-linéarité.
+
+0:01:50.720,0:01:54.799
+Donc c'est un drôle de réseau neuronal où vous avez une sorte de
+
+0:01:55.439,0:01:57.439
+sauts de connexions.
+
+0:01:58.000,0:02:00.319
+Puis nous allons entraîner ce réseau de neurones à faire
+
+0:02:01.200,0:02:04.960
+trois choses différentes ou avec trois critères différents. Un critère va être
+
+0:02:05.600,0:02:11.199
+juste de reconstruire X. Donc il va y avoir une matrice de décodage qui
+
+0:02:11.920,0:02:15.039
+va reproduire l'entrée sur la sortie.
+
+0:02:15.760,0:02:17.920
+Et nous allons faire cela en minimisant l'erreur quadratique.
+
+0:02:19.440,0:02:21.839
+Voici donc ce qu'indiquent les filtres de décodage.
+
+0:02:22.480,0:02:25.679
+Encore une fois, cela peut être compliqué ou non selon la version que vous
+
+0:02:26.400,0:02:27.760
+vous aimez.
+
+0:02:27.760,0:02:30.000
+Il y aura un critère L1 sur la
+
+0:02:30.800,0:02:32.560
+sur le vecteur de
+
+0:02:32.560,0:02:39.039
+caractéristiques, ce qui le rend épars. Cela ressemble donc beaucoup à un auto-encodeur épars dont nous avons parlé la semaine dernière.
+
+0:02:40.239,0:02:45.279
+Mais nous allons également ajouter un troisième terme qui est essentiellement un
+
+0:02:46.000,0:02:50.640
+un simple classifieur linéaire qui
+
+0:02:50.640,0:02:57.759
+va essayer de prédire une catégorie. Ok, et nous allons entraîner le système à minimiser les trois critères en même temps.
+
+0:02:58.319,0:03:02.658
+Il s'agit donc d'un auto-encodeur épars qui essaie également de trouver des codes qui font un bon travail de prédiction.
+
+0:03:04.879,0:03:07.599
+C'est en quelque sorte une bonne façon de voir les choses de deux manières différentes.
+
+0:03:07.599,0:03:13.939
+Vous pouvez voir cela comme un auto-encodeur qui est biaisé pour produire de bonnes étiquettes, ou vous pouvez voir cela comme un classifieur
+
+0:03:14.620,0:03:21.920
+multicouche qui est régularisé par un auto-encodeur. Quel est l'avantage de cette méthode ? Eh bien, l'avantage est qu'en
+
+0:03:22.720,0:03:26.319
+forçant le système à trouver des représentations ici à l'avant-dernière couche…
+
+0:03:27.040,0:03:30.480
+peut reconstruire l'entrée alors que vous
+
+0:03:31.360,0:03:36.080
+orienter le système vers l'extraction de caractéristiques contenant le plus de caractéristiques possibles sur l'entrée.
+
+0:03:41.280,0:03:44.879
+Cela rend les caractéristiques plus riches si vous le voulez. Cela oblige le système à
+
+0:03:45.519,0:03:51.439
+ne pas générer de caractéristiques dégénérées, mais générer des caractéristiques qui contiennent autant de caractéristiques que possible sur l'entrée.
+
+0:03:54.159,0:03:57.438
+Cela fonctionne plutôt bien. Je pense que c'est une méthode sous-explorée pour
+
+0:03:58.640,0:04:00.560
+l'entraînement des réseaux neuronaux.
+
+0:04:01.840,0:04:05.200
+Car très souvent nous n'avons pas assez de données étiquetées pour l’entraînement
+
+0:04:05.920,0:04:07.920
+ou lorsque le
+
+0:04:08.000,0:04:10.259
+les données d’entraînement sont telles que vous n'avez pas beaucoup de catégories
+
+0:04:10.879,0:04:15.119
+pour travailler avec. C'est peut-être un problème classique à deux, trois ou dix que nous connaissons,
+
+0:04:15.680,0:04:20.799
+tendent à produire des caractéristiques dégénérées très génériques dans un réseau neuronal comme nous en avons discuté la dernière fois.
+
+0:04:21.759,0:04:24.499
+Forcer le système à se reconstruire, lui dire :
+
+0:04:25.040,0:04:27.839
+« tu ne peux pouvez pas générer des caractéristiques qui sont trop
+
+0:04:28.460,0:04:32.720
+dégénérées » ou tellement dégénérées que vous ne pouvez pas reconstruire l'entrée à partir,
+
+0:04:32.880,0:04:35.859
+c'est une bonne chose. On peut le considérer comme un bon régulariseur.
+
+0:04:37.440,0:04:42.959
+Ok, éparsité de groupe et éparsité structurée. Donc il y a des travaux qui remonte à environ 10 ans, peut-être un peu plus.
+
+0:04:43.600,0:04:46.320
+En fait les premiers travaux sur ce sujet datent d'environ 20 ans,
+
+0:04:47.040,0:04:49.199
+concernant l'idée de l’éparsité de groupe. Qu'est-ce que cela signifie ?
+
+0:04:50.479,0:04:55.539
+Voici l'idée : l'idée est d’entraîner un système pour générer des caractéristiques éparses, et pas seulement
+
+0:04:57.440,0:05:01.999
+les caractéristiques normales qui sont extraites, disons par un tas de convolutions et de ReLU.
+
+0:05:02.720,0:05:06.959
+Pour produire les caractéristiques éparses, qui sont éparses après le pooling.
+
+0:05:07.199,0:05:15.199
+Ok, donc vous avez essentiellement un système qui consiste en des convolutions, non-linéarités et pooling ; vous essayez de rendre ces caractéristiques éparses.
+
+0:05:17.840,0:05:19.360
+Et il y a un certain nombre de travaux différents.
+
+0:05:19.360,0:05:26.580
+L'idée remonte à Hyvarinen et Hoyer en 2001, dans le cadre de l'analyse de la composante indépendante de l'ICA.
+
+0:05:27.440,0:05:31.519
+Et puis il y a eu quelques autres articles, dont un d'Osindero du groupe de Geoffrey Hinton.
+
+0:05:33.360,0:05:38.080
+Kavukcuoglu, qui était un de mes étudiants à la fin des années 2000.
+
+0:05:38.639,0:05:43.918
+Karol Gregor qui était en post-doc avec moi, Julien Mairal qui est en France et un tas d'autres personnes
+
+0:05:44.560,0:05:46.799
+sur cette idée de codage structuré épars.
+
+0:05:47.440,0:05:50.239
+Donc l'idée de base est que vous prenez…
+
+0:05:51.440,0:05:54.239
+Donc certains de ces modèles n'ont qu'un encodeur,
+
+0:05:54.240,0:05:57.199
+certains d'entre eux n'ont qu'un décodeur et d'autres sont des auto-encodeurs, ok ?
+
+0:05:57.360,0:06:00.639
+Ainsi, celui de gauche, le modèle d'Osindero est un modèle avec uniquement un encodeur.
+
+0:06:02.560,0:06:05.839
+Le modèle de Mairal est un modèle avec uniquement un décodeur.
+
+0:06:06.460,0:06:12.239
+Le modèle de Kavukcuoglu est essentiellement un auto-encodeur. Un auto-encodeur épars du type dont nous avons parlé la dernière fois.
+
+0:06:15.600,0:06:17.600
+Comment cela fonctionne-t-il ?
+
+0:06:18.319,0:06:20.319
+Prenons par exemple un modèle avec uniquement un encodeur.
+
+0:06:20.560,0:06:25.199
+Vous avez un extracteur de caractéristiques qui consiste en des convolutions ou peut-être juste 
+
+0:06:25.919,0:06:27.919
+des matrices entièrement connectées
+
+0:06:28.940,0:06:31.919
+sur un patch un patch d'image par exemple.
+
+0:06:32.800,0:06:38.560
+Et puis, au lieu de forcer la sortie de ce dernier à être après une non-linéarité, au lieu de forcer la sortie de ce dernier à être épars, 
+
+0:06:39.360,0:06:43.120
+vous mettez une couche de pooling et vous forcez le pooling à être épars.
+
+0:06:44.639,0:06:47.379
+Ceci s'applique à ces trois modèles.
+
+0:06:49.440,0:06:54.559
+Voici donc un exemple plus précis. C'est la version que Kavukcuoglu
+
+0:06:55.199,0:06:57.199
+a fait pour sa thèse de doctorat où
+
+0:06:57.240,0:06:58.800
+il avait un auto-encodeur épars.
+
+0:06:58.800,0:07:03.039
+Pour avoir une fonction d'encodage ge(We,Yi)
+
+0:07:03.440,0:07:06.799
+il pourrait y avoir plusieurs couches. Dans ce cas, il n'y avait en fait que deux couches
+
+0:07:07.599,0:07:13.919
+avec une non-linéarité. Vous avez un décodeur qui, dans ce cas, était linéaire : Wd fois Z. Vous avez une variable latente Z
+
+0:07:14.720,0:07:17.119
+Et cette variable latente au lieu du lui appliquer une L1,
+
+0:07:17.919,0:07:19.280
+elle passe par, en gros,
+
+0:07:19.280,0:07:23.519
+une L2. Mais c'est une L2 sur les groupes, ok ? Donc vous prenez
+
+0:07:24.319,0:07:26.319
+un groupe de composantes de Z.
+
+0:07:26.479,0:07:32.559
+Vous calculez la norme L2, non pas la norme au carré mais la norme L2 qui signifie la racine carrée de la somme des valeurs
+
+0:07:33.520,0:07:35.360
+de ces composantes
+
+0:07:35.360,0:07:37.360
+du carré de ces composants, ok ?
+
+0:07:37.520,0:07:41.440
+Prenez donc chaque élément, calculez le carré et ensuite la somme d'un groupe
+
+0:07:41.919,0:07:46.799
+de ces carrés et calculer ensuite la racine carrée de ça. C'est donc la norme L2 de ce groupe.
+
+0:07:47.759,0:07:51.299
+Et puis vous faites cela pour plusieurs groupes. Les groupes peuvent se chevaucher ou ne pas se chevaucher.
+
+0:07:52.479,0:07:58.878
+Vous calculez la somme et c'est votre régulariseur. C'est votre régulariseur épars. Alors, qu'est-ce que cela tend à faire ?
+
+0:07:59.599,0:08:01.039
+Cela tend à
+
+0:08:01.039,0:08:06.959
+désactiver le nombre maximum de groupes. Ok. Le système est épars
+
+0:08:07.520,0:08:08.400
+sur les groupes.
+
+0:08:08.400,0:08:11.840
+Il souhaite donc que le plus petit nombre de groupes soit présent à un moment donné.
+
+0:08:12.240,0:08:14.799
+Mais à l'intérieur d'un groupe, car c'est une norme L2 à l'intérieur d'un groupe,
+
+0:08:15.520,0:08:17.759
+le nombre d'unités n'a pas d'importance.
+
+0:08:20.319,0:08:22.719
+De nombreuses unités peuvent être en service au sein d'un groupe. Alors, à quoi cela sert-il ?
+
+0:08:23.520,0:08:25.840
+Cela force le système à
+
+0:08:28.000,0:08:30.799
+à grouper au sein d'un pool, des caractéristiques qui s'allument
+
+0:08:31.740,0:08:32.800
+simultanément, ok ?
+
+0:08:32.800,0:08:38.959
+Donc, si vous avez des caractéristiques très similaires, des extracteurs de caractéristiques très similaires, des filtres très similaires, des filtres très similaires dans un réseau convolutif,
+
+0:08:39.339,0:08:42.159
+alors ces caractéristiques auront tendance à… 
+
+0:08:42.800,0:08:46.159
+ils essaieront de se regrouper au sein d'un groupe lorsque vous faites l’entraînement.
+
+0:08:46.800,0:08:53.539
+Car ils auront tendance à être activés ensemble. C'est la meilleure façon de minimiser le nombre de groupes qui sont activés en même temps.
+
+0:08:56.399,0:09:04.399
+Voici comment ont été obtenues ce genre de photos intéressantes.
+
+0:09:06.640,0:09:10.479
+Voici les groupes, donc ce que vous regardez ici sont les…
+
+0:09:11.360,0:09:14.320
+Soit les…  je pense que c'est la matrice de décodage. Donc, ce sont les
+
+0:09:15.120,0:09:21.839
+les colonnes de la matrice Wd,  que nous pouvons reconstruire un patch d'image à partir
+
+0:09:23.600,0:09:25.600
+d'un code épars
+
+0:09:25.899,0:09:27.899
+en multipliant par cette matrice.
+
+0:09:30.560,0:09:35.119
+Mais ce que nous faisons ici, c'est que nous regroupons ces caractéristiques en blocs de 36.
+
+0:09:35.519,0:09:39.599
+Nous arrangeons donc tous les éléments dans une carte 2D qui n'a rien à voir avec la topologie de l'image.
+
+0:09:39.680,0:09:45.539
+Nous pouvons choisir la topologie que nous voulons. En fait, ce n'est pas vraiment une topologie 2D. C'est une topologie d’un tore.
+
+0:09:46.000,0:09:49.380
+Ainsi, le côté gauche touche le côté droit, le haut touche le bas.
+
+0:09:50.720,0:09:53.120
+Il est donc topologiquement identique à un tore.
+
+0:09:55.440,0:09:57.440
+Et ce que nous faisons, c'est que nous
+
+0:09:58.240,0:10:00.240
+nous regroupons un
+
+0:10:00.720,0:10:05.760
+ensemble de 36 caractéristiques au sein d'un groupe. Ok et ces
+
+0:10:06.560,0:10:13.679
+groupes de 36 caractéristiques se chevauchent sur trois colonnes et trois lignes. Donc nous avons plusieurs groupes de 36 caractéristiques six par six,
+
+0:10:14.480,0:10:16.480
+décalés de trois.
+
+0:10:17.360,0:10:19.519
+On peut considérer cela comme une sorte de pooling
+
+0:10:20.079,0:10:23.919
+sur des caractéristiques, mais pas de pooling de l'espace. Car il n'y a pas d’espace ici. C'est un réseau entièrement connecté.
+
+0:10:25.519,0:10:31.359
+Mais c’un peu la même saveur que le pooling, sauf qu'ici, on met en commun plus de 36 caractéristiques.
+
+0:10:31.440,0:10:33.440
+On ne fait pas de pooling sur l'espace. 
+
+0:10:34.000,0:10:36.000
+Donc ensuite
+
+0:10:37.760,0:10:44.399
+vous calculez la somme de la norme L2 des caractéristiques qui sont dans chaque groupe.
+
+0:10:44.800,0:10:48.419
+Et c'est le régulariseur que vous utilisez lorsque vous entraînez votre auto-encodeur épars.
+
+0:10:49.279,0:10:53.919
+Le système vise donc à minimiser le nombre de groupes qui sont actifs en même temps.
+
+0:10:54.480,0:10:56.399
+Et donc, comme je l'ai déjà dit
+
+0:10:56.399,0:10:58.000
+essentiellement
+
+0:10:58.000,0:11:03.440
+il regroupe en groupes toutes les caractéristiques qui sont similaires et susceptibles de tirer simultanément.
+
+0:11:04.399,0:11:10.879
+Et car les groupes se chevauchent, cela crée ce genre d'ensembles de caractéristiques à évolution lente qui
+
+0:11:11.440,0:11:13.339
+semblent tourbillonner
+
+0:11:13.339,0:11:14.380
+autour d’un
+
+0:11:14.380,0:11:16.380
+Point.
+
+0:11:17.120,0:11:21.839
+Ainsi, les caractéristiques que vous obtenez grâce à cela ont une sorte d'invariance, une certaine invariance non pas au décalage,
+
+0:11:22.399,0:11:27.839
+mais à des choses comme la rotation et l'échelle et d'autres choses de ce genre. Quoi que le système décide.
+
+0:11:29.120,0:11:35.359
+La raison du choix d'une topologie 2D est donc essentiellement de rendre ça beau.
+
+0:11:35.920,0:11:36.720
+Mais vous
+
+0:11:36.720,0:11:42.720
+pourriez choisir n'importe quelle topologie. [Etudiant : quels sont les axes x et y dans ce diagramme ?]
+
+0:11:42.800,0:11:44.800
+Ce sont donc des axes arbitraires.
+
+0:11:47.519,0:11:54.159
+Je ne me souviens même plus du nombre de caractéristiques qu'il y a ici. Cela pourrait être 256 caractéristiques. Je pense que c'est 16 par 16. Donc il y a
+
+0:11:55.339,0:12:00.958
+256 unités cachées, ok ? Alors imaginez un réseau qui a un patch d'entrée 12 par 12.
+
+0:12:01.519,0:12:03.519
+Une image d'entrée. C'est un patch d'une image.
+
+0:12:03.920,0:12:06.639
+Et 256 unités cachées.
+
+0:12:08.320,0:12:14.559
+Avec une couche entièrement connectée, une non-linéarité et une autre couche au-dessus,
+
+0:12:16.000,0:12:22.399
+c'est l’encodeur. Ensuite vous avez, cette éparsité de groupe, et ensuite le décodeur linéaire.
+
+0:12:23.339,0:12:27.119
+Ok, et ce que vous voyez ici, ce sont les colonnes du décodeur.
+
+0:12:28.320,0:12:30.320
+Elles sont organisées selon une topologie 2D.
+
+0:12:31.120,0:12:34.719
+D'accord, mais c'est arbitraire. [Etudiant : chacun de ces carrés est une colonne du décodeur ?]
+
+0:12:34.959,0:12:40.479
+Chacun de ces carrés est une colonne du décodeur qui correspond également à une composante de Z. D'accord, une composante du
+
+0:12:41.200,0:12:43.120
+vecteur des caractéristiques.
+
+0:12:44.720,0:12:48.399
+Ils sont donc organisés dans une matrice 16 par 16, mais c'est un peu arbitraire.
+
+0:12:48.480,0:12:51.839
+Nous les mettons dans une matrice et ensuite nous entraînons.
+
+0:12:52.639,0:12:54.719
+Et car les groupes
+
+0:12:55.600,0:12:59.920
+prennent des sortes de voisinages six par six dans cette topologie, le système
+
+0:13:00.459,0:13:01.920
+naturellement
+
+0:13:01.920,0:13:05.060
+apprend les caractéristiques qui sont similaires lorsqu'elles sont proches dans cette topologie.
+
+0:13:06.079,0:13:07.519
+Ok.
+
+0:13:07.519,0:13:09.599
+Mais là encore, j'aurais pu choisir n'importe quelle topologie.
+
+0:13:11.100,0:13:13.100
+1D, 2D, 3D ou même un graphe…
+
+0:13:16.000,0:13:22.799
+Des voisinages d'une certaine sorte tant que le pooling est entre voisins sur le graphe, cela va fonctionner.
+
+0:13:28.079,0:13:31.599
+Ce que j'ai fait ici, c’est que j’ai répété ce petit
+
+0:13:33.339,0:13:39.518
+motif parce que c'est toroïdal. Cela montre
+
+0:13:41.040,0:13:44.899
+comment ces motifs se répètent et sont en quelque sorte périodiques.
+
+0:13:47.040,0:13:53.120
+La raison de visualiser de cette façon est que c'est le genre de choses que les neuroscientifiques observent lorsqu'ils placent des électrodes dans le
+
+0:13:53.519,0:13:55.519
+cortex visuel primaire des
+
+0:13:56.560,0:13:59.359
+mammifères, et de la plupart des animaux qui ont une bonne vision.
+
+0:14:00.240,0:14:03.519
+Ils voient ce genre de tourbillons de motifs où les neurones qui sont voisins
+
+0:14:04.699,0:14:12.399
+détectent des caractéristiques similaires, c'est-à-dire des bords orientés similaires, ils sont sensibles aux bords orientés et aux bords voisins.
+
+0:14:13.279,0:14:16.239
+Les neurones sont sensibles à des angles similaires.
+
+0:14:16.959,0:14:20.879
+Ou les mêmes angles à échelle similaire ou des choses comme ça.
+
+0:14:23.360,0:14:28.719
+C'est peut-être ainsi que le cerveau organise ses neurones. C'est par une sorte de…
+
+0:14:29.519,0:14:34.159
+Fondamentalement, le fait d'avoir une sorte de critère sur les cellules complexes qui sont l'équivalent du pooling.
+
+0:14:34.800,0:14:36.800
+Les unités que nous voyons ici.
+
+0:14:38.320,0:14:41.839
+Voici un autre exemple. Donc celui-ci est…
+
+0:14:43.339,0:14:51.039
+N’est pas au niveau du patch, mais utilise des connexions locales. Ce n'est pas convolutif dans le sens où il n'utilise pas de poids partagés.
+
+0:14:51.600,0:14:54.260
+La raison de faire ça, est d'avoir 
+
+0:14:55.600,0:14:57.279
+une genre de correspondance 
+
+0:14:57.279,0:14:59.199
+semi-réaliste avec
+
+0:14:59.199,0:15:01.199
+l’apprentissage biologique.
+
+0:15:02.000,0:15:06.000
+Bien sûr, vous savez que les neurones du cerveau ne peuvent pas partager leur poids.
+
+0:15:06.720,0:15:10.639
+Ils finissent par être similaires car ils s'entraînent en utilisant une sorte
+
+0:15:11.820,0:15:13.820
+d'apprentissage non supervisé. 
+
+0:15:14.240,0:15:16.320
+Mais il n'existe pas de partage de poids dans le cerveau.
+
+0:15:16.880,0:15:19.919
+Pour autant que nous sachions.
+
+0:15:20.240,0:15:23.919
+[Etudiant : une stratégie similaire à celle de l’entraînement de l'auto-encodeur avec le
+
+0:15:24.779,0:15:30.958
+le classifieur et le régulariseur peut-elle être appliquée pour un auto-encodeur variationnel ? Et si cela a été exploré,
+
+0:15:31.360,0:15:34.159
+fonctionne-elle aussi bien pour la première diapositive que vous avez montré ?]
+
+0:15:34.720,0:15:36.720
+Oui. Essentiellement
+
+0:15:37.920,0:15:42.000
+ajouter du bruit dans un auto-encodeur variationnel et forcer l’éparsité
+
+0:15:42.720,0:15:47.120
+sont fondamentalement deux façons d'atteindre le même objectif qui est de réduire la capacité de la
+
+0:15:47.920,0:15:52.639
+variable latente. Réduire la capacité du code qui est extrait par l’auto-encodeur.
+
+0:15:53.279,0:15:57.758
+Et c'est ce qui empêche le système d'exécuter une fonction d'identité triviale, qui ne serait pas utile.
+
+0:15:58.000,0:16:04.339
+Ce dont nous avons parlé les deux dernières fois est le fait que si vous réduisez la capacité d’information 
+
+0:16:05.040,0:16:07.040
+de la variable latente du code, vous…
+
+0:16:07.339,0:16:13.999
+En conséquence, vous minimisez également le volume de l'espace qui peut prendre une énergie basse.
+
+0:16:14.000,0:16:16.800
+D'accord, car vous limitez le nombre de configurations
+
+0:16:17.360,0:16:18.639
+du code.
+
+0:16:18.639,0:16:21.839
+Par conséquent, vous limitez en quelque sorte le volume de l'espace qui peut prendre énergie basse.
+
+0:16:22.560,0:16:24.560
+Donc essentiellement cette idée de
+
+0:16:26.060,0:16:32.799
+régulariser avec L1 ou l’éparsité ou quelque chose comme cela, ou ajouter du bruit à un code où cela limite la norme du code,
+
+0:16:33.839,0:16:39.599
+atteint le même objectif qui est de limiter la capacité du code dans le but de limiter le volume
+
+0:16:40.480,0:16:43.360
+de l'espace qui peut prendre une énergie basse. Par conséquent
+
+0:16:43.920,0:16:49.360
+si vous entraînez une partie de l'espace pour qu'elle ait une énergie basse en minimisant l'erreur de reconstruction sur vos échantillons d'entraînement,
+
+0:16:49.820,0:16:55.519
+automatiquement le reste de l'espace aura une énergie plus élevée car la capacité de volume qui peut prendre une énergie basse est limitée.
+
+0:16:56.320,0:16:58.079
+Donc c'est
+
+0:16:58.079,0:17:04.159
+juste pour récapituler ce dont nous avons parlé la dernière fois et il y a quelques semaines.
+
+0:17:04.799,0:17:06.799
+C'est en quelque sorte l'alternative.
+
+0:17:06.959,0:17:09.999
+Ce genre de méthodes architecturales sont donc des alternatives aux
+
+0:17:10.620,0:17:12.959
+méthodes contrastives où l'on pousse explicitement vers le haut
+
+0:17:13.679,0:17:15.999
+l'énergie des mauvais échantillons.
+
+0:17:16.720,0:17:21.919
+Ce qui signifie que vous devez trouver un bon moyen de générer de mauvais échantillons dans ce cas. Ok ?
+
+0:17:22.559,0:17:23.039
+Donc à nouveau,
+
+0:17:23.039,0:17:30.079
+souvenez-vous de ces deux types de méthodes : méthodes contrastives vous poussez vers le bas l'énergie des échantillons d’entraînement ; vous poussez vers le haut l'énergie des choses à l'extérieur
+
+0:17:30.400,0:17:34.639
+soit en corrompant les échantillons originaux, soit en utilisant, 
+
+0:17:35.280,0:17:41.439
+un gradient bruyant dans la descente de gradient. Vous savez divergence contrastive, des choses comme ça, ou en générant des points contrastifs d'une certaine manière.
+
+0:17:42.240,0:17:46.719
+Nous avons vu un tas de méthodes contrastives différentes et l'alternative est
+
+0:17:49.520,0:17:52.959
+limiter la capacité d'un code ou
+
+0:17:53.520,0:17:58.079
+limiter le volume de choses qui peuvent consommer peu d'énergie dans le contexte de l'auto-encodeur ou du prédicteur.
+
+0:17:58.320,0:18:00.480
+Cela signifie qu'il faut limiter la capacité du code.
+
+0:18:01.919,0:18:08.319
+Et il existe de nombreuses façons de le faire. Une façon est l’éparsité, une autre est d'ajouter du bruit tout en limitant la norme.
+
+0:18:08.480,0:18:09.760
+C'est l’AE.
+
+0:18:09.760,0:18:15.140
+Il y a d'autres moyens dont nous parlerons dans une minute. [Etudiant : chaque fois que vous parliez tout à l'heure de l’éparsité de groupe,
+
+0:18:15.600,0:18:17.120
+vous additionnez
+
+0:18:17.120,0:18:24.239
+juste quelques échantillons comme quelques indices dans une petite fourchette ? Qu'est-ce que ce Pj ?] Pj est un groupe.
+
+0:18:24.400,0:18:25.679
+C'est un pool.
+
+0:18:25.679,0:18:29.359
+Imaginez qu'il s'agisse d'un pool comme dans un réseau convolutif, mais le pool au lieu de
+
+0:18:30.160,0:18:33.759
+faire un pooling sur l’espace, il le fait sur des caractéristiques. Ok.
+
+0:18:34.480,0:18:39.039
+Pour un réseau entièrement connecté. Il se contente de regrouper les éléments de Z, c’est juste des caractéristiques.
+
+0:18:39.679,0:18:47.679
+[Etudiant : donc Pj  est comme un ensemble d'indices]. Pj  est un sous-ensemble d’indices de composantes de Z.
+
+0:18:47.679,0:18:49.679
+[Etudiant : ok, merci.]
+
+0:18:51.280,0:18:53.039
+Ici Pj
+
+0:18:53.039,0:18:54.960
+est-ce un groupe de six
+
+0:18:54.960,0:18:57.120
+composantes de Z qui se trouvent être
+
+0:18:58.080,0:19:00.080
+voisines dans cette topologie.
+
+0:19:00.960,0:19:02.000
+Ok.
+
+0:19:02.000,0:19:04.880
+C'est un p et le prochain p est
+
+0:19:05.440,0:19:10.720
+un carré similaire de six sur six décalé de trois pixels vers la gauche en haut ou
+
+0:19:11.600,0:19:13.600
+ou en bas. [Etudiant : ok, ok, je comprends]
+
+0:19:14.240,0:19:16.240
+En bas. Ok ? [Etudiant : merci].
+
+0:19:17.200,0:19:20.319
+Le chevauchement entre les groupes est ce que 
+
+0:19:21.580,0:19:24.400
+représente cette topologie si vous voulez.
+
+0:19:30.320,0:19:32.320
+Ok
+
+0:19:34.160,0:19:41.279
+Donc, dans cette expérience, est très similaire à celle dont nous venons de parler. Sauf qu'ici
+
+0:19:42.240,0:19:47.280
+nous avons des connexions locales. Nous avons donc une entrée. Il s'agit d'une entrée bidimensionnelle. Nous n'en représentons en quelque sorte qu'une version 1D.
+
+0:19:49.520,0:19:51.340
+Et nous avons
+
+0:19:51.340,0:19:54.959
+des unités, peut-être plusieurs unités au même endroit,
+
+0:19:55.760,0:19:58.479
+examinant une partie de l'entrée, comme un patch local sur l'entrée.
+
+0:19:59.360,0:20:01.760
+Ensuite ces ensembles d'unités sont
+
+0:20:03.200,0:20:07.439
+en quelque sorte, reproduites plusieurs fois mais il n'y a pas de poids partagé.
+
+0:20:08.720,0:20:15.839
+Donc des unités partout sur l'entrée, mais ils les poids ne sont pas partagés. Ok, ils sont juste connectés localement.
+
+0:20:18.640,0:20:21.759
+[Etudiant : je suppose que je ne comprends pas bien le
+
+0:20:23.360,0:20:26.559
+concept de la notion du pooling
+
+0:20:27.360,0:20:29.200
+des caractéristiques.
+
+0:20:29.200,0:20:36.080
+Je veux dire que si j'y pense en termes de pooling comme celle que nous avons utilisée dans les réseaux convolutifs,
+
+0:20:37.100,0:20:40.159
+je ne comprends pas vraiment 
+
+0:20:40.960,0:20:41.840
+comment le pooling
+
+0:20:41.840,0:20:43.840
+des caractéristiques fonctionne]
+
+0:20:44.799,0:20:46.799
+Ok.
+
+0:20:46.960,0:20:51.679
+Laissez-moi faire un dessin, peut-être que ce sera plus clair. Ok, donc vous commencez avec un vecteur d'entrée.
+
+0:20:52.400,0:20:54.400
+Ok, multipliez par
+
+0:20:54.400,0:20:57.439
+une matrice ou la faire passer à travers une sorte
+
+0:20:59.260,0:21:05.599
+d’encodeur. Cela peut contenir des ReLU, des matrices multiples, ou quoi que ce soit.
+
+0:21:06.880,0:21:10.159
+Ok, peut-être plusieurs couches et vous obtenez un vecteur de caractéristique.
+
+0:21:13.120,0:21:14.880
+Nous appelons ça
+
+0:21:14.880,0:21:16.559
+Z.
+
+0:21:16.559,0:21:17.679
+Et maintenant,
+
+0:21:17.679,0:21:23.859
+vous faites essentiellement du pooling. Donc vous divisez cela en groupes qui, dans ce cas, ne se chevauchent pas.
+
+0:21:24.720,0:21:26.720
+Vous calculez au
+
+0:21:27.280,0:21:29.280
+sein d'un de ces groupes.
+
+0:21:29.440,0:21:31.440
+Vous calculez la racine carrée
+
+0:21:31.520,0:21:33.520
+de la somme des carrés
+
+0:21:34.080,0:21:37.439
+de ces zi où i appartient au groupe,
+
+0:21:38.480,0:21:41.299
+le pool. Ok. On l'appelle p car c'est un pool.
+
+0:21:44.080,0:21:46.080
+Ok, et vous faites cela pour tous les groupes.
+
+0:21:46.799,0:21:48.799
+Alors, qu'est-ce que vous obtenez ici ?
+
+0:21:49.440,0:21:55.440
+Cette sortie ressemble beaucoup à la sortie d'une couche de pooling dans un ConvNet. Il ne s'agit pas d'un réseau convolutif.
+
+0:21:55.600,0:21:57.839
+Ok, c'est un réseau entièrement connecté ici.
+
+0:21:59.679,0:22:01.679
+Mais le résultat est le même.
+
+0:22:03.360,0:22:06.959
+Et ceci est votre régulariseur. Maintenant dans l'exemple que je viens de montrer
+
+0:22:07.679,0:22:09.120
+vous prenez le Z,
+
+0:22:09.120,0:22:11.120
+et vous l’envoyez à
+
+0:22:11.280,0:22:13.280
+une matrice de décodeur
+
+0:22:13.520,0:22:15.520
+à partir de laquelle vous reconstruisez
+
+0:22:15.840,0:22:22.559
+l'entrée. Ok. Donc c'est y. Ceci est y̅ qui est une prédiction pour la reconstruction.
+
+0:22:23.760,0:22:27.439
+Cette couche poolée ici n'est utilisée que
+
+0:22:30.159,0:22:35.519
+pour calculer le régulariseur. N’est pas réellement utilisée pour la reconstruction. Vous reconstruisez directement à partir du code épars.
+
+0:22:36.480,0:22:39.839
+Cependant il est vrai que cela ressemble beaucoup à une couche de pooling maintenant. 
+
+0:22:41.120,0:22:44.719
+Si c'était un réseau convolutif,
+
+0:22:46.240,0:22:48.240
+cette dimension
+
+0:22:49.200,0:22:51.200
+sur la caractéristique ici serait…
+
+0:22:54.320,0:22:56.960
+une caractéristique, mais vous aurez plusieurs cartes de caractéristiques.
+
+0:22:58.640,0:23:01.459
+Ok, donc je représente la dimension de la caractéristique verticalement.
+
+0:23:02.480,0:23:08.159
+L’encodeur effectuerait alors plusieurs convolutions et générerait également plusieurs cartes de caractéristiques. Peut-être un grand nombre.
+
+0:23:15.200,0:23:17.200
+Et ensuite, le genre de pooling que nous ferions ici
+
+0:23:20.400,0:23:23.359
+est un pooling où chacun…
+
+0:23:25.679,0:23:27.839
+Après le pooling, nous prendrions
+
+0:23:29.200,0:23:33.380
+une fenêtre sur l'espace comme sur les caractéristiques.
+
+0:23:36.799,0:23:44.320
+Et calculerions la racine carrée de la somme du carré là. Et cela nous donne une sortie dans la sortie de notre pooling.
+
+0:23:44.320,0:23:47.520
+Et puis nous avons de multiples groupes de caractéristiques qui vont dans différents pooling.
+
+0:23:49.039,0:23:55.039
+Peu importe que ce soit ou non dans des convolutions. Dans les convolutions, vous pooleriez dans l'espace ainsi que
+
+0:23:55.840,0:23:57.840
+les types de caractéristiques mais…
+
+0:23:59.440,0:24:04.960
+Si vous n'avez pas de convolution, vous poolez simplement les caractéristiques et cela construit des invariants (peu importe à quoi),
+
+0:24:05.760,0:24:08.559
+que le système pense que cela ait du sens.
+
+0:24:11.360,0:24:17.779
+Est-ce que cela répond à votre question ? [Etudiant :  oui, je pense que c'est plus clair. Je vous remercie.]
+
+0:24:19.520,0:24:27.219
+[Etudiante : j'ai une question pour savoir si, lorsque vous divisez les z en groupes et faites le pooling, ces groupes se chevauchent]
+
+0:24:28.559,0:24:33.199
+Ok. Donc, dans l'exemple que j'ai montré ici, ils ne se chevauchent pas.
+
+0:24:34.240,0:24:36.880
+Mais vous pouvez les faire se chevaucher. Ok, donc
+
+0:24:37.840,0:24:40.559
+disons que nous avons un vecteur de caractéristique Z.
+
+0:24:43.039,0:24:44.159
+Je peux
+
+0:24:44.159,0:24:49.359
+prendre un pool ici, un pool ici, un pool ici et ici. Ces groupes se chevauchent.
+
+0:24:49.600,0:24:52.559
+Et si je fais cela et que je fais de l’éparsité de groupe,
+
+0:24:53.120,0:24:55.599
+ce qui va se passer c'est que
+
+0:24:56.880,0:25:02.079
+je vais avoir ici une sorte d'ensemble de caractéristiques qui varient continuellement d'un bout à l'autre.
+
+0:25:02.559,0:25:07.038
+Car le système va vouloir regrouper au sein d'un pool des caractéristiques qui sont similaires.
+
+0:25:07.440,0:25:12.080
+Et donc, en raison du chevauchement, il va en quelque sorte les faire varier continuellement de sorte qu'elles changent lentement
+
+0:25:13.039,0:25:15.199
+sur le vecteur.
+
+0:25:15.919,0:25:18.639
+Maintenant, dans les photos que j'ai montrées dans les diapositives,
+
+0:25:19.279,0:25:25.279
+au lieu d'organiser les caractéristiques Z ici dans une topologie 1D, je les ai organisées dans une topologie 2D.
+
+0:25:25.679,0:25:29.999
+Et j'ai fait en sorte que les groupes soient en deux dimensions. Je prends donc un bloc de six par six.
+
+0:25:30.880,0:25:37.599
+C'est un groupe et puis le groupe suivant sera un autre bloc de six par six avec un certain chevauchement et puis le groupe suivant
+
+0:25:37.600,0:25:39.039
+sera
+
+0:25:39.039,0:25:41.039
+encore un autre bloc de six par six.
+
+0:25:41.440,0:25:44.540
+Ok, et peut-être que j'en ai une autre car j'ai un
+
+0:25:44.940,0:25:47.679
+topologie toroïdale qui prend ces gars et ces gars.
+
+0:25:48.320,0:25:50.960
+Ok et puis il y a le fait que le même genre de…
+
+0:25:51.679,0:25:53.120
+Hum…
+
+0:25:53.120,0:25:56.479
+la glissade, etc. Donc, les groupes
+
+0:25:57.360,0:26:01.219
+sont des fenêtres six par six qui sont décalées par trois et qui se chevauchent.
+
+0:26:02.080,0:26:04.400
+Et c'est ainsi que l'on obtient ce genre de variation continue.
+
+0:26:05.039,0:26:12.719
+des caractéristiques le long de la dimension 2D. J'aurais tout aussi bien pu choisir
+
+0:26:13.679,0:26:15.699
+d'organiser cela en une topologie 3D.
+
+0:26:17.120,0:26:21.039
+Ou dans une sorte d'arbre, ok ? Alors je prends toutes les composantes de Z
+
+0:26:21.679,0:26:26.239
+et je les organise dans une sorte de graphe. Peut-être un arbre.
+
+0:26:28.559,0:26:34.259
+C'est donc ce qu'on appelle l’éparsité structurée, et non plus l’éparsité de groupe.
+
+0:26:39.520,0:26:44.319
+Et puis les groupes seraient des choses comme ceci. Ceci serait un groupe.
+
+0:26:45.600,0:26:47.600
+Et puis peut-être que ceci serait aussi un groupe.
+
+0:26:49.200,0:26:52.400
+Et je peux organiser un groupe en sorte 
+
+0:26:53.679,0:26:55.679
+de poupées russes.
+
+0:26:56.080,0:26:58.080
+Et
+
+0:26:58.240,0:27:00.559
+ce qui va se passer ici, c'est que les groupes…
+
+0:27:01.440,0:27:04.960
+Que les unités qui sont dans de nombreux groupes auront tendance à être très éparses.
+
+0:27:05.039,0:27:09.119
+Alors que les unités qui sont dans quelques groupes auront tendance à être moins éparses.
+
+0:27:09.760,0:27:12.159
+Donc si vous faites quelque chose comme ça avec un arbre,
+
+0:27:12.720,0:27:17.520
+ce qui se passe ici, c'est que les caractéristiques au centre ont tendance à ne pas être éparses du tout.
+
+0:27:17.600,0:27:21.839
+Ce sera quelque chose qui détecte des caractéristiques très génériques.
+
+0:27:22.720,0:27:25.919
+Et puis au premier niveau dans l'arbre, cela va être un peu clairsemés.
+
+0:27:25.919,0:27:28.319
+Ils vont donc être en quelque sorte des
+
+0:27:28.880,0:27:34.479
+extracteurs de bord très doux ou quelque chose comme ça et puis plus vous allez à l'intérieur de l'arbre
+
+0:27:35.039,0:27:37.039
+plus chaque élément entre
+
+0:27:37.279,0:27:41.759
+dans un grand nombre de pools et donc ils ont plus de pression pour être clairsemé.
+
+0:27:41.840,0:27:46.640
+Ils finissent donc par être beaucoup plus épars, ce qui signifie qu'ils sont plus sélectifs pour certaines
+
+0:27:47.340,0:27:48.640
+Caractéristiques.
+
+0:27:48.640,0:27:52.799
+Et que se passe-t-il ici ? Lorsque vous montrez une image, elle tend à favoriser
+
+0:27:53.740,0:27:55.740
+l'activation des caractéristiques qui sont le long
+
+0:27:56.000,0:27:58.239
+d'une branche particulière de cet arbre.
+
+0:27:59.360,0:28:03.279
+Car c'est la meilleure façon de minimiser le nombre de pools à un moment donné.
+
+0:28:04.640,0:28:06.640
+C'est ce qu'on appelle l’éparsité structurelle.
+
+0:28:14.880,0:28:16.959
+Et il y a un certain nombre de documents sur ce sujet par
+
+0:28:17.760,0:28:22.799
+Julien Mairal. Cela remonte à environ dix ans.
+
+0:28:23.520,0:28:25.520
+Et Rodolphe Jenatton.
+
+0:28:27.200,0:28:30.559
+Je veux dire qu'ils ont co-écrit. L’auteur principal était Francis Bach.
+
+0:28:33.120,0:28:35.520
+J'ai mis la référence dans une des diapositives.
+
+0:28:36.799,0:28:40.239
+Et il y a un article de mon groupe, rédigé par Arthur Szlam
+
+0:28:41.279,0:28:44.480
+que je vais évoquer dans une minute.
+
+0:28:44.480,0:28:49.839
+[Etudiant : pouvez-vous expliquer pourquoi regrouper la régularisation aide en fait à regrouper des caractéristiques similaires ?]
+
+0:28:51.279,0:28:55.279
+C'est une bonne question. D'abord, est-ce que ça aide ?
+
+0:28:57.200,0:28:59.200
+Et la réponse n'est pas claire.
+
+0:28:59.600,0:29:00.960
+Donc
+
+0:29:00.960,0:29:07.279
+des expériences ont été faites il y a un certain temps avant que les capacités de calcul soient vraiment disponibles et que les données soient disponibles…
+
+0:29:07.840,0:29:11.840
+pour que cela fonctionne vraiment à grande échelle. 
+
+0:29:12.480,0:29:16.079
+Les personnes intéressées par ce projet étaient intéressées par deux choses.
+
+0:29:16.080,0:29:22.000
+Elles étaient soit intéressées par un apprentissage non supervisé pour des choses comme la restauration d'images et d'autres choses de ce genre. C'est ce que Mairal faisait.
+
+0:29:23.919,0:29:25.919
+Ou étaient intéressées par 
+
+0:29:26.080,0:29:32.319
+un entraînement préalable non supervisé et autosupervisé car à l'époque, les ensembles de données étaient très réduits pour l’entraînement.
+
+0:29:33.039,0:29:36.799
+Les réseaux à convolution étaient trop petits. Il fallait donc être une sorte de procédure de pré-entraînement. 
+
+0:29:37.360,0:29:45.039
+C'est ce qui m'intéressait et c'est donc la même motivation que nous avons à nouveau pour l'apprentissage autosupervisé.
+
+0:29:46.559,0:29:51.278
+Mais beaucoup de ces méthodes n'ont pas été remises au goût du jour.
+
+0:29:52.720,0:29:55.120
+Elles ont eu tendance à très bien fonctionner lorsque l'ensemble de données était petit.
+
+0:29:56.000,0:29:58.079
+Hum, donc elles ont eu tendance à améliorer leurs performances de…
+
+0:29:58.799,0:30:01.999
+disons un réseau convolutif, si vous le pré-entrainé en utilisant une méthode
+
+0:30:02.799,0:30:04.799
+méthode très similaire à celle que j'ai
+
+0:30:05.360,0:30:09.219
+montré plus tôt. Quelque chose d'un peu comme ça mais convolutif.
+
+0:30:11.039,0:30:15.278
+Il faut donc que l’encodeur et le décodeur soient convolutifs et
+
+0:30:16.000,0:30:19.679
+entraîner avec une bonne éparsité sur les cellules complexes.
+
+0:30:20.399,0:30:22.879
+Ensuite, après avoir terminé le pré-entraînement 
+
+0:30:23.039,0:30:28.239
+du système, vous vous débarrassez du décodeur. Vous n'utilisez l’encodeur que comme extracteur de caractéristiques pour,
+
+0:30:28.320,0:30:30.320
+disons la première couche d'un ConvNet.
+
+0:30:31.039,0:30:35.839
+Et vous collez une deuxième couche par-dessus. Ok, alors laissez-moi vous expliquer un peu.
+
+0:30:37.039,0:30:39.359
+Vous commencez donc avec une image.
+
+0:30:45.200,0:30:52.319
+Vous avez un encodeur qui est essentiellement une convolution, ReLU.
+
+0:30:55.520,0:30:58.719
+Pas beaucoup plus que ça, ok juste la valeur de la combinaison.
+
+0:30:59.679,0:31:03.619
+Il doit y avoir une sorte de couche de mise à l'échelle par la suite pour, ce cas particulier.
+
+0:31:07.440,0:31:10.799
+Vous entraînez avec une éparsité de groupe. Vous avez donc un décodeur linéaire.
+
+0:31:13.120,0:31:17.620
+Et vous reconstituez en quelque sorte l'entrée.
+
+0:31:23.120,0:31:25.919
+Vous avez ici un critère qui est ce groupe L1.
+
+0:31:27.600,0:31:31.839
+Ok, donc c'est la somme d'un groupe désolé j'appelle le bon p.
+
+0:31:33.120,0:31:40.799
+Somme d'un groupe. Racine carrée de la somme pour i dans le groupe de zi au carré.
+
+0:31:42.320,0:31:48.820
+Ok, donc c'est une bonne éparsité. Vous entraînez ce petit auto-encodeur avec éparsité de groupe.
+
+0:31:50.399,0:31:52.639
+Ensuite, ce que vous faites, c'est que vous prenez la
+
+0:31:56.240,0:31:59.839
+couche d’éparsité que vous venez d'utiliser comme régulariseur.
+
+0:32:01.840,0:32:04.399
+Et essentiellement donc vous éliminez. 
+
+0:32:06.240,0:32:13.839
+Vous coupez cette partie du réseau, vous prenez l’éparsité de groupe qui est en fait une couche de pooling, une couche de pooling L2.
+
+0:32:15.600,0:32:17.600
+Et vous la collez ici.
+
+0:32:18.080,0:32:20.159
+D'accord, il s'agit donc essentiellement d’un pooling L2.
+
+0:32:23.440,0:32:25.760
+Cela a la même architecture que celle que vous utilisez pour
+
+0:32:26.960,0:32:29.279
+l’éparsité de groupe.
+
+0:32:30.159,0:32:32.159
+Et puis vous l'utilisez comme extracteur de caractéristiques.
+
+0:32:33.279,0:32:40.398
+Ok, ce qui est comme la première paire de couches d'un ConvNet. La valeur de la composition avec le pooling. Ok, un pooling L2, pas un max pooling. 
+
+0:32:41.340,0:32:44.319
+Et vous pouvez ensuite répéter le processus. Vous pouvez entraîner une autre
+
+0:32:45.360,0:32:48.399
+instance de ce réseau. Quelques couches ici.
+
+0:32:53.820,0:32:55.120
+Vous avez un décodeur
+
+0:32:55.120,0:32:57.120
+Vous avez ce pooling L2
+
+0:32:59.039,0:33:02.879
+et le critère d’éparsité. Vous entraînez à reconstruire l’entrée.
+
+0:33:04.320,0:33:06.320
+Et puis, on met le pooling par-dessus.
+
+0:33:07.100,0:33:10.740
+Eliminez cela et vous avez maintenant un réseau convolutif à deux couches pré-entraîné.
+
+0:33:11.840,0:33:16.720
+Ok, c'est une procédure que certaines personnes appellent « stacked auto-encodeur » [auto-encodeurs empilés].
+
+0:33:17.039,0:33:20.158
+Ok, donc vous entraînez un auto-encodeur pour extraire des caractéristiques et ensuite vous
+
+0:33:21.120,0:33:24.799
+générez des caractéristiques avec la partie encodeur
+
+0:33:24.960,0:33:29.679
+de l'auto-encodeur  et vous collez une autre couche sur le sommet. Entrainez ça comme un autre encodeur et ensuite vous continuez.
+
+0:33:30.559,0:33:34.398
+La seule caractéristique ici est que cet auto-encodeur est entraîné
+
+0:33:35.600,0:33:37.600
+à produire des caractéristiques invariantes grâce à
+
+0:33:38.640,0:33:44.399
+l’éparsité de groupe essentiellement. [Etudiant : nous utilisons tous les sous-arbres possibles comme groupes dans l'exemple précédent…]
+
+0:33:45.120,0:33:47.199
+Non, c'est un peu à vous de décider.
+
+0:33:48.880,0:33:50.080
+Quelle structure utilisez-vous ici ?
+
+0:33:50.080,0:33:54.960
+Vous pouvez utiliser plusieurs arbres. Si vous voulez plusieurs caractéristiques pour représenter
+
+0:33:55.279,0:33:58.398
+une entrée même à la basse fréquence. Donc c'est vraiment à vous de décider.
+
+0:34:00.640,0:34:02.640
+Cela pourrait être ce que vous pouvez vous permettre.
+
+0:34:02.880,0:34:05.839
+Ce que vous pouvez faire aussi, c'est entraîner le système avec un arbre
+
+0:34:05.760,0:34:11.919
+plus grand que nécessaire et ensuite tailler l'arbre lorsqu'il y a des branches qui ne sont pas utilisées ou qui sont très éparses.
+
+0:34:13.359,0:34:21.199
+Ok. Donc c'est une expérience que j'ai montré ici est similaire, mais il n'y a que des connexions locales et pas de partage de poids.
+
+0:34:24.240,0:34:27.599
+Et ce que vous voyez ici, c'est encore cette organisation des caractéristiques.
+
+0:34:27.600,0:34:35.110
+En termes de ce que les neuroscientifiques appellent des « pinwhell patterns » [« pinwheel » est le jouet du petit moulin à vent en papier plié au bout d'une tige. La traduction utilisée dans la suite sera « motif en forme de pales de turbines »]. Donc, les motifs en forme de pales de turbines sont des motifs
+0:34:35.119,0:34:40.479
+où la sélectivité de l'orientation varie continuellement lorsque vous tournez autour d'un de ces points rouges.
+
+0:34:41.919,0:34:46.878
+Vous prenez donc un de ces points rouges et si vous faites un petit cercle autour des points rouges,
+
+0:34:47.280,0:34:49.280
+ce que vous remarquez, c'est que l'orientation
+
+0:34:49.679,0:34:53.759
+de la caractéristique, de l'extracteur de bord varie continuellement en fonction de vos déplacements.
+
+0:34:54.800,0:34:59.060
+Et ce sont les motifs en forme de pales de turbines qui sont observés dans le cerveau.
+
+0:35:02.800,0:35:06.399
+En fait, les images ci-contre proviennent d’articles de neurosciences
+
+0:35:07.119,0:35:11.679
+qui décrivent ceci. La couleur ici code l'activité de l'ensemble d'orientation.
+
+0:35:13.200,0:35:15.200
+Et les petites étoiles indiquent
+
+0:35:18.960,0:35:25.919
+les singularités. Le centre des motifs en forme de pales de turbines. [Etudiant : Est-ce que l’eparsité de groupe est entraîné pour avoir une petite valeur ?]
+
+0:35:26.960,0:35:28.960
+C'est un régulariseur.
+
+0:35:29.440,0:35:30.560
+Laissez-moi
+
+0:35:30.560,0:35:32.560
+retourner à…
+
+0:35:33.920,0:35:41.119
+C'est une fonction de coût pendant l’entraînement ou pendant l'inférence selon que vous utilisez
+
+0:35:43.760,0:35:49.359
+la version prédictive où vous avez une variable latente ou non. Mais c'est essentiellement juste…
+
+0:35:50.240,0:35:52.160
+Il s'agit essentiellement d'un
+
+0:35:52.160,0:35:54.160
+terme d’énergie.
+
+0:35:55.119,0:35:57.119
+Donc
+
+0:35:57.200,0:36:02.020
+le terme lui-même n'est pas entraîné. Il est fixe. C'est juste la norme L2 sur les groupes et les groupes sont prédéterminés.
+
+0:36:03.680,0:36:07.200
+Mais comme il s'agit d'un critère, il détermine en quelque sorte ce que
+
+0:36:07.760,0:36:10.979
+feront l'encodeur et le décodeur. Quel type de caractéristiques sera extrait.
+
+0:36:12.400,0:36:14.160
+Voici
+
+0:36:14.160,0:36:18.160
+un autre exemple d'une façon exotique de faire du
+
+0:36:19.119,0:36:23.519
+codage épars par inhibition latérale. Il y a un tas de façons différentes qui ont été proposées pour faire ça.
+
+0:36:25.119,0:36:27.119
+Celui-ci vient de 
+
+0:36:27.599,0:36:30.639
+Karol Gregor et Arthur Szlam de mon laboratoire il y a environ 10 ans.
+
+0:36:31.440,0:36:34.960
+Voici donc à nouveau un décodeur linéaire avec une erreur de reconstruction carrée.
+
+0:36:35.040,0:36:38.239
+C'est Wz moins x où x est l'entrée dans ce cas.
+
+0:36:39.280,0:36:43.759
+Puis il y a un critère dans l'énergie qui est 
+
+0:36:44.800,0:36:46.959
+le vecteur formé par les valeurs absolues de z
+
+0:36:48.300,0:36:52.479
+transposé fois une matrice fois le vecteur lui-même. Donc c'est une sorte de
+
+0:36:53.339,0:36:55.040
+forme quadratique.
+
+0:36:55.040,0:36:58.320
+Cela implique z et cette matrice S. La matrice S est
+
+0:36:59.040,0:37:00.960
+soit déterminée à la main
+
+0:37:00.960,0:37:02.960
+soit
+
+0:37:03.280,0:37:07.839
+apprise de manière à maximiser ce terme.
+
+0:37:10.440,0:37:13.760
+Et si les termes dans  S
+
+0:37:14.560,0:37:18.399
+sont positifs et importants… si un terme particulier est important
+
+0:37:18.640,0:37:22.960
+cela signifie que le système ne veut pas que zi et zj soient allumés en même temps.
+
+0:37:23.839,0:37:26.479
+Ok, il veut si zi est activé
+
+0:37:27.599,0:37:32.639
+Et Sij est grand alors il veut que zj soit désactivé et vice versa. Ok
+
+0:37:34.079,0:37:40.239
+Et donc c'est une sorte d'inhibition mutuelle. On appelle cela inhibition latérale en neuroscience.
+
+0:37:41.040,0:37:42.240
+Essentiellement, vous savez,
+
+0:37:42.240,0:37:49.280
+tous vos vecteurs de caractéristiques inhibent d'autres vecteurs de caractéristiques à travers cette matrice S. Vous pouvez décider que la matrice S est a priori structurée.
+
+0:37:49.680,0:37:55.520
+Vous pouvez donc décider que seuls certains termes soient non nuls. Vous pouvez décider que certains termes sont fixes.
+
+0:37:56.320,0:37:59.999
+Ou peuvent être entraînés. Et la façon dont vous les entraînez est en maximisant.
+
+0:38:00.480,0:38:04.159
+C'est donc un peu une sorte d’entraînement contradictoire. Vous essayez de trouver la
+
+0:38:04.880,0:38:10.480
+valeur de S aussi grande que possible si vous voulez rester dans les limites.
+
+0:38:13.280,0:38:15.919
+Au-delà d'une certaine valeur de Sij, un des z.
+
+0:38:17.200,0:38:23.040
+Un des zi ou zj va aller à zéro et ce terme va disparaître. Donc le système va vous le dire,
+
+0:38:24.540,0:38:26.560
+maximiser les Sij jusqu'à
+
+0:38:27.359,0:38:32.078
+ce que ce soit assez grand pour faire l'inhibition mutuelle entre zi et zj.
+
+0:38:32.800,0:38:35.119
+Et cela n'ira pas plus loin car ce n'est pas nécessaire.
+
+0:38:37.920,0:38:39.920
+Et encore une fois, si vous organisez S
+
+0:38:41.520,0:38:43.599
+en termes d'arbre… Donc ici
+
+0:38:45.339,0:38:48.879
+les lignes représentent les termes nuls
+
+0:38:49.760,0:38:53.679
+dans la matrice S. Chaque fois que vous n'avez pas de ligne entre deux caractéristiques,
+
+0:38:54.160,0:38:56.639
+il y a un terme non nul dans la matrice S ok ?
+
+0:38:56.880,0:39:02.800
+Ainsi, chaque caractéristique inhibe toutes les autres caractéristiques, sauf celles qui sont en haut de l'arbre ou en bas de l'arbre. 
+
+0:39:04.320,0:39:07.439
+C'est un peu comme l’éparsité de groupe. C'est un peu
+
+0:39:09.599,0:39:12.078
+l'inverse. Au lieu de
+
+0:39:12.720,0:39:13.920
+dire
+
+0:39:13.920,0:39:20.000
+les caractéristiques d'une branche de l'arbre doivent être activées ensemble en minimisant L2,
+
+0:39:20.640,0:39:24.960
+réduire au minimum le nombre de ces groupes qui figurent. Ici vous avez explicitement
+
+0:39:25.760,0:39:28.639
+une sorte de terme d'inhibition qui
+
+0:39:29.920,0:39:31.520
+pour chaque
+
+0:39:31.520,0:39:34.719
+caractéristique inhibe toutes les autres caractéristiques dans toutes les autres branches
+
+0:39:35.440,0:39:36.880
+de l'arbre.
+
+0:39:36.880,0:39:38.880
+Et ce que vous voyez encore, c'est que vous voyez ceci
+
+0:39:40.240,0:39:43.839
+Les systèmes organisent les caractéristiques de manière plus ou moins continue
+
+0:39:46.079,0:39:46.800
+et
+
+0:39:46.800,0:39:52.879
+de telle sorte que les caractéristiques le long d'une branche de l'arbre correspondent à peu près à la même caractéristique mais avec
+
+0:39:52.960,0:39:54.960
+différents niveaux de sélectivité.
+
+0:39:55.000,0:40:00.799
+Et puis les caractéristiques en périphérie varient plus ou moins continuellement car il y a de l'inhibition.
+
+0:40:01.760,0:40:04.339
+Non seulement au niveau inférieur, mais aussi au niveau intermédiaire.
+
+0:40:10.560,0:40:16.959
+Ok, donc pour revenir à la façon dont vous entraînez le système. Vous donnez un x à chaque itération.
+
+0:40:17.040,0:40:21.999
+Trouvez le z qui minimise cette fonction énergie. Vous trouvez donc un z qui reconstruit mais aussi
+
+0:40:22.619,0:40:27.379
+réduit le deuxième terme, ce qui signifie que si vous avez un terme Sij, c'est non nul.
+
+0:40:27.839,0:40:31.679
+Il veut que soit zi ou zj soit nul ou du moins très petit.
+
+0:40:33.119,0:40:35.119
+Vous faites maintenant une étape de descente de gradient pour
+
+0:40:37.280,0:40:39.280
+mettre à jour W
+
+0:40:39.680,0:40:44.639
+afin de minimiser l'erreur de reconstruction. Vous pouvez également, si vous le souhaitez, faire une étape de
+
+0:40:44.960,0:40:47.359
+gradient ascendant pour rendre les termes en S
+
+0:40:48.079,0:40:50.079
+plus grands.
+
+0:40:50.079,0:40:54.559
+En calculant en quelque sorte le gradient de cette énergie par rapport à S mais en augmentant l'énergie et non en la diminuant.
+
+0:40:59.200,0:41:02.960
+Encore une fois, si vous utilisez une topologie non pas arborescente, mais une sorte de topologie 2D,
+
+0:41:03.040,0:41:05.060
+vous obtenez également ce genre de motifs.
+
+0:41:12.000,0:41:16.159
+Et d'autres plus complexes s'il y a une sorte d'échelle multiple pour les caractéristiques.
+
+0:41:16.880,0:41:19.839
+Bon, alors le codage épars et le codage spatial structuré.
+
+0:41:20.000,0:41:22.959
+Si je vous en parle, c'est parce que
+
+0:41:23.920,0:41:29.139
+bien que ces derniers n'aient pas une grande quantité d'applications pratiques,
+
+0:41:31.280,0:41:33.619
+ils seront à mon avis, 
+
+0:41:34.480,0:41:36.480
+à la base de méthodes
+
+0:41:36.700,0:41:38.480
+de fonctionnement autosupervisées.
+
+0:41:38.480,0:41:43.599
+Comme je vous l'ai dit, je pense que l'apprentissage autosupervisé est le sujet le plus brûlant des prochaines années dans le cadre du NLP.
+
+0:41:44.079,0:41:48.318
+Et cela devient un sujet un peu chaud en vision par ordinateur aussi.
+
+0:41:48.960,0:41:51.280
+C’est aujourd'hui principalement dominée par des méthodes contrastives. 
+
+0:41:51.920,0:41:56.800
+Mais je pense que les méthodes architecturales vont prendre le dessus car les méthodes contrastives ne sont pas très bien adaptées à l'échelle.
+
+0:41:58.400,0:42:02.639
+C'est donc en quelque sorte une façon de vous donner des armes pour l'avenir si vous voulez.
+
+0:42:04.000,0:42:06.000
+Comprendre ce dont il s'agit.
+
+0:42:06.640,0:42:12.079
+Ok maintenant quelque chose de complètement différent c'est quelque chose qu'Alfredo va aimer car il travaille sur ce projet.
+
+0:42:13.839,0:42:21.519
+L'une des utilisations, probablement l'une des plus importantes de l'apprentissage autosupervisé, est l'idée de
+
+0:42:22.800,0:42:27.439
+l'apprentissage de modèles du monde pour les systèmes de contrôle ou à d'autres fins.
+
+0:42:29.339,0:42:31.119
+Donc
+
+0:42:32.319,0:42:33.599
+lorsque les
+
+0:42:33.599,0:42:35.919
+humains ou les animaux apprennent une tâche,
+
+0:42:36.960,0:42:41.599
+il est évident que nous avons une sorte de bon modèle interne de fonctionnement du monde.
+
+0:42:42.160,0:42:47.359
+De la physique intuitive. Du fait que lorsqu'un objet n'est pas soutenu, il tombe.
+
+0:42:47.760,0:42:52.959
+Nous avons appris la gravité quand nous étions bébés, probablement vers l'âge de neuf mois. Huit ou neuf mois.
+
+0:42:53.200,0:42:55.200
+C'est là que ça apparait chez les bébés.
+
+0:42:55.760,0:42:58.319
+Nous avons surtout appris cela par observation.
+
+0:42:58.319,0:43:02.639
+Alors comment pouvons-nous apprendre comment le monde fonctionne et tous les concepts qui le concernent
+
+0:43:03.359,0:43:04.800
+par observation ?
+
+0:43:06.160,0:43:07.920
+Il y a deux raisons à cela.
+
+0:43:07.920,0:43:13.119
+J'ai donc déjà expliqué l'idée d'un apprentissage autosupervisé si vous pouvez vous entraîner à prévoir. Peut-être qu’
+
+0:43:14.619,0:43:17.439
+apprendre spontanément des concepts abstraits sur le monde
+
+0:43:18.480,0:43:20.400
+pourrait être utile
+
+0:43:20.400,0:43:22.400
+pour se préparer à exécuter une tâche particulière
+
+0:43:23.359,0:43:25.359
+ou un ensemble de tâches.
+
+0:43:25.599,0:43:27.599
+Mais il y a une autre raison qui est que
+
+0:43:27.599,0:43:30.879
+vous voulez vraiment construire des modèles du monde si vous voulez être capable d'agir sur le monde.
+
+0:43:31.760,0:43:32.960
+Ok ?
+
+0:43:32.960,0:43:34.160
+Donc
+
+0:43:34.160,0:43:37.760
+je tiens ce stylo et je sais que si je bouge ma main vers le haut
+
+0:43:38.400,0:43:40.720
+le stylo bougera avec lui car il
+
+0:43:41.520,0:43:47.759
+est entre mes doigts. Je sais que si j'ouvre mes doigts, le stylo va tomber. Je connais la gravité et je sais saisir.
+
+0:43:48.240,0:43:51.040
+J'ai appris tous ces trucs et j'ai surtout appris à observer.
+
+0:43:51.119,0:43:54.799
+J'ai aussi appris par l'expérimentation. Mais une grande partie de ce que j'ai appris, je l'ai appris par simple observation.
+
+0:43:55.280,0:43:57.280
+La grande question est donc de savoir si nous pouvons apprendre…
+
+0:43:58.079,0:43:59.200
+utiliser
+
+0:43:59.200,0:44:02.639
+ce que nous avons appris sur l'apprentissage autosupervisé pour entraîner un système
+
+0:44:03.920,0:44:05.920
+pour apprendre des modèles du monde.
+
+0:44:07.280,0:44:08.960
+Qu'est-ce qu'un modèle du monde ?
+
+0:44:08.960,0:44:15.679
+Donc, si vous voulez une idée de l'architecture d'un système d’intelligence autonome,
+
+0:44:18.079,0:44:23.199
+il s'agirait d'un système composé essentiellement de quatre grands blocs représentés ici à gauche.
+
+0:44:23.599,0:44:27.519
+C'est donc un agent intelligent ou peut-être pas si intelligent. Nous verrons.
+
+0:44:28.480,0:44:32.480
+Il a un module de perception qui essentiellement observe le monde et ensuite
+
+0:44:33.280,0:44:35.839
+calcule une représentation de l'état du monde.
+
+0:44:36.640,0:44:38.400
+Ok
+
+0:44:38.400,0:44:41.599
+Appelé s(t). Au moment t, s(t) est
+
+0:44:43.680,0:44:45.680
+l'idée que le système se fait de l'état du monde.
+
+0:44:45.760,0:44:51.280
+Il s'agit d'une représentation incomplète du monde car nous ne pouvons pas observer l'univers entier en une seule fois.
+
+0:44:51.520,0:44:54.879
+Nous n'observons que ce qui nous entoure immédiatement et même ce que nous ne pouvons pas voir
+
+0:44:55.839,0:44:57.839
+par des occlusions. Il y a beaucoup
+
+0:44:58.000,0:45:01.280
+d'états internes sur le monde que nous ne pouvons pas assez bien observer.
+
+0:45:01.680,0:45:05.359
+Même si vous pouvez observer, votre précision de votre observation peut ne pas être suffisante.
+
+0:45:05.680,0:45:07.680
+Donc, si je mets ce stylo dans ma main
+
+0:45:07.839,0:45:09.839
+il semble être vertical. En le laisser aller
+
+0:45:10.160,0:45:13.599
+il va tomber, mais on ne peut pas vraiment prédire dans quelle direction. J'ai déjà utilisé cet exemple
+
+0:45:14.480,0:45:16.480
+pour décrire le problème de
+
+0:45:19.900,0:45:26.480
+l'incertitude. C'est-à-dire que le monde est non déterministe et qu'on ne peut pas prévoir exactement ce qui va se passer car 
+
+0:45:26.480,0:45:28.400
+vous n'avez pas une lecture parfaite de l'état du monde.
+
+0:45:28.400,0:45:30.500
+Et peut-être que le monde est intrinsèquement stochastique.
+
+0:45:32.240,0:45:34.160
+Nous ne savons pas vraiment.
+
+0:45:34.160,0:45:36.160
+D'accord, donc un modèle prédictif
+
+0:45:36.319,0:45:37.839
+est un modèle qui
+
+0:45:37.839,0:45:42.159
+étant donné l'état actuel du monde s(t) ou votre idée de l’état actuel du monde…
+
+0:45:43.200,0:45:46.240
+Et une action que vous entreprenez ou que quelqu'un d'autre entreprend
+
+0:45:46.960,0:45:48.480
+quelque chose que vous pouvez
+
+0:45:48.480,0:45:50.480
+choisir ou au moins observez…
+
+0:45:51.680,0:45:55.060
+Et peut-être une variable latente auxiliaire z(t) qui représente
+
+0:45:55.680,0:46:01.280
+ce que vous ne savez pas du monde. Ok, donc la partie du monde l'état du monde que vous ne connaissez pas ou une
+
+0:46:01.839,0:46:05.039
+chose imprévisible sur ce qui va se passer dans le monde.
+
+0:46:06.160,0:46:11.040
+Le modèle prévisionnel prédit le prochain état du monde s(t+1). Bon, vous avez discrétisé
+
+0:46:11.920,0:46:15.040
+le temps, d'une certaine manière. Ainsi, si vous avez
+
+0:46:15.920,0:46:17.520
+un modèle du monde
+
+0:46:17.520,0:46:19.520
+de ce type
+
+0:46:20.160,0:46:25.200
+vous pouvez simuler dans votre tête ce qui va se passer en conséquence de vos actions.
+
+0:46:26.560,0:46:28.719
+Vous avez donc ce modèle dans votre tête.
+
+0:46:29.760,0:46:32.319
+Vous connaisez l'état actuel du monde ou
+
+0:46:32.880,0:46:36.480
+une idée de l'état actuel du monde. Vous exécutez votre modèle interne du monde
+
+0:46:37.599,0:46:42.318
+avec une séquence de a(t) qui est une séquence d'action que vous imaginez.
+
+0:46:43.839,0:46:48.639
+Et votre modèle du monde tel que vous l'imaginez va prédire ce qui va se passer dans le monde.
+
+0:46:52.079,0:46:57.439
+Si vous pouviez le faire, vous pourriez alors planifier une série d'actions qui permettront d'atteindre un objectif particulier.
+
+0:46:58.880,0:47:01.920
+D'accord. Alors, par exemple, quelle séquence d'action dois-je
+
+0:47:02.640,0:47:04.800
+faire pour attraper ce stylo ?
+
+0:47:05.760,0:47:12.719
+Suivre une trajectoire particulière, actionner mes muscles d'une manière particulière, alors je saisis ce stylo.
+
+0:47:16.240,0:47:22.639
+Le critère de la fonction de coût que je peux mesurer est de savoir si j'ai pris le stylo. D'accord, si le stylo est à ma portée.
+
+0:47:23.359,0:47:25.759
+Je pourrais mesurer cela avec une certaine fonction peut-être.
+
+0:47:27.760,0:47:29.440
+Et la question est de savoir si je peux
+
+0:47:29.440,0:47:33.839
+planifier une séquence d'actions qui étant donné mon modèle du monde, qui dans ce cas est le modèle de ma main
+
+0:47:34.160,0:47:36.160
+et le modèle de l'endroit où se trouve le stylo,
+
+0:47:36.559,0:47:38.000
+me permettra de le saisir.
+
+0:47:38.000,0:47:42.000
+Ok, c'est un peu plus compliqué si je lance le stylo et que je dois l'attraper en l'air.
+
+0:47:42.480,0:47:45.280
+Car je dois prédire la trajectoire du stylo donc je dois avoir
+
+0:47:46.720,0:47:52.800
+un modèle intuitif de la physique pour pouvoir saisir ce stylo que j'ai bien sûr aussi appris par expérience.
+
+0:47:53.119,0:47:59.679
+[Alfredo : les gens sont surpris que vous aimiez tant l'apprentissage par renforcement]. Ce n'est pas du renforcement. Cela n'a absolument rien à voir avec l'apprentissage par renforcement. Laissez-moi
+
+0:48:00.240,0:48:03.199
+être très clair. Cela n'a rien à voir avec l'apprentissage par renforcement.
+
+0:48:04.160,0:48:07.119
+Cela pourrait être nécessaire à l'avenir. D'accord, mais pour l'instant, ce n’est pas le cas.
+
+0:48:09.020,0:48:13.999
+[Alfredo : modèle basé sur l’apprentissage par renforcement ?] Non, cela n'a rien à voir avec l'apprentissage par renforcement. 
+
+0:48:14.079,0:48:17.359
+Laissez-moi vous aller un peu plus loin. [Alfredo : quelqu’un demande si vous pouvez expliquer la différence alors].
+
+0:48:18.240,0:48:20.719
+Oui dans une minute, ok. Donc maintenant…
+
+0:48:22.880,0:48:27.680
+Donc sur la gauche ici vous avez ce petit agent. Il a ce modèle du monde que vous pouvez faire avancer
+
+0:48:28.400,0:48:29.280
+Ok
+
+0:48:29.280,0:48:35.119
+il peut avoir un acteur ou vous pouvez considérer cela comme une politique qui produit une séquence d'actions.
+
+0:48:35.440,0:48:37.440
+Ce qui va alimenter le modèle.
+
+0:48:38.000,0:48:40.399
+Ensuite un critique va prédire le
+
+0:48:41.520,0:48:42.640
+coût
+
+0:48:42.640,0:48:44.000
+de 
+
+0:48:44.000,0:48:50.479
+l'état final ou ce que la trajectoire va être selon le critère. Le critique calcule donc ici 
+
+0:48:51.839,0:48:53.520
+fondamentalement le coût.
+
+0:48:53.520,0:48:55.520
+De ne pas atteindre l'objectif que je me suis fixé.
+
+0:48:56.720,0:48:58.640
+Ok, donc si
+
+0:48:58.640,0:49:02.260
+ma tâche est d'atteindre ce stylo et que je le manque de quelques centimètres,
+
+0:49:03.280,0:49:07.359
+mon coût est de quelques centimètres. Si je le prends, le coût est nul.
+
+0:49:07.839,0:49:10.799
+Si je le manque de beaucoup, le coût est plus élevé. Ok, ce serait un exemple de coût.
+
+0:49:13.760,0:49:16.399
+Il y a donc
+
+0:49:17.839,0:49:22.959
+un certain nombre de choses différentes que vous pouvez faire avec , cette sorte de modèle de base,  d'agent intelligent.
+
+0:49:23.760,0:49:25.280
+La première est :
+
+0:49:25.280,0:49:31.040
+vous partez d'un état initial que vous observez dans le monde. Vous exécutez votre modèle prédictif, vous donnez une
+
+0:49:31.839,0:49:34.639
+proposition pour une séquence d'actions dont vous mesurez le coût.
+
+0:49:35.200,0:49:40.079
+Et ce que vous pouvez faire ici en ignorant le p ici qui représente une politique. 
+
+0:49:40.640,0:49:42.640
+Imaginons qu'il n'existe pas.
+
+0:49:43.119,0:49:49.199
+Par descente de gradient ou par une sorte d'algorithme d'optimisation. Vous pourriez essayer de trouver la séquence d'actions.
+
+0:49:49.920,0:49:54.559
+Cela permettra de minimiser le coût global sur l'ensemble de la trajectoire. Je pars de l'état.
+
+0:49:55.280,0:49:57.280
+Je fais fonctionner mon modèle prédictif.
+
+0:49:58.960,0:50:00.960
+Il prend une action.
+
+0:50:02.800,0:50:06.579
+Ok, laissez-moi juste appeler cela a1, ceci s1.
+
+0:50:09.599,0:50:16.639
+Et cela va me donner s2 et je vais mesurer le coût de s2 par une fonction de coût.
+
+0:50:18.720,0:50:20.720
+c
+
+0:50:22.800,0:50:26.719
+Ok, la prochaine étape consiste à faire tourner mon modèle.
+
+0:50:30.400,0:50:33.920
+Faire une proposition d'action a2. Tout cela est simulé. Tout cela est dans ma tête.
+
+0:50:34.000,0:50:37.440
+D'accord, car ce modèle, ce modèle, est dans ma tête.
+
+0:50:37.599,0:50:39.599
+Dans mon cortex frontal.
+
+0:50:40.160,0:50:42.160
+Je ne fais donc pas vraiment cela dans le monde.
+
+0:50:45.900,0:50:50.079
+Etc. Je peux le dérouler pour quelques étapes.
+
+0:50:51.839,0:50:55.919
+Ces pas de temps peuvent être des millisecondes si je contrôle les muscles. Ils peuvent être
+
+0:50:57.280,0:51:01.759
+des secondes si je contrôle des actions de haut niveau, cela peut prendre des heures. D'accord ? Si je veux planifier comment
+
+0:51:02.400,0:51:05.780
+aller à San Francisco, j'ai besoin d’aller
+
+0:51:08.000,0:51:15.839
+à l’aéroport et prendre un avion, puis, à mon arrivée, prendre un taxi ou autre chose, etc.
+
+0:51:17.200,0:51:22.559
+Ok, donc c'est indépendant du niveau de description de la chose.
+
+0:51:24.319,0:51:27.219
+Ce que je peux faire avec ça est une méthode
+
+0:51:28.480,0:51:30.899
+très classique appelée commande prédictive.
+
+0:51:36.240,0:51:39.199
+Il s'agit donc d'une méthode classique de
+
+0:51:41.680,0:51:47.859
+contrôle optimal qui est toute une discipline qui existe depuis les années 50. Si ce n'est plus tôt.
+
+0:51:50.160,0:51:56.319
+Et certaines de ces méthodes sont des contrôles prédictifs qui remontent aux années 1960, il existe quelque chose appelé l'algorithme de Kelley-Bryson.
+
+0:51:58.400,0:52:00.400
+Je pense que c'est Kelley avec un e je ne suis pas sûr. [Note : c’est bien ça :)]
+
+0:52:05.119,0:52:07.119
+Hum, donc c'est une
+
+0:52:08.319,0:52:10.799
+méthode très similaire à celle que je décris actuellement.
+
+0:52:12.240,0:52:13.280
+Et
+
+0:52:13.280,0:52:15.280
+ce système a été utilisé principalement par
+
+0:52:16.160,0:52:20.879
+la NASA pour calculer les trajectoires des fusées. Ok, donc quand ils ont commencé à avoir des ordinateurs à la NASA 
+
+0:52:21.920,0:52:23.920
+dans les années 60,
+
+0:52:24.240,0:52:28.079
+ils ont commencé à calculer des trajectoires avec des ordinateurs et ils utilisaient essentiellement des choses comme ceci.
+
+0:52:28.960,0:52:31.139
+Avant cela, ils devaient le faire à la main.
+
+0:52:32.960,0:52:39.439
+Et si vous n'avez pas vu le film Les Figures de l’ombre [Hidden Figures en VO], cela décrit comment les gens calculaient à la main.
+
+0:52:39.520,0:52:42.979
+C’était fait principalement par des femmes noires. Des mathématiciennes noires.
+
+0:52:43.839,0:52:45.339
+Des femmes
+
+0:52:45.339,0:52:50.479
+mathématiciennes qui ont fini par programmer ces ordinateurs. Regardez ce film, il est vraiment génial.
+
+0:52:51.200,0:52:53.839
+Voici donc une idée de base.
+
+0:52:54.400,0:52:56.720
+Cela ressemble beaucoup à un réseau récurrent
+
+0:52:56.880,0:53:04.160
+car votre modèle prédictif est fondamentalement le même réseau répliqué dans le temps et c'est comme un réseau récurrent qui n’est pas du monde.
+
+0:53:05.119,0:53:06.079
+Et donc
+
+0:53:06.079,0:53:08.659
+ce que vous faites ici, c'est que vous rétropropagez
+
+0:53:09.440,0:53:14.240
+la valeur du coût à travers tout ce réseau jusqu'aux actions.
+
+0:53:15.839,0:53:19.279
+Vous n'utilisez pas cela pour l’entraînement mais pour l’inférence.
+
+0:53:20.079,0:53:22.159
+Vous considérez les actions comme des variables latentes.
+
+0:53:23.280,0:53:26.559
+Et par descente de gradient ou une autre méthode d'optimisation,
+
+0:53:27.119,0:53:31.939
+vous trouvez une séquence d'actions qui minimisera la somme des coûts sur la trajectoire.
+
+0:53:32.480,0:53:34.480
+Ok.
+
+0:53:36.800,0:53:38.800
+Donc, en gros, vous avez
+
+0:53:39.920,0:53:41.339
+un
+
+0:53:41.339,0:53:42.559
+coût
+
+0:53:43.920,0:53:47.520
+Je vais l'appeler grand C et ce sera la somme au fil du temps
+
+0:53:48.240,0:53:50.319
+des pas de temps petit c de
+
+0:53:51.520,0:53:53.520
+s(t).
+
+0:53:53.520,0:53:55.359
+Ok
+
+0:53:57.359,0:54:02.159
+Et ce que vous allez faire, c'est que le grand A qui est la séquence de a va être remplacé par
+
+0:54:02.800,0:54:04.800
+sa propre valeur moins
+
+0:54:05.440,0:54:06.480
+quelques…
+
+0:54:06.480,0:54:10.959
+la taille des pas multipliée par le gradient du grand C par rapport à a.
+
+0:54:12.480,0:54:17.359
+D'accord, tant que vous pouvez calculer le gradient de la somme de ces coûts sur la trajectoire par rapport à l'ensemble des
+
+0:54:17.359,0:54:20.479
+composantes de a, c'est-à-dire les trajectoires de a.
+
+0:54:21.599,0:54:26.159
+Vous pouvez faire cette optimisation. Vous n'êtes pas obligé de faire par descente de gradient dans certains cas.
+
+0:54:26.160,0:54:28.160
+Il existe des moyens plus efficaces de procéder à cette optimisation.
+
+0:54:29.760,0:54:31.599
+En utilisant la programmation dynamique par exemple.
+
+0:54:31.599,0:54:33.838
+Si a est discret, cela pourrait être plus efficace.
+
+0:54:34.079,0:54:38.639
+Mais si a est continu et de grande dimension, vous n'avez pas d'autre choix que d'utiliser des méthodes basées sur le gradient.
+
+0:54:39.119,0:54:42.399
+D'accord, c'est donc une inférence. Il n'y a pas encore d'apprentissage. [Etudiant : Qu'est-ce qu’a ?]
+
+0:54:42.960,0:54:44.960
+Le grand a, c'est la séquence.
+
+0:54:45.520,0:54:47.520
+a1, a2
+
+0:54:47.520,0:54:49.520
+a3, etc.
+
+0:54:51.339,0:54:57.679
+D'accord, vous avez donc une fonction objectif différenciable et vous pouvez la minimiser par rapport aux variables qui vous intéressent.
+
+0:54:57.680,0:54:59.440
+Qu'est-ce que cela vous apporte ?
+
+0:54:59.440,0:55:03.280
+[Question : il n'y a pas de poids dans un a est un vecteur, n'est-ce pas ? Donc a est un vecteur]. Oui
+
+0:55:03.359,0:55:08.818
+[Suite de la question : oui, donc c'est car nous n'utilisons jamais, nous ne minimisons jamais les vecteurs jusqu'à présent. Nous avons toujours minimisé.
+
+0:55:09.520,0:55:12.239
+Nous sommes toujours en train d'optimiser les poids. Donc les gens sont oh.] Nous avons
+
+0:55:12.799,0:55:18.399
+pour les variables latentes comme les variables z, les variables latentes des modèles à base d’énergie, 
+
+0:55:18.400,0:55:22.240
+nous minimisons effectivement l'énergie par rapport à z. C'est donc le même problème ici.
+
+0:55:22.319,0:55:29.279
+Nous sommes en train de résoudre. [Alfredo : Je pense que oui, je pense que tout le monde n'a pas compris que les variables latentes sont en fait des entrées. Donc, je pense que c'était 
+
+0:55:29.920,0:55:31.920
+un malentendu avec la
+
+0:55:31.920,0:55:33.920
+question que nous avons posée sur Piazza au sujet de l’entraînement de ces
+
+0:55:34.559,0:55:40.959
+modèles à variables latentes]. Vous ne voulez pas utiliser le mot « entraînement » pour les variables latentes ou pour des choses comme ça
+
+0:55:42.160,0:55:43.680
+parce que
+
+0:55:43.680,0:55:45.200
+vous voulez utiliser l'inférence.
+
+0:55:45.200,0:55:51.520
+D'accord, vous voulez utiliser le mot « inférence » et non « entraîner ». Je veux utiliser le mot « inférence » et non « entraînement » .
+
+0:55:52.480,0:55:54.480
+Quelle est la différence entre l'inférence et l’entraînement ?
+
+0:55:57.839,0:56:01.379
+Avec l’entraînement, vous apprenez un paramètre.
+
+0:56:02.720,0:56:05.599
+C'est la même chose pour un grand nombre d'échantillons.
+
+0:56:06.559,0:56:07.599
+Ok.
+
+0:56:07.599,0:56:09.040
+Pour l'inférence
+
+0:56:09.040,0:56:15.839
+vous trouvez la valeur d'une certaine variable. Une variable latente a dans ce cas, z dans le cas d'un modèle à base d'énergie à variable latente.
+
+0:56:18.000,0:56:20.000
+Cela est spécifique à un échantillon.
+
+0:56:20.319,0:56:26.879
+Si vous changez l'échantillon, la variable écrite change de sorte que vous ne l'apprenez pas car vous ne vous en souvenez pas d’un temps
+
+0:56:26.880,0:56:28.799
+à l’autre.
+
+0:56:28.799,0:56:32.079
+Il n'y a pas de mémoire pour ça. Ok ?
+
+0:56:34.240,0:56:38.799
+C'est donc la différence. Conceptuellement vous faites le même genre d'opération lorsque vous faites de l'apprentissage et de l'inférence.
+
+0:56:39.520,0:56:41.999
+Et donc, à un certain niveau d'abstraction, ils sont pareils.
+
+0:56:42.799,0:56:45.279
+Mais l’inférence, vous le faites par échantillon.
+
+0:56:46.400,0:56:48.400
+En apprenant vous faites 
+
+0:56:49.200,0:56:53.599
+sur un ensemble d'échantillons et le paramètre est partagé entre les échantillons.
+
+0:56:54.079,0:56:56.879
+[Alfredo : lorsque nous avons un modèle à base d’énergie, et que nous souhaitons faire de l’inférence
+
+0:56:56.960,0:57:03.199
+nous avons encore une minimisation à faire à chaque fois que nous effectuons cela, que nous l'utilisons.
+
+0:57:03.920,0:57:08.639
+C'était donc une grande différence entre] Après que vous ayez traînez le modèle, quand vous l'utilisez,
+
+0:57:09.280,0:57:12.799
+vous devez encore faire de la minimisation en ce qui concerne les variables latentes. Ok
+
+0:57:13.440,0:57:15.520
+C'est donc la même différence ici.
+
+0:57:16.480,0:57:21.679
+ici, il peut y avoir ou non un entraînement. Votre modèle prédictif peut être construit à la main ou peut-être entraîné. Au moment
+
+0:57:21.680,0:57:26.720
+où nous sommes ici, il est entraîné. Nous n’entraînons rien ici. Nous faisons juste de l'inférence. Nous découvrons
+
+0:57:26.720,0:57:30.079
+la valeur optimale de la séquence de a, celle que nous allons minimiser pour
+
+0:57:31.440,0:57:32.640
+le coût.
+
+0:57:32.640,0:57:36.319
+Le coût global. Et c'est un problème d'inférence tout comme les modèles à base d’énergie.
+
+0:57:36.640,0:57:43.280
+[Alfredo : par exemple, le modèle prédictif peut n'être qu'une ligne d'équation de physique, ok  ? Il peut s'agir d'une simple équation déterministe]
+
+0:57:43.920,0:57:47.760
+Imaginez que le modèle prédictif consiste en les quelques équations qui décrivent la
+
+0:57:48.480,0:57:54.719
+physique d'une fusée et a est essentiellement l'action sur le gouvernail :
+
+0:57:54.799,0:57:57.599
+comment vous orientez les tuyères et ensuite la poussée.
+
+0:58:00.000,0:58:03.679
+Donc, ce serait une collection de a, une collection de ces variables et puis il y a
+
+0:58:03.680,0:58:05.680
+la physique très simple : la physique newtonienne.
+
+0:58:06.240,0:58:10.240
+Vous pouvez écrire les équations qui vous donneront l'état de la fusée au prochain
+
+0:58:10.799,0:58:12.240
+pas de temps
+
+0:58:12.240,0:58:16.559
+en fonction de l'état de la fusée au pas de temps précédent et des actions que vous prenez. C’est comme ça que vous faites des simulations.
+
+0:58:16.640,0:58:18.319
+C'est ainsi que chaque simulateur
+
+0:58:18.319,0:58:20.319
+fonctionne.
+
+0:58:20.720,0:58:26.399
+Et puis votre fonction de coût si vous voulez tirer une fusée serait peut-être une combinaison de deux choses : l'une serait 
+
+0:58:28.640,0:58:33.520
+l'énergie dépensée pendant ce pas de temps. La quantité de combustible que vous avez dépensée quelque chose comme ça.
+
+0:58:34.160,0:58:40.399
+Le deuxième terme pourrait être la distance à une cible que vous voulez atteindre ; peut-être voulez-vous un rendez-vous avec une station spatiale. 
+
+0:58:42.000,0:58:47.520
+Le deuxième terme du coût serait la distance à la station spatiale. Ok carré de la distance à la station spatiale.
+
+0:58:48.160,0:58:50.160
+Si vous mesurez
+
+0:58:50.799,0:58:55.679
+la somme sur toute la trajectoire de la distance à la station spatiale, le système essaiera de minimiser le temps
+
+0:58:55.700,0:58:59.000
+qu’il faudra pour se rendre à la station spatiale car ils voudront minimiser
+
+0:58:59.200,0:59:02.739
+la somme du carré des distances à la station spatiale sur la trajectoire.
+
+0:59:02.799,0:59:06.879
+Mais en même temps, il faut réduire le carburant, il faut donc équilibrer ces deux termes, n'est-ce pas ?
+
+0:59:06.960,0:59:11.359
+C'est donc une façon classique de faire un contrôle optimal et c'est ce qu'on appelle une commande prédictive.
+
+0:59:12.079,0:59:15.839
+[Alfredo : le modèle de filtrage de Kalman est il un type de commande prédictive ?]
+
+0:59:16.000,0:59:22.239
+Non. Le filtrage de Kalman est un modèle prédictif particulier si vous voulez. C'est une façon d'estimer l'état du monde.
+
+0:59:23.680,0:59:24.880
+Ok.
+
+0:59:27.040,0:59:31.839
+Etant donné votre observation de l'état du monde à travers un système de perception,
+
+0:59:32.000,0:59:34.159
+il y aura une certaine incertitude sur l'état du monde.
+
+0:59:34.960,0:59:38.659
+Et le filtre de Kalman suppose essentiellement une distribution gaussienne sur cette incertitude.
+
+0:59:39.920,0:59:41.920
+Et maintenant, lorsque vous exécutez votre modèle prédictif
+
+0:59:43.760,0:59:47.839
+il en résultera une incertitude sur l'état du monde à la prochaine étape.
+
+0:59:48.799,0:59:49.839
+Parce qu’il
+
+0:59:49.839,0:59:51.839
+n'était pas certain de commencer avec.
+
+0:59:52.000,0:59:53.440
+Ok.
+
+0:59:53.440,0:59:59.839
+Donc, compte tenu de l'incertitude au départ, quelle est l'incertitude après une étape de physique si vous voulez.
+
+1:00:01.839,1:00:08.399
+Si vous supposez la linéarité de toutes ces étapes et la gaussianité de l'incertitude c'est un
+
+1:00:09.280,1:00:11.280
+filtre de Kalman.
+
+1:00:12.540,1:00:18.019
+La plupart des incertitudes proviennent de…
+Ok donc maintenant votre modèle prédictif produit
+
+1:00:18.720,1:00:24.399
+une prédiction. Puis l'étape suivante, vous pourriez obtenir une autre lecture de l'état du monde car vos capteurs fonctionnent toujours.
+
+1:00:24.720,1:00:26.720
+Donc maintenant vous avez deux gaussiennnes dont l'une est
+
+1:00:27.599,1:00:30.078
+votre nouvelle perception du monde. Elle vous dit ce qu’elle pense
+
+1:00:30.640,1:00:35.200
+de l'état du monde et votre modèle prédictif également prédit ce qu’il pense de l’état.
+
+1:00:35.520,1:00:41.839
+Vous devez combiner ces deux éléments, c'est là qu'intervient la complexité du filtrage commun apparait.
+
+1:00:42.400,1:00:44.319
+Deux prédictions gaussiennes.
+
+1:00:44.319,1:00:50.079
+La distribution de probabilité résultante est donc également gaussienne si vous calculez la matrice de covariance et ainsi de suite, et c'est de là que
+
+1:00:50.640,1:00:54.000
+les formules des filtres de Kalman proviennent.
+
+1:00:55.280,1:00:58.099
+Le filtre de Kalman est donc un moyen de gérer l'incertitude
+
+1:00:58.880,1:01:00.240
+dans la
+
+1:01:00.240,1:01:03.199
+lecture de votre perception du monde et dans le…
+
+1:01:06.640,1:01:09.540
+lorsque vous propagerez cette incertitude dans votre modèle prédictif.
+
+1:01:13.599,1:01:19.919
+[Alfredo : je pense que tu voulais aborder le point comme quoi c'est différent de l’apprentissage par renforcement] 
+
+1:01:20.400,1:01:23.839
+Ok, alors qu'est-ce que l’apprentissage par renforcement [abrégé en RL par la suite pour Reinforcement Learning] dans ce contexte ?
+
+1:01:24.559,1:01:28.239
+Ok, j'ai besoin d'une étape supplémentaire avant de parler du RL.
+
+1:01:30.559,1:01:32.559
+Voici cette étape
+
+1:01:36.240,1:01:43.599
+Donc ce que nous avions il y a juste une minute était un modèle prédictif qui est inscrit dans le temps.
+
+1:01:48.160,1:01:50.899
+Et le système
+
+1:01:54.240,1:02:00.419
+prend une séquence d'actions a1 a2 a3.
+
+1:02:05.339,1:02:10.558
+s1 s2 et ensuite nous avons la fonction de coût ici.
+
+1:02:13.200,1:02:15.280
+Ok, et ceci pourrait continuer à droite.
+
+1:02:16.400,1:02:17.359
+Maintenant
+
+1:02:17.359,1:02:19.359
+ce que nous aimerions pouvoir faire
+
+1:02:19.680,1:02:23.280
+ce n’est pas de faire cette optimisation par rapport à a1 a2 a3 a4,
+
+1:02:24.160,1:02:27.680
+chaque fois que nous devons faire un planning. Nous ne voulons pas avoir à
+
+1:02:28.400,1:02:39.440
+passer par ce processus complexe de rétropropager un gradient à travers tout ce système pour faire un contrôle du modèle prédictif.
+
+1:02:39.599,1:02:42.959
+Et donc un moyen simple de se débarrasser de cette étape
+
+1:02:43.680,1:02:49.280
+est la même astuce que nous utilisons dans les auto-encodeurs versus le codage épars. Donc, souvenez-vous ce qu’en codage épars nous voulions
+
+1:02:50.380,1:02:54.180
+Reconstruire. Mais ensuite nous avons dû faire une inférence par rapport à la variable latente par optimisation.
+
+1:02:54.880,1:02:56.319
+Et cela s'est avéré être
+
+1:02:56.319,1:03:02.639
+coûteux. Nous avons donc parlé la semaine dernière de l'idée d'utiliser un encodeur que nous avons entraîné pour prédire directement la valeur optimale.
+
+1:03:03.440,1:03:05.440
+D'accord, et nous allons faire de même ici.
+
+1:03:05.760,1:03:08.639
+C'est ce qui a donné naissance à l'idée de l’encodeur épars. Nous allons faire la même chose ici.
+
+1:03:09.039,1:03:11.919
+Je vais entraîner un réseau pour prendre l'état
+
+1:03:13.119,1:03:15.119
+et directement
+
+1:03:15.339,1:03:21.459
+prévoir la valeur optimale de l'action. Et ce réseau nous allons l’appliquer à chaque étape.
+
+1:03:30.799,1:03:33.279
+Et cela va s'appeler un réseau politique.
+
+1:03:37.039,1:03:39.039
+D'accord, donc le réseau politique prend l'état
+
+1:03:40.240,1:03:42.240
+et produit une supposition
+
+1:03:42.559,1:03:44.559
+sur la meilleure action
+
+1:03:44.880,1:03:46.400
+à prendre à
+
+1:03:46.400,1:03:50.000
+cet instant, afin de minimiser le coût global.
+
+1:03:51.039,1:03:53.039
+Et ce sera un réseau de neurones pouvant être entraîné
+
+1:03:53.520,1:03:59.539
+ou n'importe quel modèle paramétré que nous voulons. La façon dont nous allons entraîner ce modèle est essentiellement la rétropropagation.
+
+1:03:59.760,1:04:01.760
+Ok, donc nous allons,
+
+1:04:02.160,1:04:06.000
+en utilisant notre module de perception…
+
+1:04:07.039,1:04:08.319
+C'est le monde ici.
+
+1:04:08.319,1:04:10.079
+Nous regardons le monde avec une caméra
+
+1:04:10.079,1:04:13.919
+et il y a un module de perception qui nous donne une idée de l'état du monde.
+
+1:04:14.880,1:04:16.880
+Ok, c'est la perception.
+
+1:04:19.599,1:04:22.578
+Et il s'agit d'un modèle prédictif appliqué à plusieurs étapes temporelles.
+
+1:04:27.200,1:04:29.200
+Et c'est notre coût.
+
+1:04:30.240,1:04:32.240
+Ok, donc ce que nous pouvons faire
+
+1:04:33.359,1:04:34.960
+est
+
+1:04:34.960,1:04:36.960
+de faire fonctionner le système.
+
+1:04:37.760,1:04:39.760
+Et pour faire fonctionner le système, nous devons d'abord
+
+1:04:42.640,1:04:44.640
+passer en revue la perception.
+
+1:04:44.799,1:04:46.400
+Nous calculons
+
+1:04:46.400,1:04:47.200
+une
+
+1:04:47.200,1:04:51.439
+action, nous exécutons cette action par le biais du modèle prédictif. Ce modèle nous donne l'état suivant.
+
+1:04:51.440,1:04:53.440
+Nous allons être en mesure de calculer le coût.
+
+1:04:53.760,1:04:55.359
+Et puis continuer.
+
+1:04:55.359,1:04:57.359
+Ok, continuer à faire ça.
+
+1:04:57.359,1:05:02.719
+Il suffit d'avancer dans tout ce système, qui est en fait une sorte de réseau récurrent déroulé si vous voulez.
+
+1:05:04.000,1:05:10.479
+Et une fois que vous avez terminé, vous rétropropagez les gradients de tous les termes de la fonction de coût
+
+1:05:11.839,1:05:16.159
+tout au long du réseau grâce aux paramètres de
+
+1:05:17.599,1:05:19.599
+ce réseau politique.
+
+1:05:20.799,1:05:22.799
+D'accord, donc en gros, vous calculez
+
+1:05:24.240,1:05:28.000
+le ∂C. Souvenez-vous grand C est la somme de tous les c
+
+1:05:28.880,1:05:30.640
+sur un long temps.
+
+1:05:30.640,1:05:32.640
+Sur ∂W.
+
+1:05:33.119,1:05:36.798
+Ok, et ce sera juste la somme au fil du temps de
+
+1:05:38.640,1:05:41.619
+grand C sur ∂W.
+
+1:05:44.799,1:05:46.799
+Désolé. Grand C sur
+
+1:05:48.000,1:05:49.339
+∂at
+
+1:05:50.640,1:05:52.640
+∂at/∂W.
+
+1:05:53.760,1:05:57.359
+D'accord. J'ai juste appliqué la règle de la chaîne, mais je n'ai pas besoin de… 
+
+1:05:58.000,1:06:01.280
+Il faut juste définir cette fonction en PyTorch et faire la rétropropagation. Il suffit de faire ce qu'il faut.
+
+1:06:03.440,1:06:08.159
+Je peux calculer le gradient du coût global par rapport aux paramètres de ce réseau politique.
+
+1:06:09.039,1:06:11.359
+Et donc, si j'entraîne cela sur un nombre suffisant d’exemples
+
+1:06:13.039,1:06:14.799
+Si mon modèle prédictif est correct,
+
+1:06:14.799,1:06:19.839
+si ma fonction de coût fait ce que je veux, alors mon réseau politique va apprendre une bonne politique qui
+
+1:06:20.559,1:06:24.419
+examine juste l'état et réduira au minimum le coût prévu sur la trajectoire.
+
+1:06:25.200,1:06:26.240
+Ok.
+
+1:06:26.240,1:06:30.159
+Le coût moyen sur une trajectoire. Il n'y a pas d'apprentissage par renforcement ici. Ce n’est que
+
+1:06:31.200,1:06:33.200
+de la rétropropagation.
+
+1:06:33.520,1:06:38.079
+Nous pouvons maintenant parler de la différence avec l'apprentissage par renforcement. La principale différence avec l'apprentissage par renforcement ici
+
+1:06:39.359,1:06:44.338
+est double. La premiere est dans l'apprentissage par renforcement…
+
+1:06:46.880,1:06:50.960
+Dans la plupart des scénarios d’entraînement par renforcement
+
+1:06:53.520,1:06:57.780
+la fonction c est une boîte noire. C'est une boîte noire, pas une boîte rouge.
+
+1:07:07.119,1:07:13.619
+Ok, c'est la première différence. La deuxième différence est que ce n'est pas un modèle prédictif du monde. C'est le monde réel.
+
+1:07:23.039,1:07:29.999
+Et votre mesure de l'état du monde est imparfaite, donc à l'intérieur de ce réseau politique vous pourriez avoir un réseau de perception ici.
+
+1:07:31.920,1:07:37.280
+Qui estime l'état du monde de sorte que vous n'avez aucun contrôle sur le monde réel.
+
+1:07:38.640,1:07:40.640
+Et votre fonction de coût n'est pas connue.
+
+1:07:41.339,1:07:45.359
+Vous pouvez juste obtenir le résultat de la fonction de coût en essayant simplement quelque chose.
+
+1:07:45.520,1:07:47.759
+Vous prenez une action dont vous voyez l'effet sur le monde
+
+1:07:48.559,1:07:50.400
+et cela vous donne
+
+1:07:51.520,1:07:54.639
+ce que les gens en renforcement appellent une récompense. Mais ce n'est qu'un coût négatif.
+
+1:07:55.280,1:07:57.839
+Ok c’est la valeur de la valeur négative de votre coût.
+
+1:07:59.520,1:08:03.359
+Mais le coût n'est pas différenciable. Vous ne connaissez pas la fonction du coût. Vous devez essayer sur le monde
+
+1:08:03.920,1:08:05.920
+pour déterminer la valeur du coût.
+
+1:08:06.799,1:08:08.799
+Ok
+
+1:08:09.200,1:08:14.500
+Et c'est le principal problème du RL, c'est-à-dire que la fonction de coût n'est pas différenciable.
+
+1:08:16.799,1:08:18.080
+C'est inconnu.
+
+1:08:18.080,1:08:25.039
+La seule façon de l'estimer est d'essayer quelque chose et d'observer ensuite la valeur de la récompense, qui est en réalité négative.
+
+1:08:25.759,1:08:28.959
+Le négatif de la récompense est essentiellement votre coût. Ok ?
+
+1:08:30.640,1:08:33.619
+Donc, dans cette situation, puisque vous ne pouvez pas évaluer les gradients
+
+1:08:35.359,1:08:37.599
+pour minimiser vos coûts, vous devez essayer plusieurs choses.
+
+1:08:37.679,1:08:42.639
+Vous devez essayer une action pour voir le résultat et ensuite essayer une autre action pour voir si le résultat est meilleur.
+
+1:08:43.199,1:08:45.359
+Et ensuite, essayez une autre action pour voir si le résultat est meilleur.
+
+1:08:46.080,1:08:48.080
+Si votre fonction de coût est très plate,
+
+1:08:48.560,1:08:53.919
+vous devez essayer beaucoup de choses avant d'obtenir une récompense non nulle ou un coût non élevé.
+
+1:08:55.359,1:08:59.838
+Et c'est donc là que la complexité se situe. Il y a le problème supplémentaire de
+
+1:09:00.540,1:09:02.159
+l'exploration.
+
+1:09:03.520,1:09:08.339
+Car vous ne connaissez pas la forme du coût et parce qu'il n'est pas différenciable
+
+1:09:10.159,1:09:13.599
+vous pourriez avoir besoin d'essayer de nombreuses actions de manière intelligente pour trouver
+
+1:09:13.679,1:09:18.819
+dans quelle partie de l'espace aller pour pouvoir en quelque sorte trouver comment améliorer la performance.
+
+1:09:19.679,1:09:21.679
+Ok, c'est donc le principal problème.
+
+1:09:22.000,1:09:23.920
+Celui de
+
+1:09:23.920,1:09:30.879
+l'exploration. Et puis il y a la question de l'exploration contre l'exploitation. Donc le fait que
+
+1:09:31.679,1:09:36.799
+lorsque vous êtes dans une situation, vous ne voulez pas prendre des mesures complètement aléatoires car elles risquent de ne rien donner d'intéressant.
+
+1:09:36.960,1:09:40.719
+Vous voulez donc prendre des mesures qui sont assez proches de ce que vous pensez qui pourrait fonctionner.
+
+1:09:43.580,1:09:45.580
+A l'occasion, essayer quelque chose d'autre
+
+1:09:46.000,1:09:48.399
+pendant que vous apprenez et apprenez votre politique au fur et à mesure.
+
+1:09:49.279,1:09:52.079
+Ce que je décris, ce que je décrivais juste avant
+
+1:09:52.960,1:09:57.600
+est une situation où vous pouvez faire tout cela dans votre tête car vous avez un modèle du monde.
+
+1:09:59.040,1:10:04.239
+Et vous pouvez optimiser votre séquence d'action très efficacement car vous avez une fonction de coût différenciable.
+
+1:10:05.040,1:10:09.679
+Votre fonction de coût est calculée par votre propre cerveau si vous voulez à l'intérieur de votre agent.
+
+1:10:10.640,1:10:15.839
+Vous pouvez dire si vous saisissez le stylo, vous pouvez dire la distance entre votre main et le stylo.
+
+1:10:16.159,1:10:22.399
+Vous pouvez donc calculer votre propre fonction de coût et, en quelque sorte, dans votre monde interne, le modèle est différenciable dans le monde réel.
+
+1:10:22.480,1:10:23.679
+Ce n'est pas le cas
+
+1:10:23.679,1:10:25.679
+dans le monde réel. Vous ne connaissez pas la dérivée
+
+1:10:26.239,1:10:31.119
+de la distance entre votre main et le stylo, à moins que vous n'ayez un modèle de cela dans votre tête. Mais
+
+1:10:31.679,1:10:37.439
+par défaut, vous ne le faites pas, mais comme tout est dans votre tête, tout est différenciable. Tout est mis en œuvre par le réseau neuronal et tout.
+
+1:10:37.600,1:10:39.600
+Vous pouvez rétropropager de manière appropriée à tout.
+
+1:10:40.080,1:10:45.919
+C'est donc le grand avantage de ce type d'approche par rapport au RL. Faites en sorte que tout soit différenciable.
+
+1:10:46.560,1:10:51.620
+Il y a deux problèmes avec le monde. Il y a donc un gros avantage dans ce genre de scénario
+
+1:10:53.280,1:10:57.199
+c'est-à-dire que vous pouvez l’éxécuter plus rapidement qu'en temps réel car votre modèle prédictif à l'intérieur de votre
+
+1:10:57.840,1:11:00.640
+agent peut aller aussi vite que vous le souhaitez. Vous n'avez pas besoin d’éxécuter
+
+1:11:01.280,1:11:06.719
+à travers le monde. D'accord, c'est un avantage. Le deuxième avantage, est que les actions que vous menez
+
+1:11:07.360,1:11:09.199
+ne vous tuera pas
+
+1:11:09.199,1:11:10.159
+parce que
+
+1:11:10.159,1:11:11.440
+vous pouvez prévoir,
+
+1:11:11.440,1:11:15.520
+en utilisant votre modèle avancé, peut-être que vous prédirez que l'action vous tuera.
+
+1:11:15.600,1:11:17.600
+Mais vous n'allez pas la prendre dans le monde réel. Alors
+
+1:11:17.760,1:11:19.280
+cela ne vous tuera pas.
+
+1:11:19.280,1:11:21.280
+Si vous disposez d'un modèle prédictif précis.
+
+1:11:23.360,1:11:28.400
+Troisième avantage, car tout se passe dans votre tête. Tout est un réseau de neurones. Tout est différenciable.
+
+1:11:28.640,1:11:31.679
+Vous pouvez utiliser toutes sortes de moyens efficaces, d'apprentissage ou
+
+1:11:33.760,1:11:37.120
+d'algorithmes d'inférence pour déterminer une bonne série d’actions.
+
+1:11:40.880,1:11:43.520
+C'est la différence avec le RL. En RL
+
+1:11:44.800,1:11:46.640
+vous vous dites :
+
+1:11:46.640,1:11:48.640
+je dois passer par le monde réel.
+
+1:11:50.320,1:11:54.640
+Je n'ai pas de modèle du monde réel. Je ne sais pas comment calculer la fonction de coût de manière différenciée.
+
+1:11:55.280,1:11:57.600
+Cela dit, beaucoup de méthodes de RL
+
+1:11:58.320,1:12:01.600
+fonctionnent en entraînant un modèle de la fonction de coût.
+
+1:12:02.560,1:12:04.640
+Ok, donc les méthodes acteur/critique
+
+1:12:05.360,1:12:06.560
+essentiellement.
+
+1:12:06.560,1:12:08.480
+Le rôle du critique
+
+1:12:08.480,1:12:13.439
+est d'apprendre à évaluer pour en quelque sorte prédire la valeur de la
+
+1:12:13.760,1:12:16.719
+fonction objectivf globale. La valeur attendue de la fonction objectivf.
+
+1:12:17.520,1:12:21.839
+Et car c'est un réseau de neurones que vous allez entraîner. Vous pouvez rétropropager le gradient.
+
+1:12:21.840,1:12:25.520
+Vous apprenez donc en gros une approximation de la fonction de coût du monde réel
+
+1:12:26.480,1:12:30.159
+en utilisant un réseau neuronal. C'est le rôle d'un critique.
+
+1:12:32.000,1:12:37.359
+Ok, pourquoi est-ce si bien d'avoir des modèles quand on apprend
+
+1:12:39.840,1:12:42.319
+des compétences comme l'apprentissage de la conduite, par exemple ?
+
+1:12:44.320,1:12:45.920
+Il s'agit essentiellement que cela
+
+1:12:45.920,1:12:48.719
+permet d'apprendre rapidement et d'apprendre sans se tuer.
+
+1:12:49.360,1:12:53.759
+Donc, si vous n'avez pas un bon modèle du monde, vous ne connaissez pas la gravité. Vous ne connaissez pas la dynamique des objets.
+
+1:12:54.239,1:12:56.319
+Vous ne savez rien.
+
+1:12:57.040,1:13:02.159
+Vous mettez un agent au volant d'une voiture. L'agent n'a aucune idée de ce qu'est la physique d'une voiture.
+
+1:13:02.880,1:13:04.880
+Ok, et vous avez mis la voiture à côté d'une falaise.
+
+1:13:05.360,1:13:09.199
+La voiture roule à environ 50km/h à côté d'une falaise.
+
+1:13:10.719,1:13:15.359
+L'agent n'a pas de modèle du monde et n'a aucune idée qu'en tournant la roue vers la droite.
+
+1:13:15.840,1:13:19.520
+La voiture tombera dans le ravin.
+
+1:13:20.960,1:13:23.040
+Il doit en fait essayer de comprendre ça.
+
+1:13:23.679,1:13:26.639
+Il faut tomber dans le ravin pour se rendre compte que c'est une mauvaise idée.
+
+1:13:28.159,1:13:30.719
+Et peut-être qu’à partir d'un échantillon, il ne va pas pouvoir l'apprendre.
+
+1:13:30.719,1:13:33.839
+Il va donc falloir qu'il se jette dans le ravin des milliers de fois avant qu'il ne s'en rende compte
+
+1:13:34.640,1:13:39.919
+du modèle du monde selon lequel le fait de tourner le volant vers la droite fait d'abord tourner la voiture vers la droite et ensuite que lorsque la
+
+1:13:40.320,1:13:43.199
+voiture passe au-dessus d'un ravin, elle tombe dedans et se détruit.
+
+1:13:44.400,1:13:48.319
+Ok, si vous avez un modèle du monde qui comprend la gravité et des choses comme ça
+
+1:13:48.719,1:13:52.158
+alors vous savez que tourner le volant à droite va faire tomber la voiture dans le ravin.
+
+1:13:52.220,1:13:54.320
+Et vous ne le faites pas car vous savez que cela va vous tuer.
+
+1:13:54.480,1:14:00.159
+Donc cela permet aux humains et aux animaux d'apprendre rapidement beaucoup plus vite que n'importe quelles 
+
+1:14:00.880,1:14:08.400
+modèles et méthodes d'apprentissage par renforcement qui ont été conçues. Nous avons en tête de très très bons modèles du monde
+
+1:14:13.340,1:14:15.340
+Qu'est-ce que cela nous apprend ?
+
+1:14:16.560,1:14:19.919
+Voilà donc le problème avec le monde. Le monde n'est pas déterministe
+
+1:14:20.800,1:14:22.800
+ou s’il l’est,
+
+1:14:23.679,1:14:25.600
+il est si complexe qu’il
+
+1:14:25.600,1:14:29.519
+pourrait tout aussi bien être non déterministe. Cela ne fait aucune différence pour nous.
+
+1:14:31.280,1:14:35.120
+Il y a deux problèmes pour prédire le prochain état du monde : le premier problème est
+
+1:14:35.840,1:14:37.840
+que le monde n'est pas entièrement prévisible.
+
+1:14:38.640,1:14:41.699
+Et il ne pourrait pas être entièrement prévisible pour deux raisons appellées
+
+1:14:42.380,1:14:46.980
+incertitude aléatoire et incertitude épistémique. L’incertitude aléatoire
+
+1:14:47.679,1:14:49.679
+est due au fait que le monde est intrinsèquement
+
+1:14:50.480,1:14:52.000
+imprévisible.
+
+1:14:52.000,1:14:57.040
+Ou le fait que nous ne disposons pas de caractéristiques complètes sur l'état du monde, de sorte que nous ne pouvons pas prévoir exactement ce qui va se passer ensuite.
+
+1:14:57.679,1:14:58.560
+Donc
+
+1:14:58.560,1:15:02.640
+vous me regardez en ce moment. Vous avez un assez bon modèle de l'environnement immédiat de moi.
+
+1:15:03.199,1:15:08.799
+Ok, mais vous ne pouvez pas prévoir exactement de quelle manière je vais bouger la tête ensuite car vous n'avez pas de modèle précis de ce qui est
+
+1:15:08.800,1:15:10.320
+à l'intérieur de mon crâne.
+
+1:15:10.320,1:15:12.320
+Ok votre système perceptuel
+
+1:15:12.400,1:15:14.400
+ne vous donne pas un modèle complet de
+
+1:15:14.880,1:15:17.219
+comment mon cerveau fonctionne. Malheureusement.
+
+1:15:20.000,1:15:21.440
+Donc
+
+1:15:21.440,1:15:23.280
+vous ne pouvez donc pas exactement prédire ce que
+
+1:15:23.280,1:15:26.640
+je vais faire ensuite, ce que je vais dire, comment je vais bouger la tête etcetera
+
+1:15:28.880,1:15:30.880
+Donc, c'est l’incertitude aléatoire.
+
+1:15:32.300,1:15:36.960
+Il y a aussi l'incertitude épistémique. L'incertitude épistémique est le fait que vous ne pouvez pas
+
+1:15:37.679,1:15:39.679
+prédire complètement le prochain
+
+1:15:39.679,1:15:41.520
+état du monde.
+
+1:15:41.520,1:15:44.399
+Car la quantité de données d’entraînement que vous avez eue n'est pas suffisante.
+
+1:15:44.560,1:15:47.120
+Votre modèle n'a pas été suffisamment entraîné pour comprendre.
+
+1:15:47.679,1:15:49.679
+Ok, c'est un type
+
+1:15:49.920,1:15:51.340
+différent
+
+1:15:51.340,1:15:52.880
+d'incertitude.
+
+1:15:52.880,1:15:56.880
+La grande question est donc maintenant de savoir comment entraîner des modèles du monde dans l'incertitude. Je vous donne
+
+1:15:57.679,1:15:59.280
+un s(t).
+
+1:15:59.280,1:16:01.280
+Pouvez-vous prévoir s(t+1) ?
+
+1:16:01.920,1:16:06.799
+C'est le même problème que nous avons rencontré avant de commencer l’apprentissage supervisé. Je vous donne un x. Pouvez-vous prédire y ?
+
+1:16:07.280,1:16:10.880
+Mais le problème est qu'il existe maintenant des y multiples qui sont compatibles avec x. Les multiples
+
+1:16:10.960,1:16:14.719
+S(t+1) sont compatibles avec s même pour une action donnée.
+
+1:16:19.340,1:16:24.640
+Alors, qu'est-ce que cela signifie ? Que notre modèle ici, notre modèle prédictif
+
+1:16:28.880,1:16:35.839
+peut prendre l'état du monde et une action, mais il devra aussi prendre
+
+1:16:38.880,1:16:44.400
+une variable latente dont on ne connaît pas la valeur pour prédire l'état suivant.
+
+1:16:47.340,1:16:51.199
+Cela ressemble beaucoup à ce dont nous avons parlé tout à l'heure où nous avons…
+
+1:16:51.840,1:16:54.960
+Je vais dessiner cela dans une topologie différente, mais c'est la même idée.
+
+1:16:56.800,1:16:58.800
+Nous avions donc x
+
+1:16:59.760,1:17:01.760
+que nous passions dans
+
+1:17:02.460,1:17:04.460
+un prédicteur
+
+1:17:05.199,1:17:08.239
+qui calcule h et puis ça passait
+
+1:17:12.400,1:17:16.719
+dans un décodeur qui prendra en compte une variable latente pour prédire
+
+1:17:20.140,1:17:22.140
+y̅. Ensuite nous observons y.
+
+1:17:24.320,1:17:26.560
+Ok, c'est une prédiction pour s. Et peut-être
+
+1:17:27.760,1:17:29.040
+à un moment donné
+
+1:17:29.040,1:17:30.800
+nous pourrions être en mesure de
+
+1:17:30.800,1:17:34.560
+d'agir et observer l'état du monde pendant que nous entraînons notre modèle.
+
+1:17:34.719,1:17:36.959
+Nous allons en fait observer le prochain état du monde
+
+1:17:38.239,1:17:40.239
+t+1.
+
+1:17:42.640,1:17:46.559
+Ok, donc pour entraîner un modèle prédictif nous prenons l'état S(t).
+
+1:17:47.360,1:17:49.360
+Nous prenons une mesure si nous avons une mesure.
+
+1:17:49.760,1:17:54.159
+Nous avons une variable latente et notre prédiction s'inscrit dans une fonction de coût.
+
+1:17:55.760,1:17:58.800
+Ce diagramme est exactement identique à celui de droite.
+
+1:18:03.840,1:18:08.799
+C'est pareil, c'est exactement le même diagramme. Sauf que j'ai divisé le
+
+1:18:10.320,1:18:12.320
+modèle prédictif en deux modules.
+
+1:18:12.880,1:18:15.040
+Ok, je lui ai donné une
+
+1:18:15.820,1:18:17.920
+Architecture particulière. En fait, je pourrais faire cela
+
+1:18:18.800,1:18:20.800
+plus explicite.
+
+1:18:22.480,1:18:27.839
+[Alfredo : Je pense que tu as choisi le marqueur super épais.] Je l'ai. Oui, vous n'aimez pas ça, hein ?
+
+1:18:29.920,1:18:31.920
+C’est donc mon modèle prédictif.
+
+1:18:33.280,1:18:39.780
+Ok, donc c'est ce qu'il y a à l'intérieur de cette boite. A l'intérieur de la boite du modèle prédictif.
+
+1:18:42.560,1:18:44.560
+Et j'ai renommé…
+
+1:18:47.600,1:18:52.079
+S(t) est maintenant appelé x et s(t+1) n'est pas appelé y.
+
+1:18:52.880,1:19:00.020
+Mais c'est la même chose dans les ailleurs ok C'est donc le même scénario que celui dont nous avons parlé précédemment dans les modèles à base d’énergie à variable latente.
+
+1:19:00.560,1:19:05.120
+Mais maintenant, nous allons utiliser cela pour entraîner un modèle prédictif pour prédire ce qui va se passer dans le monde.
+
+1:19:07.360,1:19:09.360
+Donc
+
+1:19:13.199,1:19:17.839
+nous devrons peut-être appliquer les mêmes astuces que celles dont nous avons parlé la semaine dernière.
+
+1:19:19.360,1:19:21.360
+C'est-à-dire que, 
+
+1:19:23.280,1:19:27.759
+la semaine dernière, nous avons expliqué que nous pouvons prendre…
+
+1:19:30.400,1:19:33.299
+Ok, la façon dont j'ai dessiné ça la semaine dernière était légèrement différente.
+
+1:19:44.320,1:19:46.320
+Ce qui a été expliqué la semaine dernière, c'est que nous pouvons…
+
+1:19:47.199,1:19:51.279
+si pendant l’entraînement de notre modèle prédictif, nous avons une paire x et y
+
+1:19:53.199,1:19:59.839
+et la façon dont nous trouvons la valeur de z est en minimisant l'énergie par rapport à z, de sorte que nous trouvons
+
+1:20:00.800,1:20:02.480
+z*.
+
+1:20:02.480,1:20:04.480
+Ce qui est l'argmin
+
+1:20:05.679,1:20:13.199
+de c(y ,y̅), y̅  étant le résultat du prédicteur de notre système.
+
+1:20:15.360,1:20:17.199
+Ok.
+
+1:20:17.199,1:20:24.158
+Et puis nous faisons une étape de descente de gradient, donc nous changeons les paramètres de tout notre système en fonction du gradient
+
+1:20:25.840,1:20:29.279
+du coût. Mais pour que cela fonctionne, nous avons dû régulariser z.
+
+1:20:29.920,1:20:31.920
+Limiter son contenu informatif.
+
+1:20:34.320,1:20:36.320
+Et nous devons faire de même ici.
+
+1:20:37.600,1:20:44.079
+Pourquoi ? Eh bien, nous sommes ici pour essayer de résoudre un problème de prédiction, mais
+
+1:20:45.340,1:20:48.080
+imaginez et nous en avons parlé il y a quelques semaines…
+
+1:20:49.280,1:20:54.259
+je vous donne un x et un y et vous trouvez le z qui minimise l'énergie globale et le z n'est pas régularisé.
+
+1:20:54.880,1:20:58.400
+Si z est de la même dimension que y, il y aura probablement
+
+1:20:59.120,1:21:02.479
+un z pour tout y qui rend la fonction de coût nulle.
+
+1:21:03.679,1:21:05.679
+S'il y a suffisamment de capacité en z,
+
+1:21:06.400,1:21:10.799
+il y aura toujours une valeur de z qui rendra la fonction de coût nulle.
+
+1:21:12.719,1:21:15.839
+Et c'est mauvais car cela signifie que ma fonction énergie va être complètement plate.
+
+1:21:16.480,1:21:21.279
+Ce sera zéro partout et alors que j'ai besoin que ce soit petit sur les échantillons de entraînement et grand
+
+1:21:21.820,1:21:24.500
+en dehors de la région à forte densité de données.
+
+1:21:25.920,1:21:32.080
+Ce que nous avons vu ces dernières semaines, c'est qu'en régularisant z, on limite sa capacité. Soit
+
+1:21:33.199,1:21:36.079
+en la rendant éparse par exemple, ou en la rendant discrète ou
+
+1:21:39.040,1:21:45.120
+en la rendant bruyante. Nous pouvons limiter cette capacité. [Etudiant : Pourquoi avons-nous besoin de zt si vous avez déjà at ?]
+
+1:21:46.960,1:21:49.040
+Eh bien at est l’action que vous prenez.
+
+1:21:52.320,1:21:54.000
+Ok.
+
+1:21:56.800,1:21:58.800
+Je vais laisser ce stylo tomber.
+
+1:21:58.960,1:22:01.120
+Mais vous ne savez pas dans quelle direction il va aller.
+
+1:22:02.159,1:22:04.719
+Disons qu'il va par là.
+
+1:22:05.440,1:22:11.520
+Je dois prévoir à l'avance la direction que cela va prendre. C'est comme si… Ok voici une meilleure situation :
+
+1:22:13.840,1:22:15.920
+vous êtes un gardien de but au football.
+
+1:22:17.040,1:22:18.080
+Ok
+
+1:22:18.080,1:22:20.879
+et c'est un penalty. Donc, vous avez devant le
+
+1:22:22.000,1:22:23.340
+tireur devant vous.
+
+1:22:23.340,1:22:27.199
+Il va taper dans le ballon et vous allez devoir sauter d'une façon ou d'une autre.
+
+1:22:27.760,1:22:29.840
+Et vous devez faire un choix. Est-ce que je saute à gauche ou à droite ?
+
+1:22:30.880,1:22:35.600
+Et vous devez prendre cette décision sur la base de ce que vous observez de la personne mais vous ne savez pas exactement
+
+1:22:36.000,1:22:41.040
+ce que la balle va faire. a est la direction dans laquelle vous allez sauter. Je veux dire, c'est essentiellement la façon dont vous sautez.
+
+1:22:42.400,1:22:44.000
+z est
+
+1:22:44.000,1:22:48.319
+ce que vous ne savez pas sur ce que fait le joueur devant vous. Ok, vous ne connaissez pas l'état du monde.
+
+1:22:48.320,1:22:50.000
+Vous ne connaissez pas l'état du cerveau de ce type.
+
+1:22:50.000,1:22:52.959
+Et donc, vous ne savez pas s'il va tirer à gauche ou à droite ou en haut ou en bas.
+
+1:22:54.800,1:22:56.639
+Ok.
+
+1:22:56.639,1:22:59.679
+C'est la différence. z est ce que vous ne pouvez pas
+
+1:23:00.960,1:23:06.960
+connaître à propos du monde et qui est nécessaire pour faire la prédiction de l'état suivant. a est l'action que vous entreprenez.
+
+1:23:08.880,1:23:13.920
+Ce qui, dans ce cas, a très peu d'influence sur l'état immédiat du monde. [Alfredo : il semble que ce soit clair maintenant].
+
+1:23:15.120,1:23:16.400
+Ok, donc
+
+1:23:16.400,1:23:21.040
+vous devez régulariser z et ensuite une des astuces que nous avons décrit…
+
+1:23:23.920,1:23:29.199
+Donc, l'une des choses que nous avons décrites pour régulariser z était l’éparsité, une autre était l'ajout de bruit.
+
+1:23:35.440,1:23:38.399
+Mais l'autre astuce que nous avons décrite est cette idée d'avoir un encodeur.
+
+1:23:39.840,1:23:41.840
+Vous avez x ou s(t).
+
+1:23:42.880,1:23:44.880
+Cela traverse
+
+1:23:44.880,1:23:46.880
+le prédicteur puis va dans
+
+1:23:48.000,1:23:49.920
+le décodeur
+
+1:23:49.920,1:23:51.840
+qui fait une prédiction sur
+
+1:23:51.840,1:23:53.840
+y. Appelons ça y̅.
+
+1:23:55.040,1:23:57.040
+Et vous comparez oups, désolé.
+
+1:24:00.960,1:24:04.159
+Vous comparez y̅ à y.
+
+1:24:07.360,1:24:12.239
+Et ici vous avez z et ce dont nous avons parlé est l'idée d'utiliser un encodeur ici.
+
+1:24:15.040,1:24:17.040
+Pour prédire la valeur optimale de z.
+
+1:24:18.320,1:24:20.400
+Et puis avoir une fonction de coût qui
+
+1:24:22.080,1:24:28.559
+détermine l'énergie, qui mesure l'écart entre la valeur de z que vous utilisez réellement et la valeur de z prédite par l’encodeur.
+
+1:24:29.440,1:24:31.440
+Et peut-être cela est régularisé
+
+1:24:32.400,1:24:34.400
+d'une manière ou d'une autre.
+
+1:24:37.040,1:24:39.600
+Et le prédicteur doit également influencer l’encodeur.
+
+1:24:41.920,1:24:45.600
+Il est donc clair que vous avez besoin d'un goulot d'étranglement de l’information
+
+1:24:47.679,1:24:49.040
+entre l’encodeur et le décodeur.
+
+1:24:49.040,1:24:51.519
+Sinon le système trichera. Il ignorera complètement x.
+
+1:24:52.000,1:24:56.239
+Vous serez en mesure de prédire y exactement en trichant. Simplement en regardant la valeur de y.
+
+1:24:56.480,1:25:02.399
+En la faisant passer dans l’encodeur, puis dans le décodeur et en la prédisant ok ? Ce n'est qu'un encodeur très simple.
+
+1:25:02.400,1:25:08.719
+Ainsi, à moins de restreindre la capacité de z, le système se contentera de tricher et ne s'entraînera pas réellement à prédire.
+
+1:25:09.199,1:25:11.299
+Vous devez pousser vers le bas le contenu de l’information 
+
+1:25:12.560,1:25:19.600
+de z afin de forcer le système à utiliser les informations de x
+
+1:25:20.880,1:25:23.460
+pour faire la meilleure prédiction.
+
+1:25:27.040,1:25:32.959
+Ok, maintenant nous pouvons utiliser cette astuce pour entraîner notre modèle prédictif.
+
+1:25:34.000,1:25:37.759
+Parce qu'une fois de plus, un modèle prédictif n'est en fait qu'un exemple.
+
+1:25:39.340,1:25:43.440
+Ceci est le projet 
+
+1:25:44.800,1:25:46.800
+sur la conduite autonome sur lequel
+
+1:25:47.440,1:25:53.540
+mon ancien étudiant Mikael Henaff a travaillé. Alfredo a travaillé sur ce projet et y travaille encore.
+
+1:25:54.880,1:25:59.120
+Et donc ici, vous essayez d'entraîner une voiture à se conduire toute seule.
+
+1:26:03.360,1:26:06.480
+Il est difficile de prévoir ce que fera la voiture qui vous entoure.
+
+1:26:07.520,1:26:12.719
+Vous placez donc une caméra au-dessus d'une autoroute et vous regardez les voitures passer.
+
+1:26:14.239,1:26:16.239
+Et vous pouvez suivre chaque voiture.
+
+1:26:16.960,1:26:20.239
+Ensuite, extraire le voisinage immédiat de la voiture. En gros
+
+1:26:20.480,1:26:24.560
+un petit rectangle autour de chaque voiture qui indique où se trouvent les autres voitures par rapport à la
+
+1:26:25.120,1:26:26.639
+à votre voiture.
+
+1:26:26.639,1:26:30.879
+Et c'est ce qui est représenté en bas. Donc en bas vous
+
+1:26:31.600,1:26:34.079
+avez un petit rectangle centré autour d'une voiture donnée
+
+1:26:34.719,1:26:36.719
+et puis toutes les voitures autour ont
+
+1:26:38.239,1:26:41.119
+un petit rectangle centré sur où se trouve la voiture
+
+1:26:41.920,1:26:43.020
+dans un
+
+1:26:43.020,1:26:47.040
+emplacement standard au milieu de ce rectangle. Vous le faites pour chaque voiture.
+
+1:26:47.440,1:26:51.440
+Cela vous donne pour chaque voiture une séquence de ce que les voitures qui l'entourent vont faire.
+
+1:26:52.480,1:26:55.279
+Et nous pouvons nous en servir pour entraîner un modèle prédictif.
+
+1:26:56.000,1:26:58.000
+Cela permettra de prévoir ce que feront les voitures qui nous entourent.
+
+1:26:59.600,1:27:06.799
+[Etudiant : la question est de savoir si ce modèle prédictif prédit tous les futurs possibles indépendamment de l'action prise ?].
+
+1:27:08.480,1:27:12.879
+Lorsque nous prévoyons un ensemble d'avenirs pour une action donnée…
+
+1:27:15.520,1:27:21.199
+Etant donné un état initial, une action et une valeur particulière de la variable latente qui feront une seule prédiction
+
+1:27:21.760,1:27:26.239
+vous pouvez faire varier la variable latente et vous ferez de multiples prédictions. Vous pouvez bien sûr modifier l'action.
+
+1:27:29.600,1:27:36.399
+J'ai redessiné ici le petit diagramme que j'avais dessiné précédemment. L'état est essentiellement une séquence de trois images de cette vidéo.
+
+1:27:38.320,1:27:40.320
+Il n'y a pas d'état abstrait ici. C'est juste
+
+1:27:41.920,1:27:46.000
+l'image elle-même. La voiture bleue est notre voiture et les voitures vertes sont les autres voitures.
+
+1:27:46.320,1:27:49.920
+Donc vous prenez trois images du passé et vous les passez dans ce
+
+1:27:50.880,1:27:54.960
+réseau neuronal qui tente de prédire la prochaine la prochaine image.
+
+1:27:55.600,1:27:57.600										                                
+Ok en utilisant un
+
+1:27:58.400,1:28:03.440
+grand réseau convolutif comme prédicteur et un grand réseau convolutif comme décodeur.
+
+1:28:04.159,1:28:07.119
+Mais il y a une variable latente ici. Il y a aussi une action ici, qui n'est pas dessinée.
+
+1:28:11.840,1:28:13.840
+Et le système dispose également d'un encodeur.
+
+1:28:15.360,1:28:17.360
+Il ressemble donc plutôt à ceci.
+
+1:28:18.400,1:28:20.799
+Encore une fois l'action ici n'est pas représentée mais
+
+1:28:21.679,1:28:23.520
+imaginez qu'il y en ait une.
+
+1:28:23.520,1:28:28.639
+Donc x est le passé, il passe par un prédicteur qui prédit une représentation de l'entrée.
+
+1:28:29.360,1:28:31.199
+Puis cette représentation
+
+1:28:31.199,1:28:32.480
+va dans
+
+1:28:32.480,1:28:34.480
+un réseau convolutif.
+
+1:28:34.960,1:28:37.040
+Le décodeur qui prédit est essentiellement
+
+1:28:37.760,1:28:39.760
+combiné de manière additive
+
+1:28:39.760,1:28:42.719
+avec une variable latente, c'est-à-dire ajoutée à une variable latente.
+
+1:28:44.320,1:28:47.520
+Avant d'entrer dans un décodeur qui fait une prédiction pour l'état suivant.
+
+1:28:49.760,1:28:52.719
+La variable latente est 
+
+1:28:53.920,1:28:56.159
+est prédite par un encodeur
+
+1:28:57.360,1:29:00.400
+qui est lui-même un réseau convolutif. Il prend le passé et le
+
+1:29:01.440,1:29:05.040
+l'avenir et tente de prédire la valeur idéale de la variable latente.
+
+1:29:05.600,1:29:06.000
+Maintenant, bien sûr
+
+1:29:06.000,1:29:12.319
+vous devez limiter le contenu de l’information ici. Et cela est fait dans ce projet particulier en utilisant une sorte d'approche de type VAE
+
+1:29:13.120,1:29:14.480
+où la…
+
+1:29:14.480,1:29:16.639
+Euh, je veux dire, c'est essentiellement un VAE
+
+1:29:17.280,1:29:19.280
+avec quelques astuces.
+
+1:29:20.159,1:29:22.799
+Ainsi, z est échantillonné à partir d'une distribution qui est obtenue
+
+1:29:23.920,1:29:30.159
+à partir de la sortie de l'encodeur. La sortie de l’encodeur fournit une prédiction z̅ ainsi qu'une prédiction pour les variances.
+
+1:29:30.560,1:29:34.080
+Et z est échantillonné à partir de cette distribution, donc il n'est pas optimisé. Il est échantillonné.
+
+1:29:36.400,1:29:42.560
+Mais il y a aussi un terme qui essaie de minimiser la somme du carré des z dans le temps, qui est la
+
+1:29:43.280,1:29:44.320
+technique
+
+1:29:44.320,1:29:46.320
+standard pour les VAE.
+
+1:29:46.320,1:29:48.320
+Et cela va dans le décodeur.
+
+1:29:48.639,1:29:54.879
+C'est pourquoi il est entraîné comme un auto-encodeur conditionnel. Il y a une autre astuce qui s'ajoute à cela, à savoir que
+
+1:29:55.520,1:30:01.279
+la moitié du temps z est simplement mis à zéro. Donc la moitié du temps où le système est informé que vous n'êtes pas autorisé à utiliser z.
+
+1:30:01.840,1:30:05.299
+Faites votre meilleure supposition comme la prédiction sans z.
+
+1:30:06.560,1:30:11.759
+Cela pousse le système à utiliser le passé d'une manière plus importante que si vous avez
+
+1:30:13.120,1:30:15.359
+juste un z bruyant. Si vous utilisez simplement
+
+1:30:16.000,1:30:21.120
+l'entraînement standard VAE, le système ignore fondamentalement le passé, il ne fait que tricher. Il regarde la
+
+1:30:22.080,1:30:23.679
+réponse y.
+
+1:30:23.679,1:30:27.359
+[Alfredo : je vais couvrir le reste plus en détail dans la video Practinum 9.
+
+1:30:27.440,1:30:30.399
+Peut-être voulez-vous dire quelque chose à propos des GANs ?
+
+1:30:32.960,1:30:37.279
+Parce que je vais en fait passer en revue toute la présentation]
+
+1:30:37.840,1:30:39.840
+Les GANs sont donc
+
+1:30:39.900,1:30:41.900
+une forme particulière d'apprentissage contrastif.
+
+1:30:42.639,1:30:46.079
+Souvenez-vous que lorsque nous avons parlé de l'apprentissage de modèle à base d’énergie
+
+1:30:47.840,1:30:49.520
+nous avons des
+
+1:30:49.520,1:30:51.520
+points de données.
+
+1:30:55.600,1:31:01.299
+Et notre modèle que je vais
+
+1:31:04.000,1:31:06.000
+dessiner comme ceci.
+
+1:31:10.239,1:31:17.599
+Avec une fonction de coût, il pourrait avoir n'importe quelle structure, mais je vais le dessiner comme ceci.
+
+1:31:27.440,1:31:29.839
+Il s'agirait donc d'une sorte de modèle de reconstruction.
+
+1:31:31.600,1:31:38.719
+Imaginez donc que le modèle ici est un auto-encodeur ou quelque chose comme ça, mais vous pouvez imaginer à peu près n'importe quoi.
+
+1:31:40.560,1:31:43.839
+Une version simplifiée. Je veux dire qu'une version plus générale serait juste
+
+1:31:44.639,1:31:46.560
+y va dans
+
+1:31:46.560,1:31:48.560
+une fonction de coût et je ne précise pas
+
+1:31:48.960,1:31:50.960
+à quoi ressemble la fonction de coût.
+
+1:31:51.920,1:31:53.920
+Ok
+
+1:31:54.960,1:32:01.699
+Ainsi, ce que la fonction de coût calcule (dans l'espace de y avec ici y bidimensionnel) est
+
+1:32:07.840,1:32:13.920
+une énergie que nous voulons faible sur les données et élevée en dehors des données.
+
+1:32:16.400,1:32:22.000
+Ici, j'ai délibérément dessiné une mauvaise fonction énergie, d'accord. Cette fonction énergie est mauvaise parce qu’elle
+
+1:32:24.560,1:32:31.919
+devrait être faible dans cette région où nous disposons de données et plus élevée à l'extérieur. Et pour l'instant, elle est assez faible
+
+1:32:32.719,1:32:34.719
+dans cette région, juste ici.
+
+1:32:39.340,1:32:45.040
+Nous avons donc parlé de méthodes contrastives [voir video du cours 7]. Elles consistent à prélever un échantillon
+
+1:32:46.239,1:32:48.239
+et pousser sur son énergie.
+
+1:32:48.800,1:32:50.800
+Et ensuite, le prélèvement d'un échantillon contrastif
+
+1:32:52.960,1:32:54.960
+que je vais dessiner en violet.
+
+1:32:55.840,1:32:57.840
+Donc l'échantillon contrastif doit être
+
+1:32:58.239,1:33:04.559
+un échantillon auquel notre modèle donne déjà peu d'énergie mais qui ne devrait pas. Nous allons la faire monter. Ok.
+
+1:33:05.760,1:33:07.840
+Alors, il faut augmenter l'énergie de ce type.
+
+1:33:09.679,1:33:15.839
+Baisser l'énergie de ce type. Et si vous continuez à bien choisir ces échantillons, ces échantillons contrastifs,
+
+1:33:18.639,1:33:23.439
+en minimisant une certaine fonction objectif qui veut rendre l'énergie des points bleu petite et l'énergie
+
+1:33:24.239,1:33:26.239
+des points roses élevée
+
+1:33:26.480,1:33:28.239
+alors le système
+
+1:33:28.239,1:33:29.840
+apprendra
+
+1:33:29.840,1:33:31.120
+correctement.
+
+1:33:31.120,1:33:35.699
+Nous avons donc vu plusieurs façons de générer des échantillons contrastifs. L'idée l'auto-encodeur débruiter
+
+1:33:36.159,1:33:39.599
+qui consiste à prélever un échantillon et à le corrompre d'une manière ou d'une autre.
+
+1:33:40.320,1:33:42.320
+Nous avons vu l'idée de la
+
+1:33:43.679,1:33:47.359
+divergence contrastive qui prend un échantillon et ensuite on descend l'énergie
+
+1:33:48.880,1:33:51.759
+avec un peu de bruit et cela vous donne un échantillon contrastif à pousser vers le haut.
+
+1:33:54.639,1:33:56.480
+Et nous avons vu
+
+1:33:56.480,1:34:00.959
+un certain nombre d'autres méthodes basées sur la connaissance préalable de la similarité entre les échantillons.
+
+1:34:01.679,1:34:03.199
+Voici une autre idée.
+
+1:34:03.199,1:34:10.158
+L'autre idée est d'entraîner un réseau neuronal à produire ces échantillons contrastifs de manière intelligente, et c'est l'idée de base des GANs.
+
+1:34:10.719,1:34:12.719
+Au moins une forme de GAN qu’on
+
+1:34:13.120,1:34:19.599
+appellerait des GANs à base d'énergie. Vous pouvez faire plusieurs formulations des GANs en fait. Il y a une liste complète de différents types de GAN.
+
+1:34:21.040,1:34:23.279
+Mais l'idée de base des GANs est ça.
+
+1:34:23.840,1:34:29.440
+Vous entraînez votre modèle à base d’énergie. Dans le contexte des GANs, il est appelé un discriminateur ou parfois un critique.
+
+1:34:30.000,1:34:32.799
+Mais c'est en gros très similaire à un modèle à base d’énergie.
+
+1:34:33.840,1:34:36.480
+Et vous l'entraînez à consommer peu d'énergie sur les points de données.
+
+1:34:37.120,1:34:39.120
+Puis vous
+
+1:34:39.120,1:34:44.479
+entraînez un autre réseau neuronal à générer des points de données contrastifs et vous déplacez leur énergie vers le haut.
+
+1:34:45.600,1:34:46.719
+Ok.
+
+1:34:46.719,1:34:48.639
+De sorte que le diagramme
+
+1:34:48.639,1:34:50.639
+général est quelque chose comme ceci.
+
+1:34:53.199,1:34:54.239
+Vous avez
+
+1:34:54.239,1:34:56.959
+un discriminateur et le discriminateur devrait vraiment ne pas
+
+1:34:57.920,1:35:00.399
+être dessiné de cette façon. Il pourrait s'agir d'un grand réseau neuronal.
+
+1:35:01.199,1:35:03.199
+Mais en fin de compte, oups, désolé
+
+1:35:07.280,1:35:09.280
+En fin de compte, c'est juste une fonction de coût.
+
+1:35:16.239,1:35:19.279
+Il faut donc une variable y.
+
+1:35:21.600,1:35:25.119
+Et il vous dit si c'est bon ou mauvais : énergie basse si c'est bon, énergie haute si c'est mauvais.
+
+1:35:27.679,1:35:29.679
+Ainsi, en une seule phase
+
+1:35:29.920,1:35:34.560
+vous collectez une donnée de l'ensemble de vos données et vous la donnez simplement à
+
+1:35:35.600,1:35:37.600
+votre discriminateur.
+
+1:35:37.760,1:35:40.420
+Ok, donc c'est un vrai y qui vient des données.
+
+1:35:45.360,1:35:47.040
+C'est un exemple d’entraînement.
+
+1:35:47.040,1:35:49.040
+Et vous dites que la sortie de
+
+1:35:49.840,1:35:51.119
+de ça
+
+1:35:51.119,1:35:53.859
+devrait être basse. Ok, je devrais écrire ça comme F.
+
+1:35:56.880,1:36:00.000
+Parce qu'après tout, c'est juste une fonction énergie.
+
+1:36:05.679,1:36:09.839
+Alors faites F(y) baisser
+
+1:36:12.159,1:36:18.799
+en changeant les paramètres correctement. Vous remplacez w par w - η
+
+1:36:20.960,1:36:22.159
+dF(y)/dW.
+
+1:36:22.159,1:36:24.959
+[Question : Alors F est un réseau neuronal ?] F est un réseau neuronal.
+
+1:36:25.600,1:36:29.679
+Ok, quelques fonctions paramétrées, mais probablement un réseau neuronal. Probablement un réseau neuronal assez compliqué.
+
+1:36:32.159,1:36:34.159
+Ok, c'est la
+
+1:36:34.159,1:36:35.280
+première chose.
+
+1:36:35.280,1:36:37.840
+Et cela rendra l'énergie des points de données petite.
+
+1:36:38.960,1:36:44.560
+Maintenant, il y a une forme conditionnelle. La forme conditionnelle a donc une entrée supplémentaire
+
+1:36:45.520,1:36:50.639
+qui est une observation. Mais vous pouvez avoir ceci ou non. C’est ce que l'on appelle encore du conditionnel. Cela n’a
+
+1:36:51.340,1:36:53.340
+Pas d’importance. Ok deuxième phase.
+
+1:36:54.719,1:36:56.719
+Pour les échantillons contrastifs
+
+1:36:57.520,1:36:59.679
+vous avez une variable latente z
+
+1:37:00.639,1:37:05.599
+que vous échantillonniez à partir d'une certaine distribution. Une distribution qui est facile à échantillonner, disons une gaussienne.
+
+1:37:06.300,1:37:08.300
+Une gaussienne multivariée.
+
+1:37:08.960,1:37:13.299
+Ou l'uniforme ou quelque chose que vous faites passer par ce qu'on appelle un générateur.
+
+1:37:16.000,1:37:18.739
+Il s'agit donc d'un réseau neuronal et ce réseau neuronal produit
+
+1:37:22.000,1:37:26.080
+quelque chose de similaire à y. Ok, ça produit juste une image. 
+
+1:37:29.360,1:37:32.900
+Et encore une fois, vous faites passer cela par votre discriminateur.
+
+1:37:36.960,1:37:38.960
+Mais maintenant, vous voulez faire en sorte que ce soit
+
+1:37:40.080,1:37:42.080
+grand.
+
+1:37:42.080,1:37:45.999
+Ok, donc en fait ce que je vous ai dit avant est un mensonge.
+
+1:37:47.360,1:37:50.000
+On ne fait pas cette mise à jour comme ça.
+
+1:37:54.560,1:37:57.679
+D'accord, mais ici, ce que vous voulez, c'est faire
+
+1:37:59.179,1:38:01.839
+Fw(y̅) grand.
+
+1:38:04.159,1:38:06.159
+Ok
+
+1:38:08.960,1:38:14.980
+Et ce que vous allez faire maintenant c’est entraîner simultanément le discriminateur et le générateur.
+
+1:38:16.480,1:38:20.399
+Vous allez donc devoir d'abord établir une fonction de coût, une fonction de perte.
+
+1:38:22.159,1:38:28.579
+Et cette fonction de perte va être somme sur les échantillons
+
+1:38:30.800,1:38:33.920
+d'une fonction de perte par échantillon qui
+
+1:38:37.659,1:38:39.659
+est essentiellement une fonction de
+
+1:38:40.960,1:38:42.960
+F(y)
+
+1:38:43.679,1:38:45.679
+et F(y̅).
+
+1:38:46.560,1:38:50.159
+Où y̅ est bien sûr généré à partir de la variable latente z échantillonnée de manière aléatoire.
+
+1:38:52.320,1:39:00.080
+Cette fonction de coût doit maintenant être une fonction décroissante de F(y) et une fonction croissante de F(y̅).
+
+1:39:01.360,1:39:03.920
+D'accord, vous pouvez utiliser à peu près toutes les fonctions de coût que vous voulez
+
+1:39:04.480,1:39:08.399
+tant que cela diminue F(y) et augmente F(y̅).
+
+1:39:09.040,1:39:11.040
+Ou tant que cela fait décroitre différence
+
+1:39:12.480,1:39:16.159
+la différence F(y) - F(y̅). Un bon exemple de ça
+
+1:39:17.600,1:39:19.600
+serait une sorte de perte hinge.
+
+1:39:21.679,1:39:24.399
+Donc quelque chose qui dit que ma fonction de perte
+
+1:39:25.040,1:39:27.040
+va être
+
+1:39:28.880,1:39:30.880
+F(y)
+
+1:39:31.520,1:39:33.520
+plus
+
+1:39:33.760,1:39:35.760
+une certaine marge moins
+
+1:39:36.560,1:39:38.560
+F(y̅)
+
+1:39:40.159,1:39:43.519
+partie positive. Ok donc, c'est une hinge.
+
+1:39:46.800,1:39:48.800
+Et elle dit :
+
+1:39:48.880,1:39:51.040
+je veux faire en sorte que la taille de votre F(y̅) soit inférieure à
+
+1:39:53.340,1:39:57.040
+m. Sinon ça, je m'en fiche.
+
+1:39:58.880,1:40:01.699
+Plus GRAND que m. Je suis désolé, j'ai dessiné ça à l'envers.
+
+1:40:08.960,1:40:14.239
+Donc, globalement, comme une fonction F(y̅), cette fonction se présente comme suit.
+
+1:40:15.679,1:40:18.479
+Ok, donc il veut faire F(y̅) plus grande que m.
+
+1:40:21.340,1:40:27.279
+D'accord. C’est un exemple de fonction de coût réel que la plupart des euh, la formulation originale des GANs utilise.
+
+1:40:27.920,1:40:32.879
+En gros, branche chacun de ces termes dans une sigmoïde et essaie de faire
+
+1:40:34.880,1:40:39.359
+que sigmoïde de F(y) soit la plus proche possible de 1 et sigmoïde de F(y̅)
+
+1:40:39.920,1:40:45.040
+aussi proche de 0 que possible. C'est essentiellement rien de plus que cela. Donc, c'est
+
+1:40:45.600,1:40:47.600
+sigmoïde de F(y)
+
+1:40:49.440,1:40:51.919
+plus un moins sigmoïde
+
+1:40:54.480,1:40:56.480
+de F(y̅).
+
+1:40:56.800,1:40:58.800
+Vous prenez les logs parce que…
+
+1:40:59.440,1:41:01.440
+Hum, je veux dire, ce n'est pas la fonction de perte.
+
+1:41:01.520,1:41:06.719
+C'est un peu ce qui précède la fonction de perte, donc c'est un peu comme une entropie croisée.
+
+1:41:06.719,1:41:10.239
+Mais vous avez une entropie croisée qui est positive pour la
+
+1:41:11.280,1:41:13.280
+la phase positive et
+
+1:41:14.000,1:41:17.060
+la cible est négative pour la phase négative.
+
+1:41:20.880,1:41:24.159
+Je ne devrais pas l'écrire de cette façon, c'est mal, je suis désolé.
+
+1:41:27.280,1:41:34.659
+Mais vous lui avez fait subir une perte logistique pour chacun d'entre eux, donc techniquement, c'est…
+
+1:41:37.520, 1:42:01.040
+[Yann écrit la bonne formule, cf. donc l’image de la vidéo]
+
+1:42:06.480,1:42:11.540
+Mais on peut imaginer un grand nombre de fonctions objectif de ce type.
+
+1:42:17.440,1:42:20.580
+Voici donc la fonction de perte que vous allez utiliser pour entraîner le discriminateur.
+
+1:42:22.080,1:42:25.379
+C'est pour le discriminateur.
+
+1:42:26.800,1:42:30.560
+Mais pour le générateur ce sera une fonction de perte différente.
+
+1:42:31.600,1:42:34.719
+Et vous allez optimiser ces deux fonctions de perte de la même manière.
+
+1:42:35.440,1:42:38.159
+Celle du générateur est celle qui
+
+1:42:38.940,1:42:40.940
+essentiellement
+
+1:42:41.199,1:42:48.479
+veut que le générateur produise des résultats que le discriminateur juge bons, mais qui ne le sont pas.
+
+1:42:50.080,1:42:54.179
+Ok, donc en gros le générateur,
+
+1:43:00.400,1:43:02.400
+veut
+
+1:43:02.400,1:43:04.400
+adapter ses poids
+
+1:43:05.199,1:43:07.439
+pour que la sortie qu'il produit y̅
+
+1:43:09.119,1:43:11.919
+produit une énergie faible pour F(y).
+
+1:43:13.360,1:43:15.119
+Ok
+
+1:43:15.119,1:43:16.000
+Donc
+
+1:43:16.000,1:43:17.199
+vous échantillonnez
+
+1:43:17.199,1:43:19.279
+une variable aléatoire z que vous faites passer dans le générateur.
+
+1:43:19.280,1:43:25.199
+Il produit y̅ que vous passez à travers le discriminateur de F(y). Vous obtenez une certaine valeur et ensuite vous rétropropagez la valeur
+
+1:43:26.400,1:43:28.080
+par le biais du générateur.
+
+1:43:28.080,1:43:30.080
+Cela adapte les poids du générateur de manière à ce que
+
+1:43:31.920,1:43:38.560
+cette énergie baisse. D'accord. Donc, en gros, le générateur essaie de trouver un y̅ qui a une énergie aussi faible que possible.
+
+1:43:39.920,1:43:46.000
+Et il s'entraîne à produire de manière avisée pour avoir une énergie faible. A nouveau si l'on parle
+
+1:43:48.000,1:43:50.179
+des GANs conditionnels vont être
+
+1:43:52.480,1:43:57.679
+une variable x qui va entrer dans ces deux modules, mais cela ne fait aucune différence au final.
+
+1:44:01.040,1:44:04.580
+Lg [la fonction de perte du générateur] est donc peut-être simplement une fonction croissante
+
+1:44:06.719,1:44:10.400
+de F(y̅).
+
+1:44:11.280,1:44:14.000
+[Alfredo : je pense que nous sommes à court de temps]
+
+1:44:22.880,1:44:26.480
+Il s'agirait donc d'une fonction objectif de
+
+1:44:28.239,1:44:30.159
+F(G(z))
+
+1:44:30.159,1:44:33.618
+Si G est le générateur de z où z est échantillonné au hasard.
+
+1:44:36.159,1:44:41.599
+Ok, donc vous faites juste une rétropropagation de ceci et vous changez les paramètres de G. Appelons-les u.
+
+1:44:43.280,1:44:46.000
+Pour que cela baisse. Cela s'appelle
+
+1:44:46.239,1:44:50.638
+un jeu dans le sens où vous avez deux fonctions objectifs que vous devez minimiser simultanément et qui sont
+
+1:44:50.780,1:44:52.780
+incompatibles entre elles.
+
+1:44:52.880,1:44:55.679
+Il ne s'agit donc pas d'un problème de descente de gradient. Vous devez trouver
+
+1:44:56.639,1:44:58.879
+un équilibre entre ces deux fonctions.
+
+1:45:00.560,1:45:02.560
+Et la descente de gradient ne le fera pas.
+
+1:45:04.320,1:45:06.320
+Par défaut, cela conduit à
+
+1:45:07.179,1:45:10.959
+de l'instabilité et il y a des tonnes de papiers sur la façon de faire fonctionner les GANs.
+
+1:45:11.360,1:45:15.839
+C'est un peu compliqué, mais Alfredo vous racontera tout ça demain.
+
+1:45:16.159,1:45:21.359
+[Alfredo : tu veux peut-être aussi mentionner le fait que la sigmoïde créée quelques problèmes
+
+1:45:21.679,1:45:24.899
+si nous avons des échantillons similaires qui sont proches de la vraie variété]
+
+1:45:25.520,1:45:26.400
+Oui
+
+1:45:26.400,1:45:28.400
+[Alfredo : ensuite je pense que nous pouvons conclure]
+
+1:45:28.860,1:45:30.480
+D'accord, donc
+
+1:45:30.480,1:45:33.439
+permettez-moi mentionner cela. Alors imaginons que vos données euh…
+
+1:45:37.440,1:45:39.440
+Donc, encore une fois, le cadre des méthodes à base d’énergie.
+
+1:45:42.159,1:45:49.699
+Vos données se trouvent autour d'un collecteur mais celui-ci est mince, donc la distribution est infiniment fine.
+
+1:45:52.960,1:45:54.960
+Ok
+
+1:45:55.760,1:46:01.920
+Dans la formulation originale des GANs, le discriminateur devrait produire
+
+1:46:03.679,1:46:06.319
+une probabilité nulle en dehors de ça.
+
+1:46:08.159,1:46:10.239
+D'accord, il doit donc produire une probabilité nulle ici.
+
+1:46:11.600,1:46:13.600
+Et il doit produire
+
+1:46:14.000,1:46:17.139
+sur la surface une probabilité infinie.
+
+1:46:19.360,1:46:20.800
+De telle manière que
+
+1:46:20.800,1:46:27.679
+l'intégrale (si c'est vraiment une estimation de la densité) de cette densité sur l'ensemble de l'espace soit 1.
+
+1:46:28.719,1:46:30.239
+Et c'est bien sûr
+
+1:46:30.239,1:46:32.239
+très compliqué.
+
+1:46:32.480,1:46:35.619
+Les GANs ont donc pratiquement abandonné l'idée d'apprendre une distribution.
+
+1:46:35.920,1:46:40.960
+Ce qu'ils veulent faire, c'est produire zéro (dans la formulation originale) en dehors de la variété de données
+
+1:46:41.760,1:46:43.199
+et produire
+
+1:46:43.199,1:46:44.480
+1 ici.
+
+1:46:44.480,1:46:48.639
+C'est la sortie de la sigmoïde qui doit être 1, c'est-à-dire la somme pondérée qui entre dans cette sigmoïde
+
+1:46:48.719,1:46:51.039
+doit être essentiellement infinie. Ce n'est donc pas si différent.
+
+1:46:53.340,1:46:58.500
+Le problème est que si vous entraînez le système avec succès
+
+1:47:00.000,1:47:07.459
+et vous obtenez cette fonction énergie, qui est de zéro en dehors du collecteur de données et de un sur la variété des données. Votre fonction énergie est complètement inutile.
+
+1:47:08.480,1:47:12.239
+C'est inutile car c'est un terrain de golf, n'est-ce pas ? C'est plat.
+
+1:47:12.960,1:47:18.239
+Donc la fonction énergie qui correspond à cela serait le logarithme négatif de ça.
+
+1:47:20.480,1:47:22.480
+Donc ce serait l'infini ici
+
+1:47:22.719,1:47:23.679
+et
+
+1:47:23.679,1:47:27.839
+la valeur minimale de votre fonction de coût sur la surface, qui pourrait par exemple être nulle si
+
+1:47:28.320,1:47:32.480
+c'est un auto-encodeur, l'énergie sera inférieure à zéro, n'est-ce pas ?
+
+1:47:34.320,1:47:41.040
+Donc c'est un terrain de golf d'altitude infinie, ce qui n'est vraiment pas très utile.
+
+1:47:41.760,1:47:43.040
+Ce que vous voulez
+
+1:47:43.040,1:47:49.699
+comme je l'ai déjà dit, pour tout modèle à base d’énergie, si vous voulez qu'un modèle à base d’énergie soit utile, vous voulez que la fonction énergie soit lisse.
+
+1:47:50.320,1:47:52.719
+Vous ne voulez pas que ça aille à l'infini en quelque sorte.
+
+1:47:53.840,1:47:57.840
+Vous voulez que ce soit lisse afin de pouvoir faire de l’inférence. De sorte que si
+
+1:47:58.159,1:48:00.399
+vous partez d'un point ici. Il est facile de trouver
+
+1:48:01.280,1:48:04.639
+un point sur la surface qui est à proximité en utilisant la descente de gradient par exemple.
+
+1:48:05.440,1:48:07.759
+Ainsi, la formulation originale des GANs conduit à…
+
+1:48:09.600,1:48:16.479
+Tout d'abord des poids infinis dans les instabilités du discriminateur : c'est ce qu'on appelle l'effondrement des modes, dont Alfredo vous parlera.
+
+1:48:18.239,1:48:20.239
+Et en fin de compte
+
+1:48:20.239,1:48:22.799
+une fonction contrastive, une fonction énergie qui est essentiellement inutile.
+
+1:48:23.920,1:48:25.440
+Ce n'est donc pas
+
+1:48:25.440,1:48:30.239
+idéalement formulé. Des gens ont proposé des moyens de corriger ça en régularisant
+
+1:48:31.520,1:48:37.060
+la fonction énergie en la forçant à être lisse. Un bon exemple de cela est ce qu'on appelle les GANs Wasserstein
+
+1:48:43.280,1:48:48.960
+proposés par Martin Arjovsky qui vient d'être diplômé de New York University,
+
+1:48:50.639,1:48:52.639
+Léon Bottou et Soumith Chintala.
+
+1:48:58.000,1:49:03.359
+L'idée est de limiter la taille des poids du discriminateur afin que la fonction
+
+1:49:03.760,1:49:06.639
+soit lisse. Il y a divers arguments mathématiques.
+
+1:49:07.199,1:49:11.039
+dans un cadre probabiliste, mais c'est l'idée de base et il y a beaucoup de variations de cela aussi.
+
+1:49:11.840,1:49:18.000
+[Alfredo : les questions sur le cours d'aujourd'hui étaient denses, mais au moins nous étions en train de répondre à toutes]
+
+1:49:23.760,1:49:25.920
+[Etudiant : j’étais un peu perdu sur ce qu'est le réseau politique.
+
+1:49:37.199,1:49:39.199
+Qu'est-ce qu’il fait ?]
+
+1:49:40.400,1:49:45.359
+Le réseau politique prend l'estimation de l'état du monde et produit une action.
+
+1:49:46.560,1:49:48.560
+Il est entraîné pour
+
+1:49:48.719,1:49:50.719
+minimiser le coût attendu
+
+1:49:51.520,1:49:53.360
+de 
+
+1:49:53.360,1:49:57.040
+l'état sur une trajectoire, mais il suffit d'une action.
+
+1:49:59.920, 1:50:20.639
+[Question : je n’ai pas compris la question de l’étudiant] 
+
+1:50:21.280,1:50:27.599
+Le réseau politique est donc indiqué par pi ici sur l'écran.
+
+1:50:28.719,1:50:30.719
+Il prend donc l’état s
+
+1:50:31.840,1:50:33.840
+et produit une action.
+
+1:50:37.340,1:50:42.639
+C'est ce qu'est une politique. Vous observez l'état du monde et vous prenez une action.
+
+1:50:44.880,1:50:45.440
+En fait
+
+1:50:45.440,1:50:48.719
+dans une politique probabiliste vous ne prenez pas une action. Vous donnez une
+
+1:50:48.960,1:50:53.679
+distribution sur les actions et ensuite vous choisissez l'action d'une manière ou d'une autre et vous effectuez cette distribution.
+
+1:50:54.400,1:50:56.400
+Mais il suffit de prendre une action.
+
+1:50:57.599,1:51:03.439
+Si le nombre d'actions est discret, alors ce réseau pi, ce réseau politique, est essentiellement un classifieur.
+
+1:51:04.080,1:51:09.519
+Il produit un ensemble de scores pour chaque action possible, et ensuite vous prenez une des actions
+
+1:51:10.380,1:51:15.440
+de manière probabiliste ou déterministe. Vous prenez simplement l'action ayant obtenu le score le plus élevé.
+
+1:51:16.400,1:51:19.839
+Probabilistiquement vous pouvez échantillonner en fonction du score
+
+1:51:20.560,1:51:22.959
+et puis vous passez en revue votre modèle prédictif et vous continuez.
+
+1:51:23.840,1:51:26.560
+[Etudiant : Ok alors sans la connexion politique
+
+1:51:27.440,1:51:29.440
+alors l'action est juste une sorte de…]
+
+1:51:29.760,1:51:35.920
+C'est une variable latente. Il faut donc optimiser par rapport à la variable latente pour trouver sa valeur optimale.
+
+1:51:36.000,1:51:38.959
+Vous avez donc ce genre de diagramme
+
+1:51:40.239,1:51:41.920
+où
+
+1:51:41.920,1:51:44.639
+les actions ne sont pas produites par un réseau neuronal.
+
+1:51:45.599,1:51:50.319
+Il y a des variables latentes que vous devez déterminer pour chaque nouvelle variable à chaque fois que vous exécutez votre modèle.
+
+1:51:50.800,1:51:55.679
+Vous devez déterminer quelle est la meilleure séquence d'action pour minimiser les coûts. Et donc, vous devez essentiellement
+
+1:51:56.560,1:52:03.039
+faire ça par exemple par descente de gradient en déterminant la séquence de a qui minimisera la somme des c sur la
+
+1:52:03.099,1:52:04.639
+trajectoire.
+
+1:52:04.639,1:52:07.759
+C'est ce qu'on appelle la commande prédictive. 
+
+1:52:08.719,1:52:10.719
+Et puis celui avec le réseau politique
+
+1:52:12.719,1:52:16.899
+c'est ce qu'on appelle le contrôle direct.
+
+1:52:18.480,1:52:20.480
+[Etudiant : Professeur,
+
+1:52:21.840,1:52:24.880
+vous dites que pendant l’inférence, nous devons minimiser
+
+1:52:26.560,1:52:27.679
+l'énergie
+
+1:52:27.679,1:52:29.839
+pour obtenir la valeur finale mais
+
+1:52:30.400,1:52:34.879
+j'ai deux questions : cela ne prend-t-il pas trop de temps pour effectuer l’inférence
+
+1:52:35.520,1:52:38.319
+vis à vis des systèmes en temps réel ?
+
+1:52:39.199,1:52:41.199
+et puisqu'il
+
+1:52:41.520,1:52:45.679
+est déroulé et qu'il faut rétropropager jusqu'au début
+
+1:52:46.400,1:52:49.440
+qu’en est il des problèmes que nous rencontrons dans
+
+1:52:50.159,1:52:52.159
+les réseaux neuronaux récurrents ?]
+
+1:52:54.460,1:52:58.719
+Vous n'aurez probablement pas les mêmes problèmes que ceux que vous avez avec les réseaux récurrents car votre modèle prédictif
+
+1:53:00.139,1:53:03.199
+met probablement en œuvre la dynamique de certains systèmes réels. Donc
+
+1:53:03.760,1:53:05.760
+il pourrait ne pas avoir les problèmes.
+
+1:53:06.320,1:53:10.400
+Une sorte de non-invertibilité que vous avez si c'est un système physique. Ce sera probablement
+
+1:53:10.940,1:53:12.940
+réversible, de sorte que vous ne pouvez pas avoir le
+
+1:53:13.199,1:53:17.919
+même problème que pour les réseaux récurrents mais oui vous êtes confrontés aux mêmes problèmes.
+
+1:53:20.560,1:53:23.919
+Dans des situations en temps réel, vous utilisez une forme de ce que l'on appelle la
+
+1:53:25.820,1:53:28.000
+planification à horizon fuyant
+
+1:53:38.480,1:53:43.919
+Ok, donc la planification à horizon fuyant, c'est quand vous êtes dans une situation en temps réel.
+
+1:53:44.719,1:53:49.519
+Votre système fonctionnera selon son modèle prédictif pendant quelques étapes dans le futur.
+
+1:53:50.080,1:53:54.799
+Disons quelques secondes. D'accord. Suffisamment d'étapes pour prédire pendant quelques secondes.
+
+1:53:55.360,1:53:57.360
+C'est votre horizon.
+
+1:53:57.679,1:54:00.239
+Alors vous faites cette commande prédictive
+
+1:54:00.480,1:54:07.119
+en optimisant la recherche de l'action optimale qui minimise votre coût. Votre coût estimé selon votre modèle.
+
+1:54:07.199,1:54:12.719
+Vous n'avez pas encore pris une action. Ok, vous venez d'exécuter votre modèle interne pour faire cette prédiction.
+
+1:54:13.760,1:54:15.440
+Donc
+
+1:54:15.440,1:54:21.460
+grâce à l'optimisation par rapport à a, vous trouvez la séquence de a qui optimise votre coût et ensuite vous faites la première action
+
+1:54:22.639,1:54:23.920
+dans ce a.
+
+1:54:23.920,1:54:25.920
+Et puis vous le faites à nouveau.
+
+1:54:26.159,1:54:29.999
+Donc, avec le a que vous avez pris, observez l'état du monde maintenant que vous avez un nouvel
+
+1:54:30.639,1:54:32.239
+état.
+
+1:54:32.239,1:54:39.198
+D'accord, ce que vous observez à partir de vos capteurs et maintenant répéter le processus. Exécuter votre modèle avant un certain nombre d'étapes dans l'avenir,
+
+1:54:40.300,1:54:43.920
+optimisez la séquence des actions pour minimiser vos coûts, prenez la première action
+
+1:54:45.119,1:54:46.560
+et recommencer.
+
+1:54:46.560,1:54:51.299
+Cela peut donc être coûteux si votre horizon est long si votre modèle prédictif est compliqué.
+
+1:54:52.239,1:54:54.559
+C'est donc à ce moment que vous avez besoin
+
+1:54:55.199,1:54:59.519
+d’un réseau politique. Le réseau politique, en gros,
+
+1:55:00.060,1:55:03.699
+compile tout ce processus en un réseau neuronal qui produit directement
+
+1:55:04.239,1:55:06.239
+la meilleure action pour l'état.
+
+1:55:06.639,1:55:08.639
+Ok. Ce qui peut ou non être possible mais
+
+1:55:09.599,1:55:11.599
+cela vous donne une bonne idée.
+
+1:55:11.760,1:55:13.760
+Pour vous donner un exemple concret,
+
+1:55:14.000,1:55:16.000
+il a une série intéressante de livres
+
+1:55:16.540,1:55:20.639
+d’un économiste lauréat du prix Nobel qui vit à New York appelé Daniel Kahneman.
+
+1:55:21.520,1:55:23.759
+Il parle de deux systèmes présent dans l’esprit
+
+1:55:24.800,1:55:28.159
+humain appelés le système un et le système deux. Le système un
+
+1:55:28.800,1:55:30.159
+est le
+
+1:55:30.159,1:55:33.199
+processus par lequel vous entreprenez une action sans réfléchir correctement.
+
+1:55:35.360,1:55:40.960
+Vous êtes un conducteur très expérimenté et vous pouvez conduire votre voiture sans même faire attention, en parlant à quelqu'un à côté de vous
+
+1:55:41.760,1:55:43.760
+Vous n'avez pas besoin d'y réfléchir. D'accord ?
+
+1:55:44.880,1:55:48.560
+Le deuxième système est davantage une sorte de planification délibérée. 
+
+1:55:49.440,1:55:54.480
+Le deuxième système consiste à utiliser votre modèle interne du monde pour faire des prévisions à l'avance sur ce qu’il va se passer.
+
+1:55:55.119,1:55:58.559
+Anticiper ce qui va se passer et ensuite prendre une décision délibérée
+
+1:55:59.340,1:56:04.560
+sur une action que vous pensez être la bonne selon votre modèle. Donc, c'est plutôt un raisonnement.
+
+1:56:05.199,1:56:07.040
+Ok, vous pouvez penser à ceci.
+
+1:56:07.040,1:56:13.839
+Vous connaissez l'optimisation en ce qui concerne les actions visant à minimiser un objectif comme forme de raisonnement. Nous en avons déjà parlé.
+
+1:56:14.639,1:56:15.599
+Donc
+
+1:56:15.599,1:56:17.599
+en gros
+
+1:56:17.599,1:56:21.039
+la commande prédictive, c'est quand vous n'avez pas de politique, vous n'avez pas appris la compétence,
+
+1:56:21.360,1:56:26.880
+vous savez quelle est votre fonction de coût, vous avez un assez bon modèle du monde, mais vous ne savez pas comment réagir.
+
+1:56:27.520,1:56:30.399
+Un joueur d'échecs débutant serait comme ça.
+
+1:56:31.920,1:56:35.920
+Vous regardez le plateau d’échecs et vous devez réfléchir à toutes les possibilités avant de jouer.
+
+1:56:36.480,1:56:41.219
+Parce que vous ne savez pas où jouer. Il faut donc imaginer toutes les possibilités.
+
+1:56:42.560,1:56:46.560
+Si vous êtes un joueur expert et que vous jouez contre un débutant,
+
+1:56:48.000,1:56:52.719
+vous savez immédiatement ce qu'il faut jouer. Vous n'avez pas besoin d'y penser. Je ne sais pas si vous avez déjà joué des parties simultanées contre un maître d’eches.
+
+1:56:53.520,1:57:00.959
+Un grand maître d'échecs peut jouer contre 50 personnes et les battre en quelques minutes.
+
+1:57:02.880,1:57:05.920
+Parce que le joueur peut passer
+
+1:57:06.960,1:57:10.399
+d’un joueur à un autre et jouer immédiatement. C'est juste être complètement réactif.
+
+1:57:11.360,1:57:14.000
+Il n'a en fait pas besoin de réfléchir car ils
+
+1:57:15.199,1:57:18.399
+ont en quelque sorte compilé
+
+1:57:18.960,1:57:21.919
+dans leur connaissance des échecs et ils n'ont pas besoin de penser quand ils voient un
+
+1:57:22.639,1:57:24.639
+type de situation facile.
+
+1:57:24.960,1:57:27.119
+C'est donc passer du système deux au système un.
+
+1:57:27.360,1:57:32.159
+Quand vous apprenez la compétence au début, vous êtes hésitant et vous devez y réfléchir.
+
+1:57:32.159,1:57:36.719
+Quand vous conduisez, vous conduisez lentement et vous regardez tout et vous êtes attentif, et puis quand vous
+
+1:57:37.340,1:57:38.960
+êtes
+
+1:57:38.960,1:57:45.599
+expérimenté vous pouvez juste réagir très rapidement. En gros, vous êtes passé d’une commande prédictive à
+
+1:57:46.480,1:57:49.759
+en gros, entraîner votre propre réseau politique si vous voulez. Ok ?
+
+1:57:50.320,1:57:56.880
+Et dans ce processus, votre compétence est passée d'une sorte de planification délibérée,
+
+1:57:57.599,1:57:58.960
+conscient,
+
+1:58:00.080,1:58:02.499
+d’un mécanisme de décision à une sorte de subconscient.
+
+1:58:03.260,1:58:07.840
+Un mécanisme de décision automatique, c'est ce que fait l'acquisition d'expertise.
+
+1:58:11.679,1:58:14.079
+Et c'est ainsi que vous partez de ce diagramme
+
+1:58:14.560,1:58:18.899
+à ce diagramme. Vous avez une politique qui prévoit directement l'action sans avoir à planifier.
+
+1:58:20.960,1:58:22.960
+[Etudiant : d'accord, compris, merci.]

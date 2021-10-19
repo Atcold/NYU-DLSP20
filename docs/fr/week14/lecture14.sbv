@@ -1,0 +1,4613 @@
+0:00:00.399,0:00:03.840
+Il y a un certain nombre de sujets dont je veux parler aujourd'hui.
+
+0:00:03.840,0:00:06.560
+C'est notre dernier cours et je veux garder un peu de temps à la fin pour
+
+0:00:06.560,0:00:09.920
+des questions sur des sujets aléatoires que vous pourriez avoir.
+
+0:00:09.920,0:00:13.599
+Peut-être des questions générales sur l’apprentissage machine,
+
+0:00:13.599,0:00:18.400
+l’IA, l’apprentissage profonde, etc. Peut-être des questions
+
+0:00:18.400,0:00:21.840
+être un peu plus philosophiques, mais
+
+0:00:21.840,0:00:25.000
+laissez-moi commencer par quelque chose de plus concret.
+
+0:00:25.000,0:00:28.800
+Donc je veux parler de la prédiction de structure. J'ai fait allusion à ce sujet de
+
+0:00:28.800,0:00:33.360
+nombre de fois au cours des cours précédents, mais je pense que ce n'était pas suffisamment
+
+0:00:33.360,0:00:36.880
+en profondeur pour que la plupart des gens puissent comprendre. Donc je veux
+
+0:00:36.880,0:00:42.079
+revenir sur ce point. Donc la prédiction de structure est en gros
+
+0:00:42.079,0:00:47.200
+le problème de prédire une variable qui elle-même n'est pas
+
+0:00:47.200,0:00:50.719
+une seule catégorie ou un seul objet,
+
+0:00:50.719,0:00:54.079
+mais une sorte d'objet combinatoire. Donc par exemple,
+
+0:00:54.079,0:00:57.199
+des choses comme une phrase. Vous faites de la reconnaissance vocale,
+
+0:00:57.199,0:01:01.039
+de la reconnaissance d'écriture manuscrite, de la génération de langage
+
+0:01:01.039,0:01:07.200
+ou la traduction. Et ce que vous devez sortir c’est une sorte de
+
+0:01:07.200,0:01:12.640
+une séquence grammaticalement correcte et cohérente de symboles.
+
+0:01:12.640,01:19.759
+Et vous ne pouvez pas dire qu'il y a un nombre fini de possibilités de sortie car
+0:01:19.759,0:01:23.439
+la longueur de la sortie peut être variable. Mais même si la
+
+0:01:23.439,0:01:27.759
+longueur a un maximum et le nombre est en principe fini,
+
+0:01:27.759,0:01:33.280
+car c'est combinatoire, il n'y a pas moyen d'énumérer toutes les sorties
+
+0:01:33.280,0:01:38.560
+différentes possibles. Donc pour exprimer le type de contrainte que la sortie a
+
+0:01:38.560,0:01:42.640
+à refléter, c’est ce qu'on appelle la prédiction de structure.
+
+0:01:42.640,0:01:49.600
+Il y a beaucoup de travail sur ça, datant dès les premiers jours de la reconnaissance vocale.
+
+0:01:49.600,0:01:52.320
+Ce n'est donc pas un problème récent.
+
+0:01:52.320,0:01:57.920
+Et en fait le je vais commencer par un peu d'histoire.
+
+0:01:57.920,0:02:01.680 
+A mon avis, le premier modèle à faire de la prédiction de structure
+
+0:02:01.680,0:02:04.079
+avec des choses combinées à des réseaux neurones
+
+0:02:04.079,0:02:10.000
+entraînés de manière discriminatoire, était ce modèle de reconnaissance vocale
+
+0:02:10.000,0:02:14.640
+de mots de Xavier Driancourt et Léon Bottou datant du
+
+0:02:14.640,0:02:18.000
+début des années 90 : 1991. Et il y a eu une sorte de travail similaire à
+
+0:02:18.000,0:02:22.319
+la même époque de Joshua Bengio et un autre un ou deux ans plus tard par Patrick Haffner.
+
+0:02:22.319,0:02:25.680
+Il s'agit donc de personnes qui ont travaillé sur des entraînements discriminatoires
+
+0:02:25.680,0:02:28.720
+pour les systèmes censés produire une séquence de symboles
+
+0:02:28.720,0:02:33.440
+à partir d’un signal, disons la parole
+
+0:02:33.440,0:02:38.000
+ou l'écriture, et où la première étape est en gros un réseau de neurones.
+
+0:02:38.000,0:02:42.720
+Ce réseau ici, TDNN, signifiant « Time Data Neural Net »
+
+0:02:42.720,0:02:46.160
+[réseau neuronal de données temporelles] est en gros un réseau convolutif temporel.
+
+0:02:46.160,0:02:56.080
+C’est donc le premier modèle que je peux trouver sur des prédictions de structure étant, en quelque sorte,
+
+0:02:56.080,0:02:58.080
+hybridé avec des réseaux neuronaux.
+
+0:02:58.080,0:03:02.640
+Donc le problème que Xavier Driancourt et Léon Bottou essayaient de résoudre était
+
+0:03:02.640,0:03:09.360
+la reconnaissance des mots à l'aide d'un réseau neuronal. Et, dans une certaine mesure, des approches modernes
+
+0:03:09.360,0:03:13.360
+sont en quelque sorte similaires à ça.
+
+0:03:13.360,0:03:17.360
+Donc le signal vocal est représenté sous la forme d'une séquence de vecteurs acoustiques.
+
+0:03:17.360,0:03:21.440
+Vous coupez le signal en petits morceaux et puis
+
+0:03:21.440,0:03:26.500
+sur un des morceaux vous faites une transformée de Fourrier qu’Alfredo vous a expliqué,
+
+0:03:26.500,0:03:30.799
+et vous convertissez ça en un vecteur de caractéristiques. Et un de ces vecteurs 
+
+0:03:30.799,0:03:33.920
+est typiquement en 30 dimensions ou alors peut-être 40.
+
+0:03:33.920,0:03:37.280
+Et vous voulez un de ces vecteurs toutes les 10 millisecondes.
+
+0:03:37.280,0:03:40.959
+Donc environ 100 fois par seconde. Vous avez une séquence, 
+
+0:03:40.959,0:03:43.750
+vecteur de 40 dimensions et cela environ 100 par seconde.
+
+0:03:43.750,0:03:48.720
+Vous le faites passer par un ConvNet, un ConvNet temporel et en
+
+0:03:48.720,0:03:52.319
+sortie de celui-ci ce que vous obtenez est une séquence de vecteurs de caractéristiques.
+
+0:03:52.319,0:03:59.840
+Dans les systèmes modernes, ces vecteurs de caractéristiques sont
+
+0:03:55.599,0:03:59.840
+en fait une sorte de facteurs de softmax qui indiquent une catégorie
+
+0:03:59.840,0:04:06.080
+Mais ici, ce n'était pas le cas. Ils peuvent être dans le même catégorie
+
+0:04:06.080,0:04:09.760
+ou peuvent être plus lents. Donc, si le ConvNet
+
+0:04:09.760,0:04:13.439
+a un sous-échantillonnage temporel, vous n'allez pas obtenir 10 de ces
+
+0:04:13.439,0:04:17.440
+vecteurs de caractéristiques par seconde, mais pourriez en avoir 
+
+0:04:17.440,0:04:20.479
+250 ou quelque chose comme ça. Oh je suis désolé.
+
+0:04:20.479,0:04:23.680
+En entrée il y en a une centaine, donc si vous avez un sous-échantillonnage par un facteur de
+
+0:04:23.680,0:04:25.840
+4 vous obtiendrez 25 vecteurs de caractéristiques par
+
+0:04:25.840,0:04:29.759
+seconde et non 100. Ou quelque chose comme ça. Voici le problème.
+
+0:04:29.759,0:04:34.880
+Le problème est que vous voulez reconnaître quel mot vient d'être prononcé.
+
+0:04:34.880,0:04:40.000
+Différentes personnes prononceront le même mot à des vitesses différentes.
+
+0:04:40.000,0:04:45.000
+Donc ce que vous devez faire est ce qu'on appelle la déformation dynamique du temps [DTW dans la suite]
+
+0:04:45.000,0:04:47.440
+et je l'ai déjà expliqué avant.
+
+0:04:47.440,0:04:51.199
+Donc imaginons que vous ayez enregistré cette personne. Vous ne voulez pas faire
+
+0:04:51.199,0:04:55.040
+de la reconnaissance vocale indépendante du locuteur pour l'instant juste un locuteur
+
+0:04:55.040,0:05:01.919
+spécifique. Donc vous avez enregistré cette personne disant  
+
+0:05:01.919,0:05:08.320
+les dix chiffres : zéro, un, deux, trois, quatre, cinq, etc.
+
+0:05:08.320,0:05:14.720
+Car vous êtes seulement intéressé par reconnaître les chiffres isolés. Peut-être que c'est
+
+0:05:14.720,0:05:18.000
+un système qui est censé composer un numéro sur
+
+0:05:18.000,0:05:22.320
+votre téléphone droit. Donc vous devez reconnaître des séquences de
+
+0:05:22.320,0:05:26.080
+chiffres, ou peut-être est-ce un discours très simple
+
+0:05:26.080,0:05:31.360
+pour les systèmes de reconnaissance afin de le réveiller comme
+
+0:05:31.360,0:05:34.720
+Alexa d’Amazon ou quelque chose comme ça. Donc la seule chose que le système est censé
+
+0:05:34.720,0:05:39.600
+reconnaître est « Alexa » ou « Hey Google » ou  quelque chose comme ça.	
+
+0:05:39.600,0:05:43.160
+Un mot de réveil. Donc le système peut avoir un tas de
+
+0:05:43.160,0:05:49.000
+templates [ou patrons, on utilisera les deux possibilités] préenregistrés qui correspondent à
+
+0:05:49.000,0:05:54.240
+des séquences de vecteurs de caractéristiques qui ont été produits par quelqu'un
+
+0:05:54.240,0:05:59.120
+disant chacun des mots. Et maintenant la façon dont vous voulez entraîner 
+
+0:05:59.120,0:06:03.919
+est que vous souhaitez entraîner le réseau neuronal en même temps que
+
+0:06:03.919,0:06:08.160
+le template. Donc le système global reconnait les mots aussi 
+
+0:06:08.160,0:06:11.440
+bien que possible. C’est un problème de classification.
+
+0:06:11.440,0:06:14.720
+Mais il y a une variable latente et celle-ci est la façon dont
+
+0:06:14.720,0:06:17.840
+vous allez déformer la séquence de vecteurs de caractéristiques de manière à ce qu'elle
+
+0:06:17.840,0:06:20.800
+correspond à la longueur de ces templates. Et, encore une fois,
+
+0:06:20.800,0:06:24.000
+je me répète un peu car j'en ai déjà parlé. 
+
+0:06:24.000,0:06:28.759
+Donc vous faites cela avec la DTW. Cela consiste
+
+0:06:28.759,0:06:32.400
+à aligner tous les vecteurs de caractéristiques en bas 
+
+0:06:32.400,0:06:36.000
+ici… Donc il faut penser à cela comme une matrice.
+
+0:06:36.000,0:06:40.400
+Vous alignez tous les vecteurs de caractéristiques en entrée. Donc la séquence
+
+0:06:40.400,0:06:44.319
+des vecteurs de caractéristiques est obtenue ici. Puis vous mettez la séquence
+
+0:06:44.319,0:06:50.360
+des vecteurs de templates. Donc des vecteurs de caractéristiques viennent du patron
+
+0:06:50.360,0:06:53.199
+sur cet axe. Et puis chaque entrée de la matrice
+
+0:06:53.199,0:06:57.039
+est une indication de la distance entre le vecteur de caractéristique
+
+0:06:57.039,0:07:02.800
+ici et le vecteur de caractéristique là. Donc vous obtenez cette matrice de probabilité avec
+
+0:07:02.800,0:07:06.479
+les distances entre les vecteurs de caractéristiques.
+
+0:07:06.479,0:07:10.880
+Et le meilleur moyen d’associer la séquence de chaque vecteur à une autre,
+
+0:07:10.880,0:07:16.240
+pour savoir si elles conviennent, il faut considérer cette matrice comme une sorte
+
+0:07:16.240,0:07:20.400
+d'ensemble de nœuds dans un graphe. Et ce que vous voulez,
+
+0:07:20.400,0:07:24.160
+est d’aller du coin inférieur gauche de ce graphe
+
+0:07:24.160,0:07:29.440
+au coin supérieur droit en passant par un chemin qui
+
+0:07:29.440,0:07:32.639
+minimise la somme des distances parcourues dans le chemin.
+
+0:07:32.639,0:07:35.840
+Donc évidemment vous devez aller
+
+0:07:35.840,0:07:39.520
+Horizontalement… plus de marches que vous n'en faites verticalement.
+
+0:07:39.520,0:07:42.080
+A quelques reprises, vous allez en diagonale et à quelques reprises, vous
+
+0:07:42.080,0:07:44.879
+montez verticalement. Mais à de nombreuses occasions, vous allez 
+
+0:07:44.879,0:07:49.680
+horizontalement vers la droite. Et ce serait
+
+0:07:49.680,0:07:52.479
+la situation où vous avez de multiples vecteurs de caractéristiques ici
+
+0:07:52.479,0:07:54.560
+qui sont en gros identiques et qui correspondent
+
+0:07:54.560,0:07:58.000
+au vecteur de caractéristique unique dans le template. Donc par exemple
+
+0:07:58.000,0:08:01.280
+vous prononcez le mot « seven » très lentement le « e »
+
+0:08:01.280,0:08:07.039
+au départ, sera répété plusieurs fois. Vous passez dessus pendant un quart de seconde donc
+
+0:08:07.039,0:08:11.599
+vous aurez 25 exemples. Et tout cela sera associé avec peut-être
+
+0:08:11.599,0:08:15.999
+un seul vecteur de caractéristique ici qui correspond à ce son « e ».
+
+0:08:15.999,0:08:23.000
+Donc trouver ce chemin qui déforme le mieux la séquence dans la séquence de template
+
+0:08:23.000,0:08:27.759
+est comme minimiser par rapport à une variable latente z. Donc c'est comme
+
+0:08:27.759,0:08:33.719
+si vous aviez une fonction d’énergie et que vous minimisiez cette fonction par rapport à la variable latente.
+
+0:08:33.719,0:08:37.700
+La variable latente est le chemin dans ce graphe. Donc ce que vous avez est
+
+0:08:37.700,0:08:42.700
+la meilleure déformation qui fasse correspondre la séquence de vecteur de caractéristique au premier patron.
+
+0:08:42.700,0:08:46.880
+Vous continuez à faire cela avec tous les patrons.
+
+0:08:46.880,0:08:50.720
+Donc pour chaque mot de zéro à neuf,
+
+0:08:50.720,0:08:54.240
+vous avez la meilleure façon de vous déformer
+
+0:08:54.240,0:08:58.160
+le vecteur de caractéristique vers ce patron.
+
+0:08:58.160,0:09:08.079
+Si votre système a été entraîné, vous choisissez la catégorie du template de mot
+
+0:09:08.080,0:09:11.519
+avec la distance la plus petite. C'est aussi simple que cela.
+
+0:09:11.519,0:09:14.640
+C’est pour la classification. Quand est-il de l’entraînement ? 
+
+0:09:14.640,0:09:18.640
+Il s'agit d'un modèle à variables latentes en gros, et ce que vous devez faire
+
+0:09:18.640,0:09:23.760
+c'est rendre l'énergie nécessaire à la bonne réponse aussi petite que possible
+
+0:09:23.760,0:09:26.800
+et vous assurer que l'énergie nécessaire
+
+0:09:26.800,0:09:33.519
+aux réponses incorrectes plus grandes. Donc imaginons que la bonne
+
+0:09:33.519,0:09:37.600
+la réponse est… Oups désolé.
+
+0:09:37.600,0:09:41.839
+Est ce mot ici, l'avant-dernier, qui correspond à zéro, un, deux, trois.
+
+0:09:41.839,0:09:45.600
+La catégorie trois par exemple. Donc on sait que la bonne réponse est
+
+0:09:45.600,0:09:52.080
+trois et ce que nous devons faire est de changer un peu le template de mots
+
+0:09:52.080,0:09:56.000
+pour le rapprocher de la séquence de vecteurs de caractéristiques.
+
+0:09:56.000,0:10:03.440
+Puis modifier la séquence de vecteurs de caractéristiques de manière à ce qu'elle se rapproche du patron.
+
+0:10:03.440,0:10:08.400
+Vous pouvez penser à cette DTW comme une sorte de distance
+
+0:10:08.400,0:10:12.640
+qui implique une minimisation par rapport à un chemin. Mais en fin de compte c'est
+
+0:10:12.640,0:10:17.200
+une sorte de distance ou de divergence. Et ce que vous devez faire… Ceci est
+
+0:10:17.200,0:10:20.480
+en gros, votre énergie. Donc ce que vous devez faire, c'est réduire cette distance
+
+0:10:20.480,0:10:24.880
+pour la bonne réponse. Donc l'énergie de la bonne réponse diminue.
+
+0:10:24.880,0:10:28.640
+Et simultanément vous devez vous assurer que l'énergie de toutes les
+
+0:10:28.640,0:10:32.000
+réponses incorrectes soient plus grandes. Donc vous pourriez avoir besoin 
+
+0:10:32.000,0:10:34.959
+de les repousser. Donc vous pouvez avoir besoin d'une fonction 
+
+0:10:34.959,0:10:38.399
+objectif qui va prendre les templates pour les mauvais
+
+0:10:38.399,0:10:43.839
+les mots et les éloignent d'une certaine manière de la séquence actuelle de caractéristiques.
+
+0:10:43.839,0:10:47.279
+C'est comme ça que vous apprenez les templates.
+
+0:10:47.279,0:10:53.040
+Puis simultanément vous allez avoir une sorte de combinaison
+
+0:10:53.040,0:10:57.200
+de gradients qui vont se rétropropager à travers cette DTW.
+
+0:10:57.200,0:11:00.320
+Essayer d’agir sur cette séquence
+
+0:11:00.320,0:11:04.959
+de vecteurs de caractéristiques de telle que la DTW
+
+0:11:04.959,0:11:09.600
+se rapproche du template du mot correct mais aussi
+
+0:11:09.600,0:11:15.279
+la modifier de manière à ce qu'elle s'éloigne des templates
+
+0:11:15.279,0:11:20.399
+pour les autres catégories. Donc c'est simplement
+
+0:11:20.399,0:11:24.720
+rétropropager à travers la DTW.
+
+0:11:24.720,0:11:28.079
+La DTW est un interrupteur géant.
+
+0:11:28.079,0:11:31.200
+Elle vous dit en gros : ces valeurs ici
+
+0:11:31.200,0:11:36.240
+le long du chemin comptent car elles indiquent si
+
+0:11:36.240,0:11:39.519
+mon vecteur d'entrée correspond à mon vecteur de template.
+
+0:11:39.519,0:11:43.120
+Tous les autres dans mon chemin sont sans importance, ne comptent pas.
+
+0:11:43.120,0:11:49.040
+La distance n'est donc que la somme de ces valeurs. Donc quand je rétropropage, j’ai
+
+0:11:49.040,0:11:53.440
+pour chaque vecteur ici, un gradient qui correspond à…
+
+0:11:57.279,0:12:02.639
+la distance au vecteur correspondant dans le patron.
+
+0:12:02.800,0:12:06.399
+Donc pour le bon template, cela va rapprocher
+
+0:12:06.399,0:12:09.680
+tous ces vecteurs du vecteur correspondant dans le template
+
+0:12:09.680,0:12:13.279
+et s'éloigner tous ces vecteurs du vecteur correspondant dans le
+
+0:12:13.279,0:12:19.560
+mauvais template. Donc vous décidez de repousser. Vous pouvez alors simplement rétropropager ces gradients.
+
+0:12:19.560,0:12:24.519
+Je suis en train d'expliquer la mécanique mais vous n'avez pas besoin d’y penser.
+
+0:12:24.519,0:12:28.000
+En principe…
+
+0:12:28.000,0:12:33.680
+Conceptuellement, c'est juste un modèle à base d'énergie avec une variable latente.
+
+0:12:33.680,0:12:37.120
+et vous calculez simplement le gradient de votre énergie par rapport
+
+0:12:37.120,0:12:40.639
+à tout dans votre dans votre réseau
+
+0:12:40.639,0:12:44.480
+pour les valeurs des variables latentes qui dépendent de
+
+0:12:44.480,0:12:48.959
+la position de ce commutateur ici. Vous pouvez penser à celui-ci
+
+0:12:48.959,0:12:54.079
+comme vous indiquant laquelle des réponses est la bonne.
+
+0:12:54.079,0:12:57.120
+Donc ce n'est rien de plus qu'un modèle basé sur l'énergie.
+
+0:12:57.120,0:13:01.480
+Alors pourquoi je présente ça avant de parler
+
+0:13:01.480,0:13:04.750
+de la prédiction de structure ? Car il s'agit d'une
+
+0:13:04.750,0:13:08.320
+forme simple de prédiction de structure, surtout si le problème n'est pas
+
+0:13:08.320,0:13:12.399
+de reconnaître un seul mot mais de reconnaître une séquence de mots.
+
+0:13:12.399,0:13:16.000
+Donc un mot est une séquence de sons mais une phrase est une
+
+0:13:16.000,0:13:19.440
+séquence de mots et donc aussi une séquence de sons.
+
+0:13:19.440,0:13:26.399
+Je pourrais construire une collection de séquences possibles qui sont grammaticalement correctes,
+
+0:13:26.399,0:13:31.519
+correspondant à certaines séquences grammaticalement correctes de sons.
+
+0:13:31.519,0:13:34.720
+Puis ce genre de DTW
+
+0:13:34.720,0:13:39.519
+permettra de trouver parmi toutes les séquences possibles de
+
+0:13:39.519,0:13:45.199
+symboles ou de sons ou de mots celui qui a la plus faible énergie.
+
+0:13:45.199,0:13:50.320
+Ce vecteur de caractéristique est le plus proche d'une manière ou d'une autre.
+
+0:13:52.160,0:13:56.560
+C’est donc le problème général de l'étiquetage des séquences.
+
+0:14:00.639,0:14:10.160
+Et il peut être formulé à un niveau général de cette façon. Je suis en train de fixer un peu la scène.
+
+0:14:10.160,0:14:18.000
+Je vais parler maintenant de quelque chose dont vous n’allez pas voir immédiatement que c’est connecté mais ça va venir à la fin.
+
+0:14:18.000,0:14:21.040
+Alors disons que vous avez un système d'apprentissage
+
+0:14:21.040,0:14:25.519
+qui est composé d'une entrée x, il prend une entrée x.
+
+0:14:25.519,0:14:29.600
+C'est un modèle d’énergie dans lequel l'énergie est une somme de trois termes dans ce cas.
+
+0:14:29.600,0:14:36.880
+Donc ces carrés bleus ici sont en gros les facteurs dans un graphe de facteurs,
+
+0:14:36.880,0:14:40.079
+des termes d'énergie additifs dans votre fonction d’énergie.
+
+0:14:40.079,0:14:46.880
+Votre sortie est une séquence, dans ce cas une séquence de quatre symboles.
+
+0:14:46.880,0:14:52.880
+Ces symboles ne contribuent pas tous à tous les termes dans le l'énergie.
+
+0:14:52.880,0:14:55.680
+Donc en gros le premier terme de votre fonction d’énergie 
+
+0:14:55.680,0:15:04.800
+prend en compte les deux premiers symboles ou variables dans votre séquence de sortie.
+
+0:15:04.800,0:15:10.720
+Le deuxième prend les deux autres, le troisième prend les troisième et quatrième.
+
+0:15:10.740,0:15:16.120
+Maintenant imaginez que c'était une séquence de mots et que votre système était censé faire
+
+0:15:16.120,0:15:21.120
+quelque chose comme de la reconnaissance vocale ou quelque chose comme x est un signal vocal.
+
+0:15:21.120,0:15:26.750
+Dans les boîtes bleues, vous avez des réseaux neuronaux et diverses autres choses pouvant être un autre réseau qui examine x
+
+0:15:26.750,0:15:30.600
+et qui produit ensuite les vecteurs de caractéristiques qui vont dans ces boîtes.
+
+0:15:30.600,0:15:38.959
+Mais c'est un détail pour l'instant. Et ce que ces boîtes bleues doivent implémenter c’est en gros 
+
+0:15:38.959,0:15:43.600
+les contraintes grammaticales. Donc en anglais certains mots peuvent
+
+0:15:43.600,0:15:47.759
+suivre certains autres mais pas tous. Vous avez rarement deux
+
+0:15:47.759,0:15:53.750
+verbes qui se suivent. Donc vous pourriez implémenter cela dans
+
+0:15:53.750,0:16:00.800
+ce terme d’énergie qui vous ferait payer un prix pour mettre un verbe après un autre verbe.
+
+0:16:00.800,0:16:07.600
+Ou avoir, je ne sais pas, deux prépositions. Vous pouvez avoir deux objectifs qui se suivent.
+
+0:16:07.600,0:16:10.720
+Ce genre de choses. Donc en gros implémenter
+
+0:16:10.720,0:16:13.839
+des règles grammaticales de base. Vous pouvez considérer cela comme une 
+
+0:16:13.839,0:16:16.959
+sorte de modèle de langue. Donc je sais quel mot est venu avant,
+
+0:16:16.959,0:16:20.720
+dites-moi ce qui peut venir après, et je peux entraîner cela sur un corpus 
+
+0:16:20.720,0:16:24.880
+de texte pour apprendre cette fonction d’énergie
+
+0:16:24.880,0:16:28.480
+Donc c'est un modèle de langage très basique.
+
+0:16:28.480,0:16:32.160
+Ce type de modèle pourrait implémenter un modèle linguistique très cool
+
+0:16:32.160,0:16:37.920
+en vous contentant de prendre le mot précédent et dire quels sont les mots suivants possibles.
+
+0:16:37.920,0:16:43.320
+Et vous payez un prix pour choisir un mot qui n'est pas correct.
+
+0:16:43.320,0:16:50.600
+Donc comment faire l’inférence ? C’est juste un modèle d’énergie qui,
+
+0:16:50.880,0:16:53.759
+dans ce cas n'a pas de variable latente mais
+
+0:16:53.759,0:16:57.440
+en gros, je vous donne un x et vous devez trouver la séquence de y qui minimise l'énergie.
+
+0:16:57.440,0:17:00.399
+Mais dans ce cas, car l'énergie est la somme de trois termes,
+
+0:17:00.399,0:17:03.440
+il y a une manière efficace de trouver la séquence
+
+0:17:03.440,0:17:06.799
+de y qui minimisent l'énergie qui ne nécessite pas
+
+0:17:06.799,0:17:10.160
+une recherche exhaustive ou une descente de gradient ou quelque chose de ce genre.
+
+0:17:10.160,0:17:13.520
+Je vais me mettre dans une situation où,
+
+0:17:13.520,0:17:16.799
+les y sont en fait discrets. Donc comme des mots
+
+0:17:16.799,0:17:20.959
+ou des sons ou des catégories. Donc cela s'applique à…
+
+0:17:24.000,0:17:31.360
+Cette situation où les variables que vous devez inférer sont toutes
+
+0:17:31.360,0:17:34.559
+des sorties, ce qui signifie qu'elles vont être visibles sur le jeu
+
+0:17:34.559,0:17:38.600
+d’entraînement et vous pouvez entraîner votre système à les inférer correctement.
+
+0:17:38.600,0:17:41.679
+Mais il pourrait aussi s'agir d'une autre situation où
+
+0:17:41.679,0:17:46.000
+certaines des variables sont observées, comme x ici à gauche,
+
+0:17:46.000,0:17:49.840
+et y est observé pendant l’entraînement à droite. Toutes les variables intermédiaires
+
+0:17:49.840,0:17:54.400
+intermédiaires ne sont jamais observées, ce sont des variables latentes dont vous avez besoin pour minimiser.
+
+0:17:54.400,0:18:00.799
+Mais ici encore, ce graphe de facteurs est factorisé au sens que l'énergie est une somme de différents
+
+0:18:00.799,0:18:06.640
+termes qui ne prennent en compte que des sous-ensembles des variables.
+
+0:18:06.919,0:18:18.600
+Prenons un exemple très concret maintenant. Disons que l'énergie ici, dans ce cas, est une somme de quatre termes énergétiques.
+
+0:18:18.799,0:18:25.120
+Les deux premiers dépendent de x, l'observation,
+
+0:18:25.120,0:18:28.760
+deux derniers dépendent de y qui est la variable que vous devez
+
+0:18:28.760,0:18:32.080
+prédire pendant l’entraînement mais pas pendant le test.
+
+0:18:32.080,0:18:36.720
+Puis deux autres nœuds sont des nœuds de variables latentes.
+
+0:18:36.720,0:18:42.720
+Et disons que x est une variable en grande dimension, on ne s’en soucie pas exactement, car nous l'observons juste.
+
+0:18:42.720,0:18:52.919
+Et Z1, Z2 et Y1 sont binaires, et Y2 est ternaire, peut prendre trois valeurs : 0, 1, 2.
+
+0:18:52.559,0:19:03.120
+Si vous comptez combien de configurations possibles il y a pour Z1, Z2, Y1, Y2, il y en a en gros 
+
+0:19:03.120,0:19:08.720
+24 : 2 fois 2 fois 2 fois 3.
+
+0:19:08.720,0:19:13.440
+Il y a 24 différentes configurations possibles de valeurs.
+
+0:19:13.440,0:19:18.320
+Donc si vous voulez faire une inférence exacte, vous devriez essayer
+
+0:19:18.320,0:19:22.080
+les 24 de ces configurations, puis calculer l'énergie des 24 de
+
+0:19:22.080,0:19:26.039
+ces configurations et choisir celle qui a la plus faible énergie
+
+0:19:26.039,0:19:33.520
+pour faire l’inférence. Et en fait ces 24 configurations correspondent à
+
+0:19:33.520,0:19:39.039
+24 fois 3 évaluations de ces termes énergétiques. Car nous avons 3
+
+0:19:39.039,0:19:42.080
+termes énergétiques. Nous devons donc calculer 96 termes différents
+
+0:19:42.080,0:19:45.919
+d'énergie pour pouvoir faire ça. Et c’est un petit exemple où
+
+0:19:45.919,0:19:50.480
+la séquence est courte et les variables sont binaires. Cela
+
+0:19:50.480,0:19:53.520
+va exponentiellement avec la longueur de la séquence…
+
+0:19:59.600,0:20:09.000
+Désolé avec le nombre de valeurs possibles des z et la longueur de la séquence.
+
+0:20:09.039,0:20:15.000
+Donc si vous avez n possibilités pour chacune des variables et la longueur est l,
+
+0:20:15.000,0:20:19.440
+alors c'est n à l, c’est exponentielle avec la longueur.
+
+0:20:21.640,0:20:31.760
+Mais le fait est qu'il y a une manière plus efficace de déterminer quelle est la configuration de l’énergie la plus basse.
+
+0:20:31.760,0:20:34.159
+Et c'est dû au fait que vous avez
+
+0:20:34.159,0:20:40.799
+ce genre structure locale. Donc Z1 ne peut prendre que deux valeurs.
+
+0:20:40.799,0:20:43.840
+Et Z2 ne peut aussi prendre que deux valeurs.
+
+0:20:43.840,0:20:48.000
+Donc ce terme énergétique ne peut donc prendre que quatre valeurs.
+
+0:20:48.000,0:20:51.360
+Seulement quatre valeurs différentes car il ne peut voir que 
+
+0:20:51.360,0:20:54.960
+0,0 0,1 1,0 et 1,1.
+
+0:20:54.960,0:20:58.480
+Vous pouvez donc imaginer que ces quatre valeurs soient précalculées.
+
+0:20:58.480,0:21:02.320
+Ce gars va aussi voir que quatre valeurs.
+
+0:21:02.320,0:21:05.600
+Car ceci est binaire, ceci est binaire.
+
+0:21:05.600,0:21:08.799
+Donc vous pouvez précalculer ces quatre valeurs.
+
+0:21:08.799,0:21:12.320
+Il s'agit donc de 4 autres évaluations d'une fonction objective.
+
+0:21:12.320,0:21:14.480
+On est donc à 8. Et ce type a 6 valeurs différentes
+
+0:21:14.480,0:21:17.200
+car cette variable est binaire et celle-là ternaire donc
+
+0:21:17.200,0:21:20.720
+c'est 2 fois 3. Ce qui fait que vous avez maintenant 6 configurations différentes.
+
+0:21:20.720,0:21:25.280
+Donc en précalculant les 4 ici, les 4 ici et les 6 ici
+
+0:21:25.280,0:21:36.480
+vous avez calculé toutes les configurations possibles.
+
+0:21:39.600,0:21:43.200
+Et c'est en quelque sorte représenté ici en bas.
+
+0:21:43.200,0:21:47.200
+C'est ce qu'on appelle un « trellis » et c'est en gros un graphe qui a un nœud source
+
+0:21:47.200,0:21:50.320
+et un nœud cible. Et chaque chemin dans le graphe correspond à
+
+0:21:50.320,0:21:55.600
+une affectation particulière des variables.
+
+0:21:55.600,0:22:03.840
+Donc, par exemple, si je suis ce chemin, cela signifie que Z1 = 1,
+
+0:22:03.840,0:22:11.039
+Z2 = 0, Y1 = 1 et Y2 = 2.
+
+0:22:11.039,0:22:17.919
+Et si j'additionne les termes de chaque arc, j'obtiens l'énergie globale.
+
+0:22:17.919,0:22:26.600
+Chaque arc est en gros annoté par le terme énergétique, la valeur de l'énergie qui correspond à cette configuration.
+
+0:22:26.880,0:22:31.919
+Donc par exemple, cet arc ici, est cette énergie et c'est la valeur de ce
+
+0:22:31.919,0:22:38.159
+terme énergétique pour Y1 = 1 et Y2 = 2.
+
+0:22:38.840,0:22:45.039
+Donc chacun de ces arcs est une valeur de ce terme énergétique.
+
+0:22:45.039,0:22:49.280
+Chacun de ces arcs est la valeur de ce terme énergétique, etc.
+
+0:22:49.280,0:22:55.679
+Et maintenant la recherche de la meilleure configuration énergie 
+
+0:22:55.679,0:22:59.760
+avec la plus basse énergie Z1, Z2, Y1 et Y2 consiste simplement à
+
+0:22:59.760,0:23:06.000
+trouver le chemin le plus court dans ce graphe.
+
+0:23:06.000,0:23:13.500
+Pour ce faire, je n'ai qu'à évaluer 4 termes d'énergie ici, 4 termes ici et 6 termes ici et c'est tout.
+
+0:23:13.760,0:23:21.120
+C'est 14. Je ne sais pas pourquoi j'ai écrit 16 ici. Oh 16
+
+0:23:21.120,0:23:26.640
+à cause des 2 premiers ici. Donc 16 valeurs au total.
+
+0:23:28.000,0:23:33.360
+Et c’est donc beaucoup moins que 96.
+
+0:23:33.360,0:23:40.039
+Et cela car l'énergie est la somme des termes et vous pouvez utiliser ce genre d’algorithmes efficients pour faire l'inférence.
+
+0:23:40.279,0:23:46.240
+Donc c’est un cas simple où la sortie est une séquence.
+
+0:23:46.240,0:23:49.440
+Et lorsque la sortie est une séquence, il y a un algorithme simple
+
+0:23:49.440,0:23:53.279
+consistant en gros à des chemins dans un graphe, dans un « trellis ».
+
+0:23:53.279,0:23:58.720
+Donc c'est juste de la programmation dynamique. C'est très simple et efficace. 
+
+0:23:58.720,0:24:04.120
+C’est bien. Donc entraîner un système comme celui-ci où vous devez lui dire :
+
+0:24:04.120,0:24:10.400
+voici la bonne configuration de Y1 Y2, je ne sais pas ce que sont Z1 Z2 car c'est des variables latentes,
+
+0:24:10.400,0:24:16.080
+trouve-moi alors le chemin qui mène à la bonne combinaison de Y1 Y2.
+
+0:24:16.080,0:24:24.400
+Disons que Y1 = 1 et Y2 = 2, le chemin correct
+
+0:24:24.880,0:24:32.600
+doit inclure ce lien. Il n'y a donc qu'un sous-ensemble de chemins pour les précédents qui sont possibles.
+
+0:24:32.620,0:24:36.320
+Vous ne pouvez pas aller à Y1 = 0 car
+
+0:24:36.320,0:24:40.000
+ce serait incorrect. Donc en gros, seul ce type survit.
+
+0:24:40.000,0:24:45.039
+Puis pour les autres chemins, vous pouvez emprunter ce que vous le voulez à condition d'arriver ce point.
+
+0:24:45.039,0:24:48.720
+Donc vous pouvez trouver celui qui minimise l'énergie ici.
+
+0:24:48.720,0:24:52.080
+Donc en minimisant l'énergie par rapport à Z1 Z2 de sorte que
+
+0:24:52.080,0:24:55.919
+Y1 et Y2 prennent la bonne valeur. Contraignant Y1 et Y2
+
+0:24:55.919,0:25:00.000
+à prendre la bonne valeur. Et la façon dont vous entraînez le système est
+
+0:25:00.000,0:25:04.799
+que par descente de gradient, vous rétropropagez le gradient de
+
+0:25:04.799,0:25:11.600
+l'énergie globale. Pour ce Y particulier et ce X particulier et le Z que vous obtenez en minimisant.
+
+0:25:11.600,0:25:19.679
+Vous rétropropagez le gradient de cette énergie par rapport aux paramètres de tous ces termes énergétiques.
+
+0:25:19.679,0:25:27.880
+Et vous essayez de rendre ça petit. Vous avez le Y correct, le X correct et peu importe la valeur que prend Z, 
+
+0:25:27.880,0:25:33.600
+vous essayez de faire baisser cette énergie en modifiant les paramètres.
+
+0:25:33.600,0:25:38.000
+En même temps vous devez vous assurer que l'énergie des réponses incorrectes pour
+
+0:25:38.000,0:25:44.159
+Y1 et Y2 soient plus élevées. Donc vous prenez d'autres valeurs
+
+0:25:44.159,0:25:49.120
+de Y1 et Y2 incluant Y1 = 0 et Y2 = peu importe.
+
+0:25:49.120,0:25:55.200
+Et pour toutes ces autres configurations de Y1 Y2, vous voulez vous assurer que quelle que soit l'énergie
+
+0:25:55.200,0:25:59.440
+que vous obtenez en minimisant sur Z, est supérieure à ce que vous avez obtenu pour la bonne réponse.
+
+0:25:59.440,0:26:05.679
+Donc votre fonction de perte est quelque chose où vous prenez l'énergie de la bonne réponse,
+
+0:26:05.679,0:26:08.480
+vous essayez de la faire baisser et puis vous prenez les énergies des
+
+0:26:08.480,0:26:13.919
+réponses incorrectes et essayez de les rendre plus grandes. C'est un 
+
+0:26:13.919,0:26:17.919
+entraînement discriminatoire pour la prédiction de structure.
+
+0:26:17.919,0:26:22.720
+Prédiction de structure car la structure ici est représentée par cette
+
+0:26:22.720,0:26:28.320
+séquence de coûts. Mais conceptuellement, à un niveau élevé, ce n'est pas
+
+0:26:28.320,0:26:30.880
+différent de tout ce dont nous avons parlé auparavant lorsque
+
+0:26:30.880,0:26:34.240
+nous avons une variable latente et lorsque nous entraînons avec un critère
+
+0:26:34.240,0:26:37.679
+qui rend l'énergie de la bonne réponse petite et celle de
+
+0:26:37.679,0:26:43.520
+toutes les autres réponses plus grandes. Des questions à ce stade ?
+
+0:26:43.520,0:26:48.320
+[Etudiant : j’en ai une. D'après ce diagramme, il semble que
+
+0:26:48.320,0:26:54.320
+ce réseau ne prend que des valeurs discrètes
+
+0:26:54.320,0:26:59.679
+et ma compréhension était que
+
+0:26:59.679,0:27:03.520
+la rétropropagation n'est pas vraiment efficace si on
+
+0:27:03.520,0:27:07.760
+travaille qu'avec des valeurs discrètes.
+
+0:27:07.760,0:27:11.520
+Je me demande donc si je rate quelque chose ou si c'est
+
+0:27:11.520,0:27:18.240
+comment vous connectez ces choses] Donc dans ce cas Z1, Z2, Y1, Y2
+
+0:27:18.240,0:27:22.480
+ne sont pas des variables que l'on apprend. Ce sont des étiquettes.
+
+0:27:22.480,0:27:29.440
+Elles sont discrètes. Y1, Y2 sont discrètes comme la classe / la catégorie
+
+0:27:29.440,0:27:34.720
+de sortie d’un ConvNet est discrète. Sauf que vous en avez deux, mais peu importe.
+
+0:27:34.720,0:27:38.000
+Z1, Z2 sont fondamentalement de même nature : des variables discrètes.
+
+0:27:38.000,0:27:40.640
+Ce ne sont pas des choses que vous allez apprendre par descente de gradient. Elles sont juste latentes.
+
+0:27:40.640,0:27:44.000
+Vous devez réduire dessus pour faire de l’inférence.
+
+0:27:44.000,0:27:48.760
+Ne parlons pas d'apprentissage pour l'instant. Une fois que votre système est entraîné, je donne
+
+0:27:48.760,0:27:52.840
+un x et par minimisation de l'énergie vous trouvez Z1, Z2, Y1, Y2
+
+0:27:52.840,0:27:56.720
+qui minimisent l'énergie. Et car vous avez entraîné les Y1, Y2
+
+0:27:56.720,0:28:00.080
+corrects à avoir l'énergie la plus faible de toutes
+
+0:28:00.080,0:28:04.320
+les configurations possibles de Y1, Y2, vous allez obtenir la bonne.
+
+0:28:04.320,0:28:11.120
+Maintenant pour l’entraînement, il affecte en gros les paramètres de
+
+0:28:11.120,0:28:14.480
+chacun de ces facteurs. A l'intérieur de ces facteurs, il y a des
+
+0:28:14.480,0:28:19.360
+paramètres : Wa, Wb, Wc, Wd que je n'ai pas
+
+0:28:19.360,0:28:22.960
+représenté ici. Et la façon dont vous entraînez le système, c'est vous
+
+0:28:22.960,0:28:27.520
+avez le gradient de l'énergie de la bonne réponse
+
+0:28:27.520,0:28:30.559
+par rapport à ces paramètres, vous les ajustez de manière à ce que
+
+0:28:30.559,0:28:35.039
+l'énergie diminue.  C’est continu, différenciable.
+
+0:28:35.039,0:28:38.320
+Et en même temps, j'ai l'énergie des mauvaises réponses.
+
+0:28:38.320,0:28:42.000
+Je vais rétropropagez les gradients et selon ma fonction de perte, je vais
+
+0:28:42.000,0:28:46.080
+pousser l'énergie de ceux-là de sorte que ma fonction de perte diminue…
+
+0:28:46.080,0:28:51.039
+Mon objectif d’entraînement diminue.
+
+0:28:51.039,0:28:56.039
+Pas mon énergie. Donc maintenant ce que j'explique en bas
+
+0:28:56.039,0:29:00.480
+avec le trellis est le fait que car ces variables sont discrètes,
+
+0:29:00.480,0:29:04.240
+vous ne pouvez pas utiliser la descente de gradient pour inférer.
+
+0:29:04.240,0:29:10.679
+Il faut donc les inférer par recherche combinatoire en gros.
+
+0:29:10.679,0:29:15.520
+Et la première solution que j'ai mentionnée avec les
+
+0:29:15.520,0:29:19.919
+96 évaluations de facteurs est en gros de la recherche exhaustive.
+
+0:29:19.919,0:29:22.799
+Essayer toutes les combinaisons de Z1, Z2, Y1, Y2
+
+0:29:22.799,0:29:26.480
+et déterminer laquelle a la plus faible énergie.
+
+0:29:26.480,0:29:30.559
+Mais ceci est du gaspillage dans le sens où,
+
+0:29:30.559,0:29:34.159
+car l'énergie se décompose en termes qui ne prennent que
+
+0:29:34.159,0:29:38.320
+des sous-ensembles de variables, vous pouvez en fait décomposer.
+
+0:29:38.320,0:29:42.000
+Vous pouvez réduire cela à trouver les chemins les plus courts dans un graphe.
+
+0:29:42.000,0:29:48.320
+Où les transitions dans ce graphe sont annotées par les énergies qui
+
+0:29:48.320,0:29:52.559
+correspondent à la valeur des variables des deux
+
+0:29:52.559,0:29:57.520
+nœuds correspondants. Il s'agit d'une forme de
+
+0:29:57.520,0:30:02.399
+ce dont je vous ai parlé plus tôt. Donc ce modèle ici
+
+0:30:02.399,0:30:07.279
+avec la DTW est très semblable.
+
+0:30:07.279,0:30:12.600
+Les Z1, Z2 ici sont en gros les chemins dans le module de DTW.
+
+0:30:12.600,0:30:17.679
+Le Y est le template de mot qui correspond.
+
+0:30:17.679,0:30:23.520
+Et l’entraînement consiste à faire une descente de gradient pour rendre l'énergie
+
+0:30:23.520,0:30:27.919
+de la bonne réponse petite et l'énergie de la mauvaise réponse plus grande.
+
+0:30:27.919,0:30:32.320
+En utilisant une fonction de perte que je ne spécifie pas pour le moment.
+
+0:30:32.320,0:30:38.320
+[Etudiant : quand vous dites que vous trouvez le chemin le plus court, vous dites que la distance entre
+
+0:30:38.320,0:30:45.279
+les nœuds est l'énergie entre les nœuds] Le chemin le plus court est le chemin
+
+0:30:45.279,0:30:52.159
+qui a la plus petite somme de termes le long des arêtes.
+
+0:30:52.159,0:30:55.600
+Chaque arête ici est marquée par une énergie.
+
+0:30:55.600,0:31:05.279
+Par exemple, cette arête est ici marquée par l'énergie
+
+0:30:57.760,0:31:05.279
+du terme B quand Z1 = 0 et Z2 = 1.
+
+0:31:05.279,0:31:11.840
+Donc si je prends ce chemin, je vais
+
+0:31:11.840,0:31:16.799
+payer cette énergie. Et si je prends cette
+
+0:31:16.799,0:31:22.240
+arête, je vais payer cette énergie. Donc trouver la configuration de variables 
+
+0:31:22.240,0:31:25.679
+avec l’énergie la plus basse consiste à trouver le chemin
+
+0:31:25.679,0:31:32.000
+avec la plus petite somme des valeurs sur les arêtes le long de ce chemin.
+
+0:31:32.000,0:31:36.480
+Donc le chemin le plus court dans le graphe. C’est clair ?
+
+0:31:40.640,0:31:44.240
+[Oui, ça fait sens, merci. Et donc les 0 avant le
+
+0:31:44.240,0:31:48.320
+nœud noir ce sont des 0 juste car la somme elle-même est
+
+0:31:48.320,0:31:51.279
+l'énergie nulle, c'est bien ça ?] Oui c'est ça.
+
+0:31:51.279,0:31:56.320
+Je ne compte pas…  Je me fiche de savoir lequel de ces chemins c’est.
+
+0:31:56.320,0:32:00.799
+Je n'ai pas de terme énergétique ici pour
+
+0:32:00.799,0:32:04.000
+la valeur de Y2. Si j'avais un facteur supplémentaire ici
+
+0:32:04.000,0:32:08.960
+qui ne prendrait que Y2, alors ce facteur mettrait en gros
+
+0:32:08.960,0:32:15.600
+l'énergie ici. Nous remplaçons ces 0.
+
+0:32:17.600,0:32:27.840
+[Alfredo : il y a une question qui vient des étudiants. Donc nous baissons l'énergie ou
+
+0:32:27.039,0:32:31.519
+nous faisons en fait une minimisation pour l’entraînement et l'inférence, mais quand
+
+0:32:31.519,0:32:36.399
+augmentons-nous ? Juste pendant l’entraînement ?] Donc laissez-moi
+
+0:32:36.399,0:32:40.600
+vous rappeler comment fonctionnent les modèles à base d’énergie
+
+0:32:40.600,0:32:45.120
+en particulier les  méthodes contrastives. Et si vous avez des variables latentes.
+
+0:32:45.120,0:32:48.799
+Donc vous avez votre fonction d’énergie E(X,Y,Z).
+
+0:32:48.799,0:32:51.120
+Désolé les arguments sont dans le mauvais ordre ici.
+
+0:32:51.120,0:32:54.240
+Mais cela n'a pas d'importance. Donc vous avez votre fonction E(X,Y,Z).
+
+0:32:54.240,0:33:00.000
+Je vous donne un X. Donc en mode entraînement, je vous donne un X et un Y.
+
+0:33:00.000,0:33:03.120
+Je ne vous donne jamais Z. Je vous donne un X et un Y. Voici un
+
+0:33:03.120,0:33:07.360
+exemple d’entraînement : c'est un X et un Y. La première chose que vous faites est de trouver un Z
+
+0:33:07.360,0:33:14.799
+qui minimise l'énergie E(X,Y,Z) et vous appelez cela F(X,Y).
+
+0:33:14.799,0:33:20.080
+La façon dont vous calculez ça c’est juste min sur Z de E(X,Y,Z).
+
+0:33:20.080,0:33:25.440
+Pour le y correct dans le jeu d’entraînement,
+
+0:33:25.440,0:33:30.399
+vous voulez que cette énergie soit petite. Et pour votre algorithme d'inférence,
+
+0:33:30.399,0:33:34.399
+lors de la période de test, je ne vous donne pas le y.
+
+0:33:34.399,0:33:37.600
+Je vous donne juste le x. Et ce que vous devez trouver c'est le y qui
+
+0:33:37.600,0:33:40.480
+a la plus petite énergie. Donc pour que cela fonctionne
+
+0:33:40.480,0:33:44.960
+il faut que le y correct ait l'énergie la plus faible parmi tous les y
+
+0:33:44.960,0:33:49.200
+possibles. Donc ce que je dois faire maintenant pendant
+
+0:33:49.200,0:33:52.960
+l’entraînement est que je vous donne le bon y et
+
+0:33:52.960,0:33:55.600
+vous devez donner une énergie faible à ce bon y
+
+0:33:55.600,0:34:00.960
+et une énergie plus élevée à toutes les autres configurations possibles de y.
+
+0:34:00.960,0:34:07.679
+Comment vous faites cela exactement ? ou comment
+
+0:34:07.679,0:34:11.040
+toutes ces énergies entrent dans votre fonction objectif ?
+
+0:34:11.040,0:34:14.480
+Cela dépend des objectifs que vous choisissez. Nous allons y venir dans un
+
+0:34:14.480,0:34:17.200
+minute. Mais il est presque certain que vous allez
+
+0:34:17.200,0:34:20.240
+avoir un terme dans votre fonction de perte qui va dire : « rend l'énergie de
+
+0:34:20.240,0:34:23.599
+la bonne réponse basse » et un autre terme qui va
+
+0:34:23.599,0:34:27.280
+dire : « rend l'énergie de toutes les autres réponses ou de certaines d'entre elles, grande ».
+
+0:34:27.280,0:34:31.760
+Nous en avons parlé la dernière fois. Il y a trois semaines. Mais je vais
+
+0:34:31.760,0:34:37.119
+y revenir à droite. Est-ce que c'est clair ou avez-vous besoin
+
+0:34:37.119,0:34:44.639
+d’autre précision ? [Alfredo : je ne vois pas de réponse ici]
+
+0:34:51.200,0:34:54.750
+[Alfredo : il y en a une autre. Qu’en est-il si le graphe
+
+0:34:54.750,0:34:59.000
+factoriel n'est pas possible ? Faut-il rechercher toutes les combinaisons possibles
+
+0:34:59.000,0:35:03.240
+de y ? Je pense que c’est peut-être le cas continu]
+
+0:35:03.240,0:35:07.040
+Non, pas nécessairement.
+
+0:35:07.040,0:35:13.280
+Cette idée de décomposition en énergies vous donne aussi un avantage
+
+0:35:13.280,0:35:17.280
+même dans le cas de variables continues. Car vous pouvez faire
+
+0:35:17.280,0:35:21.760
+des optimisations indépendantes. La combinaison de valeurs
+
+0:35:21.760,0:35:27.119
+de Z1 et Z2 n'affecte que EB  même si Z1
+
+0:35:27.119,0:35:30.560
+et Z2 sont continus. Et vous pouvez donc faire un peu
+
+0:35:30.560,0:35:33.040
+l'équivalent d'une programmation dynamique. C'est un peu
+
+0:35:33.040,0:35:37.200
+plus compliqué dans le cas continu mais cela est possible.
+
+0:35:37.200,0:35:45.520
+La pire situation c'est quand tous les Z et les Y entrent dans un facteur géant et qu'il n'y a pas moyen
+
+0:35:45.520,0:35:48.960
+de la factoriser. Alors vous devez
+
+0:35:48.960,0:35:54.400
+faire une recherche exhaustive ou une recherche heuristique approximative.
+
+0:35:54.400,0:35:57.599
+Un algorithme d'inférence qui minimise l'énergie.
+
+0:35:57.599,0:36:00.880
+[Alfredo : oui c'était en fait le cas auquel se référait l'étudiant.
+
+0:36:00.880,0:36:06.800
+Et l'autre étudiant est également satisfait. Tu as répondu aux deux questions]
+
+0:36:07.040,0:36:10.720
+N'hésitez pas à demander si quelque chose qui n'est pas clair.
+
+0:36:10.720,0:36:17.040
+Donc voici un exemple de ça. Et si vous rencontrez cela dans la
+
+0:36:17.040,0:36:18.960
+littérature vous saurez ce que c'est : cela s'appelle un
+
+0:36:18.960,0:36:22.000
+champ aléatoire conditionnel. Un champ aléatoire conditionnel
+
+0:36:22.000,0:36:27.119
+est un type très particulier de modèle de prédiction de structure.
+
+0:36:27.119,0:36:30.880
+Ici vous avez les Y de Z, cela n’a pas d'importance.
+
+0:36:30.880,0:36:36.640
+Ce n’est que des Y. Mais la façon dont ces facteurs sont paramétrés
+
+0:36:36.640,0:36:41.040
+c'est qu'il existe un extracteur de caractéristiques fixe, appelons-le F(X,Y1,Y2)
+
+0:36:41.040,0:36:45.680
+dans ce cas ici. Puis un vecteur de poids qui
+
+0:36:45.680,0:36:49.839
+calcule le produit scalaire de ce vecteur de caractéristiques avec ce
+
+0:36:49.839,0:36:51.520
+vecteur de poids. Et cela vous donne un score ici, 
+
+0:36:51.520,0:36:55.000
+une énergie. L'énergie globale est juste la somme de toutes ces termes.
+
+0:36:55.000,0:36:58.720
+Il s'agit donc en gros de réseaux neuronaux fantômes si vous voulez,
+
+0:36:58.720,0:37:04.160
+des réseaux neuronaux monocouches avec un extracteur de caractéristiques à l'entrée.
+
+0:37:04.160,0:37:07.839
+Puis nous pouvons réfléchir à quel type de fonction de perte pour
+
+0:37:07.839,0:37:13.200
+Minimiser, pour entraîner quelque chose comme cela. Une possibilité est d'utiliser la
+
+0:37:13.200,0:37:16.000
+perte NLL[cf. cours 11]. Donc, en gros, vous dites :
+
+0:37:16.000,0:37:20.320
+« je veux que l'énergie de la bonne réponse soit basse,
+	
+0:37:20.320,0:37:25.760
+et je veux le log de la somme des exponentielles de toutes les énergies
+
+0:37:25.760,0:37:32.480
+de toutes les mauvaises réponses, la bonne comprise, soit grande.
+
+0:37:32.500,0:37:40.720
+En fait, plus correctement, vous voulez que moins le logarithme de la somme 
+
+0:37:40.720,0:37:44.160
+de toutes les configurations de votre sortie de l’exponentielle moins 
+
+0:37:44.160,0:37:48.960
+l'énergie de toutes ces configurations soit aussi petit que possible.
+
+0:37:48.960,0:37:59.280
+Donc en gros vous voulez la combinaison d'énergies ou de mauvaises réponses soit aussi grande que possible.
+
+0:37:59.280,0:38:03.200
+Et nous avons déjà rencontré cette fonction de perte.
+
+0:38:03.200,0:38:06.880
+Je veux dire que c'est en gros ce qu'utilise le softmax.
+
+0:38:06.880,0:38:10.720
+Le softmax dit : « je veux que la probabilité de la NL
+
+0:38:10.720,0:38:14.079
+de la bonne réponse soit aussi faible que possible »,
+
+0:38:14.079,0:38:19.920
+la probabilité des mauvaises réponses soit aussi grande que possible. C'est comme une énergie.
+
+0:38:19.920,0:38:27.040
+Mais simultanément je calcule le log de la somme des exponentielles de toutes les réponses.
+
+0:38:27.040,0:38:32.400
+Et je veux que ce soit petit, je veux que toutes ces énergies
+
+0:38:32.400,0:38:36.280
+soient grandes, je veux que toutes ces probabilités soient petites.
+
+0:38:36.280,0:38:39.280
+La softmax fait ça pour vous. 
+
+0:38:39.280,0:38:42.960
+Le critère de logsoftmax quand vous rétropropagez fait de la
+
+0:38:42.960,0:38:45.760
+classification. Et c'est exactement ce qu'il fait :
+
+0:38:45.760,0:38:48.560
+il abaisse l'énergie de la bonne réponse et augmente les énergies de tous 
+
+0:38:48.560,0:38:51.200
+les autres réponses en calculant le logarithme de la somme des
+
+0:38:51.200,0:38:54.480
+réponses de l'exponentielle moins les énergies.
+
+0:38:54.480,0:39:00.000
+Donc ici le champ aléatoire conditionnel est en gros un exemple de cela mais
+
+0:39:00.000,0:39:03.200
+vous ne faites pas de classification. Vous faites une sorte de prédiction de structure.
+
+0:39:03.200,0:39:07.200
+Dans le cas positif, vous avez la bonne configuration
+
+0:39:07.200,0:39:13.440
+de Y1, Y2, Y3, Y4 et
+
+0:39:13.440,0:39:17.599
+les incorrectes ne sont pas  es catégories incorrectes comme dans
+
+0:39:17.599,0:39:20.079
+la classification mais il y a
+
+0:39:20.079,0:39:28.960
+des configurations incorrectes de Y1, Y2, Y3, Y4. Sinon ça c’est que de la rétropropagation.
+
+0:39:29.320,0:39:34.480
+Ce n’est même pas de la rétropropagation ici, c’est un réseau fantôme.
+
+0:39:34.480,0:39:38.000
+Si vous mettez tout un réseau neuronal paramétré par W, c'est que
+
+0:39:38.000,0:39:42.000
+serait parfaitement [???]. Ce serait une sorte de champ conditionnel 
+
+0:39:42.000,0:39:45.920
+aléatoire profond si vous voulez, ce qui se trouve réellement exister avant 
+
+0:39:45.920,0:39:49.119
+le champ conditionnel. Il y a une autre idée : vous pouvez utiliser un
+
+0:39:49.119,0:39:53.680
+hinge loss. Cette perte dit : « je veux que l'énergie de la bonne réponse
+
+0:39:53.680,0:39:58.400
+soit faible et puis parmi toutes les configurations possibles de réponses incorrectes,
+
+0:39:58.400,0:40:02.000
+les configurations incorrectes de y, je vais chercher celle qui l’énergie
+
+0:40:02.000,0:40:05.599
+la plus basse parmi toutes les mauvaises. »
+
+0:40:05.599,0:40:08.240
+Et c’est celle-là que je vais pousser. Je n'ai pas besoin de pousser les autres
+
+0:40:08.240,0:40:12.520
+car sont plus grandes de toute façon. Donc je vais juste demander de trouver
+
+0:40:12.520,0:40:18.000
+quelle configuration de Y1, Y2, Y3, Y4 est à la fois incorrecte et parmi toutes
+
+0:40:18.000,0:40:22.319
+les incorrectes, celle qui a l'énergie la plus faible. Puis pousser vers le haut.
+
+0:40:22.319,0:40:28.800
+La façon dont je pousse en haut et en bas est que je vais mettre la différence de ces deux énergies dans la hinge loss.
+
+0:40:28.800,0:40:33.760
+Donc la hinge loss pousse l'énergie de la bonne réponse à être faible et
+
+0:40:33.760,0:40:39.579
+pousse l'énergie de la réponse la plus offensante comme devant être supérieure d'au moins une certaine marge.
+
+0:40:39.599,0:40:44.240
+Donc c'est ce qu'on appelle un « max margin markov net »
+
+0:40:44.240,0:40:48.000
+si vous régularisez les poids avec les moindres carrés et si vous
+
+0:40:48.000,0:40:52.000
+avez ce type de paramétrage linéaire des termes énergétiques.
+
+0:40:52.000,0:40:55.920
+Vous pouvez également utiliser la perte de perception et
+
+0:40:55.920,0:41:00.000
+Michael Collins qui est un célèbre professeur en NLP à Columbia 
+
+0:41:00.000,0:41:03.599
+à en quelque sorte réussi à construire sa carrière autour de cela.
+
+0:41:03.599,0:41:07.000
+L'idée d'utiliser la perte de perception pour la prédiction de structure.
+
+0:41:07.000,0:41:11.200
+La perte de perception ne fonctionne que si vous disposez d'une paramétrisation linéaire
+
+0:41:11.200,0:41:16.500
+des facteurs. Si vous en faites des réseaux neuronaux, vous ne pouvez plus utiliser la perte de perception car la marge est nulle.
+
+0:41:16.500,0:41:20.079
+J'en ai déjà parlé un peu plus tôt, mais j'y reviendrai dans une minute.
+
+0:41:22.079,0:41:29.000
+Donc ces idées datent d’il y a un moment. Probablement les premières personnes à avoir
+
+0:41:29.079,0:41:34.720
+penser à des choses comme ça, où les gens qui ont travaillé sur ce qu'on appelle
+
+0:41:34.720,0:41:38.599
+l’entraînement discriminatoire pour la reconnaissance vocale, remontent à la
+
+0:41:38.599,0:41:42.760
+fin des années 80 / début des années 90. Par exemple Ljolje et Rabiner de
+
+0:41:42.760,0:41:46.040
+AT&T avaient quelque chose qu'ils appelaient « minimum empirical error loss ».
+
+0:41:46.040,0:41:51.599
+C'est une sorte de perte particulière pour un système de reconnaissance vocale. Ils n'avaient pas de réseaux neuronaux.
+
+0:41:51.599,0:41:56.800
+Ils avaient une autre façon de transformer les signaux vocaux en 
+
+0:41:56.800,0:42:01.520
+des catégories de signaux si vous voulez. Mais ils avaient cette façon d’entraîner
+
+0:42:01.520,0:42:04.880
+au niveau de la séquence en ne disant pas au système : 
+
+0:42:04.880,0:42:07.599
+« voici ce son à cet endroit, qui se trouve à cet endroit ».
+
+0:42:07.599,0:42:14.400
+Mais juste : « voici une phrase d’entrée et la transcription de celle-ci en mots ».
+
+0:42:14.400,0:42:17.760
+Cela trouve la solution en faisant cette DTW dans le contexte
+
+0:42:17.760,0:42:21.520
+des modèles de Markov cachés. C’est en quelque sorte très similaire
+
+0:42:21.520,0:42:26.000
+DTW dont je vous parlais tout à l'heure.
+
+0:42:26.000,0:42:30.000
+Alors, comme je l'ai dit, au début des années 90, les gens ont commencé à travailler sur
+
+0:42:30.000,0:42:34.240
+l'utilisation de réseaux neuronaux pour alimenter un de ces systèmes de
+
+0:42:34.240,0:42:38.720
+prédiction de structure. Comme je l'ai dit le premier que je connais est 
+
+0:42:38.720,0:42:41.599
+par Xavier Driancourt et Léon Bottou pour la reconnaissance vocale.
+
+0:42:41.599,0:42:45.599
+Ils avaient un réseau avec retard. Joshua Bengio a fait sa thèse de doctorat sur ça
+
+0:42:45.599,0:42:50.800
+et a eu quelques résultats vers 1992. Et aussi Patrick Haffner l'année suivante.
+
+0:42:50.800,0:42:54.720
+Léon Bottou, Joshua Bengio et Patrick Haffner
+
+0:42:54.720,0:43:01.520
+sont les co-auteurs de mon article de 1998 sur la reconnaissance de l'écriture
+
+0:43:01.520,0:43:10.000
+car je les ai tous les trois embauchés à AT&T pour travailler sur ce problème.
+
+0:43:10.000,0:43:18.720
+Ils ont compris comment faire ça dans le cadre de leur thèse et je savais que c'était le truc qui devait être appliqué pour
+
+0:43:18.720,0:43:24.000
+des choses comme la reconnaissance de l'écriture manuscrite, la prédiction de structure avec les réseaux neuronaux.
+
+0:43:31.280,0:43:38.240
+Donc voici quelque chose dont j'ai fait rapidement allusion dans un cours précédent.
+
+0:43:38.240,0:43:44.000
+Voici une façon de mettre cela dans le contexte de l'apprentissage profond. Comme je l'ai dit précédemment,
+
+0:43:44.000,0:43:47.200
+la manière de faire ça dans le cadre de l’apprentissage profond
+
+0:43:47.200,0:43:51.520
+est de faire en sorte que ces facteurs soient des réseaux neuronaux profonds.
+
+0:43:51.520,0:43:54.240
+Il suffit de calculer des énergies et ils sont paramétrés par un tas de
+
+0:43:54.240,0:43:58.640
+paramètres. Et rien ne change. Nous savons comment rétropropager.
+
+0:43:58.640,0:44:03.839
+Et nous avons PyTorch. Mais voici une idée légèrement
+
+0:44:03.839,0:44:08.240
+différente qui s'inspire du même type de modèle.
+
+0:44:08.240,0:44:18.880
+Et c’est quand la structure est plus complexe qu’un tas de facteurs fixes
+
+0:44:18.880,0:44:26.400
+d’une structure connue si vous voulez.
+
+0:44:26.400,0:44:32.000
+Donc l'exemple que je vais utiliser ici est la reconnaissance de l'écriture
+
+0:44:32.000,0:44:36.960
+car qu'il y a une longue histoire sur ça 
+
+0:44:36.960,0:44:42.640
+et les dessins que j’utilise pour cela existent depuis longtemps.
+
+0:44:42.920,0:44:47.440
+Donc ici le problème que nous avons est que nous avons une séquence de
+
+0:44:47.440,0:44:50.720
+chiffres en entrée et nous ne savons pas comment
+
+0:44:50.720,0:44:55.000
+segmenter cette séquence en chiffres individuels
+
+0:44:55.000,0:44:59.119
+car nous ne savons pas quelles sont les parties de chacun des chiffres.
+
+0:44:59.119,0:45:02.640
+Le 4 est en quelque sorte divisés en deux parties.
+
+0:45:02.640,0:45:06.319
+Donc ce que nous pouvons faire c'est construire un graphe dans lequel chaque chemin
+
+0:45:06.319,0:45:13.040
+est un moyen possible de décomposer cette séquence en caractères.
+
+0:45:13.040,0:45:17.760
+Donc je peux grouper, je peux rendre chacune des pièces
+
+0:45:17.760,0:45:21.839
+séparée en un caractère séparé. Donc c'est le chemin au sommet. Je peux
+
+0:45:21.839,0:45:25.760
+regrouper les deux premières pièces 3, 4 et la partie gauche du 4.
+
+0:45:25.760,0:45:32.480
+et avoir le 2 final séparé. Ou je peux avoir le premier être lui-même.
+
+0:45:32.480,0:45:37.680
+Le 2 suivant être regroupé et puis
+
+0:45:37.680,0:45:42.599
+le dernier est lui-même. Donc qu'est-ce que j'ai fait ici ?
+
+0:45:44.560,0:45:51.040
+La façon dont j'ai fait l’inférence dans le contexte de la prédiction de structure
+
+0:45:51.040,0:45:59.359
+c'est en ayant des termes énergétiques qui me disent
+
+0:45:59.359,0:46:02.480
+le coût d'une combinaison particulière de variables.
+
+0:46:02.480,0:46:06.079
+Ce graphe représente donc en gros
+
+0:46:06.079,0:46:12.560
+une représentation explicite de ce modèle d’énergie. Tant que je mets
+
+0:46:12.560,0:46:16.880
+ces arcs ici, les énergies qui sont calculées par ces modules
+
+0:46:16.880,0:46:23.880
+pour chaque valeur. Mais que se passe-t-il si je manipule ce graphe ?
+
+0:46:23.880,0:46:31.200
+L’état que je manipule dans un réseau neuronal n'est pas une affectation particulière de
+
+0:46:31.200,0:46:34.640
+variable avec quelque chose pour calculer les énergies, mais c'est
+
+0:46:34.640,0:46:38.880
+directement un graphe comme celui-ci. Donc un graphe comme celui-ci peut
+
+0:46:38.880,0:46:43.040
+être considérer comme représentant une liste d'énergies pour chaque
+
+0:46:43.040,0:46:47.359
+configurations des variables d'intérêt.
+
+0:46:47.359,0:46:51.359
+C'est une façon compacte de représenter une liste d'énergies pour toutes
+
+0:46:51.359,0:46:56.800
+les configurations des séquences de symboles.
+
+0:46:56.800,0:47:03.920
+Et si je construisais un réseau neuronal pour que ces états internes de ce
+
+0:47:03.920,0:47:08.800
+réseaux soient en gros ces graphes ?
+
+0:47:08.800,0:47:13.359
+Encore une fois, les graphes sont juste une manière compacte de représenter une liste
+
+0:47:13.359,0:47:16.319
+d'énergies pour toutes les configurations possibles de la variable de
+
+0:47:16.319,0:47:21.359
+d'intérêt. Rien de plus.
+
+0:47:22.640,0:47:27.200
+Mais je peux utiliser cela pour d'autres choses que l’énergie.
+
+0:47:27.200,0:47:31.920
+Donc, ici, un chemin dans un graphe correspond à une façon particulière de séparer
+
+0:47:31.920,0:47:37.520
+ce bloc d'encre en caractères. Et chaque chemin est une façon
+
+0:47:37.520,0:47:42.240
+particulière de regrouper ces blocs en caractères. Je peux exécuter
+
+0:47:42.240,0:47:45.119
+ces images. Donc maintenant ce graphe est annoté
+
+0:47:45.119,0:47:49.680
+par des images et non par des énergies. Je peux passer ces images dans un
+
+0:47:49.680,0:47:53.599
+ConvNet. Celui-ci va me dire, pour chaque arc dans ce graphe,
+
+0:47:53.599,0:47:56.319
+« il est très probable que ce soit un 3  et
+
+0:47:56.319,0:48:00.160
+voici l'énergie pour ce 3 ». Une énergie faible si c'est un bon 3,
+
+0:48:00.160,0:48:04.240
+une grande énergie si c'est un mauvais 3. Il pourrait aussi bien me dire que cela peut
+
+0:48:04.240,0:48:07.599
+être un 2 mais avec une énergie plus élevée. Ou cela pourrait être un
+
+0:48:07.599,0:48:11.760
+0 avec une énergie plus élevée. Donc il va construire ce graphe
+
+0:48:11.760,0:48:16.400
+que vous pouvez appeler un « graphe d'interprétation ».
+
+0:48:16.559,0:48:20.720
+Chaque chemin dans ce graphe est un étiquetage possible.
+
+0:48:20.720,0:48:27.359
+Et les étiquettes indiquent les catégories.
+
+0:48:27.359,0:48:31.520
+Et les énergies attachées aux arcs
+
+0:48:31.520,0:48:34.880
+sont en gros les énergies produites par
+
+0:48:34.880,0:48:38.480
+un ConvNet ici pour chacune de ces réponses.
+
+0:48:38.480,0:48:42.960
+Donc ce ConvNet va se pencher sur ce petit morceau de 4.
+
+0:48:42.960,0:48:46.319
+Il va me dire que cela ressemble à un 2 avec une faible énergie ou
+
+0:48:46.319,0:48:49.520
+à un morceau de 4 avec une énergie plus élevée.
+
+0:48:49.520,0:48:54.640
+Le gars qui regarde cette pièce, quelque part ici,
+
+0:48:54.640,0:48:57.119
+va me dire que c'est un 4 et en est sûr
+
+0:48:57.119,0:49:00.319
+avec une faible énergie. Cela va me dire que c'est peut-être quelque chose
+
+0:49:00.319,0:49:03.839
+d'autres avec une énergie plus élevée. Donc chacun de ces arcs ici va
+
+0:49:03.839,0:49:07.119
+être remplacé par 10 arcs. Je n'en représente que 2 ici mais
+
+0:49:07.119,0:49:11.119
+en gros 10 arcs correspondant aux 10 catégories possibles.
+
+0:49:11.119,0:49:14.880
+Chacun d'eux avec une énergie différente, c’est juste 
+
+0:49:14.880,0:49:19.760
+la sortie correspondante du ConvNet appliquées ici.
+
+0:49:19.760,0:49:23.359
+A nouveau l’inférence trouve le chemin le plus court dans ce graphe.
+
+0:49:23.359,0:49:27.839
+Donc en gros trouver le chemin avec l'énergie minimale.
+
+0:49:27.839,0:49:31.040
+Juste trouver le chemin le plus court.
+
+0:49:31.040,0:49:34.079
+Vous pouvez le considérer comme un module qui sélectionne
+
+0:49:34.079,0:49:38.750
+le chemin le plus court. En fait, c'est celui-ci ici que j'appelle « Viterbi Transformer ». 
+
+0:49:38.750,0:49:44.960
+Le mot transformer dans le contexte des réseaux neuronaux a été utilisé en 1997, mais a été
+
+0:49:44.960,0:49:48.960
+en quelque sorte recyclé pour autre chose maintenant.
+
+0:49:50.640,0:49:56.839
+Voici donc un exemple concret de la manière dont cela pourrait fonctionner.
+
+0:49:56.839,0:50:04.000
+Donc, encore une fois, nous avons en entrée une image.
+
+0:50:04.000,0:50:07.760
+Nous la passons par ce genre de segmenteur qui propose
+
+0:50:07.760,0:50:11.520
+de multiples segmentations possibles qui sont autant de moyens de regrouper
+
+0:50:11.520,0:50:14.800
+les blocs entre eux. Chaque chemin dans ce graphe correspond à
+
+0:50:14.800,0:50:19.119
+une façon particulière de regrouper les blocs d'encre. Nous passons chacune d'entre elles
+
+0:50:19.119,0:50:22.880
+dans un réseau neural. Des copies identiques du même contenu
+
+0:50:22.880,0:50:26.480
+qui essaie juste de faire de la reconnaissance de caractères.
+
+0:50:26.480,0:50:31.359
+Chacun de ces ConvNets produit une liste de 10 scores.
+
+0:50:31.359,0:50:35.040
+Ce type me dit que c'est 1 avec une énergie de 0,1, ceci un 4 avec une 
+
+0:50:35.040,0:50:39.119
+énergie 2,4, etc. Ce type me dit que cette pièce est un
+
+0:50:39.119,0:50:45.119
+4 avec une énergie de 0,6 ou un 9 avec une énergie de 1,2 ou peu importe, etc.
+
+0:50:45.119,0:50:51.200
+Ce type va me donner une énergie relativement élevée pour tout car ça n'a pas l'air bon.
+
+0:50:51.200,0:50:57.040
+Pareil pour ce type. Donc maintenant je reçois un graphe ici. Pensez-y comme une sorte de
+
+0:50:57.040,0:51:00.480
+forme étrange de tenseur. C'est un tenseur épars en réalité.
+
+0:51:00.480,0:51:10.000
+C'est un tenseur qui pour chaque configuration possible de cette variable me dit son coût.
+
+0:51:10.000,0:51:18.119
+C’est davantage comme la répartition sur les tenseurs si vous voulez. Ou la log répartition car ce n'est pas normalisé.
+
+0:51:18.319,0:51:22.480
+Car nous parlons d'énergies.
+
+0:51:22.480,0:51:32.000
+Puis je prends ce graphe et je veux calculer l'énergie de la bonne réponse car je pourrais
+
+0:51:32.000,0:51:35.839
+vouloir entraîner le système. Donc je vous dis que la bonne réponse est
+
+0:51:35.839,0:51:39.520
+3 4. Choisissez dans ce chemin celui qui
+
+0:51:39.520,0:51:43.200
+dit 3 4. Il y en a deux.
+
+0:51:43.200,0:51:47.920
+3 4 avec comme énergie 0,1 + 0,6.
+
+0:51:47.920,0:51:52.480
+Puis il y a 3 4 avec comme énergie 3,4 + 2,4.
+
+0:51:52.480,0:51:55.760
+Ce qui est plus élevé. Donc j'ai ces deux chemins
+
+0:51:55.760,0:51:59.040
+et puis parmi ces deux, je choisis le meilleur.
+
+0:51:59.040,0:52:04.640
+Donc j'ai dit au système voici la bonne réponse, donne-moi le chemin
+
+0:52:04.640,0:52:08.000
+qui a la plus faible énergie, donne-moi la bonne réponse.
+
+0:52:08.000,0:52:12.119
+Donc trouver ce chemin est comme minimiser sur une variable latente où
+
+0:52:12.119,0:52:15.599
+la variable latente est le chemin que vous choisissez.
+
+0:52:15.599,0:52:20.880
+Conceptuellement c'est un modèle d’énergie où la variable latente est un chemin.
+
+0:52:20.880,0:52:30.000
+[Etudiant : 3 ou 4 dans le graphe doivent être étiquetés avant l’entraînement ou cette variable latente le détermine pour le système ?]
+
+0:52:30.000,0:52:35.200
+Ici je me mets dans une situation où je vais entraîner le système de manière supervisé.
+
+0:52:35.200,0:52:37.200
+Je connais la bonne réponse.
+
+0:52:37.200,0:52:40.720
+Penser à cela comme une cible. [Etudiant : donc nous savons la cible
+
+0:52:40.720,0:52:44.319
+mais pas quelle partie est le 3 et quelle partie est le 4]
+
+0:52:44.319,0:52:49.200
+C’est ça. Donc nous savons quelle est la cible mais pas quel chemin est la bonne segmentation.
+
+0:52:49.300,0:52:53.559
+Cela pourrait être ce chemin ou pourrait être celui-ci. 
+
+0:52:54.079,0:53:00.640
+Et ce que nous faisons c’est juste choisir celui qui a la plus faible énergie et qui se trouve être le bon ici.
+
+0:53:00.640,0:53:07.000
+[Etudiant : est-ce que ce transformer de reconnaissance… est ce que 
+
+0:53:07.200,0:53:14.000
+chacune des boites n par n sont toutes partagés ?]
+
+0:53:14.000,0:53:18.800
+Oui, c'est plusieurs copies du même réseau neuronal.
+
+0:53:18.800,0:53:23.839
+C'est juste un réseau de reconnaissance de caractère dans ce cas.
+
+0:53:24.000,0:53:28.000
+Maintenant nous avons l'énergie de la bonne réponse, c’est 0,7
+
+0:53:28.000,0:53:33.000
+la somme de 0,1 et 0,6, et ce que nous devons faire c’est rétropropager
+
+0:53:33.000,0:53:37.000
+le gradient à travers toute cette structure
+
+0:53:37.000,0:53:41.839
+afin que nous puissions modifier les poids du réseau de telle sorte que ce
+
+0:53:41.839,0:53:45.920
+cette énergie baisse. Cela semble décourageant mais c'est
+
+0:53:45.920,0:53:49.920
+tout à fait possible car tout ce système est ici construit
+
+0:53:49.920,0:53:53.680
+à partir d'éléments que nous connaissons déjà.
+
+0:53:53.680,0:54:00.000
+Ce n'est qu'un réseau neuronal standard et ces « Viterbi transformers » sont en gros des interrupteurs qui choisissent
+
+0:54:00.400,0:54:04.000
+une arête particulière ou pas. Donc c'est comme un interrupteur,
+
+0:54:04.000,0:54:07.920
+le max-pooling. Sauf que c'est du min-pooling si vous voulez.
+
+0:54:07.920,0:54:13.200
+Donc comment je rétropropage ? Ce 0,7 est la somme de
+
+0:54:13.200,0:54:17.920
+ce 0,1 et ce 0,6. Si je calcule le
+
+0:54:17.920,0:54:21.359
+gradient de ça par rapport à ce 0,1, c'est juste 1.
+
+0:54:21.359,0:54:25.440
+Le gradient de cette sortie par
+
+0:54:25.440,0:54:29.359
+rapport à cette valeur de 0,6 ici, c’est aussi 1.
+
+0:54:29.359,0:54:32.960
+Car ce n'est que la somme de ces deux choses. Il suffit de rétropropager
+
+0:54:32.960,0:54:37.000
+1 à travers une somme et c'est juste une connexion y.
+
+0:54:37.000,0:54:40.799
+Maintenant rétropropager via le « Viterbi transformer ». Ce gars choisi
+
+0:54:40.799,0:54:44.240
+juste un chemin parmi deux. Donc ce qu'il va faire, c'est qu’il
+
+0:54:44.240,0:54:47.440
+va prendre ces gradients ici et les copier
+
+0:54:47.440,0:54:51.359
+sur l’arête correspondante du graphe d'entrée. Puis il va mettre les gradients des
+
+0:54:51.359,0:54:55.520
+chemins non retenus à 0. C'est exactement ce qui se passe avec
+
+0:54:55.520,0:54:59.200
+le max-pooling ou le min-pooling. Vous rétropropagez via l'interrupteur à
+
+0:54:59.200,0:55:05.440
+cette bonne position mais pas à côté. Il n'y a donc rien de fantaisiste.
+
+0:55:05.440,0:55:09.359
+Pour le sélecteur c’est la même chose. C'est juste un système qui sélectionne le chemin
+
+0:55:09.359,0:55:14.240
+qui pourrait produire la bonne réponse.
+
+0:55:14.240,0:55:22.500
+Donc à travers ça je vais juste propager +1 aux arcs qui
+
+0:55:22.500,0:55:26.319
+apparaissent ici. Donc cet arc est celui.
+
+0:55:26.319,0:55:29.520
+Vous voyez un 0 ici mais j'y reviendrai dans une minute.
+
+0:55:29.520,0:55:33.000
+Cela devrait être un 1 pour l'instant. Et +1 ici. Cela correspond
+
+0:55:33.000,0:55:38.720
+à ce +1 ici. Puis vous pouvez propager ces gradients jusqu'au réseau neuronal et ajuster les poids
+
+0:55:38.720,0:55:42.880
+pour que cette énergie baisse. Donc cela s'occupe de rendre l'énergie
+
+0:55:42.880,0:55:47.280
+de la bonne réponse petite. En rétropropageant par cette chose.
+
+0:55:47.280,0:55:49.599
+Ce qui importe maintenant, c'est que
+
+0:55:49.599,0:55:53.000
+cette structure, ici, est dynamique. Au sens où
+
+0:55:53.000,0:55:58.319
+si je vous donne une nouvelle entrée, le nombre d'instances de ce réseau changera
+
+0:55:58.319,0:56:02.319
+avec le nombre de segments. Le graphe ici changera.
+
+0:56:02.319,0:56:05.680
+Ces graphes vont complètement changer. E je dois donc pouvoir rétropropager
+
+0:56:05.680,0:56:08.559
+par ce type de structure dynamique si vous voulez.
+
+0:56:08.559,0:56:12.079
+Et ce sont des situations où des choses comme PyTorch sont vraiment
+
+0:56:12.079,0:56:15.280
+importantes car vous voulez être capable de gérer ces 
+
+0:56:15.280,0:56:18.559
+structures dynamiques qui changent avec chaque échantillon.
+
+0:56:18.559,0:56:22.640
+Donc cette phase de rétropropagation prend soin de
+
+0:56:22.640,0:56:25.760
+rendre l'énergie de la bonne réponse faible.
+
+0:56:25.760,0:56:29.680
+Comment faire pour que l'énergie des réponses incorrectes soit grande ?
+
+0:56:29.680,0:56:34.480
+Et bien il y aura une deuxième phase où, dans ce cas, nous allons juste
+
+0:56:34.480,0:56:37.119
+laisser le système choisir la réponse qu'il veut.
+
+0:56:37.119,0:56:46.240
+C'est une sorte de forme simplifiée d’entraînement discriminant pour la prévision de structure.
+
+0:56:46.240,0:56:51.040
+Cela utilise une forme de perte de perceptron si vous voulez.
+
+0:56:51.040,0:56:56.160
+Donc les premières étapes sont exactement identiques à ce dont j'ai parlé
+
+0:56:56.160,0:56:59.839
+plus tôt, mais ici le « Viterbi transformer »
+
+0:56:59.839,0:57:07.500
+choisit le meilleur chemin parmi tous. Vous ne l'obligez pas à choisir le bon, vous le laisser choisir celui qu'il veut.
+
+0:57:07.760,0:57:11.280
+Donc il va choisir le meilleur chemin qu'il pense avoir l’énergie la
+
+0:57:11.280,0:57:15.680
+plus basse, celui dont il pense donner la bonne réponse. Maintenant
+
+0:57:15.680,0:57:19.500
+l'énergie que vous en tirerez sera nécessairement plus faible ou
+
+0:57:19.500,0:57:23.680
+égale à celle que vous avez obtenue précédemment car celle-ci est la plus petite de toutes
+
+0:57:23.680,0:57:26.960
+les configurations possibles et les autres ne sont pas les plus petites de toutes.
+
+0:57:26.960,0:57:29.680
+Seulement la plus petite de tous les bons.
+
+0:57:29.680,0:57:31.680
+Donc ce type va forcément devenir plus petit.
+
+0:57:31.680,0:57:36.079
+[Alfredo : désolé, je t’ai perdu. Retire t’on 
+
+0:57:36.079,0:57:39.119
+ceux qui produisent effectivement la séquence correcte ou non ?]
+
+0:57:39.119,0:57:42.400
+Donc vous avez deux formes. Pour la forme que j'explique ici vous ne
+
+0:57:42.400,0:57:46.720
+retirez pas le bon. En fait dans cet exemple particulier
+
+0:57:46.720,0:57:50.400
+cela ne ferait aucune différence. Mais, si vous voulez que le système fonctionne
+
+0:57:50.400,0:57:52.720
+correctement, ce que vous devriez faire ici
+
+0:57:52.720,0:57:56.000
+est de disposer d'un sélecteur de chemin qui retire les bonnes réponses.
+
+0:57:56.000,0:57:59.000
+[Alfredo : oui, oui, exactement]
+
+0:57:59.000,0:58:02.960
+Vous voudriez dire au système : « donne moi la meilleure chance d’une
+
+0:58:02.960,0:58:10.400
+mauvaise réponse. L’énergie la plus faible de la mauvaise réponse. » [Alfredo : oui, le y barre dans ton papier] Oui.
+
+0:58:10.400,0:58:13.839
+Ici, je ne fais pas ça. Je demande juste quelle est la meilleure chance.
+
+0:58:13.839,0:58:18.640
+Je me moque de savoir si c'est correct ou incorrect.
+
+0:58:18.640,0:58:21.839
+Nous y reviendrons dans une minute.
+
+0:58:21.839,0:58:24.640
+En rassemblant tout cela, ma fonction de perte va faire la différence
+
+0:58:24.640,0:58:28.640
+entre l'énergie que je reçois pour la bonne réponse
+
+0:58:28.640,0:58:32.500
+et l'énergie que je reçois, qu’importe la réponse que le système produit.
+
+0:58:32.500,0:58:35.839
+Donc je calcule la différence entre ces deux.
+
+0:58:35.839,0:58:38.720
+Et c'est ma fonction de perte. Je peux alors rétropropager à travers ça.
+
+0:58:38.720,0:58:43.920
+Je vous ai dit que je rétropropageais juste pour rendre l'énergie ici petite. Je ne le fais pas vraiment.
+
+0:58:43.920,0:58:46.799
+Je calcule une fonction de perte ici qui, dans ce cas, est juste la différence entre
+
+0:58:46.799,0:58:50.160
+ça et cela. Et je rétropropage le gradient
+
+0:58:50.160,0:58:55.040
+à travers toute cette structure. Donc quel que soit le chemin
+
+0:58:55.040,0:58:59.839
+n'apparaissant qu'à gauche, nous aurons un +1. Donc ce type a un
+
+0:58:59.839,0:59:02.960
++1 car cette arête n'apparaît que de ce côté.
+
+0:59:02.960,0:59:07.200
+Donc il obtient un + 1. Les chemins qui n'apparaissent que
+
+0:59:07.200,0:59:11.280
+sur le côté droit comme ce gars , désolé comme ce gars,
+
+0:59:11.280,0:59:15.760
+obtienne un -1. Le gradient ici obtient un -1 car
+
+0:59:15.760,0:59:18.900
+vous avez un signe moins ici. Donc les gradients, quand vous rétropropagez 
+
+0:59:18.900,0:59:23.599
+finissent par être -1. Ce gars a aussi -1.
+
+0:59:23.599,0:59:27.599
+Ces gars ici apparaissent des deux côtés. Donc le -1 et le +1
+
+0:59:27.599,0:59:30.640
+s’annule. Et ces gars obtiennent un gradient nul.
+
+0:59:30.640,0:59:34.400
+C'est dans le bon chemin mais c'est aussi dans le chemin que le
+
+0:59:34.400,0:59:36.640
+système produit donc vous ne devez rien changer.
+
+0:59:36.640,0:59:41.839
+C'est bien. Donc les gars qui ont -1 sont les mauvais chemins.
+
+0:59:41.839,0:59:45.200
+Les autres chemins sont dans la mauvaise réponse mais pas dans la bonne réponse.
+
+0:59:45.200,0:59:49.520
+Ceux ayant un +1 sont les arêtes qui sont dans la bonne
+
+0:59:49.520,0:59:55.760
+réponse mais pas dans la mauvaise. Ceux ayant 0 ne sont dans aucune des deux ou
+
+0:59:55.760,0:59:59.920
+sont dans les deux. Donc maintenant vous avez des gradients ici.
+
+0:59:59.920,1:00:02.960
+Ces gradients sont des gradients pour toutes les sorties de tous ces réseaux.
+
+1:00:02.960,1:00:07.839
+Vous rétropropagez pour tous ces réseaux neuronaux et mettez à jour les poids.
+
+1:00:07.839,1:00:13.680
+Et si vous faites cela, le système finira par minimiser sa fonction de perte qui est la différence entre
+
+1:00:13.680,1:00:16.480
+l'énergie de la bonne réponse et l'énergie de
+
+1:00:16.480,1:00:20.480
+la meilleure réponse, quelle qu'elle soit. Cette fonction de perte est la perte de perceptron
+
+1:00:20.480,1:00:25.280
+et nous en avons déjà parlé auparavant. En fait, laissez-m’en parler maintenant.
+
+1:00:25.280,1:00:30.400
+Donc la fonction de perte dont nous venons de parler est la deuxième
+
+1:00:30.400,1:00:35.680
+de cette liste ici. C'est l'énergie de la bonne
+
+1:00:35.680,1:00:39.520
+réponse moins peu importe l'énergie de la réponse
+
+1:00:39.520,1:00:43.599
+que votre système veut produire. C'est la perte de perceptron ou la
+
+1:00:43.599,1:00:47.359
+perte généralisée de perceptron si vous voulez. Et les mauvaises nouvelles à propos de cette perte
+
+1:00:50.720,1:00:53.680
+est qu'elle ne dispose pas d'une marge donc elle ne garantit pas que
+
+1:00:53.680,1:00:57.200
+l'énergie des réponses incorrectes est strictement
+
+1:00:57.200,1:01:01.839
+plus grande que l'énergie de la bonne réponse. Elle pourrait
+
+1:01:01.839,1:01:06.720
+s’effondrer et juste rendre chaque énergie nulle ou la même.
+
+1:01:06.720,1:01:10.559
+Donc ce n'est pas une bonne fonction de perte à utiliser.
+
+1:01:10.559,1:01:14.319
+Il se trouve que cela fonctionne lorsque votre énergie est paramétrée de façon linéaire en W
+
+1:01:14.319,1:01:18.799
+mais dans le cas général, cela ne fonctionne pas. Donc il vaut mieux utiliser
+
+1:01:18.799,1:01:24.240
+quelque chose comme la hinge. Mais dans le cas d'une hinge ce dont vous avez besoin
+
+1:01:24.240,1:01:27.920
+ici est que ce y̅ qui est l'énergie de la
+
+1:01:27.920,1:01:33.839
+réponse incorrecte la plus offensante… Donc en gros dans la deuxième phase,
+
+1:01:33.839,1:01:39.599
+comme Alfredo le faisait remarquer, au lieu de choisir le chemin avec le
+
+1:01:39.599,1:01:41.680
+la plus faible énergie, la réponse avec la plus faible énergie,
+
+1:01:41.680,1:01:45.839
+vous contraignez le système à choisir une mauvaise réponse. Puis, parmi toutes ces réponses, vous choisissez
+
+1:01:45.839,1:01:50.520
+celle qui a la plus faible énergie et prenez la différence entre ces deux énergies.
+
+1:01:50.520,1:01:58.000
+Donc l’énergie de la réponse correct, l’énergie de la réponse incorrecte la plus offensante, calculez la différence entre et branchez ceci sur une hinge.
+
+1:01:58.000,1:02:06.000
+Vous voulez que cette énergie soit inférieure à cette énergie d’au moins m.
+
+1:02:06.000,1:02:10.319
+Et c'est le genre d'objectif que
+
+1:02:10.319,1:02:16.480
+Driancourt et Bottou ont utilisé. C’est très similaire.
+
+1:02:16.480,1:02:22.000
+C’est quelque chose que les gens appellent MCE en reconnaissance vocale.
+
+1:02:22.000,1:02:25.750
+En gros, cela ressemble un peu à une sigmoïde.
+
+1:02:25.750,1:02:29.680
+Donc, en gros, c'est une fonction sigmoïde. Vous prenez la différence entre l'énergie
+
+1:02:29.680,1:02:32.799
+de la bonne réponse et l'énergie des mauvaises réponses et
+
+1:02:32.799,1:02:35.760
+vous branchez ça sur une sigmoïde. 1 + exp(-E, etc…)
+
+1:02:35.760,1:02:38.799
+Donc elle veut en gros faire en sorte que
+
+1:02:38.799,1:02:41.920
+la différence soit petite mais
+
+1:02:41.920,1:02:46.839
+ne se soucie pas de savoir si elle est trop petite. Et si elle est trop grande, elle « give-up »
+
+1:02:46.839,1:02:53.520
+Et puis ceci est la NLL rendant l'énergie de la bonne réponse
+
+1:02:53.520,1:02:57.839
+petite et puis rend le log de la somme sur toutes les réponses
+
+1:02:57.839,1:03:03.280
+de exp(- l'énergie de ces réponses) grand.
+
+1:03:03.280,1:03:08.480
+Rend le - log grand, c'est-à-dire rendre le log petit
+
+1:03:08.480,1:03:12.559
+ce qui veut dire que ces énergies sont importantes.
+
+1:03:12.559,1:03:16.000
+Puis la chose de Llolje et Rabiner dont je vous parlais.
+
+1:03:16.000,1:03:20.000
+C’est une autre forme de fonction objectif poussant vers le haut ou le bas.
+
+1:03:20.000,1:03:25.000
+La plupart d'entre elles découlent de principes de principes probabilistes, mais beaucoup d'entre elles non.
+
+1:03:25.000,1:03:28.700
+Toutes celles tous ceux qui sont au sommet ne le sont pas.
+
+1:03:28.700,1:03:36.760
+[Etudiant : j’ai une question sur la marge des pertes. Je pense que lors du cours précédent [le 11], nous avons discuté de la façon dont la
+
+1:03:36.760,1:03:40.880
+la perte NLL converge vers la perte de perceptron lorsque le β va vers + l'infini…] Correct 
+
+1:03:40.880,1:03:47.000
+[Mais comment se fait-il que la NLL ait une convergence positive et pas la perte de perception ?]
+
+1:03:47.000,1:03:51.200
+Car la température est… Je veux dire le β dans le 1/β
+
+1:03:51.200,1:03:54.799
+n'est pas infini. Car 1/β n'est pas 0.
+
+1:03:54.799,1:03:59.200
+Si vous prenez la limite vers + l’infini de ce β,
+
+1:03:59.200,1:04:03.599
+ce 1/β log somme converge vers le min en y
+
+1:04:03.599,1:04:13.119
+de E(W,y,Xi). Donc c'est exactement ce que la perte de perceptron fait. Donc la perte de perceptron est
+
+1:04:13.359,1:04:22.559
+la limite de température zéro ou la limite infinie β de la NLL en effet. 
+
+1:04:22.559,1:04:27.920
+Mais la marge est en gros infinie dans ce cas, alors que la marge est ici de 0.
+
+1:04:27.920,1:04:32.079
+Il y a donc une petite discontinuité ici.
+
+1:04:32.079,1:04:36.000
+Si vous rendez β très grand ici, numériquement
+
+1:04:36.000,1:04:40.000
+les énergies de tout sauf les termes de plus faibles énergies…
+
+1:04:40.000,1:04:45.000
+Je veux dire le rôle de l'importance des termes
+
+1:04:45.000,1:04:48.720
+pour divers y dans cette somme va en quelque sorte diminué.
+
+1:04:48.720,1:04:51.760
+Et donc, numériquement, cela peut en fait
+
+1:04:51.760,1:04:55.200
+commencer à se comporter comme le perceptron.
+
+1:04:55.200,1:04:59.839
+Il y a un problème aussi avec ça que j’ai
+
+1:04:59.839,1:05:05.039
+mentionné précédemment, à savoir que ce cela veut rendre l'énergie
+
+1:05:05.039,1:05:09.760
+de réponses incorrectes infinie. Et cela ne la rendra pas
+
+1:05:09.760,1:05:13.200
+infinie car, à mesure qu'elle grandit,
+
+1:05:13.200,1:05:19.039
+le gradient de cette somme par rapport à chacune d'entre elles devient très petit.
+
+1:05:19.039,1:05:24.880
+Mais cela va être poussé à l'infini et ce n'est pas nécessairement une bonne chose.
+
+1:05:24.880,1:05:29.839
+La hinge est meilleure dans un sens car dit juste : « je veux que ce soit plus grand
+
+1:05:29.839,1:05:34.000
+d'une certaine valeur » et je ne me soucie pas de combien.
+
+1:05:34.000,1:05:38.079
+Je vous ai donné une autre forme de la hinge dans le passé
+
+1:05:38.079,1:05:42.240
+où vous avez une somme supérieure à y. Donc au lieu de prendre simplement
+
+1:05:42.240,1:05:46.000
+la réponse incorrecte la plus offensante dans la hinge,
+
+1:05:46.000,1:05:50.880
+vous prenez toutes les réponses et faites la somme de toutes. Pour chacune d'entre elles vous
+
+1:05:50.880,1:05:53.200
+avez une marge différente qui dépend de
+
+1:05:53.200,1:05:57.680
+Yi et de Y̅i. C’est une forme plus générale pouvant être
+
+1:05:57.680,1:06:01.599
+plus coûteuse selon la façon dont vous la calculez.
+
+1:06:01.599,1:06:04.200
+[Alfredo : il y a un tas de questions ici.
+
+1:06:04.200,1:06:09.280
+Quelques élèves posent des questions sur le segmenteur. Apprenons-nous le segmenteur ?
+
+1:06:09.280,1:06:13.839
+Doit on aussi le rétropropager ? Est-ce une variable latente ?]
+
+1:06:13.839,1:06:19.160
+Dans ce cas particulier non. C'est juste une heuristique artisanale mais vous pouvez imaginer
+
+1:06:19.160,1:06:25.599
+la construction d'un segmenteur différenciable et rétropropager à travers lui.
+
+1:06:25.599,1:06:32.000
+C'était en fait l'un des plans à l’origine quand nous avons construit cette chose au milieu des années 90. Nous n'y sommes jamais arrivés.
+
+1:06:32.000,1:06:35.599
+La raison pour laquelle nous n'y sommes pas parvenus est qu'il existe une autre approche de
+
+1:06:35.599,1:06:39.599
+reconnaissance de caractères, qui est l'approche à fenêtre coulissante que
+
+1:06:39.599,1:06:43.599
+j’ai expliquée. Vous prenez juste l’entrée et ne la segmentez jamais.
+
+1:06:43.599,1:06:47.599
+Il suffit d'appliquer le réseau neuronal à chaque emplacement de l'entrée
+
+1:06:47.599,1:06:51.599
+enregistrer la sortie. Puis faire une prédiction de structure au-dessus de ça.
+
+1:06:51.599,1:06:55.599
+Donc vous devez avoir une sorte de modèle de séquence qui vous dit :
+
+1:06:55.599,1:06:59.200
+si j'observe 3 3 3 blanc blanc
+
+1:06:59.200,1:07:02.640
+2 4 4 4 4 c'est en fait 3 4.
+
+1:07:02.640,1:07:05.520
+Le blanc et le 2 sont fondamentalement faux.
+
+1:07:05.520,1:07:11.760
+Donc vous auriez une grammaire qui indiquerait ce que
+
+1:07:11.760,1:07:13.680
+sont les bonnes combinaisons de caractères sur
+
+1:07:13.680,1:07:17.200
+la sortie. Et vous le feriez pour trouver le
+
+1:07:17.200,1:07:21.039
+chemin le plus court dans le graphe. [Alfredo : le graphe du bas est généré
+
+1:07:21.039,1:07:24.160
+par le segmenteur ?] Correct.
+
+1:07:24.160,1:07:28.400
+[Celui avec un saut comme deux sauts ou deux sauts un saut un saut ?]
+
+1:07:28.400,1:07:33.000
+Oui. Vous pouvez penser à ça comme une sorte de forme simple
+
+1:07:33.000,1:07:37.000
+de réseau neuronal de graphe [GNN] ou type de forme spécifique
+
+1:07:37.000,1:07:40.480
+de GNN où l'ensemble de cette architecture  
+
+1:07:40.480,1:07:45.839
+d’apprentissage profond  manipule des graphes au lieu de tenseurs comme
+
+1:07:45.839,1:07:49.760
+manière de représenter les entrées. Ou les états.
+
+1:07:49.760,1:07:53.280
+Il faut donc considérer cela comme une architecture multicouche où les états des graphes
+
+1:07:53.280,1:07:56.799
+sont des graphes annotés. Puis vous pouvez avoir des modules ici
+
+1:07:56.799,1:08:01.039
+qui transforme le graphe en d'autres graphes. Nous appelions ça un transformeur de graphes.
+
+1:08:01.039,1:08:04.920
+En fait, c'est ce qu'on appelle un « Graph Transformer Network ».
+
+1:08:04.920,1:08:09.520
+Donc c'est de 1997, ce n'est pas récent [N.D.T : ne pas confondre avec le transformer de Vaswani et al.]
+
+1:08:09.520,1:08:13.920
+Et en fait de 1996. C’est le premier document en 1997.
+
+1:08:13.920,1:08:18.000
+Aussi longtemps que la façon dont vous calculez
+
+1:08:18.000,1:08:22.679
+ces scores est avec des fonctions différentiables qui sont paramétrés,
+
+1:08:21.679,1:08:26.799
+alors vous pouvez rétropropager le gradient à travers tout ce truc.
+
+1:08:26.799,1:08:30.400
+Et je peux vous démontrer comment procéder dans ce cas particulier
+
+1:08:30.400,1:08:35.000
+[Alfredo : il y a une autre question que je ne suis pas en mesure de
+
+1:08:35.000,1:08:37.540
+comprendre : quelles sont les dimensions de
+
+1:08:37.540,1:08:42.080
+les graphes d'interprétation ? Je ne sais pas quelles sont ces dimensions]
+
+1:08:42.080,1:08:46.719
+Donc en gros chaque arc… Vous pouvez le faire de deux façons.
+
+1:08:46.719,1:08:51.600
+La façon dont je l'ai représenté ici est que chaque arc a une étiquette :
+
+1:08:51.600,1:08:56.000
+3 ici pour cette arête particulière et une énergie 3.4
+
+1:08:56.000,1:08:59.839
+et le nombre entre parenthèses est le gradient qui vient du haut.
+
+1:08:59.839,1:09:06.239
+Donc ici c’est un scalaire. Mais ici sur le graphe en bas
+
+1:09:06.239,1:09:12.000
+l'annotation est un tenseur entier, c'est une image.
+
+1:09:12.000,1:09:19.520
+Donc je ne précise pas avec quoi vous pouvez annoter les graphes du moment 
+
+1:09:19.520,1:09:23.520
+que ce que vous utilisez est calculé par des fonctions
+
+1:09:23.520,1:09:27.199
+continues avec lesquelles vous pouvez propager le gradient.
+
+1:09:27.199,1:09:30.560
+Maintenant, une autre façon de représenter ce graphe n'est pas d'avoir
+
+1:09:30.560,1:09:35.040
+un arc séparé ici pour chaque catégorie mais en ayant un vecteur.
+
+1:09:35.040,1:09:41.319
+Et le vecteur ne contient que la liste des catégories et de scores.
+
+1:09:41.679,1:09:46.080
+Donc 0 à 9 et puis la liste des énergies pour chaque.
+
+1:09:46.080,1:09:51.120
+Et ce serait un seul arc mais il serait annoté par ce vecteur.
+
+1:09:51.120,1:09:55.040
+[Alfredo : ok, je vois] Car ces types, le Viterbi
+
+1:09:58.880,1:10:02.960
+et le sélecteur de chemin choisissent des chemins individuels. C’est plus clair si vous
+
+1:10:02.960,1:10:08.320
+écrivez de cette façon. La façon dont vous l’implémenter dépend de vous.
+
+1:10:08.320,1:10:12.080
+Donc ces « Graph Transformers ». Il y a les systèmes de reconnaissance vocale aujourd'hui…
+
+1:10:12.080,1:10:19.199
+Donc en gros dans un système de reconnaissance vocale, cette façon de déduire la bonne séquence
+
+1:10:19.199,1:10:22.560
+en utilisant par exemple un modèle de langue est
+
+1:10:22.560,1:10:26.480
+appelé un décodeur. Donc avec un décodeur à la sortie d'un réseau,
+
+1:10:26.480,1:10:28.480
+en général, vous avez une 
+
+1:10:28.480,1:10:33.120
+séquence de vecteurs qui indiquent le score/l'énergie/la probabilité, ce que vous voulez
+
+1:10:33.120,1:10:36.719
+de sons ou phonèmes individuels ou parfois de mots.
+
+1:10:36.719,1:10:39.600
+Puis vous devez passer à un modèle de langue qui vous dit que 
+
+1:10:39.600,1:10:43.600
+cette séquence est possible et les autres séquences ne le sont pas.
+
+1:10:43.600,1:10:46.640
+Et il choisit la meilleure interprétation possible en fonction du
+
+1:10:46.640,1:10:50.000
+modèle linguistique et en fonction des scores produits par votre système.
+
+1:10:50.000,1:10:53.920
+Cela s'appelle un décodeur. Et la grande question est
+
+1:10:53.920,1:10:57.120
+comment rétropropager dans le décodeur ?
+
+1:10:57.120,1:11:00.640
+Il y a un très petit nombre de systèmes de reconnaissance vocale aujourd'hui qui
+
+1:11:00.640,1:11:08.239
+font en réalité ça. Celui auquel je pense est de Ronan Collobert, l'auteur original de Torch.
+
+1:11:08.640,1:11:12.640
+Et voici comment cela fonctionne. Disons que vous voulez…
+
+1:11:12.640,1:11:16.239
+C’est donc un concept particulier appelé composition de graphe ou
+
+1:11:16.239,1:11:20.480
+transducteur de graphes. Expliquant comment vous pouvez
+
+1:11:23.360,1:11:25.840
+combiner les graphes les uns avec les autres, par exemple
+
+1:11:25.840,1:11:32.080
+avec un modèle de langue. Donc vous pouvez penser à un modèle de langue
+
+1:11:32.080,1:11:36.159
+sous forme de graphe ou d’un réseau de neurones, cela n'a pas d'importance.
+
+1:11:36.159,1:11:41.840
+Mais je vais le représenter sous la forme d'un graphe. Donc ici il s'agit en gros d'un lexique qui est
+
+1:11:41.840,1:11:48.080
+représenté comme un essai. Il peut représenter
+
+1:11:48.080,1:11:51.840
+les mots « barn », « but »
+
+1:11:51.840,1:11:58.000
+« cute », « cure », « cap », « cat » et « card ».
+
+1:11:58.000,1:12:05.119
+Ainsi, chaque nœud terminal correspond à un chemin et chaque chemin est un mot en gros.
+
+1:12:05.199,1:12:09.199
+La séquence de symboles est un mot.
+
+1:12:09.199,1:12:12.120
+Imaginons maintenant que tout notre lexique est ceci.
+
+1:12:12.120,1:12:16.000
+Nous avons un réseau neuronal ou quelque chose qui produit un trellis de
+
+1:12:16.000,1:12:19.500
+d'interprétations possibles qui correspond à ce graphe. Il dit donc
+
+1:12:19.500,1:12:23.520
+ma première lettre, je ne peux pas vous dire exactement ce que c'est, mais je pense que c'est « c »
+
+1:12:23.520,1:12:26.520
+avec une énergie de 0.4, c’est « o » avec une énergie de 1
+
+1:12:26.520,1:12:30.239
+ou est « d » avec une énergie de 0,8. C'est une reconnaisseur de lettre.
+
+1:12:30.239,1:12:33.440
+Le deuxième dit que c'est « x » avec 0,1 ou « a » avec 0,2 
+
+1:12:33.440,1:12:37.520
+ou « u » avec 0,8. Et le dernier « p » avec 0,2 et « t » avec 0,8.
+
+1:12:37.520,1:12:42.560
+Donc maintenant quelle est la meilleure interprétation
+
+1:12:42.560,1:12:48.239
+de ça ? Le meilleur chemin qui se trouve aussi être présent
+
+1:12:48.239,1:12:52.719
+dans notre lexique. L'opération que vous devez faire pour cela est un
+
+1:12:52.719,1:12:57.000
+concept qui a été inventé par Fernando Pereira qui est à la tête du groupe
+
+1:12:57.00,1:13:00.000
+de recherche en NLP et plus que cela en fait, à Google. 
+
+1:13:00.000,1:13:06.750
+Mais c'était à l'époque où il était à AT&T Labs au début des années 90.
+
+1:13:06.750,1:13:11.500
+Et ça a été implémenté dans une librairie open source appelée « fsm
+
+1:13:11.500,1:13:14.800
+librairy » par [???] qui est professeur à NYU.
+
+1:13:14.800,1:13:18.320
+Il a fait cela pendant qu'il était à AT&T et puis à Google.
+
+1:13:18.320,1:13:22.719
+Et la façon de faire est avec cette opération de composition. Donc vous commencez
+
+1:13:22.719,1:13:25.199
+à partir du nœud initial de ces deux graphes
+
+1:13:25.199,1:13:33.760
+et vous dites : « Y a-t-il un chemin que je peux prendre dans ce graphe qui est légal ici ? » Donc ici
+
+1:13:33.760,1:13:41.760
+je peux avoir « b » ou « c ». Et ici je peux avoir « c », « o », ou « d ». Seul « c » est commun entre les deux.
+
+1:13:41.760,1:13:46.400
+Je vais donc combiner ces deux en disant dans mon graphe de sortie,
+
+1:13:46.400,1:13:50.480
+je vais avoir une de ces transitions qui est la seule qui soit
+
+1:13:50.480,1:13:54.000
+commune ici et ici. Donc… Oups désolé.
+
+1:13:54.000,1:14:02.320
+Ce nœud ici, et ce nœud-là. Ici je peux prendre « x », « a » ou « u ».
+
+1:14:02.320,1:14:06.880
+Et ici je peux prendre « u » ou « a ». Donc j'ai deux possibilités :
+
+1:14:06.880,1:14:10.500
+« a » avec 0,2 et « u » avec 0,8. Donc j'ajoute ces deux ici.
+
+1:14:10.500,1:14:14.719
+Donc en gros, ce que je fais ici, c'est que chaque fois que
+
+1:14:14.719,1:14:18.560
+j'arrive à un nœud et je dois faire une transition, je trouve les
+
+1:14:18.560,1:14:22.640
+nœuds qui peuvent se trouver ici examine les transitions possibles.
+
+1:14:22.640,1:14:25.120
+Si la transition existe, s'il y en a une qui correspond,
+
+1:14:25.120,1:14:32.080
+je crée un arc sortant et l’annote par l'énergie de quel que soit l’arc
+
+1:14:32.080,1:14:35.520
+que j'avais ici. Si j'avais aussi une énergie dans cet arc, je
+
+1:14:35.520,1:14:40.719
+pourrais simplement ajouter ces deux termes ou les combiner d'une manière ou d'une autre.
+
+1:14:40.719,1:14:46.239
+Donc maintenant j'ai deux nœuds ici, et le dernier peut être « p » ou « t ».
+
+1:14:46.239,1:14:49.280
+Donc que je peux partir de ces deux nœuds et avoir
+
+1:14:49.280,1:14:51.679
+soit « p » ou « t ». Il peut se trouver soit dans ce nœud, soit
+
+1:14:51.679,1:14:56.000
+ce nœud. Donc je peux aller ici avec « t » ou ici avec « p » ou ici avec « t »
+
+1:14:56.000,1:14:59.920
+et finis par avoir ces trois choses. Donc j'ai mon
+
+1:14:59.920,1:15:05.120
+interprétation étant soit « cat », ou « cap » ou « cut ». Ce sont les trois
+
+1:15:05.120,1:15:08.640
+interprétations qui sont grammaticalement correctes. Et en même temps
+
+1:15:08.640,1:15:13.040
+présentes comme une possibilité produite par le réseau. Et maintenant je 
+
+1:15:13.040,1:15:18.320
+dois trouver le chemin le plus court et c'est ma réponse.
+
+1:15:18.320,1:15:22.880
+Donc cette opération est appelée ici composition de graphes.
+
+1:15:22.880,1:15:26.880
+Cela vous permet de combiner deux graphes en gros
+
+1:15:26.880,1:15:31.520
+ou combiner deux bases de connaissances qui sont conceptuellement des graphes
+
+1:15:31.520,1:15:34.800
+mais pouvant être représentés par des réseaux de neurones. Donc ici je peux
+
+1:15:34.800,1:15:38.320
+représenter cette chose, tout ce modèle de langage, par un réseau neural.
+
+1:15:38.320,1:15:41.920
+Quand je suis à un endroit particulier, quand je suis ici, cela signifie 
+
+1:15:41.920,1:15:45.760
+que j'ai observé la séquence « cu ». Puis je peux exécuter « cu » dans
+
+1:15:45.760,1:15:48.960
+mon dans mon modèle de langage et demander à mon réseau de prédire la
+
+1:15:48.960,1:15:55.500
+lettre suivante. Et il me dirait que c'est soit « t » ou « r » dans cette sortie de softmax de 26 lettres.
+
+1:15:55.500,1:16:00.800
+Il va me dire « t » et « r » ont une probabilité de 0.5 et pour les autres une probabilité faible.
+
+1:16:00.800,1:16:04.320
+Ou si cela produit de l'énergie, cela va dire « t » et « r » ont de faibles énergies
+
+1:16:04.320,1:16:08.960
+et les autres ont des énergies plus élevées. Peu importe comment vous
+
+1:16:08.960,1:16:13.840
+représentez cela. Si elles sont représentées comme un réseau neuronal alors
+
+1:16:13.840,1:16:16.960
+implicitement vous pouvez entraîner ce réseau, vous pouvez entraîner le modèle 
+
+1:16:16.960,1:16:22.000
+de langage car vous pouvez rétropropager un gradient dans toute cette chose. Donc ceci est une sorte d'exemple
+
+1:16:22.800,1:16:26.000
+de ce que les gens appellent la programmation différenciable.
+
+1:16:26.000,1:16:29.920
+En gros, la façon d’implémenter ce programme est vraiment très compliquée.
+
+1:16:29.920,1:16:32.880
+Ce que vous devez faire, c'est rétropropager un gradient tout au long de ce programme et
+
+1:16:32.880,1:16:40.320
+ce programme comporte des boucles, des si et des récursions. Donc ce n’est pas trivial.
+
+1:16:40.540,1:16:44.719
+Je ne vous dis pas comment nous avons implémenté ceci en 1994/95 [rires].
+
+1:16:44.719,1:16:50.000
+Mais c'est en gros ainsi que notre système de lecture de chèques dans ces
+
+1:16:50.000,1:16:54.800
+a été implémenté à l’époque. Donc la fonction de perte que nous avons utilisée à la fin
+
+1:16:54.800,1:17:02.500
+pour entraîner le système était la fonction de perte NLL. Donc la NLL dit…
+
+1:17:02.500,1:17:07.000
+vous disposez ici d'un graphe d'interprétation où chaque chemin est une possibilité
+
+1:17:07.000,1:17:13.000
+d'interprétation et la somme des énergies le long du chemin est l'énergie de cette interprétation.
+
+1:17:13.000,1:17:16.560
+Vous lui donnez la bonne réponse, vous choisissez le chemin qui a la bonne
+
+1:17:16.560,1:17:20.000
+interprétation. De même de l'autre côté. Ici vous
+
+1:17:20.000,1:17:23.199
+combinez avec la grammaire. Celle-ci limite
+
+1:17:23.199,1:17:28.000
+les séquences à celles qui sont syntaxiquement correctes.
+
+1:17:28.000,1:17:31.520
+Donc si c'est un montant sur le chèque par exemple, il y a
+
+1:17:31.520,1:17:36.239
+un point décimal. Il pourrait y avoir un signe de dollar devant, il pourrait y avoir des
+
+1:17:36.239,1:17:40.480
+étoiles, il y a une grammaire pour ça.
+
+1:17:40.480,1:17:44.000
+Qu’on peut construire à la main. C'est une grammaire à états finis.
+
+1:17:44.000,1:17:48.080
+Vous composez ces deux graphes et vous obtenez l'ensemble des chemins dans ce graphe qui
+
+1:17:48.080,1:17:50.600
+contiennent une interprétation grammaticale correcte.
+
+1:17:50.600,1:17:53.600
+Et maintenant vous ne faites pas Viterbi, vous faites « forward ».
+
+1:17:53.600,1:17:58.480
+Qu’est-ce que « forward » ? Viterbi calcule le chemin dans un
+
+1:17:58.480,1:18:02.239
+graphe qui présente le minimum d'énergie. Il minimise par rapport à
+
+1:18:02.239,1:18:05.679
+la variable latente, où la variable latente est un chemin dans le graphe.
+
+1:18:05.679,1:18:10.480
+« forward » calcule le logarithme de la somme des exponentielles de moins les énergies
+
+1:18:10.480,1:18:16.560
+de tous les chemins. Donc en gros, il marginalise sur la
+
+1:18:16.560,1:18:19.440
+variable latente qui est le chemin dans le graphe.
+
+1:18:19.440,1:18:23.040
+Il s'avère que vous pouvez le faire très facilement et
+
+1:18:23.040,1:18:26.480
+c'est très bon marché, ça ne coûte pas plus cher que de faire Viterbi.
+
+1:18:26.480,1:18:29.679
+Et vous pouvez rétropropager.
+
+1:18:29.679,1:18:36.560
+Et je n'ai pas de diapositive pour cela, donc je vais passer au dessin.
+
+1:18:48.800,1:18:57.840
+Donc vous avez un chemin,
+
+1:18:57.840,1:19:02.400
+un autre chemin et peut-être un autre chemin qui saute par ici.
+
+1:19:06.960,1:19:15.280
+Chacun de ces types a une énergie e1, e2,
+
+1:19:15.280,1:19:21.080
+e3, e4, e5, e6.
+
+1:19:21.080,1:19:26.000
+Donc si vous faites le chemin le plus court de Viterbi dans un graphe vous allez juste trouver le chemin
+
+1:19:26.000,1:19:30.320
+qui a le minimum d'énergie. Mais ce dont je vais parler ici, c'est
+
+1:19:30.320,1:19:33.840
+du calcul. Donc pensez au chemin comme une
+
+1:19:33.840,1:19:39.760
+variable latente z et pour calculer F(x,y)
+
+1:19:39.760,1:19:43.280
+vous pouvez faire deux choses. Vous pouvez faire min E(x,y,z) sur z.
+
+1:19:43.280,1:19:48.960
+Et souvenez-vous que z est le chemin. Ou si vous voulez marginaliser
+
+1:19:48.960,1:19:55.440
+vous faites – 1/β log de la somme sur tous les z
+
+1:19:55.440,1:20:01.080
+de exp(-β (E(x,y,z)) et cela marginalise.
+
+1:20:01.080,1:20:07.440
+C’est une somme discrète si z est une variable discrète, ce qui est le cas ici car il s'agit d'un chemin discret.
+
+1:20:07.440,1:20:13.920
+Donc c’est Fβ(x,y). Et vous pouvez considérer cela comme F infini. C'est la limite pour
+
+1:20:13.920,1:20:17.920
+β allant à l'infini de celui du bas.
+
+1:20:18.920,1:20:25.000
+[Question d’un étudiant difficilement compréhensible]
+
+1:20:25.000,1:20:28.880
+Je n'ai pas compris la question, je suis désolé, pouvez-vous répéter ?
+
+1:20:28.880,1:20:39.679
+[Etudiant : est-ce que la fonction d’énergie ici est une fonction simple comme la fonction de perte ou certains réseaux neuronaux à entraîner au modèle ?]
+
+1:20:39.679,1:20:44.480
+Cela n’a pas d’importance. C'est l'énergie que vous utilisez pour mesurer
+
+1:20:44.480,1:20:48.159
+le score d'une réponse y. L'observation
+
+1:20:48.159,1:20:53.040
+est x et la réponse que vous êtes censé prévoir dans ce cas une
+
+1:20:53.040,1:20:58.800
+séquence de symboles est y. Donc chacune de ces
+
+1:20:58.800,1:21:01.520
+choses ici sont annotées avec un y particulier.
+
+1:21:01.520,1:21:07.760
+Donc ça pourrait être… 
+
+1:21:09.280,1:21:12.880
+Chacun de ces arcs est annoté par un symbole.
+
+1:21:12.880,1:21:19.360
+Disons A et ceci est B et ceci est B
+
+1:21:19.360,1:21:26.800
+et C et ceci, je ne sais pas, X et là c'est G.
+
+1:21:26.800,1:21:31.280
+Donc, ici, l'interprétation possible pour y… Donc y serait une chaîne de symboles et
+
+1:21:31.280,1:21:35.600
+il peut s'agir soit d'AB soit
+
+1:21:35.600,1:21:39.920
+BCG ou cela peut être CG.
+
+1:21:46.560,1:21:52.320
+[Alfredo : c’est un X] Oui, désolé t’as raison c'est le 6
+
+1:21:52.320,1:21:57.320
+Donc c'est X. T’as raison, désolé.
+
+1:21:57.320,1:22:04.440
+Donc ce sont les trois seules interprétations possibles pouvant sortir de ce graphe.
+
+1:22:04.480,1:22:10.960
+Et z, est le chemin que vous prenez.
+
+1:22:10.960,1:22:14.719
+Si z est le premier chemin, la sortie sera AB, si z est le deuxième chemin
+
+1:22:14.719,1:22:18.960
+la sortie sera BCG, etc.
+
+1:22:18.960,1:22:22.840
+Mais ce n'est pas utilisé pour l’entraînement. C'est la fonction d’énergie.
+
+1:22:22.840,1:22:27.200
+C’est utilisé pour l’inférence.
+
+1:22:27.200,1:22:31.520
+Donc le logarithme de la somme des exponentielles des énergies
+
+1:22:31.520,1:22:34.880
+pour tous les chemins, la somme sur tous les chemins.
+
+1:22:34.880,1:22:39.840
+Donc la somme ici est sur les chemins. C'est comme marginaliser sur z.
+
+1:22:46.639,1:22:51.440
+Et nous avons vu ça avant. Nous avons expliqué cela avant.
+
+1:22:51.440,1:23:00.480
+Maintenant comment je calcule ça ? Il s'avère que c'est très simple.
+
+1:23:00.480,1:23:03.120
+C'est fait en utilisant ce que l'on appelle un algorithme « forward ». Je vais 
+
+1:23:03.120,1:23:07.520
+en fait dessiner un graphe différent. Il va 
+
+1:23:07.520,1:23:11.120
+ressembler davantage à celui que j'avais avant.
+
+1:23:11.600,1:23:25.520
+Qui était un peu comme ça. Donc y est une séquence de
+
+1:23:26.159,1:23:34.000
+trois symboles dans ce cas.
+
+1:23:34.000,1:23:38.880
+Et le premier symbole peut être. Oh je suis désolé j'utilise des nœuds ici
+
+1:23:40.560,1:23:45.280
+au lieu d'arcs, ce qui est un peu déroutant.
+
+1:23:45.920,1:23:52.840
+Laissez-moi corriger cela. Donc chaque chemin dans ce graphe est une interprétation possible.
+
+1:23:53.239,1:24:03.520
+Donc pour chaque arête que je prends, j’émet un symbole et je n'ai pas de connexion qui permettent de sauter.
+
+1:24:03.520,1:24:08.400
+Donc ici, elles ont toutes quatre symboles exactement qui sortent
+
+1:24:08.400,1:24:12.719
+car chaque chemin est de longueur quatre.
+
+1:24:12.880,1:24:16.320
+Mais comment calculer cette somme ?
+
+1:24:16.320,1:24:21.040
+En gros, je vais à un nœud. Quand je suis à… je ne sais pas, ici,
+
+1:24:21.040,1:24:25.440
+prenons ce nœud juste ici, je vais l'appeler rouge.
+
+1:24:28.080,1:24:36.159
+Le coût du nœud d'entrée,
+
+1:24:36.159,1:24:42.400
+l'énergie du nœud d'entrée à ce nœud est le log de la somme des
+
+1:24:42.400,1:24:47.080
+exponentielles des énergies de tous les chemins pour aller de l'entrée à ce nœud.
+
+1:24:54.320,1:24:58.719
+Et bien sûr, j'ai une énergie ici qui est
+
+1:24:58.719,1:25:03.040
+l'énergie de cette branche. J'ai une énergie ici qui est juste
+
+1:25:03.040,1:25:08.239
+L'énergie de cette branche. J'ai un F ici.
+
+1:25:08.239,1:25:14.639
+Et pour calculer le F pour ce type, je calcule juste le
+
+1:25:14.639,1:25:19.040
+log de la somme des exponentielles de ces deux types.
+
+1:25:21.120,1:25:26.639
+Donc laissez-moi déballer ça. J'ai de l'énergie ici
+
+1:25:26.639,1:25:31.600
+e1, j'ai de l'énergie ici e2, j'en ai une ici e3 et
+
+1:25:31.600,1:25:36.639
+ce gars est e4.
+
+1:25:36.800,1:25:41.840
+Le F que je vais avoir ici… Donc je vais appeler ça…
+
+1:25:50.320,1:25:54.480
+Je vais l'appeler comme je veux. Donc la valeur que je devrais avoir ici
+
+1:25:54.480,1:25:56.719
+est e1 plus e3.
+
+1:26:06.000,1:26:09.840
+Exponentielle de ça et – β devant.
+
+1:26:15.679,1:26:25.520
+Plus exp(-β(e2 + e4)).
+
+1:26:26.080,1:26:32.320
+Et je prends – 1/β log de ceci.
+
+1:26:32.840,1:26:40.200
+[Etudiant : donc comment le e est-il calculé ? Je veux dire le plus petit]
+
+1:26:40.200,1:26:43.040
+Dee tout ce qui sort de votre énergie.
+
+1:26:43.040,1:26:46.159
+Chacun de ces graphes, comme je l'ai dit,
+
+1:26:46.159,1:26:50.400
+vous représentez les interprétations possibles sous forme de graphe.  
+
+1:26:50.400,1:26:54.320
+Chaque nœud dans le graphe a une énergie. Et une énergie complète de la fonction
+
+1:26:54.320,1:27:00.639
+qui est un F(x,y) pour un y particulier et un z particulier, suivant un chemin, est
+
+1:27:00.639,1:27:05.679
+E(x,y,z). Et maintenant ce que vous voulez calculer est log
+
+1:27:05.679,1:27:11.040
+de la somme de exp(-β E(x,y,z)) qui est la
+
+1:27:11.040,1:27:14.880
+marginalisation sur tous les chemins. Donc il s'agit en gros de 
+
+1:27:14.880,1:27:20.080
+combiner le coût minimum de tous les chemins.
+
+1:27:20.080,1:27:23.120
+Mais l'algorithme est super simple car
+
+1:27:23.120,1:27:27.840
+vous maintenez une variable pour chaque nœud.
+
+1:27:27.840,1:27:31.600
+Pour chaque nœud, vous calculez une variable α.
+
+1:27:31.600,1:27:35.520
+Et cela sera égal à
+
+1:27:35.520,1:27:42.400
+- log somme sur tous les nœuds qui sont « UP ».
+
+1:27:44.400,1:27:48.719
+Donc disons que c’est le nœud i donc UP(i).
+
+1:27:48.719,1:27:56.000
+Donc tous les nœuds parents de i. Et puis vous faites exp(- β αk).
+
+1:27:56.000,1:28:04.800
+Et vous y ajoutez
+
+1:28:04.800,1:28:07.440
+eki
+
+1:28:11.440,1:28:15.280
+qui est l'énergie du lien provenant du nœud k au nœud i.
+
+1:28:15.280,1:28:20.320
+C’est ce qu’on appelle un algorithme « forward ».
+
+1:28:30.000,1:28:34.159
+Et si vous en avez entendu parler, il s'agit en fait d'un cas particulier
+
+1:28:34.159,1:28:38.159
+de l'algorithme dit de propagation des croyances.
+
+1:28:43.920,1:28:41.120
+La propagation des croyances est un algorithme général pour les modèles de graphes et [Musique].
+
+1:28:53.040,1:28:56.800
+Et l’algorithme « forward » est un cas particulier lorsque votre graphe est une chaîne de graphe.
+
+1:28:56.800,1:29:00.480
+Mais je ne vais pas entrer dans les détails.
+
+1:29:00.480,1:29:04.000
+Vous pouvez suivre un cours sur les réseaux bayésiens ou
+
+1:29:04.000,1:29:07.500
+sur les modèles de graphes ou sur les méthodes probabilistes.
+
+1:29:07.500,1:29:11.440
+Prenez un cours avec Rajesh, elle vous expliquera cela.
+
+1:29:11.440,1:29:15.280
+Cela nous mènerait trop loin, mais ce serait
+
+1:29:15.280,1:29:22.480
+en quelque sorte la chose. Donc maintenant il s'agit juste d'un réseau de feedforward
+
+1:29:22.480,1:29:25.520
+où, en gros, la fonction à chaque nœud 
+
+1:29:25.520,1:29:29.600
+est le logarithme de la somme des exponentielles plus
+
+1:29:29.600,1:29:34.320
+l'addition d'un certain terme. C'est un réseau de neurones
+
+1:29:34.320,1:29:39.040
+où α i est l'activation du
+
+1:29:39.040,1:29:46.400
+« neurone » si vous voulez, les nœuds. Et les poids sont ce
+
+1:29:46.400,1:29:52.639
+eki qui relient l'unité k à l'unité i. Et l’opération que vous effectuez est 
+
+1:29:52.639,1:29:56.719
+log somme exp. Donc au lieu d'un réseau neuronal dans lequel vous faites
+
+1:29:56.719,1:30:00.320
+un produit par un poids et puis vous additionnez les produits,
+
+1:30:00.320,1:30:04.480
+ici, vous ajoutez les poids et vous faites log somme exponentielle.
+
+1:30:04.480,1:30:07.600
+Algébriquement, c'est en fait équivalent.
+
+1:30:07.600,1:30:14.679
+C’est comme une somme pondérée dans le domaine du log. Mais le fait est que vous pouvez faire
+
+1:30:14.680,1:30:18.800
+cet algorithme « forward » puis pouvez rétropropager le gradient.
+
+1:30:18.800,1:30:23.440
+Quel que soit le f que vous obtenez à la fin, au moment où vous passez par ce réseau,
+
+1:30:23.440,1:30:30.960
+à la fin ici, vous obtenez en gros f(x,y), la valeur à ce nœud, l’α
+
+1:30:30.960,1:30:34.560
+ici est f(x,y).
+
+1:30:34.560,1:30:41.440
+Et vous avez éliminé z en faisant ce log de la somme des exponentielles sur tous les chemins.
+
+1:30:43.040,1:30:46.000
+Si vous voulez calculer le gradient
+
+1:30:46.000,1:30:52.960
+de f(x,y) par rapport à chacun des eki qui sont probablement eux-mêmes des produits d'un réseau de neurones, vous pouvez le faire.
+
+1:30:52.960,1:30:57.040
+Vous pouvez rétropropager à travers ce réseau. C'est un réseau neuronal 
+
+1:30:57.040,1:31:00.560
+dont la structure est dynamique, qui change
+
+1:31:00.560,1:31:04.239
+en fonction de l’exemple. Mais vous pouvez clairement
+
+1:31:04.239,1:31:08.719
+rétropropager le gradient. Et c'est en gros ce que nous faisons
+
+1:31:08.719,1:31:14.040
+ici. Dans ce système, nous exécutons l’algorithme « forward »
+
+1:31:14.280,1:31:18.480
+sur ce graphe et nous obtenons un score qui est le
+
+1:31:18.480,1:31:23.280
+logarithme de la somme des exponentielles de moins les énergies pour tous les chemins.
+
+1:31:23.280,1:31:26.159
+Nous faisons la même chose ici, nous obtenons un autre score.
+
+1:31:26.159,1:31:30.360
+Je veux dire c'est moins le log de la somme de l'exponentielle de moins l'énergie.
+
+1:31:30.360,1:31:34.639
+Ce gars est forcément plus grand que celui-ci.
+
+1:31:34.639,1:31:38.000
+Vous calculez la différence et c'est la perte NLL.
+
+1:31:38.000,1:31:42.639
+C'est une différence entre log somme exp de l'énergie sur la variable
+
+1:31:42.639,1:31:46.320
+latente de la bonne réponse et log somme exp de la variable latente
+
+1:31:46.320,1:31:50.719
+de chaque réponse. Bien qu'il s'agisse ici de réponses grammaticales,
+
+1:31:50.719,1:31:54.000
+mais c'est la même chose. Et puis vous ne faites que rétropropager le
+
+1:31:54.000,1:31:57.800
+gradient à travers tout ce truc. Puis rétropropager le gradient
+
+1:31:57.800,1:32:01.199
+à travers ce graphe ici que vous pouvez considérer comme une sorte
+
+1:32:01.199,1:32:04.639
+de réseau neuronal bizarre dont le fonctionnement des nœuds est
+
+1:32:04.639,1:32:07.679
+log somme exp. Et vous obtenez des gradients pour chacune des e.
+
+1:32:07.679,1:32:11.280
+Chacune des e étant les valeurs que vous obtenez ici produites
+
+1:32:11.280,1:32:14.159
+par le réseau neuronal. Donc vous obtenez
+
+1:32:14.159,1:32:18.159
+des gradients par rapport aux paramètres.
+
+1:32:22.400,1:32:26.239
+Donc c'est une prédiction de structure pour vous.
+
+1:32:26.239,1:32:29.920
+Il y a quelques autres sujets dont je voulais parler aujourd'hui.
+
+1:32:29.920,1:32:34.159
+Les méthodes variationnelles dans l'inférence bayésienne. Car nous en avons parlé dans le contexte des VAEs.
+
+1:32:34.159,1:32:40.760
+Mais sans vraiment expliquer ce que c'était ou du moins je ne l'ai pas fait. Peut-être tu l’as fait Alfredo.
+
+1:32:40.760,1:32:44.080
+La forme générale de l'inférence variationnelle. Ou je peux parler
+
+1:32:44.080,1:32:48.159
+de la formulation lagrangienne de la rétropropagation. Je peux en fait faire les deux car
+
+1:32:48.159,1:32:52.000
+c'est assez rapide. Cela prendra plus de cinq minutes mais vous pouvez partir quand vous voulez.
+
+1:32:52.000,1:32:54.320
+[Alfredo : allons-y pour les deux]
+
+1:32:54.320,1:32:58.719
+L’approche lagrangienne est courte, alors je vais le faire en premier.
+
+1:33:00.560,1:33:05.840
+Vous pouvez donc formuler la rétropropagation comme une minimisation sous contrainte.
+
+1:33:05.840,1:33:09.920
+Vous avez donc une variable d'entrée x, passant par
+
+1:33:09.920,1:33:20.800
+un premier module de fonction. Appelons-le f1(x,w1).
+
+1:33:20.639,1:33:31.440
+Il produit une sortie z1. En fait laissez-moi appeler ça f0.
+
+1:33:31.440,1:33:42.600
+Le deuxième sera f1(x,w1) et produit z2
+
+1:33:42.639,1:33:48.639
+etc. Et à la fin, nous avons le dernier module allant dans
+
+1:33:48.639,1:33:51.000
+une sorte de terme énergétique.
+
+1:33:51.000,1:33:59.639
+Disons, la sortie souhaitée si nous faisons de l’apprentissage supervisé mais que ça n’a pas d’importance, c'est juste un coût.
+
+1:34:00.560,1:34:07.360
+Appelons le zn. C(zn,y)
+
+1:34:11.840,1:34:18.239
+Donc la passe « forward » peut être écrite comme
+
+1:34:18.239,1:34:35.679
+zk+1 = f_k(zk,wk).
+
+1:34:35.920,1:34:40.880
+C'est juste la passe « forward ». Puis vous avez une fonction de coût
+
+1:34:40.880,1:34:44.159
+C que vous voulez minimiser qui C(zn,y).
+
+1:34:44.159,1:34:52.600
+C'est juste une fonction de coût que vous voulez minimiser. Vous pouvez écrire tout le problème de
+
+1:34:56.800,1:34:59.520
+la rétropropagation comme une minimisation de la
+
+1:34:59.520,1:35:04.719
+contrainte. Et la déclaration est : minimiser
+
+1:35:04.719,1:35:06.880
+C avec la contrainte telle que
+
+1:35:17.679,1:35:21.199
+la contrainte ci-dessus est vérifiée.
+
+1:35:25.199,1:35:28.159
+Quand vous avez un problème de minimisation sous contrainte, la meilleure chose à faire est
+
+1:35:28.159,1:35:33.000
+d'écrire la lagrangienne. Donc vous écrivez la fonction lagrangienne. 
+
+1:35:33.000,1:35:37.119
+Je ne vais pas vous dire tout de suite de quoi est cette fonction.
+
+1:35:37.119,1:35:41.360
+Et pour un seul échantillon d’entraînement x y ce sera
+
+1:35:41.360,1:35:48.000
+le coût C(zn,y)
+
+1:35:48.000,1:35:52.239
+L'autre chose que nous pourrions dire est qu'il existe une autre contrainte
+
+1:35:52.239,1:35:57.360
+qui est que z0 = x.
+
+1:35:57.360,1:36:04.400
+Plus la somme des couches. Donc nous allons avoir un indice k de 1 à n.
+
+1:36:07.520,1:36:14.960
+Le multiplicateur de Lagrange et une contrainte qui devrait être
+
+1:36:14.960,1:36:18.239
+égale à 0. Cette contrainte va être
+
+1:36:18.239,1:36:26.560
+zk+1 – fk(zk, wk).
+
+1:36:26.560,1:36:33.679
+Appelons ça λk+1
+
+1:36:33.679,1:36:39.040
+et ceci doit aller jusqu’à n-1.  Et probablement commencer
+
+1:36:39.040,1:36:42.159
+à 0 en fait.
+
+1:36:43.679,1:36:47.600
+Donc c'est une formulation lagrangienne de mon
+
+1:36:47.600,1:36:52.320
+problème de rétropropagation où, en gros, j’ai une fonction de coût global
+
+1:36:52.320,1:36:56.080
+et j'ai un tas de contraintes. Donc les contraintes sont que
+
+1:36:56.080,1:37:01.760
+l'entrée de la couche k est la sortie de la couche k – 1.
+
+1:37:01.920,1:37:06.800
+Donc ce lagrangien est une fonction de x,y
+
+1:37:06.800,1:37:15.760
+tous les λ, les λk, tous les z et tous les w.
+
+1:37:15.760,1:37:22.639
+Donc ce que je dois faire maintenant pour faire cette
+
+1:37:22.639,1:37:25.520
+minimisation sous contrainte est que
+
+1:37:25.520,1:37:33.920
+∂L/∂λk  = 0. Cette condition,
+
+1:37:33.920,1:37:36.719
+le gradient de L par rapport à
+
+1:37:36.719,1:37:41.040
+λk est juste ça.
+
+1:37:41.040,1:37:47.520
+Je veux dire λ k+1, désolé. C'est juste cette parenthèse.
+
+1:37:47.520,1:37:52.400
+J’obtiens juste zk+1 = fk(zk, wk)
+
+1:37:52.400,1:37:59.280
+qui n'est que la formule de propagation avant.
+
+1:38:00.400,1:38:08.400
+Si je fais ∂L/∂zk = 0,
+
+1:38:08.639,1:38:12.480
+c'est un peu plus compliqué. Donc j’ai le premier terme
+
+1:38:12.480,1:38:17.920
+qui est λk car j’ai zk ici et ce zk
+
+1:38:17.920,1:38:23.119
+va être un facteur de ce λk ici même.
+
+1:38:23.119,1:38:28.639
+Donc j’ai λk transposé.
+
+1:38:29.440,1:38:32.639
+Puis j’ai moins, et pour ce zk
+
+1:38:32.639,1:38:41.199
+j'ai un λk+1 ici multiplié par la fonction jacobienne de ça par rapport à z. 
+
+1:38:42.560,1:38:51.679
+Donc ça va être quelque chose comme ∂fk(zk,w)/∂zk
+
+1:39:04.719,1:39:09.520
+fois λk+1 transposé et cela devrait être égal à 0.
+
+1:39:09.639,1:39:15.040
+Je vais réorganiser les choses et ce que j’obtiens c’est
+
+1:39:15.040,1:39:23.040
+λk = ∂fk(zk,w)/∂zk
+
+1:39:28.480,1:39:35.920
+Donc la matrice jacobienne de f transposée fois λk+1.
+
+1:39:35.920,1:39:40.719
+Et ceci est en fait la formule de rétropropagation.
+
+1:39:40.719,1:39:44.080
+C'est la chose qui vous donne les gradients au niveau k
+
+1:39:44.080,1:39:50.080
+étant donné les gradients du niveau k+1 que vous multipliez par le jacobien 
+
+1:39:50.080,1:39:55.040
+de la boîte par laquelle vous propagez.
+
+1:39:55.040,1:39:59.840
+Donc vous n'avez pas à y penser.
+
+1:39:59.840,1:40:03.840
+C’est juste une réécriture de la rétropropagation comme un problème d'optimisation sous contraintes.
+
+1:40:03.840,1:40:07.360
+La rétropropagation en sort naturellement. Les premières personnes à le comprendre
+
+1:40:07.360,1:40:10.560
+étaient des personnes en théorie du contrôle. En fait les premières personnes à comprendre cela
+
+1:40:10.560,1:40:16.960
+étaient des gens comme Lagrange ou Euler ou Hamilton et Jacobi. 
+
+1:40:16.960,1:40:20.800
+C'est la formulation classique de la mécanique
+
+1:40:20.800,1:40:26.639
+si vous voulez. En mécanique quand vous écrivez
+
+1:40:26.639,1:40:32.239
+quelque chose comme ça, vous dites C(zn,y) est l'énergie du système.
+
+1:40:32.400,1:40:37.600
+L’énergie potentielle est quelque chose comme ça. Puis l'autre terme
+
+1:40:37.600,1:40:41.040
+implémente en gros les contraintes dynamiques. Le fait que vous avez
+
+1:40:41.040,1:40:44.719
+une équation différentielle qui vous dit que l'état au moment t+1
+
+1:40:44.719,1:40:51.360
+est une fonction de l'état au moment t avec une contrainte. Donc c'est la contrainte dynamique.
+
+1:40:51.360,1:40:56.480
+Puis si vous faites ça, vous vous rendez compte que
+
+1:40:56.480,1:41:02.080
+si vous avez une énergie pour chaque…
+
+1:41:02.080,1:41:08.880
+Considérer k comme un pas dans le temps et la propagation en avant comme
+
+1:41:08.880,1:41:13.360
+une équation différentielle qui régit un système.
+
+1:41:13.360,1:41:17.040
+Vous pourriez alors avoir un terme ici qui n'est pas seulement
+
+1:41:17.040,1:41:21.119
+un terme énergétique à la sortie mais en gros un terme énergétique qui…
+
+1:41:23.300,1:41:32.480
+Vous pouvez avoir un de ces termes pour chaque pas de temps. Donc la fonction lagrangienne est la somme
+
+1:41:32.480,1:41:36.880
+sur les pas de temps de C pour ce pas de temps de zk.
+
+1:41:36.880,1:41:41.440
+Et il pourrait y avoir une variable externe
+
+1:41:41.440,1:41:47.840
+appelons-la yk. Plus ces contraintes.
+
+1:41:51.040,1:41:57.920
+zk+1 – fk(zk,wk).
+
+1:41:59.280,1:42:02.880
+Et la somme sur toutes ces choses.
+
+1:42:02.880,1:42:07.760
+Quand vous regardez la formulation lagrangienne de la mécanique classique
+
+1:42:07.760,1:42:10.880
+c'est en gros la façon dont cela s’exprime.
+
+1:42:10.880,1:42:15.360
+C est l'énergie et le deuxième terme contient les contraintes.
+
+1:42:15.360,1:42:20.800
+En mécanique classique, la variable λ est en fait
+
+1:42:20.800,1:42:24.719
+l'élan (le momentum). Donc z est la variable de position et
+
+1:42:24.719,1:42:28.719
+λ devient l'élan. Donc le deuxième terme devient en gros
+
+1:42:28.719,1:42:33.520
+l'énergie cinétique. Ou l'énergie cinétique négative plus
+
+1:42:35.920,1:42:41.119
+spécifiquement. Peu importe, c'est juste un aparté.
+
+1:42:41.119,1:42:44.320
+Pourquoi je vous dis cela ? Car conceptuellement
+
+1:42:44.320,1:42:48.080
+les mathématiques de ceci sont super simples si vous connaissez
+
+1:42:48.080,1:42:53.600
+la minimisation sous contrainte de la lagrangienne.
+
+1:42:54.880,1:42:58.000
+Et c'est quelque chose que vous pouvez également utiliser dans
+
+1:42:58.000,1:43:06.400
+une nouvelle classe de modèle appelée « Neural ODE » [ODE pour équation différentielle ordinaire en français].
+
+1:43:06.400,1:43:11.920
+Et c'est quelque chose dont Alfredo voulait que je parle.
+
+1:43:11.920,1:43:14.159
+[Alfredo : merci]
+
+1:43:15.760,1:43:24.080
+Donc il s'agit d'un type de réseau neuronal qui est en gros un réseau récurrent
+
+1:43:24.080,1:43:30.800
+où vous dites : mon état au temps t plus delta t
+
+1:43:30.800,1:43:39.440
+est égal à mon état au temps t plus delta t fois une fonction
+
+1:43:39.440,1:43:46.159
+qui est une fonction constante de zt et un tas de paramètres qui sont fixes.
+
+1:43:46.159,1:43:50.880
+Ils ne varient pas avec le temps.
+
+1:43:50.880,1:43:58.719
+Je peux l'écrire de cette façon ou sous la forme d’une équation différentielle où je peux dire 
+
+1:43:58.719,1:44:06.320
+∂z(t)/∂t = f(zt,w)
+
+1:44:06.320,1:44:12.400
+Donc c'est l'équation différentielle ordinaire.
+
+1:44:12.400,1:44:15.440
+Dans ce cas de premier ordre car cela dépend de ce qui est en z.
+
+1:44:15.440,1:44:20.639
+Mais je peux exprimer à peu près tout de cette façon.
+
+1:44:20.639,1:44:24.080
+Et la question est de savoir comment entraîner
+
+1:44:24.080,1:44:28.080
+quelque chose comme ça. En gros, si vous écrivez la
+
+1:44:28.080,1:44:33.000
+formulation lagrangienne de ceci, c’est triviale. Donc il y a deux raisons
+
+1:44:33.000,1:44:37.440
+pour lesquelles vous voudriez entraîner quelque chose comme cela. Vous pourriez vouloir entraîner le système
+
+1:44:37.440,1:44:43.520
+à associer un point z au temps 0 à un point
+
+1:44:43.520,1:44:50.000
+particulier z au temps T après une certaine trajectoire. Vous ne souhaitez peut-être pas
+
+1:44:50.000,1:44:53.520
+contraindre la trajectoire, vous voulez juste qu'elle atteigne ce point.
+
+1:44:53.520,1:44:57.360
+Et peu importe ce que cela fait après. Je veux juste atteindre ce point.
+
+1:44:57.360,1:45:03.440
+Donc vous pouvez avoir une fonction de coût qui est en gros la distance de z à ce point cible zT.
+
+1:45:03.440,1:45:06.800
+Je vais l'appeler y.
+
+1:45:06.800,1:45:15.280
+Donc la cible serait un point y
+
+1:45:15.280,1:45:18.480
+et votre fonction de coût serait alors la distance entre
+
+1:45:18.480,1:45:25.679
+zt  et y ou quelque chose comme ça. Une autre chose que vous pourriez vouloir faire est d’entraîner le système afin
+
+1:45:25.679,1:45:30.000
+qu’il ait des états stables à certains moments y.
+
+1:45:30.000,1:45:36.400
+Donc pour un point y particulier que vous décidez à partir de votre jeu d’entraînement,
+
+1:45:36.400,1:45:44.320
+f(de ce y particulier, w) = 0.
+
+1:45:44.320,1:45:47.679
+Ce qui signifie que cet état va être stable.
+
+1:45:47.679,1:45:50.719
+La trajectoire… Donc vous avez un point
+
+1:45:50.719,1:45:56.480
+y dans votre espace et alors que vous pourriez partir d'un certain point
+
+1:45:56.480,1:46:01.920
+puis quand vous arrivez à ce point, la dynamique s'arrête.
+
+1:46:02.480,1:46:08.719
+Donc si vous le formulez en termes de lagrangienne, cela devient super simple dans
+
+1:46:08.719,1:46:14.880
+le sens où les gradients… contrairement à la rétropropagation dans le temps.
+
+1:46:14.880,1:46:20.480
+Si vous dérouler ce réseau… Ici, considérez ceci comme un réseau récurrent
+
+1:46:20.480,1:46:24.719
+et vous le dérouler dans le temps. Pour calculer le gradient
+
+1:46:24.719,1:46:30.719
+du point final par rapport aux paramètres et le point initial,
+
+1:46:30.719,1:46:34.000
+vous devez rétropropager dans le temps. Vous 
+
+1:46:34.000,1:46:38.639
+souvenir de la séquence complète et rétropropager dans le temps.
+
+1:46:38.639,1:46:44.159
+Mais si ce qui vous intéresse, c'est d'apprendre un état stable comme celui-ci
+
+1:46:44.159,1:46:47.440
+alors vous n'avez pas besoin de stocker la trajectoire.
+
+1:46:47.440,1:46:52.239
+Vous commencez à partir d'un certain point, vous convergez vers
+
+1:46:52.239,1:46:58.880
+un autre point et vous voulez rendre y un état stable.
+
+1:47:01.040,1:47:08.080
+Ce que vous devez juste faire, c'est vous assurer que ceci est vrai.
+
+1:47:08.080,1:47:13.119
+Et la façon dont vous pouvez le faire est en gros en minimisant votre
+
+1:47:13.119,1:47:15.920
+coût qui serait quelque chose comme la norme carrée
+
+1:47:15.920,1:47:20.320
+de f(y,w). Mais le point est que
+
+1:47:20.320,1:47:22.719
+vous n'avez pas besoin de vous souvenir de toute la trajectoire.
+
+1:47:22.719,1:47:26.400
+Le gradient par rapport aux poids peut être obtenu en
+
+1:47:26.400,1:47:32.080
+exécutant un type très similaire d'équation différentielle rétropropagée dans le temps.
+
+1:47:34.480,1:47:37.840
+Et je suis désolé de ne pas pouvoir entrer dans les détails de ça. Je peux vous
+
+1:47:37.840,1:47:41.440
+référer à un papier. Ce papier « Neural EDO »
+
+1:47:41.440,1:47:48.560
+ne le mentionne pas vraiment, mais il existe un de mes anciens papiers intitulé
+
+1:47:48.840,1:47:57.840			                                                                                                        
+« A theoretical framework for back-propagation »
+
+1:47:57.360,1:48:06.719
+qui explique en gros, la formulation lagrangienne ainsi que la façon dont vous l'appliquez aux réseaux récurrents.
+
+1:48:06.719,1:48:13.760
+Cela peut être continu dans le temps et vous voulez entraîner à
+
+1:48:13.920,1:48:18.000
+aller à des points fixes particuliers. C'est un papier de 1988.
+
+1:48:18.000,1:48:22.239
+Ce n'est pas récent. Vous le trouverez sur ma page web.
+
+1:48:22.239,1:48:28.159
+En bas de la page des publications. Mais je ne veux pas entrer dans les
+détails de ça.
+
+1:48:28.400,1:48:37.760
+[Alfredo : et il y a le truc bayésien] Oui. [Des gens sont encore. Ils ont l’air d’apprécier].
+
+1:48:37.760,1:48:41.840
+Vous pouvez y aller, vous n’êtes pas obligé de rester.
+
+1:48:41.840,1:48:45.199
+Ce n'est pas le truc bayésien, c'est plus le variationnel.
+
+1:48:45.199,1:48:49.040
+[Alfredo : oh désolé, tu as raison]
+
+1:48:49.040,1:48:53.280
+Disons que j'ai une certaine fonction de perte.
+
+1:48:53.280,1:49:00.560
+Et je vais parler d'une perte pas une énergie mais c'est la même chose.
+
+1:49:00.560,1:49:05.760
+Ma fonction de perte est une fonction de perte marginalisée sur une
+
+1:49:05.760,1:49:10.239
+variable latente. Donc souvenez-vous, j’en ai parlé avant,
+
+1:49:10.239,1:49:14.480
+si vous avez une fonction d’énergie
+
+1:49:16.560,1:49:20.400
+f(x,y) disons et vous voulez la dériver d'une
+
+1:49:20.400,1:49:26.880
+fonction d’énergie plus élémentaire E(x, y, z) en effectuant l'opération équivalente de marginaliser sur les z [problème technique coupé au montage]
+
+1:49:28.560,1:49:37.480
+Donc la façon dont vous marginalisez est vous vous faites
+
+1:49:37.679,1:49:48.400
+- 1/β log somme sur z de exp(-β, E(x,y,z)).  
+
+1:49:48.400,1:49:56.159
+Donc c’est la formule pour marginaliser une variable relative. Et cela s'applique également aux
+
+1:49:56.159,1:49:58.719
+fonctions de perte. Quel que soit la fonction que vous voulez marginaliser sur une
+
+1:49:58.719,1:50:02.880
+variable latente, c'est ce que vous calculez. Donc disons que vous
+
+1:50:02.880,1:50:10.000
+avez un modèle avec une variable latente et vous ne savez pas quelle est la valeur de cette variable latente.
+
+1:50:10.000,1:50:17.000
+Vous voulez calculer quelle est la perte. C’est le log de la somme des exponentielles de la perte sur toutes les valeurs de la variable latente.
+
+1:50:17.000,1:50:21.199
+Donc je marginalise par rapport à cette certaine variable. Disons que c'est
+
+1:50:21.199,1:50:25.000
+un VAE ou quelque chose ayant une variable latente dans le milieu.
+
+1:50:25.000,1:50:32.639
+Et je veux calculer – 1/β log, somme sur toutes les valeurs de ma variable z, exp(-β L).
+
+1:50:32.639,1:50:36.800
+J’utilise l mais je pourrais utiliser n'importe quel symbole ici.
+
+1:50:36.800,1:50:41.199
+C'est n’importe quelle fonction que vous devez calculer.
+
+1:50:42.800,1:50:46.480
+Mais c’est utile pour les choses que vous voulez minimiser comme l’énergie
+
+1:50:46.480,1:50:52.880
+ou des objectifs. Donc ici cette fonction de perte
+
+1:50:52.880,1:50:58.480
+n'est plus une fonction de z, mais seulement de x et de y.
+
+1:51:00.080,1:51:10.719
+Je peux réécrire ceci comme suit :
+
+1:51:11.360,1:51:21.280
+L(x,y) = - 1/β log somme sur z de q(z) [ exp(-β L(x,y,z)) / q(z) ]
+
+1:51:21.280,1:51:25.679
+Je viens de multiplier et de diviser par q(z).
+
+1:51:25.679,1:51:32.800
+Je n'ai rien fait. Maintenant q(z) ici, je suppose que c'est
+
+1:51:32.800,1:51:35.840
+une distribution de probabilité sur z. Donc c'est une
+
+1:51:35.840,1:51:39.599
+fonction de densité qui s'intègre à 1 quand j'intègre sur z.
+
+1:51:39.599,1:51:43.679
+Donc vous pouvez interpréter cette intégrale comme la valeur attendue
+
+1:51:43.679,1:51:52.679
+par rapport à cette distribution de exp(-β L(x,y,z)) / q(z)
+
+1:51:52.480,1:52:03.840
+Maintenant il y a une astuce : l'inégalité de Jensen
+
+1:52:05.520,1:52:10.639
+L'inégalité de Jensen dit quelque chose de très intéressant.
+
+1:52:10.639,1:52:20.159
+Imaginons que j'ai une fonction convexe comme disons - log. Je ne dessine 
+
+1:52:20.159,1:52:26.239
+pas - log vraiment bien mais cela ressemble un peu à ça.
+
+1:52:26.239,1:52:36.480
+Maintenant si je prends un tas de valeurs sur une plage de données,
+
+1:52:36.639,1:52:41.440
+et calcule la moyenne de la valeur
+
+1:52:44.639,1:52:49.040
+de la fonction -log sur cette plage,
+
+1:52:51.520,1:52:58.400
+car la fonction est convexe, je vais obtenir une valeur plus petite
+
+1:52:58.400,1:53:05.199
+que la fonction appliquée à la moyenne. Donc mon diagramme n'est pas si bon 
+
+1:53:05.199,1:53:10.080
+car la courbure n'est pas assez élevée. Laissez-moi la redessiner.
+
+1:53:10.080,1:53:14.080
+Voici une fonction convexe et je fais varier
+
+1:53:14.080,1:53:20.480
+une variable ici sur cette plage. Et calcule la moyenne de cette fonction sur cette plage.
+
+1:53:20.480,1:53:26.480
+Donc il cela donne une valeur
+
+1:53:26.480,1:53:31.599
+probablement par ici. Puis je vais prendre la
+
+1:53:31.599,1:53:34.719
+moyenne de toutes ces valeurs dans ce plage, la moyenne de la plage, le
+
+1:53:34.719,1:53:39.440
+point au milieu de cette plage et le transmet à la fonction.
+
+1:53:47.440,1:53:50.000
+Et je reçois quelque chose en dessous…
+
+1:53:50.000,1:53:54.159
+Je n'ai pas dessiné cela correctement. Donc si je prends la moyenne de ça +
+
+1:53:54.159,1:53:56.800
+ça, ça, ça, ça et ça,
+
+1:53:56.800,1:54:00.239
+je vais obtenir quelque chose de plus élevée que ça car
+
+1:54:00.239,1:54:03.760
+la fonction est convexe. Si la fonction était
+
+1:54:03.760,1:54:07.119
+droite, la moyenne après être allée dans la
+
+1:54:07.119,1:54:10.960
+fonction serait la même qu'avant d'aller à la fonction.
+
+1:54:10.960,1:54:14.080
+Si je calcule la moyenne de toutes ces valeurs
+
+1:54:14.080,1:54:17.679
+ou les valeurs y de ces points, je serais au même endroit
+
+1:54:17.679,1:54:24.159
+que la fonction appliquée à la moyenne. [Alfredo : donc tu peux faire l'interception
+
+1:54:24.159,1:54:27.840
+entre la fonction convexe et la ligne droite allant à ces deux
+
+1:54:27.840,1:54:30.800
+extrema] C’est juste.
+
+1:54:30.800,1:54:35.760
+[La moyenne serait ce point] C'est vrai.
+
+1:54:35.760,1:54:43.840
+Donc la moyenne appliquée aux valeurs de la fonction serait
+
+1:54:43.840,1:54:50.400
+quelque chose comme cette corde. Ce ne serait pas ça mais ce serait proche de cela. 
+
+1:54:50.400,1:54:55.960
+En fait, j'aurais dû expliquer ceci de manière simple avec seulement deux valeurs.
+
+1:54:55.960,1:54:58.080
+Disons que c'est juste la somme de deux termes.
+
+1:54:58.080,1:55:02.199
+Donc j'ai une fonction convexe et deux valeurs.
+
+1:55:02.199,1:55:08.639
+La moyenne de ces deux valeurs après être
+
+1:55:08.639,1:55:13.119
+passées par cette fonction… Donc en gros, disons que
+
+1:55:13.119,1:55:18.880
+ma fonction est -log. Donc la moyenne de -log… 
+
+1:55:18.880,1:55:26.159
+appelons ces points x1 et x2. Donc la moyenne est -log(x1) + -log(x2) 
+
+1:55:28.880,1:55:34.480
+divisé par 2. C’est ce point.
+
+1:55:35.360,1:55:40.480
+Et puis -log((x1 + x2)/2)
+
+1:55:47.360,1:55:54.639
+est ce point. Et c'est dessous.
+
+1:55:54.639,1:55:58.320
+Et l'inégalité de Jensen dit que si vous avez une fonction convexe
+
+1:55:58.320,1:56:04.800
+comme -log…
+
+1:56:06.000,1:56:10.239
+Ici j'ai calculé une moyenne mais que c'est vrai pour tout.
+
+1:56:10.239,1:56:14.239
+Donc l'inégalité dit en gros : 
+
+1:56:20.119,1:56:32.560
+convexe de l'attente sur toute distribution d'une fonction h,
+
+1:56:34.560,1:56:38.239
+dans ce cas ce serait z…
+
+1:56:43.920,1:56:48.320
+je dois écrire ceci de la manière propre… est inférieur ou égal
+
+1:56:48.320,1:56:57.840
+à somme sur z de q(z) de cette fonction convexe
+
+1:56:58.960,1:57:02.000
+appliquée à h(z). C'est l'inégalité de Jensen.
+
+1:57:08.000,1:57:12.480
+Donc, cela fonctionne avec -log, ce qui signifie que je peux écrire
+
+1:57:12.480,1:57:17.840
+ma fonction objectif comme étant plus petite que 1/β … En fait à mettre
+
+1:57:17.840,1:57:20.000
+à l'intérieur…  J’efface donc ça.
+
+1:57:28.400,1:57:35.760
+Donc inférieure à somme sur z de q(z)
+
+1:57:35.920,1:57:45.360
+fois – 1/β log exp(-β L(x, y, z))
+
+1:57:47.679,1:57:54.000
+divisé par q(z).
+
+1:57:54.000,1:58:04.880
+Evidemment le -1/β log exp(-β) s’annule. Donc ce que j'obtiens :
+
+1:58:04.880,1:58:09.199
+somme sur z q(z) L(x, y, z).
+
+1:58:13.360,1:58:19.840
+D'est donc juste la valeur attendue de L moyennée sur la distribution q(z).
+
+1:58:19.840,1:58:22.960
+Puis j’ai le deuxième terme qui est
+
+1:58:29.840,1:58:35.119
+1/β moins le log de q(z) mais il y a q(z)
+
+1:58:35.119,1:58:38.000
+au dénominateur, je vais donc le mettre en haut ce
+
+1:58:38.000,1:58:42.760
+qui va annuler le – 1/β et donc je vais obtenir quelque chose comme :
+
+1:58:42.760,1:58:45.920
++ 1/β log q(z).
+
+1:58:45.920,1:58:50.000
+Et je peux l'écrire à nouveau comme : 
+
+1:58:53.000,1:59:12.000
+somme sur z de q(z) L(x, y, z) + 1/β somme sur z q(z) log q(z).
+
+1:59:15.000,1:59:30.040
+C'est la perte moyenne… d'énergie mais quelle qu'elle soit. Appelons-la l'énergie.
+
+1:59:35.000,1:59:45.560
+Et ceci est -1/β fois l’entropie de q.
+
+1:59:50.000,1:59:53.040
+L'entropie d'une distribution est moins
+
+1:59:53.040,1:59:59.679
+somme sur la variable aléatoire de la distribution, logarithmique de la distribution.
+
+1:59:59.679,2:00:03.440
+Donc c'est -1/β fois l'entropie. Alors qu'est-ce que cela signifie ?
+
+2:00:03.440,2:00:06.800
+Que j'ai une limite supérieure sur ma fonction
+
+2:00:06.800,2:00:11.760
+de perte que je veux minimiser, L(x,y). Ou mon énergie que je veux
+
+2:00:11.760,2:00:14.159
+minimiser, peu importe ce que c’est. Quelle que soit la fonction que je veux
+
+2:00:14.159,2:00:18.400
+Minimiser, j'ai maintenant sa limite supérieure. Et cette limite supérieure est la 
+
+2:00:18.400,2:00:24.480
+somme de deux termes. Un est la moyenne de l'énergie que j’ai,
+
+2:00:24.480,2:00:28.480
+en échantillonnant en gros la variable latente.
+
+2:00:28.480,2:00:32.000
+Donc j'ai un système avec une variable latente, j'échantillonne quelques
+
+2:00:32.000,2:00:35.040
+valeurs de la variable latente selon une certaine distribution q.
+
+2:00:35.040,2:00:38.719
+Bien sûr, je choisis un q pour lequel je peux facilement prélever.
+
+2:00:38.719,2:00:42.960
+Je peux choisir q comme je veux.
+
+2:00:42.960,2:00:49.840
+Donc je prends un q, gaussien, peu importe. Je prends un z d’après cette
+
+2:00:49.840,2:00:54.800
+distribution et je calcule la valeur attendue de la fonction que je veux
+
+2:00:54.800,2:00:58.960
+minimiser par rapport à ce q. Et je peux le faire juste en
+
+2:00:58.960,2:01:02.480
+échantillonnant z de la distribution de q et puis
+
+2:01:02.480,2:01:08.000
+calculer la moyenne de la fonction L que j'obtiens comme résultat.
+
+2:01:08.000,2:01:11.920
+Donc c'est le premier terme. Le deuxième terme
+
+2:01:11.920,2:01:15.119
+est l'entropie de z. Donc ce que je dois faire c’est
+
+2:01:15.119,2:01:19.360
+modifier ma distribution z de telle sorte que l'entropie est maximisée.
+
+2:01:19.360,2:01:22.400
+Donc si c'est une gaussienne par exemple, cela signifie que je dois
+
+2:01:22.400,2:01:25.360
+rendre la variance de z aussi grande que possible. Mais si je la
+
+2:01:25.360,2:01:28.800
+rend trop grande, le terme énergétique moyen va exploser.
+
+2:01:28.800,2:01:31.920
+Je dois donc optimiser l'ensemble de cette fonction.
+
+2:01:31.920,2:01:35.280
+Et si j'optimise toute cette fonction
+
+2:01:35.280,2:01:39.760
+par rapport à q et par rapport à n'importe quel paramètre de L que je
+
+2:01:39.760,2:01:43.119
+veux minimiser car L est une fonction objective avec…
+
+2:01:43.119,2:01:47.360
+je ne sais pas des poids d'un réseau neuronal ou quelque chose comme ça.
+
+2:01:47.360,2:01:50.880
+Donc je peux simultanément minimiser par rapport à 
+
+2:01:50.880,2:01:54.960
+ces paramètres w que je n'ai pas écrits ici et par rapport à la
+
+2:01:54.960,2:01:58.719
+distribution de q. Et si la distribution de q est dans une famille qui est 
+
+2:01:58.719,2:02:01.440
+assez large , alors cette limite supérieure sera assez
+
+2:02:01.440,2:02:05.440
+proche de la perte réelle que je veux minimiser. Qui est
+
+2:02:05.440,2:02:10.239
+la perte marginalisée sur la variable latente. Mais je ne dois 
+
+2:02:10.239,2:02:14.080
+jamais calculer explicitement la marginalisation d'une variable latente. 
+
+2:02:14.080,2:02:18.719
+Donc c'est une façon de marginaliser une variable latente sans vraiment le faire. 
+
+2:02:18.720,2:02:23.440
+En marginalisant sur une variable latente que vous pouvez échantillonner, comme une gaussienne,
+
+2:02:23.440,2:02:26.250
+mais ce qu'il faut faire c'est maximiser son entropie.
+
+2:02:26.250,2:02:30.360
+Et si vous pensez aux VAEs, c'est exactement ce qu'ils font.
+
+2:02:30.360,2:02:34.639
+Ils minimisent l'erreur de reconstruction attendue, qui est L(x,y,z),
+
+2:02:34.639,2:02:37.920
+par rapport aux paramètres, en échantillonnant la variable latente z
+
+2:02:37.920,2:02:42.480
+selon une répartition gaussienne. Mais en même temps il y a ce qu'on
+
+2:02:42.480,2:02:45.280
+appelle le terme KL qui est le deuxième terme qui essaie en gros de faire
+
+2:02:45.280,2:02:49.280
+que la distribution, cette entropie soit aussi grande que possible.
+
+2:02:49.280,2:02:52.960
+Cette formule est exactement identique à une formule que
+
+2:02:52.960,2:02:58.639
+les gens utilisent en physique statistique. Donc les physiciens
+
+2:02:58.639,2:03:02.159
+ont une formule très célèbre : F = <E> - TS.
+
+2:03:06.480,2:03:13.679
+Cela dit que l'énergie libre est égale à l'énergie
+
+2:03:13.679,2:03:17.599
+moyenne moins la température multipliée par l'entropie.
+
+2:03:17.599,2:03:23.119
+Ce qu'ils appellent la température est ce que j'appelle 1/β.
+
+2:03:24.080,2:03:29.440
+Et c'est identique à cette formule car ici c'est moins
+
+2:03:29.440,2:03:32.840
+l’entropie. C'est la même formule.
+
+2:03:33.320,2:03:41.360
+Donc ce que nous minimisons maintenant est une énergie libre. Et si q(z)
+
+2:03:41.360,2:03:49.200
+est suffisamment puissant pour être la distribution réelle qu'elle doit être, alors l'inégalité devient une égalité.
+
+2:03:52.000,2:03:56.480
+C'est l'idée des méthodes variationnelles.
+
+2:03:56.480,2:04:02.079
+Vous utilisez en gros l'inégalité de Jensen pour transformer
+
+2:04:02.079,2:04:08.800
+le log d'une moyenne en une moyenne de log.
+
+2:04:08.800,2:04:14.239
+Et vous obtenez une limite supérieure.
+
+2:04:14.239,2:04:18.000
+Cette étape ici, quand où je transforme l'égalité
+
+2:04:18.000,2:04:22.320
+qui était ici en une inégalité en appliquant l'inégalité de Jensen.
+
+2:04:22.320,2:04:25.360
+Ce que j'ai fait, c'est que j'ai mis le log à l'intérieur. Il y avait un log
+
+2:04:25.360,2:04:32.440
+à l'extérieur et je l'ai mis à l'intérieur. Donc maintenant c'est l’attente du log au lieu d'un log d'une attente.
+
+2:04:34.520,2:04:39.040
+Et puis car c'est un ratio, c'est une différence de deux logs et
+
+2:04:39.040,2:04:42.320
+car c'est l’exponentielle d'une énergie, je prends le log et je divise
+
+2:04:42.320,2:04:45.280
+par β. J'obtiens ce genre de formule agréable et
+
+2:04:45.280,2:04:50.079
+c'est ce qu'on appelle une énergie libre variationnelle. Vous obtenez la valeur attendue de
+
+2:04:50.079,2:04:55.520
+l'énergie moins la température inverse multipliée par l’entropie de la distribution.
+
+2:04:55.520,2:04:59.000
+Maintenant comment vous minimisez cela ?
+
+2:04:59.000,2:05:02.880
+C’est une autre histoire, mais cela signifie que vous pouvez utiliser
+
+2:05:02.880,2:05:05.119
+une distribution de substitution pour échantillonner
+
+2:05:05.119,2:05:10.000
+à partir de la variable latente. Vous n'avez pas besoin d'échantillonner à partir de la vraie distribution.
+
+2:05:10.000,2:05:13.840
+Qui est ici. La distribution réelle
+
+2:05:13.840,2:05:17.040
+de z est vraiment compliquée. J'aurais dû l'écrire.
+
+2:05:17.040,2:05:21.840
+La distribution réelle, p(z) = exp(-β)…   
+
+2:05:22.040,2:05:28.320
+Ceci serait un β différent, β’, il n'est pas nécessaire qu'il soit le même.
+
+2:05:28.320,2:05:39.440
+Donc p(z) = exp(-β’ E(x,y,z)) divisé par l'intégrale sur z de exp(-β’ E(x,y,z’))
+
+2:05:40.719,2:05:49.280
+C'est la vraie distribution. Si vous branchez ce p…
+
+2:05:49.280,2:05:54.560
+ici, l'inégalité devient une égalité.
+
+2:05:54.560,2:06:04.400
+Vous pouvez montrer que la plus petite valeur pour cette variable est lorsque q = p.
+
+2:06:04.400,2:06:09.000
+Puis les deux termes dans l'inégalité sont égaux.
+
+2:06:09.000,2:06:13.280
+C'est un peu le point de vue « énergétique » si vous voulez de
+
+2:06:13.280,2:06:17.840
+l'inférence variationnelle. Si vous devez calculer le log d'une somme
+
+2:06:19.840,2:06:25.199
+d'exponentielles, remplacer ça par
+
+2:06:26.000,2:06:31.599
+la moyenne de votre fonction plus un terme d'entropie.
+
+2:06:31.599,2:06:34.960
+Ce qui vous donnera une limite supérieure. Vous minimisez la limite supérieure et car
+
+2:06:34.960,2:06:37.679
+vous poussez sur la limite supérieure, vous poussez aussi sur
+
+2:06:37.679,2:06:40.400
+la fonction que vous souhaitez réellement minimiser.
+
+2:06:40.400,2:06:45.280
+[Alfredo : c'est beau] C'est comme l’essentiel,
+
+2:06:45.280,2:06:49.360
+la formulation la plus simple, de l'inférence variationnelle.
+
+2:06:49.360,2:06:57.199
+En termes d'énergie. Je veux dire, vous pouvez remplacer L par
+
+2:06:57.199,2:07:01.040
+p et avec quelques trucs normalisés. Mais cela rend plus compliqué.
+
+2:07:01.040,2:07:03.800
+Je veux dire que cela ne fait aucune différence,
+
+2:07:03.800,2:07:07.119
+mais cela rend l'interprétation plus difficile.
+
+2:07:08.480,2:07:15.520
+Je pense que nous avons fini. Il y a beaucoup de gens qui sont restés pour
+
+2:07:15.520,2:07:19.360
+cette genre de session extrascolaire de plus d'une demi-heure ?
+
+2:07:19.360,2:07:23.119
+[Alfredo : oui, 40 personnes] C'était un plaisir d'enseigner ce cours
+
+2:07:23.119,2:07:32.000
+en particulier dans les circonstances actuelles. [Alfredo : je vous verrai demain. Resterez en sécurité, bye] Bye.

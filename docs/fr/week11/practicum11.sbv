@@ -1,0 +1,2584 @@
+0:00:00.319,0:00:07.080
+Ok donc commençons la leçon du jour et voyons ce sur quoi Yann aime
+
+0:00:07.080,0:00:12.349
+faire des recherches. Donc aujourd'hui nous allons parler de l’apprentissage 
+
+0:00:12.349,0:00:19.180
+d’un modèle prédictif de politiques avec régularisation de l'incertitude pour la conduite dans un trafic dense.
+
+0:00:19.180,0:00:24.420
+Sacré nom. La partie agréable est que dans environ 50 minutes
+
+0:00:24.420,0:00:28.289
+vous allez pouvoir comprendre chaque mot de ce titre et
+
+0:00:28.289,0:00:33.149
+devrez même être prêt pour implémenter ça, car 
+
+0:00:33.149,0:00:37.620
+tous les éléments de base que nous avons couverts jusqu'à présent.
+
+0:00:37.620,0:00:42.809
+Et donc il s’agit juste d’assembler plusieurs choses. Peut-être pas de façon triviale mais je
+
+0:00:42.809,0:00:48.539
+ne pense pas que ça soit trop fou. Donc c'est un travail fait par mon ami et collègue
+
+0:00:48.539,0:00:57.379
+Mikael Henaff, moi-même et Yann. Cela remonte à quelques années. Je crois que c'était en 2019…
+
+0:00:57.379,0:01:05.059
+Donc l'année dernière enfaites. Ou peut-être l'année d'avant. Je ne sais plus très bien.
+
+0:01:09.000,0:01:16.000
+Donc voyons comment vous pouvez apprendre à conduire. Le modèle libre d’apprentissage par renforcement [MF RL dans la suite]. 
+
+0:01:16.000,0:01:21.960
+Donc faites attention à la voiture noire qui se trouve à l'arrière.
+
+0:01:21.960,0:01:26.490
+Disons que j'aimerais entraîner ce type avec MF RL.
+
+0:01:26.490,0:01:32.540
+Comment s'y prendre ? Vous devez essayer de faire des choses
+
+0:01:32.840,0:01:41.000
+qui ne sont peut-être pas bonnes et vous entendrez alors : «  à ne pas faire ».
+
+0:01:41.000,0:01:47.359
+Car ce n'est pas bon. Donc il faut mourir plusieurs fois de suite avant
+
+0:01:47.359,0:01:52.340
+d'apprendre réellement à ne pas mourir. Mais ce n'est sans doute pas ainsi qu'on apprend
+
+0:01:52.340,0:01:58.009
+à conduire. Surtout si vous conduisez la voiture de vos parents.
+
+0:01:58.009,0:02:02.060
+Vous ne voulez pas avoir un accident avec la voiture de vos parents avant d'apprendre à ne pas avoir d'accident
+
+0:02:02.060,0:02:08.630
+avec la voiture de vos parents. Donc trouvons un moyen plus rationnel d'apprendre
+
+0:02:08.630,0:02:12.739
+à conduire une voiture. Donc ici et c'est juste mon intuition.
+
+0:02:12.739,0:02:17.150
+Si vous avez une voiture maintenant et roulez à 100 km/h
+
+0:02:17.150,0:02:24.290
+ce qui correspond à 30/s, si vous regardez à 30 mètres devant vous,
+
+0:02:24.290,0:02:33.769
+cela signifie que vous regarderez une seconde dans le futur.
+
+0:02:33.769,0:02:38.389
+Vous pouvez donc voir que le centre de la route tourne légèrement à gauche
+
+0:02:38.389,0:02:42.799
+dans une seconde à l'avenir, c'est pourquoi je veux tourner le volant
+
+0:02:42.799,0:02:47.540
+maintenant. De sorte que dans une seconde je suivrais la trajectoire,
+
+0:02:47.540,0:02:52.849
+là où la rue me mène. Ok donc ici j'essaie juste de
+
+0:02:52.849,0:02:57.799
+faire avancer l'idée que nous devons regarder dans le futur pour être
+
+0:02:57.799,0:03:05.780
+capable de faire une sorte de plan d'action.
+
+0:03:05.780,0:03:11.540
+Vous aimeriez savoir que si quelque chose n'est pas bon, vous ne voulez peut-être pas
+
+0:03:11.540,0:03:21.739
+le faire, pour ne pas avoir d'ennuis. Quel est le problème principal ici ?
+
+0:03:21.739,0:03:29.720
+Les autres personnes sont le problème. Donc ici vous avez des véhicules qui vous entourent
+
+0:03:29.720,0:03:36.169
+et ils ne sont pas du tout déterministes. Donc il se peut que ce soit un peu
+
+0:03:36.169,0:03:41.620
+difficile de prendre en compte toutes les choses qui pourraient se passer.
+
+0:03:41.620,0:03:48.040
+Alors laissez-moi vous donner une introduction, un petit récapitulatif, de ce que sont
+
+0:03:48.040,0:03:53.050
+les principales composantes de ce système. Donc nous avons ici un agent représenté par
+
+0:03:53.050,0:04:01.030
+ce cerveau rose recevant en entrée un état sₜ  et produit une action qui est
+
+0:04:01.030,0:04:06.190
+la sortie aₜ. C’est par exemple ma direction, mon accélérateur
+
+0:04:06.190,0:04:13.810
+ou mon frein. De plus, j'observe un coût qui est une conséquence de
+
+0:04:13.810,0:04:19.780
+prendre une action spécifique a étant donné que je me trouve dans l'état sₜ.
+
+0:04:19.780,0:04:25.000
+Ok, laissez-moi regarder le chat, il a des messages.
+
+0:04:25.000,0:04:30.720
+Ok, les gens rient, cool. De l'autre côté, vous avez le monde réel.
+
+0:04:30.720,0:04:36.789
+Le monde réel, étant donné un état interne, vous donne une nouvelle action et puis vous
+
+0:04:36.789,0:04:40.720
+produisez le nouvel état. Et aussi vous produisez ce qui est le résultat,
+
+0:04:40.720,0:04:45.430
+cette conséquence cₜ à fournir à votre agent. C'est ainsi que vous pouvez
+
+0:04:45.430,0:04:49.870
+avoir comme un réseau en interaction avec un monde réel. Vous prenez des actions étant
+
+0:04:49.870,0:04:54.160
+donné un état spécifique et monde mot vous donne l'état suivant et la
+
+0:04:54.160,0:05:00.570
+conséquence suivante. C’est le modèle libre car vous interagissez avec le monde réel.
+
+0:05:00.570,0:05:06.729
+Mais ce qui est bien, c'est que vous pouvez interagir avec un modèle du monde.
+
+0:05:06.729,0:05:11.289
+Donc sur le côté gauche au lieu d'essayer des choses dans le monde réel comme
+
+0:05:11.289,0:05:18.490
+essayer de cuisiner, vous brûlez la nourriture et vous-même donc ce n’est pas bon.
+
+0:05:18.500,0:05:28.789
+Peut-être que vous aimeriez d'abord essayer dans votre esprit : comment faire des biscuits sans se brûler,
+
+0:05:28.789,0:05:34.789
+peut-être ne pas toucher le four avec les mains. Ce serait une option très intelligente.
+
+0:05:34.789,0:05:40.960
+Bien, donc comment pouvons-nous penser ? Comment pouvons-nous réfléchir
+
+0:05:40.960,0:05:49.110
+à la manière dont nous pouvons faire ce type d'interaction entre mes actions et les conséquences attendues ?
+
+0:05:49.110,0:05:54.330
+Comment prendre une action spécifique sans la prendre physiquement ?
+
+0:05:54.330,0:06:00.000
+Donc comment éviter de me brûler ce soir en cuisinant ?
+
+0:06:00.320,0:06:08.170
+Vous voulez penser dans votre tête : « ne pas toucher à ce qui est chaud ».
+
+0:06:08.170,0:06:12.700
+Alors comment entraîner ce modèle du monde ? De la même manière que nous l'avons fait la semaine dernière.
+
+0:06:12.700,0:06:18.760
+Nous commençons donc par l'état initial, puis nous proposons des actions. 
+
+0:06:18.760,0:06:22.990
+Elles étaient aléatoires la semaine dernière mais pas cette semaine. Par exemple l'action ici pourrait
+
+0:06:22.990,0:06:29.140
+être l'action d'un expert que nous avons observé comme notre mère ou notre père cuisinant.
+
+0:06:29.140,0:06:34.120
+Vous pouvez voir quel est l'état actuel et puis vous pouvez avoir le
+
+0:06:34.120,0:06:39.970
+prochain état : « le dîner est prêt ». Mangerrrr. J'ai vraiment faim.
+
+0:06:39.970,0:06:45.670
+De plus, vous avez aussi la conséquence cₜ : « vous salivez ».
+
+0:06:45.670,0:06:54.310
+Peu importe. Vous allez fournir comme une distance entre cet état observé dans le monde réel et l'état fourni
+
+0:06:54.330,0:06:59.220
+par le modèle du monde. Vous avez alors une perte de MSE.
+
+0:06:59.220,0:07:04.060
+Donc c'est juste une régression. Vous essayez de régresser le prochain état
+
+0:07:04.060,0:07:09.190
+étant donné que vous partez du même état initial. Et vous fournissez une
+
+0:07:09.190,0:07:15.040
+action spécifique. Ok jusqu'à présent ? C'est quelque chose que nous avons déjà vu la semaine dernière. 
+
+0:07:15.040,0:07:21.790
+C’est pour vous donner une vue d'ensemble à nouveau. Bien vous vous ne vous plaignez pas.
+
+0:07:21.790,0:07:28.270
+Voyons que nous pouvons faire. Par exemple, dans ce cas, je n'ai pas mon
+
+0:07:28.270,0:07:34.390
+modèle sortant un coût. Je n'ai pas le monde indiquant un coût.
+
+0:07:34.390,0:07:42.820
+Plus précisément, dans mon cas, j'ai mon cerveau ici, mon agent,
+
+0:07:42.820,0:07:49.690
+prenant un état et fournissant une action qui alimente ce modèle.
+
+0:07:49.690,0:07:55.360
+Et j'ai mon coût qui est une fonction différenciable de l'état.
+
+0:07:55.360,0:08:00.760
+C’est exactement ce que nous avions vu la semaine dernière avec la
+
+0:08:00.760,0:08:04.720
+destination finale, la chose spécifique que vous rétropropagez
+
+0:08:04.720,0:08:08.110
+dans le temps. La rétropropagation dans le temps déroulant
+
+0:08:08.110,0:08:12.760
+cette boucle. Pour avancer, vous allez comme ça et puis vous rétropopagez
+
+0:08:12.760,0:08:20.560
+et faites ça. Alors laissez-moi vous présenter le jeu de données.
+
+0:08:20.560,0:08:26.500
+Jusqu'à présent c’était des petites choses comme configurer le problème.
+
+0:08:26.500,0:08:31.720
+Ici c'est mon scénario réel. J’ai 7 caméras fixées au sommet
+
+0:08:31.720,0:08:39.940
+d'un bâtiment de 30 étages faisant face au segment « interstate » du
+
+0:08:39.940,0:08:44.000
+réseau routier. Donc ici ces caméras enregistrent les voitures.
+
+0:08:44.000,0:08:48.340
+La première partie est de fixer la perspective de sorte que je puisse avoir
+
+0:08:48.340,0:08:53.500
+comme une vue de hauteur. De plus ici on extrait quelques boîtes
+
+0:08:53.500,0:08:57.940
+de contour pour chaque véhicule. Donc il y a une détection,
+
+0:08:57.940,0:09:01.480
+une régression de la détection pour déterminer la taille de
+
+0:09:01.480,0:09:05.960
+ces boîtes et puis un suivi/tracking car ces boites suivent mes voitures.
+
+0:09:05.960,0:09:10.210
+Vous pouvez voir ici le camion rouge sur la gauche
+
+0:09:10.210,0:09:22.530
+ou encore ce pick-up rouge sur les deux vues de la caméra jusqu'à une seule vue. 
+
+0:09:23.290,0:09:31.140
+Ici je peux donner ces voitures à mon programme Python, mon émulateur de jeu,
+
+0:09:31.140,0:09:36.340
+et peux dessiner cette représentation. Dans ce cas, vous pouvez encore voir 
+
+0:09:36.340,0:09:41.980
+le camion rouge et le pick-up. Et ensuite le bus à droite.
+
+0:09:41.980,0:09:48.460
+Donc ici pour chaque véhicule en cyan j'ai deux vecteurs.
+
+0:09:48.460,0:09:53.320
+Le vecteur pₜ  qui représente la position du véhicule.
+
+0:09:53.320, 0:10:02.589
+Le vₜ  est la vitesse, c'est-à-dire le vecteur représentant la composante vₓ et vy.
+
+0:10:02.589,0:10:08.470
+Et de plus, étant donné que je sais quelle est la cinématique de la conduite d'une voiture ou d'un vélo,
+
+0:10:08.470,0:10:14.170
+je peux inverser la cinématique de ces voitures qui sont conduites par des experts.
+
+0:10:14.170,0:10:20.769
+Je peux déterminer quelles sont les actions du conducteur.
+
+0:10:20.769,0:10:26.800
+Au sens que si la voiture se déplace avec un mouvement uniforme,
+
+0:10:26.800,0:10:32.950
+vous n'avez aucune d'action. Donc si vous n'appliquez aucune accélération
+
+0:10:32.950,0:10:38.010
+longitudinale ou transversale , la voiture continue de rouler.
+
+0:10:38.010,0:10:43.290
+Donc si vous avez un mouvement rectiligne uniforme, il n'y a pas d'action. A chaque fois que vous essayez
+
+0:10:43.290,0:10:48.459
+de vous écarter de ce mouvement, par exemple en accélérant, freinant ou 
+
+0:10:48.459,0:10:54.870
+changeant de voie, vous avez une action évoluant. Vous pouvez inverser
+
+0:10:54.870,0:11:02.079
+le modèle cinématique afin de déterminer ce qu’est l'action.
+
+0:11:02.079,0:11:06.089
+Ici dans cette représentation, la chose que j'appelle « machine
+
+0:11:06.089,0:11:11.620
+représentation », j’ai à nouveau les mêmes véhicules : le camion, le pick-up
+
+0:11:11.620,0:11:17.920
+le bus sur le côté droit. Donc dans ce cas, chaque véhicule a une boîte
+
+0:11:17.920,0:11:24.220
+qui représente ma zone de visionnement. Donc chaque véhicule ne peut voir
+
+0:11:24.220,0:11:30.190
+la boîte autour de lui-même. Par exemple ici je peux extraire la première boîte 
+
+0:11:30.190,0:11:35.470
+où je me remplace au centre et je me déplace sur le canal bleu.
+
+0:11:35.470,0:11:42.220
+Comme si je me rendais différent des autres.
+
+0:11:42.220,0:11:45.430
+Le canal rouge représente la voie et le canal vert représente
+
+0:11:45.430,0:11:51.579
+les autres véhicules. Vous avez un autre gars ici, celui-ci,
+
+0:11:51.579,0:11:59.649
+celui-là et le dernier là. Ici vous pouvez voir à nouveau le pick-up,
+
+0:11:59.649,0:12:04.000
+le camion rouge et puis ici vous avez un morceau du bus.
+
+0:12:04.000,0:12:08.660
+Donc ce sont mes images iₜ, les observations.
+
+0:12:08.660,0:12:13.880
+Elles représentant deux choses : l'état des voies de la rue et
+
+0:12:13.880,0:12:16.850
+la représentation de la situation du trafic m'entourant.
+
+0:12:16.850,0:12:24.020
+Donc l'ensemble est composé de pₜ la position,
+
+0:12:24.020,0:12:30.830
+vₜ  la vitesse, et iₜ  cette observation représentent mon état sₜ.
+
+0:12:30.830,0:12:37.310
+Donc sₜ  représente l'état actuel à un moment précis t pour mon véhicule.
+
+0:12:37.310,0:12:44.690
+Des questions jusqu'à présent ? Où est-ce clair ? Je veux dire que nous avons déjà vu
+
+0:12:44.690,0:12:48.860
+tout ça la semaine dernière et viens juste de vous donner comme un aperçu
+
+0:12:48.860,0:12:53.750
+du jeu de données spécifique. Il n'y a donc pas de nouveau concept jusqu'à présent. Donc c’est clair ?
+
+0:12:53.750,0:12:59.570
+Oui ? Non ? Vous êtes très silencieux aujourd'hui.
+
+0:12:59.570,0:13:07.490
+Peut-être que mon audio n’est pas activé (rires]. Vous n’écrivez pas dans le chat donc je suppose que c’est ok.
+
+0:13:07.490,0:13:13.130
+[Chat : oui c'est clair] Ok merci cool. Donc le coût. Nous avons défini avant,
+
+0:13:13.130,0:13:18.800
+nous avons dit avant que mon coût est une fonction de mon état. Donc voyons comment
+
+0:13:18.800,0:13:23.120
+calculer ce coût. Il y a deux coûts différents : un coût de voie
+
+0:13:23.120,0:13:35.110
+qui me dit en gros si je suis à l’intérieur de la voie ou si je sors de la voie.
+
+0:13:35.230,0:13:41.480
+L’autre me dit à quel point je suis proche d'autres véhicules.
+
+0:13:41.480,0:13:46.880
+Le premier ressemble à ceci. Sur mon axe des y… Donc l'axe des x est la direction du
+
+0:13:46.880,0:13:52.760
+mouvement. L'axe des y est celui qui est à 90 degrés sur la gauche.
+
+0:13:52.760,0:13:57.680
+Vous pouvez penser à avoir un potentiel qui est comme une maison au-dessus de vous.
+
+0:13:57.680,0:14:03.500
+Si vous superposez ceci avec le canal rouge, il y a une intersection sur
+
+0:14:03.500,0:14:08.570
+le côté gauche. Cette intersection, la hauteur de cette intersection,
+
+0:14:08.570,0:14:13.520
+va à 0 si vous êtes exactement au centre des deux voies. Si vous êtes décalé
+
+0:14:13.520,0:14:18.050
+sur un côté, vous allez avoir une intersection non nulle. Et si vous êtes
+
+0:14:18.050,0:14:24.040
+exactement en haut de la voie, vous obtenez la valeur sur le haut de ce triangle.
+
+0:14:24.040,,0:14:31.000
+De l'autre côté vous avez le coût de proximité. Donc j'ai exactement le même mais pour les autres véhicules.
+
+0:14:31.000,0:14:35.880
+Donc dans ce cas, j'ai un potentiel transversal.
+
+0:14:35.880,0:14:43.509
+J'ai un potentiel longitudinal qui change la longueur avec la vitesse.
+
+0:14:43.509,0:14:48.790
+Donc plus je vais vite et plus j'aimerais regarder devant et derrière moi.
+
+0:14:48.790,0:14:54.550
+Et plus vais lentement, moins je ne me soucie vraiment des choses
+
+0:14:54.550,0:14:58.720
+qui sont au loin. Je regarde juste près de moi. Donc on branche ces
+
+0:14:58.720,0:15:03.250
+deux choses dans mon environnement. Vous pouvez voir maintenant qu'il y a une Intersection.
+
+0:15:03.250,0:15:08.860
+Par exemple ici, c’est assez élevé pour le violet car nous sommes
+
+0:15:08.860,0:15:14.530
+exactement devant nous, mais l'orange est assez bas car plus loin au loin.
+
+0:15:14.530,0:15:19.000
+Donc vous pouvez faire simplement la multiplication des deux
+
+0:15:19.000,0:15:26.740
+et obtenir ce qu’est mon coût de proximité actuel.
+
+0:15:26.740,0:15:32.980
+Maintenant, je peux vous montrer par exemple une situation où nous allons à 20 km/h.
+
+0:15:32.980,0:15:37.610
+Vous avez tous ces véhicules qui sont très proches les uns des autres.
+
+0:15:37.610,0:15:40.209
+Et puis si vous allez à 50 km/h, en moyenne,
+
+0:15:40.209,0:15:44.980
+chacun est un peu plus éloigné. Donc si vous multipliez ce potentiel qui est sur
+
+0:15:44.980,0:15:49.870
+le y et l'autre qui est sur le x, vous obtenez quelque chose qui ressemble à ça.
+
+0:15:49.870,0:15:55.060
+Dans le cas où nous allons à une vitesse plus élevée, vous pouvez obtenir quelque chose
+
+0:15:55.060,0:15:58.839
+comme ceci car l'extension dans la direction x dépend de la vitesse.
+
+0:15:58.839,0:16:05.230
+Et vous pouvez dire que celui de droite est plus loin devant et derrière.
+
+0:16:05.230,0:16:13.480
+Comment obtenir ce coût final ? Pour mon coût final en ce moment,
+
+0:16:13.480,0:16:19.060
+celui que nous avons publié dans le papier, nous avons juste multiplié ce masque de potentiel
+
+0:16:19.060,0:16:24.130
+avec le canal vert. Puis nous choisissons le maximum. En gros, nous trouvons
+
+0:16:24.130,0:16:29.889
+quelle est la voiture / la partie la plus proche de nous appartenant à
+
+0:16:29.889,0:16:34.960
+un autre objet. Donc, si vous faites une multiplication par éléments de
+
+0:16:34.960,0:16:39.880
+ces deux gars et puis prenez le maximum, vous obtenez un nombre. La partie cool est
+
+0:16:39.880,0:16:45.520
+que c’est différenciable. Donc vous pouvez exécuter les gradients à travers le réseau
+
+0:16:45.520,0:16:51.400
+donc vous pouvez calculer certaines actions de telle sorte que cette 
+
+0:16:51.400,0:16:59.020
+valeur globale est réduite à 0. Donc vous évitez les collisions.
+
+0:16:59.020,0:17:04.270
+Donc laissez-moi vous donner les grandes lignes de la leçon d'aujourd'hui. 
+
+0:17:04.270,0:17:09.520
+Nous avons d'abord dit que nous devions apprendre à imiter le monde. Donc c’était assez
+
+0:17:09.520,0:17:15.040
+abstrait jusqu'à présent, nous pouvons maintenant commencer à concrétiser  les outils et les informations.
+
+0:17:15.040,0:17:20.500
+Donc nous voulons d'abord apprendre et imiter le monde réel. Puis nous voulons utiliser
+
+0:17:20.500,0:17:27.220
+le modèle appris de l'environnement afin d’entraîner cet agent
+
+0:17:27.220,0:17:34.030
+en réfléchissant sur la façon de conduire. Donc d’abord on apprend comment les autres véhicules
+
+0:17:34.030,0:17:38.710
+se comporte dans le monde réel. Deuxième partie, étant donné que vous avez une compréhension de
+
+0:17:38.710,0:17:43.540
+comment les autres personnes interagissent, vous essayez de penser à ce qui arriverait si vous 
+
+0:17:43.540,0:17:49.810
+effectuez telle action dans telle condition. Enfin nous pouvons comprendre
+
+0:17:49.810,0:17:55.690
+ce qui est une belle façon d'évaluer, une façon possible d'évaluer, cette politique
+
+0:17:55.690,0:18:00.970
+dans le monde réel. Donc une fois que vous avez réfléchi à la façon de conduire, 
+
+0:18:00.970,0:18:07.690
+imaginez conduire en toute sérénité. Commençons avec la première partie :
+
+0:18:07.690,0:18:14.000
+modèle du monde prédisant ce qui va arriver compte tenu de l'histoire et de l'action.
+
+0:18:14.000,0:18:18.760
+C’est quelque chose que vous avez déjà vu il y a quelques leçons, mais laissez-moi vous donner
+
+0:18:18.760,0:18:26.310
+encore une fois une vue complète. Nous avons un modèle du monde qui est alimenté par
+
+0:18:26.310,0:18:32.020
+s1:t qui est une séquence d'états. Chaque état représenté par un vecteur
+
+0:18:32.020,0:18:37.780
+de position pₜ, un vecteur de vitesse en vₜ  et ces images de contexte iₜ
+
+0:18:37.780,0:18:42.850
+ces observations. C’est donc un ensemble de choses. Bien sûr comme vous pouvez vous en rendre compte
+
+0:18:42.850,0:18:50.710
+il y a différentes branches d'entrée dans votre réseau car il existe différents types de données.
+
+0:18:50.710,0:18:56.000
+Une est un vecteur en 4D et l'autre est une image. Donc vous aimeriez utiliser un ConvNet.
+
+0:18:56.000,0:19:00.820
+De plus, ce modèle du monde obtient une action et il produit
+
+0:19:00.820,0:19:06.220
+une prédiction pour la prochaine action. De l'autre côté vous avez le
+
+0:19:06.220,0:19:10.780
+vrai monde qui vous dit ce qui arrive. Donc c'est une cible.
+
+0:19:10.780,0:19:16.970
+Donc comment entraîner ce truc ? Comme nous l'avons dit c'est juste un problème de régression
+
+0:19:16.970,0:19:22.840
+donc nous entraînons juste avec MSE. Nous avons une séquence d’états
+
+0:19:22.840,0:19:29.350
+et une action. Nous fournissons cela à ce module de prédiction. Celui-ci me donne
+
+0:19:29.350,0:19:34.550
+une sorte de représentation cachée du futur.
+
+0:19:34.550,0:19:40.450
+Puis j’ai un décodeur qui décode cette représentation cachée du futur.
+
+0:19:40.450,0:19:45.360
+Et celui-ci devrait me donner une prédiction. Donc c'est direct.
+
+0:19:45.360,0:19:49.960
+Vous avez un prédicteur qui prédit le passé en
+
+0:19:49.960,0:19:53.559
+la représentation cachée du futur. Le décodeur décode la
+
+0:19:53.559,0:20:00.700
+représentation cachée du futur dans le futur réel. Donc nous avons des 
+
+0:20:00.700,0:20:05.200
+cibles de l'autre côté. Tout ce dont vous avez besoin est d'avoir ça
+
+0:20:05.200,0:20:12.010
+allant dans une MSE. Vous minimisez la MSE en entraînant ces deux modules. 
+
+0:20:12.010,0:20:19.380
+[Chat : quelle est l'action ici ?] L'action est par exemple l'accélération,
+
+0:20:19.380,0:20:25.059
+et la commande de direction que nous avons observée dans notre jeu de données.
+
+0:20:25.059,0:20:30.730
+Donc mon état s1:t est une séquence d'observations, de positions,
+
+0:20:30.730,0:20:35.530
+de vitesses et d’images de contexte. L'action est l’action prise par
+
+0:20:35.530,0:20:41.030
+le conducteur que j'ai obtenu en inversant le modèle cinématique de la voiture.
+
+0:20:41.030,0:20:48.670
+pₜ  est la position de la voiture et vₜ  est la vitesse de la voiture. Donc vous avez une position,
+
+0:20:48.670,0:20:57.190
+la vitesse, et aₜ  est l'accélération. Donc pₜ, une position (x,y), vₜ  une vitesse (x,y),
+
+0:20:57.190,0:21:05.440
+aₜ  une accélération (x,y). [Chat : est-ce préférable d'ajouter le
+
+0:21:05.440,0:21:11.289
+décodeur au lieu d'utiliser simplement un prédicteur pour améliorer la précision ?]
+
+0:21:11.289,0:21:19.480
+Le prédicteur prédit ce que sera l'état caché du futur.
+
+0:21:19.480,0:21:24.190
+Le prédicteur récupère le passé, le comprime et essaie de vous donner
+
+0:21:24.190,0:21:29.169
+la représentation cachée future. Donc vous avez ce code et
+
+0:21:29.169,0:21:33.340
+aimeriez le décoder. C'est juste un réseau neuronal mais nous
+
+0:21:33.340,0:21:43.779
+aimons les séparer en blocs. [Chat : donc l'action à aₜ est calculée
+
+0:21:43.779,0:21:52.000
+de st+1 ?] Ces actions sont celles de la vérité du terrain.
+
+0:21:52.000,0:21:58.619
+[Chat : comment avoir les vrais sₜ ?]
+
+0:21:58.619,0:22:05.200
+Les vrais sₜ je vous les ai montrés avant. La caméra vérifie les voitures
+
+0:22:05.200,0:22:10.029
+sur l'autoroute. Je reçois les boites de délimitation et les suis.
+
+0:22:10.029,0:22:16.450
+J'ai donc toutes les positions x et y au fil du temps.
+
+0:22:16.450,0:22:22.659
+Ce sont les positions pₜ. Vous pouvez aussi calculer la vitesse : 
+
+0:22:22.659,0:22:27.879
+la position au temps t+1 moins la position au temps t divisé par le temps. 
+
+0:22:27.879,0:22:33.759
+[Chat : je suis encore un peu confus sur le rôle du décodeur,
+
+0:22:33.759,0:22:38.230
+il ne fait que convertir la représentation vectorielle du futur du
+
+0:22:38.230,0:22:41.169
+prédicteur en les prédictions réelles du monde réel ?] Oui c'est exact.
+
+0:22:41.169,0:22:49.090
+Donc le décodeur est comme la sémantique, la subdivision, C'est juste un réseau de neurones
+
+0:22:49.090,0:22:53.769
+et vous pouvez penser que le réseau neuronal a un encodeur et un
+
+0:22:53.769,0:22:58.119
+décodeur tout le temps. Vous pouvez décider où vous voulez avoir la
+
+0:22:58.119,0:23:04.090
+Représentation cachée. [Chat : comment déterminer la dimensionnalité de la
+
+0:23:04.090,0:23:10.000
+sortie de fpred ?] Cela dépend de votre réseau. Donc quel que soit votre réseau sort.
+
+0:23:10.000,0:23:14.000
+Dans mon cas, je pense que c’est un vecteur en 128 dimensions.
+
+0:23:14.000,0:23:22.310
+[Chat : pour sₜ puisqu'un nombre variable de voitures entourent notre agent…]
+
+0:23:22.310,0:23:27.360
+Ok, c'est une bonne question : la taille de la variable sₜ. 
+
+0:23:27.360,0:23:35.610
+sₜ  représente la position et la vélocité de moi-même. J'ai alors une image
+
+0:23:35.610,0:23:42.330
+qui me montre la grille d'occupation, me montre ce qu’est l'environnement.
+
+0:23:42.330,0:23:49.009
+Donc je vous montre ici. C’est mon image iₜ  qui représente la configuration
+
+0:23:49.009,0:23:53.909
+des voies de la rue et quelle est la configuration des véhicules.
+
+0:23:53.909,0:23:57.809
+Vous avez un nombre différent de véhicules entre l'image
+
+0:23:57.809,0:24:01.649
+de gauche et l'image de droite. Néanmoins, une image peut montrer
+
+0:24:01.649,0:24:07.950
+n'importe quel nombre de véhicules. C'est une façon très mignonne d'utiliser des images juste pour
+
+0:24:07.950,0:24:15.359
+le fait que je n'ai pas besoin d'avoir un ensemble de longueurs variables de choses.
+
+0:24:15.359,0:24:19.889
+Sinon, vous auriez dû utiliser une sorte d'attention ou de ressources
+
+0:24:19.889,0:24:24.929
+réseau ou d’autres choses astucieuses. Vous pouvez utiliser les images
+
+0:24:24.929,0:24:29.519
+comme moyen de représenter des informations. Ce ne sont pas des images naturelles.
+
+0:24:29.519,0:24:34.409
+Il s’agit d’images complètement synthétiques. Mais je peux les utiliser pour
+
+0:24:34.409,0:24:40.590
+faire face au fait que j'ai un nombre différent d'objets à proximité de moi. 
+
+0:24:40.590,0:24:45.889
+Je crois que j’ai répondu à tout le monde. [Chat : c'est une grille de booléens ?]
+
+0:24:50.330,0:24:56.600
+Oui c’en est une. Donc mon image a RVB et chaque canal est 0 ou 1.
+
+0:24:56.600,0:25:02.059
+Dans ce cas, vous pouvez voir les pixels et ils sont un peu flous
+
+0:25:02.059,0:25:09.200
+car il y a comme un échantillonnage linéaire.
+
+0:25:09.200,0:25:15.200
+Laissez-moi réfléchir. Oui je pense qu'il y a quelque chose comme ça.
+
+0:25:15.200,0:25:23.269
+Mais oui cela devrait être une grille booléenne, c'est correct. Je pense qu'ici nous faisons 
+
+0:25:23.269,0:25:26.480
+du sous-échantillonnage. Donc ces images sont en fait
+
+0:25:26.480,0:25:31.190
+sont plus grandes et binaires. Mais elles sont trop grandes,
+
+0:25:31.190,0:25:37.340
+alors nous les faisons quatrième. En faisant la réduction
+
+0:25:37.340,0:25:40.880
+elles commencent à être un peu floues. Sinon, si vous avez un quarteron
+
+0:25:40.880,0:25:45.830
+vous allez avoir un genre d'escalier.
+
+0:25:45.830,0:25:52.750
+Au contraire, si vous avez ce genre de version floue, ce n'est pas un escalier.
+
+0:25:52.750,0:26:01.159
+Ok trop de questions. [Chat : avec une fonction de coût différenciable 
+
+0:26:01.159,0:26:06.200
+rétropropageons nous à partir de la fin de la trajectoire jusqu'au début ?]
+
+0:26:06.200,0:26:10.039
+Oui bien sûr, nous allons voir cela dans la deuxième partie.
+
+0:26:10.039,0:26:17.630
+Ceci est la première partie où j'entraîne un réseau de régression, c’est le premier modèle.
+
+0:26:17.630,0:26:22.399
+Donc vous avez comme un encodeur-décodeur qui n'en est pas un car c’est un prédicteur.
+
+0:26:22.399,0:26:27.710
+Un prédicteur-décodeur. Juste du simple fait que les choses à gauche
+
+0:26:27.710,0:26:30.769
+viennent du passé. C'est pourquoi vous avez besoin d'un prédicteur qui
+
+0:26:30.769,0:26:35.929
+vous donne la prochaine chose. Mais sinon vous pouvez penser à un encodeur
+
+0:26:35.929,0:26:41.680
+mais ce n'est pas une façon correcte de penser. C’est juste similaire.
+
+0:26:41.680,0:26:45.600
+Donc sur le côté gauche vous avez l'avenir réel, la chose
+
+0:26:45.600,0:26:50.610
+qui s'est réellement passée. Sur la droite, vous obtenez le prédicteur décodeur déterminisme,
+
+0:26:50.610,0:26:54.610
+le réseau que je viens de vous montrer, entraîné avec la MSE afin de
+
+0:26:54.610,0:26:58.200
+reproduire la chose à gauche. Cela vient du jeu de test.
+
+0:26:58.200,0:27:03.410
+Et cela a été entraîné sur le jeu d’entraînement. Donc en haut à droite vous allez voir les images.
+
+0:27:03.410,0:27:07.240
+Vous en avez 10 par seconde et la direction du mouvement est vers l’avant.
+
+0:27:07.240,0:27:11.710
+Le gars bleu c’est nous et les gars verts sont les autres.
+
+0:27:11.710,0:27:20.340
+Les rouges étant les voies. Vous pouvez voir ici qu'après 3s, 4s, 5s,
+
+0:27:20.340,0:27:28.830
+tout devient très n’importe quoi, rien ne marche.
+
+0:27:28.830,0:27:34.990
+Je viens de vous apprendre quelque chose qui ne marche pas. A quel point êtes-vous contents ?
+
+0:27:34.990,0:27:39.880
+Vous êtes content ? Non. Je ne peux pas entendre mais merci pour le non.
+
+0:27:39.880,0:27:46.600
+Pas contents, ok. Donc ce que se passe-t-il ?
+
+0:27:46.600,0:27:56.760
+Vous devriez savoir ce qui se passe car Yann parle de ce sujet depuis trois semaines, alors quel est le problème ?
+
+0:27:57.000,0:28:02.290
+[Chat : les variables latentes] Ok, ça c’est la solution mais quel est le problème ?
+
+0:28:02.290,0:28:09.370
+[Chat : la perte MSE] Oh ok quelqu’un a donné la réponse.
+
+0:28:09.370,0:28:14.350
+LM. Qui est LM ? Je ne sais pas. [LM : cela moyenne les résultats futurs]
+
+0:28:14.350,0:28:21.400
+Oui. Quelqu'un a répondu, vous pouvez stopper. C'est en gros tout ce qui peut arriver
+
+0:28:21.400,0:28:26.800
+à partir de ce moment initial. Donc cela ressemble à ça.
+
+0:28:26.800,0:28:30.850
+Toutes les possibilités d'images ressemblent à une image floue.
+
+0:28:30.850,0:28:37.090
+Vous avez eu cet exemple de Yann. Si vous avez un crayon sur un plan
+
+0:28:37.090,0:28:41.260
+et comme je ne peux pas vraiment dessiner en 3D, je vous donne la vue depuis le haut.
+
+0:28:41.260,0:28:46.480
+Disons que vous le faites tomber : un fois, deux, trois, quatre,
+
+0:28:46.480,0:28:52.990
+Cinq, six, peu importe. Et si vous calculez la localisation
+
+0:28:52.990,0:28:59.260
+moyenne de la chute sur les coordonnées (x,y),
+
+0:28:59.260,0:29:04.990
+c’est comme si le stylo n’était jamais tombé. Et c'est vraiment mauvais.
+
+0:29:04.990,0:29:09.400
+Sinon, si vous utilisez un espace en pixels, vous avez une superposition.
+
+0:29:09.400,0:29:14.680
+Le problème est celui-ci. Vous avez de multiples futurs possibles
+
+0:29:14.680,0:29:22.570
+et vous essayez de régresser le futur moyen. Comment réparer ça ?
+
+0:29:22.570,0:29:28.290
+Vous me l’avez dit : avec une variable latente. Non, non, non, pas de L1, je veux une variable latente.
+
+0:29:28.290,0:29:40.560
+C'est les choses à base d'énergie qu’il aime beaucoup et aimons aussi car nous aimons Yann.
+
+0:29:44.890,0:29:52.120
+Donc en fait vous connaissez déjà tout ici. Donc voici le réseau original
+
+0:29:52.120,0:29:56.170
+que je viens de vous montrer et il ne marche pas. Réglons ça.
+
+0:29:56.170,0:29:59.770
+Au centre, nous allons sommer quelque chose :
+
+0:29:59.770,0:30:05.940
+une variable latente de faible dimension en vert, zₜ, qui passe par un 
+
+0:30:05.940,0:30:11.980
+module d'extension de telle sorte que la dimensionnalité de l’image match.
+
+0:30:11.980,0:30:17.260
+D'où vient zₜ  ? zₜ  est choisi
+
+0:30:17.260,0:30:22.840
+de telle sorte que la prédiction est minimisée, la MSE est minimisée
+
+0:30:22.840,0:30:27.700
+pour ce pic spécifique de la prédiction. Donc vous pouvez inférer. 
+
+0:30:27.700,0:30:31.480
+Vous entraînez tout… C'est déjà entraîné en fait car nous avons entraîné un
+
+0:30:31.480,0:30:35.230
+déterministe. Vous pouvez faire l'inférence de la variable latente telle
+
+0:30:35.230,0:30:40.540
+que vous pouvez toujours ramener la MSE à 0 en effectuant une descente de gradient
+
+0:30:40.540,0:30:43.110
+dans l’espace latent. Vous pouvez changer zₜ 
+
+0:30:43.110,0:30:48.120
+jusqu'à ce que la MSE meure. C'est très coûteux car vous avez faire une
+
+0:30:50.450,0:30:53.960
+descente de gradient dans chose ici. Sinon vous pouvez juste brancher
+
+0:30:53.960,0:30:58.160
+ça et avoir la prédiction de la latent. Comment faire cela ?
+
+0:30:58.160,0:31:02.390
+Avec un encodeur et voilà où il se trouve. Donc l'encodeur obtient
+
+0:31:02.390,0:31:10.360
+l'état futur et vous donne la moyenne et la variance à partir desquelles vous échantillonnez.
+
+0:31:10.360,0:31:15.740
+Qu'est-ce que c'est ? Le réseau prédictif variationnel. En fait c’est un
+
+0:31:15.740,0:31:21.050
+réseau prédictif conditionnel car vous partez d'une action aₜ.
+
+0:31:21.050,0:31:29.750
+Donc aₜ  est la condition. [Chat : est-ce conseillé d'aider la sortie donnée
+
+0:31:29.750,0:31:35.570
+à l’encodeur pour la variable latente pendant l’entraînement ou peu importe ?]
+
+0:31:35.570,0:31:39.890
+Oui c'est comme ça… Oui c'était la réponse. Vous n’êtes pas obligés.
+
+0:31:39.890,0:31:45.860
+C'est juste un moyen très pratique de faire ce zt. Je suppose dans le
+
+0:31:45.860,0:31:49.010
+practinum sur les modèles à base d'énergie, nous allons faire en premier
+
+0:31:49.010,0:31:53.130
+l'inférence. Mais l'inférence vous prend une éternité car chaque fois 
+
+0:31:53.130,0:31:56.420
+vous devez essayer un nouveau z là où vous commencez. [Chat : pourquoi y a
+
+0:31:56.420,0:32:02.320
+t-il une flèche de st+1 à fenc ?] Car, à moins que vous ne sachiez ce qui va se passer,
+
+0:32:08.539,0:32:14.749
+comment allez-vous trouver ce zₜ ? Donc zₜ est l'information manquante 
+
+0:32:14.749,0:32:18.979
+que vous ne pouvez pas avoir du passé car quelque chose s'est passé.
+
+0:32:18.979,0:32:24.589
+Par exemple si mon colocataire débarque nu : Oh ! Il ne fait pas ça d’habitude.
+
+0:32:24.589,0:32:29.749
+C'est une partie imprévisible. Ce n’est jamais arrivé avant. Heureusement.
+
+0:32:29.749,0:32:36.499
+Le fait est que, étant donné que je n'ai aucune idée de ce qui va arriver dans le futur.
+
+0:32:36.499,0:32:42.559
+Une météorite s'écrasant ici. Vous ne pouvez pas vraiment
+
+0:32:42.559,0:32:46.759
+prédire l'imprévisible, car vous ne savez pas ce qui se passer.
+
+0:32:46.759,0:32:51.169
+Donc pendant l’entraînement, je regarde dans le futur.
+
+0:32:51.169,0:32:56.169
+Qu’est-ce qui se passe ? Hum, je vois quelque chose. Je reçois des informations du futur
+
+0:32:59.169,0:33:01.039
+et à partir de celles-ci, je peux prédire la variable latente.
+
+0:33:01.039,0:33:06.009
+Quelqu'un va dire : « oh c’est de la triche ». Car on regarde le futur et
+
+0:33:06.009,0:33:12.229
+on ne l’a pas au moment du test. Au moment où vous conduisez vous n'avez pas
+
+0:33:12.229,0:33:16.489
+l'accès au futur. Mais comme vous entraînez, vous pouvez en quelque sorte tricher et
+
+0:33:16.489,0:33:23.029
+regardez ce qui s'est passé là-bas. Mais nous pouvons réparer ça. Comment ?
+
+0:33:23.029,0:33:28.190
+Donc c’est l'apostériori d'un auto-encodeur variationnel. Vous réparez de cette façon.
+
+0:33:28.190,0:33:34.969
+Vous forcez l’apostériori de l’encodeur à vous donner une distribution
+
+0:33:34.969,0:33:39.079
+aussi proche que possible de l’apriori via la divergence KL.
+
+0:33:39.079,0:33:48.349
+Donc dans ce cas, vous apprenez à prédire la signification de la variable zₜ.
+
+0:33:48.349,0:33:52.729
+C’est déconnecter aussi de ce genre de futur.
+
+0:33:52.729,0:34:05.960
+[Chat : je ne comprends pas vraiment la partie fexp] fexp signifie une expansion.
+
+0:34:05.960,0:34:11.370
+Donc zt est la latent pouvant être un vecteur en 16D, une très petite et
+
+0:34:11.370,0:34:17.400
+fpred peut facilement ressembler à une sorte d'information spatiale.
+
+0:34:17.400,0:34:22.710
+Donc étant donné que l'état est une image, cela passe dans un réseau
+
+0:34:22.710,0:34:26.190
+et rend le tout plus petit via le ConvNet et
+
+0:34:26.190,0:34:30.679
+ce sera toujours spatial. Cela ne s’effondre pas en un vecteur.
+
+0:34:30.679,0:34:37.500
+Donc fexp va étendre mon vecteur à 16 D en 16 plans
+
+0:34:37.500,0:34:44.070
+de la même taille de cette représentation cachée de fpred. Et donc je peux les additionner.
+
+0:34:44.070,0:34:47.520
+[Etudiant : pourriez-vous répéter comment vous mettez
+
+0:34:47.520,0:34:52.770
+la restriction sur le modèle pour ne pas regarder les états futurs ?]
+
+0:34:52.770,0:34:59.280
+En regardant seulement dans le futur, vous pouvez comprendre ce qui se passe.
+
+0:34:59.280,0:35:05.400
+Donc ce fenc est entraîné pour produire la variable latente qui minimise la MSE.
+
+0:35:05.400,0:35:11.100
+Donc ce n'est pas l’auto-encodeur variationnel et l'encodeur en haut
+
+0:35:11.100,0:35:17.040
+essaie de prédire la latente qui vous donne une erreur
+
+0:35:17.040,0:35:22.230
+de prédiction nulle. Mais d'un autre côté, vous forcez aussi cet encodeur
+
+0:35:22.230,0:35:28.140
+à vous donner quelque chose qui est proche de l’a priori p.
+
+0:35:28.140,0:35:33.000
+Donc il y a un terme KL entre l’apostériori Q et le p
+
+0:35:33.000,0:35:39.420
+vous permettant de prélever ultérieurement un échantillon de l’a priori lorsque
+
+0:35:39.420,0:35:43.590
+vous utilisez ce réseau. [Etudiant : donc, vous construisez une distribution a priori puis
+
+0:35:43.590,0:35:47.400
+pendant l'inférence / le test, au lieu de regarder l'état futur réel, 
+
+0:35:47.400,0:35:52.740
+vous indiquez échantillonnez à partir de la distribution [???] ?] Vous échantillonnez juste à partir
+
+0:35:52.740,0:35:55.860
+de la distribution a priori. Donc vous fixez un a priori
+
+0:35:55.860,0:35:59.700
+qui est une distribution normale et forcez l’encodeur à
+
+0:35:59.700,0:36:05.760
+s'en tenir à cet a priori. Ou vous pouvez même apprendre quelle est la distribution de
+
+0:36:05.760,0:36:09.480
+ces variables latentes. Vous pouvez faire beaucoup de choses. C'est ce qui 
+
+0:36:09.480,0:36:14.309
+nous a donner les meilleurs résultats. Vous forcez l’encodeur
+
+0:36:14.309,0:36:18.209
+à vous donner quelque chose qui ressemble à un a priori qui
+
+0:36:18.209,0:36:31.439
+est une gaussienne indépendante et de covariance une matrice identité. 
+
+0:36:31.670,0:36:41.279
+Donc plus tard nous allons juste échantillonner de cette distribution a priori pour avoir une latente qui semble raisonnable.
+
+0:36:41.279,0:36:45.069
+[Ok merci] Il y a beaucoup d'autres questions.
+
+0:36:45.069,0:36:53.869
+[Chat : comment la variable latente empêche le moyennage…]
+
+0:36:53.869,0:36:59.189
+Disons que nous entraînons la branche en bas, 
+
+0:36:59.189,0:37:03.539
+la partie déterministe. Donc à la fin, vous avez une prédiction
+
+0:37:03.539,0:37:12.279
+pour l'état futur qui ressemble à une moyenne des futurs possibles.
+
+0:37:12.279,0:37:18.959
+Pour un futur spécifique, en effectuant une descente en pente, vous pouvez minimiser cette MSE
+
+0:37:18.959,0:37:27.719
+en modifiant cette variable latente supplémentaire. C’est comment les modèles à variable latente fonctionnent.
+
+0:37:27.719,0:37:33.660
+Donc pour chaque échantillon d’entraînement, vous disposez d'une variable latente
+
+0:37:33.660,0:37:38.729
+ce qui vous donnera exactement une MSE nulle. Vous pouvez entraîner en premier lieu avec toutes
+
+0:37:38.729,0:37:43.359
+de telle sorte que vous pouvez obtenir un point de départ initial qui est la prédiction moyenne.
+
+0:37:43.359,0:37:46.890
+Puis vous pouvez affiner cette prédiction moyenne
+
+0:37:46.890,0:37:52.259
+en ajoutant cette variable latente supplémentaire. La valeur pour la
+
+0:37:52.259,0:37:56.789
+variable latente peut être trouvée par exemple en faisant une descente de gradient. 
+
+0:37:56.789,0:38:02.130
+C'est-à-dire que vous minimisez la MSE en faisant venir les gradients ici.
+
+0:38:02.130,0:38:06.839
+Ils viennent ici et puis vous obtenez des gradients là. Donc vous pouvez
+
+0:38:06.839,0:38:18.809
+faire z = z – η gradient de la perte par rapport à z.
+
+0:38:18.809,0:38:22.309
+Vous l’avez ? Ok, génial.
+
+0:38:23.619,0:38:27.109
+Ah non c’est quelqu'un d'autre qui disait avoir compris.
+
+0:38:27.109,0:38:31.789
+Quelqu'un avait une question avant… Oh non c'était la réponse.
+
+0:38:31.789,0:38:35.359
+[Chat : donc en gros nous ajoutons fpred,
+
+0:38:35.359,0:38:42.559
+notre prédiction de ce qui se passera, avec fexp la représentation de
+
+0:38:42.559,0:38:50.630
+ce qui se passe réellement…] Non. fexp n'est pas ce qui se passe réellement. fexp est ce que je ne peux pas
+
+0:38:50.630,0:38:59.059
+comprendre que cela se serait passé. Donc pour la sortie de fpred est
+
+0:38:59.059,0:39:04.519
+la meilleure prédiction de ce qui se passera demain, comme :
+
+0:39:04.519,0:39:12.739
+le soleil se lèvera. Cela pourrait ne pas être le cas, donc le z
+
+0:39:12.739,0:39:20.690
+venant de fexp ajoute cette composante qui vous permet de gérer/réparer
+
+0:39:20.690,0:39:27.979
+ma prédiction cassée. Donc la branche inférieure essaie de faire au mieux
+
+0:39:27.979,0:39:33.589
+sans avoir la connaissance du futur. Et l'autre me permet d'affiner
+
+0:39:33.589,0:39:38.029
+ma prédiction pour qu'elle soit réellement correcte. Mais dans ce cas, nous avons
+
+0:39:38.029,0:39:43.489
+accès au futur réel. Donc c'est une sorte de triche. Vous forcez néanmoins
+
+0:39:43.489,0:39:48.000
+cette génération de variable latente à être aussi proche que possible de
+
+0:39:48.000,0:39:52.479
+ma distribution a priori. J'espère que cela a plus de sens. Mais peut-être 
+
+0:39:56.480,0:40:02.000
+que nous pouvons aller plus loin et alors aurez l'esprit un peu plus clair.
+
+0:40:02.720,0:40:08.170
+Dernière question. [Chat : est-il garanti qu’il existe un z donnant une MSE nulle ?]
+
+0:40:08.170,0:40:13.550
+Je ne suis pas sûr à propos de garanties mais
+
+0:40:13.550,0:40:21.050
+si votre réseau se comporte raisonnablement bien, je suppose que oui.
+
+0:40:21.050,0:40:26.000
+Si la capacité de votre réseau surentraîne…
+
+0:40:26.000,0:40:34.490
+Mais vous ne pouvez pas surentraîner car les données sont bruyantes et que vous pouvez
+
+0:40:34.490,0:40:40.850
+réduire ce bruit à 0 en ajoutant ce terme supplémentaire. Donc c’est garanti si
+
+0:40:40.850,0:40:49.280
+le réseau est correctement dimensionné. Ok cool. Alors l’inférence : comment nous conduisons.
+
+0:40:49.280,0:40:55.670
+Nous avons déjà gâché. D’autres questions. [Chat : nous essayons d'apprendre q(z)
+
+0:40:55.670,0:41:03.710
+proche de l’a priori z… Temps du test] Ok j'y arrive.
+
+0:41:03.710,0:41:07.300
+Le temps de la conduite : comment utiliser ce truc ?
+
+0:41:07.300,0:41:11.000
+Prédiction variationnelle/conditionnelle : l'inférence.
+
+0:41:11.000,0:41:16.000
+Donc on a cette branche inférieure, cette variable latente dimensionnelle basse,
+
+0:41:16.000,0:41:21.440
+un vecteur 16D et d'où provient-il ? Nous échantillonnons de l’a priori
+
+0:41:21.440,0:41:26.600
+car nous exigeons que l'encodeur essaie de tirer vers cette distribution.
+
+0:41:26.600,0:41:32.870
+Cool. Que faites-vous ensuite ? Vous obtenez la prédiction,
+
+0:41:32.870,0:41:37.940
+la remettez à sa place et faites un pas autorégressif.
+
+0:41:37.940,0:41:43.000
+Vous obtenez alors la prédiction suivante. Et après ? Personne n’a écrit
+
+0:41:43.000,0:41:47.900
+mais je sais que vous avez compris. Donc vous continuez à nourrir ce truc. Est-ce que ça marche ?
+
+0:41:47.900,0:41:52.550
+Oui. Donc vous pouvez voir ici une comparaison entre le futur réel à gauche,
+
+0:41:52.550,0:41:56.390
+la branche déterministe qui n'est que la partie inférieure
+
+0:41:56.390,0:42:03.260
+comme auparavant et ici je vous donne quatre tirages différents d'une
+
+0:42:03.260,0:42:14.000
+distribution normale.
+
+0:42:14.000,0:42:21.440
+Donc vous avez 200 fois 4 donc 800 échantillons d'une distribution normale
+
+0:42:21.440,0:42:28.670
+de taille, je ne sais pas, 16. Et je donne les 200 premières valeurs
+
+0:42:28.670,0:42:33.530
+au premier modèle. Puis je recommence du même passé et donne
+
+0:42:33.530,0:42:39.890
+200 nouvelles valeurs à la latente. Puis la troisième fois :
+
+0:42:39.890,0:42:44.450
+la même condition initiale et donne cette séquence. Une autre
+
+0:42:44.450,0:42:50.360
+séquence de 200 variables. Faites attention ici à la voiture sur la
+
+0:42:50.360,0:42:53.810
+droite qui dans un cercle blanc et au gars
+
+0:42:53.810,0:42:59.710
+derrière qui est dans un carré. Vous voyez ici que
+
+0:42:59.710,0:43:03.710
+vous obtenez des prédictions différentes prédisant
+
+0:43:03.710,0:43:08.450
+un emplacement différent pour la voiture dans le cercle.
+
+0:43:08.450,0:43:12.500
+La voiture derrière dans le carré n’a pas non plus de prédiction arbitraire.
+
+0:43:12.500,0:43:22.000
+C’est super cool. Chacun de ces futurs possibles sont complètement imaginés par mon réseau.
+
+0:43:22.000,0:43:26.210
+Ce truc n'existe pas. Mais nous avons un réseau qui génère un futur.
+
+0:43:26.210,0:43:32.360
+A quel point c'est cool ? Donc avant nous avions une quantité limitée de
+
+0:43:32.360,0:43:39.360
+données d’entraînement. Maintenant nous disposons d'un réseau qui génère des futurs d’un chapeau comme un magicien.
+
+0:43:39.360,0:43:43.610
+Donc c'est super super cool. Vous avez une quantité infinie
+
+0:43:43.610,0:43:48.140
+de données qui sont complètement différentes de ce qu'elles sont dans le futur réel.
+
+0:43:48.140,0:43:52.880
+Ces données proviennent uniquement de données d'observation
+
+0:43:52.880,0:43:56.190
+que nous avons vu dans la réalité mais appliquées
+
+0:43:56.190,0:44:02.880
+à cette condition initiale spécifique. Donc vous pouvez maintenant utiliser
+
+0:44:02.880,0:44:08.910
+cette énorme quantité de données pour entraîner la politique, ce réseau permettant
+
+0:44:08.910,0:44:14.130
+de contrôler notre agent, de manière à ce qu'il minimise les pertes. Le coût
+
+0:44:14.130,0:44:25.470
+de franchir une de ces voies et le coût pour qu'il y a collision avec d'autres véhicules. 
+
+0:44:25.470,0:44:41.279
+La partie cool est que ce futur ici, ces multiples futurs proviennent de la séquence spécifique de la variable latente que vous donnez au réseau.
+
+0:44:41.279,0:44:49.500
+Que se passe-t-il si vous effectuez une ascension de gradient dans l'espace latent ?
+
+0:44:49.500,0:44:54.210
+Vous obtenez votre échantillon initial de la normale
+
+0:44:54.210,0:45:01.200
+puis vous ajustez cette valeur de manière à augmenter la dureté.
+
+0:45:05.460,0:45:09.029
+Vous augmentez la dureté. Par exemple vous essayez d'augmenter
+
+0:45:09.029,0:45:20.000
+le coût de proximité. Donc vous obtenez la séquence de latente où se trouvent les voitures kamikazes, celles qui vont vous rentrer dedans.
+
+0:45:20.000,0:45:24.960
+C'est super cool. Vous avez un réseau qui vous donne un futur que vous voulez.
+
+0:45:24.960,0:45:29.990
+Je suis trop excité, je ne pourrai pas dormir cette nuit.
+
+0:45:29.990,0:45:35.910
+Questions. [Chat : si nous essayons d’échantillonner z de p(z) pendant le test, est-ce
+
+0:45:35.910,0:45:41.640
+possible pour nous de chercher un futur spécifique ? Par exemple, je voudrais savoir
+
+0:45:41.640,0:45:50.430
+la solution consistant à tourner à gauche sans avancer]
+
+0:45:50.430,0:46:00.000
+Dans ce réseau prédictif, vous donnez l'action. C'est un réseau prédictif conditionnel. 
+
+0:46:00.000,0:46:03.940
+Donc nous avons l'action ici sur la partie du bas.
+
+0:46:03.940,0:46:08.110
+Vous pouvez prendre différentes actions et le futur tout entier changera en fonction de l’action prise.
+
+0:46:08.110,0:46:11.950
+Je mentionnais que nous avons un état initial,
+
+0:46:11.950,0:46:15.940
+et ensuite, compte tenu des différentes latentes, vous aurez
+
+0:46:15.940,0:46:19.690
+différents comportements des autres véhicules. Vous pouvez alors décider 
+
+0:46:19.690,0:46:24.790
+de modifier cette latente en faisant par exemple une montée de gradient dans l’espace latent
+
+0:46:24.790,0:46:29.500
+en augmentant le terme de collision, comme pour le cas des voitures folles venant sur vous.
+
+0:46:29.500,0:46:33.880
+Mais néanmoins, comme vous l'avez souligné ici, vous pouvez aussi comprendre
+
+0:46:33.880,0:46:42.530
+quels sont les résultats de la modification de l’action. C'est exactement comme ça que nous entraînons notre politique.
+
+0:46:42.530,0:46:54.600
+Les problèmes. Le premier. Etant donné que vous avez réellement accès au futur,
+
+0:46:54.600,0:47:00.310
+si vous tournez légèrement à gauche, tout va tourner à droite.
+
+0:47:00.310,0:47:12.400
+Car si vous conduisez, si je tourne à gauche, vous tournez juste à droite. 
+
+0:47:12.880,0:47:19.990
+Et tournez à droite va contribuer de manière importante à la MSE.
+
+0:47:19.990,0:47:26.020
+Donc vous avez en gros cette perte de MSE pouvant être minimisée si votre 
+
+0:47:26.020,0:47:31.000
+encodeur dans la variable latente dit à ma partie inférieure
+
+0:47:31.000,0:47:35.830
+que tout est tourné vers la droite. Mais ce n'est absolument pas ce que nous voulons.
+
+0:47:35.830,0:47:40.660
+Car nous savons comment dire que tout tourne à droite car
+
+0:47:40.660,0:47:44.950
+c'est déterministe. Etant donné le passé puisque j'ai tourné le volant
+
+0:47:44.950,0:47:49.330
+à gauche, tout tourne à droite. Je m’en fiche. Je ne veux pas regarder
+
+0:47:49.330,0:47:54.400
+dans le futur pour voir que tout tourne à droite indépendamment de ce que 
+
+0:47:54.400,0:47:59.200
+je fais avec mon volant. Donc c'est un très très gros problème
+
+0:47:59.200,0:48:03.970
+car le réseau apprend à bien tricher et se figure
+
+0:48:03.970,0:48:10.870
+que nous tournions sans dire au système que nous tournions.
+
+0:48:10.870,0:48:17.230
+Donc c'est terrible car au fond cette grosse flèche ici est une fuite d’informations
+
+0:48:17.230,0:48:23.410
+et donc n’est pas plus sensible à l'action en cours
+
+0:48:23.410,0:48:29.110
+donnée à mon prédicteur. C’est un très grand cauchemar.
+
+0:48:29.110,0:48:32.080
+Donc comment tuer cette grande flèche ?
+
+0:48:32.080,0:48:40.000
+Comment faire en sorte que mon réseau prédictif s'intéresse réellement à l'action que je mène ?
+
+0:48:40.000,0:48:46.450
+Laissez-moi vous montrer le problème ici. Donc nous avons ici la séquence réelle de la latente, 
+
+0:48:46.450,0:48:50.980
+celle que j'ai calculé en minimisant le MSE.
+
+0:48:50.980, 0:48:58.570
+Donc ici j'ai la séquence réelle de latente et la séquence réelle des actions qui sont prises par l'agent.
+
+0:48:58.570,0:49:01.830
+Donc ici j’ai accéléré le temps pour que vous puissiez voir.
+
+0:49:01.830,0:49:10.000
+Il y a une sorte de tournant. Vous pouvez voir des variables aléatoires
+
+0:49:10.000,0:49:18.910
+mais la véritable séquence d'action. Vous pouvez voir que les choses tournent.
+
+0:49:18.910,0:49:26.020
+Sur la dernière, vous avez la véritable séquence d'actions latentes mais échantillonnées.
+
+0:49:26.020,0:49:32.620
+Vous pouvez clairement voir, la dernière,
+
+0:49:33.080,0:49:40.640
+que le tournant vient surtout de la latente.
+
+0:49:40.640,0:49:47.990
+Donc la vraie latente encode la rotation. Et l'action qu'il est écrit avec un tilde
+
+0:49:47.990,0:49:53.840
+sont échantillonnées aléatoirement. Echantillonnées d'autres épisodes.
+
+0:49:53.840,0:49:58.000
+Le problème ici est que le fait que nous tournons…
+
+0:49:58.000,0:50:05.060
+[Chat : donc vous aimeriez apprendre cette chose, vous voudriez
+
+0:50:05.310,0:50:12.110
+rejeter le fait que nous tournions à droite]. Donc le fait que les
+
+0:50:12.110,0:50:16.790
+choses tournent devraient être complètement explicables par l'action.
+
+0:50:16.790,0:50:21.000
+Mais laissez-moi vous montrer comment on règle le problème.
+0:50:21.000,0:50:30.250
+[Etudiant : pouvez-vous expliquer encore une fois… ce n'était pas très clair quand vous parliez de premier et de dernier… ce à quoi ça réfère]
+
+0:50:30.250,0:50:40.580
+Ok, j'essaie à nouveau. Donc ici nous avons quatre rectangles différents. Dans le dernier à droite, vous avez la vraie séquence
+
+0:50:40.580,0:50:45.140
+de variables latentes qui sont les variables latentes qui me permettent
+
+0:50:45.140,0:50:51.470
+d’obtenir le futur exact. Donc ces variables latentes proviennent
+
+0:50:51.470,0:50:56.780
+de l’encodeur dans l’auto-encodeur variationnel. J’ai la séquence réelle
+
+0:50:56.780,0:50:59.900
+des actions entreprises par l'expert.
+
+0:50:59.900,0:51:05.750
+Les deux bleus, ici et ici [les deux du centre]
+
+0:51:05.750,0:51:11.240
+sont des variables latentes échantillonnées, le tilde signifie qu'elles
+
+0:51:11.240,0:51:15.380
+sont échantillonnés de manière aléatoire. Mais j'ai la véritable séquence d'actions.
+
+0:51:15.380,0:51:24.770
+Donc je m'attendais à voir la direction et la dernière à gauche j'ai la séquence réelle de latente mais j'ai des actions arbitraires.
+
+0:51:24.770,0:51:30.920
+Donc si je vous montre à nouveau l'animation, vous allez voir
+
+0:51:30.920,0:51:37.220
+ici qu'il faut un certain degré de direction évoluant.
+
+0:51:37.220,0:51:43.340
+La direction vient des actions. Sur les deux autres exemples que je vous montre ici,
+
+0:51:43.340,0:51:47.510
+les mêmes actions ne fournissent pas le même degré de direction.
+
+0:51:47.510,0:51:52.700
+J’ai échantillonné différentes variables. Néanmoins, si j'utilise exactement la
+
+0:51:52.700,0:51:57.470
+même variable latente, toute la direction se fait à cause de la variable latente.
+
+0:51:57.470,0:52:03.760
+Donc mon décodeur me dira dans mon réseau que les choses tournent juste
+
+0:52:03.760,0:52:08.450
+car elles sont encodées dans la variable latente plutôt que dans l’action.
+
+0:52:08.450,0:52:14.810
+Je pense que j'ai été clair mais
+
+0:52:15.640,0:52:19.810
+laissez-moi vous montrer comment nous réglons ce problème. Est-ce clair ce que
+
+0:52:19.810,0:52:24.250
+j'essaye de vous montrer ? [Oui, c'était beaucoup mieux] Ok merci.
+
+0:52:24.250,0:52:30.640
+Nous disons repetita iuvant en latin. La répétition aide. C'est pourquoi 
+
+0:52:30.640,0:52:35.860
+vous devez pratiquer beaucoup de fois. Ok alors comment résoudre le problème ? 
+
+0:52:35.860,0:52:45.940
+Le problème est que nous n'avons pas une fuite de mémoire mais une fuite d'information. Fuite provenant du futur. Alors comment réparer ça ?
+
+0:52:45.940,0:52:55.230
+Nous réglons ça en abandonnant simplement cette latente et la prélevant et l'échantillonnant de la distribution a priori au hasard.
+
+0:52:55.520,0:53:01.040
+Donc on ne s'appuie pas toujours sur la sortie du réseau apostériori de l'encodeur mais parfois,
+
+0:53:01.040,0:53:06.940
+nous choisissons à partir de l’a priori. De cette façon, vous ne pouvez 
+
+0:53:06.940,0:53:10.900
+plus encoder la rotation dans la variable latente car parfois elle
+
+0:53:10.900,0:53:16.270
+sera manquante. Donc le réseau devra exploiter
+
+0:53:16.270,0:53:22.060
+l'action que vous fournissez. Dans les deux cas en violet à droite
+
+0:53:22.060,0:53:27.190
+je vous montre deux ensembles différents de variables latentes mais les actions réelles.
+
+0:53:27.190,0:53:31.840
+Et ce réseau a été entraîné avec le dropout. Donc dans ces cas,
+
+0:53:31.840,0:53:36.430
+vous pouvez voir que la rotation est en fait encodée par l'action et non
+
+0:53:36.430,0:53:42.600
+plus par les variables latentes comme c'était le cas auparavant. Nous réglons donc ce problème.
+
+0:53:42.600,0:53:48.700
+Je pense que je devrais accélérer un peu car nous sommes en peu en retard.
+
+0:53:48.700,0:53:53.610
+Désolé, je ne l’avais pas remarqué.
+
+0:53:59.880,0:54:06.599
+Donc comment bien entraîner l'agent ? C'est à peu près ce que j'ai dit avant.
+
+0:54:06.599,0:54:11.430
+Sur la droite, nous apprenions jusqu'à présent le modèle du monde à partir
+
+0:54:11.430,0:54:16.019
+du monde réel. A gauche, vous allez entraîner cet agent
+
+0:54:16.019,0:54:23.819
+en utilisant ce modèle prédictif. Donc l'agent choisit un état initial :
+
+0:54:23.819,0:54:27.599
+une position, une vitesse et les images de contexte.
+
+0:54:27.599,0:54:33.029
+Il vous donne un contrôle et une action qui est l'accélération dans
+
+0:54:33.029,0:54:39.109
+la direction longitudinale et l'accélération dans la direction transversale.
+
+0:54:39.109,0:54:45.569
+Alors comment ça marche ? Voici comment on entraîne. On a un état. On le donne à une politique
+
+0:54:45.569,0:54:50.190
+et on obtient une action. Puis on donne les deux au modèle du monde.
+
+0:54:50.190,0:54:54.900
+Qu’est-ce que le modèle vous dit ? Que vous devez fournir une 
+
+0:54:54.900,0:55:00.619
+variable latente. Une certaine manière possible que l'avenir puisse évoluer.
+
+0:55:00.619,0:55:08.460
+Puis vous obtenez une prédiction. Cool. Vous donnez une prédiction à cette perte
+
+0:55:08.460,0:55:15.390
+qui est le coût de la tâche que j'essaie d'accomplir. Dans mon cas c’est
+
+0:55:15.390,0:55:19.170
+la somme du coût de proximité, celui qui me dit à quelle distance je
+
+0:55:19.170,0:55:24.359
+suis d'autres véhicules, plus le coût associé au faisceau au
+
+0:55:24.359,0:55:29.249
+centre de la voie. Donc j’ai l'état suivant et l'envoie à la politique
+
+0:55:29.249,0:55:34.019
+et je reçois l'action suivante. Je les donne les deux au modèle du monde,
+
+0:55:34.019,0:55:41.259
+je prends la variable latente et obtiens une nouvelle prédiction. Vous l'envoyez à la perte.
+
+0:55:41.259,0:55:47.069
+Et on recommence le processus [cf. l’écran].
+
+0:55:47.069,0:55:55.339
+Vous faites une rétropropagation pour entraîner le modèle politique et ça ne fonctionne pas !
+
+0:55:56.450,0:56:03.740
+Que s’est-il passé ? Nous sommes en fait en dehors de la surface.
+
+0:56:03.740,0:56:10.290
+La politique réussit à lancer ces actions et donner des prévisions qui sont
+
+0:56:10.290,0:56:19.050
+toutes noires. Toutes noires c’est donc un coût nul. Donc c'est mal.
+
+0:56:19.050,0:56:22.950
+Ici, nous sommes sortis de la route et ici, nous sommes entrés en collision avec
+
+0:56:22.950,0:56:27.780
+d'autres véhicules. Essayons d'imiter d'autres véhicules, alors comment faire ça ?
+
+0:56:27.780,0:56:38.609
+La perte va être la tâche que nous essayions d'accomplir plus un certain régulariseur expert.
+
+0:56:38.970,0:56:42.119
+Qu’est-ce que ce truc ? Alors ici vous essayez aussi d’avoir
+
+0:56:42.119,0:56:48.750
+la prédiction que vous obtiendriez en prenant une action spécifique,
+
+0:56:48.750,0:56:53.670
+aussi proche que possible de l'action future réelle. Donc vous faites ça
+
+0:56:53.670,0:56:58.380
+pour toutes. Mais dans ce cas, vous devez en quelque sorte supprimer cette
+
+0:56:58.380,0:57:03.180
+variable latente, car elle vous donne une prédiction spécifique.
+
+0:57:03.180,0:57:08.500
+Cela fonctionne mieux si vous vous contentez de travailler avec la prévision moyenne.
+
+0:57:08.500,0:57:13.730
+Entraîner l’auto-encodeur variationnel à la supprimer ? Est-ce que ça marche ? Oui
+
+0:57:13.730,0:57:18.420
+Il imite le travail des experts. Donc c'est une sorte d'apprentissage par imitation,
+
+0:57:18.420,0:57:23.099
+mais basé sur un modèle, je veux dire un apprentissage basé sur un modèle d’imitation.
+
+0:57:23.099,0:57:28.530
+Vous utilisez votre cerveau pour essayer d'imiter les autres. Pouvons-nous faire mieux ?
+
+0:57:28.530,0:57:33.990
+Oui nous le pouvons et ce sera la fin de la classe.
+
+0:57:33.990,0:57:38.330
+Comment pouvons-nous ajouter un autre type d'attracteur de surface dont je parle ici ?
+
+0:57:38.330,0:57:46.320
+Donc l'incertitude du modèle prévisionnel. Mon modèle prédictif produit une prédiction
+
+0:57:46.320,0:57:51.599
+étant donné un état et l'action. Puis j'ai mon coût ici.
+
+0:57:51.599,0:57:58.210
+Voici par exemple mon coût. Le point est que ce coût peut
+
+0:57:58.210,0:58:04.570
+aller de différents façons lorsque vous êtes en dehors de la région d’entraînement,
+
+0:58:04.570,0:58:08.380
+les points rouges. Donc si vous êtes dans les points rouges comme je vous l’ai montré dans
+
+0:58:08.380,0:58:13.180
+le practinum 3 quand nous avons fait la régression, si vous êtes dans cette
+
+0:58:13.180,0:58:17.619
+région d’entraînement, vous n'avez aucune variance sur ces points. Si vous vous éloignez
+
+0:58:17.619,0:58:24.430
+de ces régions d’entraînement, la variance augmente. Devinez quoi ? Cette variance
+
+0:58:24.430,0:58:31.660
+est différentiable. Donc essayons d’exécuter une descente de gradient
+
+0:58:31.660,0:58:39.150
+sur la variance. Donc vous minimisez la variance en utilisant SGD.
+
+0:58:39.150,0:58:46.330
+C'est donc mon régulariseur l'incertitude. J'ai donc ma politique qui
+
+0:58:46.330,0:58:52.180
+alimente mon action au modèle du monde. Vous obtenez cette variable latente
+
+0:58:52.180,0:58:57.700
+ici et une prédiction. Vous obtenez aussi le coût de la tâche ici qui est 
+
+0:58:57.700,0:59:03.270
+la minimisation du cout de la voie et du coût de proximité coût.
+
+0:59:03.270,0:59:08.440
+Vous pouvez obtenir plusieurs modèles ou utiliser le dropout.
+
+0:59:08.440,0:59:14.320
+Vous pouvez laisser le dropout pendant l’inférence de telle sorte que vous
+
+0:59:14.320,0:59:19.559
+pouvez avoir plusieurs prédictions. Et vous pouvez maintenant calculer la variance
+
+0:59:19.559,0:59:24.989
+de ces prédictions. Vous multipliez par une chose, un scalaire lambda.
+
+0:59:24.989,0:59:31.680
+C’est mon modèle avec régulariseur d'incertitude. Puis vous sommez les deux
+
+0:59:31.680,0:59:38.689
+et obtenez la perte finale à optimiser. Et c'est tout. Donc c’est le modèle entier
+
+0:59:38.689,0:59:42.390
+où la perte finale est ma ctask plus
+
+0:59:42.390,0:59:48.479
+cette incertitude. Dans la prochaine diapositive je vous donne les liens.
+
+0:59:48.479,0:59:54.059
+Donc ici je vous montre en rose comment ils ont réussi à apprendre
+
+0:59:54.059,0:59:58.380
+à conduire en minimisant l'incertitude du modèle prédictif.
+
+0:59:58.380,1:00:02.939
+Donc les actions prises par la politique minimisent l'incertitude du
+
+1:00:02.939,1:00:08.880
+réseau prédictif quand il fait des prédictions. C’est lourd mais ça
+
+1:00:08.880,1:00:14.109
+fonctionne très bien. L'évaluation. Je vais vous montrer ça très rapidement. 
+
+1:00:14.109,1:00:22.109
+En jaune, c’est la voiture d'origine et en bleue la voiture contrôlée par notre politique
+
+1:00:22.109,1:00:27.779
+qui est un peu perdue ici car l'autre gars a changé de voie.
+
+1:00:27.779,1:00:32.579
+Donc notre gars bleu ici doit survivre à cette jungle de voitures.
+
+1:00:32.579,1:00:37.589
+Dans le cas 2 nous sommes légèrement en avance, légèrement en retard, puis
+
+1:00:37.589,1:00:42.209
+on accélère beaucoup et nous avons survécu. Dans le cas 3 nous sommes toujours le bleu
+
+1:00:42.209,1:00:48.209
+et le gars en jaune est l’original dans les données et… Oh nous nous sommes
+
+1:00:48.209,1:00:53.099
+écartés de la trajectoire initiale, mais nous survivons jusqu'à la fin.
+
+1:00:53.099,1:01:00.599
+Et les diapositives mentionnées… Oh ok donc c'est comme un résumé de
+
+1:01:00.599,1:01:04.410
+l’apprentissage d’un modèle prédictif des politiques avec régularisation de l'incertitude
+
+1:01:04.410,1:01:10.349
+pour la conduite dans un trafic dense. Vous devriez avoir tout compris à présent.
+
+1:01:10.349,1:01:14.910
+Vous avez les quatre différents points qui sont
+
+1:01:14.910,1:01:19.890
+la régularisation de l'incertitude, de dropout de la latente, l'ensemble de données à grande échelle et
+
+1:01:19.890,1:01:26.900
+vous avez le coût supplémentaire pour essayer d'imiter les experts.
+
+1:01:26.900,1:01:32.210
+Informations. Donc voici les liens pour tout. Donc ceci est le titre, ça c’est moi.
+
+1:01:32.210,1:01:37.339
+Les auteurs principaux : Mikael et moi sommes tous les deux les premiers auteurs.
+
+1:01:37.339,1:01:43.190
+Les diapositives sont ici l'article est là. Le code est disponible sur
+
+1:01:43.190,1:01:50.779
+sur mon GitHub et ceci est un site web et nous avons aussi un poster.
+
+1:01:50.779,1:01:56.390
+Désolé d’avoir fini si tard, mais j'espère que vous avez vraiment apprécié 
+
+1:01:56.390,1:02:02.450
+notre petit projet. Je n’avais pas prévu qu’il y aurait tant de questions.
+
+1:02:02.450,1:02:07.839
+Il y a une autre explication de ce projet sur ma chaîne YouTube qui dure
+
+1:02:07.839,1:02:15.260
+une vingtaine de minutes. J'y ai peut-être fait un meilleur travail qu'aujourd'hui.
+
+1:02:15.260,1:02:20.630
+Mais j'en ai peut-être fait un meilleur aujourd'hui puisque je répondais à vos questions.
+
+1:02:20.630,1:02:26.480
+Donc s’il n’y a pas d'autres questions nous allons nous voir la semaine prochaine. Et encore si quelqu'un
+
+1:02:26.480,1:02:33.200
+peut aider à retranscrire le practinum de la semaine dernière, cela serait très utile.
+
+1:02:33.200,1:02:40.730
+Je n'ai aucune idée de la manière de gérer cela. [Chat : est-ce que le modèle
+
+1:02:40.730,1:02:44.720
+du monde a gelé lors de l’entraînement de l'agent ?] Oui comme nous l'avons vu la semaine dernière.
+
+1:02:44.720,1:02:49.670
+[Chat : avons-nous encore le temps de poser des questions ?] Bien sûr. [Etudiant : quand vous entraînez
+
+1:02:49.670,1:02:56.710
+le réseau, comme il s'agit en quelque sorte d'une architecture récurrente,
+
+1:02:56.710,1:03:06.789
+se préoccupe-t-on de la disparition des gradients et comment faire avec un tel modèle ?
+
+1:03:06.789,1:03:13.579
+Comment aborder cette question ?] Ce n’est pas aussi complexe.
+
+1:03:13.579,1:03:18.559
+C'est un réseau neuronal à deux couches, donc la politique est très stupide 
+
+1:03:18.559,1:03:24.980
+car minuscule. Le modèle du monde est un peu plus grand mais nous avons néanmoins 
+
+1:03:24.980,1:03:31.970
+la batch normalisation qui aide à envoyer les gradients.
+
+1:03:31.970,1:03:36.280
+Et je pense que nous avons aussi utilisé des connexions résiduelles
+
+1:03:36.280,1:03:40.869
+car ce sont des unités. Donc les gradients n’ont pas été
+
+1:03:40.869,1:03:48.940
+de gros problèmes pour l’entraînement de ce modèle. Nous faisons aussi 30 étapes temporelles dans le futur,
+
+1:03:48.940,1:03:53.020
+cela correspond à comme 3s dans le futur. Etant donné nous
+
+1:03:53.020,1:03:57.369
+partions de 2s dans le passé. Donc nous avons toujours une fenêtre 
+
+1:03:57.369,1:04:03.299
+temporelle de 5s pour l’entraînement du système. [Etudiant : je n'ai pas bien compris
+
+1:04:03.299,1:04:12.760
+quand nous faisons le dropout, comment cela fonctionne / comment cela aide ?
+
+1:04:12.760,1:04:18.039
+Je suppose que vous appelleriez cela comme un démêlage de l'action contre la latente]
+
+1:04:18.039,1:04:23.589
+Donc le problème était là. C’était le fait que nous avons accès au futur.
+
+1:04:23.589,1:04:29.650
+Si nous apportons un petit changement minime à mon volant,
+
+1:04:29.650,1:04:34.539
+tout va changer, ce qui est un changement très important.
+
+1:04:34.539,1:04:40.329
+Et pour minimiser la MSE, beaucoup d’informations vont de cette façon
+
+1:04:40.329,1:04:45.460
+car c'est un grand changement, un changement brutal.
+
+1:04:45.460,1:04:49.809
+Cette variable latente essaie de reconnaître
+
+1:04:49.809,1:04:55.569
+le fait que tout change alors que at vient de changer légèrement.
+
+1:04:55.569,1:05:00.490
+Car il ne s'agit que d'un petit changement du volant. 
+
+1:05:00.490,1:05:04.599
+Le problème est que si votre modèle prédictif 
+
+1:05:04.599,1:05:11.200
+ne regarde plus ce qu'est le volant, alors 
+
+1:05:11.200,1:05:15.849
+vous pouvez vous déplacer, mais le réseau ne se souciera pas de ce que vous contrôlez.
+
+1:05:15.849,1:05:20.380
+Vous souhaitez plutôt avoir un réseau qui, si vous vous dirigez vers la gauche
+
+1:05:20.380,1:05:27.039
+va vous dire que tout va dans à droite par le fait que vous vous dirigez vers la gauche.
+
+1:05:27.039,1:05:31.930
+Il faut donc démêler tout cela et pour réparer cela, ce qui
+
+1:05:31.930,1:05:37.869
+a très bien fonctionné, c'est ça. En gros la moitié du temps ou peut-être que nous avions un planificateur
+
+1:05:37.869,1:05:42.069
+que j'ai oublié…, mais parfois, au lieu d’échantillonner
+
+1:05:42.069,1:05:50.420
+la variable latente pendant l’entraînement de l’encodeur de votre auto-encodeur variationnel,
+
+1:05:47.420,1:05:59.960
+Vous échantillonnez simplement à partir de la distribution a priori. De cette façon, une rotation dans le futur
+
+1:05:59.960,1:06:05.680
+ne peut pas être expliquée par la variable latente. Donc il doit y avoir un 
+
+1:06:05.680,1:06:16.310
+chemin qui relie l'action à l'état futur. Donc si vous cassez cette flèche,
+
+1:06:16.310,1:06:20.360
+vous devez casser ce bras. Si j’échange l'un et l'autre
+
+1:06:20.360,1:06:24.890
+je brise cette flèche pour une fraction de l’itération.
+
+1:06:24.890,1:06:30.050
+Donc la flèche ne subsistera pas réellement car on ne peut l'utiliser
+
+1:06:30.050,1:06:34.730
+pour faire une prédiction. Parfois elle se produit parfois non.
+
+1:06:34.730,1:06:39.080
+Le réseau voit toujours cette action. Cette action va toujours être :
+
+1:06:39.080,1:06:44.090
+tourner à gauche, tourner à droite déterministiquement du fait que
+
+1:06:44.090,1:06:50.320
+vous tournez à gauche / à droite. [Etudiant : c'est une sorte de moyen de rendre le réseau…
+
+1:06:50.320,1:06:56.140
+comme voir l'action pendant l’entraînement] Oui c'était un gros problème.
+
+1:06:56.140,1:07:00.470
+Sans ça, il ne fonctionne car vous auriez un réseau qui ne porte pas du tout.
+
+1:07:00.470,1:07:05.030
+Quelque chose de faisable est de rendre adversaire des choses. 
+
+1:07:05.030,1:07:09.920
+Vous voulez obtenir un réseau qui va vous tuer
+
+1:07:09.920,1:07:14.960
+si l'avenir avait changé à cause de l'action ou non.
+
+1:07:14.960,1:07:19.700
+[Etudiant : la distribution a priori de la variable latente est identique à une gaussienne normale ?]. Oui.
+
+1:07:19.700,1:07:25.220
+[Ok très bien, cool merci beaucoup] Yann ne cesse de dire que nous prélevons de 0,
+
+1:07:25.220,1:07:30.530
+c’était la version précédente où nous n'avions même pas
+
+1:07:30.530,1:07:37.280
+un auto-encodeur variationnel et avions juste un encodeur qui encodait la moyenne.
+
+1:07:37.280,1:07:42.320
+Donc nous n'avions pas le module d’échantillonnage, nous n'avions pas la variance.
+
+1:07:42.320,1:07:46.890
+Nous avions un encodeur donnant juste cette latence. Donc c'était la version précédente :
+
+1:07:46.890,1:07:52.970
+pas d'échantillonnage, pas de V, juste fenc encodant ce type. Et donc parfois vous
+
+1:07:52.970,1:07:57.339
+l'obtenez de l'encodeur et parfois vous le prenez à partir de zéro.
+
+1:07:57.339,1:08:01.930
+Car nous avons entraîné cette première branche avec ce type qui n'était pas là.
+
+1:08:01.930,1:08:11.200
+Donc nous avons d'abord entraîné de façon déterministe qui est… ici.
+
+1:08:11.200,1:08:16.659
+Donc nous avons initialement entraîné, ce qui signifie qu'il faut mettre z à 0.
+
+1:08:16.659,1:08:21.369
+En faisant ça, vous obtenez ce truc déterministe. Donc en gros, chaque fois 
+
+1:08:21.369,1:08:26.980
+que vous faites du dropout, vous passez de la version déterministe à
+
+1:08:26.980,1:08:31.710
+la version stochastique du modèle prédictif.
+
+1:08:31.710,1:08:38.589
+Cela semble fou je pense mais vous devriez être capable de digérer ça
+
+1:08:38.589,1:08:46.390
+car vous êtes de bons étudiants [Etudiant : c’est intéressant, merci]
+
+1:08:46.390,1:08:52.660
+D’autres questions ? [Etudiant : je voudrais juste vérifier ma compréhension des
+
+1:08:52.660,1:08:57.310
+modèles à variables latentes. Il semble que différents modèles utilisent
+
+1:08:57.310,1:09:02.290
+des variables latentes pour différents objectifs comme l'auto-encodeur en utilise
+
+1:09:02.290,1:09:07.449
+pour apprendre une représentation de faible dimension. L'auto-encodeur
+
+1:09:07.449,1:09:11.770
+variationnel lui s'en inspire pour régulariser l'espace latent. Donc il
+
+1:09:11.770,1:09:18.069
+peut prélever au hasard dans l'espace latent. Puis les GANs et le modèle 
+
+1:09:18.069,1:09:24.370
+que nous venons d'étudier en utilisent pour introduire du hasard. Donc quand nous avons la même entrée
+
+1:09:24.370,1:09:33.120
+et des sorties différentes, le réseau ne doit pas produire une moyenne des prédictions.
+
+1:09:33.120,1:09:41.560
+Nous utilisons donc ici l'espace latent pour fournir plus de dimensionnalité à l’entrée,
+
+1:09:41.560,1:09:46.719
+pour introduire un caractère aléatoire dans l'entrée] Donc dans ce cas
+
+1:09:46.719,1:09:56.350
+nous avons cette variable latente pour rendre compte de ce qui ne peut pas être rendu compte du passé.
+
+1:09:56.350,1:10:02.080
+Le fait est que tout n'est pas prévisible et donc si vous ne pouvez pas
+
+1:10:02.080,1:10:06.130
+prévoir tout ce que vous allez faire, vous allez faire des erreurs. Cette variable latente
+
+1:10:06.130,1:10:11.550
+vous permet de régler votre algorithme de manière à ce que cette erreur soit nulle.
+
+1:10:11.550,1:10:16.120
+Et plus tard, vous pouvez échantillonner cette variable latente afin d’avoir
+
+1:10:16.120,1:10:19.179
+des prédictions propres. Donc sans la variable latente, vous obtenez une 
+
+1:10:19.179,1:10:25.660
+version masquée de la prédiction. Il s'agit plutôt d'une prédiction floue. 
+
+1:10:25.660,1:10:32.020
+Au lieu de ça, pour avoir des prédictions croustillantes vous voulez affiner votre prédiction moyenne au
+
+1:10:32.020,1:10:38.500
+cas spécifique que vous avez sous la main. [Etudiant : ok, donc il l'utilise essentiellement pour ajouter de
+
+1:10:38.500,1:10:41.860
+la dimensionnalité à l'entrée pour rendre les choses plus spécifiques]
+
+1:10:41.860,1:10:44.000
+Je ne dirais pas ça.
+
+1:10:44.000,1:10:48.850
+Je dirais que vous ajoutez des variables latentes afin de fournir les informations manquantes
+
+1:10:48.850,1:10:54.630
+qui seraient nécessaire pour que vous puissiez faire une prédiction correcte.
+
+1:10:54.630,1:11:03.360
+[Etudiant : ok, merci] D’autres questions ? Je sais qu’il est tard.
+
+1:11:03.360,1:11:13.860
+C'était un cours extrêmement long. Je suis désolé. Des questions ?
+
+1:11:13.860,1:11:18.730
+Je ne peux pas vous voir, je départage l’écran.
+
+1:11:18.730,1:11:28.990
+Oh 50 personnes sont encore là. Que voulez-vous savoir d'autre ?
+
+1:11:28.990,1:11:34.540
+[Etudiante : je voudrais aussi vérifier ma compréhension. Donc la variable latente nous dira quelque chose
+
+1:11:34.540,1:11:40.960
+que nous ne pouvons pas prévoir à partir du futur, mais vous venez de dire que si nous tournons à gauche,
+
+1:11:40.960,1:11:45.490
+tout serait à notre droite, mais vous ne voulez pas que z indique cette
+
+1:11:45.490,1:11:51.490
+information. Cette information vient seulement de notre action]
+
+1:11:51.490,1:11:56.290
+Exactement. Car si vous si vous tournez à gauche tout va tourner droite.
+
+1:11:56.290,1:11:59.650
+Si vous êtes à vélo et que vous faites comme ça
+
+1:11:59.650,1:12:04.660
+vous savez exactement comment vous allez évoluer. Vous ne savez pas
+
+1:12:04.660,1:12:08.350
+si vous allez vous écraser sur quelqu'un et cela sera pris en charge par la
+
+1:12:08.350,1:12:14.890
+variable latente qui va corriger votre mauvaise prédiction en raison
+
+1:12:14.890,1:12:20.740
+d'événements imprévus. Mais tout ce qui est prévisible devrait être
+
+1:12:20.740,1:12:25.300
+fait par la branche déterministe. Donc vous utilisez les informations passées pour
+
+1:12:25.300,1:12:28.450
+déterminer ce qui se passe ensuite. Mais vous ne pouvez pas vraiment savoir.
+
+1:12:28.450,1:12:35.560
+C’est comme si j’essaye de toucher la webcam ici mais il y a
+
+1:12:35.560,1:12:40.630
+un peu de vent venant de la fenêtre ouverte, alors je vais ici et ça va là,
+
+1:12:40.630,1:12:45.700
+je vais ici et ça va ici. Donc s'il y a un élément supplémentaire, c’est
+
+1:12:45.700,1:12:50.770
+comme si je bougeais la main. Je dois faire face à cela pour le cas spécifique.
+
+1:12:50.770,1:12:55.310
+Je ne peux aller ici que si je sais que mon doigt va avancer du
+
+1:12:55.310,1:13:00.190
+passé vers le futur exactement de cette façon. Mais s'il y a une entrée
+
+1:13:00.190,1:13:05.350
+supplémentaire qui n’est pas sous mon contrôle je ne serez pas capable
+
+1:13:05.350,1:13:11.470
+de faire des prévisions précises, à moins d’avoir des connaissances.
+
+1:13:11.470,1:13:16.630
+Revenons à l'exemple que Yann fait tout le temps avec le stylo.
+
+1:13:16.630,1:13:20.160
+Donc le stylo va tomber dans une direction… Laissez-moi en prendre un.
+
+1:13:20.160,1:13:25.570
+Si vous laissez tomber le stylo, il va tomber dans une direction, dans une autre,
+
+1:13:25.570,1:13:32.020
+dans une troisième direction, etc… Donc vous pouvez d'abord entraîner un 
+
+1:13:32.020,1:13:37.450
+gros réseau qui apprend la dynamique de la chute, comment un stylo tombe.
+
+1:13:37.450,1:13:42.970
+La seule petite information que vous ne pouvez pas savoir
+
+1:13:42.970,1:13:47.320
+à l'avance est dans quelle direction il va tomber. Donc vous allez
+
+1:13:47.320,1:13:54.700
+avoir le gros réseau apprenant la dynamique de chute et puis la dernière
+
+1:13:54.700,1:13:58.900
+quantité minimale d'informations manquante est la direction 
+
+1:13:58.900,1:14:05.770
+initiale de la trajectoire de chute. Donc voici comment cela fonctionne.
+
+1:14:05.770,1:14:12.460
+Un gros réseau apprenant la grande majorité des prévisions et une petite variable latente.
+
+1:14:12.460,1:14:15.640
+Cette variable latente est quelque chose comme 16 dimensions donc
+
+1:14:15.640,1:14:20.980
+très petite, un vecteur très court, qui vous fournit juste
+
+1:14:20.980,1:14:25.060
+l'information manquante pour faire une prédiction précise.
+
+1:14:25.060,1:14:32.950
+[Etudiante : ok donc pour éviter que la variable nous donne des informations prévisibles, nous essayons
+
+1:14:32.950,1:14:40.060
+d'approcher le terme de régularisation, le terme KL, à l'aide de l’a priori]
+
+1:14:40.060,1:14:49.510
+Le terme KL est nécessaire sinon les choses vont exploser comme nous
+
+1:14:49.510,1:14:53.950
+l’avons vu en classe. Si vous n'avez pas le KL, cette prédiction ira
+
+1:14:53.950,1:14:59.140
+aussi loin que possible, car ils ne veulent pas de chevauchement.
+
+1:14:59.140,1:15:02.680
+Le terme tente de les faire s'effondrer. Donc chaque fois que vous
+
+1:15:02.680,1:15:08.230
+introduisez ce KL vous forcez la bulle a avoir une variance unitaire et
+
+1:15:08.230,1:15:12.460
+que la moyenne soit proches de 0 de sorte que vous remplissez cette
+
+1:15:12.460,1:15:18.910
+sphère de petites bulles. Et puis plus tard, étant donné ça, 
+
+1:15:18.910,1:15:23.469
+vous pouvez simplement échantillonner d’une distribution gaussienne, 
+
+1:15:23.469,1:15:30.610
+une distribution normale de la même taille. C’est pourquoi nous utilisons le KL.
+
+1:15:30.610,1:15:34.780
+Si vous mettez beaucoup de force sur la KL,
+
+1:15:34.780,1:15:39.160
+vous allez également réduire la quantité d'informations.
+
+1:15:39.160,1:15:47.260
+Donc vous pouvez utiliser KL comme un terme pour réduire la quantité d'informations venant du futur.
+
+1:15:47.260,1:15:53.410
+C'est donc une façon de régulariser la variable latente.
+
+1:15:53.410,1:15:59.290
+L'autre façon que nous utilisons aussi est le dropout pour la latente.
+
+1:15:59.290,1:16:03.340
+C'est-à-dire parfois un échantillonnage venant de l’a priori.
+
+1:16:03.340,1:16:11.140
+Tel que maintenant le « backbone », le gros réseau déterministe
+
+1:16:11.140,1:16:16.239
+ne peut pas se fier à des informations pas toujours présentes.
+
+1:16:16.239,1:16:22.150
+[Etudiante : et tout cela se passe dans la phase d’entraînement] du modèle
+
+1:16:22.150,1:16:30.820
+prédictif. [Etudiante : oui, ok merci beaucoup] [Etudiant : concernant
+
+1:16:30.820,1:16:37.510
+l'incertitude du modèle prédictif, l'incertitude est celle provenant
+
+1:16:37.510,1:16:44.860
+d’essayer de prédire davantage le futur ou ?] Donc l'incertitude…  Je pense que je suis
+
+1:16:44.860,1:16:49.510
+allé un peu vite. L'incertitude est le fait que 
+
+1:16:49.510,1:16:55.150
+chaque fois que votre politique vise à contrôler l'autre gars, vous pouvez
+
+1:16:55.150,1:16:59.560
+accélérer beaucoup ou changer comme un fou.
+
+1:16:59.560,1:17:09.640
+Et si vous donnez des actions qui sont loin du domaine de l’entraînement de cette politique, différentes politiques
+
+1:17:09.640,1:17:16.360
+répondront d'une manière différente. Car si vous vous entraînez
+
+1:17:16.360,1:17:24.160
+plusieurs modèles sur les mêmes données d’entraînement et ensuite vous testez ces différents modèles
+
+1:17:24.160,1:17:28.270
+entraînés sur ces données en dehors de l'intervalle d’entraînement… 
+
+1:17:28.270,1:17:34.120
+Disons que… Ah beh non je ne peux pas parler avec un stylo dans la bouche…
+
+1:17:34.120,1:17:39.010
+Donc ceci est l’intervalle d’entraînement et vous testez en dehors ici.
+
+1:17:39.010,1:17:43.630
+Dans cet intervalle d’entraînement ici tout le modèle sera d'accord et donc la variance
+
+1:17:43.630,1:17:49.750
+pendant cet intervalle d’entraînement sera très petite. En vous éloignant de
+
+1:17:49.750,1:17:55.060
+cet intervalle, la variance augmentera. La partie agréable est qu’étant
+
+1:17:55.060,1:18:00.160
+donné que cette variance est une valeur scalaire, vous pouvez la minimiser
+
+1:18:00.160,1:18:06.790
+en faisant passer l'action de là à là. Car ici la variance
+
+1:18:06.790,1:18:09.160
+est minuscule. Là variance ici est le minimum et
+
+1:18:09.160,1:18:14.920
+là elle est très grande. Donc vous pouvez avoir des actions pouvant migrer de
+
+1:18:14.920,1:18:21.820
+votre espace d'action de telle sorte que la variance est réduite au minimum. Donc votre variance maintenant
+
+1:18:21.820,1:18:30.610
+est votre perte. Vous faites une descente de gradient dans l'espace d'action pour minimiser la variance.
+
+1:18:30.610,1:18:35.110
+Et donc vous pouvez voyager dans cet espace d'action qui est en fait
+
+1:18:35.110,1:18:38.260
+bidimensionnel. C'est tellement cool.
+
+1:18:38.260,1:18:43.630
+Donc vous avez les direction x et y et la colline. Donc dans ce cas vous pouvez tracer la variance.
+
+1:18:43.630,1:18:48.400
+Si elle monte ici, vous pouvez descendre avec la descente de gradient.
+
+1:18:48.400,1:18:54.190
+De sorte que dans cette région où la variance est faible, tous ces
+
+1:18:54.190,1:19:00.190
+différents modèles se d’accord pour les prévisions futures.
+
+1:19:00.190,1:19:09.970
+Donc ces actions viennent d’un domaine sur. [Etudiant : les actions viennent 
+
+1:19:09.970,1:19:14.560
+plutôt de points d’entraînement qu'en dehors].
+
+1:19:14.560,1:19:18.490
+Disons la région d’entraînement. [Ok merci].
+
+1:19:18.490,1:19:23.140
+D'autres questions ? Demandez-moi ce que vous voulez.
+
+1:19:25.340,1:19:34.409
+Terminé ? Je vais préparer le dîner sinon. [Etudiant : j'ai une question.
+
+1:19:34.409,1:19:39.090
+Supposons que nous modifions le contexte de ce problème en passant d'une régression à un
+
+1:19:39.090,1:19:43.020
+problème de classification. Par exemple prédire si nous allons nous écraser ou non ou
+
+1:19:43.020,1:19:46.440
+si vous voulez prévoir si le trafic est dense ou pas.
+
+1:19:46.440,1:19:49.290
+L'efficacité des variables latentes est toujours présente ?
+
+1:19:49.290,1:19:54.510
+Les variables latentes améliorent le modèle même s'il s'agissait d'une classification ?
+
+1:19:54.510,1:19:59.099
+Car d'après ce que j'ai observé, il semble que les variables latentes
+
+1:19:59.099,1:20:03.929
+améliorent toujours la performance. Comme en génération quand nous voulons
+
+1:20:03.929,1:20:07.739
+générer quelque chose comme une image ou de la musique ou des
+
+1:20:07.739,1:20:12.150
+prédictions de régression. Mais dans le cadre d'une classification
+
+1:20:12.150,1:20:18.210
+comment cela impact ?] Nous travaillons actuellement sur la classification
+
+1:20:18.210,1:20:21.020
+et vous en saurez peut-être plus la
+
+1:20:25.500,1:20:30.059
+semaine prochaine, quand nous parlerons de la langue.
+
+1:20:30.059,1:20:35.000
+Un autre étudiant de Yann travaille sur l'utilisation de modèles à variables latentes pour
+
+1:20:35.000,1:20:41.489
+effectuer une classification qui vous permet de choisir entre plusieurs options.
+
+1:20:41.489,1:20:46.889
+Donc je suppose que vous allez entendre parler de ceci mais
+
+1:20:46.889,1:20:49.760
+pas aujourd'hui. Ou vous pouvez demander à Yann la prochaine fois.
+
+1:20:52.380,1:20:58.040
+Mais je pense que nous allons en parler la semaine prochaine.
+
+1:20:59.289,1:21:03.280
+[Ok, merci] C'est tout. Passez une bonne nuit.
+
+1:21:06.040,1:21:11.860
+Profiter de votre repas, restez en sécurité, lavez-vous les mains. 
+
+1:21:11.860,1:21:15.340
+Le stylo n'était pas aseptisé mais je ne l'ai pas utilisé.
+
+1:21:15.340,1:21:21.600
+Ne touchez pas votre visage, restez en sécurité. Bye bye.
+
+1:21:21.600,1:21:25.010
+Comment tirer le meilleur parti de ce cours ?
+
+1:21:25.010,1:21:30.180
+Donc laissez-moi vous donner quelques suggestions. Premièrement la compréhension.
+
+1:21:30.180,1:21:35.110
+Si quelque chose n'est toujours pas clair, il suffit de me poser la question dans la section en dessous de la vidéo.
+
+1:21:35.110,1:21:38.340
+Je répondrai à toutes les questions. Si vous souhaitez
+
+1:21:38.340,1:21:43.830
+obtenir plus d'informations sur les activités que je mène en matière d'éducation
+
+1:21:43.830,1:21:48.300
+et des choses que je trouve intéressantes, vous pouvez me suivre sur Twitter à alfcnz.
+
+1:21:48.300,1:21:52.200
+Si vous souhaitez avoir des mises à jour pour les nouvelles vidéos
+
+1:21:52.200,1:21:56.160
+n'oubliez pas de vous abonner à la chaîne et d'activer les notifications.
+
+1:21:56.160,1:22:00.780
+Si vous aimez vraiment cette vidéo n'oubliez pas de mettre un pouce ça aide
+
+1:22:00.780,1:22:05.220
+ainsi que de recommander cette vidéo à d'autres personnes. Si vous souhaitez faire des recherches sur
+
+1:22:05.220,1:22:09.330
+le contenu de cette leçon, nous avons une transcription anglaise qui est reliée
+
+1:22:09.330,1:22:13.000
+directement à cette vidéo. Chaque titre de la transcription est cliquable et
+
+1:22:13.000,1:22:16.950
+en cliquant sur le titre, vous êtes redirigés à la bonne partie de la vidéo.
+
+1:22:16.950,1:22:20.310
+De la même manière que chaque section de la vidéo a le même titre dans
+
+1:22:20.310,1:22:26.320
+la transcription donc vous pouvez faire des allers-retours. Peut-être que l'anglais n'est pas votre langue maternelle.
+
+1:22:26.320,1:22:30.960					              
+Sei parla italiano ? Hablas español ? 你会说中文吗 ? Parlez-vous coréen ?
+
+1:22:30.960,1:22:36.180
+Nous disposons de plusieurs traductions de ce matériel sur le site web.
+
+1:22:36.180,1:22:40.050
+Nous cherchons également d'autres traductions si vous êtes disponibles.
+
+1:22:40.050,1:22:44.910
+C’est très important que vous essayiez de faire une partie des
+
+1:22:44.910,1:22:48.900
+exercices et jouiez avec les notebooks et le code source afin
+
+1:22:48.900,1:22:53.130
+d'internaliser de mieux comprendre les concepts que nous
+
+1:22:53.130,1:22:58.890
+expliquons pendant les cours. Contribuer. C’est pour vous donner
+
+1:22:58.890,1:23:03.060
+l’opportunité de montrer votre contribution. Par exemple, si vous trouvez des coquilles
+
+1:23:03.060,1:23:07.740
+dans textes, les notebooks, etc… vous pouvez les corriger et participer
+
+1:23:07.740,1:23:12.810
+à l'ensemble de ce projet en envoyant une PR sur GitHub ou en me 
+
+1:23:12.810,1:23:18.920
+l’indiquant d’une autre manière. Et c'est tout. A la prochaine fois bye bye

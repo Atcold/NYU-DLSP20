@@ -18,6 +18,12 @@ translator: Loïck Bourdois
 | MATERIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks](https://github.com/Atcold/pytorch-Deep-Learning) |
 
 
+<!--
+❗ A version 2 of the French translation of this website is currently being deployed. This message will be removed when it is completed ❗
+-->
+❗ Une version 2 de la traduction française de ce site web est en cours de déploiement. Ce message sera supprimé quand celui-ci sera terminé ❗
+
+
 ## Description
 
 Ce cours porte sur les techniques d'apprentissage profond et de représentation les plus récentes.
@@ -324,15 +330,15 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
   </tbody>
 </table>
 
-## Corps enseignants
+## Corps enseignant
 
 | Rôle | Photo | Contact | A propos |
 |:-----|:-----:|:--------|:------|
-|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer <br> Science à la New York University (NYU) <br> et lauréat du prix Turing 2019|
+|Instructeur|<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|Silver Professor en Computer <br> Science à la New York <br> University (NYU) <br> et lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en Computer Science à la NYU|
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en Computer Science à NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu| Doctorant en Computer Science à NYU|
-|Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://lbourdois.github.io/blog/">Loïck Bourdois <br>| N'appartient pas au corps enseignant de la NYU |
+|Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://twitter.com/BdsLoick">Loïck Bourdois <br>| N'appartient pas au corps enseignant de la NYU |
 
 
 <!--
