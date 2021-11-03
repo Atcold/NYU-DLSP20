@@ -15,19 +15,14 @@ translator: Loïck Bourdois
 | COURS MAGISTRAUX | Lundi 16h55 - 18h35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | TRAVAUX DIRIGÉS | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
-| MATÉRIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks en anglais](https://github.com/Atcold/pytorch-Deep-Learning) | [Notebooks en français](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French) |
+| MATÉRIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks en anglais](https://github.com/Atcold/pytorch-Deep-Learning), [Notebooks en français](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French) |
 
-
-<!--
-❗ A version 2 of the French translation of this website is currently being deployed. This message will be removed when it is completed ❗
--->
-❗ Une version 2 de la traduction française de ce site web est en cours de déploiement. Ce message sera supprimé quand celui-ci sera terminé ❗
 
 
 ## Description
 
 Ce cours porte sur les techniques de représentation et d'apprentissage profond les plus récentes.
-Il se concentre sur l'apprentissage profond supervisé et non supervisé, les méthodes d’enchâssement, l'apprentissage métrique, les réseaux convolutifs et récurrents.
+Il se concentre sur l'apprentissage supervisé, non supervisé et autosupervisté, mais aussi sur les méthodes d’enchâssement, l'apprentissage métrique et les réseaux convolutifs et récurrents.
 Il est illustré d’applications à la vision par ordinateur, la compréhension du langage naturel et la reconnaissance vocale.
 
 Pour suivre ce cours, il est fortement conseillé d’avoir des prérequis en algèbre et d’avoir déjà suivi un cours introductif d'apprentissage machine ou de *data science*.
@@ -258,7 +253,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr><td><a href="{{site.baseurl}}/fr/week11/11-2">Fonctions de perte</a></td></tr>
     <tr>
       <td rowspan="1">Travaux dirigés</td>
-      <td><a href="{{site.baseurl}}/fr/week11/11-3">PPUU</a></td>
+      <td><a href="{{site.baseurl}}/fr/week11/11-3">Prediction et apprentissage d'une politique sous incertitude</a></td>
       <td>
         <a href="http://bit.ly/PPUU-slides">🖥️</a>
         <a href="http://bit.ly/PPUU-code">📓</a>
@@ -269,13 +264,13 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week12/12">⑫</a></td>
       <td rowspan="2">Cours magistral</td>
-      <td><a href="{{site.baseurl}}/fr/week12/12-1">Apprentissage profond pour le traitement du langage naturel (NLP) I</a></td>
+      <td><a href="{{site.baseurl}}/fr/week12/12-1">Apprentissage profond pour le traitement du langage naturel I</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/149m3wRavTp4DQZ6RJTej8KP8gv4jnkPW/">🖥️</a>
         <a href="https://youtu.be/6D4EWKJgNn0">🎥</a>
       </td>
     </tr>
-    <tr><td><a href="{{site.baseurl}}/fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel (NLP) II</a></td></tr>
+    <tr><td><a href="{{site.baseurl}}/fr/week12/12-2"> Apprentissage profond pour le traitement du langage naturel II</a></td></tr>
     <tr>
       <td rowspan="1">Travaux dirigés</td>
       <td><a href="{{site.baseurl}}/fr/week12/12-3">Attention & Transformer</a></td>
@@ -309,7 +304,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week14/14">⑭</a></td>
       <td rowspan="2">Cours magistral</td>
-      <td><a href="{{site.baseurl}}/fr/week14/14-1">Prédiction de structure</a></td>
+      <td><a href="{{site.baseurl}}/fr/week14/14-1">Prédiction utilisant la structure</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/file/d/1qBu-2hYWaGYEXeX7kAU8O4S2RZ1hMjsk/">🖥️</a>
         <a href="https://youtu.be/gYayCG6YyO8">🎥</a>
