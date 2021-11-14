@@ -15,6 +15,7 @@ translator: Loïck Bourdois
 | COURS MAGISTRAUX | Lundi 16h55 - 18h35, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | TRAVAUX DIRIGÉS | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
+| DISCORD     | [NYU DL](https://discord.gg/CthuqsX8Pb) |
 | MATÉRIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks en anglais](https://github.com/Atcold/pytorch-Deep-Learning), [Notebooks en français](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French) |
 
 
@@ -90,7 +91,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
     <tr>
       <td rowspan="3" align="center"><a href="{{site.baseurl}}/fr/week03/03">③</a></td>
       <td rowspan="2">Cours magistral</td>
-      <td><a href="{{site.baseurl}}/fr/week03/03-1">Transformation de paramètres</a></td>
+      <td><a href="{{site.baseurl}}/fr/week03/03-1">Transformation des paramètres</a></td>
       <td rowspan="2">
         <a href="https://drive.google.com/open?id=18UFaOGNKKKO5TYnSxr2b8dryI-PgZQmC">🖥️</a>
         <a href="https://youtu.be/FW5gFiJb-ig">🎥</a>
@@ -351,29 +352,3 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 |Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
 |Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
 |Traducteur|<img src="https://st3.depositphotos.com/13159112/17145/v/450/depositphotos_171453724-stock-illustration-default-avatar-profile-icon-grey.jpg" width="100" height="100">| <a href="https://twitter.com/BdsLoick">Loïck Bourdois <br>| N'appartient pas au corps<br>enseignant de la NYU |
-
-
-<!--
-All other texts found on this site are lecture notes taken by students of the New York University during lectures given by Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
-Thus the texts in English were written by about 130 people, which has an impact on the homogeneity of the texts (some write in the past tense, others in the present tense; the abbreviations used are not always the same; some write short sentences, while others write sentences of up to 5 or 6 lines, etc.).
-The French translation that is proposed to you has been done by one and only one person and then reviewed by different people. The goal was to alleviate the problems mentioned just now, and to propose a homogeneous translation. All the choices made for the writing and the translation are detailed [here](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
-This translation took about 70 hours and was checked several times. Nevertheless, it is possible that there may be some omissions: typing errors, spelling mistakes, etc. If you notice any, we invite you to submit a PR on the [GitHub directory of the site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifying with an `[FR]` that it concerns the French translation.
-Finally, it should be noted that this site is intended to accompany the Spring 2020 edition of NYU's Deep Learning Course. In future editions, the transcripts of the courses present on the site will not be modified, which will not be the case for the notebooks.
-Therefore, all links to the notebooks will take you to the most recent English versions.
-If you wish, you can still consult a French translation of the 16 notebooks based on a version of the notebooks dating from September 2020. Any subsequent modification of the English notebooks will not be taken into account. The French version is available [here](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French).
-Wishing you a deep reading :]
--->
-
-## Traduction
-Tous les textes présents sur ce site sont des notes de cours prises par les étudiants de la New York University lors des conférences données par Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis et Xavier Bresson.
-Ainsi les textes en anglais ont été rédigés par plus de 130 personnes, ce qui a un impact sur l’homogénéité des textes (certains écrivent au passé, d’autres au présent ; les abréviations utilisées ne sont pas forcément toujours les mêmes ; certains écrivent des phrases courtes, quand d’autres écrivent des phrases pouvant aller jusqu’à 5 ou 6 lignes, etc.).
-
-La traduction en français qui vous est proposée a été effectuée par une seule personne, le but étant d’atténuer les problèmes cités à l’instant, et de proposer une traduction homogène. L’ensemble des choix qui ont été retenus pour la rédaction et la traduction sont détaillés [ici](https://github.com/Atcold/pytorch-Deep-Learning/wiki/French-translation).
-Cette traduction a nécessité environ six cents heures et a été plusieurs fois vérifiée. Néanmoins, il se peut qu’il y ait des oublis : fautes de frappe, d’orthographe, etc. Si vous en remarquez, nous vous invitons à soumettre une PR sur le [répertoire GitHub du site](https://github.com/Atcold/pytorch-Deep-Learning/pulls) en précisant avec un `[FR]` qu’elle concerne la traduction française.
-
-Enfin, précisons que ce site est destiné à accompagner l’édition « Printemps 2020 » du cours sur l’apprentissage profond de la NYU. Dans les éditions futures, les retranscriptions des cours présents sur le site ne seront pas modifiées ce qui ne sera pas le cas des notebooks.
-De ce fait, tous les liens renvoyant vers les notebooks vous conduiront vers leurs versions anglaises les plus récentes.
-Si vous le souhaitez, vous pouvez tout de même consulter une traduction française des 16 notebooks se basant sur une version des notebooks datant de septembre 2020. Toute modification ultérieure des notebooks anglais ne sera pas prise en compte. La version française est disponible [ici](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French).
-
-En vous souhaitant une deep lecture :]
-
