@@ -1,0 +1,3429 @@
+0:00:04.819,0:00:08.319
+In this case, we have a network which has an input on the left-hand side
+
+0:00:08.959,0:00:14.259
+Usually you have the input on the bottom side or on the left. They are pink in my slides
+
+0:00:14.260,0:00:17.409
+So if you take notes, make them pink. No, just kidding!
+
+0:00:18.400,0:00:23.020
+And then we have... How many activations? How many hidden layers do you count there?
+
+0:00:23.539,0:00:27.789
+Four hidden layers. So overall how many layers does the network have here?
+
+0:00:28.820,0:00:32.980
+Six, right? Because we have four hidden, plus one input, plus one output layer
+
+0:00:33.649,0:00:37.568
+So in this case, I have two neurons per layer, right?
+
+0:00:37.569,0:00:41.739
+So what does it mean? What are the dimensions of the matrices we are using here?
+
+0:00:43.339,0:00:46.119
+Two by two. So what does that two by two matrix do?
+
+0:00:48.739,0:00:51.998
+Come on! You have... You know the answer to this question
+
+0:00:53.359,0:00:57.579
+Rotation, yeah. Then scaling, then shearing and...
+
+0:00:59.059,0:01:05.469
+reflection. Fantastic, right? So we constrain our network to perform all the operations on the plan
+
+0:01:05.540,0:01:12.380
+We have seen the first time if I allow the hidden layer to be a hundred neurons long we can...
+
+0:01:12.380,0:01:13.680
+Wow okay!
+
+0:01:13.680,0:01:15.680
+We can easily...
+
+0:01:18.079,0:01:20.079
+Ah fantastic. What is it?
+
+0:01:21.170,0:01:23.170
+We are watching movies now. I see...
+
+0:01:24.409,0:01:29.889
+See? Fantastic. What is it? Mandalorian is so cool, no? Okay...
+
+0:01:32.479,0:01:39.428
+Okay, how nice is this lesson. Is it even recorded? Okay, we have no idea
+
+0:01:40.789,0:01:43.719
+Okay, give me a sec. Okay, so we go here...
+
+0:01:47.810,0:01:49.810
+Done
+
+0:01:50.390,0:01:52.070
+Listen
+
+0:01:52.070,0:01:53.600
+All right
+
+0:01:53.600,0:01:59.679
+So we started from this network here, right? Which had this intermediate layer and we forced them to be
+
+0:02:00.289,0:02:05.229
+2-dimensional, right? Such that all the transformations are enforced to be on a plane
+
+0:02:05.270,0:02:08.319
+So this is what the network does to our plan
+
+0:02:08.319,0:02:14.269
+It folds it on specific regions, right? And those foldings are very abrupt
+
+0:02:14.370,0:02:18.499
+This is because all the transformations are performed on the 2d layer, right?
+
+0:02:18.500,0:02:22.550
+So this training took me really a lot of effort because the
+
+0:02:23.310,0:02:25.310
+optimization is actually quite hard
+
+0:02:25.740,0:02:30.769
+Whenever I had a hundred-neuron hidden layer, that was very easy to train
+
+0:02:30.770,0:02:35.299
+This one really took a lot of effort and you have to tell me why, okay?
+
+0:02:35.400,0:02:39.469
+If you don't know the answer right now, you'd better know the answer for the midterm
+
+0:02:40.470,0:02:43.370
+So you can take note of what are the questions for the midterm...
+
+0:02:43.980,0:02:49.600
+Right, so this is the final output of the network, which is also that 2d layer
+
+0:02:50.010,0:02:55.489
+to the embedding, so I have no non-linearity on my last layer. And these are the final
+
+0:02:56.370,0:03:01.850
+classification regions. So let's see what each layer does. This is the first layer, affine transformation
+
+0:03:01.850,0:03:06.710
+so it looks like it's a 3d rotation, but it's not right? It's just a 2d rotation
+
+0:03:07.740,0:03:15.600
+reflection, scaling, and shearing. And then what is this part? Ah, what's happened right now? Do you see?
+
+0:03:17.820,0:03:21.439
+We have like the ReLU part, which is killing all the negative
+
+0:03:22.800,0:03:27.079
+sides of the network, right? Sorry, all the negative sides of this
+
+0:03:28.080,0:03:33.499
+space, right? It is the second affine transformation and then here you apply again
+
+0:03:34.770,0:03:37.460
+the ReLU, you can see all the negative
+
+0:03:38.220,0:03:41.149
+subspaces have been erased and they've been set to zero
+
+0:03:41.730,0:03:44.509
+Then we keep going with a third affine transformation
+
+0:03:45.120,0:03:46.790
+We zoom it... it's zooming a lot...
+
+0:03:46.790,0:03:54.469
+And then you're gonna have the ReLU layer which is gonna be killing one of those... all three quadrants, right?
+
+0:03:54.470,0:03:59.240
+Only one quadrant survives every time. And then we go with the fourth affine transformation
+
+0:03:59.790,0:04:06.200
+where it's elongating a lot because given that we confine all the transformation to be living in this space
+
+0:04:06.210,0:04:12.439
+it really needs to stretch and use all the power it can, right? Again, this is the
+
+0:04:13.170,0:04:18.589
+second last. Then we have the last affine transformation, which is the final one. And then we reach finally
+
+0:04:19.320,0:04:20.910
+linearly separable
+
+0:04:20.910,0:04:26.359
+regions here. Finally, we're gonna see how each affine transformation can be
+
+0:04:27.240,0:04:31.759
+split in each component. So we have the rotation, we have now squashing, like zooming
+
+0:04:32.340,0:04:38.539
+Then we have rotation, reflection because the determinant is minus one, and then we have the final bias
+
+0:04:38.539,0:04:42.769
+You have the positive part of the ReLU (Rectified Linear Unit), again rotation
+
+0:04:43.650,0:04:47.209
+flipping because we had a negative, a minus one determinant
+
+0:04:47.849,0:04:49.849
+Zooming, rotation
+
+0:04:49.889,0:04:54.258
+One more reflection and then the final bias. This was the second affine transformation
+
+0:04:54.259,0:04:58.609
+Then we have here the positive part again. We have third layer so rotation, reflection
+
+0:05:00.000,0:05:05.629
+zooming and then we have... this is SVD decomposition, right? You should be aware of that, right?
+
+0:05:05.629,0:05:09.799
+You should know. And then final is the translation and the third
+
+0:05:10.229,0:05:15.589
+ReLU, then we had the fourth layer, so rotation, reflection because the determinant was negative
+
+0:05:16.169,0:05:18.169
+zooming, again the other rotation
+
+0:05:18.599,0:05:21.769
+Once more... reflection and bias
+
+0:05:22.379,0:05:24.559
+Finally a ReLU and then we have the last...
+
+0:05:25.259,0:05:27.259
+the fifth layer. So rotation
+
+0:05:28.139,0:05:32.059
+zooming, we didn't have reflection because the determinant was +1
+
+0:05:32.490,0:05:37.069
+Again, reflection in this case because the determinant was negative and then finally the final bias, right?
+
+0:05:37.139,0:05:41.478
+And so this was pretty much how this network, which was
+
+0:05:42.599,0:05:44.599
+just made of
+
+0:05:44.759,0:05:46.759
+a sequence of layers of
+
+0:05:47.159,0:05:52.218
+neurons that are only two neurons per layer, is performing the classification task
+
+0:05:54.990,0:05:58.159
+And all those transformation have been constrained to be
+
+0:05:58.680,0:06:03.199
+living on the plane. Okay, so this was really hard to train
+
+0:06:03.419,0:06:05.959
+Can you figure out why it was really hard to train?
+
+0:06:06.539,0:06:08.539
+What does it happen if my...
+
+0:06:09.270,0:06:16.219
+if my bias of one of the four layers puts my points away from the top right quadrant?
+
+0:06:21.060,0:06:25.519
+Exactly, so if you have one of the four biases putting my
+
+0:06:26.189,0:06:28.549
+initial point away from the top right quadrant
+
+0:06:29.189,0:06:34.039
+then the ReLUs are going to be completely killing everything, and everything gets collapsed into zero
+
+0:06:34.560,0:06:38.399
+Okay? And so there you can't do any more of anything, so
+
+0:06:38.980,0:06:44.129
+this network here was really hard to train. If you just make it a little bit fatter than...
+
+0:06:44.320,0:06:48.659
+instead of constraining it to be two neurons for each of the hidden layers
+
+0:06:48.660,0:06:52.230
+then it is much easier to train. Or you can do a combination of the two, right?
+
+0:06:52.230,0:06:54.300
+So instead of having just a fat network
+
+0:06:54.300,0:07:01.589
+you can have a network that is less fat, but then you have a few hidden layers, okay?
+
+0:07:02.770,0:07:06.659
+So the fatness is how many neurons you have per hidden layer, right?
+
+0:07:07.810,0:07:11.429
+Okay. So the question is how do we determine the structure or the
+
+0:07:12.730,0:07:15.150
+configuration of our network, right? How do we design the network?
+
+0:07:15.580,0:07:20.550
+And the answer is going to be, that's what Yann is gonna be teaching across the semester, right?
+
+0:07:20.550,0:07:27.300
+So keep your attention high because that's what we're gonna be teaching here
+
+0:07:28.090,0:07:30.840
+That's a good question right? There is no
+
+0:07:32.410,0:07:34.679
+mathematical rule, there is a lot of experimental
+
+0:07:35.710,0:07:39.569
+empirical evidence and a lot of people are trying different configurations
+
+0:07:39.570,0:07:42.000
+We found something that actually works pretty well now.
+
+0:07:42.100,0:07:46.200
+We're gonna be covering these architectures in the following lessons. Other questions?
+
+0:07:48.790,0:07:50.790
+Don't be shy
+
+0:07:51.880,0:07:56.130
+No? Okay, so I guess then we can switch to the second part of the class
+
+0:07:57.880,0:08:00.630
+Okay, so we're gonna talk about convolutional nets today
+
+0:08:02.710,0:08:05.879
+Let's dive right in. So I'll start with
+
+0:08:06.820,0:08:09.500
+something that's relevant to convolutional nets but not just [to them]
+
+0:08:10.000,0:08:12.500
+which is the idea of transforming the parameters of a neural net
+
+0:08:12.570,0:08:17.010
+So here we have a diagram that we've seen before except for a small twist
+
+0:08:17.920,0:08:22.300
+The diagram we're seeing here is that we have a neural net G of X and W
+
+0:08:22.360,0:08:27.960
+W being the parameters, X being the input that makes a prediction about an output, and that goes into a cost function
+
+0:08:27.960,0:08:29.500
+We've seen this before
+
+0:08:29.500,0:08:34.500
+But the twist here is that the weight vector instead of being a
+
+0:08:35.830,0:08:39.660
+parameter that's being optimized, is actually itself the output of some other function
+
+0:08:40.599,0:08:43.589
+possibly parameterized. In this case this function is
+
+0:08:44.320,0:08:50.369
+not a parameterized function, or it's a parameterized function but the only input is another parameter U, okay?
+
+0:08:50.750,0:08:56.929
+So what we've done here is make the weights of that neural net be the function of some more elementary...
+
+0:08:57.480,0:08:59.480
+some more elementary parameters U
+
+0:09:00.420,0:09:02.420
+through a function and
+
+0:09:02.940,0:09:07.880
+you realize really quickly that backprop just works there, right? If you back propagate gradients
+
+0:09:09.210,0:09:15.049
+through the G function to get the gradient of whatever objective function we're minimizing with respect to the
+
+0:09:15.600,0:09:21.290
+weight parameters, you can keep back propagating through the H function here to get the gradients with respect to U
+
+0:09:22.620,0:09:27.229
+So in the end you're sort of propagating things like this
+
+0:09:30.600,0:09:42.220
+So when you're updating U, you're multiplying the Jacobian of the objective function with respect to the parameters, and then by the...
+
+0:09:42.750,0:09:46.760
+Jacobian of the H function with respect to its own parameters, okay?
+
+0:09:46.760,0:09:50.960
+So you get the product of two Jacobians here, which is just what you get from back propagating
+
+0:09:50.960,0:09:54.919
+You don't have to do anything in PyTorch for this. This will happen automatically as you define the network
+
+0:09:59.130,0:10:03.080
+And that's kind of the update that occurs
+
+0:10:03.840,0:10:10.820
+Now, of course, W being a function of U through the function H, the change in W
+
+0:10:12.390,0:10:16.460
+will be the change in U multiplied by the Jacobian of H transpose
+
+0:10:18.090,0:10:24.739
+And so this is the kind of thing you get here, the effective change in W that you get without updating W
+
+0:10:24.740,0:10:30.260
+--you actually are updating U-- is the update in U multiplied by the Jacobian of H
+
+0:10:30.690,0:10:37.280
+And we had a transpose here. We have the opposite there. This is a square matrix
+
+0:10:37.860,0:10:41.720
+which is Nw by Nw, which is the number of... the dimension of W squared, okay?
+
+0:10:42.360,0:10:44.690
+So this matrix here
+
+0:10:45.780,0:10:47.780
+has as many rows as
+
+0:10:48.780,0:10:52.369
+W has components and then the number of columns is the number of
+
+0:10:52.560,0:10:57.470
+components of U. And then this guy, of course, is the other way around so it's an Nu by Nw
+
+0:10:57.540,0:11:02.669
+So when you make the product, do the product of those two matrices you get an Nw by Nw matrix
+
+0:11:03.670,0:11:05.670
+And then you multiply this by this
+
+0:11:06.190,0:11:10.380
+Nw vector and you get an Nw vector which is what you need for updating
+
+0:11:11.440,0:11:13.089
+the weights
+
+0:11:13.089,0:11:16.828
+Okay, so that's kind of a general form of transforming the parameter space and there's
+
+0:11:18.430,0:11:22.979
+many ways you can use this and a particular way of using it is when
+
+0:11:23.769,0:11:25.389
+H is what's called a...
+
+0:11:26.709,0:11:30.089
+what we talked about last week, which is a "Y connector"
+
+0:11:30.089,0:11:35.578
+So imagine the only thing that H does is that it takes one component of U and it copies it multiple times
+
+0:11:36.029,0:11:40.000
+So that you have the same value, the same weight replicated across the G function
+
+0:11:40.000,0:11:43.379
+the G function we use the same value multiple times
+
+0:11:45.639,0:11:47.639
+So this would look like this
+
+0:11:48.339,0:11:50.339
+So let's imagine U is two dimensional
+
+0:11:51.279,0:11:54.448
+u1, u2 and then W is four dimensional but
+
+0:11:55.000,0:11:59.969
+w1 and w2 are equal to u1 and w3, w4 are equal to u2
+
+0:12:01.060,0:12:04.400
+So basically you only have two free parameters
+
+0:12:04.700
+and when you're changing one component of U changing two components of W at the same time
+
+0:12:08.560,0:12:14.579
+in a very simple manner. And that's called weight sharing, okay? When two weights are forced to be equal
+
+0:12:14.579,0:12:19.200
+They are actually equal to a more elementary parameter that controls both
+
+0:12:19.300,0:12:21.419
+That's weight sharing and that's kind of the basis of
+
+0:12:21.940,0:12:23.940
+a lot of
+
+0:12:24.670,0:12:26.880
+ideas... you know, convolutional nets among others
+
+0:12:27.730,0:12:31.890
+but you can think of this as a very simple form of H of U
+
+0:12:33.399,0:12:38.489
+So you don't need to do anything for this in the sense that when you have weight sharing
+
+0:12:39.100,0:12:45.810
+If you do it explicitly with a module that does kind of a Y connection on the way back, when the gradients are back propagated
+
+0:12:45.810,0:12:47.800
+the gradients are summed up
+
+0:12:47.800,0:12:53.099
+so the gradient of some cost function with respect to u1, for example, will be the sum of the gradient so that
+
+0:12:53.199,0:12:55.559
+cost function with respect to w1 and w2
+
+0:12:56.860,0:13:02.219
+And similarly for the gradient with respect to u2 would be the sum of the gradients with respect to w3 and w4, okay?
+
+0:13:02.709,0:13:06.328
+That's just the effect of backpropagating through the two Y connectors
+
+0:13:13.310,0:13:19.119
+Okay, here is a slightly more general view of this parameter transformation that some people have called hypernetworks
+
+0:13:19.970,0:13:23.350
+So a hypernetwork is a network where
+
+0:13:23.839,0:13:28.299
+the weights of one network are computed as the output of another network
+
+0:13:28.459,0:13:33.969
+Okay, so you have a network H that looks at the input, it has its own parameters U
+
+0:13:35.569,0:13:37.929
+And it computes the weights of a second network
+
+0:13:38.959,0:13:44.199
+Okay? so the advantage of doing this... there are various names for it
+
+0:13:44.199,0:13:46.508
+The idea is very old, it goes back to the 80s
+
+0:13:46.880,0:13:52.539
+people using what's called multiplicative interactions, or three-way network, or sigma-pi units and they're basically
+
+0:13:53.600,0:13:59.050
+this idea --and this is maybe a slightly more general general formulation of it
+
+0:14:00.949,0:14:02.949
+that you have sort of a dynamically
+
+0:14:04.069,0:14:06.519
+Your function that's dynamically defined
+
+0:14:07.310,0:14:09.669
+In G of X and W
+
+0:14:10.459,0:14:14.318
+Because W is really a complex function of the input and some other parameter
+
+0:14:16.189,0:14:17.959
+This is particularly
+
+0:14:17.959,0:14:22.419
+interesting architecture when what you're doing to X is transforming it in some ways
+
+0:14:23.000,0:14:29.889
+Right? So you can think of W as being the parameters of that transformation, so Y would be a transformed version of X
+
+0:14:32.569,0:14:37.809
+And the X, I mean the function H basically computes that transformation
+
+0:14:38.899,0:14:41.739
+Okay? But we'll come back to that in a few weeks
+
+0:14:42.829,0:14:46.209
+Just wanted to mention this because it's basically a small modification of
+
+0:14:46.579,0:14:52.869
+of this right? You just have one more wire that goes from X to H, and that's how you get those hypernetworks
+
+0:14:56.569,0:15:03.129
+Okay, so we're showing the idea that you can have one parameter controlling
+
+0:15:06.500,0:15:12.549
+multiple effective parameters in another network. And one reason that's useful is
+
+0:15:13.759,0:15:16.779
+if you want to detect a motif on an input
+
+0:15:17.300,0:15:20.139
+And you want to detect this motif regardless of where it appears, okay?
+
+0:15:20.689,0:15:27.099
+So let's say you have an input, let's say it's a sequence but it could be an image, in this case is a sequence
+
+0:15:27.100,0:15:28.000
+Sequence of vectors, let's say
+
+0:15:28.300,0:15:33.279
+And you have a network that takes a collection of three of those vectors, three successive vectors
+
+0:15:34.010,0:15:36.339
+It's this network G of X and W and
+
+0:15:37.010,0:15:42.249
+it's trained to detect a particular motif of those three vectors. Maybe this is... I don't know
+
+0:15:42.889,0:15:44.750
+the power consumption
+
+0:15:44.750,0:15:51.880
+Electrical power consumption, and sometimes you might want to be able to detect like a blip or a trend or something like that
+
+0:15:52.519,0:15:54.519
+Or maybe it's, you know...
+
+0:15:56.120,0:15:58.120
+financial instruments of some kind
+
+0:15:59.149,0:16:05.289
+Some sort of time series. Maybe it's a speech signal and you want to detect a particular sound that consists in three
+
+0:16:06.050,0:16:10.899
+vectors that define the sort of audio content of that speech signal
+
+0:16:12.440,0:16:15.709
+And so you'd like to be able to detect
+
+0:16:15.709,0:16:20.469
+if it's a speech signal and there's a particular sound you need to detect for doing speech recognition
+
+0:16:20.470,0:16:22.630
+You might want to detect the sound
+
+0:16:23.180,0:16:28.690
+The vowel P, right? The sound P wherever it occurs in a sequence
+
+0:16:28.690,0:16:31.299
+You want some detector that fires when the sound P is...
+
+0:16:33.589,0:16:41.439
+...is pronounced. And so what we'd like to have is a detector you can slide over and regardless of where this motif occurs
+
+0:16:42.470,0:16:47.500
+detect it. So what you need to have is some network, some parameterized function that...
+
+0:16:48.920,0:16:55.029
+You have multiple copies of that function that you can apply to various regions on the input and they all share the same weight
+
+0:16:55.029,0:16:58.600
+but you'd like to train this entire system end to end
+
+0:16:58.700,0:17:01.459
+So for example, let's say...
+
+0:17:01.459,0:17:03.459
+Let's talk about a slightly more sophisticated
+
+0:17:05.569,0:17:07.688
+thing here where you have...
+
+0:17:11.059,0:17:13.059
+Let's see...
+
+0:17:14.839,0:17:17.349
+A keyword that's being being pronounced so
+
+0:17:18.169,0:17:22.959
+the system listens to sound and wants to detect when a particular keyword, a wakeup
+
+0:17:24.079,0:17:28.329
+word has been has been pronounced, right? So this is Alexa, right?
+
+0:17:28.459,0:17:32.709
+And you say "Alexa!" and Alexa wakes up it goes bong, right?
+
+0:17:35.260,0:17:40.619
+So what you'd like to have is some network that kind of takes a window over the sound and then sort of keeps
+
+0:17:41.890,0:17:44.189
+in the background sort of detecting
+
+0:17:44.860,0:17:47.219
+But you'd like to be able to detect
+
+0:17:47.220,0:17:52.020
+wherever the sound occurs within the frame that is being looked at, or it's been listened to, I should say
+
+0:17:52.300,0:17:56.639
+So you can have a network like this where you have replicated detectors
+
+0:17:56.640,0:17:59.520
+They all share the same weight and then the output which is
+
+0:17:59.520,0:18:03.329
+the score as to whether something has been detected or not, goes to a max function
+
+0:18:04.090,0:18:07.500
+Okay? And that's the output. And the way you train a system like this
+
+0:18:08.290,0:18:10.290
+you will have a bunch of samples
+
+0:18:10.780,0:18:14.140
+Audio examples where the keyword
+
+0:18:14.140,0:18:18.000
+has been pronounced and a bunch of audio samples where the keyword was not pronounced
+
+0:18:18.100,0:18:20.249
+And then you train a 2 class classifier
+
+0:18:20.470,0:18:24.689
+Turn on when "Alexa" is somewhere in this frame, turn off when it's not
+
+0:18:25.059,0:18:30.899
+But nobody tells you where the word "Alexa" occurs within the window that you train the system on, okay?
+
+0:18:30.900,0:18:35.729
+Because it's really expensive for labelers to look at the audio signal and tell you exactly
+
+0:18:35.730,0:18:37.570
+This is where the word "Alexa" is being pronounced
+
+0:18:37.570,0:18:42.720
+The only thing they know is that within this segment of a few seconds, the word has been pronounced somewhere
+
+0:18:43.450,0:18:48.390
+Okay, so you'd like to apply a network like this that has those replicated detectors?
+
+0:18:48.390,0:18:53.429
+You don't know exactly where it is, but you run through this max and you want to train the system to...
+
+0:18:53.950,0:18:59.370
+You want to back propagate gradient to it so that it learns to detect "Alexa", or whatever...
+
+0:19:00.040,0:19:01.900
+wake up word occurs
+
+0:19:01.900,0:19:09.540
+And so there what happens is you have those multiple copies --five copies in this example
+
+0:19:09.580,0:19:11.580
+of this network and they all share the same weight
+
+0:19:11.710,0:19:16.650
+You can see there's just one weight vector sending its value to five different
+
+0:19:17.410,0:19:22.559
+instances of the same network and so we back propagate through the
+
+0:19:23.260,0:19:27.689
+five copies of the network, you get five gradients, so those gradients get added up...
+
+0:19:29.679,0:19:34.949
+for the parameter. Now, there's this slightly strange way this is implemented in PyTorch and other
+
+0:19:35.740,0:19:41.760
+Deep Learning frameworks, which is that this accumulation of gradient in a single parameter is done implicitly
+
+0:19:42.550,0:19:46.659
+And it's one reason why before you do a backprop in PyTorch, you have to zero out the gradient
+
+0:19:47.840,0:19:49.840
+Because there's sort of implicit
+
+0:19:50.510,0:19:52.510
+accumulation of gradients when you do back propagation
+
+0:19:58.640,0:20:02.000
+Okay, so here's another situation where that would be useful 
+
+0:20:02.100,0:20:07.940
+And this is the real motivation behind conditional nets in the first place
+
+0:20:07.940,0:20:09.940
+Which is the problem of
+
+0:20:10.850,0:20:15.000
+training a system to recognize the shape independently of the position
+
+0:20:16.010,0:20:17.960
+of where the shape occurs
+
+0:20:17.960,0:20:22.059
+and whether there are distortions of that shape in the input
+
+0:20:22.850,0:20:28.929
+So this is a very simple type of convolutional net that is has been built by hand. It's not been trained
+
+0:20:28.929,0:20:30.929
+It's been designed by hand
+
+0:20:31.760,0:20:36.200
+And it's designed explicitly to distinguish C's from D's
+
+0:20:36.400,0:20:38.830
+Okay, so you can draw a C on the input
+
+0:20:39.770,0:20:41.770
+image which is very low resolution
+
+0:20:43.880,0:20:48.459
+And what distinguishes C's from D's is that C's have end points, right?
+
+0:20:48.460,0:20:54.610
+The stroke kind of ends, and you can imagine designing a detector for that. Whereas these have corners
+
+0:20:55.220,0:20:59.679
+So if you have an endpoint detector or something that detects the end of a segment and
+
+0:21:00.290,0:21:02.290
+a corner detector
+
+0:21:02.330,0:21:06.699
+Wherever you have corners detected, it's a D and wherever you have
+
+0:21:07.700,0:21:09.700
+segments that end, it's a C
+
+0:21:11.870,0:21:16.989
+So here's an example of a C. You take the first detector, so the little
+
+0:21:17.750,0:21:19.869
+black and white motif here at the top
+
+0:21:20.870,0:21:24.640
+is an endpoint detector, okay? It detects the end of a
+
+0:21:25.610,0:21:28.059
+of a segment and the way this
+
+0:21:28.760,0:21:33.969
+is represented here is that the black pixels here...
+
+0:21:35.840,0:21:37.929
+So think of this as some sort of template
+
+0:21:38.990,0:21:43.089
+Okay, you're going to take this template and you're going to swipe it over the input image
+
+0:21:44.510,0:21:51.160
+and you're going to compare that template to the little image that is placed underneath, okay?
+
+0:21:51.980,0:21:56.490
+And if those two match, the way you're going to determine whether they match is that you're going to do a dot product
+
+0:21:56.490,0:22:03.930
+So you're gonna think of those black and white pixels as value of +1 or -1, say +1 for black and -1 for white
+
+0:22:05.020,0:22:09.420
+And you're gonna think of those pixels also as being +1 for blacks and -1 for white and
+
+0:22:10.210,0:22:16.800
+when you compute the dot product of a little window with that template
+
+0:22:17.400,0:22:22.770
+If they are similar, you're gonna get a large positive value. If they are dissimilar, you're gonna get a...
+
+0:22:24.010,0:22:27.629
+zero or negative value. Or a smaller value, okay?
+
+0:22:29.020,0:22:35.489
+So you take that little detector here and you compute the dot product with the first window, second window, third window, etc.
+
+0:22:35.650,0:22:42.660
+You shift by one pixel every time for every location and you recall the result. And what you what you get is this, right?
+
+0:22:42.660,0:22:43.660
+So this is...
+
+0:22:43.660,0:22:51.640
+Here the grayscale is an indication of the matching
+
+0:22:51.640,0:22:57.959
+which is actually the dot product between the vector formed by those values
+
+0:22:58.100,0:23:05.070
+And the patch of the corresponding location on the input. So this image here is roughly the same size as that image
+
+0:23:06.250,0:23:08.250
+minus border effects
+
+0:23:08.290,0:23:13.469
+And you see there is a... whenever the output is dark there is a match
+
+0:23:14.380,0:23:16.380
+So you see a match here
+
+0:23:16.810,0:23:20.249
+because this endpoint detector here matches the
+
+0:23:20.980,0:23:24.810
+the endpoint. You see sort of a match here at the bottom
+
+0:23:25.630,0:23:27.930
+And the other kind of values are not as
+
+0:23:28.750,0:23:32.459
+dark, okay? Not as strong if you want
+
+0:23:33.250,0:23:38.820
+Now, if you threshold those those values you set the output to +1 if it's above the threshold
+
+0:23:39.520,0:23:41.520
+Zero if it's below the threshold
+
+0:23:42.070,0:23:46.499
+You get those maps here, you have to set the threshold appropriately but what you get is that
+
+0:23:46.500,0:23:50.880
+this little guy here detected a match at the two end points of the C, okay?
+
+0:23:52.150,0:23:54.749
+So now if you take this map and you sum it up
+
+0:23:56.050,0:23:58.050
+Just add all the values
+
+0:23:58.600,0:24:00.430
+You get a positive number
+
+0:24:00.430,0:24:03.989
+Pass that through threshold, and that's your C detector. It's not a very good C detector
+
+0:24:03.990,0:24:07.859
+It's not a very good detector of anything, but for those particular examples of C's
+
+0:24:08.429,0:24:10.210
+and maybe those D's
+
+0:24:10.210,0:24:16.980
+It will work, it'll be enough. Now for the D is similar, those other detectors here are meant to detect the corners of the D
+
+0:24:17.679,0:24:24.538
+So this guy here, this detector, as you swipe it over the input will detect the
+
+0:24:25.659,0:24:29.189
+upper left corner and that guy will detect the lower right corner
+
+0:24:29.649,0:24:33.689
+Once you threshold, you will get those two maps where the corners are detected
+
+0:24:34.509,0:24:37.019
+and then you can sum those up and the
+
+0:24:37.360,0:24:44.729
+D detector will turn on. Now what you see here is an example of why this is good because that detection now is shift invariant
+
+0:24:44.730,0:24:49.169
+So if I take the same input D here, and I shift it by a couple pixels
+
+0:24:50.340,0:24:56.279
+And I run this detector again, it will detect the motifs wherever they appear. The output will be shifted
+
+0:24:56.379,0:25:01.559
+Okay, so this is called equivariance to shift. So the output of that network
+
+0:25:02.590,0:25:10.499
+is equivariant to shift, which means that if I shift the input the output gets shifted, but otherwise unchanged. Okay? That's equivariance
+
+0:25:11.289,0:25:12.909
+Invariance would be
+
+0:25:12.909,0:25:17.398
+if I shift it, the output will be completely unchanged but here it is modified
+
+0:25:17.399,0:25:19.739
+It just modified the same way as the input
+
+0:25:23.950,0:25:31.080
+And so if I just sum up the activities in the feature maps here, it doesn't matter where they occur
+
+0:25:31.809,0:25:34.199
+My D detector will still activate
+
+0:25:34.929,0:25:38.998
+if I just compute the sum. So this is sort of a handcrafted
+
+0:25:39.700,0:25:47.100
+pattern recognizer that uses local feature detectors and then kind of sums up their activity and what you get is an invariant detection
+
+0:25:47.710,0:25:52.529
+Okay, this is a fairly classical way actually of building certain types of pattern recognition systems
+
+0:25:53.049,0:25:55.049
+Going back many years
+
+0:25:57.730,0:26:03.929
+But the trick here, what's important of course, what's interesting would be to learn those templates
+
+0:26:04.809,0:26:10.258
+Can we view this as just a neural net and we back propagate to it and we learn those templates?
+
+0:26:11.980,0:26:18.779
+As weights of a neural net? After all we're using them to do that product which is a weighted sum, so basically
+
+0:26:21.710,0:26:29.059
+This layer here to go from the input to those so-called feature maps that are weighted sums
+
+0:26:29.520,0:26:33.080
+is a linear operation, okay? And we know how to back propagate through that
+
+0:26:35.850,0:26:41.750
+We'd have to use a kind of a soft threshold, a ReLU or something like this here because otherwise we can't do backprop
+
+0:26:43.470,0:26:48.409
+Okay, so this operation here of taking the dot product of a bunch of coefficients
+
+0:26:49.380,0:26:53.450
+with an input window and then swiping it over, that's a convolution
+
+0:26:57.810,0:27:03.409
+Okay, so that's the definition of a convolution. It's actually the one up there so this is in the one dimensional case
+
+0:27:05.400,0:27:07.170
+where imagine you have
+
+0:27:10.530,0:27:16.639
+An input Xj, so X indexed by the j in the index
+
+0:27:20.070,0:27:22.070
+You take a window
+
+0:27:23.310,0:27:26.029
+of X at a particular location i
+
+0:27:27.330,0:27:30.080
+Okay, and then you sum
+
+0:27:31.890,0:27:40.340
+You do a weighted sum of the window of the X values and you multiply those by the weights wⱼ's
+
+0:27:41.070,0:27:50.359
+Okay, and the sum presumably runs over a kind of a small window so j here would go from 1 to 5
+
+0:27:51.270,0:27:54.259
+Something like that, which is the case in the little example I showed earlier
+
+0:27:58.020,0:28:00.950
+and that gives you one Yi
+
+0:28:01.770,0:28:05.510
+Okay, so take the first window of 5 values of X
+
+0:28:06.630,0:28:13.280
+Compute the weighted sum with the weights, that gives you Y1. Then shift that window by 1, compute the weighted sum of the
+
+0:28:13.620,0:28:18.320
+dot product of that window by the Y's, that gives you Y2, shift again, etc.
+
+0:28:23.040,0:28:26.839
+Now, in practice when people implement in things like PyTorch
+
+0:28:26.840,0:28:31.069
+there is a confusion between two things that mathematicians think are very different
+
+0:28:31.070,0:28:37.009
+but in fact, they're pretty much the same. It's convolution and cross correlation. So in convolution, the convention is that the...
+
+0:28:37.979,0:28:44.359
+the index goes backwards in the window when it goes forwards in the weights
+
+0:28:44.359,0:28:49.519
+In cross correlation, they both go forward. In the end, it's just a convention, it depends on how you lay...
+
+0:28:51.659,0:28:59.598
+organize the data and your weights. You can interpret this as a convolution if you read the weights backwards, so really doesn't make any difference
+
+0:29:01.259,0:29:06.949
+But for certain mathematical properties of a convolution if you want everything to be consistent you have to have the...
+
+0:29:07.440,0:29:10.849
+The j in the W having an opposite sign to the j in the X
+
+0:29:11.879,0:29:13.879
+So the two dimensional version of this...
+
+0:29:15.419,0:29:17.419
+If you have an image X
+
+0:29:17.789,0:29:21.258
+that has two indices --in this case i and j
+
+0:29:23.339,0:29:25.909
+You do a weighted sum over two indices k and l
+
+0:29:25.909,0:29:31.368
+And so you have a window a two-dimensional window indexed by k and l and you compute the dot product
+
+0:29:31.769,0:29:34.008
+of that window over X with the...
+
+0:29:35.099,0:29:39.679
+the weight, and that gives you one value in Yij which is the output
+
+0:29:43.349,0:29:51.319
+So the vector W or the matrix W in the 2d version, there is obvious extensions of this to 3d and 4d, etc.
+
+0:29:52.080,0:29:55.639
+It's called a kernel, it's called a convolutional kernel, okay?
+
+0:30:00.380,0:30:03.309
+Is it clear? I'm sure this is known for many of you but...
+
+0:30:10.909,0:30:13.449
+So what we're going to do with this is that
+
+0:30:14.750,0:30:18.699
+We're going to organize... build a network as a succession of
+
+0:30:20.120,0:30:23.769
+convolutions where in a regular neural net you have
+
+0:30:25.340,0:30:29.100
+alternation of linear operators and pointwise non-linearity
+
+0:30:29.250,0:30:34.389
+In convolutional nets, we're going to have an alternation of linear operators that will happen to be convolutions, so multiple convolutions
+
+0:30:34.940,0:30:40.179
+Then also pointwise non-linearity and there's going to be a third type of operation called pooling...
+
+0:30:42.620,0:30:44.620
+which is actually optional
+
+0:30:45.470,0:30:50.409
+Before I go further, I should mention that there are
+
+0:30:52.220,0:30:56.889
+twists you can make to this convolution. So one twist is what's called a stride
+
+0:30:57.380,0:31:01.239
+So a stride in a convolution consists in moving the window
+
+0:31:01.760,0:31:07.509
+from one position to another instead of moving it by just one value
+
+0:31:07.940,0:31:13.510
+You move it by two or three or four, okay? That's called a stride of a convolution
+
+0:31:14.149,0:31:17.138
+And so if you have an input of a certain length and...
+
+0:31:19.700,0:31:26.590
+So let's say you have an input which is kind of a one-dimensional and size 100 hundred
+
+0:31:27.019,0:31:31.059
+And you have a convolution kernel of size five
+
+0:31:32.330,0:31:34.330
+Okay, and you convolve
+
+0:31:34.909,0:31:38.409
+this kernel with the input
+
+0:31:39.350,0:31:46.120
+And you make sure that the window stays within the input of size 100
+
+0:31:46.730,0:31:51.639
+The output you get has 96 outputs, okay? It's got the number of inputs
+
+0:31:52.519,0:31:56.019
+minus the size of the kernel, which is 5 minus 1
+
+0:31:57.110,0:32:00.610
+Okay, so that makes it 4. So you get 100 minus 4, that's 96
+
+0:32:02.299,0:32:08.709
+That's the number of windows of size 5 that fit within this big input of size 100
+
+0:32:11.760,0:32:13.760
+Now, if I use this stride...
+
+0:32:13.760,0:32:21.960
+So what I do now is I take my window of 5 where I applied the kernel and I shift not by one pixel but by 2 pixels
+
+0:32:21.960,0:32:24.710
+Or two values, let's say. They're not necessarily pixels
+
+0:32:26.310,0:32:31.880
+Okay, the number of outputs I'm gonna get is gonna be divided by two roughly
+
+0:32:33.570,0:32:36.500
+Okay, instead of 96 I'm gonna have
+
+0:32:37.080,0:32:42.949
+a little less than 50, 48 or something like that. The number is not exact, you can...
+
+0:32:44.400,0:32:46.400
+figure it out in your head
+
+0:32:47.430,0:32:51.470
+Very often when people run convolutions in convolutional nets they actually pad the convolution
+
+0:32:51.470,0:32:59.089
+So they sometimes like to have the output being the same size as the input, and so they actually displace the input window
+
+0:32:59.490,0:33:02.479
+past the end of the vector assuming that it's padded with zeros
+
+0:33:04.230,0:33:06.230
+usually on both sides
+
+0:33:16.110,0:33:19.849
+Does it have any effect on performance or is it just for convenience?
+
+0:33:21.480,0:33:25.849
+If it has an effect on performance is bad, okay? But it is convenient
+
+0:33:28.350,0:33:30.350
+That's pretty much the answer
+
+0:33:32.700,0:33:37.800
+The assumption that's bad is assuming that when you don't have data it's equal to zero
+
+0:33:38.000,0:33:41.720
+So when your nonlinearities are ReLU, it's not necessarily completely unreasonable
+
+0:33:43.650,0:33:48.079
+But it sometimes creates funny border effects (boundary effects)
+
+0:33:51.120,0:33:53.539
+Okay, everything clear so far?
+
+0:33:54.960,0:33:59.059
+Right. Okay. So what we're going to build is a
+
+0:34:01.050,0:34:03.050
+neural net composed of those
+
+0:34:03.690,0:34:08.120
+convolutions that are going to be used as feature detectors, local feature detectors
+
+0:34:09.090,0:34:13.069
+followed by nonlinearities, and then we're gonna stack multiple layers of those
+
+0:34:14.190,0:34:18.169
+And the reason for stacking multiple layers is because
+
+0:34:19.170,0:34:21.090
+We want to build
+
+0:34:21.090,0:34:25.809
+hierarchical representations of the visual world of the data
+
+0:34:26.089,0:34:32.258
+It's not... convolutional nets are not necessarily applied to images. They can be applied to speech and other signals
+
+0:34:32.299,0:34:35.619
+They basically can be applied to any signal that comes to you in the form of an array
+
+0:34:36.889,0:34:41.738
+And I'll come back to the properties that this array has to verify
+
+0:34:43.789,0:34:45.789
+So what you want is...
+
+0:34:46.459,0:34:48.698
+Why do you want to build hierarchical representations?
+
+0:34:48.699,0:34:54.369
+Because the world is compositional --and I alluded to this I think you the first lecture if remember correctly
+
+0:34:55.069,0:35:03.519
+It's the fact that pixes assemble to form simple motifs like oriented edges
+
+0:35:04.430,0:35:10.839
+Oriented edges kind of assemble to form local features like corners and T junctions and...
+
+0:35:11.539,0:35:14.018
+things like that... gratings, you know, and...
+
+0:35:14.719,0:35:19.600
+then those assemble to form motifs that are slightly more abstract.
+
+0:35:19.700,0:35:23.559
+Then those assemble to form parts of objects, and those assemble to form objects
+
+0:35:23.559,0:35:28.000
+So there is a sort of natural compositional hierarchy in the natural world
+
+0:35:28.100,0:35:33.129
+And this natural compositional hierarchy in the natural world is not just because of
+
+0:35:34.369,0:35:38.438
+perception --visual perception-- is true at a physical level, right?
+
+0:35:41.390,0:35:46.808
+You start at the lowest level of the description
+
+0:35:47.719,0:35:50.079
+You have elementary particles and they form...
+
+0:35:50.079,0:35:56.438
+they clump to form less elementary particles, and they clump to form atoms, and they clump to form molecules, and molecules clump to form
+
+0:35:57.229,0:36:00.399
+materials, and materials parts of objects and
+
+0:36:01.130,0:36:03.609
+parts of objects into objects, and things like that, right?
+
+0:36:04.670,0:36:07.599
+Or macromolecules or polymers, bla bla bla
+
+0:36:08.239,0:36:13.239
+And then you have this natural composition or hierarchy the world is built this way
+
+0:36:14.719,0:36:19.000
+And it may be why the world is understandable, right?
+
+0:36:19.100,0:36:22.419
+So there's this famous quote from Einstein that says:
+
+0:36:23.329,0:36:26.750
+"the most incomprehensible thing about the world is that the world is comprehensible"
+
+0:36:26.800,0:36:30.069
+And it seems like a conspiracy that we live in a world that we are able to comprehend
+
+0:36:31.130,0:36:35.019
+But we can comprehend it because the world is compositional and
+
+0:36:36.970,0:36:38.970
+it happens to be easy to build
+
+0:36:39.760,0:36:44.370
+brains in a compositional world that actually can interpret compositional world
+
+0:36:45.580,0:36:47.580
+It still seems like a conspiracy to me
+
+0:36:49.660,0:36:51.660
+So there's a famous quote from...
+
+0:36:53.650,0:36:54.970
+from a...
+
+0:36:54.970,0:37:00.780
+Not that famous, but somewhat famous, from a statistician at Brown called Stuart Geman.
+
+0:37:01.360,0:37:04.799
+And he says that sounds like a conspiracy, like magic
+
+0:37:06.070,0:37:08.070
+But you know...
+
+0:37:08.440,0:37:15.570
+If the world were not compositional we would need some even more magic to be able to understand it
+
+0:37:17.260,0:37:21.540
+The way he says this is: "the world is compositional or there is a God"
+
+0:37:25.390,0:37:32.339
+You would need to appeal to superior powers if the world was not compositional to explain how we can understand it
+
+0:37:35.830,0:37:37.830
+Okay, so this idea of hierarchy
+
+0:37:38.440,0:37:44.520
+and local feature detection comes from biology. So the whole idea of convolutional nets comes from biology. It's been
+
+0:37:45.850,0:37:47.850
+so inspired by biology and
+
+0:37:48.850,0:37:53.399
+what you see here on the right is a diagram by Simon Thorpe who's a
+
+0:37:54.160,0:37:56.160
+psycho-physicist and
+
+0:37:56.500,0:38:02.939
+did some relatively famous experiments where he showed that the way we recognize everyday objects
+
+0:38:03.580,0:38:05.969
+seems to be extremely fast. So if you show...
+
+0:38:06.640,0:38:10.409
+if you flash the image of an everyday object to a person and
+
+0:38:11.110,0:38:12.730
+you flash
+
+0:38:12.730,0:38:16.649
+one of them every 100 milliseconds or so, you realize that the
+
+0:38:18.070,0:38:23.549
+the time it takes for a person to identify in a long sequence, whether there was a particular object, let's say a tiger
+
+0:38:25.780,0:38:27.640
+is about 100 milliseconds
+
+0:38:27.640,0:38:34.769
+So the time it takes for brain to interpret an image and recognize basic objects in them is about 100 milliseconds
+
+0:38:35.650,0:38:37.740
+A tenth of a second, right?
+
+0:38:39.490,0:38:42.120
+And that's just about the time it takes for the
+
+0:38:43.000,0:38:45.000
+nerve signal to propagate from
+
+0:38:45.700,0:38:47.550
+the retina
+
+0:38:47.550,0:38:54.090
+where images are formed in the eye to what's called the LGN (lateral geniculate nucleus)
+
+0:38:54.340,0:38:56.340
+which is a small
+
+0:38:56.350,0:39:02.640
+piece of the brain that basically does sort of contrast enhancement and gain control, and things like that
+
+0:39:03.580,0:39:08.789
+And then that signal goes to the back of your brain v1. That's the primary visual cortex area
+
+0:39:09.490,0:39:15.600
+in humans and then v2, which is very close to v1. There's a fold that sort of makes v1 sort of
+
+0:39:17.380,0:39:20.549
+right in front of v2, and there is lots of wires between them
+
+0:39:21.580,0:39:28.890
+And then v4, and then the inferior temporal cortex, which is on the side here and that's where object categories are represented
+
+0:39:28.890,0:39:35.369
+So there are neurons in your inferior temporal cortex that represent generic object categories
+
+0:39:38.350,0:39:41.370
+And people have done experiments with this where...
+
+0:39:44.320,0:39:51.150
+epileptic patients are in hospital and have their skull open because they need to locate the...
+
+0:39:52.570,0:40:00.200
+exact position of the source of their epilepsy seizures
+
+0:40:02.080,0:40:04.650
+And because they have electrodes on the surface of their brain
+
+0:40:05.770,0:40:11.000
+you can show the movies and then observe if a particular neuron turns on for particular movies
+
+0:40:11.100,0:40:14.110
+And you show them a movie with Jennifer Aniston and there is this
+
+0:40:14.110,0:40:17.900
+neuron that only turns on when Jennifer Aniston is there, okay?
+
+0:40:18.000,0:40:21.000
+It doesn't turn on for anything else as far as we could tell, okay?
+
+0:40:21.700,0:40:27.810
+So you seem to have very selective neurons in the inferior temporal cortex that react to a small number of categories
+
+0:40:30.760,0:40:35.669
+There's a joke, kind of a running joke, in neuroscience of a concept called the grandmother cell
+
+0:40:35.670,0:40:40.350
+So this is the one neuron in your inferior temporal cortex that turns on when you see your grandmother
+
+0:40:41.050,0:40:45.120
+regardless of what position what she's wearing, how far, whether it's a photo or not
+
+0:40:46.510,0:40:50.910
+Nobody really believes in this concept, what people really believe in is distributed representations
+
+0:40:50.910,0:40:54.449
+So there is no such thing as a cell that just turns on for you grandmother
+
+0:40:54.970,0:41:00.820
+There are this collection of cells that turn on for various things and they serve to represent general categories
+
+0:41:01.100,0:41:04.060
+But the important thing is that they are invariant to
+
+0:41:04.700,0:41:06.700
+position, size...
+
+0:41:06.920,0:41:11.080
+illumination, all kinds of different things and the real motivation behind
+
+0:41:11.930,0:41:14.349
+convolutional nets is to build
+
+0:41:15.140,0:41:18.670
+neural nets that are invariant to irrelevant transformation of the inputs
+
+0:41:19.510,0:41:27.070
+You can still recognize a C or D or your grandmother regardless of the position and to some extent the orientation, the style, etc.
+
+0:41:29.150,0:41:36.790
+So this idea that the signal only takes 100 milliseconds to go from the retina to the inferior temporal cortex
+
+0:41:37.160,0:41:40.330
+Seems to suggest that if you count the delay
+
+0:41:40.850,0:41:42.850
+to go through every neuron or every
+
+0:41:43.340,0:41:45.489
+stage in that pathway
+
+0:41:46.370,0:41:48.880
+There's barely enough time for a few spikes to get through
+
+0:41:48.880,0:41:55.720
+So there's no time for complex recurrent computation, is basically a feed-forward process. It's very fast
+
+0:41:56.930,0:41:59.980
+Okay, and we need it to be fast because that's a question of survival for us
+
+0:41:59.980,0:42:06.159
+There's a lot of... for most animals, you need to be able to recognize really quickly what's going on, particularly...
+
+0:42:07.850,0:42:12.820
+fast-moving predators or preys for that matter
+
+0:42:17.570,0:42:20.830
+So that kind of suggests the idea that we can do
+
+0:42:21.920,0:42:26.230
+perhaps we could come up with some sort of neuronal net architecture that is completely feed-forward and
+
+0:42:27.110,0:42:29.110
+still can do recognition
+
+0:42:30.230,0:42:32.230
+The diagram on the right
+
+0:42:34.430,0:42:39.280
+is from Gallent & Van Essen, so this is a type of sort of abstract
+
+0:42:39.920,0:42:43.450
+conceptual diagram of the two pathways in the visual cortex
+
+0:42:43.490,0:42:50.530
+There is the ventral pathway and the dorsal pathway. The ventral pathway is, you know, basically the v1, v2, v4, IT hierarchy
+
+0:42:50.530,0:42:54.999
+which is sort of from the back of the brain, and goes to the bottom and to the side and
+
+0:42:55.280,0:42:58.179
+then the dorsal pathway kind of goes
+
+0:42:59.060,0:43:02.469
+through the top also towards the inferior temporal cortex and
+
+0:43:04.040,0:43:09.619
+there is this idea somehow that the ventral pathway is there to tell you what you're looking at, right?
+
+0:43:10.290,0:43:12.499
+The dorsal pathway basically identifies
+
+0:43:13.200,0:43:15.200
+locations
+
+0:43:15.390,0:43:17.390
+geometry and motion
+
+0:43:17.460,0:43:25.040
+Okay? So there is a pathway for what, and another pathway for where, and that seems fairly separate in the
+
+0:43:25.040,0:43:29.030
+human or primate visual cortex
+
+0:43:32.610,0:43:34.610
+And of course there are interactions between them
+
+0:43:39.390,0:43:45.499
+So various people had the idea of kind of using... so where does that idea come from? There is
+
+0:43:46.080,0:43:48.799
+classic work in neuroscience from the late 50s early 60s
+
+0:43:49.650,0:43:52.129
+By Hubel & Wiesel, they're on the picture here
+
+0:43:53.190,0:43:57.440
+They won a Nobel Prize for it, so it's really classic work and what they showed
+
+0:43:58.290,0:44:01.519
+with cats --basically by poking electrodes into cat brains
+
+0:44:02.310,0:44:08.480
+is that neurons in the cat brain --in v1-- detect...
+
+0:44:09.150,0:44:13.789
+are only sensitive to a small area of the visual field and they detect oriented edges
+
+0:44:14.970,0:44:17.030
+contours in that particular area, okay?
+
+0:44:17.880,0:44:22.160
+So the area to which a particular neuron is sensitive is called a receptive field
+
+0:44:23.700,0:44:27.859
+And you take a particular neuron and you show it
+
+0:44:29.070,0:44:35.719
+kind of an oriented bar that you rotate, and at one point the neuron will fire
+
+0:44:36.270,0:44:40.640
+for a particular angle, and as you move away from that angle the activation of the neuron kind of
+
+0:44:42.690,0:44:50.149
+diminishes, okay? So that's called orientation selective neurons, and Hubel & Wiesel called it simple cells
+
+0:44:51.420,0:44:56.930
+If you move the bar a little bit, you go out of the receptive field, that neuron doesn't fire anymore
+
+0:44:57.150,0:45:03.049
+it doesn't react to it. This could be another neuron almost exactly identical to it, just a little bit
+
+0:45:04.830,0:45:09.620
+Away from the first one that does exactly the same function. It will react to a slightly different
+
+0:45:10.380,0:45:12.440
+receptive field but with the same orientation
+
+0:45:14.700,0:45:18.889
+So you start getting this idea that you have local feature detectors that are positioned
+
+0:45:20.220,0:45:23.689
+replicated all over the visual field, which is basically this idea of
+
+0:45:24.960,0:45:26.960
+convolution, okay?
+
+0:45:27.870,0:45:33.470
+So they are called simple cells. And then another idea that or discovery that
+
+0:45:35.100,0:45:40.279
+Hubel & Wiesel did is the idea of complex cells. So what a complex cell is is another type of neuron
+
+0:45:41.100,0:45:45.200
+that integrates the output of multiple simple cells within a certain area
+
+0:45:46.170,0:45:50.120
+Okay? So they will take different simple cells that all detect
+
+0:45:51.180,0:45:54.079
+contours at a particular orientation, edges at a particular orientation
+
+0:45:55.350,0:46:02.240
+And compute an aggregate of all those activations. It will either do a max, or a sum, or
+
+0:46:02.760,0:46:08.239
+a sum of squares, or square root of sum of squares. Some sort of function that does not depend on the order of the arguments
+
+0:46:08.820,0:46:11.630
+Okay? Let's say max for the sake of simplicity
+
+0:46:12.900,0:46:17.839
+So basically a complex cell will turn on if any of the simple cells within its
+
+0:46:19.740,0:46:22.399
+input group turns on
+
+0:46:22.680,0:46:29.480
+Okay? So that complex cell will detect an edge at a particular orientation regardless of its position within that little region
+
+0:46:30.210,0:46:32.210
+So it builds a little bit of
+
+0:46:32.460,0:46:34.609
+shift invariance of the
+
+0:46:35.250,0:46:40.159
+representation coming out of the complex cells with respect to small variation of positions of
+
+0:46:40.890,0:46:42.890
+features in the input
+
+0:46:46.680,0:46:52.010
+So a gentleman by the name of Kunihiko Fukushima
+
+0:46:54.420,0:46:56.569
+--No real relationship with the nuclear power plant
+
+0:46:58.230,0:47:00.230
+In the late 70s early 80s
+
+0:47:00.330,0:47:07.190
+experimented with computer models that sort of implemented this idea of simple cell / complex cell, and he had the idea of sort of replicating this
+
+0:47:07.500,0:47:09.500
+with multiple layers, so basically...
+
+0:47:11.310,0:47:17.810
+The architecture he did was very similar to the one I showed earlier here with this sort of handcrafted
+
+0:47:18.570,0:47:20.490
+feature detector
+
+0:47:20.490,0:47:24.559
+Some of those feature detectors in his model were handcrafted but some of them were learned
+
+0:47:25.230,0:47:30.709
+They were learned by an unsupervised method. He didn't have have backprop, right? Backprop didn't exist
+
+0:47:30.710,0:47:36.770
+I mean, it existed but it wasn't really popular and people didn't use it
+
+0:47:38.609,0:47:43.338
+So he trained those filters basically with something that amounts to a
+
+0:47:44.190,0:47:46.760
+sort of clustering algorithm a little bit...
+
+0:47:49.830,0:47:53.569
+and separately for each layer. And so he would
+
+0:47:56.609,0:48:02.389
+train the filters for the first layer, train this with handwritten digits --he also had a dataset of handwritten digits
+
+0:48:03.390,0:48:06.470
+and then feed this to complex cells that
+
+0:48:06.470,0:48:10.820
+pool the activity of simple cells together, and then that would
+
+0:48:11.880,0:48:18.440
+form the input to the next layer, and it would repeat the same running algorithm. His model of neuron was very complicated
+
+0:48:18.440,0:48:19.589
+It was kind of inspired by biology
+
+0:48:19.589,0:48:27.229
+So it had separate inhibitory neurons, the other neurons only have positive weights and outgoing weights, etc.
+
+0:48:27.839,0:48:29.839
+He managed to get this thing to kind of work
+
+0:48:30.510,0:48:33.800
+Not very well, but sort of worked
+
+0:48:36.420,0:48:39.170
+Then a few years later
+
+0:48:40.770,0:48:44.509
+I basically kind of got inspired by similar architectures, but
+
+0:48:45.780,0:48:51.169
+trained them supervised with backprop, okay? So that's the genesis of convolutional nets, if you want
+
+0:48:51.750,0:48:53.869
+And then independently more or less
+
+0:48:57.869,0:49:04.969
+Max Riesenhuber and Tony Poggio's lab at MIT kind of rediscovered this architecture also, but also didn't use backprop for some reason
+
+0:49:06.060,0:49:08.060
+He calls this H-max
+
+0:49:12.150,0:49:20.039
+So this is sort of early experiments I did with convolutional nets when I was finishing my postdoc in the University of Toronto in 1988
+
+0:49:20.040,0:49:22.040
+So that goes back a long time
+
+0:49:22.840,0:49:26.730
+And I was trying to figure out, does this work better on a small data set?
+
+0:49:26.730,0:49:27.870
+So if you have a tiny amount of data
+
+0:49:27.870,0:49:31.109
+you're trying to fully connect to network or linear network with just one layer or
+
+0:49:31.480,0:49:34.529
+a network with local connections but no shared weights or compare this with
+
+0:49:35.170,0:49:39.299
+what was not yet called a convolutional net, where you have shared weights and local connections
+
+0:49:39.400,0:49:42.749
+Which one works best? And it turned out that in terms of
+
+0:49:43.450,0:49:46.439
+generalization ability, which are the curves on the bottom left
+
+0:49:49.270,0:49:52.499
+which you see here, the top curve here, is...
+
+0:49:53.500,0:50:00.330
+basically the baby convolutional net architecture trained with very a simple data set of handwritten digits that were drawn with a mouse, right?
+
+0:50:00.330,0:50:02.490
+We didn't have any way of collecting images, basically
+
+0:50:03.640,0:50:05.640
+at that time
+
+0:50:05.860,0:50:09.240
+And then if you have real connections without shared weights
+
+0:50:09.240,0:50:12.119
+it works a little worse. And then if you have fully connected
+
+0:50:14.470,0:50:22.230
+networks it works worse, and if you have a linear network, it not only works worse, but but it also overfits, it over trains
+
+0:50:23.110,0:50:28.410
+So the test error goes down after a while, and this was trained with 320
+
+0:50:29.410,0:50:35.519
+320 training samples, which is really small. Those networks had on the order of
+
+0:50:36.760,0:50:43.170
+five thousand connections, one thousand parameters. So this is a billion times smaller than what we do today
+
+0:50:43.990,0:50:45.990
+A million times I would say
+
+0:50:47.890,0:50:53.730
+And then I finished my postdoc, I went to Bell Labs, and Bell Labs had slightly bigger computers
+
+0:50:53.730,0:50:57.389
+but what they had was a data set that came from the Postal Service
+
+0:50:57.390,0:51:00.629
+So they had zip codes for envelopes and we built a
+
+0:51:00.730,0:51:05.159
+data set out of those zip codes and then trained a slightly bigger a neural net for three weeks
+
+0:51:06.430,0:51:12.749
+and got really good results. So this convolutional net did not have separate
+
+0:51:13.960,0:51:15.960
+convolution and pooling
+
+0:51:16.240,0:51:22.769
+It had strided convolution, so convolutions where the window is shifted by more than one pixel. So that's...
+
+0:51:23.860,0:51:29.739
+What's the result of this? So the result is that the output map when you do a convolution where the stride is
+
+0:51:30.710,0:51:36.369
+more than one, you get an output whose resolution is smaller than the input and you see an example here
+
+0:51:36.370,0:51:40.390
+So here the input is 16 by 16 pixels. That's what we could afford
+
+0:51:41.900,0:51:49.029
+The kernels are 5 by 5, but they are shifted by 2 pixels every time and so the
+
+0:51:51.950,0:51:56.919
+the output here is smaller because of that
+
+0:52:11.130,0:52:13.980
+Okay? And then one year later this was the next generation
+
+0:52:14.830,0:52:16.830
+convolutional net. This one had separate
+
+0:52:17.680,0:52:19.680
+convolution and pooling so...
+
+0:52:20.740,0:52:24.389
+Where's the pooling operation? At that time, the pooling operation was just another
+
+0:52:25.690,0:52:31.829
+neuron except that all the weights of that neuron were equal, okay? So a pooling unit was basically
+
+0:52:32.680,0:52:36.839
+a unit that computed an average of its inputs
+
+0:52:37.180,0:52:41.730
+it added a bias, and then passed it to a non-linearity, which in this case was a hyperbolic tangent function
+
+0:52:42.820,0:52:48.450
+Okay? All the non-linearities in this network were hyperbolic tangents at the time. That's what people were doing
+
+0:52:53.200,0:52:55.200
+And the pooling operation was
+
+0:52:56.380,0:52:58.440
+performed by shifting
+
+0:52:59.680,0:53:01.710
+the window over which you compute the
+
+0:53:02.770,0:53:09.240
+the aggregate of the output of the previous layer by 2 pixels, okay? So here
+
+0:53:10.090,0:53:13.470
+you get a 32 by 32 input window
+
+0:53:14.470,0:53:20.730
+You convolve this with filters that are 5 by 5. I should mention that a convolution kernel sometimes is also called a filter
+
+0:53:22.540,0:53:25.230
+And so what you get here are
+
+0:53:27.520,0:53:29.520
+outputs that are
+
+0:53:30.520,0:53:33.749
+I guess minus 4 so is 28 by 28, okay?
+
+0:53:34.540,0:53:40.380
+And then there is a pooling which computes an average of
+
+0:53:41.530,0:53:44.400
+pixels here over a 2 by 2 window and
+
+0:53:45.310,0:53:47.310
+then shifts that window by 2
+
+0:53:48.160,0:53:50.160
+So how many such windows do you have?
+
+0:53:51.220,0:53:56.279
+Since the image is 28 by 28, you divide by 2, is 14 by 14, okay? So those images
+
+0:53:57.460,0:54:00.359
+here are 14 by 14 pixels
+
+0:54:02.050,0:54:05.759
+And they are basically half the resolution as the previous window
+
+0:54:07.420,0:54:09.420
+because of this stride
+
+0:54:10.360,0:54:16.470
+Okay? Now it becomes interesting because what you want is, you want the next layer to detect combinations of features from the previous layer
+
+0:54:17.200,0:54:19.200
+And so...
+
+0:54:20.200,0:54:22.619
+the way to do this is... you have
+
+0:54:23.440,0:54:26.579
+different convolution filters apply to each of those feature maps
+
+0:54:27.730,0:54:29.730
+Okay?
+
+0:54:29.950,0:54:35.939
+And you sum them up, you sum the results of those four convolutions and you pass the result to a non-linearity and that gives you
+
+0:54:36.910,0:54:42.239
+one feature map of the next layer. So because those filters are 5 by 5 and those
+
+0:54:43.330,0:54:46.380
+images are 14 by 14, those guys are 10 by 10
+
+0:54:47.290,0:54:49.739
+Okay? To not have border effects
+
+0:54:52.270,0:54:56.999
+So each of these feature maps --of which there are sixteen if I remember correctly
+
+0:54:59.290,0:55:01.290
+uses a different set of
+
+0:55:02.860,0:55:04.860
+kernels to...
+
+0:55:06.340,0:55:09.509
+convolve the previous layers. In fact
+
+0:55:10.630,0:55:13.799
+the connection pattern between the feature map...
+
+0:55:14.650,0:55:18.720
+the feature map at this layer and the feature map at the next layer is actually not full
+
+0:55:18.720,0:55:22.349
+so not every feature map is connected to every feature map. There's a particular scheme of
+
+0:55:23.680,0:55:25.950
+different combinations of feature map from the previous layer
+
+0:55:28.030,0:55:33.600
+combining to four feature maps at the next layer. And the reason for doing this is just to save computer time
+
+0:55:34.000,0:55:40.170
+We just could not afford to connect everything to everything. It would have taken twice the time to run or more
+
+0:55:41.890,0:55:48.359
+Nowadays we are kind of forced more or less to actually have a complete connection between feature maps in a convolutional net
+
+0:55:49.210,0:55:52.289
+Because of the way that multiple convolutions are implemented in GPUs
+
+0:55:53.440,0:55:55.440
+Which is sad
+
+0:55:56.560,0:55:59.789
+And then the next layer up. So again those maps are 10 by 10
+
+0:55:59.790,0:56:02.729
+Those feature maps are 10 by 10 and the next layer up
+
+0:56:03.970,0:56:06.389
+is produced by pooling and subsampling
+
+0:56:07.330,0:56:09.330
+by a factor of 2
+
+0:56:09.370,0:56:11.370
+and so those are 5 by 5
+
+0:56:12.070,0:56:14.880
+Okay? And then again there is a 5 by 5 convolution here
+
+0:56:14.880,0:56:18.089
+Of course, you can't move the window 5 by 5 over a 5 by 5 image
+
+0:56:18.090,0:56:21.120
+So it looks like a full connection, but it's actually a convolution
+
+0:56:22.000,0:56:24.000
+Okay? Keep this in mind
+
+0:56:24.460,0:56:26.460
+But you basically just sum in only one location
+
+0:56:27.250,0:56:33.960
+And those feature maps at the top here are really outputs. And so you have one special location
+
+0:56:33.960,0:56:39.399
+Okay? Because you can only place one 5 by 5 window within a 5 by 5 image
+
+0:56:40.460,0:56:45.340
+And you have 10 of those feature maps each of which corresponds to a category so you train the system to classify
+
+0:56:45.560,0:56:47.619
+digits from 0 to 9, you have ten categories
+
+0:56:59.750,0:57:03.850
+This is a little animation that I borrowed from Andrej Karpathy
+
+0:57:05.570,0:57:08.439
+He spent the time to build this really nice real animation
+
+0:57:09.470,0:57:16.780
+which is to represent several convolutions, right? So you have three feature maps here on the input and you have six
+
+0:57:18.650,0:57:21.100
+convolution kernels and two feature maps on the output
+
+0:57:21.100,0:57:26.709
+So here the first group of three feature maps are convolved with...
+
+0:57:28.520,0:57:31.899
+kernels are convolved with the three input feature maps to produce
+
+0:57:32.450,0:57:37.330
+the first group, the first of the two feature maps, the green one at the top
+
+0:57:38.390,0:57:40.370
+Okay?
+
+0:57:40.370,0:57:42.820
+And then...
+
+0:57:44.180,0:57:49.000
+Okay, so this is the first group of three kernels convolved with the three feature maps
+
+0:57:49.000,0:57:53.349
+And they produce the green map at the top, and then you switch to the second group of
+
+0:57:54.740,0:57:58.479
+of convolution kernels. You convolve with the
+
+0:57:59.180,0:58:04.149
+three input feature maps to produce the map at the bottom. Okay? So that's
+
+0:58:05.810,0:58:07.810
+an example of
+
+0:58:10.070,0:58:17.709
+n-feature map on the input, n-feature map on the output, and N times M convolution kernels to get all combinations
+
+0:58:25.000,0:58:27.000
+Here's another animation which I made a long time ago
+
+0:58:28.100,0:58:34.419
+That shows convolutional net after it's been trained in action trying to recognize digits
+
+0:58:35.330,0:58:38.529
+And so what's interesting to look at here is you have
+
+0:58:39.440,0:58:41.440
+an input here, which is I believe
+
+0:58:42.080,0:58:44.590
+32 rows by 64 columns
+
+0:58:45.770,0:58:52.570
+And after doing six convolutions with six convolution kernels passing it through a hyperbolic tangent non-linearity after a bias
+
+0:58:52.570,0:58:59.229
+you get those feature maps here, each of which kind of activates for a different type of feature. So, for example
+
+0:58:59.990,0:59:01.990
+the feature map at the top here
+
+0:59:02.390,0:59:04.690
+turns on when there is some sort of a horizontal edge
+
+0:59:07.400,0:59:10.090
+This guy here it turns on whenever there is a vertical edge
+
+0:59:10.940,0:59:15.340
+Okay? And those convolutional kernels have been learned through backprop, the thing has been just been trained
+
+0:59:15.980,0:59:20.980
+with backprop. Not set by hand. They're set randomly usually
+
+0:59:21.620,0:59:26.769
+So you see this notion of equivariance here, if I shift the input image the
+
+0:59:27.500,0:59:31.600
+activations on the feature maps shift, but otherwise stay unchanged
+
+0:59:32.540,0:59:34.540
+All right?
+
+0:59:34.940,0:59:36.940
+That's shift equivariance
+
+0:59:36.950,0:59:38.860
+Okay, and then we go to the pooling operation
+
+0:59:38.860,0:59:42.519
+So this first feature map here corresponds to a pooled version of
+
+0:59:42.800,0:59:46.149
+this first one, the second one to the second one, third went to the third one
+
+0:59:46.250,0:59:51.370
+and the pooling operation here again is an average, then a bias, then a similar non-linearity
+
+0:59:52.070,0:59:55.029
+And so if this map shifts by
+
+0:59:56.570,0:59:59.499
+one pixel this map will shift by one half pixel
+
+1:00:01.370,1:00:02.780
+Okay?
+
+1:00:02.780,1:00:05.259
+So you still have equavariance, but
+
+1:00:06.260,1:00:11.830
+shifts are reduced by a factor of two, essentially
+
+1:00:11.830,1:00:15.850
+and then you have the second stage where each of those maps here is a result of
+
+1:00:16.160,1:00:23.440
+doing a convolution on each, or a subset of the previous maps with different kernels, summing up the result, passing the result through
+
+1:00:24.170,1:00:27.070
+a sigmoid, and so you get those kind of abstract features
+
+1:00:28.730,1:00:32.889
+here that are a little hard to interpret visually, but it's still equivariant to shift
+
+1:00:33.860,1:00:40.439
+Okay? And then again you do pooling and subsampling. So the pooling also has this stride by a factor of two
+
+1:00:40.630,1:00:42.580
+So what you get here are
+
+1:00:42.580,1:00:47.609
+our maps, so that those maps shift by one quarter pixel if the input shifts by one pixel
+
+1:00:48.730,1:00:55.290
+Okay? So we reduce the shift and it becomes... it might become easier and easier for following layers to kind of interpret what the shape is
+
+1:00:55.290,1:00:57.290
+because you exchange
+
+1:00:58.540,1:01:00.540
+spatial resolution for
+
+1:01:01.030,1:01:05.009
+feature type resolution. You increase the number of feature types as you go up the layers
+
+1:01:06.040,1:01:08.879
+The spatial resolution goes down because of the pooling and subsampling
+
+1:01:09.730,1:01:14.459
+But the number of feature maps increases and so you make the representation a little more abstract
+
+1:01:14.460,1:01:19.290
+but less sensitive to shift and distortions. And the next layer
+
+1:01:20.740,1:01:25.080
+again performs convolutions, but now the size of the convolution kernel is equal to the height of the image
+
+1:01:25.080,1:01:27.449
+And so what you get is a single band
+
+1:01:28.359,1:01:32.219
+for this feature map. It basically becomes one dimensional and
+
+1:01:32.920,1:01:39.750
+so now any vertical shift is basically eliminated, right? It's turned into some variation of activation, but it's not
+
+1:01:40.840,1:01:42.929
+It's not a shift anymore. It's some sort of
+
+1:01:44.020,1:01:45.910
+simpler --hopefully
+
+1:01:45.910,1:01:49.020
+transformation of the input. In fact, you can show it's simpler
+
+1:01:51.160,1:01:53.580
+It's flatter in some ways
+
+1:01:56.650,1:02:00.330
+Okay? So that's the sort of generic convolutional net architecture we have
+
+1:02:01.570,1:02:05.699
+This is a slightly more modern version of it, where you have some form of normalization
+
+1:02:07.450,1:02:09.450
+Batch norm
+
+1:02:10.600,1:02:15.179
+Good norm, whatever. A filter bank, those are the multiple convolutions
+
+1:02:16.660,1:02:18.690
+In signal processing they're called filter banks
+
+1:02:19.840,1:02:27.149
+Pointwise non-linearity, generally a ReLU, and then some pooling, generally max pooling in the most common
+
+1:02:28.330,1:02:30.629
+implementations of convolutional nets. You can, of course
+
+1:02:30.630,1:02:35.880
+imagine other types of pooling. I talked about the average but the more generic version is the LP norm
+
+1:02:36.640,1:02:38.640
+which is...
+
+1:02:38.770,1:02:45.530
+take all the inputs through a complex cell, elevate them to some power and then take the...
+
+1:02:45.530,1:02:47.530
+Sum them up, and then take the...
+
+1:02:49.860,1:02:51.860
+Elevate that to 1 over the power
+
+1:02:53.340,1:02:58.489
+Yeah, this should be a sum inside of the P-th root here
+
+1:03:00.870,1:03:02.870
+Another way to pool and again
+
+1:03:03.840,1:03:07.759
+a good pooling operation is an operation that is
+
+1:03:07.920,1:03:11.719
+invariant to a permutation of the input. It gives you the same result
+
+1:03:12.750,1:03:14.750
+regardless of the order in which you put the input
+
+1:03:15.780,1:03:22.670
+Here's another example. We talked about this function before: 1 over b log sum of our inputs of e to the bXᵢ
+
+1:03:25.920,1:03:30.649
+Exponential bX. Again, that's a kind of symmetric aggregation operation that you can use
+
+1:03:32.400,1:03:35.539
+So that's kind of a stage of a convolutional net, and then you can repeat that
+
+1:03:36.270,1:03:43.729
+There's sort of various ways of positioning the normalization. Some people put it after the non-linearity before the pooling
+
+1:03:43.730,1:03:45.730
+You know, it depends
+
+1:03:46.590,1:03:48.590
+But it's typical
+
+1:03:53.640,1:03:56.569
+So, how do you do this in PyTorch? there's a number of different ways
+
+1:03:56.570,1:04:02.479
+You can do it by writing it explicitly, writing a class. So this is an example of a convolutional net class
+
+1:04:04.020,1:04:10.520
+In particular one here where you do convolutions, ReLU and max pooling
+
+1:04:12.600,1:04:17.900
+Okay, so the constructor here creates convolutional layers which have parameters in them
+
+1:04:18.810,1:04:24.499
+And this one has what's called fully-connected layers. I hate that. Okay?
+
+1:04:25.980,1:04:30.919
+So there is this idea somehow that the last layer of a convolutional net
+
+1:04:32.760,1:04:34.790
+Like this one, is fully connected because
+
+1:04:37.320,1:04:42.860
+every unit in this layer is connected to every unit in that layer. So that looks like a full connection
+
+1:04:44.010,1:04:47.060
+But it's actually useful to think of it as a convolution
+
+1:04:49.200,1:04:51.060
+Okay?
+
+1:04:51.060,1:04:56.070
+Now, for efficiency reasons, or maybe some others bad reasons they're called
+
+1:04:57.370,1:05:00.959
+fully-connected layers, and we used the class linear here
+
+1:05:01.120,1:05:05.459
+But it kind of breaks the whole idea that your network is a convolutional network
+
+1:05:06.070,1:05:09.209
+So it's much better actually to view them as convolutions
+
+1:05:09.760,1:05:14.370
+In this case one by one convolution which is sort of a weird concept. Okay. So here we have
+
+1:05:15.190,1:05:20.46
+four layers, two convolutional layers and two so-called fully-connected layers
+
+1:05:21.790,1:05:23.440
+And then the way we...
+
+1:05:23.440,1:05:29.129
+So we need to create them in the constructor, and the way we use them in the forward pass is that
+
+1:05:30.630,1:05:35.310
+we do a convolution of the input, and then we apply the ReLU, and then we do max pooling and then we
+
+1:05:35.710,1:05:38.699
+run the second layer, and apply the ReLU, and do max pooling again
+
+1:05:38.700,1:05:44.280
+And then we reshape the output because it's a fully connected layer. So we want to make this a
+
+1:05:45.190,1:05:47.879
+vector so that's what the x.view(-1) does
+
+1:05:48.820,1:05:50.820
+And then apply a
+
+1:05:51.160,1:05:53.160
+ReLU to it
+
+1:05:53.260,1:05:55.260
+And...
+
+1:05:55.510,1:06:00.330
+the second fully-connected layer, and then apply a softmax if we want to do classification
+
+1:06:00.460,1:06:04.409
+And so this is somewhat similar to the architecture you see at the bottom
+
+1:06:04.900,1:06:08.370
+The numbers might be different in terms of feature maps and stuff, but...
+
+1:06:09.160,1:06:11.160
+but the general architecture is
+
+1:06:12.250,1:06:14.250
+pretty much what we're talking about
+
+1:06:15.640,1:06:17.640
+Yes?
+
+1:06:20.530,1:06:22.530
+Say again
+
+1:06:24.040,1:06:26.100
+You know, whatever gradient descent decides
+
+1:06:28.630,1:06:30.630
+We can look at them, but
+
+1:06:31.180,1:06:33.180
+if you train with a lot of
+
+1:06:33.280,1:06:37.590
+examples of natural images, the kind of filters you will see at the first layer
+
+1:06:37.840,1:06:44.999
+basically will end up being mostly oriented edge detectors, very much similar to what people, to what neuroscientists
+
+1:06:45.340,1:06:49.110
+observe in the cortex of
+
+1:06:49.210,1:06:50.440
+animals
+
+1:06:50.440,1:06:52.440
+In the visual cortex of animals
+
+1:06:55.780,1:06:58.469
+They will change when you train the model, that's the whole point yes
+
+1:07:05.410,1:07:11.160
+Okay, so it's pretty simple. Here's another way of defining those. This is... I guess it's kind of an
+
+1:07:12.550,1:07:15.629
+outdated way of doing it, right? Not many people do this anymore
+
+1:07:17.170,1:07:23.340
+but it's kind of a simple way. Also there is this class in PyTorch called nn.Sequential
+
+1:07:24.550,1:07:28.469
+It's basically a container and you keep putting modules in it and it just
+
+1:07:29.080,1:07:36.269
+automatically kind of use them as being kind of connected in sequence, right? And so then you just have to call
+
+1:07:40.780,1:07:45.269
+forward on it and it will just compute the right thing
+
+1:07:46.360,1:07:50.370
+In this particular form here, you pass it a bunch of pairs
+
+1:07:50.370,1:07:55.229
+It's like a dictionary so you can give a name to each of the layers, and you can later access them
+
+1:08:08.079,1:08:10.079
+It's the same architecture we were talking about earlier
+
+1:08:18.489,1:08:24.029
+Yeah, I mean the backprop is automatic, right? You get it
+
+1:08:25.630,1:08:27.630
+by default you just call
+
+1:08:28.690,1:08:32.040
+backward and it knows how to back propagate through it
+
+1:08:44.000,1:08:49.180
+Well, the class kind of encapsulates everything into an object where the parameters are
+
+1:08:49.250,1:08:51.250
+There's a particular way of...
+
+1:08:52.220,1:08:54.220
+getting the parameters out and 
+
+1:08:55.130,1:08:58.420
+kind of feeding them to an optimizer
+
+1:08:58.420,1:09:01.330
+And so the optimizer doesn't need to know what your network looks like
+
+1:09:01.330,1:09:06.910
+It just knows that there is a function and there is a bunch of parameters and it gets a gradient and
+
+1:09:06.910,1:09:08.910
+it doesn't need to know what your network looks like
+
+1:09:10.790,1:09:12.879
+Yeah, you'll hear more about this
+
+1:09:14.840,1:09:16.840
+tomorrow
+
+1:09:25.610,1:09:33.159
+So here's a very interesting aspect of convolutional nets and it's one of the reasons why they've become so
+
+1:09:33.830,1:09:37.390
+successful in many applications. It's the fact that
+
+1:09:39.440,1:09:45.280
+if you view every layer in a convolutional net as a convolution, so there is no full connections, so to speak
+
+1:09:47.660,1:09:53.320
+you don't need to have a fixed size input. You can vary the size of the input and the network will
+
+1:09:54.380,1:09:56.380
+vary its size accordingly
+
+1:09:56.780,1:09:58.780
+because...
+
+1:09:59.510,1:10:01.510
+when you apply a convolution to an image
+
+1:10:02.150,1:10:05.800
+you fit it an image of a certain size, you do a convolution with a kernel
+
+1:10:06.620,1:10:11.979
+you get an image whose size is related to the size of the input
+
+1:10:12.140,1:10:15.789
+but you can change the size of the input and it just changes the size of the output
+
+1:10:16.760,1:10:20.320
+And this is true for every convolutional-like like operation, right?
+
+1:10:20.320,1:10:25.509
+So if your network is composed only of convolutions, then it doesn't matter what the size of the input is
+
+1:10:26.180,1:10:31.450
+It's going to go through the network and the size of every layer will change according to the size of the input
+
+1:10:31.580,1:10:34.120
+and the size of the output will also change accordingly
+
+1:10:34.640,1:10:37.329
+So here is a little example here where
+
+1:10:38.720,1:10:40.720
+I wanna do
+
+1:10:41.300,1:10:45.729
+cursive handwriting recognition and it's very hard because I don't know where the letters are
+
+1:10:45.730,1:10:48.700
+So I can't just have a character recognizer that...
+
+1:10:49.260,1:10:51.980
+I mean a system that will first cut the
+
+1:10:52.890,1:10:56.100
+word into letters
+
+1:10:56.100,1:10:57.72
+because I don't know where the letters are
+
+1:10:57.720,1:10:59.900
+and then apply the convolutional net to each of the letters
+
+1:11:00.210,1:11:05.200
+So the best I can do is take the convolutional net and swipe it over the input and then record the output
+
+1:11:05.850,1:11:11.810
+Okay? And so you would think that to do this you will have to take a convolutional net like this that has a window
+
+1:11:12.060,1:11:14.389
+large enough to see a single character
+
+1:11:15.120,1:11:21.050
+and then you take your input image and compute your convolutional net at every location
+
+1:11:21.660,1:11:27.110
+shifting it by one pixel or two pixels or four pixels or something like this, a small enough number of pixels that
+
+1:11:27.630,1:11:30.619
+regardless of where the character occurs in the input
+
+1:11:30.620,1:11:35.000
+you will still get a score on the output whenever it needs to recognize one
+
+1:11:36.150,1:11:38.989
+But it turns out that will be extremely wasteful
+
+1:11:40.770,1:11:42.770
+because...
+
+1:11:43.290,1:11:50.179
+you will be redoing the same computation multiple times. And so the proper way to do this --and this is very important to understand
+
+1:11:50.880,1:11:56.659
+is that you don't do what I just described where you have a small convolutional net that you apply to every window
+
+1:11:58.050,1:12:00.050
+What you do is you
+
+1:12:01.230,1:12:07.939
+take a large input and you apply the convolutions to the input image since it's larger you're gonna get a larger output
+
+1:12:07.940,1:12:11.270
+you apply the second layer convolution to that, or the pooling, whatever it is
+
+1:12:11.610,1:12:15.170
+You're gonna get a larger input again, etc.
+
+1:12:15.170,1:12:16.650
+all the way to the top and
+
+1:12:16.650,1:12:20.929
+whereas in the original design you were getting only one output now you're going to get multiple outputs because
+
+1:12:21.570,1:12:23.570
+it's a convolutional layer
+
+1:12:27.990,1:12:29.990
+This is super important because
+
+1:12:30.600,1:12:35.780
+this way of applying a convolutional net with a sliding window is
+
+1:12:36.870,1:12:40.610
+much, much cheaper than recomputing the convolutional net at every location
+
+1:12:42.510,1:12:44.510
+Okay?
+
+1:12:45.150,1:12:51.619
+You would not believe how many decades it took to convince people that this was a good thing
+
+1:12:58.960,1:13:03.390
+So here's an example of how you can use this
+
+1:13:04.090,1:13:09.180
+This is a conventional net that was trained on individual digits, 32 by 32. It was trained on a MNIST, okay?
+
+1:13:09.760,1:13:11.760
+32 by 32 input windows
+
+1:13:12.400,1:13:15.690
+It's LeNet 5, so it's very similar to the architecture
+
+1:13:15.690,1:13:20.940
+I just showed the code for, okay? It's trained on individual characters to just classify
+
+1:13:21.970,1:13:26.369
+the character in the center of the image. And the way it was trained was there was a little bit of data
+
+1:13:26.770,1:13:30.359
+augmentation where the character in the center was kind of shifted a little bit in various locations
+
+1:13:31.420,1:13:36.629
+changed in size. And then there were two other characters
+
+1:13:37.420,1:13:39.600
+that were kind of added to the side to confuse it
+
+1:13:40.480,1:13:45.660
+in many samples. And then it was also trained with an 11th category
+
+1:13:45.660,1:13:50.249
+which was "none of the above" and the way it's trained is either you show it a blank image
+
+1:13:50.410,1:13:54.149
+or you show it an image where there is no character in the center but there are characters on the side
+
+1:13:54.940,1:13:59.399
+so that it would detect whenever it's inbetween two characters
+
+1:14:00.520,1:14:02.520
+and then you do this thing of
+
+1:14:02.650,1:14:10.970
+computing the convolutional net at every location on the input without actually shifting it but just applying the convolutions to the entire image
+
+1:14:11.740,1:14:13.740
+And that's what you get
+
+1:14:13.780,1:14:23.220
+So here the input image is 64 by 32, even though the network was trained on 32 by 32 with those kind of generated examples
+
+1:14:24.280,1:14:28.049
+And what you see is the activity of some of the layers, not all of them are represented
+
+1:14:29.410,1:14:32.309
+And what you see at the top here, those kind of funny shapes
+
+1:14:33.520,1:14:37.560
+You see threes and fives popping up and they basically are an
+
+1:14:38.830,1:14:41.850
+indication of the winning category for every location, right?
+
+1:14:42.670,1:14:47.339
+So the eight outputs that you see at the top are
+
+1:14:48.520,1:14:50.520
+basically the output corresponding to eight different
+
+1:14:51.250,1:14:56.790
+positions of the 32 by 32 input window on the input, shifted by 4 pixels every time
+
+1:14:59.530,1:15:05.859
+And what is represented is the winning category within that window and the grayscale indicates the score, okay?
+
+1:15:07.220,1:15:10.419
+So what you see is that there's two detectors detecting the five
+
+1:15:11.030,1:15:15.850
+until the three kind of starts overlapping. And then two detectors are detecting the three that kind of moved around
+
+1:15:18.230,1:15:22.779
+because within a 32 by 32 window
+
+1:15:23.390,1:15:29.919
+the three appears to the left of that 32 by 32 window, and then to the right of that other 32 by 32 windows shifted by four
+
+1:15:29.920,1:15:31.920
+and so those two detectors detect
+
+1:15:32.690,1:15:34.690
+that 3 or that 5
+
+1:15:36.140,1:15:39.890
+So then what you do is you take all those scores here at the top and you
+
+1:15:39.890,1:15:43.809
+do a little bit of post-processing very simple and you figure out if it's a three and a five
+
+1:15:44.630,1:15:46.630
+What's interesting about this is that
+
+1:15:47.660,1:15:49.899
+you don't need to do prior segmentation
+
+1:15:49.900,1:15:51.860
+So something that people had to do
+
+1:15:51.860,1:15:58.180
+before, in computer vision, was if you wanted to recognize an object you had to separate the object from its background because the recognition system
+
+1:15:58.490,1:16:00.490
+would get confused by
+
+1:16:00.800,1:16:07.900
+the background. But here with this convolutional net, it's been trained with overlapping characters and it knows how to tell them apart
+
+1:16:08.600,1:16:10.809
+And so it's not confused by characters that overlap
+
+1:16:10.810,1:16:15.729
+I have a whole bunch of those on my web website, by the way, those animations from the early nineties
+
+1:16:38.450,1:16:41.679
+No, that was the main issue. That's one of the reasons why
+
+1:16:44.210,1:16:48.040
+computer vision wasn't working very well. It's because the very problem of
+
+1:16:49.850,1:16:52.539
+figure/background separation, detecting an object
+
+1:16:53.780,1:16:59.530
+and recognizing it is the same. You can't recognize the object until you segment it but you can't segment it until you recognize it
+
+1:16:59.840,1:17:05.290
+It's the same for cursive handwriting recognition, right? You can't... so here's an example
+
+1:17:07.460,1:17:09.460
+Do we have pens?
+
+1:17:10.650,1:17:12.650
+Doesn't look like we have pens right?
+
+1:17:14.969,1:17:21.859
+Here we go, that's true. I'm sorry... maybe I should use the...
+
+1:17:24.780,1:17:26.780
+If this works...
+
+1:17:34.500,1:17:36.510
+Oh, of course...
+
+1:17:43.409,1:17:45.409
+Okay...
+
+1:17:52.310,1:17:54.310
+Can you guys read this?
+
+1:17:55.670,1:18:01.990
+Okay, I mean it's horrible handwriting but it's also because I'm writing on the screen. Okay, now can you read it?
+
+1:18:08.240,1:18:10.240
+Minimum, yeah
+
+1:18:11.870,1:18:15.010
+Okay, there's actually no way you can segment the letters out of this right
+
+1:18:15.010,1:18:17.439
+I mean this is kind of a random number of waves
+
+1:18:17.900,1:18:23.260
+But just the fact that the two "I"s are identified, then it's basically not ambiguous at least in English
+
+1:18:24.620,1:18:26.620
+So that's a good example of
+
+1:18:28.100,1:18:30.340
+the interpretation of individual
+
+1:18:31.580,1:18:38.169
+objects depending on their context. And what you need is some sort of high-level language model to know what words are possible
+
+1:18:38.170,1:18:40.170
+If you don't know English or similar
+
+1:18:40.670,1:18:44.320
+languages that have the same word, there's no way you can you can read this
+
+1:18:45.500,1:18:48.490
+Spoken language is very similar to this
+
+1:18:49.700,1:18:53.679
+All of you who have had the experience of learning a foreign language
+
+1:18:54.470,1:18:56.470
+probably had the experience that
+
+1:18:57.110,1:19:04.150
+you have a hard time segmenting words from a new language and then recognizing the words because you don't have the vocabulary
+
+1:19:04.850,1:19:09.550
+Right? So if I speak in French -- si je commence à parler français, vous n'avez aucune idée d'où sont les limites des mots --
+[If I start speaking French, you have no idea where the limits of words are]
+
+1:19:09.740,1:19:13.749
+Except if you speak French. So I spoke a sentence, it's words
+
+1:19:13.750,1:19:17.140
+but you can't tell the boundary between the words right because it is basically no
+
+1:19:17.990,1:19:23.800
+clear seizure between the words unless you know where the words are in advance, right? So that's the problem of segmentation
+
+1:19:23.900,1:19:28.540
+You can't recognize until you segment, you can't segment until you recognize you have to do both at the same time
+
+1:19:29.150,1:19:32.379
+Early computer vision systems had a really hard time doing this
+
+1:19:40.870,1:19:46.739
+So that's why this kind of stuff is big progress because you don't have to do segmentation in advance, it just...
+
+1:19:47.679,1:19:52.559
+just train your system to be robust to kind of overlapping objects and things like that. Yes, in the back!
+
+1:19:55.510,1:19:59.489
+Yes, there is a background class. So when you see a blank response
+
+1:20:00.340,1:20:04.410
+it means the system says "none of the above" basically, right? So it's been trained
+
+1:20:05.590,1:20:07.590
+to produce "none of the above"
+
+1:20:07.690,1:20:11.699
+either when the input is blank or when there is one character that's too
+
+1:20:13.420,1:20:17.190
+outside of the center or when you have two characters
+
+1:20:17.620,1:20:24.029
+but there's nothing in the center. Or when you have two characters that overlap, but there is no central character, right? So it's...
+
+1:20:24.760,1:20:27.239
+trying to detect boundaries between characters essentially
+
+1:20:28.420,1:20:30.420
+Here's another example
+
+1:20:31.390,1:20:38.640
+This is an example that shows that even a very simple convolutional net with just two stages, right? convolution, pooling, convolution
+
+1:20:38.640,1:20:40.640
+pooling, and then two layers of...
+
+1:20:42.010,1:20:44.010
+two more layers afterwards
+
+1:20:44.770,1:20:47.429
+can solve what's called the feature-binding problem
+
+1:20:48.130,1:20:50.130
+So visual neuroscientists and
+
+1:20:50.320,1:20:56.190
+computer vision people had the issue --it was kind of a puzzle-- How is it that
+
+1:20:57.489,1:21:01.289
+we perceive objects as objects? Objects are collections of features
+
+1:21:01.290,1:21:04.229
+but how do we bind all the features together of an object to form this object?
+
+1:21:06.460,1:21:09.870
+Is there some kind of magical way of doing this?
+
+1:21:12.520,1:21:16.589
+And they did... psychologists did experiments like...
+
+1:21:24.210,1:21:26.210
+draw this and then that
+
+1:21:28.239,1:21:31.349
+and you perceive the bar as
+
+1:21:32.469,1:21:39.419
+a single bar because you're used to bars being obstructed by, occluded by other objects
+
+1:21:39.550,1:21:41.550
+and so you just assume it's an occlusion
+
+1:21:44.410,1:21:47.579
+And then there are experiments that figure out how much do I have to
+
+1:21:48.430,1:21:52.109
+shift the two bars to make me perceive them as two separate bars
+
+1:21:53.980,1:21:56.580
+But in fact, the minute they perfectly line and if you...
+
+1:21:57.250,1:21:59.080
+if you do this..
+
+1:21:59.080,1:22:03.809
+maybe exactly identical to what you see here, but now you perceive them as two different objects
+
+1:22:06.489,1:22:12.929
+So how is it that we seem to be solving the feature-binding problem?
+
+1:22:15.880,1:22:21.450
+And what this shows is that you don't need any specific mechanism for it. It just happens
+
+1:22:22.210,1:22:25.919
+If you have enough nonlinearities and you train with enough data
+
+1:22:26.440,1:22:33.359
+then, as a side effect, you get a system that solves the feature-binding problem without any particular mechanism for it
+
+1:22:37.510,1:22:40.260
+So here you have two shapes and you move a single
+
+1:22:43.060,1:22:50.519
+stroke and it goes from a six and a one, to a three, to a five and a one, to a seven and a three
+
+1:22:53.140,1:22:55.140
+Etcetera
+
+1:23:00.020,1:23:07.480
+Right, good question. So the question is: how do you distinguish between the two situations? We have two fives next to each other and
+
+1:23:08.270,1:23:14.890
+the fact that you have a single five being detected by two different frames, right? Two different framing of that five
+
+1:23:15.470,1:23:17.470
+Well there is this explicit
+
+1:23:17.660,1:23:20.050
+training so that when you have two characters that
+
+1:23:20.690,1:23:25.029
+are touching and none of them is really centered you train the system to say "none of the above", right?
+
+1:23:25.030,1:23:29.079
+So it's always going to have five blank five
+
+1:23:30.020,1:23:35.800
+It's always gonna have even like one blank one, and the ones can be very close. It will you'll tell you the difference
+
+1:23:39.170,1:23:41.289
+Okay, so what are convnets good for?
+
+1:24:04.970,1:24:07.599
+So what you have to look at is this
+
+1:24:11.510,1:24:13.510
+Every layer here is a convolution
+
+1:24:13.610,1:24:15.020
+Okay?
+
+1:24:15.020,1:24:21.070
+Including the last layer, so it looks like a full connection because every unit in the second layer goes into the output
+
+1:24:21.070,1:24:24.460
+But in fact, it is a convolution, it just happens to be applied to a single location
+
+1:24:24.950,1:24:31.300
+So now imagine that this layer at the top here now is bigger, okay? Which is represented here
+
+1:24:32.840,1:24:34.130
+Okay?
+
+1:24:34.130,1:24:37.779
+Now the size of the kernel is the size of the image you had here previously
+
+1:24:37.820,1:24:43.360
+But now it's a convolution that has multiple locations, right? And so what you get is multiple outputs
+
+1:24:46.430,1:24:55.100
+That's right, that's right. Each of which corresponds to a classification over an input window of size 32 by 32 in the example I showed
+
+1:24:55.100,1:25:02.710
+And those windows are shifted by 4 pixels. The reason being that the network architecture I showed
+
+1:25:04.280,1:25:11.739
+here has a convolution with stride one, then pooling with stride two, convolution with stride one, pooling with stride two
+
+1:25:13.949,1:25:17.178
+And so the overall stride is four, right?
+
+1:25:18.719,1:25:22.788
+And so to get a new output you need to shift the input window by four
+
+1:25:24.210,1:25:29.509
+to get one of those because of the two pooling layers with...
+
+1:25:31.170,1:25:35.480
+Maybe I should be a little more explicit about this. Let me draw a picture, that would be clearer
+
+1:25:39.929,1:25:43.848
+So you have an input
+
+1:25:49.110,1:25:53.749
+like this... a convolution, let's say a convolution of size three
+
+1:25:57.420,1:25:59.420
+Okay? Yeah with stride one
+
+1:26:01.289,1:26:04.518
+Okay, I'm not gonna draw all of them, then you have
+
+1:26:05.460,1:26:11.389
+pooling with subsampling of size two, so you pool over 2 and you subsample, the stride is 2, so you shift by two
+
+1:26:12.389,1:26:14.389
+No overlap
+
+1:26:18.550,1:26:25.060
+Okay, so here the input is this size --one two, three, four, five, six, seven, eight
+
+1:26:26.150,1:26:29.049
+because the convolution is of size three you get
+
+1:26:29.840,1:26:31.840
+an output here of size six and
+
+1:26:32.030,1:26:39.010
+then when you do pooling with subsampling with stride two, you get three outputs because that divides the output by two, okay?
+
+1:26:39.880,1:26:41.880
+Let me add another one
+
+1:26:43.130,1:26:45.130
+Actually two
+
+1:26:46.790,1:26:48.790
+Okay, so now the output is ten
+
+1:26:50.030,1:26:51.680
+This guy is eight
+
+1:26:51.680,1:26:53.680
+This guy is four
+
+1:26:54.260,1:26:56.409
+I can do convolutions now also
+
+1:26:57.650,1:26:59.650
+Let's say three
+
+1:27:01.400,1:27:03.400
+I only get two outputs
+
+1:27:04.490,1:27:06.490
+Okay? Oops!
+
+1:27:07.040,1:27:10.820
+Hmm not sure why it doesn't... draw
+
+1:27:10.820,1:27:13.270
+Doesn't wanna draw anymore, that's interesting
+
+1:27:17.060,1:27:19.060
+Aha!
+
+1:27:24.110,1:27:26.380
+It doesn't react to clicks, that's interesting
+
+1:27:34.460,1:27:39.609
+Okay, not sure what's going on! Oh "xournal" is not responding
+
+1:27:41.750,1:27:44.320
+All right, I guess it crashed on me
+
+1:27:46.550,1:27:48.550
+Well, that's annoying
+
+1:27:53.150,1:27:55.150
+Yeah, definitely crashed
+
+1:28:02.150,1:28:04.150
+And, of course, it forgot it, so...
+
+1:28:09.860,1:28:12.760
+Okay, so we have ten, then eight
+
+1:28:15.230,1:28:20.470
+because of convolution with three, then we have pooling
+
+1:28:22.520,1:28:24.520
+of size two with
+
+1:28:26.120,1:28:28.120
+stride two, so we get four
+
+1:28:30.350,1:28:36.970
+Then we have convolution with three so we get two, okay? And then maybe pooling again
+
+1:28:38.450,1:28:42.700
+of size two and subsampling two, we get one. Okay, so...
+
+1:28:44.450,1:28:46.869
+ten input, eight
+
+1:28:49.370,1:28:53.079
+four, two, and...
+
+1:28:58.010,1:29:03.339
+then one for the pooling. This is convolution three, you're right
+
+1:29:06.500,1:29:08.500
+This is two
+
+1:29:09.140,1:29:11.140
+And those are three
+
+1:29:12.080,1:29:14.080
+Etcetera. Right. Now, let's assume
+
+1:29:14.540,1:29:17.860
+I add a few units here
+
+1:29:18.110,1:29:21.010
+Okay? So that's going to add, let's say
+
+1:29:21.890,1:29:24.160
+four units here, two units here
+
+1:29:27.620,1:29:29.620
+Then...
+
+1:29:41.190,1:29:42.840
+Yeah, this one is
+
+1:29:42.840,1:29:46.279
+like this and like that so I got four and
+
+1:29:47.010,1:29:48.960
+I got another one here
+
+1:29:48.960,1:29:52.460
+Okay? So now I have only one output and by adding four
+
+1:29:53.640,1:29:55.640
+four inputs here
+
+1:29:55.830,1:29:58.249
+which is not 14. I got two outputs
+
+1:29:59.790,1:30:02.090
+Why four? Because I have 2
+
+1:30:02.970,1:30:04.830
+stride of 2
+
+1:30:04.830,1:30:10.939
+Okay? So the overall subsampling ratio from input to output is 4, it's 2 times 2
+
+1:30:13.140,1:30:17.540
+Now this is 12, and this is 6, and this is 4
+
+1:30:20.010,1:30:22.010
+So that's a...
+
+1:30:22.620,1:30:24.620
+demonstration of the fact that
+
+1:30:24.900,1:30:26.900
+you can increase the size of the input
+
+1:30:26.900,1:30:32.330
+it will increase the size of every layer, and if you have a layer that has size 1 and it's a convolutional layer
+
+1:30:32.330,1:30:34.330
+its size is going to be increased
+
+1:30:42.870,1:30:44.870
+Yes
+
+1:30:47.250,1:30:52.760
+Change the size of a layer, like, vertically, horizontally? Yeah, so there's gonna be...
+
+1:30:54.390,1:30:57.950
+So first you have to train for it, if you want the system to have so invariance to size
+
+1:30:58.230,1:31:03.860
+you have to train it with characters of various sizes. You can do this with data augmentation if your characters are normalized
+
+1:31:04.740,1:31:06.740
+That's the first thing. Second thing is...
+
+1:31:08.850,1:31:16.579
+empirically simple convolutional nets are only invariant to size within a factor of... rather small factor, like you can increase the size by
+
+1:31:17.610,1:31:23.599
+maybe 40 percent or something. I mean change the size about 40 percent plus/minus 20 percent, something like that, right?
+
+1:31:26.250,1:31:28.250
+Beyond that...
+
+1:31:28.770,1:31:33.830
+you might have more trouble getting invariance, but people have trained with input...
+
+1:31:33.980,1:31:38.390
+I mean objects of sizes that vary by a lot. So the way to handle this is
+
+1:31:39.750,1:31:46.430
+if you want to handle variable size, is that if you have an image and you don't know what size the objects are
+
+1:31:46.950,1:31:50.539
+that are in this image, you apply your convolutional net to that image and
+
+1:31:51.180,1:31:53.979
+then you take the same image, reduce it by a factor of two
+
+1:31:54.440,1:31:58.179
+just scale the image by a factor of two, run the same convolutional net on that new image and
+
+1:31:59.119,1:32:02.949
+then reduce it by a factor of two again, and run the same convolutional net again on that image
+
+1:32:03.800,1:32:08.110
+Okay? So the first convolutional net will be able to detect small objects within the image
+
+1:32:08.630,1:32:11.859
+So let's say your network has been trained to detect objects of size...
+
+1:32:11.860,1:32:16.179
+I don't know, 20 pixels, like faces for example, right? They are 20 pixels
+
+1:32:16.789,1:32:20.739
+It will detect faces that are roughly 20 pixels within this image and
+
+1:32:21.320,1:32:24.309
+then when you subsample by a factor of 2 and you apply the same network
+
+1:32:24.309,1:32:31.209
+it will detect faces that are 20 pixels within the new image, which means there were 40 pixels in the original image
+
+1:32:32.179,1:32:37.899
+Okay? Which the first network will not see because the face would be bigger than its input window
+
+1:32:39.170,1:32:41.529
+And then the next network over will detect
+
+1:32:42.139,1:32:44.409
+faces that are 80 pixels, etc., right?
+
+1:32:44.659,1:32:49.089
+So then by kind of combining the scores from all of those, and doing something called non-maximum suppression
+
+1:32:49.090,1:32:51.090
+we can actually do detection and
+
+1:32:51.230,1:32:57.939
+localization of objects. People use considerably more sophisticated techniques for detection now, and for localization that we'll talk about next week
+
+1:32:58.429,1:33:00.429
+But that's the basic idea
+
+1:33:00.920,1:33:02.920
+So let me conclude
+
+1:33:03.019,1:33:09.429
+What are convnets good for? They're good for signals that come to you in the form of a multi-dimensional array
+
+1:33:10.190,1:33:12.190
+But that multi-dimensional array has
+
+1:33:13.190,1:33:17.500
+to have two characteristics at least. The first one is
+
+1:33:18.469,1:33:23.828
+there is strong local correlations between values. So if you take an image
+
+1:33:24.949,1:33:32.949
+random image, take two pixels within this image, two pixels that are nearby. Those two pixels are very likely to have very similar colors
+
+1:33:33.530,1:33:38.199
+Take a picture of this class, for example, two pixels on the wall basically have the same color
+
+1:33:39.469,1:33:42.069
+Okay? It looks like there is a ton of objects here, but
+
+1:33:43.280,1:33:49.509
+--animate objects-- but in fact mostly, statistically, neighboring pixels are essentially the same color
+
+1:33:52.699,1:34:00.129
+As you move the distance from two pixels away and you compute the statistics of how similar pixels are as a function of distance
+
+1:34:00.650,1:34:02.650
+they're less and less similar
+
+1:34:03.079,1:34:05.079
+So what does that mean? Because
+
+1:34:06.350,1:34:09.430
+nearby pixels are likely to have similar colors
+
+1:34:09.560,1:34:14.499
+that means that when you take a patch of pixels, say five by five, or eight by eight or something
+
+1:34:16.040,1:34:18.040
+The type of patch you're going to observe
+
+1:34:18.920,1:34:21.159
+is very likely to be kind of a smoothly varying
+
+1:34:21.830,1:34:23.830
+color or maybe with an edge
+
+1:34:24.770,1:34:32.080
+But among all the possible combinations of 25 pixels, the ones that you actually observe in natural images is a tiny subset
+
+1:34:34.130,1:34:38.380
+What that means is that it's advantageous to represent the content of that patch
+
+1:34:39.440,1:34:46.509
+by a vector with perhaps less than 25 values that represent the content of that patch. Is there an edge, is it uniform?
+
+1:34:46.690,1:34:48.520
+What color is it? You know things like that, right?
+
+1:34:48.520,1:34:52.660
+And that's basically what the convolutions in the first layer of a convolutional net are doing
+
+1:34:53.900,1:34:58.809
+Okay. So if you have local correlations, there is an advantage in detecting local features
+
+1:34:59.090,1:35:01.659
+That's what we observe in the brain. That's what convolutional nets are doing
+
+1:35:03.140,1:35:08.140
+This idea of locality. If you feed a convolutional net with permuted pixels
+
+1:35:09.020,1:35:15.070
+it's not going to be able to do a good job at recognizing your images, even if the permutation is fixed
+
+1:35:17.030,1:35:19.960
+Right? A fully connected net doesn't care
+
+1:35:21.410,1:35:23.410
+about permutations
+
+1:35:25.700,1:35:28.240
+Then the second characteristics is that
+
+1:35:30.050,1:35:34.869
+features that are important may appear anywhere on the image. So that's what justifies shared weights
+
+1:35:35.630,1:35:38.499
+Okay? The local correlation justifies local connections
+
+1:35:39.560,1:35:46.570
+The fact that features can appear anywhere, that the statistics of images or the signal is uniform
+
+1:35:47.810,1:35:52.030
+means that you need to have repeated feature detectors for every location
+
+1:35:52.850,1:35:54.850
+And that's where shared weights
+
+1:35:55.880,1:35:57.880
+come into play
+
+1:36:01.990,1:36:06.059
+It does justify the pooling because the pooling is if you want invariance to
+
+1:36:06.760,1:36:11.400
+variations in the location of those characteristic features. And so if the objects you're trying to recognize
+
+1:36:12.340,1:36:16.619
+don't change their nature by kind of being slightly distorted then you want pooling
+
+1:36:21.160,1:36:24.360
+So people have used convnets for cancer stuff, image video
+
+1:36:25.660,1:36:31.019
+text, speech. So speech actually is pretty... speech recognition convnets are used a lot
+
+1:36:32.260,1:36:34.380
+Time series prediction, you know things like that
+
+1:36:36.220,1:36:42.030
+And you know biomedical image analysis, so if you want to analyze an MRI, for example
+
+1:36:42.030,1:36:44.030
+MRI or CT scan is a 3d image
+
+1:36:44.950,1:36:49.170
+As humans we can't because we don't have a good visualization technology. We can't really
+
+1:36:49.960,1:36:54.960
+apprehend or understand a 3d volume, a 3-dimensional image
+
+1:36:55.090,1:36:58.709
+But a convnet is fine, feed it a 3d image and it will deal with it
+
+1:36:59.530,1:37:02.729
+That's a big advantage because you don't have to go through slices to kind of figure out
+
+1:37:04.000,1:37:06.030
+the object in the image
+
+1:37:10.390,1:37:15.300
+And then the last thing here at the bottom, I don't know if you guys know where hyperspectral images are
+
+1:37:15.300,1:37:19.139
+So hyperspectral image is an image where... most natural color images
+
+1:37:19.140,1:37:22.619
+I mean images that you collect with a normal camera you get three color components
+
+1:37:23.470,1:37:25.390
+RGB
+
+1:37:25.390,1:37:28.019
+But we can build cameras with way more
+
+1:37:28.660,1:37:30.660
+spectral bands than this and
+
+1:37:31.510,1:37:34.709
+that's particularly the case for satellite imaging where some
+
+1:37:36.160,1:37:40.920
+cameras have many spectral bands going from infrared to ultraviolet and
+
+1:37:41.890,1:37:44.610
+that gives you a lot of information about what you see in each pixel
+
+1:37:45.760,1:37:47.040
+Some tiny animals
+
+1:37:47.040,1:37:54.930
+that have small brains find it easier to process hyperspectral images of low resolution than high resolution images with just three colors
+
+1:37:55.750,1:38:00.450
+For example, there's a particular type of shrimp, right? They have those beautiful
+
+1:38:01.630,1:38:07.499
+eyes and they have like 17 spectral bands or something, but super low resolution and they have a tiny brain to process it
+
+1:38:09.770,1:38:12.850
+Okay, that's all for today. See you!

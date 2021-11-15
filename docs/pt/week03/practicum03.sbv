@@ -1,0 +1,1751 @@
+0:00:00.020,0:00:07.840
+So convolutional neural networks, I guess today I so foundations me, you know, I post nice things on Twitter
+
+0:00:09.060,0:00:11.060
+Follow me. I'm just kidding
+
+0:00:11.290,0:00:16.649
+Alright. So again anytime you have no idea what's going on. Just stop me ask questions
+
+0:00:16.900,0:00:23.070
+Let's make these lessons interactive such that I can try to please you and provide the necessary information
+
+0:00:23.980,0:00:25.980
+For you to understand what's going on?
+
+0:00:26.349,0:00:27.970
+alright, so
+
+0:00:27.970,0:00:31.379
+Convolutional neural networks. How cool is this stuff? Very cool
+
+0:00:32.439,0:00:38.699
+mostly because before having convolutional nets we couldn't do much and we're gonna figure out why now
+
+0:00:39.850,0:00:43.800
+how why why and how these networks are so powerful and
+
+0:00:44.379,0:00:48.329
+They are going to be basically making they are making like a very large
+
+0:00:48.879,0:00:52.859
+Chunk of like the whole networks are used these days
+
+0:00:53.980,0:00:55.300
+so
+
+0:00:55.300,0:01:02.369
+More specifically we are gonna get used to repeat several times those three words, which are the key words for understanding
+
+0:01:02.920,0:01:05.610
+Convolutions, but we are going to be figuring out that soon
+
+0:01:06.159,0:01:09.059
+so let's get started and figuring out how
+
+0:01:09.580,0:01:11.470
+these
+
+0:01:11.470,0:01:13.470
+signals these images and these
+
+0:01:13.990,0:01:17.729
+different items look like so whenever we talk about
+
+0:01:18.670,0:01:21.000
+signals we can think about them as
+
+0:01:21.580,0:01:23.200
+vectors for example
+
+0:01:23.200,0:01:30.600
+We have there a signal which is representing a monophonic audio signal so given that is only
+
+0:01:31.180,0:01:38.339
+We have only the temporal dimension going in like the signal happens over one dimension, which is the temporal dimension
+
+0:01:38.560,0:01:46.079
+This is called 1d signal and can be represented by a singular vector as is shown up up there
+
+0:01:46.750,0:01:48.619
+each
+
+0:01:48.619,0:01:52.389
+Value of that vector represents the amplitude of the wave form
+
+0:01:53.479,0:01:56.589
+for example, if you have just a sign you're going to be just hearing like
+
+0:01:57.830,0:01:59.830
+Like some sound like that
+
+0:02:00.560,0:02:05.860
+If you have like different kind of you know, it's not just a sign a sign you're gonna hear
+
+0:02:06.500,0:02:08.500
+different kind of Timbers or
+
+0:02:09.200,0:02:11.200
+different kind of
+
+0:02:11.360,0:02:13.190
+different kind of
+
+0:02:13.190,0:02:15.190
+flavor of the sound
+
+0:02:15.440,0:02:18.190
+Moreover you're familiar. How sound works, right? So
+
+0:02:18.709,0:02:21.518
+Right now I'm just throwing air through my windpipe
+
+0:02:22.010,0:02:26.830
+where there are like some membranes which is making the air vibrate these the
+
+0:02:26.930,0:02:33.640
+Vibration propagates through the air there are going to be hitting your ears and the ear canal you have inside some little
+
+0:02:35.060,0:02:38.410
+you have likely cochlea right and then given about
+
+0:02:38.989,0:02:45.159
+How much the sound propagates through the cochlea you're going to be detecting the pitch and then by adding different pitch
+
+0:02:45.830,0:02:49.119
+information you can and also like different kind of
+
+0:02:50.090,0:02:53.350
+yeah, I guess speech information you're going figure out what is the
+
+0:02:53.930,0:02:59.170
+Sound I was making over here and then you reconstruct that using your language model you have in your brain
+
+0:02:59.170,0:03:03.369
+Right and the same thing Yun was mentioning if you start speaking another language
+
+0:03:04.310,0:03:11.410
+then you won't be able to parse the information because you're using both a speech model like a conversion between
+
+0:03:12.019,0:03:17.709
+Vibrations and like, you know signal your brain plus the language model in order to make sense
+
+0:03:18.709,0:03:22.629
+Anyhow, that was a 1d signal. Let's say I'm listening to music so
+
+0:03:23.570,0:03:25.570
+What kind of signal do I?
+
+0:03:25.910,0:03:27.910
+have there
+
+0:03:28.280,0:03:34.449
+So if I listen to music user is going to be a stare of stereophonic, right? So it means you're gonna have how many channels?
+
+0:03:35.420,0:03:37.420
+Two channels, right?
+
+0:03:37.519,0:03:38.570
+nevertheless
+
+0:03:38.570,0:03:41.019
+What type of signal is gonna be this one?
+
+0:03:41.150,0:03:46.420
+It's still gonna be one this signal although there are two channels so you can think about you know
+
+0:03:46.640,0:03:54.459
+regardless of how many chanted channels like if you had Dolby Surround you're gonna have what 5.1 so six I guess so, that's the
+
+0:03:55.050,0:03:56.410
+You know
+
+0:03:56.410,0:03:58.390
+vectorial the
+
+0:03:58.390,0:04:02.790
+size of the signal and then the time is the only variable which is
+
+0:04:03.820,0:04:07.170
+Like moving forever. Okay. So those are 1d signals
+
+0:04:09.430,0:04:13.109
+All right, so let's have a look let's zoom in a little bit so
+
+0:04:14.050,0:04:18.420
+We have it. For example on the left hand side. We have something that looks like a sinusoidal
+
+0:04:19.210,0:04:25.619
+function here nevertheless a little bit after you're gonna have again the same type of
+
+0:04:27.280,0:04:29.640
+Function appearing again, so this is called
+
+0:04:30.460,0:04:37.139
+Stationarity you're gonna see over and over and over again the same type of pattern across the temporal
+
+0:04:37.810,0:04:39.810
+Dimension, okay
+
+0:04:40.090,0:04:47.369
+So the first property of this signal which is our natural signal because it happens in nature is gonna be we said
+
+0:04:49.330,0:04:51.330
+Stationarity, okay. That's the first one
+
+0:04:51.580,0:04:53.580
+Moreover what do you think?
+
+0:04:54.130,0:04:56.130
+How likely is?
+
+0:04:56.140,0:05:00.989
+If I have a peak on the left hand side to have a peak also very nearby
+
+0:05:03.430,0:05:09.510
+So how likely is to have a peak there rather than having a peak there given that you had a peak before or
+
+0:05:09.610,0:05:11.590
+if I keep going
+
+0:05:11.590,0:05:18.119
+How likely is you have a peak, you know few seconds later given that you have a peak on the left hand side. So
+
+0:05:19.960,0:05:24.329
+There should be like some kind of common sense common knowledge perhaps that
+
+0:05:24.910,0:05:27.390
+If you are close together and if you are
+
+0:05:28.000,0:05:33.360
+Close to the left hand side is there's gonna be a larger probability that things are gonna be looking
+
+0:05:33.880,0:05:40.589
+Similar, for example you have like a specific sound will have a very kind of specific shape
+
+0:05:41.170,0:05:43.770
+But then if you go a little bit further away from that sound
+
+0:05:44.050,0:05:50.010
+then there's no relation anymore about what happened here given what happened before and so if you
+
+0:05:50.410,0:05:55.170
+Compute the cross correlation between a signal and itself, do you know what's a cross correlation?
+
+0:05:57.070,0:06:02.670
+Do know like if you don't know okay how many hands up who doesn't know a cross correlation
+
+0:06:04.360,0:06:07.680
+Okay fine, so that's gonna be homework for you
+
+0:06:07.680,0:06:14.489
+If you take one signal just a signal audio signal they perform convolution of that signal with itself
+
+0:06:14.650,0:06:15.330
+Okay
+
+0:06:15.330,0:06:19.680
+and so convolution is going to be you have your own signal you take the thing you flip it and then you
+
+0:06:20.170,0:06:22.170
+pass it across and then you multiply
+
+0:06:22.390,0:06:25.019
+Whenever you're gonna have them overlaid in the same
+
+0:06:25.780,0:06:27.780
+Like when there is zero
+
+0:06:28.450,0:06:33.749
+Misalignment you're gonna have like a spike. And then as you start moving around you're gonna have basically two decaying
+
+0:06:34.360,0:06:36.930
+sides that represents the fact that
+
+0:06:37.990,0:06:44.850
+Things have much things in common basically performing a dot product right? So things that have much in common when they are
+
+0:06:45.370,0:06:47.970
+Very close to one specific location
+
+0:06:47.970,0:06:55.919
+If you go further away things start, you know averaging out. So here the second property of this natural signal is locality
+
+0:06:56.500,0:07:04.470
+Information is contained in specific portion and parts of the in this case temporal domain. Okay. So before we had
+
+0:07:06.940,0:07:08.940
+Stationarity now we have
+
+0:07:09.640,0:07:11.640
+Locality alright don't
+
+0:07:12.160,0:07:17.999
+Bless you. All, right. So how about this one right? This is completely unrelated to what happened over there
+
+0:07:20.110,0:07:24.960
+Okay, so let's look at the nice little kitten what kind of
+
+0:07:25.780,0:07:27.070
+dimensions
+
+0:07:27.070,0:07:31.200
+What kind of yeah what dimension has this signal? What was your guess?
+
+0:07:32.770,0:07:34.829
+It's a 2 dimensional signal why is that
+
+0:07:39.690,0:07:45.469
+Okay, we have also a three-dimensional signal option here so someone said two dimensions someone said three dimensions
+
+0:07:47.310,0:07:51.739
+It's two-dimensional why is that sorry noise? Why is two-dimensional
+
+0:07:54.030,0:07:56.030
+Because the information is
+
+0:07:58.050,0:08:00.050
+Sorry the information is
+
+0:08:00.419,0:08:01.740
+especially
+
+0:08:01.740,0:08:03.740
+Depicted right? So the information
+
+0:08:03.750,0:08:05.310
+is
+
+0:08:05.310,0:08:08.450
+Basically encoded in the spatial location of those points
+
+0:08:08.760,0:08:15.439
+Although each point is a vector for example of three or if it's a hyper spectral image. It can be several planes
+
+0:08:16.139,0:08:23.029
+Nevertheless you still you still have two directions in which points can move right? The thickness doesn't change
+
+0:08:24.000,0:08:27.139
+across like in the thicknesses of a given space
+
+0:08:27.139,0:08:33.408
+Right so given thickness and it doesn't change right so you can have as many, you know planes as you want
+
+0:08:33.409,0:08:35.409
+but the information is basically
+
+0:08:35.640,0:08:41.779
+It's a spatial information is spread across the plane. So these are two dimensional data you can also
+
+0:08:50.290,0:08:53.940
+Okay, I see your point so like a wide image or a
+
+0:08:54.910,0:08:56.350
+grayscale image
+
+0:08:56.350,0:08:58.350
+It's definitely a 2d
+
+0:08:58.870,0:09:04.169
+Signal and also it can be represented by using a tensor of two dimensions
+
+0:09:04.870,0:09:07.739
+A color image has RGB planes
+
+0:09:08.350,0:09:14.550
+but the thickness is always three doesn't change and the information is still spread across the
+
+0:09:15.579,0:09:21.839
+Other two dimensions so you can change the size of a color image, but you won't change the thickness of a color image, right?
+
+0:09:22.870,0:09:28.319
+So we are talking about here. The dimension of the signal is how is the information?
+
+0:09:29.470,0:09:31.680
+Basically spread around right in the temporal information
+
+0:09:31.959,0:09:38.789
+If you have Dolby Surround mono mono signal or you have a stereo we still have over time, right?
+
+0:09:38.790,0:09:41.670
+So it's one dimensional images are 2d
+
+0:09:42.250,0:09:44.759
+so let's have a look to the little nice kitten and
+
+0:09:45.519,0:09:47.909
+Let's focus on the on the nose, right? Oh
+
+0:09:48.579,0:09:50.579
+My god, this is a monster. No
+
+0:09:50.949,0:09:52.949
+Okay. Nice big
+
+0:09:53.649,0:09:55.948
+Creature here, right? Okay, so
+
+0:09:56.740,0:10:03.690
+We observe there and there is some kind of dark region nearby the eye you can observe that kind of seeing a pattern
+
+0:10:04.329,0:10:09.809
+Appear over there, right? So what is this property of natural signals? I
+
+0:10:12.699,0:10:18.239
+Told you two properties, this is stationarity. Why is this stationarity?
+
+0:10:22.029,0:10:29.129
+Right, so the same pattern appears over and over again across the dimensionality in this case the dimension is two dimension. Sorry
+
+0:10:30.220,0:10:36.600
+Moreover, what is the likelihood that given that the color in the pupil is black? What is the likelihood that?
+
+0:10:37.149,0:10:42.448
+The pixel on the arrow or like on the tip of the arrow is also black
+
+0:10:42.449,0:10:47.879
+I would say it's quite likely right because it's very close. How about that point?
+
+0:10:48.069,0:10:51.899
+Yeah, kind of less likely right if I keep clicking
+
+0:10:52.480,0:10:59.649
+You know, it's completely it's bright. No, no the other pics in right so is further you go in spacial dimension
+
+0:11:00.290,0:11:06.879
+The less less likely you're gonna have, you know similar information. And so this is called
+
+0:11:08.629,0:11:10.629
+Locality which means
+
+0:11:12.679,0:11:16.269
+There's a higher likelihood for things to have if like
+
+0:11:16.549,0:11:22.509
+The information is like containers in a specific region as you move around things get much much more
+
+0:11:24.649,0:11:26.649
+You know independent
+
+0:11:27.199,0:11:32.529
+Alright, so we have two properties. The third property is gonna be the following. What is this?
+
+0:11:33.829,0:11:35.829
+Are you hungry?
+
+0:11:37.579,0:11:41.769
+So you can see here some donuts right no donuts how you called
+
+0:11:42.649,0:11:44.230
+Bagels, right? All right
+
+0:11:44.230,0:11:51.009
+So for the you the the one of you which have glasses take your glasses off and now answer my question
+
+0:11:53.179,0:11:55.179
+Okay
+
+0:11:59.210,0:12:01.210
+So the third property
+
+0:12:02.210,0:12:07.059
+It's compositionality right and so compositionality means that the
+
+0:12:07.880,0:12:10.119
+Word is actually explainable, right?
+
+0:12:11.060,0:12:13.060
+okay, you enjoy the
+
+0:12:15.830,0:12:20.199
+The thing okay, you gotta get back to me right? I just try to keep your life
+
+0:12:26.180,0:12:28.100
+Hello
+
+0:12:28.100,0:12:33.520
+Okay. So for the one that doesn't have glasses ask the friend who has glasses and try them on. Okay now
+
+0:12:34.430,0:12:36.430
+Don't do it if it's not good
+
+0:12:37.010,0:12:43.659
+I'm just kidding. You can squint just queen don't don't don't use other people glasses. Okay?
+
+0:12:44.990,0:12:46.990
+Question. Yeah
+
+0:12:50.900,0:12:52.130
+So
+
+0:12:52.130,0:12:57.489
+Stationerity means you observe the same kind of pattern over and over again your data
+
+0:12:58.160,0:13:01.090
+Locality means that pattern are just localized
+
+0:13:01.820,0:13:08.109
+So you have some specific information here some information here information here as you move away from this point
+
+0:13:08.270,0:13:10.270
+this other value is gonna be
+
+0:13:10.760,0:13:11.780
+almost
+
+0:13:11.780,0:13:15.249
+Independent from the value of this point here. So things are correlated
+
+0:13:15.860,0:13:17.860
+Only within a neighborhood, okay
+
+0:13:19.910,0:13:27.910
+Okay, everyone has been experimenting now squinting and looking at this nice picture, okay. So this is the third part which is compositionality
+
+0:13:28.730,0:13:32.289
+Here you can tell how you can actually see something
+
+0:13:33.080,0:13:35.080
+If you blur it a little bit
+
+0:13:35.810,0:13:39.250
+because again things are made of small parts and you can actually
+
+0:13:40.010,0:13:42.429
+You know compose things in this way
+
+0:13:43.400,0:13:47.829
+anyhow, so these are the three main properties of natural signals, which
+
+0:13:48.650,0:13:50.650
+allow us to
+
+0:13:51.260,0:13:55.960
+Can be exploited for making, you know, a design of our architecture, which is more
+
+0:13:56.600,0:14:00.880
+Actually prone to extract information that has these properties
+
+0:14:00.880,0:14:05.169
+Okay, so we are just talking now about signals that exhibits those properties
+
+0:14:07.730,0:14:11.500
+Finally okay. There was the last one which I didn't talk so
+
+0:14:12.890,0:14:18.159
+We had the last one here. We have an English sentence, right John picked up the apple
+
+0:14:18.779,0:14:22.818
+whatever and here again, you can represent each word as
+
+0:14:23.399,0:14:26.988
+One vector, for example each of those items. It can be a
+
+0:14:27.869,0:14:30.469
+Vector which has a 1 in correspondent
+
+0:14:31.110,0:14:35.329
+Correspondence to the position of where that word happens to be in a dictionary, okay
+
+0:14:35.329,0:14:39.709
+so if you have a dictionary of 10,000 words, you can just check whatever is the
+
+0:14:40.679,0:14:44.899
+The word on this dictionary you just put the page plus the whatever number
+
+0:14:45.629,0:14:50.599
+Like you just figured that the position of the page in the dictionary. So also language
+
+0:14:51.899,0:14:56.419
+Has those kind of properties things that are close by have, you know
+
+0:14:56.420,0:15:01.069
+Some kind of relationship things away are not less unless you know
+
+0:15:01.470,0:15:05.149
+Correlated and then similar patterns happen over and over again over
+
+0:15:05.819,0:15:12.558
+Moreover, you can use you know words make sentences to make full essays and to make finally your write-ups for the
+
+0:15:12.839,0:15:16.008
+Sessions. I'm just kidding. Okay. All right, so
+
+0:15:17.429,0:15:19.789
+We already seen this one. So I'm gonna be going quite fast
+
+0:15:20.759,0:15:28.279
+there shouldn't be any I think questions because also we have everything written down on the website, right so you can always check the
+
+0:15:28.860,0:15:30.919
+summaries of the previous lesson on the website
+
+0:15:32.040,0:15:39.349
+So fully connected layer. So this actually perhaps is a new version of the diagram. This is my X,Y is at the bottom
+
+0:15:42.089,0:15:49.698
+Low level features. What's the color of the decks? Pink. Okay good. All right, so we have an arrow which represents my
+
+0:15:51.299,0:15:54.439
+Yeah, fine that's the proper term, but I like to call them
+
+0:15:55.410,0:16:02.299
+Rotations and then there is some squashing right? squashing means the non-linearity then I have my hidden layer then I have another
+
+0:16:04.379,0:16:06.379
+Rotation and a final
+
+0:16:06.779,0:16:12.888
+Squashing. Okay. It's not necessary. Maybe can be a linear, you know final transformation like a linear
+
+0:16:14.520,0:16:18.059
+Whatever function they're like if you do if you perform a regression task
+
+0:16:19.750,0:16:21.750
+There you have the equations, right
+
+0:16:22.060,0:16:24.060
+And those guys can be any of those
+
+0:16:24.610,0:16:26.260
+nonlinear functions or
+
+0:16:26.260,0:16:33.239
+Even a linear function right if you perform regression once more and so you can write down these layers where I expand
+
+0:16:33.240,0:16:39.510
+So this guy here the the bottom guy is actually a vector and I represent the vector G with just one pole there
+
+0:16:39.510,0:16:42.780
+I just show you all the five items elements of that vector
+
+0:16:43.030,0:16:45.239
+So you have the X the first layer?
+
+0:16:45.370,0:16:50.520
+Then you have the first hidden second hidden third hit and the last layer so we have how many layers?
+
+0:16:53.590,0:16:55.240
+Five okay
+
+0:16:55.240,0:16:56.950
+And then you can also call them
+
+0:16:56.950,0:17:03.689
+activation layer 1 layer 2 3 4 whatever and then the matrices are where you store your
+
+0:17:03.970,0:17:10.380
+Parameters you have those different W's and then in order to get each of those values you already seen the stuff, right?
+
+0:17:10.380,0:17:17.280
+So I go quite faster you perform just the scalar product. Which means you just do that thing
+
+0:17:17.860,0:17:23.400
+You get all those weights. I multiply the input for each of those weights and you keep going like that
+
+0:17:24.490,0:17:28.920
+And then you store those weights in those matrices and so on. So as you can tell
+
+0:17:30.700,0:17:37.019
+There is a lot of arrows right and regardless of the fact that I spent too many hours doing that drawing
+
+0:17:38.200,0:17:43.649
+This is also like very computationally expensive because there are so many computations right each arrow
+
+0:17:44.350,0:17:46.350
+represents a weight which you have to multiply
+
+0:17:46.960,0:17:49.110
+for like by its own input
+
+0:17:49.870,0:17:51.870
+so
+
+0:17:52.090,0:17:53.890
+What can we do now?
+
+0:17:53.890,0:17:55.150
+so
+
+0:17:55.150,0:17:57.150
+given that our information is
+
+0:17:57.700,0:18:04.679
+Has locality. No our data has this locality as a property. What does it mean if I had something here?
+
+0:18:05.290,0:18:07.290
+Do I care what's happening here?
+
+0:18:09.460,0:18:12.540
+So some of you are just shaking the hand and the rest of
+
+0:18:13.000,0:18:17.219
+You are kind of I don't know not responsive and I have to ping you
+
+0:18:18.140,0:18:18.900
+so
+
+0:18:18.900,0:18:25.849
+We have locality, right? So things are just in specific regions. You actually care to look about far away
+
+0:18:27.030,0:18:28.670
+No, okay. Fantastic
+
+0:18:28.670,0:18:32.119
+So let's simply drop some connections, right?
+
+0:18:32.130,0:18:38.660
+So here we go from layer L-1 to the layer L by using the first, you know five
+
+0:18:39.570,0:18:45.950
+Ten and fifteen, right? Plus I have the last one here to from the layer L to L+1
+
+0:18:45.950,0:18:48.529
+I have three more right so in total we have
+
+0:18:50.550,0:18:53.089
+Eighteen weights computations, right
+
+0:18:53.760,0:18:55.760
+so, how about we
+
+0:18:56.370,0:19:01.280
+Drop the things that we don't care, right? So like let's say for this neuron, perhaps
+
+0:19:01.830,0:19:04.850
+Why do we have to care about those guys there on the bottom, right?
+
+0:19:05.160,0:19:08.389
+So, for example, I can just use those three weights, right?
+
+0:19:08.390,0:19:12.770
+I just forget about the other two and then again, I just use those three weights
+
+0:19:12.770,0:19:15.229
+I skip the first and the last and so on
+
+0:19:16.170,0:19:23.570
+Okay. So right now we have just nine connections now just now nine multiplications and finally three more
+
+0:19:24.360,0:19:28.010
+so as we go from the left hand side to the right hand side we
+
+0:19:28.920,0:19:32.149
+Climb the hierarchy and we're gonna have a larger and larger
+
+0:19:33.960,0:19:34.790
+View right
+
+0:19:34.790,0:19:40.879
+so although these green bodies here and don't see the whole input is you keep climbing the
+
+0:19:41.310,0:19:45.109
+Hierarchy you're gonna be able to see the whole span of the input, right?
+
+0:19:46.590,0:19:48.590
+so in this case, we're going to be
+
+0:19:49.230,0:19:55.760
+Defining the RF as receptive field. So my receptive field here from the last
+
+0:19:56.400,0:20:03.769
+Neuron to the intermediate neuron is three. So what is gonna be? This means that the final neuron sees three
+
+0:20:04.500,0:20:10.820
+Neurons from the previous layer. So what is the receptive field of the hidden layer with respect to the input layer?
+
+0:20:14.970,0:20:21.199
+The answer was three. Yeah, correct, but what is now their septic field of the output layer with respect to the input layer
+
+0:20:23.549,0:20:25.549
+Five right. That's fantastic
+
+0:20:25.679,0:20:30.708
+Okay, sweet. So right now the whole architecture does see the whole input
+
+0:20:31.229,0:20:33.229
+while each sub part
+
+0:20:33.239,0:20:39.019
+Like intermediate layers only sees small regions and this is very nice because you will spare
+
+0:20:39.239,0:20:46.939
+Computations which are unnecessary because on average they have no whatsoever in information. And so we managed to speed up
+
+0:20:47.669,0:20:50.059
+The computations that you actually can compute
+
+0:20:51.119,0:20:53.208
+things in a decent amount of time
+
+0:20:54.809,0:20:58.998
+Clear so we can talk about sparsity only because
+
+0:21:02.669,0:21:05.238
+We assume that our data shows
+
+0:21:06.329,0:21:08.249
+locality, right
+
+0:21:08.249,0:21:12.708
+Question if my data doesn't show locality. Can I use sparsity?
+
+0:21:16.139,0:21:19.279
+No, okay fantastic, okay. All right
+
+0:21:20.549,0:21:23.898
+more stuff so we also said that this natural signals are
+
+0:21:24.209,0:21:28.399
+Stationary and so given that they're stationary things appear over and over again
+
+0:21:28.399,0:21:34.008
+So maybe we don't have to learn again again the same stuff of all over the time right? So
+
+0:21:34.679,0:21:37.668
+In this case we said oh we drop those two lines, right?
+
+0:21:38.729,0:21:41.179
+And so how about we use?
+
+0:21:41.969,0:21:46.999
+The first connection the oblique one from you know going in down
+
+0:21:47.549,0:21:52.158
+Make it yellow. So all of those are yellows then these are orange
+
+0:21:52.859,0:21:57.139
+And then the final one are red, right? So how many weights do I have here?
+
+0:21:59.639,0:22:01.639
+And I had over here
+
+0:22:03.089,0:22:05.089
+Nine right and before we had
+
+0:22:06.749,0:22:09.769
+15 right so we drop from 15 to 3
+
+0:22:10.529,0:22:14.958
+This is like a huge reduction and how perhaps now it is actually won't work
+
+0:22:14.969,0:22:16.759
+So we have to fix that in a bit
+
+0:22:16.759,0:22:22.368
+But anyhow in this way when I train a network, I just had to train three weights the red
+
+0:22:22.840,0:22:25.980
+sorry, the yellow orange and red and
+
+0:22:26.889,0:22:30.959
+It's gonna be actually working even better because it just has to learn
+
+0:22:31.749,0:22:37.079
+You're gonna have more information you have more data for you know training those specific weights
+
+0:22:41.320,0:22:48.299
+So those are those three colors the yellow orange and red are gonna be called my kernel and so I stored them
+
+0:22:48.850,0:22:50.850
+Into a vector over here
+
+0:22:53.200,0:22:58.679
+And so those if you talk about you know convolutional careness those are simply the weight of these
+
+0:22:59.200,0:22:59.909
+over here
+
+0:22:59.909,0:23:04.589
+Right the weights that we are using by using sparsity and then using parameter sharing
+
+0:23:04.869,0:23:09.629
+Parameter sharing means you use the same parameter over over again across the architecture
+
+0:23:10.330,0:23:15.090
+So there are the following nice properties of using those two combined
+
+0:23:15.490,0:23:20.699
+So parameter sharing gives us faster convergence because you're gonna have much more information
+
+0:23:21.399,0:23:23.549
+To use in order to train these weights
+
+0:23:24.519,0:23:26.139
+You have a better
+
+0:23:26.139,0:23:32.008
+Generalization because you don't have to learn every time a specific type of thing that happened in different region
+
+0:23:32.009,0:23:34.079
+You just learn something. That makes sense
+
+0:23:34.720,0:23:36.720
+You know globally
+
+0:23:37.570,0:23:44.460
+Then we also have we are not constrained to the input size this is so important ray also Yann said this thing three times yesterday
+
+0:23:45.700,0:23:48.029
+Why are we not constrained to the input size?
+
+0:23:54.039,0:24:00.449
+Because we can keep shifting in over right before in these other case if you have more neurons you have to learn new stuff
+
+0:24:00.450,0:24:06.210
+Right, in this case. I can simply add more neurons and I keep using my weight across right that was
+
+0:24:07.240,0:24:09.809
+Some of the major points Yann, you know
+
+0:24:10.509,0:24:12.509
+highlighted yesterday
+
+0:24:12.639,0:24:14.939
+Moreover we have the kernel independence
+
+0:24:15.999,0:24:18.689
+So for the one of you they are interested in optimization
+
+0:24:19.659,0:24:21.009
+optimizing like computation
+
+0:24:21.009,0:24:22.299
+this is so cool because
+
+0:24:22.299,0:24:29.189
+This kernel and another kernel are completely independent so you can train them you can paralyze is to make things go faster
+
+0:24:33.580,0:24:38.549
+So finally we have also some connection sparsity property and so here we have a
+
+0:24:39.070,0:24:41.700
+Reduced amount of computation, which is also very good
+
+0:24:42.009,0:24:48.659
+So all these properties allowed us to be able to train this network on a lot of data
+
+0:24:48.659,0:24:55.739
+you still require a lot of data, but without having sparsity locality, so without having sparsity and
+
+0:24:56.409,0:25:01.859
+Parameter sharing you wouldn't be able to actually finish training this network in a reasonable amount of time
+
+0:25:03.639,0:25:11.039
+So, let's see, for example now how this works when you have like audio signal which is how many dimensional signal
+
+0:25:12.279,0:25:17.849
+1 dimensional signal, right? Okay. So for example kernels for 1d data
+
+0:25:18.490,0:25:24.119
+On the right hand side. You can see again. My my neurons can I'll be using my
+
+0:25:24.909,0:25:30.359
+Different the first scanner here. And so I'm gonna be storing my kernel there in that vector
+
+0:25:31.330,0:25:36.059
+For example, I can have a second kernel right. So right now we have two kernels the
+
+0:25:36.700,0:25:39.749
+Blue purple and pink and the yellow, orange and red
+
+0:25:41.559,0:25:44.158
+So let's say my output is r2
+
+0:25:44.799,0:25:46.829
+So that means that each of those
+
+0:25:47.980,0:25:50.909
+Bubbles here. Each of those neurons are actually
+
+0:25:51.639,0:25:57.359
+One and two rightly come out from the from the board, right? So it's each of those are having a thickness of two
+
+0:25:58.929,0:26:02.819
+And let's say the other guy here are having a thickness of seven, right
+
+0:26:02.990,0:26:07.010
+They are coming outside from the screen and they are you know, seven euros in this way
+
+0:26:08.070,0:26:13.640
+so in this case, my kernel are going to be of size 2 * 7 * 3
+
+0:26:13.860,0:26:17.719
+So 2 means I have two kernels which are going from 7
+
+0:26:18.240,0:26:20.070
+to give me
+
+0:26:20.070,0:26:22.070
+3
+
+0:26:22.950,0:26:24.950
+Outputs
+
+0:26:28.470,0:26:32.959
+Hold on my bad. So the 2 means you have ℝ² right here
+
+0:26:33.659,0:26:37.069
+Because you have two corners. So the first kernel will give you the first
+
+0:26:37.679,0:26:41.298
+The first column here and the second kernel is gonna give you the second column
+
+0:26:42.179,0:26:44.869
+Then it has to init 7
+
+0:26:45.210,0:26:50.630
+Because it needs to match all the thickness of the previous layer and then it has 3 because there are three
+
+0:26:50.789,0:26:56.778
+Connections right? So maybe I miss I got confused before does it make sense the sizing?
+
+0:26:58.049,0:26:59.820
+so given that our
+
+0:26:59.820,0:27:03.710
+273  2 means you had 2 kernels and therefore you have two
+
+0:27:04.080,0:27:08.000
+Items here like one a one coming out for each of those columns
+
+0:27:08.640,0:27:15.919
+It has seven because each of these have a thickness of 7 and finally 3 means there are 3 connection connecting to the previous layer
+
+0:27:17.429,0:27:22.819
+Right so 1d data uses 3d kernels ok
+
+0:27:23.460,0:27:30.049
+so if I call this my collection of kernel, right, so if those are gonna be stored in a tensor
+
+0:27:30.049,0:27:32.898
+This tensor will be a three dimensional tensor
+
+0:27:33.690,0:27:34.919
+so
+
+0:27:34.919,0:27:37.939
+Question for you, if I'm gonna be playing now with images
+
+0:27:38.580,0:27:40.580
+What is the size of?
+
+0:27:40.679,0:27:43.999
+You know full pack of kernels for an image
+
+0:27:45.809,0:27:47.809
+Convolutional net
+
+0:27:49.590,0:27:56.209
+Four right. So we're gonna have the number of kernels then it's going to be the number of the thickness
+
+0:27:56.730,0:28:00.589
+And then you're gonna have connections in height and connection in width
+
+0:28:01.799,0:28:03.179
+Okay
+
+0:28:03.179,0:28:09.798
+So if you're gonna be checking the currently convolutional kernels later on in your notebook, actually you should check that
+
+0:28:09.929,0:28:12.138
+You should find the same kind of dimensions
+
+0:28:14.159,0:28:16.159
+All right, so
+
+0:28:18.059,0:28:20.478
+Questions so far, is this so clear?. Yeah
+
+0:28:50.460,0:28:52.460
+Okay, so good question so
+
+0:28:52.469,0:28:56.149
+trade-off about, you know sizing of those convolutions
+
+0:28:56.700,0:28:59.119
+convolutional kernels, right is it correct? Right
+
+0:28:59.909,0:29:06.409
+Three by three he seems to be like the minimum you can go for if you actually care about spatial information
+
+0:29:07.499,0:29:13.098
+As Yann pointed out you can also use one by one convolution. Oh, sorry one come one
+
+0:29:13.769,0:29:15.149
+like a
+
+0:29:15.149,0:29:20.718
+Convolution with which has only one weight or if you use like in images you have a one by one convolution
+
+0:29:21.179,0:29:23.179
+Those are used in order to be
+
+0:29:23.309,0:29:24.570
+having like a
+
+0:29:24.570,0:29:26.570
+final layer, which is still
+
+0:29:26.909,0:29:30.528
+Spatial still can be applied to a larger input image
+
+0:29:31.649,0:29:36.138
+Right now we just use kernels that are three or maybe five
+
+0:29:36.929,0:29:42.348
+it's kind of empirical so it's not like we don't have like a magic formulas, but
+
+0:29:43.349,0:29:44.279
+we've been
+
+0:29:44.279,0:29:50.329
+trying hard in the past ten years to figure out what is you know the best set of hyper parameters and if you check
+
+0:29:50.969,0:29:55.879
+For each field like for a speech processing visual processing like image processing
+
+0:29:55.879,0:29:59.718
+You're gonna figure out what is the right compromise for your specific data?
+
+0:30:01.769,0:30:03.769
+Yeah
+
+0:30:04.910,0:30:06.910
+Second
+
+0:30:07.970,0:30:12.279
+Okay, that's a good question why odd numbers why the kernel has an odd number
+
+0:30:14.390,0:30:16.220
+Of elements
+
+0:30:16.220,0:30:20.049
+So if you actually have a odd number of elements there would be a central element
+
+0:30:20.240,0:30:25.270
+Right. If you have a even number of elements there, we'll know there won't be a central value
+
+0:30:25.370,0:30:27.880
+So if you have again odd number
+
+0:30:27.880,0:30:30.790
+You know that from a specific point you're gonna be considering
+
+0:30:31.220,0:30:36.789
+Even number of left and even number of right items if it's a even size
+
+0:30:37.070,0:30:42.399
+Kernel that you actually don't know where the center is and the center is gonna be the average of two
+
+0:30:43.040,0:30:48.310
+Neighboring samples which actually creates like a low-pass filter effect. So even
+
+0:30:49.220,0:30:51.910
+kernel sizes are not usually
+
+0:30:52.580,0:30:56.080
+preferred or not usually used because they imply some kind of
+
+0:30:57.290,0:30:59.889
+additional lowering of the quality of the data
+
+0:31:02.000,0:31:08.380
+Okay, so one more thing that we mentioned also yesterday its padding padding is something
+
+0:31:09.590,0:31:16.629
+that if it has an effect on the final results is getting it worse, but it's very convenient for
+
+0:31:17.570,0:31:25.450
+programming side so if we've had our so as you can see here when we apply convolution from this layer you're gonna end up with
+
+0:31:27.680,0:31:31.359
+Okay, how many how many neurons we have here
+
+0:31:32.720,0:31:34.720
+three and we started from
+
+0:31:35.480,0:31:39.400
+five, so if we use a convolutional kernel of three
+
+0:31:40.490,0:31:42.490
+We lose how many neurons? 
+
+0:31:43.310,0:31:50.469
+Two, okay, one per side. If you're gonna be using a convolutional kernel of size five how much you're gonna be losing
+
+0:31:52.190,0:31:57.639
+Four right and so that's the rule user zero padding you have to add an extra
+
+0:31:58.160,0:32:02.723
+Neuron here an extra neuron here. So you're gonna do number size of the kernel, right?
+
+0:32:02.723,0:32:05.800
+Three minus one divided by two and then you add that extra
+
+0:32:06.560,0:32:12.850
+Whatever number of neurons here, you've set them to zero. Why to zero? because usually you zero mean
+
+0:32:13.470,0:32:18.720
+Your inputs or your zero each layer output by using some normalization layers
+
+0:32:19.900,0:32:21.820
+in this case
+
+0:32:21.820,0:32:25.770
+Yeah, three comes from the size of the kernel and then you have that
+
+0:32:26.740,0:32:28.630
+Some animation should be playing
+
+0:32:28.630,0:32:31.289
+Yeah, you have one extra neuron there there then
+
+0:32:31.289,0:32:37.289
+I have an extra neuron there such that finally you end up with these, you know ghosts neurons there
+
+0:32:37.330,0:32:41.309
+But now you have the same number of input and the same number of output
+
+0:32:41.740,0:32:47.280
+And this is so convenient because if we started with I don't know 64 neurons you apply a convolution
+
+0:32:47.280,0:32:54.179
+You still have 64 neurons and therefore you can use let's say max pooling of two you're going to end up at 32 neurons
+
+0:32:54.179,0:32:57.809
+Otherwise you gonna have this I don't know if you consider one
+
+0:32:58.539,0:33:01.019
+We have a odd number right so you don't know what to do
+
+0:33:04.030,0:33:06.030
+after a bit, right?
+
+0:33:08.320,0:33:10.320
+Okay, so
+
+0:33:10.720,0:33:12.720
+Yeah, and you have the same size
+
+0:33:13.539,0:33:20.158
+All right. So, let's see how much time you have left. You have a bit of time. So, let's see how we use this
+
+0:33:21.130,0:33:27.270
+Convolutional net work in practice. So this is like the theory behind and we have said that we can use convolutions
+
+0:33:28.000,0:33:33.839
+So this is a convolutional operator. I didn't even define. What's a convolution. We just said that if our data has
+
+0:33:37.090,0:33:39.929
+Stationarity locality and is actually
+
+0:33:42.130,0:33:45.689
+Compositional then we can exploit this by using
+
+0:33:49.240,0:33:51.240
+Weight sharing
+
+0:33:51.940,0:33:56.730
+Sparsity and then you know by stacking several of this layer. You have a like a hierarchy, right?
+
+0:33:58.510,0:34:06.059
+So by using this kind of operation this is a convolution I didn't even define it I don't care right now maybe next class
+
+0:34:07.570,0:34:11.999
+So this is like the theory behind now, we're gonna see a little bit of practical
+
+0:34:12.429,0:34:15.628
+You know suggestions how we actually use this stuff in practice
+
+0:34:16.119,0:34:22.229
+So next thing we have like a standard a spatial convolutional net which is operating which kind of data
+
+0:34:22.840,0:34:24.840
+If it's spatial
+
+0:34:25.780,0:34:28.229
+It's special because it's my network right special
+
+0:34:29.260,0:34:32.099
+Not just kidding so special as you know space
+
+0:34:33.190,0:34:37.139
+So in this case, we have multiple layers, of course we stuck them
+
+0:34:37.300,0:34:42.419
+We also talked about why it's better to have several layers rather than having a fat layer
+
+0:34:43.300,0:34:48.149
+We have convolutions. Of course, we have nonlinearities because otherwise
+
+0:34:55.270,0:34:56.560
+So
+
+0:34:56.560,0:35:04.439
+ok, next time we're gonna see how a convolution can be implemented with matrices but convolutions are just linear operator with which a lot of
+
+0:35:04.440,0:35:07.470
+zeros and like replication of the same by the weights
+
+0:35:07.570,0:35:13.019
+but otherwise if you don't use non-linearity a convolution of a convolution
+
+0:35:13.020,0:35:16.679
+It's gonna be a convolution. So we have to clean up stuff
+
+0:35:17.680,0:35:19.510
+that
+
+0:35:19.510,0:35:25.469
+We have to like put barriers right? in order to avoid collapse of the whole network. We had some pooling operator
+
+0:35:26.140,0:35:27.280
+which
+
+0:35:27.280,0:35:33.989
+Geoffrey says that's you know, something already bad. But you know, you're still doing that Hinton right Geoffrey Hinton
+
+0:35:35.410,0:35:40.950
+Then we've had something that if you don't use it, your network is not gonna be training. So just use it
+
+0:35:41.560,0:35:44.339
+although we don't know exactly why it works but
+
+0:35:45.099,0:35:48.659
+I think there is a question on Piazza. I will put a link there
+
+0:35:49.330,0:35:53.519
+About this batch normalization. Also Yann is going to be covering all the normalization layers
+
+0:35:54.910,0:36:01.889
+Finally we have something that also is quite recent which is called a receival or bypass connections
+
+0:36:01.990,0:36:03.990
+Which are basically these?
+
+0:36:04.240,0:36:05.859
+extra
+
+0:36:05.859,0:36:07.089
+connections
+
+0:36:07.089,0:36:09.089
+Which allow me to
+
+0:36:09.250,0:36:10.320
+Get the network
+
+0:36:10.320,0:36:13.320
+You know the network decided whether whether to send information
+
+0:36:13.780,0:36:18.780
+Through this line or actually send it forward if you stack so many many layers one after each other
+
+0:36:18.910,0:36:24.330
+The signal get lost a little bit after sometime if you add these additional connections
+
+0:36:24.330,0:36:27.089
+You always have like a path in order to go back
+
+0:36:27.710,0:36:31.189
+The bottom to the top and also to have gradients coming down from the top to the bottom
+
+0:36:31.440,0:36:38.599
+so that's actually a very important both the receiver connection and the batch normalization are really really helpful to get this network to
+
+0:36:39.059,0:36:46.849
+Properly train if you don't use them then it's going to be quite hard to get those networks to really work for the training part
+
+0:36:48.000,0:36:51.949
+So how does it work we have here an image, for example
+
+0:36:53.010,0:36:55.939
+Where most of the information is spatial information?
+
+0:36:55.940,0:36:59.000
+So the information is spread across the two dimensions
+
+0:36:59.220,0:37:04.520
+Although there is a thickness and I call the thickness as characteristic information
+
+0:37:04.770,0:37:07.339
+Which means it provides a information?
+
+0:37:07.890,0:37:11.569
+At that specific point. So what is my characteristic information?
+
+0:37:12.180,0:37:15.740
+ in this image let's say it's a RGB image
+
+0:37:16.680,0:37:18.680
+It's a color image right?
+
+0:37:19.230,0:37:27.109
+So we have the most of the information is spread on a  spatial information. Like if you have me making funny faces
+
+0:37:28.109,0:37:30.109
+but then at each point
+
+0:37:30.300,0:37:33.769
+This is not a grayscale image is a color image, right?
+
+0:37:33.770,0:37:39.199
+So each point will have an additional information which is my you know specific
+
+0:37:39.990,0:37:42.439
+Characteristic information. What is it in this case?
+
+0:37:44.640,0:37:46.910
+It's a vector of three values which represent
+
+0:37:48.630,0:37:51.530
+RGB are the three letters by the __  as they represent
+
+0:37:54.780,0:37:57.949
+Okay, overall, what does it represent like
+
+0:37:59.160,0:38:02.480
+Yes intensity. Just you know, tell me in English without weird
+
+0:38:03.359,0:38:05.130
+things
+
+0:38:05.130,0:38:11.480
+The color of the pixel, right? So my specific information. My characteristic information. Yeah. I don't know what you're saying
+
+0:38:11.480,0:38:18.500
+Sorry, the characteristic information in this case is just a color right so the color is the only information that is specific there
+
+0:38:18.500,0:38:20.780
+But then otherwise information is spread around
+
+0:38:21.359,0:38:23.359
+As if we climb climb the hierarchy
+
+0:38:23.730,0:38:31.189
+You can see now some final vector which has let's say we are doing classification in this case. So my
+
+0:38:31.770,0:38:36.530
+You know the height and width or the thing is going to be one by one so it's just one vector
+
+0:38:37.080,0:38:43.590
+And then let's say there you have the specific final logit, which is the highest one so which is representing the class
+
+0:38:43.590,0:38:47.400
+Which is most likely to be the correct one if it's trained well
+
+0:38:48.220,0:38:51.630
+in the Midway, you have something that is, you know a trade-off between
+
+0:38:52.330,0:38:59.130
+Spatial information and then these characteristic information. Okay. So basically it's like a conversion between
+
+0:39:00.070,0:39:01.630
+spatial information
+
+0:39:01.630,0:39:03.749
+into this characteristic information
+
+0:39:04.360,0:39:07.049
+Do you see so it basically go from a thing?
+
+0:39:07.660,0:39:08.740
+input
+
+0:39:08.740,0:39:13.920
+Data to something. It is very thick, but then has no more information spatial information
+
+0:39:14.710,0:39:20.760
+and so you can see here with my ninja PowerPoint skills how you can get you know a
+
+0:39:22.240,0:39:27.030
+Reduction of the ___ thickener like a figure thicker in our presentation
+
+0:39:27.070,0:39:30.840
+Whereas you actually lose the spatial special one
+
+0:39:32.440,0:39:39.870
+Okay, so that was oh one more pooling so pooling is simply again for example
+
+0:39:41.620,0:39:43.600
+It can be performed in this way
+
+0:39:43.600,0:39:48.660
+So there you have some hand drawing because I didn't want to do you have time to make it in latex?
+
+0:39:49.270,0:39:52.410
+So you have different regions you apply a specific?
+
+0:39:53.500,0:39:57.060
+Operator to that specific region, for example, you have the P norm
+
+0:39:58.150,0:39:59.680
+and then
+
+0:39:59.680,0:40:02.760
+Yes, the P goes to plus infinity. You have the Max
+
+0:40:03.730,0:40:09.860
+And then that one is not give you one value right then you perform a stride.
+
+0:40:09.860,0:40:12.840
+jump to Pixels further and then you again you compute the same thing
+
+0:40:12.840,0:40:18.150
+you're gonna get another value there and so on until you end up from
+
+0:40:18.700,0:40:24.900
+Your data which was m by n with c channels you get still c channels
+
+0:40:24.900,0:40:31.199
+But then in this case you gonna get m/2 and c and  n/2. Okay, and this is for images
+
+0:40:35.029,0:40:41.079
+There are no parameters on the pooling how you can nevertheless choose which kind of pooling, right you can choose max pooling
+
+0:40:41.390,0:40:44.229
+Average pooling any pooling is wrong. So
+
+0:40:45.769,0:40:48.879
+Yeah, let's also the problem, okay, so
+
+0:40:49.999,0:40:55.809
+This was the mean part with the slides. We are gonna see now the notebooks will go a bit slower this time
+
+0:40:55.809,0:40:58.508
+I noticed that last time I kind of rushed
+
+0:40:59.900,0:41:02.529
+Are there any questions so far on this part that we cover?
+
+0:41:04.519,0:41:06.519
+Yeah
+
+0:41:10.670,0:41:12.469
+So there is like
+
+0:41:12.469,0:41:17.769
+Geoffrey Hinton is renowned for saying that max pooling is something which is just
+
+0:41:18.259,0:41:23.319
+Wrong because you just throw away information as you average or you take the max you just throw away things
+
+0:41:24.380,0:41:29.140
+He's been working on like something called capsule networks, which have you know specific
+
+0:41:29.660,0:41:33.849
+routing paths that are choosing, you know some
+
+0:41:34.519,0:41:41.319
+Better strategies in order to avoid like throwing away information. Okay. Basically that's the the argument behind yeah
+
+0:41:45.469,0:41:52.329
+Yes, so the main purpose of using this pooling or the stride is actually to get rid of a lot of data such that you
+
+0:41:52.329,0:41:54.579
+Can compute things in a reasonable amount of time?
+
+0:41:54.619,0:42:00.939
+Usually you need a lot of stride or pooling at the first layers at the bottom because otherwise  it's absolutely  you know
+
+0:42:01.339,0:42:03.339
+Too computationally expensive
+
+0:42:03.979,0:42:05.979
+Yeah
+
+0:42:21.459,0:42:23.459
+So on that sit
+
+0:42:24.339,0:42:32.068
+Those network architectures are so far driven by you know the state of the art, which is completely an empirical base
+
+0:42:33.279,0:42:40.109
+we try hard and we actually go to I mean now we actually arrive to some kind of standard so a
+
+0:42:40.359,0:42:44.399
+Few years back. I was answering like I don't know but right now we actually have
+
+0:42:45.099,0:42:47.049
+Determined some good configurations
+
+0:42:47.049,0:42:53.968
+Especially using those receiver connections and the batch normalization. We actually can get to train basically everything
+
+0:42:54.759,0:42:56.759
+Yeah
+
+0:43:05.859,0:43:11.038
+So basically you're gonna have your gradient at a specific point coming down as well
+
+0:43:11.039,0:43:13.679
+And then you have the other gradient coming down down
+
+0:43:13.839,0:43:18.238
+Then you had a branch right a branching and if you have branch what's happening with the gradient?
+
+0:43:19.720,0:43:25.439
+That's correct. Yeah, they get added right so you have the two gradients coming from two different branches getting added together
+
+0:43:26.470,0:43:31.769
+All right. So let's go to the notebook such that we can cover  we don't rush too much
+
+0:43:32.859,0:43:37.139
+So here I just go through the convnet part. So here I train
+
+0:43:39.519,0:43:41.289
+Initially I
+
+0:43:41.289,0:43:43.979
+Load the MNIST data set so I show you a few
+
+0:43:44.680,0:43:45.849
+characters here
+
+0:43:45.849,0:43:52.828
+Okay, and I train now a multi-layer perceptron like a fully connected Network like a mood, you know
+
+0:43:53.440,0:44:00.509
+Yeah, fully connected Network and a convolutional neural net which have the same number of parameters. Okay. So these two models will have the same
+
+0:44:01.150,0:44:05.819
+Dimension in terms of D. If you save them we'll wait the same so
+
+0:44:07.269,0:44:11.219
+I'm training here this guy here with the fully connected Network
+
+0:44:12.640,0:44:14.640
+It takes a little bit of time
+
+0:44:14.829,0:44:21.028
+And he gets some 87% Okay. This is trained on classification of the MNIST digits from Yann
+
+0:44:21.999,0:44:24.419
+We actually download from his website if you check
+
+0:44:25.239,0:44:32.189
+Anyhow, I train a convolutional neural net with the same number of parameters what you expect to have a better a worse result
+
+0:44:32.349,0:44:35.548
+So my multi-layer perceptron gets 87 percent
+
+0:44:36.190,0:44:38.190
+What do we get with a convolutional net?
+
+0:44:41.739,0:44:43.739
+Yes, why
+
+0:44:46.910,0:44:50.950
+Okay, so what is the point here of using sparsity what does it mean
+
+0:44:52.640,0:44:55.089
+Given that we have the same number of parameters
+
+0:44:56.690,0:44:58.690
+We manage to train much
+
+0:44:59.570,0:45:05.440
+more filters right in the second case because in the first case we use filters that are completely trying to get some
+
+0:45:05.960,0:45:12.549
+dependencies between things that are further away with things that are closed by so they are completely wasted basically they learn 0
+
+0:45:12.830,0:45:19.930
+Instead in the convolutional net. I have all these parameters. They're just concentrated for figuring out. What is the relationship within a
+
+0:45:20.480,0:45:23.799
+Neighboring pixels. All right. So now it takes the pictures I
+
+0:45:24.740,0:45:26.740
+Shake everything just got scrambled
+
+0:45:27.410,0:45:33.369
+But I keep the same I scramble the same same way all the images. So I perform a random permutation
+
+0:45:34.850,0:45:38.710
+Always the same random permutation of all my images or the pixels on my images
+
+0:45:39.500,0:45:41.090
+What does it happen?
+
+0:45:41.090,0:45:43.299
+If I train both networks
+
+0:45:47.990,0:45:50.049
+So here I trained see here
+
+0:45:50.050,0:45:56.950
+I have my pics images and here I just scrambled with the same scrambling function all the pixels
+
+0:46:00.200,0:46:04.240
+All my inputs are going to be these images here
+
+0:46:06.590,0:46:10.870
+The output is going to be still the class of the original so this is a four you
+
+0:46:11.450,0:46:13.780
+Can see this this is a four. This is a nine
+
+0:46:14.920,0:46:19.889
+This is a 1 this is a 7 is a 3 in this is a 4 so I keep the same labels
+
+0:46:19.930,0:46:24.450
+But I scrambled the order of the pixels and I perform the same scrambling every time
+
+0:46:25.239,0:46:27.239
+What do you expect is performance?
+
+0:46:31.029,0:46:33.299
+Who's better who's working who's the same?
+
+0:46:38.619,0:46:46.258
+Perception how does it do with the perception? Does he see any difference? No, okay. So the guy still 83
+
+0:46:47.920,0:46:49.920
+Yann's network
+
+0:46:52.029,0:46:54.029
+What do you guys
+
+0:47:04.089,0:47:09.988
+Know that's a fully connected. Sorry. I'll change the order. Yeah, see. Okay. There you go
+
+0:47:12.460,0:47:14.999
+So I can't even show you this thing
+
+0:47:17.920,0:47:18.730
+All right
+
+0:47:18.730,0:47:24.659
+So the fully connected guy basically performed the same the differences are just basic based on the initial
+
+0:47:25.059,0:47:30.899
+The random initialization the convolutional net which was winning by kind of large advance
+
+0:47:31.509,0:47:33.509
+advantage before actually performs
+
+0:47:34.059,0:47:38.008
+Kind of each similarly, but I mean worse than much worse than before
+
+0:47:38.499,0:47:42.449
+Why is the convolutional network now performing worse than my fully connected Network?
+
+0:47:44.829,0:47:46.829
+Because we fucked up
+
+0:47:47.739,0:47:55.379
+Okay, and so every time you use a convolutional network, you actually have to think can I use of convolutional network, okay
+
+0:47:56.440,0:47:59.700
+If it holds now, you have the three properties then yeah
+
+0:47:59.700,0:48:05.759
+Maybe of course, it should be giving you a better performance if those three properties don't hold
+
+0:48:06.579,0:48:09.058
+then using convolutional networks is
+
+0:48:11.499,0:48:17.939
+BS right, which was the bias? No. Okay. Never mind. All right. Well, good night
