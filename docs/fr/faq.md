@@ -94,7 +94,7 @@ Terme | Traduction | Raisons / Explications
 Dropout | Dropout | Le mot « décimation » serait approprié mais il est déjà utilisé en traitement du signal pour signifier « sous-échantillonnage ».
 Finetuning | Finetuning | Le terme « affinage » peut être trouvable dans la littérature. 
 One hot | One hot | La notion de « vecteurs de base canonique » pourrait être utilisée mais elle est un peu technique et l'expression est plutôt longue pour traduire à peine 2 mots.   N.D.T : dans mes cours d'algèbre linéaire j'utilisais soit « v.b.c » pour « vecteurs de base canonique » ou bien « zerun » (pour un vecteur contenant des 0 et un 1) mais c'ést une convention personnelle que je ne préfère pas imposer.
-Pooling | Pooling | Plusieurs traductions envisagées comme agrégation, agglomération, ou coalescence. Garder le terme en anglais est plus simple (un "max-agrégation" est pas très élégant par exemple).
+Pooling | Pooling | Plusieurs traductions envisagées comme agrégation, agglomération, ou coalescence. Garder le terme en anglais est plus simple (un « max-agrégation » n'est pas très élégant par exemple).
 
 
 En vous souhaitant un bon visionnage ou une bonne lecture !
