@@ -122,8 +122,8 @@ class TemporalOrderExp6aSequence():
     From Hochreiter&Schmidhuber(1997):
 
         The goal is to classify sequences. Elements and targets are represented locally
-        (input vectors with only one non-zero bit). The sequence starts with an E, ends
-        with a B (the "trigger symbol") and otherwise consists of randomly chosen symbols
+        (input vectors with only one non-zero bit). The sequence starts with an B, ends
+        with a E (the "trigger symbol") and otherwise consists of randomly chosen symbols
         from the set {a, b, c, d} except for two elements at positions t1 and t2 that are
         either X or Y . The sequence length is randomly chosen between 100 and 110, t1 is
         randomly chosen between 10 and 20, and t2 is randomly chosen between 50 and 60.
