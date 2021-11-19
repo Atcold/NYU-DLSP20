@@ -1,0 +1,1742 @@
+0:00:00.030,0:00:03.959
+so today we are gonna be covering quite a lot of materials so I will try not to
+
+0:00:03.959,0:00:08.309
+run but then yesterday young scooped me completely so young talked about exactly
+
+0:00:08.309,0:00:15.269
+the same things I wanted to talk today so I'm gonna go a bit faster please slow
+
+0:00:15.269,0:00:18.210
+me down if you actually are somehow lost okay
+
+0:00:18.210,0:00:21.420
+so I will just try to be a little bit faster than you sir
+
+0:00:21.420,0:00:26.250
+so today we are gonna be talking about recurrent neural networks record neural
+
+0:00:26.250,0:00:31.050
+networks are one type of architecture we can use in order to be to deal with
+
+0:00:31.050,0:00:37.430
+sequences of data what are sequences what type of signal is a sequence
+
+0:00:39.890,0:00:44.219
+temporal is a temporal component but we already seen data with temporal
+
+0:00:44.219,0:00:49.350
+component how what are they called what dimensional what is the dimension
+
+0:00:49.350,0:00:55.320
+of that kind of signal so on the convolutional net lesson we have seen
+
+0:00:55.320,0:00:59.969
+that a signal could be one this signal to this signal 3d signal based on the
+
+0:00:59.969,0:01:06.270
+domain and the domain is what you map from to go to right so temporal handling
+
+0:01:06.270,0:01:10.580
+sequential sequences of data is basically dealing with one the data
+
+0:01:10.580,0:01:15.119
+because the domain is going to be just the temporal axis nevertheless you can
+
+0:01:15.119,0:01:18.689
+also use RNN to deal with you know two dimensional data you have double
+
+0:01:18.689,0:01:28.049
+Direction okay okay so this is a classical neural network in the diagram
+
+0:01:28.049,0:01:33.299
+that is I'm used to draw where I represent each in this case bunch of
+
+0:01:33.299,0:01:37.590
+neurons like each of those is a vector and for example the X is my input vector
+
+0:01:37.590,0:01:42.450
+it's in pink as usual then I have my hidden layer in a green in the center
+
+0:01:42.450,0:01:46.200
+then I have my final blue eared lane layer which is the output network so
+
+0:01:46.200,0:01:52.320
+this is a three layer neural network in my for my notation and so if some of you
+
+0:01:52.320,0:01:57.960
+are familiar with digital electronics this is like talking about a
+
+0:01:57.960,0:02:03.329
+combinatorial logic your current output depends only on the current input and
+
+0:02:03.329,0:02:08.420
+that's it there is no there is no other input instead when we
+
+0:02:08.420,0:02:12.590
+are talking about our men we are gonna be talking about something that looks
+
+0:02:12.590,0:02:17.420
+like this in this case our output here on the right hand side depends on the
+
+0:02:17.420,0:02:21.860
+current input and on the state of the system and again if you're a king of
+
+0:02:21.860,0:02:26.750
+digital electronics this is simply sequential logic whereas you have an
+
+0:02:26.750,0:02:31.580
+internal state the onion is the dimension flip-flop if you have no idea
+
+0:02:31.580,0:02:37.040
+what a flip-flop you know check it out it's just some very basic memory unit in
+
+0:02:37.040,0:02:41.810
+digital electronics nevertheless this is the only difference right in the first
+
+0:02:41.810,0:02:45.290
+case you have an output which is just function of the input in the second case
+
+0:02:45.290,0:02:49.580
+you have an output which is function of the input and the state of the system
+
+0:02:49.580,0:02:54.130
+okay that's the big difference yeah vanilla is in American term for saying
+
+0:02:58.040,0:03:04.670
+it's plane doesn't have a taste that American sorry I try to be the most
+
+0:03:04.670,0:03:11.390
+American I can in Italy you feel taken an ice cream which is doesn't have a
+
+0:03:11.390,0:03:15.950
+taste it's gonna be fior di latte which is milk taste in here we don't have milk
+
+0:03:15.950,0:03:20.049
+tests they have vanilla taste which is the plain ice cream
+
+0:03:20.049,0:03:28.360
+okay Americans sorry all right so oh so let's see what does
+
+0:03:28.360,0:03:32.760
+it change this with young representation so young draws those kind of little
+
+0:03:32.760,0:03:38.170
+funky things here which represent a mapping between a TENS tensor to another
+
+0:03:38.170,0:03:41.800
+painter from one a vector to another vector right so there you have your
+
+0:03:41.800,0:03:46.630
+input vector X is gonna be mapped through this item here to this hidden
+
+0:03:46.630,0:03:50.620
+representation so that actually represent my fine transformation so my
+
+0:03:50.620,0:03:54.130
+rotation Plus this question then you have the heater representation that you
+
+0:03:54.130,0:03:57.850
+have another rotation is question then you get the final output right similarly
+
+0:03:57.850,0:04:03.220
+in the recurrent diagram you can have these additional things this is a fine
+
+0:04:03.220,0:04:06.640
+transformation squashing that's like a delay module with a final transformation
+
+0:04:06.640,0:04:10.900
+excursion and now you have the final one affine transformation and squashing
+
+0:04:10.900,0:04:18.100
+right these things is making noise okay sorry all right so what is the first
+
+0:04:18.100,0:04:24.250
+case first case is this one is a vector to sequence so we input one bubble the
+
+0:04:24.250,0:04:28.270
+pink wonder and then you're gonna have this evolution of the internal state of
+
+0:04:28.270,0:04:33.070
+the system the green one and then as the state of the system evolves you can be
+
+0:04:33.070,0:04:38.470
+spitting out at every time stamp one specific output what can be an example
+
+0:04:38.470,0:04:43.240
+of this kind of architecture so this one could be the following my input is gonna
+
+0:04:43.240,0:04:46.750
+be one of these images and then the output is going to be a sequence of
+
+0:04:46.750,0:04:53.140
+characters representing the English description of whatever this input is so
+
+0:04:53.140,0:04:57.940
+for example in the center when we have a herd of elephants so the last one herd
+
+0:04:57.940,0:05:03.880
+of elephants walking across a dry grass field so it's very very very well
+
+0:05:03.880,0:05:09.130
+refined right then you have in the center here for example two dogs play in
+
+0:05:09.130,0:05:15.640
+the in the grass maybe there are three but okay they play they're playing in
+
+0:05:15.640,0:05:20.500
+the grass right so it's cool in this case you know a red motorcycle park on
+
+0:05:20.500,0:05:24.610
+the side of the road looks more pink or you know a little
+
+0:05:24.610,0:05:30.490
+blow a little a little girl in the pink that is blowing bubbles that she's not
+
+0:05:30.490,0:05:35.650
+blowing right anything there all right and then you also have you know even
+
+0:05:35.650,0:05:41.560
+more wrong examples right so you have like yellow school bus parked in the
+
+0:05:41.560,0:05:44.050
+parking lot well it's CL um but it's not a school
+
+0:05:44.050,0:05:49.860
+bus so it can be failing as well but I also can do a very very nice you know
+
+0:05:49.860,0:05:56.470
+you can also perform very well so this was from one input vector which is B for
+
+0:05:56.470,0:06:01.720
+example representation of my image to a sequence of symbols which are D for
+
+0:06:01.720,0:06:05.620
+example characters or words that are making here my English sentence okay
+
+0:06:05.620,0:06:11.440
+clear so far yeah okay another kind of usage you can have is maybe the
+
+0:06:11.440,0:06:17.560
+following so you're gonna have sequence two final vector okay so I don't care
+
+0:06:17.560,0:06:22.120
+about the intermediate sequences so okay the top right is called Auto regressive
+
+0:06:22.120,0:06:26.590
+network and outer regressive network is a network which is outputting an output
+
+0:06:26.590,0:06:29.950
+given that you feel as input the previous output okay
+
+0:06:29.950,0:06:33.700
+so this is called Auto regressive you have this kind of loopy part on the
+
+0:06:33.700,0:06:37.780
+network on the left hand side instead I'm gonna be providing several sequences
+
+0:06:37.780,0:06:40.140
+yeah that's gonna be the English translation
+
+0:06:51.509,0:06:55.380
+so you have a sequence of words that are going to make up your final sentence
+
+0:06:55.380,0:07:00.330
+it's it's blue there you can think about a index in a dictionary and then each
+
+0:07:00.330,0:07:03.300
+blue is going to tell you which word you're gonna pick on an indexed
+
+0:07:03.300,0:07:09.780
+dictionary right so this is a school bus right so oh yeah a yellow school bus you
+
+0:07:09.780,0:07:14.940
+go to a index of a then you have second index you can figure out that is yellow
+
+0:07:14.940,0:07:17.820
+and then school box right so the sequence here is going to be
+
+0:07:17.820,0:07:22.590
+representing the sequence of words the model is out on the other side there on
+
+0:07:22.590,0:07:26.460
+the left you're gonna have instead I keep feeding a sequence of symbols and
+
+0:07:26.460,0:07:30.750
+only at the end I'm gonna look what is my final output what can be an
+
+0:07:30.750,0:07:36.150
+application of this one so something yun also mentioned was different so let's
+
+0:07:36.150,0:07:40.789
+see if I can get my network to compile Python or to an open pilot own
+
+0:07:40.789,0:07:45.599
+interpretation so in this case I have my current input which I feed my network
+
+0:07:45.599,0:07:54.979
+which is going to be J equal 8580 for then for X in range eight some - J 920
+
+0:07:54.979,0:07:59.430
+blah blah blah and then print this one and then my network is going to be
+
+0:07:59.430,0:08:04.860
+tasked with the just you know giving me twenty five thousand and eleven okay so
+
+0:08:04.860,0:08:09.210
+this is the final output of a program and I enforced in the network to be able
+
+0:08:09.210,0:08:13.860
+to output me the correct output the correct in your solution of this program
+
+0:08:13.860,0:08:18.330
+or even more complicated things for example I can provide a sequence of
+
+0:08:18.330,0:08:21.900
+other symbols which are going to be eighty eight thousand eight hundred
+
+0:08:21.900,0:08:26.669
+thirty seven then I have C is going to be something then I have print this one
+
+0:08:26.669,0:08:33.360
+if something that is always true as the other one and then you know the output
+
+0:08:33.360,0:08:38.849
+should be twelve thousand eight 184 right so you can train a neural net to
+
+0:08:38.849,0:08:42.690
+do these operations so you feed a sequence of symbols and then at the
+
+0:08:42.690,0:08:48.870
+output you just enforce that the final target should be a specific value okay
+
+0:08:48.870,0:08:56.190
+and these things making noise okay maybe I'm better
+
+0:08:56.190,0:09:02.589
+all right so what's next next is going to be for example a sequence to vector
+
+0:09:02.589,0:09:07.210
+to sequence this used to be the standard way of performing length language
+
+0:09:07.210,0:09:13.000
+translation so you start with a sequence of symbols here shown in pink so you
+
+0:09:13.000,0:09:17.290
+have a sequence of inputs then everything gets condensed into this kind
+
+0:09:17.290,0:09:23.020
+of final age which is this H over here which is going to be somehow my concept
+
+0:09:23.020,0:09:27.880
+right so I have a sentence I squeeze the sentence temporal information into just
+
+0:09:27.880,0:09:31.600
+one vector which is representing the meaning the message I'd like to send
+
+0:09:31.600,0:09:36.310
+across and then I get this meaning in whatever representation unrolled back in
+
+0:09:36.310,0:09:41.380
+a different language right so I can encode I don't know today I'm very happy
+
+0:09:41.380,0:09:47.350
+in English as a sequence of word and then you know you can get LG Sonoma to
+
+0:09:47.350,0:09:53.170
+Felicia and then I speak outside Thailand today or whatever now today I'm
+
+0:09:53.170,0:09:58.480
+very tired Jin Chen walk han lei or whatever ok so
+
+0:09:58.480,0:10:02.020
+again you have some kind of encoding then you have a compressed
+
+0:10:02.020,0:10:08.110
+representation and then you get like the decoding given the same compressed
+
+0:10:08.110,0:10:15.040
+version ok and so for example I guess language translation again recently we
+
+0:10:15.040,0:10:20.709
+have seen transformers and a lot of things like in the recent time so we're
+
+0:10:20.709,0:10:25.300
+going to cover that the next lesson I think but this used to be the state of
+
+0:10:25.300,0:10:31.000
+the art until few two years ago and here you can see that if you actually check
+
+0:10:31.000,0:10:38.950
+if you do a PCA over the latent space you have that words are grouped by
+
+0:10:38.950,0:10:43.630
+semantics ok so if we zoom in that region there are we're gonna see that in
+
+0:10:43.630,0:10:48.400
+what in the same location you find all the amounts december february november
+
+0:10:48.400,0:10:52.750
+whatever right if you put a few focus on a different region you get that a few
+
+0:10:52.750,0:10:55.250
+days next few miles and so on right so
+
+0:10:55.250,0:11:00.230
+different location will have some specific you know common meaning so we
+
+0:11:00.230,0:11:05.780
+basically see in this case how by training these networks you know just
+
+0:11:05.780,0:11:09.680
+with symbols they will pick up on some specific semantics
+
+0:11:09.680,0:11:16.130
+you know features right in this case you can see like there is a vector so the
+
+0:11:16.130,0:11:20.900
+vector that is connecting women to men is gonna be the same vector that is well
+
+0:11:20.900,0:11:27.590
+woman - man which is this one I think is gonna be equal to Queen - King right and
+
+0:11:27.590,0:11:32.890
+so yeah it's correct and so you're gonna have that the same distance in this
+
+0:11:32.890,0:11:37.730
+embedding space will be applied to things that are female and male for
+
+0:11:37.730,0:11:43.370
+example or in the other case you have walk-in and walked swimming and swamp so
+
+0:11:43.370,0:11:47.960
+you always have this you know specific linear transformation you can apply in
+
+0:11:47.960,0:11:53.690
+order to go from one type of word to the other one or this one you have the
+
+0:11:53.690,0:11:59.180
+connection between cities and the capitals all right so one more right I
+
+0:11:59.180,0:12:05.210
+think what's missing from the big picture here it's a big picture because
+
+0:12:05.210,0:12:09.560
+it's so large no no it's such a big picture because it's the overview okay
+
+0:12:09.560,0:12:18.590
+you didn't get the joke it's okay what's missing here vector to seek with no okay
+
+0:12:18.590,0:12:23.330
+good but no because you can still use the other one so you have this one the
+
+0:12:23.330,0:12:27.830
+vector is sequence to sequence right so this one is you start feeding inside
+
+0:12:27.830,0:12:31.580
+inputs you start outputting something right what can be an example of this
+
+0:12:31.580,0:12:38.900
+stuff so if you had a Nokia phone and you use the t9 you know this stuff from
+
+0:12:38.900,0:12:43.100
+20 years ago you have basically suggestions on what your typing is
+
+0:12:43.100,0:12:47.150
+you're typing right so this would be one type of these suggestions where like one
+
+0:12:47.150,0:12:50.570
+type of this architecture as you getting suggestions as you're typing things
+
+0:12:50.570,0:12:57.290
+through or you may have like speech to captions right I talked and you have the
+
+0:12:57.290,0:13:02.520
+things below or something very cool which is
+
+0:13:02.520,0:13:08.089
+the following so I start writing here the rings of Saturn glitter while the
+
+0:13:08.089,0:13:16.260
+harsh ice two men look at each other hmm okay they were enemies but the server
+
+0:13:16.260,0:13:20.100
+robots weren't okay okay hold on so this network was trained on some
+
+0:13:20.100,0:13:24.360
+sci-fi novels and therefore you can just type something then you let the network
+
+0:13:24.360,0:13:28.290
+start outputting some suggestions for you so you know if you don't know how to
+
+0:13:28.290,0:13:34.620
+write a book then you can you know ask your computer to help you out okay
+
+0:13:34.620,0:13:39.740
+that's so cool or one more that I really like it this one is fantastic I think
+
+0:13:39.740,0:13:45.959
+you should read read it I think so you put some kind of input there like the
+
+0:13:45.959,0:13:51.630
+scientist named alone what is it or the prompt right so you put in the
+
+0:13:51.630,0:13:56.839
+the top prompt and then you get you know this network start writing about very
+
+0:13:56.839,0:14:05.690
+interesting unicorns with multiple horns is called horns say unicorn right okay
+
+0:14:05.690,0:14:09.480
+alright let's so cool just check it out later and you can take a screenshot of
+
+0:14:09.480,0:14:14.970
+the screen anyhow so that was like the eye candy such that you get you know
+
+0:14:14.970,0:14:21.089
+hungry now let's go into be PTT which is the thing that they aren't really like
+
+0:14:21.089,0:14:27.390
+yesterday's PTT said okay alright let's see how this stuff works okay so on the
+
+0:14:27.390,0:14:31.620
+left hand side we see again this vector middle in the representation the output
+
+0:14:31.620,0:14:35.520
+to a fine transformation and then there we have the classical equations right
+
+0:14:35.520,0:14:42.450
+all right so let's see how this stuff is similar or not similar and you can't see
+
+0:14:42.450,0:14:46.620
+anything so for the next two seconds I will want one minute I will turn off the
+
+0:14:46.620,0:14:51.300
+lights then I turn them on [Music]
+
+0:14:51.300,0:14:55.570
+okay now you can see something all right so let's see what are the questions of
+
+0:14:55.570,0:15:00.490
+this new architecture don't stand up you're gonna be crushing yourself
+
+0:15:00.490,0:15:04.270
+alright so you have here the hidden representation now there's gonna be this
+
+0:15:04.270,0:15:10.000
+nonlinear function of this rotation of a stack version of my input which I
+
+0:15:10.000,0:15:15.520
+appended the previous configuration of the hidden layer okay and so this is a
+
+0:15:15.520,0:15:19.420
+very nice compact notation it's just I just put the two vectors one on top of
+
+0:15:19.420,0:15:24.640
+each other and then I sign assign I sum the bias I also and define initial
+
+0:15:24.640,0:15:29.920
+condition my initial H is gonna be 0 so at the beginning whenever I have t=1
+
+0:15:29.920,0:15:34.360
+this stuff is gonna be settle is a vector of zeros and then I have this
+
+0:15:34.360,0:15:39.880
+matrix Wh is gonna be two separate matrices so sometimes you see this a
+
+0:15:39.880,0:15:48.130
+question is Wₕₓ times x plus Wₕₕ times h[t-1] but you can also figure out
+
+0:15:48.130,0:15:52.450
+that if you stock those two matrices you know one attached to the other that you
+
+0:15:52.450,0:15:56.620
+just put this two vertical lines completely equivalent notation but it
+
+0:15:56.620,0:16:01.360
+looked like very similar to whatever we had here so hidden layer is affine
+
+0:16:01.360,0:16:05.230
+transformation of the input inner layer is affine transformation of the input
+
+0:16:05.230,0:16:11.440
+and the previous value okay and then you have the final output is going to be
+
+0:16:11.440,0:16:20.140
+again my final rotation so I'm gonna turn on the light so no magic so far
+
+0:16:20.140,0:16:27.690
+right you're okay right you're with me to shake the heads what about the others
+
+0:16:27.690,0:16:34.930
+no yes okay whatever so this one is simply on the right hand
+
+0:16:34.930,0:16:40.330
+side I simply unroll over time such that you can see how things are just not very
+
+0:16:40.330,0:16:43.990
+crazy like this loop here is not actually a loop this is like a
+
+0:16:43.990,0:16:48.500
+connection to next time steps right so that around
+
+0:16:48.500,0:16:52.760
+arrow means is just this right arrow so this is a neural net it's dinkley a
+
+0:16:52.760,0:16:57.950
+neural net which is extended in in length rather also not only in a in a
+
+0:16:57.950,0:17:01.639
+thickness right so you have a network that is going this direction input and
+
+0:17:01.639,0:17:05.600
+output but as you can think as there's been an extended input and this been an
+
+0:17:05.600,0:17:10.220
+extended output while all these intermediate weights are all share right
+
+0:17:10.220,0:17:14.120
+so all of these weights are the same weights and then you use this kind of
+
+0:17:14.120,0:17:17.510
+shared weights so it's similar to a convolutional net in the sense that you
+
+0:17:17.510,0:17:21.410
+had this parameter sharing right across different time domains because you
+
+0:17:21.410,0:17:28.820
+assume there is some kind of you know stationarity right of the signal make
+
+0:17:28.820,0:17:32.870
+sense so this is a kind of convolution right you can see how this is kind of a
+
+0:17:32.870,0:17:40.130
+convolution alright so that was kind of you know a little bit of the theory we
+
+0:17:40.130,0:17:46.160
+already seen that so let's see how this works for a practical example so in this
+
+0:17:46.160,0:17:51.830
+case we we are just reading this code here so this is world language model you
+
+0:17:51.830,0:17:57.770
+can find it at the PyTorch examples so you have a sequence of symbols I have
+
+0:17:57.770,0:18:01.910
+just represented there every symbol is like a letter in the alphabet and then
+
+0:18:01.910,0:18:05.419
+the first part is gonna be basically splitting this one in this way right
+
+0:18:05.419,0:18:10.309
+so you preserve vertically in the time domain but then I split the long long
+
+0:18:10.309,0:18:16.640
+long sequence such that I can now chop I can use best bets bets how do you say
+
+0:18:16.640,0:18:21.980
+computation so the first thing you have the best size is gonna be 4 in this case
+
+0:18:21.980,0:18:27.410
+and then I'm gonna be getting in my first batch and then I will force the
+
+0:18:27.410,0:18:33.650
+network to be able to so this will be my best back propagation through time
+
+0:18:33.650,0:18:38.270
+period and I will force the network to output the next sequence of characters
+
+0:18:38.270,0:18:44.510
+ok so given that I have a,b,c, I will force my network to say d given that I have
+
+0:18:44.510,0:18:50.000
+g,h,i, I will force the network to come up with j. Given m,n,o,
+
+0:18:50.000,0:18:54.980
+I want p, given s,t,u, I want v. So how can you actually make
+
+0:18:54.980,0:18:59.660
+sure you understand what I'm saying whenever you are able to predict my next
+
+0:18:59.660,0:19:04.010
+world you're actually able to you know you basically know in already what I'm
+
+0:19:04.010,0:19:11.720
+saying right yeah so by trying to predict an upcoming word you're going to
+
+0:19:11.720,0:19:15.170
+be showing some kind of comprehension of whatever is going to be this temporal
+
+0:19:15.170,0:19:22.700
+information in the data all right so after we get the beds we have so how
+
+0:19:22.700,0:19:26.510
+does it work let's actually see you know and about a bit of a detail this is
+
+0:19:26.510,0:19:30.650
+gonna be my first output is going to be a batch with four items I feed this
+
+0:19:30.650,0:19:34.220
+inside the near corner all night and then my neural net we come up with a
+
+0:19:34.220,0:19:39.740
+prediction of the upcoming sample right and I will force that one to be my b,h,n,t
+
+0:19:39.740,0:19:47.450
+okay then I'm gonna be having my second input I will provide the previous
+
+0:19:47.450,0:19:53.420
+hidden state to the current RNN I will feel these inside and then I expect to
+
+0:19:53.420,0:19:58.670
+get the second line of the output the target right and then so on right I get
+
+0:19:58.670,0:20:03.410
+the next state and sorry the next input I get the next state and then I'm gonna
+
+0:20:03.410,0:20:07.700
+get inside the neural net the RNN I which I will try to force to get the
+
+0:20:07.700,0:20:13.840
+final target okay so far yeah each one is gonna be the output of the
+
+0:20:18.730,0:20:28.280
+internet recurrent neural net right I'll show you the equation before you have h[1]
+
+0:20:28.280,0:20:43.460
+comes out from this one right second the output I'm gonna be forcing the output
+
+0:20:43.460,0:20:48.170
+actually to be my target my next word in the sequence of letters right so I have
+
+0:20:48.170,0:20:52.610
+a sequence of words force my network to predict what's the next word given the
+
+0:20:52.610,0:21:02.480
+previous word know h1 is going to be fed inside here and you stuck the next word
+
+0:21:02.480,0:21:07.880
+the next word together with the previous state and then you'll do a rotation of
+
+0:21:07.880,0:21:13.670
+the previous word with a previous sorry the new word with the next state the new
+
+0:21:13.670,0:21:17.720
+word with the previous state you'll do our rotation here find transformation
+
+0:21:17.720,0:21:21.230
+right and then you apply the non-linearity so you always get a new
+
+0:21:21.230,0:21:25.610
+word that is the current X and then you get the previous state just to see in
+
+0:21:25.610,0:21:30.650
+what state the system once and then you output a new output right and so we are
+
+0:21:30.650,0:21:35.000
+in this situation here we have a bunch of inputs I have my first input and then
+
+0:21:35.000,0:21:39.200
+I get the first output I have this internal memory that is sent forward and
+
+0:21:39.200,0:21:44.240
+then this network will now be aware of what happened here and then I input the
+
+0:21:44.240,0:21:49.450
+next input and so on I get the next output and I force the output to be the
+
+0:21:49.450,0:21:57.040
+output here the value inside the batch ok alright what's missing now
+
+0:21:57.070,0:22:00.160
+[Music] this is for PowerPoint drawing
+
+0:22:02.890,0:22:08.370
+constraint all right what's happening now so here I'm gonna be sending the
+
+0:22:08.370,0:22:13.300
+here I just drawn an arrow with the final h[T] but there is a slash on the
+
+0:22:13.300,0:22:16.780
+arrow what is the slash on the arrow who can
+
+0:22:16.780,0:22:27.100
+understand what the slash mean of course there will be there is gonna be the next
+
+0:22:27.100,0:22:31.570
+batch they're gonna be starting from here D and so on this is gonna be my
+
+0:22:31.570,0:22:46.690
+next batch d,j,p,v  e,k,q,w  and f,l,r,x. This slash here means do not back
+
+0:22:46.690,0:22:51.550
+propagate through okay so that one is gonna be calling dot detach in Porsche
+
+0:22:51.550,0:22:56.560
+which is gonna be stopping the gradient to be you know propagated back to
+
+0:22:56.560,0:23:01.450
+forever okay so this one say know that and so whenever I get the sorry no no
+
+0:23:01.450,0:23:06.970
+gradient such that when I input the next gradient the first input here it's gonna
+
+0:23:06.970,0:23:11.530
+be this guy over here and also of course without gradient such that we don't have
+
+0:23:11.530,0:23:17.170
+an infinite length RNN okay make sense yes
+
+0:23:17.170,0:23:24.640
+no I assume it's a yes okay so vanishing and exploding
+
+0:23:24.640,0:23:30.730
+gradients we touch them upon these also yesterday so again I'm kind of going a
+
+0:23:30.730,0:23:35.620
+little bit faster to the intent user so let's see how this works
+
+0:23:35.620,0:23:40.390
+so usually for our recurrent neural network you have an input you have a
+
+0:23:40.390,0:23:45.160
+hidden layer and then you have an output then this value of here how do you get
+
+0:23:45.160,0:23:50.680
+this information through here what what what does this R represent do you
+
+0:23:50.680,0:23:55.840
+remember the equation of the hidden layer so the new hidden layer is gonna
+
+0:23:55.840,0:24:01.050
+be the previous hidden layer which we rotate
+
+0:24:03.100,0:24:08.030
+alright so we rotate the previous hidden layer and so how do you rotate hidden
+
+0:24:08.030,0:24:15.220
+layers matrices right and so every time you see all ads on tile arrow there is a
+
+0:24:15.220,0:24:21.920
+rotation there is a matrix now if the you know this matrix can
+
+0:24:21.920,0:24:26.900
+change the sizing of your final output right so if you think about perhaps
+
+0:24:26.900,0:24:31.190
+let's say the determinant right if the terminal is unitary it's a mapping the
+
+0:24:31.190,0:24:34.610
+same areas for the same area if it's larger than one they're going to be
+
+0:24:34.610,0:24:39.560
+getting you know this radians to getting larger and larger or if it's smaller
+
+0:24:39.560,0:24:44.660
+than I'm gonna get these gradients to go to zero whenever you perform the back
+
+0:24:44.660,0:24:48.920
+propagation in this direction okay so the problem here is that whenever we do
+
+0:24:48.920,0:24:53.390
+is send gradients back so the gains are going to be going down like that are
+
+0:24:53.390,0:24:57.800
+gonna be going like down like this then down like this way and down like this
+
+0:24:57.800,0:25:01.610
+way and also all down this way and so on right so the gradients are going to be
+
+0:25:01.610,0:25:06.380
+always going against the direction of the arrow in H ro has a matrix inside
+
+0:25:06.380,0:25:11.510
+right and again this matrix will affect how these gradients propagate and that's
+
+0:25:11.510,0:25:18.590
+why you can see here although we have a very bright input that one like gets
+
+0:25:18.590,0:25:23.720
+lost through oh well if you have like a gradient coming down here the gradient
+
+0:25:23.720,0:25:30.410
+gets you know kill over time okay so how do we fix that to fix this one we simply
+
+0:25:30.410,0:25:40.420
+remove the matrices in this horizontal operation does it make sense no yes no
+
+0:25:40.420,0:25:47.630
+the problem is that the next hidden state will have you know its own input
+
+0:25:47.630,0:25:52.910
+memory coming from the previous step through a matrix multiplication now this
+
+0:25:52.910,0:25:58.760
+matrix multiplication will affect what's gonna be the gradient that comes in the
+
+0:25:58.760,0:26:02.630
+other direction okay so whenever you have an output here you
+
+0:26:02.630,0:26:06.740
+have a final loss now you have the grade that are gonna be going against the
+
+0:26:06.740,0:26:12.050
+arrows up to the input the problem is that this gradient which is going
+
+0:26:12.050,0:26:16.910
+through the in the opposite direction of these arrows will be multiplied by the
+
+0:26:16.910,0:26:22.460
+matrix right the transpose of the matrix and again these matrices will affect
+
+0:26:22.460,0:26:26.030
+what is the overall norm of this gradient right and it will be all
+
+0:26:26.030,0:26:28.310
+killing it you have vanishing gradient or you're
+
+0:26:28.310,0:26:32.690
+gonna have exploding the gradient which is going to be whenever is going to be
+
+0:26:32.690,0:26:37.880
+getting amplified right so in order to be avoiding that we have to avoid so you
+
+0:26:37.880,0:26:41.960
+can see this is a very deep network so recurrently our network where the first
+
+0:26:41.960,0:26:45.320
+deep networks back in the night is actually and the word
+
+0:26:45.320,0:26:49.850
+depth was actually in time which and of course they were facing the same issues
+
+0:26:49.850,0:26:54.350
+we face with deep learning in modern day days where ever we were still like
+
+0:26:54.350,0:26:58.450
+stacking several layers we were observing that the gradients get lost as
+
+0:26:58.450,0:27:05.750
+depth right so how do we solve gradient getting lost through the depth in a
+
+0:27:05.750,0:27:08.770
+current days skipping constant connection right the
+
+0:27:11.270,0:27:15.530
+receiver connections we use and similarly here we can use skip
+
+0:27:15.530,0:27:21.860
+connections as well when we go down well up in in time okay so let's see how this
+
+0:27:21.860,0:27:30.500
+works yeah so the problem is that the
+
+0:27:30.500,0:27:34.250
+gradients are only going in the backward paths right back
+
+0:27:34.250,0:27:38.990
+[Music] well the gradient has to go the same way
+
+0:27:38.990,0:27:42.680
+it went forward by the opposite direction right I mean you're computing
+
+0:27:42.680,0:27:46.970
+chain rule so if you have a function of a function of a function then you just
+
+0:27:46.970,0:27:52.220
+use those functions to go back right the point is that whenever you have these
+
+0:27:52.220,0:27:55.790
+gradients coming back they will not have to go through matrices therefore also
+
+0:27:55.790,0:28:01.250
+the forward part has not doesn't have to go through the matrices meaning that the
+
+0:28:01.250,0:28:07.310
+memory cannot go through matrix multiplication if you don't want to have
+
+0:28:07.310,0:28:11.770
+this effect when you perform back propagation okay
+
+0:28:14.050,0:28:19.420
+yeah it's gonna be worth much better working I show you in the next slide
+
+0:28:19.420,0:28:22.539
+[Music] show you next slide
+
+0:28:27.740,0:28:32.270
+so how do we fix this problem well instead of using one recurrent neural
+
+0:28:32.270,0:28:36.650
+network we're gonna using for recurrent neural network okay so the first
+
+0:28:36.650,0:28:41.510
+RNN on the first network is gonna be the one that goes
+
+0:28:41.510,0:28:46.370
+from the input to this intermediate state then I have other three networks
+
+0:28:46.370,0:28:51.410
+and each of those are represented by these three symbols 1 2 & 3.
+
+0:28:51.410,0:28:56.870
+okay think about this as our open mouth and it's like a closed mouth okay like
+
+0:28:56.870,0:29:04.580
+the emoji okay so if you use this kind of for net for recurrent neural network
+
+0:29:04.580,0:29:09.740
+be regular Network you gotta have for example from the input I send things
+
+0:29:09.740,0:29:14.390
+through in the open mouth therefore it gets here I have a closed mouth here so
+
+0:29:14.390,0:29:18.920
+nothing goes forward then I'm gonna have this open mouth here such that the
+
+0:29:18.920,0:29:23.600
+history goes forward so the history gets sent forward without going through a
+
+0:29:23.600,0:29:29.120
+neural network matrix multiplication it just gets through our open mouth and
+
+0:29:29.120,0:29:34.670
+all the other inputs find a closed mouth so the hidden state will not change upon
+
+0:29:34.670,0:29:40.820
+new inputs okay and then here you're gonna have a open mouth here such that
+
+0:29:40.820,0:29:44.960
+you can get the final output here then the open mouth keeps going here such
+
+0:29:44.960,0:29:48.560
+that you have another output there and then finally you get the last closed
+
+0:29:48.560,0:29:54.620
+mouth at the last one now if you perform back prop you will have the gradients
+
+0:29:54.620,0:29:58.880
+flowing through the open mouth and you don't get any kind of matrix
+
+0:29:58.880,0:30:04.400
+multiplication so now let's figure out how these open mouths are represented
+
+0:30:04.400,0:30:10.010
+how are they instantiated in like in in terms of mathematics is it clear design
+
+0:30:10.010,0:30:13.130
+right so now we are using open and closed mouths and each of those mouths
+
+0:30:13.130,0:30:17.880
+is plus the the first guy here that connects the input to the hidden are
+
+0:30:17.880,0:30:25.580
+brn ends so these on here that is a gated recurrent network it's simply for
+
+0:30:25.580,0:30:32.060
+normal recurrent neural network combined in a clever way such that you have
+
+0:30:32.060,0:30:37.920
+multiplicative interaction and not matrix interaction is it clear so far
+
+0:30:37.920,0:30:42.000
+this is like intuition I haven't shown you how all right so let's figure out
+
+0:30:42.000,0:30:48.570
+who made this and how it works okay so we're gonna see now those long short
+
+0:30:48.570,0:30:55.530
+term memory or gated recurrent neural networks so I'm sorry okay that was the
+
+0:30:55.530,0:30:59.730
+dude okay this is the guy who actually invented this stuff actually him and his
+
+0:30:59.730,0:31:07.620
+students back some in 1997 and we were drinking here together okay all right so
+
+0:31:07.620,0:31:14.010
+that is the question of a recurrent neural network and on the top left are
+
+0:31:14.010,0:31:18.000
+you gonna see in the diagram so I just make a very compact version of this
+
+0:31:18.000,0:31:23.310
+recurrent neural network here is going to be the collection of equations that
+
+0:31:23.310,0:31:27.840
+are expressed in a long short term memory they look a little bit dense so I
+
+0:31:27.840,0:31:32.970
+just draw it for you here okay let's actually goes through how this stuff
+
+0:31:32.970,0:31:36.320
+works so I'm gonna be drawing an interactive
+
+0:31:36.320,0:31:40.500
+animation here so you have your input gate here which is going to be an affine
+
+0:31:40.500,0:31:43.380
+transformation so all of these are recurrent Network write the same
+
+0:31:43.380,0:31:49.920
+equation I show you here so this input transformation will be multiplying my C
+
+0:31:49.920,0:31:55.440
+tilde which is my candidate gate here I have a don't forget gate which is
+
+0:31:55.440,0:32:01.920
+multiplying my previous value of my cell memory and then my Poppa stylist maybe
+
+0:32:01.920,0:32:08.100
+don't forget previous plus input ii i'm gonna show you now how it works then i
+
+0:32:08.100,0:32:12.600
+have my final hidden representations to be multiplication element wise
+
+0:32:12.600,0:32:17.850
+multiplication between my output gate and my you know whatever hyperbolic
+
+0:32:17.850,0:32:22.740
+tangent version of the cell such that things are bounded and then I have
+
+0:32:22.740,0:32:26.880
+finally my C tilde which is my candidate gate is simply
+
+0:32:26.880,0:32:31.110
+Anette right so you have one recurrent network one that modulates the output
+
+0:32:31.110,0:32:35.730
+one that modulates this is don't forget gate and this is the input gate
+
+0:32:35.730,0:32:40.050
+so all this interaction between the memory and the gates is a multiplicative
+
+0:32:40.050,0:32:44.490
+interaction and this forget input and don't forget the input and output are
+
+0:32:44.490,0:32:48.780
+all sigmoids and therefore they are going from 0 to 1 so I can multiply by a
+
+0:32:48.780,0:32:53.340
+0 you have a closed mouth or you can multiply by 1 if it's open mouth right
+
+0:32:53.340,0:33:00.120
+if you think about being having our internal linear volume which is below
+
+0:33:00.120,0:33:06.120
+minus 5 or above plus 5 okay such that you using the you use the gate in the
+
+0:33:06.120,0:33:11.940
+saturated area or 0 or 1 right you know the sigmoid so let's see how this stuff
+
+0:33:11.940,0:33:16.260
+works this is the output let's turn off the
+
+0:33:16.260,0:33:20.450
+output how do I do turn off the output I simply put a 0
+
+0:33:20.450,0:33:26.310
+inside so let's say I have a purple internal representation see I put a 0
+
+0:33:26.310,0:33:29.730
+there in the output gate the output is going to be multiplying a 0 with
+
+0:33:29.730,0:33:36.300
+something you get 0 okay then let's say I have a green one I have one then I
+
+0:33:36.300,0:33:40.830
+multiply one with the purple I get purple and then finally I get the same
+
+0:33:40.830,0:33:46.170
+value similarly I can control the memory and I can for example we set it in this
+
+0:33:46.170,0:33:51.240
+case I'm gonna be I have my internal memory see this is purple and then I
+
+0:33:51.240,0:33:57.450
+have here my previous guy which is gonna be blue I guess I have a zero here and
+
+0:33:57.450,0:34:01.500
+therefore the multiplication gives me a zero there I have here a zero so
+
+0:34:01.500,0:34:05.190
+multiplication is gonna be giving a zero at some two zeros and I get a zero
+
+0:34:05.190,0:34:09.690
+inside of memory so I just erase the memory and you get the zero there
+
+0:34:09.690,0:34:15.210
+otherwise I can keep the memory I still do the internal thing I did a new one
+
+0:34:15.210,0:34:19.919
+but I keep a wonder such that the multiplication gets blue the Sun gets
+
+0:34:19.919,0:34:25.649
+blue and then I keep sending out my bloom finally I can write such that I
+
+0:34:25.649,0:34:31.110
+can get a 1 in the input gate the multiplication gets purple then the I
+
+0:34:31.110,0:34:35.010
+set a zero in the don't forget such that the
+
+0:34:35.010,0:34:40.679
+we forget and then multiplication gives me zero I some do I get purple and then
+
+0:34:40.679,0:34:45.780
+I get the final purple output okay so here we control how to send how to write
+
+0:34:45.780,0:34:50.850
+in memory how to reset the memory and how to output something okay so we have
+
+0:34:50.850,0:35:04.770
+all different operation this looks like a computer - and in an yeah it is
+
+0:35:04.770,0:35:08.700
+assumed in this case to show you like how the logic works as we are like
+
+0:35:08.700,0:35:14.250
+having a value inside the sigmoid has been or below minus 5 or being above
+
+0:35:14.250,0:35:27.780
+plus 5 such that we are working as a switch 0 1 switch okay the network can
+
+0:35:27.780,0:35:32.790
+choose to use this kind of operation to me make sense I believe this is the
+
+0:35:32.790,0:35:37.110
+rationale behind how this network has been put together the network can decide
+
+0:35:37.110,0:35:42.690
+to do anything it wants usually they do whatever they want but this seems like
+
+0:35:42.690,0:35:46.800
+they can work at least if they've had to saturate the gates it looks like things
+
+0:35:46.800,0:35:51.930
+can work pretty well so in the remaining 15 minutes of kind of I'm gonna be
+
+0:35:51.930,0:35:56.880
+showing you two notebooks I kind of went a little bit faster because again there
+
+0:35:56.880,0:36:04.220
+is much more to be seen here in the notebooks so yeah
+
+0:36:10.140,0:36:17.440
+so this the the actual weight the actual gradient you care here is gonna be the
+
+0:36:17.440,0:36:21.970
+gradient with respect to previous C's right the thing you care is gonna be
+
+0:36:21.970,0:36:25.000
+basically the partial derivative of the current seen with respect to previous
+
+0:36:25.000,0:36:30.160
+C's such that you if you have the original initial C here and you have
+
+0:36:30.160,0:36:35.140
+multiple C over time you want to change something in the original C you still
+
+0:36:35.140,0:36:39.130
+have the gradient coming down all the way until the first C which comes down
+
+0:36:39.130,0:36:43.740
+to getting gradients through that matrix Wc here right so if you want to change
+
+0:36:46.660,0:36:52.089
+those weights here you just go through the chain of multiplications that are
+
+0:36:52.089,0:36:56.890
+not involving any matrix multiplication as such that you when you get the
+
+0:36:56.890,0:37:00.490
+gradient it still gets multiplied by one all the time and it gets down to
+
+0:37:00.490,0:37:05.760
+whatever we want to do okay did I answer your question
+
+0:37:09.150,0:37:16.660
+so the matrices will change the amplitude of your gradient right so if
+
+0:37:16.660,0:37:22.000
+you have like these largest eigenvalue being you know 0.0001 every time you
+
+0:37:22.000,0:37:26.079
+multiply you get the norm of this vector getting killed right so you have like an
+
+0:37:26.079,0:37:31.569
+exponential decay in this case if my forget gate is actually always equal to
+
+0:37:31.569,0:37:37.510
+1 then you get c = c-t. What is the partial
+
+0:37:37.510,0:37:43.299
+derivative of c[t]/c[t-1]?
+
+0:37:43.299,0:37:48.579
+1 right so the parts of the relative that is the
+
+0:37:48.579,0:37:52.390
+thing that you actually multiply every time there's gonna be 1 so output
+
+0:37:52.390,0:37:57.609
+gradient output gradients can be input gradients right yeah i'll pavillions
+
+0:37:57.609,0:38:01.510
+gonna be implicit because it would apply the output gradient by the derivative of
+
+0:38:01.510,0:38:05.599
+this module right if the this module is e1 then the thing that is
+
+0:38:05.599,0:38:14.660
+here keeps going that is the rationale behind this now this is just for drawing
+
+0:38:14.660,0:38:24.710
+purposes I assumed it's like a switch okay such that I can make things you
+
+0:38:24.710,0:38:29.089
+know you have a switch on and off to show like how it should be working maybe
+
+0:38:29.089,0:38:46.579
+doesn't work like that but still it works it can work this way right yeah so
+
+0:38:46.579,0:38:50.089
+that's the implementation of pro question is gonna be simply you just pad
+
+0:38:50.089,0:38:55.069
+all the other sync when sees with zeros before the sequence so if you have
+
+0:38:55.069,0:38:59.920
+several several sequences yes several sequences that are of a different length
+
+0:38:59.920,0:39:03.619
+you just put them all aligned to the right
+
+0:39:03.619,0:39:08.960
+and then you put some zeros here okay such that you always have in the last
+
+0:39:08.960,0:39:14.599
+column the latest element if you put two zeros here it's gonna be a mess in right
+
+0:39:14.599,0:39:17.299
+in the code if you put the zeros in the in the beginning you just stop doing
+
+0:39:17.299,0:39:21.319
+back propagation when you hit the last symbol right so you start from here you
+
+0:39:21.319,0:39:25.460
+go back here so you go forward then you go back prop and stop whenever you
+
+0:39:25.460,0:39:29.599
+actually reach the end of your sequence if you pad on the other side you get a
+
+0:39:29.599,0:39:34.730
+bunch of drop there in the next ten minutes so you're gonna be seen two
+
+0:39:34.730,0:39:45.049
+notebooks if you don't have other questions okay wow you're so quiet okay
+
+0:39:45.049,0:39:49.970
+so we're gonna be going now for sequence classification alright so in this case
+
+0:39:49.970,0:39:54.589
+I'm gonna be I just really stuff loud out loud the goal is to classify a
+
+0:39:54.589,0:40:00.259
+sequence of elements sequence elements and targets are represented locally
+
+0:40:00.259,0:40:05.660
+input vectors with only one nonzero bit so it's a one hot encoding the sequence
+
+0:40:05.660,0:40:10.770
+starts with a B for beginning and end with a E and otherwise consists of a
+
+0:40:10.770,0:40:16.370
+randomly chosen symbols from a set {a, b, c, d} which are some kind of noise
+
+0:40:16.370,0:40:22.380
+expect for two elements in position t1 and t2 this position can be either or X
+
+0:40:22.380,0:40:29.460
+or Y in for the hard difficulty level you have for example that the sequence
+
+0:40:29.460,0:40:35.220
+length length is chose randomly between 100 and 110 10 t1 is randomly chosen
+
+0:40:35.220,0:40:40.530
+between 10 and 20 Tinto is randomly chosen between 50 and 60 there are four
+
+0:40:40.530,0:40:47.010
+sequences classes Q, R, S and U which depends on the temporal order of x and y so if
+
+0:40:47.010,0:40:53.520
+you have X,X you can be getting a Q. X,Y you get an R. Y,X you get an S
+
+0:40:53.520,0:40:57.750
+and Y,Y get U. You so we're going to be doing a sequence classification based on
+
+0:40:57.750,0:41:03.720
+the X and y or whatever those to import to these kind of triggers okay
+
+0:41:03.720,0:41:08.370
+and in the middle in the middle you can have a,b,c,d in random positions like you
+
+0:41:08.370,0:41:12.810
+know randomly generated is it clear so far so we do cast a classification of
+
+0:41:12.810,0:41:23.180
+sequences where you may have these X,X  X,Y  Y,X ou Y,Y. So in this case
+
+0:41:23.210,0:41:29.460
+I'm showing you first the first input so the return type is a tuple of sequence
+
+0:41:29.460,0:41:36.780
+of two which is going to be what is the output of this example generator and so
+
+0:41:36.780,0:41:43.050
+let's see what is what is this thing here so this is my data I'm going to be
+
+0:41:43.050,0:41:48.030
+feeding to the network so I have 1, 2, 3, 4, 5, 6, 7, 8 
+
+0:41:48.030,0:41:54.180
+different symbols here in a row every time why there are eight we
+
+0:41:54.180,0:42:02.970
+have X and Y and a, b, c and d beginning and end. So we have one hot out of you
+
+0:42:02.970,0:42:08.400
+know eight characters and then i have a sequence of rows which are my sequence
+
+0:42:08.400,0:42:12.980
+of symbols okay in this case you can see here i have a beginning with all zeros
+
+0:42:12.980,0:42:19.260
+why is all zeros padding right so in this case the sequence was shorter than
+
+0:42:19.260,0:42:21.329
+the expect the maximum sequence in the bed
+
+0:42:21.329,0:42:29.279
+and then the first first sequence has an extra zero item at the beginning in them
+
+0:42:29.279,0:42:34.859
+you're gonna have like in this case the second item is of the two a pole to pole
+
+0:42:34.859,0:42:41.160
+is the corresponding best class for example I have a batch size of 32 and
+
+0:42:41.160,0:42:51.930
+then I'm gonna have an output size of 4. Why 4 ? Q, R, S and U.
+
+0:42:51.930,0:42:57.450
+so I have 4 a 4 dimensional target vector and I have a sequence of 8
+
+0:42:57.450,0:43:04.499
+dimensional vectors as input okay so let's see how this sequence looks like
+
+0:43:04.499,0:43:12.779
+in this case is gonna be BbXcXcbE. So X,X let's see X X X X is Q
+
+0:43:12.779,0:43:18.569
+right so we have our Q sequence and that's why the final target is a Q the 1
+
+0:43:18.569,0:43:25.019
+0 0 0 and then you're gonna see B B X C so the second item and the second last
+
+0:43:25.019,0:43:30.390
+is gonna be B lowercase B you can see here the second item and the second last
+
+0:43:30.390,0:43:36.390
+item is going to be a be okay all right so let's now create a recurrent Network
+
+0:43:36.390,0:43:41.249
+in a very quick way so here I can simply say my recurrent network is going to be
+
+0:43:41.249,0:43:47.369
+torch and an RNN and I'm gonna be using a reader network really non-linearity
+
+0:43:47.369,0:43:52.709
+and then I have my final linear layer in the other case I'm gonna be using a led
+
+0:43:52.709,0:43:57.119
+STM and then I'm gonna have a final inner layer so I just execute these guys
+
+0:43:57.119,0:44:07.920
+I have my training loop and I'm gonna be training for 10 books so in the training
+
+0:44:07.920,0:44:13.259
+group you can be always looking for those five different steps first step is
+
+0:44:13.259,0:44:18.900
+gonna be get the data inside the model right so that's step number one what is
+
+0:44:18.900,0:44:30.669
+step number two there are five steps we remember hello
+
+0:44:30.669,0:44:35.089
+you feel that you feed the network if you feed the network with some data then
+
+0:44:35.089,0:44:41.539
+what do you do you compute the loss okay then we have compute step to compute the
+
+0:44:41.539,0:44:52.549
+loss fantastic number three is zero the cash right then number four which is
+
+0:44:52.549,0:45:09.699
+computing the off yes lost dog backwards lost not backward don't compute the
+
+0:45:09.699,0:45:16.449
+partial derivative of the loss with respect to the network's parameters yeah
+
+0:45:16.449,0:45:27.380
+here backward finally number five which is step in opposite direction of the
+
+0:45:27.380,0:45:31.819
+gradient okay all right those are the five steps you always want to see in any
+
+0:45:31.819,0:45:37.909
+training blueprint if someone is missing then you're [ __ ] up okay so we try now
+
+0:45:37.909,0:45:42.469
+the RNN and the LSTM and you get something looks like this
+
+0:45:42.469,0:45:55.929
+so our NN goes up to 50% in accuracy and then the LSTM got 100% okay oh okay
+
+0:45:56.439,0:46:06.019
+first of all how many weights does this LSTM have compared to the RNN four
+
+0:46:06.019,0:46:11.059
+times more weights right so it's not a fair comparison I would say because LSTM
+
+0:46:11.059,0:46:16.819
+is simply for rnns combined somehow right so this is a two layer neural
+
+0:46:16.819,0:46:20.659
+network whereas the other one is at one layer right always both ever like it has
+
+0:46:20.659,0:46:25.009
+one hidden layer they are an end if Alice TM we can think about having two
+
+0:46:25.009,0:46:33.199
+hidden so again one layer two layers well one hidden to lead in one set of
+
+0:46:33.199,0:46:37.610
+parameters four sets of the same numbers like okay not fair okay anyway
+
+0:46:37.610,0:46:43.610
+let's go with hundred iterations okay so now I just go with 100 iterations and I
+
+0:46:43.610,0:46:49.490
+show you how if they work or not and also when I be just clicking things such
+
+0:46:49.490,0:46:56.000
+that we have time to go through stuff okay now my computer's going to be
+
+0:46:56.000,0:47:02.990
+complaining all right so again what are the five types of operations like five
+
+0:47:02.990,0:47:06.860
+okay now is already done sorry I was going to do okay so this is
+
+0:47:06.860,0:47:16.280
+the RNN right RNN and finally actually gave to 100% okay so iron and it just
+
+0:47:16.280,0:47:20.030
+let it more time like a little bit more longer training actually works the other
+
+0:47:20.030,0:47:26.060
+one okay and here you can see that we got 100% in twenty eight bucks okay the
+
+0:47:26.060,0:47:30.650
+other case we got 2,100 percent in roughly twice as long
+
+0:47:30.650,0:47:35.690
+twice longer at a time okay so let's first see how they perform here so I
+
+0:47:35.690,0:47:42.200
+have this sequence BcYdYdaE which is a U sequence and then we ask the network
+
+0:47:42.200,0:47:46.760
+and he actually meant for actually like labels it as you okay so below we're
+
+0:47:46.760,0:47:51.140
+gonna be seeing something very cute so in this case we were using sequences
+
+0:47:51.140,0:47:56.870
+that are very very very very small right so even the RNN is able to train on
+
+0:47:56.870,0:48:02.390
+these small sequences so what is the point of using a LSTM well we can first
+
+0:48:02.390,0:48:07.430
+of all increase the difficulty of the training part and we're gonna see that
+
+0:48:07.430,0:48:13.280
+the RNN can be miserably failing whereas the LSTM keeps working in this
+
+0:48:13.280,0:48:19.790
+visualization part below okay I train a network now Alice and LSTM now with the
+
+0:48:19.790,0:48:26.000
+moderate level which has eighty symbols rather than eight or ten ten symbols so
+
+0:48:26.000,0:48:31.430
+you can see here how this model actually managed to succeed at the end although
+
+0:48:31.430,0:48:38.870
+there is like a very big spike and I'm gonna be now drawing the value of the
+
+0:48:38.870,0:48:43.970
+cell state over time okay so I'm going to be input in our sequence of eighty
+
+0:48:43.970,0:48:49.090
+symbols and I'm gonna be showing you what is the value of the hidden state
+
+0:48:49.090,0:48:53.330
+hidden State so in this case I'm gonna be showing you
+
+0:48:53.330,0:48:56.910
+[Music] hidden hold on
+
+0:48:56.910,0:49:01.140
+yeah I'm gonna be showing I'm gonna send my input through a hyperbolic tangent
+
+0:49:01.140,0:49:06.029
+such that if you're below minus 2.5 I'm gonna be mapping to minus 1 if you're
+
+0:49:06.029,0:49:12.329
+above 2.5 you get mapped to plus 1 more or less and so let's see how this stuff
+
+0:49:12.329,0:49:18.029
+looks so in this case here you can see that this specific hidden layer picked
+
+0:49:18.029,0:49:27.720
+on the X here and then it became red until you got the other X right so this
+
+0:49:27.720,0:49:33.710
+is visualizing the internal state of the LSD and so you can see that in specific
+
+0:49:33.710,0:49:39.599
+unit because in this case I use hidden representation like hidden dimension of
+
+0:49:39.599,0:49:47.700
+10 and so in this case the 1 2 3 4 5 the fifth hidden unit of the cell lay the
+
+0:49:47.700,0:49:52.829
+5th cell actually is trigger by observing the first X and then it goes
+
+0:49:52.829,0:49:58.410
+quiet after seen the other acts this allows me to basically you know take
+
+0:49:58.410,0:50:07.440
+care of I mean recognize if the sequence is U, P, R or S. Okay does it make sense okay
+
+0:50:07.440,0:50:14.519
+oh this one more notebook I'm gonna be showing just quickly which is the 09-echo_data
+
+0:50:14.519,0:50:22.410
+in this case I'm gonna be in South corner I'm gonna have a network echo in
+
+0:50:22.410,0:50:27.059
+whatever I'm saying so if I say something I asked a network to say if I
+
+0:50:27.059,0:50:30.960
+say something I asked my neighbor to say if I say something I ask ok Anderson
+
+0:50:30.960,0:50:42.150
+right ok so in this case here and I'll be inputting this is the first sequence
+
+0:50:42.150,0:50:50.579
+is going to be 0 1 1 1 1 0 and you'll have the same one here 0 1 1 1 1 0 and I
+
+0:50:50.579,0:50:57.259
+have 1 0 1 1 0 1 etc right so in this case if you want to output something
+
+0:50:57.259,0:51:00.900
+after some right this in this case is three time
+
+0:51:00.900,0:51:06.809
+step after you have to have some kind of short-term memory where you keep in mind
+
+0:51:06.809,0:51:11.780
+what I just said where you keep in mind what I just said where you keep in mind
+
+0:51:11.780,0:51:16.890
+[Music] what I just said yeah that's correct so
+
+0:51:16.890,0:51:22.099
+you know pirating actually requires having some kind of working memory
+
+0:51:22.099,0:51:27.569
+whereas the other one the language model which it was prompted prompted to say
+
+0:51:27.569,0:51:33.539
+something that I haven't already said right so that was a different kind of
+
+0:51:33.539,0:51:38.700
+task you actually had to predict what is the most likely next word in keynote you
+
+0:51:38.700,0:51:42.329
+cannot be always right right but this one you can always be right you know
+
+0:51:42.329,0:51:49.079
+this is there is no random stuff anyhow so I have my first batch here and then
+
+0:51:49.079,0:51:53.549
+the sec the white patch which is the same similar thing which is shifted over
+
+0:51:53.549,0:52:01.319
+time and then we have we have to chunk this long long long sequence so before I
+
+0:52:01.319,0:52:05.250
+was sending a whole sequence inside the network and I was enforcing the final
+
+0:52:05.250,0:52:09.569
+target to be something right in this case I had to chunk if the sequence goes
+
+0:52:09.569,0:52:13.319
+this direction I had to chunk my long sequence in little chunks and then you
+
+0:52:13.319,0:52:18.869
+have to fill the first chunk keep trace of whatever is the hidden state send a
+
+0:52:18.869,0:52:23.549
+new chunk where you feed and initially as the initial hidden state the output
+
+0:52:23.549,0:52:28.319
+of this chant right so you feed this chunk you have a final hidden state then
+
+0:52:28.319,0:52:33.960
+you feed this chunk and as you put you have to put these two as input to the
+
+0:52:33.960,0:52:38.430
+internal memory right now you feed the next chunk where you put this one as
+
+0:52:38.430,0:52:44.670
+input as to the internal state and you we are going to be comparing here RNN
+
+0:52:44.670,0:52:57.059
+with analyst TMS I think so at the end here you can see that okay we managed to
+
+0:52:57.059,0:53:02.789
+actually get we are an n/a accuracy that goes 100 100 percent then if you are
+
+0:53:02.789,0:53:08.220
+starting now to mess with the size of the memory chunk with a memory interval
+
+0:53:08.220,0:53:11.619
+you can be seen with the LSTM you can keep this memory
+
+0:53:11.619,0:53:16.399
+for a long time as long as you have enough capacity the RNN after you reach
+
+0:53:16.399,0:53:22.880
+some kind of length you start forgetting what happened in the past and it was
+
+0:53:22.880,0:53:29.809
+pretty much everything for today so stay warm wash your hands and I'll see you
+
+0:53:29.809,0:53:34.929
+next week bye bye
