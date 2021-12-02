@@ -56,13 +56,13 @@ ici car nous pouvons passer d'une représentation à l'autre.
 Il est parfois plus facile d'utiliser cella à gauche quand on veut parler d’un
 
 0:01:47.820,0:01:52.009
-neurone mais parfois nous préférons utiliser l'autre qui peut contenir 
+neurone mais parfois nous préférons utiliser l'autre qui peut contenir
 
 0:01:52.009,0:01:58.110
 plusieurs couches. Chaque bloc ici, l'encodeur et
 
 0:01:58.110,0:02:03.229
-le décodeur peuvent être à plusieurs couches. 
+le décodeur peuvent être à plusieurs couches.
 
 0:02:03.229,0:02:09.989
 Donc deux modules macro, je suppose. Donc l'entrée va dans un encodeur
@@ -80,7 +80,7 @@ h est appelé code et nous avons donc un encodeur qui encode l'entrée
 en ce code. Nous avons ensuite un décodeur qui décode le code en
 
 0:02:28.709,0:02:36.630
-représentation. Dans ce cas, c’est similaire, la même représentation que l'entrée. 
+représentation. Dans ce cas, c’est similaire, la même représentation que l'entrée.
 
 0:02:40.829,0:02:53.890
 Ok donc sur le côté droit vous avez un AE, sur la gauche vous allez voir ce qu'est un auto-encodeur variationnel [VAE dans la suite].
@@ -91,8 +91,8 @@ Donc voilà un VAE. Cela a l'air pareil, donc quelle est la différence ?
 0:02:57.879,0:03:02.200
 Il manque quelque chose. Donc la première différence est qu'au lieu
 
-0:03:02.200, 0:03:16.000
-d'avoir la couche cachée h, le code est maintenant constitué de deux choses : E(z) et V(z) qui représentent 
+0:03:02.200,0:03:16.000
+d'avoir la couche cachée h, le code est maintenant constitué de deux choses : E(z) et V(z) qui représentent
 
 0:03:16.000,0:03:21.189
 la moyenne et la variance de cette variable latente z.
@@ -131,7 +131,7 @@ que nous avons d-moyennes et d-variances. Donc chacun de ces éléments
 sont indépendants. On peut aussi penser à l’AE classique comme étant
 
 0:04:38.050,0:04:42.970
-le simple encodage des moyennes. Si vous encodez la moyenne et que vous 
+le simple encodage des moyennes. Si vous encodez la moyenne et que vous
 
 0:04:42.970,0:04:49.210
 avez zéro variance, vous obtenez à nouveau un AE déterministe. Donc h
@@ -164,7 +164,7 @@ tous les autres éléments de la matrice de covariance sont tous des zéros.
 Vous n'avez que la diagonale où vous avez toutes les variances.
 
 0:05:37.060,0:05:41.020
-Donc ici juste pour faire un rappel, vous avez l’encodeur qui fait aller 
+Donc ici juste pour faire un rappel, vous avez l’encodeur qui fait aller
 
 0:05:41.020,0:05:47.290
 l'ensemble des entrées des échantillons à ℝ²ᵈ. Donc nous pouvons penser
@@ -173,7 +173,7 @@ l'ensemble des entrées des échantillons à ℝ²ᵈ. Donc nous pouvons penser
 dans ce cas que nous allons de x à la représentation cachée. Ensuite le
 
 0:05:52.360,0:05:58.480
-décodeur fait plutôt correspondre l'espace Z à ℝⁿ, revenant à l'espace 
+décodeur fait plutôt correspondre l'espace Z à ℝⁿ, revenant à l'espace
 
 0:05:58.480,0:06:05.160
 original de x. Donc on passe de z à x̂. [Etudiant : quelqu'un a demandé
@@ -194,19 +194,19 @@ l'écrasement, puis une autre transformation affine. C’est juste un bout de
 réseau de neurones qui sort certains paramètres. Donc c'est l’encodeur
 
 0:06:31.810,0:06:38.620
-qui me donne ces paramètres E et V étant donné mon entrée x. C’est donc 
+qui me donne ces paramètres E et V étant donné mon entrée x. C’est donc
 
 0:06:38.620,0:06:43.390
-une partie déterministe. Puis étant donné que nous avons ces paramètres 
+une partie déterministe. Puis étant donné que nous avons ces paramètres
 
 0:06:43.390,0:06:50.410
 qui donnent une distribution gaussienne avec des moyennes spécifiques et
 
 0:06:50.410,0:06:54.160
-des variances spécifiques, nous prélevons un ensemble d'échantillons de 
+des variances spécifiques, nous prélevons un ensemble d'échantillons de
 
 0:06:54.160,0:07:02.470
-cette distribution gaussienne. Puis nous décodons. Nous allons voir ce que 
+cette distribution gaussienne. Puis nous décodons. Nous allons voir ce que
 
 0:07:02.470,0:07:07.570
 cela signifie dans une seconde. Mais en gros, vous allez encoder la moyenne
@@ -227,7 +227,7 @@ représentation cachée plutôt qu'à l'entrée. Cela fait sens ? [Etudiant : ou
 beaucoup plus, merci] [Autre étudiant : j'ai remarqué que la notation elle-même ressemble un peu
 
 0:07:41.370,0:07:47.730
-comme la valeur attendue, générons-nous juste une moyenne normale à partir de z ou 
+comme la valeur attendue, générons-nous juste une moyenne normale à partir de z ou
 
 0:07:47.730,0:07:54.000
 calculons-nous une moyenne pondérée ?] Non, mon x à la place de sortir…
@@ -269,7 +269,7 @@ qui est échantillonné de…] Oui oui. Donc z ici va avoir la moitié de ça.
 Donc l’encodeur me donne deux fois la dimension de z et ensuite car
 
 0:09:05.520,0:09:12.450
-vous obtenez la moitié des dimensions, un ensemble pour la moyenne et un 
+vous obtenez la moitié des dimensions, un ensemble pour la moyenne et un
 
 0:09:12.450,0:09:17.490
 de variances, nous échantillonnons ensuite à partir d'une gaussienne qui a
@@ -389,10 +389,10 @@ se comporte. Les VAEs imposent une certaine structure et ils
 le font en ajoutant une pénalité d'être différent ou loin d'une
 
 0:12:46.320,0:12:54.060
-Distribution. Donc si vous avez une distribution latente qui ne ressemble 
+Distribution. Donc si vous avez une distribution latente qui ne ressemble
 
 0:12:54.060,0:12:59.040
-pas vraiment à une gaussienne alors ce terme ici est très fort, très élevé. 
+pas vraiment à une gaussienne alors ce terme ici est très fort, très élevé.
 
 0:12:59.040,0:13:02.940
 Lorsque nous entraînons un VAE, nous allons l’entraîner en
@@ -413,14 +413,14 @@ sinon nous ne pourrions pas d’échantillonner de là quand nous voudrions
 utiliser ce décodeur comme un modèle génératif. Ce n'est peut-être pas très clair mais laissez-moi
 
 0:13:31.470,0:13:37.800
-vous donner un peu plus d’informations. Comment créons-nous 
+vous donner un peu plus d’informations. Comment créons-nous
 
 0:13:37.800,0:13:50.750
-cette variable latente z ? Mon z est simplement ma moyenne E(z) plus un 
+cette variable latente z ? Mon z est simplement ma moyenne E(z) plus un
 bruit epsilon qui est un échantillon
 
 0:13:50.750,0:14:01.250
-d'une distribution gaussienne multivariée de moyenne nulle et matrice d'identité comme matrice de covariance 
+d'une distribution gaussienne multivariée de moyenne nulle et matrice d'identité comme matrice de covariance
 
 0:14:01.250,0:14:08.510
 qui a chaque composante multipliée par l'écart type. Vous devriez être
@@ -447,7 +447,7 @@ Vous la mettez dans l’encodeur et ensuite celui-ci vous donne deux
 paramètres : E et V. Quand vous échantillonnez à partir de cette distribution
 
 0:14:47.690,0:14:54.200
-vous obtenez, en gros, z. Et ce que vous obtenez ici, c'est simplement que vous pouvez écrire la partie 
+vous obtenez, en gros, z. Et ce que vous obtenez ici, c'est simplement que vous pouvez écrire la partie
 
 0:14:54.200,0:14:58.970
 échantillon comme ceci. Donc le problème de l'échantillonnage est que nous ne savons pas comment
@@ -456,7 +456,7 @@ vous obtenez, en gros, z. Et ce que vous obtenez ici, c'est simplement que vous 
 effectuer une rétropropagation à travers un module d'échantillonnage. En fait, il n'y a aucun moyen
 
 0:15:02.930,0:15:07.910
-pour effectuer la rétropropagation à travers l'échantillonnage car celui-ci 
+pour effectuer la rétropropagation à travers l'échantillonnage car celui-ci
 
 0:15:07.910,0:15:13.010
 génère juste un nouveau z. Donc comment obtenir des gradients dans ce module afin
@@ -483,7 +483,7 @@ de gradients par cette entrée. Les gradients arrivent en passant par la multipl
 Donc chaque fois que vous avez des gradients pour entraîner ce système, le gradient vient vers
 
 0:15:53.420,0:16:03.410
-le bas et nous pouvons alors remplacer le module d'échantillonnage par une addition entre E + epsilon multiplié par la racine carré de la variance. 
+le bas et nous pouvons alors remplacer le module d'échantillonnage par une addition entre E + epsilon multiplié par la racine carré de la variance.
 
 0:16:03.410,0:16:12.050
 De sorte que maintenant vous avez addition. Vous savez comment rétropropager à travers une addition. Vous obtenez donc des gradients pour l’encodeur.
@@ -519,7 +519,7 @@ Car si vous ajoutez du bruit supplémentaire, nous avons les moyennes
 qui sont essentiellement au centre de ces points. Donc vous avez
 
 0:17:14.720,0:17:23.350
-une moyenne ici, une moyenne ici, une moyenne là, etc… puis ce que va 
+une moyenne ici, une moyenne ici, une moyenne là, etc… puis ce que va
 
 0:17:23.350,0:17:28.610
 faire le terme de reconstruction est ce qui suit. Si ces moyennes, ces
@@ -543,7 +543,7 @@ tous les points de cette bulle ici seront reconstruits à l'entrée originale.
 Vous partez d'un point original, vous allez dans l'espace latent ici et
 
 0:18:04.130,0:18:08.930
-vous ajoutez un certain bruit. Vous avez en fait un volume. Puis vous prenez 
+vous ajoutez un certain bruit. Vous avez en fait un volume. Puis vous prenez
 
 0:18:08.930,0:18:13.870
 un autre point et cet autre point est reconstruit ici.
@@ -588,7 +588,7 @@ ne sont pas des sphères mais des points] Correct. Donc si vous avez juste des p
 ils points ne se chevaucheront jamais. Pour cela ils doivent alors être exactement les mêmes mais
 
 0:19:30.190,0:19:35.169
-vous n'avez exactement le même point que si l’encodeur est mort ou si vous 
+vous n'avez exactement le même point que si l’encodeur est mort ou si vous
 
 0:19:35.169,0:19:41.080
 avez la même entrée je pense. Il est peu probable que les deux points se chevauchent.
@@ -600,7 +600,7 @@ Si au lieu d'avoir des points, vous avez en fait des volumes, les volumes
 peuvent se chevaucher car il y a de nombreux points infinis à l’intérieur.
 
 0:19:50.320,0:19:56.649
-Donc une option est de tuer la variance et donc vous avez des points. 
+Donc une option est de tuer la variance et donc vous avez des points.
 
 0:19:56.649,0:20:01.299
 Et cela va à l'encontre de toute l’idée de variation.
@@ -657,13 +657,13 @@ non car ils sont ici. Donc si vous n'avez pas la variance tous ces cercles,
 toutes ces bulles ici ne sont que des points. Etant donné que nous avons
 
 0:21:34.300,0:21:41.320
-des variances, elles prendront un peu de place. Maintenant si cet espace est pris par 
+des variances, elles prendront un peu de place. Maintenant si cet espace est pris par
 
 0:21:41.320,0:21:45.280
 deux bulles se chevauchant, l'erreur de reconstruction augmentera car
 
 0:21:45.280,0:21:49.360
-vous n'avez aucune idée de la façon de revenir au point de départ qui a 
+vous n'avez aucune idée de la façon de revenir au point de départ qui a
 
 0:21:49.360,0:21:54.810
 généré cette sphère. Donc le réseau, l’encodeur, a deux options pour
@@ -684,7 +684,7 @@ des trucs volant autour. Mais introduisons ensuite le deuxième terme.
 Je vous recommande vraiment de calculer ces entropies relatives entre une gaussienne
 
 0:22:24.370,0:22:30.580
-et une répartition normale pour vous entraîner pour la semaine prochaine. 
+et une répartition normale pour vous entraîner pour la semaine prochaine.
 
 0:22:30.580,0:22:34.240
 Si vous calculez cette entropie relative, vous obtenez ces choses.
@@ -792,7 +792,7 @@ de reconstruction ne repousserait rien car il n’y a pas de chevauchement.
 Etant donné que nous avons une certaine variance, la variance a ces
 
 0:25:58.659,0:26:03.399
-points prenant un certain volume et donc cette reconstruction essaye 
+points prenant un certain volume et donc cette reconstruction essaye
 
 0:26:03.399,0:26:09.129
 d’avoir ces points. Donc si vous regardez ces quelques animations que je vous ai montré,
@@ -810,7 +810,7 @@ qui vous assure que ces petites bulles ne s'effondrent pas.
 Et vous avez le dernier terme qui est le terme de ressort car il est quadratique
 
 0:26:30.610,0:26:36.940
-dans la perte, ce qui ajoute en gros ces pressions supplémentaires telles 
+dans la perte, ce qui ajoute en gros ces pressions supplémentaires telles
 
 0:26:36.940,0:26:41.590
 que tous les petits gars sont emballés vers 0. Mais ils ne se chevauchent pas
@@ -819,7 +819,7 @@ que tous les petits gars sont emballés vers 0. Mais ils ne se chevauchent pas
 car il y a le terme de reconstruction. Donc pas de chevauchement dû à la reconstruction.
 
 0:26:46.350,0:26:53.519
-La taille ne sera pas inférieure à 1 en raison de la première partie de 
+La taille ne sera pas inférieure à 1 en raison de la première partie de
 
 0:26:53.519,0:26:58.240
 l’entropie relative. Puis tous ces types sont empaquetés pour la partie quadratique
@@ -828,7 +828,7 @@ l’entropie relative. Puis tous ces types sont empaquetés pour la partie quadr
 qui est la force du ressort. [Etudiant : est-ce un paramètre qui doit être
 
 0:27:05.040,0:27:11.490
-réglé comme un hyper paramètre ?] Ici il y a un bêta. Dans la version 
+réglé comme un hyper paramètre ?] Ici il y a un bêta. Dans la version
 
 0:27:11.490,0:27:16.260
 originale du VAE il n’y en avait pas. Puis il y a eu un papier
@@ -839,14 +839,14 @@ proposant le bêta VAE. Juste pour dire que vous pouvez utiliser
 0:27:22.170,0:27:28.620
 un hyper paramètre pour modifier la contribution de ces deux termes pour
 
-0 :27 :28.620,0 :27 :35.580
-la perte finale. [Etudiant : le deuxième terme de perte avec le bêta c’est 
+0:27:28.620,0:27:35.580
+la perte finale. [Etudiant : le deuxième terme de perte avec le bêta c’est
 
 0:27:35.580,0:27:40.080
-la divergence KL ?] Oui. [Il poursuit : puis le taux de distribution normal ?] 
+la divergence KL ?] Oui. [Il poursuit : puis le taux de distribution normal ?]
 
 0:27:40.080,0:27:46.710
-Oui, entre le z qui provient d'une gaussienne de moyenne E et de variance V 
+Oui, entre le z qui provient d'une gaussienne de moyenne E et de variance V
 
 0:27:46.710,0:27:52.500
 et le deuxième terme est cette répartition normale. Donc ce terme tente
@@ -873,7 +873,7 @@ Regardez la formule de l'entropie relative qui vous dit, en gros,
 à quelle distance se trouvent les distributions. La première distribution
 
 0:28:43.680,0:28:48.120
-est une gaussienne multivariée et la seconde est une distribution normale. 
+est une gaussienne multivariée et la seconde est une distribution normale.
 
 0:28:48.120,0:28:53.820
 [Etudiant : une gaussienne et une distribution normale ne sont pas la même chose ?]
@@ -903,7 +903,7 @@ dans une dimension, cela signifie que dans cette direction c’est très étendu
 là encore, tous les éléments sont indépendants. [Etudiant : est-ce que
 
 0:29:51.940,0:29:57.279
-la perte de reconstruction est la distance de pixel entre la sortie finale 
+la perte de reconstruction est la distance de pixel entre la sortie finale
 
 0:29:57.279,0:30:03.279
 et l’image originale ?] La perte de reconstruction que nous avons vue la semaine dernière a deux options.
@@ -939,7 +939,7 @@ A présent, au lieu de cela, vous allez associer des points à des espaces, puis
 en raison de plusieurs facteurs. Si vous avez un peu d'espace entre ces
 
 0:31:06.099,0:31:11.229
-bulles alors vous n'avez aucune idée de comment passer de cette région ici 
+bulles alors vous n'avez aucune idée de comment passer de cette région ici
 
 0:31:11.229,0:31:22.400
 à l'espace d’entrée. Le VAE vous donne un très bon comportement de la couverture de l'espace latent.
@@ -963,7 +963,7 @@ et ensuite je vais expliquer les choses comme il faut.
 Au début, j’importe des librairies comme d'habitude puis j'ai une
 
 0:32:19.070,0:32:25.210
-routine d'affichage dont on ne se préoccupe pas. J'ai quelques valeurs par 
+routine d'affichage dont on ne se préoccupe pas. J'ai quelques valeurs par
 
 0:32:25.210,0:32:30.320
 défaut comme la graine aléatoire afin que vous obteniez les mêmes chiffres que moi.
@@ -1008,7 +1008,7 @@ Il y a un module ici qui s'appelle « reparamétrage » et si nous entraînons
 nous utilisons cette partie de reparamétrage. [Etudiant : pourriez-vous répétez
 
 0:33:57.050,0:34:03.170
-pourquoi vous utilisez la sigmoïde dans le décodeur ?] Car mes données 
+pourquoi vous utilisez la sigmoïde dans le décodeur ?] Car mes données
 
 0:34:03.170,0:34:14.480
 vivent entre 0 et 1. J'ai les chiffres de MNIST et les valeurs des chiffres vont être de 0 à 1. Donc je voudrais
@@ -1056,7 +1056,7 @@ distribution normale quelle que soit la taille que j'ai ici. Donc l'écart type.
 J’obtiens la taille. Je crée un nouveau tenseur et je le remplis avec une donnée de distribution normale.
 
 0:35:46.570,0:35:52.130
-Ensuite je renvoie l'epsilon multiplié par l'écart type et j'ajoute le mu 
+Ensuite je renvoie l'epsilon multiplié par l'écart type et j'ajoute le mu
 
 0:35:52.130,0:35:57.830
 ce qui est ce que je vous ai montré avant. Si je n’entraîne pas, je n'ai pas à ajouter de bruit.
@@ -1077,7 +1077,7 @@ quelque chose et je remodèle de telle sorte que j'ai des batchs de
 taille 2 puis d où d est la dimension de la moyenne et la dimension des
 
 0:36:30.530,0:36:37.610
-variances. Puis j'ai mu qui est la moyenne. Simplement la première partie 
+variances. Puis j'ai mu qui est la moyenne. Simplement la première partie
 
 0:36:37.610,0:36:41.720
 de ce d et la variance est l’autre partie.
@@ -1086,7 +1086,7 @@ de ce d et la variance est l’autre partie.
 Ensuite j'ai mon z qui est ma variable latente. C’est la reparamétrisation
 
 0:36:46.700,0:36:55.910
-étant donné mon mu et la log variance. Pourquoi j'utilise la log variance ? Dites moi. [Etudiant : la sortie du réseau peut être négative mais vous avez besoin d'une sortie positive] 
+étant donné mon mu et la log variance. Pourquoi j'utilise la log variance ? Dites moi. [Etudiant : la sortie du réseau peut être négative mais vous avez besoin d'une sortie positive]
 
 0:36:55.910,0:37:08.090
 Etant donné que les variances sont seulement positives, si je calcule le log, cela permet de sortir l'intégralité
@@ -1107,7 +1107,7 @@ somme de deux parties : l'entropie binaire croisée entre l'entrée et la
 Reconstruction, qui est ici. Donc j'ai le x̂ et puis le x.
 
 0:37:40.070,0:37:48.500
-J’additionne ensuite le tout. Pour la divergence KL, nous avons la var 
+J’additionne ensuite le tout. Pour la divergence KL, nous avons la var
 
 0:37:48.500,0:37:52.580
 qui est linéaire. Puis – log var qui est le logarithme « retourné »
@@ -1134,7 +1134,7 @@ Puis on ajoute l'élément à la perte. On nettoie le gradient des précédentes
 étapes et effectuerons le calcul des dérivés partielles.
 
 0:38:42.580,0:38:47.570
-Là je fais juste les tests et je fais de la mise en cache pour plus tard. 
+Là je fais juste les tests et je fais de la mise en cache pour plus tard.
 
 0:38:47.570,0:38:54.680
 Donc nous avons commencé avec une erreur initiale de 544. C'est avant l’entraînement.
@@ -1173,7 +1173,7 @@ de la distribution que la variable latente aurait dû suivre.
 Voici donc quelques exemples de la manière dont l'échantillonnage à partir de la distribution latente
 
 0:40:03.700,0:40:09.830
-est décodée en quelque chose. Nous avons un 9 ici. On a un 0, on a des 5. 
+est décodée en quelque chose. Nous avons un 9 ici. On a un 0, on a des 5.
 
 0:40:09.830,0:40:15.410
 Certaines régions sont très bien définies : 9, 2, mais d'autres
@@ -1251,7 +1251,7 @@ reconstruisons des choses qui semblent légitimes dans l'espace d'entrée.
 Cela n'aurait jamais fonctionné avec un AE normal. Enfin je vais vous montrer
 
 0:42:56.810,0:43:04.640
-quelques belles représentations des enchâssements des moyennes pour cet AE 
+quelques belles représentations des enchâssements des moyennes pour cet AE
 
 0:43:04.640,0:43:10.190
 entraîné. Donc ici vous allez voir une collection d’enchâssements du jeu
@@ -1355,7 +1355,7 @@ disons que ce sont des 1. Laissez-moi activer la ligne « colorbar » pour que n
 0:46:42.490,0:46:50.869
 Donc on a les 0 par ici.
 
-0:46:50.869,0:46:02.020
+0:46:50.869,0:47:02.020
 Tous les 0 se ressemblent. Donc même une projection aléatoire de ces 0 les regroupera.
 
 0:47:02.510,0:47:06.650
@@ -1368,7 +1368,7 @@ nombreuses façons de dessiner un 4. Certains le font en faisant toucher
 les deux barres du haut, d’autres non. Si à la place, vous regardez à droite,
 
 0:47:16.400,0:47:21.079
-tous les quatre sont presque tous ici. Il y a juste un petit groupe ici à 
+tous les quatre sont presque tous ici. Il y a juste un petit groupe ici à
 
 0:47:21.079,0:47:25.820
 côté des 9. Cela si vous écrivez un 4 comme ça [cf. la vidéo],
@@ -1386,10 +1386,10 @@ Néanmoins ils sont toujours regroupés. Ici vous avez toutes ces choses qui son
 Cependant, ce diagramme vous montre qu’il y a très peu de variance dans la façon d’écrire un 0.
 
 0:47:56.930,0:48:02.210
-Cela vous montre comme un mode spécifique. C’est très concentré ici, mais 
+Cela vous montre comme un mode spécifique. C’est très concentré ici, mais
 
 0:48:02.210,0:48:08.270
-ne l’est pas vraiment pour ces gars. [Etudiant : je suis juste curieux de 
+ne l’est pas vraiment pour ces gars. [Etudiant : je suis juste curieux de
 
 0:48:08.270,0:48:16.700
 savoir les motivations ou les utilisations du VAE, à quoi c’est utile]
@@ -1470,7 +1470,7 @@ sont très similaires à ces choses que nous avons vues aujourd'hui.
 bulle jaune provient d'un exemple d'entrée. Donc si nous en avons 1000,
 
 0:50:30.200,0:50:34.520
-disons des images, cela signifie que nous avons exactement 1000 bulles 
+disons des images, cela signifie que nous avons exactement 1000 bulles
 
 0:50:34.520,0:50:42.410
 jaunes. Donc chaque bulle jaune vient de la distribution E(z), V(z)
@@ -1479,13 +1479,13 @@ jaunes. Donc chaque bulle jaune vient de la distribution E(z), V(z)
 et du bruit ajouté à la variable latente ?] La bulle vient d’ici.
 
 0:50:48.770,0:50:53.750
-Laissez-moi vous montrer. Si je vous montre celui-ci c’est ok ou… 
+Laissez-moi vous montrer. Si je vous montre celui-ci c’est ok ou…
 
 0:50:53.750,0:50:59.410
 [Oui oui] Ok donc là j’ai ces x qui vont à l'intérieur du modèle.
 
 0:50:59.410,0:51:04.580
-Chaque fois que vous envoyez ces x par le modèle, cela va en avant. Donc x 
+Chaque fois que vous envoyez ces x par le modèle, cela va en avant. Donc x
 
 0:51:04.580,0:51:11.390
 va à l'intérieur ici, puis il entre dans l’encodeur. [Ok]. Ensuite l’encodeur
@@ -1500,7 +1500,7 @@ Donc jusqu'à présent, tout est comme l’AE normal. [Ok].
 La bulle vient ici. Donc mon z sort du « self.reparameterise ».
 
 0:51:30.170,0:51:36.740
-Ce « self.reparameterise » fonctionne de manière différente si nous sommes 
+Ce « self.reparameterise » fonctionne de manière différente si nous sommes
 
 0:51:36.740,0:51:41.420
 dans la boucle d’entraînement ou ne sommes pas dans cette boucle. Si je ne suis pas dans la
@@ -1515,7 +1515,7 @@ partie test. Donc j’obtiens la meilleure valeur que l’encodeur peut me donne
 Si au lieu de ça j’entraîne, voici ce qui se passe. Je calcule l’écart-type
 
 0:51:58.220,0:52:03.799
-par rapport au logvar. J’obtiens donc le logvar et le divise par deux. Puis 
+par rapport au logvar. J’obtiens donc le logvar et le divise par deux. Puis
 
 0:52:03.799,0:52:10.519
 je prends l’exponentielle. Donc j'ai exp(0.5 * logvar) donc obtenez
@@ -1557,7 +1557,7 @@ vous donner 100 points différents, tous regroupés en mu avec un rayon
 qui est approximativement l'écart type. C’est donc la ligne qui vous renvoie
 
 0:53:18.410,0:53:22.910
-à chaque fois un seul échantillon, mais si vous l’appelez en boucle, vous 
+à chaque fois un seul échantillon, mais si vous l’appelez en boucle, vous
 
 0:53:22.910,0:53:27.080
 obtenez un nuage de points qui sont tous centrés en mu avec un rayon spécifique.
@@ -1584,7 +1584,7 @@ Oui. Ma seule entrée x ici me donne un mu et une logvar.
 Et mu et la logvar me donne z qui est un échantillon de l'ensemble de la distribution.
 
 0:54:20.220,0:54:34.410
-Si vous exécutez cette fonction 1 000 fois, vous obtiendrez 1 000 z qui tous prendront ce volume. 
+Si vous exécutez cette fonction 1 000 fois, vous obtiendrez 1 000 z qui tous prendront ce volume.
 
 0:54:34.410,0:54:39.480
 [Ok, j’ai compris, merci] [Etudiant : j'ai une question sur les encodeurs
@@ -1650,7 +1650,7 @@ d'une distribution. Donc nous n'avons jamais eu à parler de distributions avant
 Nous ne savions pas comment générer des distributions. Maintenant avec les modèles génératifs,
 
 0:56:36.949,0:56:45.319
-vous pouvez générer des données qui sont, en gros, une flexion, une rotation  
+vous pouvez générer des données qui sont, en gros, une flexion, une rotation
 
 0:56:45.319,0:56:51.769
 ou d'une transformation de quoi que ce soit de la gaussienne originale.
@@ -1662,7 +1662,7 @@ Nous avons donc cette gaussienne multivariée puis le décodeur prend cette ball
 et la façonne pour qu'elle ressemble à l'entrée. L’entrée pouvant être
 
 0:57:00.739,0:57:05.449
-quelque chose de courbé. Vous avez cette bulle ici, cette grosse bulle de bulles 
+quelque chose de courbé. Vous avez cette bulle ici, cette grosse bulle de bulles
 
 0:57:05.449,0:57:11.799
 et le décodeur renvoie un truc qui ressemble à l'entrée.
