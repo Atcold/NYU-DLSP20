@@ -28,14 +28,17 @@ En cas de besoin vous pouvez facilement basculer du site à un moment d’une vi
 # FAQ
 Voici quelques réponses à des questions fréquemment posées :
 -	**Est-ce que suivre ce cours permet d’obtenir une certification ?**
->	Non. Pour proposer une certification, il faudrait pouvoir vous évaluer or le contenu n’a pas été prévu pour (contrairement à un MOOC par exemple). Cette demande étant fréquente, des réflexions sont menées pour essayer d’en proposer une pour des éditions futures du cours.
+>	Non. Pour proposer une certification, il faudrait pouvoir vous évaluer or le contenu n’a pas été prévu pour (contrairement à un MOOC par exemple).
+>	Cette demande étant fréquente, des réflexions sont menées pour essayer d’en proposer une pour des éditions futures du cours.
 -	**Une version plus récente du cours existe. Cette édition 2020 est-elle encore valable ?**
 > Absolument. L’édition 2021 est sensiblement la même que celle de 2020 mais est présentée d’une façon différente : les travaux dirigés sont maintenant abordés du point de vue des modèles à base d’énergie et les cours magistraux ont été légèrement réorganisées. Les invités diffèrent également. Concernant le français, le site web de l’édition 2021 a été traduit mais pas les vidéos (elles ne le seront probablement pas car ce travail est extrêmement chronophage, voir la section 3 ci-dessous). Ainsi nous vous conseillons de commencer avec cette édition 2020 pour le français puis explorer par vous-même par la suite l’édition 2021 au besoin. 
 -	**Combien de temps consacrer à ce cours ?**
 > Pour chaque semaine, il y a environ 2h30/3h de contenu vidéo. Avec le temps consacré à la prise de notes et celui pour jouer avec les *notebooks*, une estimation totale de 5h par semaine semble raisonnable. Pour la suite, cela dépend du niveau d'immersion que vous voulez atteindre dans un sujet donné (lire les articles donnés en référence, appliquer ce qui a été vu en classe à vos propres projets, etc.).
 -	**Où poser une question à l’issue du visionnage d’une vidéo ?**
->	Vous pouvez la poser directement dans la section commentaires sous la vidéo YouTube en question, Alfredo se fera un plaisir d’y répondre. Si cette question porte sur un point précis de la vidéo, pensez à indiquer l’horodatage.
->	Vous pouvez le faire également sur le [Discord](https://discord.gg/CthuqsX8Pb) de la classe dédié expressément aux étudiants. Il sert également à coordonner des groupes de visionnage, discuter des devoirs, suggérer des améliorations ou plus généralement tout sujet lié au cours.
+>	Vous pouvez la poser directement dans la section commentaires sous la vidéo YouTube en question, Alfredo se fera un plaisir d’y répondre. 
+>	Si cette question porte sur un point précis de la vidéo, pensez à indiquer l’horodatage.
+>	Vous pouvez le faire également sur le [Discord](https://discord.gg/CthuqsX8Pb) de la classe dédié expressément aux étudiants. 
+>	Il sert également à coordonner des groupes de visionnage, discuter des devoirs, suggérer des améliorations ou plus généralement tout sujet lié au cours.
 - **Puis-je utiliser ce cours?**
 > Bien sûr, le cours est placé sous la [Licence internationale Creative Commons Attribution-NonCommercial-ShareAlike 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr).
 > Cela signifie que :
@@ -93,7 +96,7 @@ Terme | Traduction | Raisons / Explications
 --- | --- |--- | 
 Dropout | Dropout | Le mot « décimation » serait approprié mais il est déjà utilisé en traitement du signal pour signifier « sous-échantillonnage ».
 Finetuning | Finetuning | Le terme « affinage » peut être trouvable dans la littérature. 
-One hot | One hot | La notion de « vecteurs de base canonique » pourrait être utilisée mais elle est un peu technique et l'expression est plutôt longue pour traduire à peine 2 mots.   N.D.T : dans mes cours d'algèbre linéaire j'utilisais soit « v.b.c » pour « vecteurs de base canonique » ou bien « zerun » (pour un vecteur contenant des 0 et un 1) mais c'ést une convention personnelle que je ne préfère pas imposer.
+One hot | One hot | La notion de « vecteurs de base canonique » pourrait être utilisée mais elle est un peu technique et l'expression est plutôt longue pour traduire à peine 2 mots.   N.D.T : dans mes cours d'algèbre linéaire j'utilisais soit « v.b.c » pour « vecteurs de base canonique » ou bien « zérun » (pour un vecteur contenant des 0 et un 1) mais c'ést une convention personnelle que je ne préfère pas imposer.
 Pooling | Pooling | Plusieurs traductions envisagées comme agrégation, agglomération, ou coalescence. Garder le terme en anglais est plus simple (un « max-agrégation » n'est pas très élégant par exemple).
 
 
