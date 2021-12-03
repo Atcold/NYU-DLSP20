@@ -16,7 +16,7 @@ translator: Loïck Bourdois
 | TRAVAUX DIRIGÉS | Mardi 19h10 - 20h00, [GCASL C95](http://library.nyu.edu/services/campus-media/classrooms/gcasl-c95/) |
 | FORUM       | [r/NYU_DeepLearning](https://www.reddit.com/r/NYU_DeepLearning/) |
 | DISCORD     | [NYU DL](https://discord.gg/CthuqsX8Pb) |
-| MATÉRIEL | [Google Drive](https://bitly.com/DLSP20), [Notebooks en anglais](https://github.com/Atcold/pytorch-Deep-Learning), [Notebooks en français](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French) |
+| MATÉRIEL | [Google Drive](https://bitly.com/DLSP20),<br> [Notebooks en anglais](https://github.com/Atcold/pytorch-Deep-Learning),<br> [Notebooks en français](https://github.com/lbourdois/pytorch-Deep-Learning-Notebooks-in-French) |
 
 
 
