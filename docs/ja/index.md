@@ -343,8 +343,8 @@ translator: Go Inoue
 |:-----|:-----:|:--------|:------|
 |講師|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科シルバー教授<br>チューリング賞受賞者|
 |講師|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科助教|
-|アシスタント|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
-|サイト管理者|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
+|アシスタント|<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
+|サイト管理者|<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|ニューヨーク大学コンピュータ・サイエンス学科博士課程|
 
 
 <!--

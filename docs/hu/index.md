@@ -339,8 +339,8 @@ Ez a kurzus a *Deep Learning* valamint *Representation Learning* legújabb techn
 |:-----|:-----:|:--------|:------|
 |Oktató|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor, Informatika, NYU<br> és Turing díjas|
 |Oktató|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof., Informatika, NYU|
-|Tanársegéd|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD hallgató, Informatika, NYU|
-|Webmester|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD hallgató, Informatika, NYU|
+|Tanársegéd|<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD hallgató, Informatika, NYU|
+|Webmester|<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD hallgató, Informatika, NYU|
 
 
 <!--

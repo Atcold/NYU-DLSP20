@@ -31,7 +31,7 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 
 
 
-## Conférences
+## Cours
 
 **Legende**: 🖥 Diaporama, 📓 Notebook Jupyter, 🎥 Video YouTube.
 
@@ -349,6 +349,6 @@ D’après Yann Le Cun, ces cours sont destinés à des personnes de niveau bac+
 |:-----|:-----:|:--------|:------|
 |Instructeur|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann Le Cun</a><br>yann@cs.nyu.edu|*Silver Professor* en *Computer*<br> *Science* à la *New York* <br> *University* (NYU) et<br>lauréat du prix Turing 2019|
 |Instructeur|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu| Prof. Ast. en<br>*Computer Science* à la NYU|
-|Assistant|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
-|Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
+|Assistant|<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
+|Webmaster|<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doctorant en<br>*Computer Science* à la NYU|
 |Traducteur|<img src="https://lbourdois.github.io/blog/assets/images/pp_Lo%C3%AFck_Bourdois.png" width="100" height="100">| <a href="https://twitter.com/BdsLoick">Loïck Bourdois <br>| N'appartient pas au corps<br>enseignant de la NYU |
