@@ -46,7 +46,7 @@ Here are some answers to frequently asked questions:
 > For credit, you can use the following BibTeX:  
 > @misc{canziani2020nyudlsp20,  
   author = {Canziani, Alfredo and LeCun, Yann},  
-  title = {{NYU Deep Learning, Spring 2020}},  
+  title = {NYU Deep Learning, Spring 2020},  
   howpublished = "\url{https://atcold.github.io/pytorch-Deep-Learning/}",  
   year = {2020},  
   note = "[Online; accessed <today>]"  
