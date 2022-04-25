@@ -18,7 +18,7 @@ translator: Gio
 
 
 ## 소개
-이 코스에서는 지도 학습과 비지도 학습, 임베딩 기법, 메트릭 학습, 합성곱 및 순환 신경망 등의 최신 딥러닝 및 표현 학습 기법과 컴퓨터 비전, 자연어 이해, 음성 인식 분야에서 이들의 적용 사례들을 소개합니다. 이 수업을 듣기 위해선 [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) 강의나 학부 수준의 머신 러닝 지식이 필요합니다.
+이 코스에서는 지도 학습과 비지도 학습, 임베딩 기법, 메트릭 학습, 합성곱 및 순환 신경망 등의 최신 딥러닝 및 표현 학습 기법과 컴퓨터 비전, 자연어 이해, 음성 인식 분야에서 이들의 적용 사례들을 소개합니다. 이 수업을 듣기 위해선 [DS-GA 1001 Intro to Data Science](https://cds.nyu.edu/academics/ms-curriculum/) 강의나 대학원 수준의 머신 러닝 지식이 필요합니다.
 
 ## 강의
 
@@ -337,10 +337,10 @@ translator: Gio
 
 | 직책 | 사진 | 연락처 | 소개 |
 |:-----|:-----:|:--------|:------|
-|교수|<img src="https://github.com/Atcold/pytorch-Deep-Learning/raw/master/docs/images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
+|교수|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor in CS at NYU<br>and Turing Award winner|
 |교수|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. in CS at NYU|
-|조교|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
-|웹 관리자|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
+|조교|<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|PhD student in CS at NYU|
+|웹 관리자|<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|PhD student in CS at NYU|
 
 
 <!--
@@ -361,7 +361,7 @@ It is possible that there may be some omissions: typing errors, spelling mistake
 
 Wishing you a deep reading !-->
 
-이 사이트의 목차를 제외한 모든 텍스트는 Yann Le Cun, Alfredo Canziani, Ishan Misra, Mike Lewis와 Xavier Bresson가 뉴욕대학교에서 진행한 수업을 기반으로 뉴욕대학교 학생들이 작성한 강의 노트입니다.
+이 사이트의 목차를 제외한 모든 텍스트는 Yann Le Cun, Alfredo Canziani, Aaron Defazio, Ishan Misra, Mike Lewis와 Xavier Bresson가 뉴욕대학교에서 진행한 수업을 기반으로 뉴욕대학교 학생들이 작성한 강의 노트입니다.
 즉, 본 사이트의 글은 130명 이상의 서로 다른 사람이 영어로 작성하고 이를 다시 20여 명의 사람이 번역한 바, 글의 용어나 시제 등이 통일되어 있지 않을 수 있습니다.
 또한, 오탈자나 내용상의 모순 등 다양한 오류가 있을 수 있습니다. 이러한 오류를 발견하신다면, [본 사이트의 깃허브](https://github.com/Atcold/pytorch-Deep-Learning/pulls)에 PR을 남겨주세요. (`[KR]` 태그를 제목에 붙여, 사이트의 한글 자료와 관련된 것임을 알려주세요!)
 

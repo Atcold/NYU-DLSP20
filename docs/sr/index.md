@@ -321,8 +321,8 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacija. F
 |:-----|:-----:|:--------|:------|
 |Predavač  |<img src="images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Profesor računarskih nauka na NYU<br>i dobitnih Turing nagrade|
 |Predavač  |<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Asst. Prof. računarskih nauka na NYU|
-|Asistent  |<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doktorski student računarskih nauka na NYU|
-|Webmaster |<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doktorski student računarskih nauka na NYU|
+|Asistent  |<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Doktorski student računarskih nauka na NYU|
+|Webmaster |<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Doktorski student računarskih nauka na NYU|
 
 
 <!--
@@ -337,7 +337,7 @@ Ovaj kurs prati najskorije tehnike u dubokom učenju i učenju reprezentacija. F
 
 ## Disclaimer
 
-Svi ostali tekstovi na ovom sajtu su beleške sa predavanja studenata Njujorškog Univerziteta tokom lekcija koje su držali Yann LeCun, Alfredo Canziani, Ishan Misra, Mike Lewis and Xavier Bresson.
+Svi ostali tekstovi na ovom sajtu su beleške sa predavanja studenata Njujorškog Univerziteta tokom lekcija koje su držali Yann LeCun, Alfredo Canziani, Aaron Defazio, Ishan Misra, Mike Lewis and Xavier Bresson.
 Dakle, tekstove na engleskom je pisalo oko 130 ljudi što utiče na homogenost teksta (nešto je napisano u prošlom vremenu, nešto u sadašnjem; skraćenice nisu uvek iste; neke rečenice su kratke, a neke su u 5-6 redova, itd.).
 Moguće je da postoje neke greške: greške u kucanju, slovne greške, itd. Ako primetite neku, pozivamo vas da postavite PR na [GitHub direktorijumu sajta](https://github.com/Atcold/pytorch-Deep-Learning/pulls) specifirajući sa `[SR]` da je u vezi tekstova na srpskom.
 

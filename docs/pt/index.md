@@ -337,6 +337,6 @@ Este curso trata das técnicas mais recentes em aprendizagem profunda e aprendiz
 |:-----|:-----:|:--------|:------|
 |Instrutor|<img src="../images/Yann.png" width="100" height="100">|<a href="https://twitter.com/ylecun">Yann LeCun</a><br>yann@cs.nyu.edu|Silver Professor em CS<br> na NYU e ganhador <br>do Prêmio Turing|
 |Instrutor|<img src="https://avatars1.githubusercontent.com/u/2119355" width="100" height="100">|<a href="https://twitter.com/alfcnz">Alfredo Canziani</a><br>canziani@nyu.edu|Professor Assistente em Ciência da Computação na NYU|
-|Asistente|<img src="https://pbs.twimg.com/profile_images/1186879808845860864/czRv3g1G_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
-|Webmaster|<img src="https://pbs.twimg.com/profile_images/673997980370927616/vMXf545j_400x400.jpg" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
+|Asistente|<img src="../images/Mark.png" width="100" height="100">|<a href="https://twitter.com/marikgoldstein">Mark Goldstein</a><br>goldstein@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
+|Webmaster|<img src="../images/Zeming.png" width="100" height="100">|<a href="https://twitter.com/ebetica">Zeming Lin</a><br>zl2799@nyu.edu|Estudante de doutorado em Ciência da Computação na NYU|
 
