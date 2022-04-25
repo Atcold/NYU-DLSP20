@@ -1,0 +1,1751 @@
+0:00:00.020,0:00:07.840
+Então, redes neurais convolucionais, acho que hoje eu me funda, sabe, eu posto coisas legais no Twitter
+
+0:00:09.060,0:00:11.060
+Me siga. Estou brincando
+
+0:00:11.290,0:00:16.649
+Tudo bem. Então, novamente, sempre que você não tem ideia do que está acontecendo. Apenas me pare de fazer perguntas
+
+0:00:16.900,0:00:23.070
+Vamos tornar essas aulas interativas para que eu possa tentar agradá-lo e fornecer as informações necessárias
+
+0:00:23.980,0:00:25.980
+Para você entender o que está acontecendo?
+
+0:00:26.349,0:00:27.970
+tudo bem, então
+
+0:00:27.970,0:00:31.379
+Redes neurais convolucionais. Quão legal é essa coisa? Muito legal
+
+0:00:32.439,0:00:38.699
+principalmente porque antes de ter redes convolucionais não podíamos fazer muito e vamos descobrir por que agora
+
+0:00:39.850,0:00:43.800
+como por que e como essas redes são tão poderosas e
+
+0:00:44.379,0:00:48.329
+Eles vão estar basicamente fazendo eles estão fazendo como um grande
+
+0:00:48.879,0:00:52.859
+Pedaço de como as redes inteiras são usadas nos dias de hoje
+
+0:00:53.980,0:00:55.300
+assim
+
+0:00:55.300,0:01:02.369
+Mais especificamente, vamos nos acostumar a repetir várias vezes essas três palavras, que são as palavras-chave para entender
+
+0:01:02.920,0:01:05.610
+Convoluções, mas vamos descobrir isso em breve
+
+0:01:06.159,0:01:09.059
+então vamos começar e descobrir como
+
+0:01:09.580,0:01:11.470
+esses
+
+0:01:11.470,0:01:13.470
+sinaliza essas imagens e essas
+
+0:01:13.990,0:01:17.729
+itens diferentes parecem assim sempre que falamos sobre
+
+0:01:18.670,0:01:21.000
+sinais que podemos pensar sobre eles como
+
+0:01:21.580,0:01:23.200
+vetores por exemplo
+
+0:01:23.200,0:01:30.600
+Temos aí um sinal que está representando um sinal de áudio monofônico, dado que é apenas
+
+0:01:31.180,0:01:38.339
+Temos apenas a dimensão temporal entrando como o sinal acontece em uma dimensão, que é a dimensão temporal
+
+0:01:38.560,0:01:46.079
+Isso é chamado de sinal 1d e pode ser representado por um vetor singular como é mostrado lá em cima
+
+0:01:46.750,0:01:48.619
+cada
+
+0:01:48.619,0:01:52.389
+O valor desse vetor representa a amplitude da forma de onda
+
+0:01:53.479,0:01:56.589
+por exemplo, se você tiver apenas um sinal, você vai ouvir como
+
+0:01:57.830,0:01:59.830
+Como alguns soam assim
+
+0:02:00.560,0:02:05.860
+Se você tem um tipo diferente de você sabe, não é apenas um sinal, um sinal que você vai ouvir
+
+0:02:06.500,0:02:08.500
+diferentes tipos de madeiras ou
+
+0:02:09.200,0:02:11.200
+tipo diferente de
+
+0:02:11.360,0:02:13.190
+tipo diferente de
+
+0:02:13.190,0:02:15.190
+sabor do som
+
+0:02:15.440,0:02:18.190
+Além disso, você está familiarizado. Como o som funciona, certo? assim
+
+0:02:18.709,0:02:21.518
+Agora estou apenas jogando ar pela minha traqueia
+
+0:02:22.010,0:02:26.830
+onde existem como algumas membranas que estão fazendo o ar vibrar essas
+
+0:02:26.930,0:02:33.640
+A vibração se propaga pelo ar, atingindo seus ouvidos e o canal auditivo que você tem dentro de alguns pequenos
+
+0:02:35.060,0:02:38.410
+você provavelmente tem a cóclea certa e, em seguida, deu cerca de
+
+0:02:38.989,0:02:45.159
+Quanto o som se propaga pela cóclea, você detectará o tom e, em seguida, adicionará um tom diferente
+
+0:02:45.830,0:02:49.119
+informações que você pode e também gosta de diferentes tipos de
+
+0:02:50.090,0:02:53.350
+sim, acho que informações de fala você vai descobrir qual é o
+
+0:02:53.930,0:02:59.170
+Som que eu estava fazendo aqui e então você reconstrói isso usando seu modelo de linguagem que você tem em seu cérebro
+
+0:02:59.170,0:03:03.369
+Certo e a mesma coisa que Yun estava mencionando se você começar a falar outro idioma
+
+0:03:04.310,0:03:11.410
+então você não poderá analisar as informações porque está usando um modelo de fala como uma conversão entre
+
+0:03:12.019,0:03:17.709
+Vibrações e afins, você sabe sinalizar seu cérebro mais o modelo de linguagem para fazer sentido
+
+0:03:18.709,0:03:22.629
+De qualquer forma, isso era um sinal 1d. Digamos que estou ouvindo música, então
+
+0:03:23.570,0:03:25.570
+Que tipo de sinal eu faço?
+
+0:03:25.910,0:03:27.910
+tem lá
+
+0:03:28.280,0:03:34.449
+Então, se eu ouvir a música do usuário vai ser um olhar estereofônico, certo? Então significa que você vai ter quantos canais?
+
+0:03:35.420,0:03:37.420
+Dois canais, certo?
+
+0:03:37.519,0:03:38.570
+no entanto
+
+0:03:38.570,0:03:41.019
+Que tipo de sinal vai ser esse?
+
+0:03:41.150,0:03:46.420
+Ainda vai ser um este sinal, embora existam dois canais para que você possa pensar, você sabe
+
+0:03:46.640,0:03:54.459
+independentemente de quantos canais cantados, como se você tivesse Dolby Surround, você terá o que 5.1, então seis, acho que sim, esse é o
+
+0:03:55.050,0:03:56.410
+Você sabe
+
+0:03:56.410,0:03:58.390
+vetorial o
+
+0:03:58.390,0:04:02.790
+tamanho do sinal e então o tempo é a única variável que é
+
+0:04:03.820,0:04:07.170
+Como se mover para sempre. OK. Então esses são sinais 1d
+
+0:04:09.430,0:04:13.109
+Tudo bem, então vamos dar uma olhada, vamos ampliar um pouco para
+
+0:04:14.050,0:04:18.420
+Nós temos isso. Por exemplo, do lado esquerdo. Temos algo que se parece com um senoidal
+
+0:04:19.210,0:04:25.619
+funcionar aqui, no entanto, um pouco depois você terá novamente o mesmo tipo de
+
+0:04:27.280,0:04:29.640
+Função aparecendo novamente, então isso é chamado
+
+0:04:30.460,0:04:37.139
+Estacionaridade você verá repetidas vezes o mesmo tipo de padrão ao longo do tempo
+
+0:04:37.810,0:04:39.810
+Dimensão, ok
+
+0:04:40.090,0:04:47.369
+Então, a primeira propriedade deste sinal, que é o nosso sinal natural, porque acontece na natureza, será que dissemos
+
+0:04:49.330,0:04:51.330
+Estacionaridade, ok. Esse é o primeiro
+
+0:04:51.580,0:04:53.580
+Além disso o que você acha?
+
+0:04:54.130,0:04:56.130
+Quão provável é?
+
+0:04:56.140,0:05:00.989
+Se eu tiver um pico do lado esquerdo para ter um pico também muito próximo
+
+0:05:03.430,0:05:09.510
+Então, qual é a probabilidade de ter um pico lá em vez de ter um pico lá, dado que você teve um pico antes ou
+
+0:05:09.610,0:05:11.590
+se eu continuar
+
+0:05:11.590,0:05:18.119
+Qual é a probabilidade de você ter um pico, você sabe alguns segundos depois, pois tem um pico no lado esquerdo. assim
+
+0:05:19.960,0:05:24.329
+Deveria haver algum tipo de conhecimento comum de senso comum, talvez, que
+
+0:05:24.910,0:05:27.390
+Se vocês estão juntos e se estão
+
+0:05:28.000,0:05:33.360
+Perto do lado esquerdo, haverá uma probabilidade maior de que as coisas pareçam
+
+0:05:33.880,0:05:40.589
+Semelhante, por exemplo, você tem como um som específico terá um tipo muito específico de forma
+
+0:05:41.170,0:05:43.770
+Mas então se você for um pouco mais longe desse som
+
+0:05:44.050,0:05:50.010
+então não há mais relação sobre o que aconteceu aqui dado o que aconteceu antes e então se você
+
+0:05:50.410,0:05:55.170
+Calcule a correlação cruzada entre um sinal e ele mesmo, você sabe o que é uma correlação cruzada?
+
+0:05:57.070,0:06:02.670
+Sabe como se você não sabe ok quantas mãos para cima quem não sabe uma correlação cruzada
+
+0:06:04.360,0:06:07.680
+Tudo bem, então isso vai ser lição de casa para você
+
+0:06:07.680,0:06:14.489
+Se você pegar um sinal apenas um sinal de áudio, eles realizam a convolução desse sinal consigo mesmo
+
+0:06:14.650,0:06:15.330
+OK
+
+0:06:15.330,0:06:19.680
+e então a convolução vai ser você tem seu próprio sinal você pega a coisa você vira e então você
+
+0:06:20.170,0:06:22.170
+passá-lo e então você multiplica
+
+0:06:22.390,0:06:25.019
+Sempre que você vai tê-los sobrepostos no mesmo
+
+0:06:25.780,0:06:27.780
+Como quando há zero
+
+0:06:28.450,0:06:33.749
+Desalinhamento você vai ter como um pico. E então, quando você começar a se mover, terá basicamente dois
+
+0:06:34.360,0:06:36.930
+lados que representa o fato de que
+
+0:06:37.990,0:06:44.850
+As coisas têm muitas coisas em comum basicamente realizando um produto escalar certo? Então, coisas que têm muito em comum quando são
+
+0:06:45.370,0:06:47.970
+Muito perto de um local específico
+
+0:06:47.970,0:06:55.919
+Se você for mais longe, as coisas começam, você sabe fazer a média. Então aqui a segunda propriedade deste sinal natural é a localidade
+
+0:06:56.500,0:07:04.470
+A informação está contida em uma porção específica e partes do domínio temporal neste caso. OK. Então, antes que tivéssemos
+
+0:07:06.940,0:07:08.940
+Estacionaridade agora temos
+
+0:07:09.640,0:07:11.640
+Localidade tudo bem não
+
+0:07:12.160,0:07:17.999
+Abençoe. Tudo bem. Então que tal esse certo? Isso não tem nada a ver com o que aconteceu lá
+
+0:07:20.110,0:07:24.960
+Ok, então vamos olhar para o gatinho simpático que tipo de
+
+0:07:25.780,0:07:27.070
+dimensões
+
+0:07:27.070,0:07:31.200
+Que tipo de sim que dimensão tem esse sinal? Qual foi o seu palpite?
+
+0:07:32.770,0:07:34.829
+É um sinal bidimensional por que isso
+
+0:07:39.690,0:07:45.469
+Ok, também temos uma opção de sinal tridimensional aqui, então alguém disse duas dimensões alguém disse três dimensões
+
+0:07:47.310,0:07:51.739
+É bidimensional, por que é esse barulho lamentável? Por que é bidimensional
+
+0:07:54.030,0:07:56.030
+Porque a informação é
+
+0:07:58.050,0:08:00.050
+Desculpe a informação é
+
+0:08:00.419,0:08:01.740
+especialmente
+
+0:08:01.740,0:08:03.740
+retratado certo? Então as informações
+
+0:08:03.750,0:08:05.310
+é
+
+0:08:05.310,0:08:08.450
+Basicamente codificado na localização espacial desses pontos
+
+0:08:08.760,0:08:15.439
+Embora cada ponto seja um vetor por exemplo de três ou se for uma imagem hiperespectral. Pode ser vários aviões
+
+0:08:16.139,0:08:23.029
+No entanto, você ainda tem duas direções nas quais os pontos podem se mover, certo? A espessura não muda
+
+0:08:24.000,0:08:27.139
+transversalmente como nas espessuras de um determinado espaço
+
+0:08:27.139,0:08:33.408
+Certo, dada a espessura e não muda certo, então você pode ter quantos, você conhece os aviões que quiser
+
+0:08:33.409,0:08:35.409
+mas a informação é basicamente
+
+0:08:35.640,0:08:41.779
+É uma informação espacial espalhada pelo plano. Então, esses são dados bidimensionais que você também pode
+
+0:08:50.290,0:08:53.940
+Ok, eu vejo seu ponto como uma imagem ampla ou um
+
+0:08:54.910,0:08:56.350
+imagem em tons de cinza
+
+0:08:56.350,0:08:58.350
+com certeza é 2d
+
+0:08:58.870,0:09:04.169
+Sinal e também pode ser representado usando um tensor de duas dimensões
+
+0:09:04.870,0:09:07.739
+Uma imagem colorida tem planos RGB
+
+0:09:08.350,0:09:14.550
+mas a espessura é sempre três não muda e a informação ainda está espalhada pelo
+
+0:09:15.579,0:09:21.839
+Outras duas dimensões para que você possa alterar o tamanho de uma imagem colorida, mas não alterará a espessura de uma imagem colorida, certo?
+
+0:09:22.870,0:09:28.319
+Então estamos falando aqui. A dimensão do sinal é como fica a informação?
+
+0:09:29.470,0:09:31.680
+Basicamente espalhados pela informação temporal
+
+0:09:31.959,0:09:38.789
+Se você tem sinal mono mono Dolby Surround ou tem um estéreo ainda temos com o tempo, certo?
+
+0:09:38.790,0:09:41.670
+Então, as imagens unidimensionais são 2d
+
+0:09:42.250,0:09:44.759
+então vamos dar uma olhada no gatinho simpático e
+
+0:09:45.519,0:09:47.909
+Vamos focar no nariz, certo? Oh
+
+0:09:48.579,0:09:50.579
+Meu Deus, isso é um monstro. Não
+
+0:09:50.949,0:09:52.949
+OK. Bem grande
+
+0:09:53.649,0:09:55.948
+Criatura aqui, certo? OK, então
+
+0:09:56.740,0:10:03.690
+Nós observamos lá e há algum tipo de região escura perto do olho você pode observar esse tipo de ver um padrão
+
+0:10:04.329,0:10:09.809
+Aparece por lá, certo? Então, qual é essa propriedade dos sinais naturais? eu
+
+0:10:12.699,0:10:18.239
+Disse-lhe duas propriedades, esta é a estacionaridade. Por que essa estacionariedade?
+
+0:10:22.029,0:10:29.129
+Certo, então o mesmo padrão aparece repetidamente em toda a dimensionalidade, neste caso a dimensão é de duas dimensões. Desculpe
+
+0:10:30.220,0:10:36.600
+Além disso, qual é a probabilidade de que, dado que a cor da pupila seja preta? Qual é a probabilidade disso?
+
+0:10:37.149,0:10:42.448
+O pixel na seta ou como na ponta da seta também é preto
+
+0:10:42.449,0:10:47.879
+Eu diria que é bem provável que esteja certo porque é muito próximo. Que tal esse ponto?
+
+0:10:48.069,0:10:51.899
+Sim, meio menos provável certo se eu continuar clicando
+
+0:10:52.480,0:10:59.649
+Você sabe, é completamente brilhante. Não, não as outras fotos à direita, então você vai mais longe na dimensão espacial
+
+0:11:00.290,0:11:06.879
+Quanto menos provável você tiver, você saberá informações semelhantes. E assim se chama isso
+
+0:11:08.629,0:11:10.629
+Localidade que significa
+
+0:11:12.679,0:11:16.269
+Há uma maior probabilidade de as coisas terem se como
+
+0:11:16.549,0:11:22.509
+As informações são como contêineres em uma região específica à medida que você se move, as coisas ficam muito, muito mais
+
+0:11:24.649,0:11:26.649
+Você sabe independente
+
+0:11:27.199,0:11:32.529
+Tudo bem, então temos duas propriedades. A terceira propriedade será a seguinte. O que é isso?
+
+0:11:33.829,0:11:35.829
+Está com fome?
+
+0:11:37.579,0:11:41.769
+Então você pode ver aqui alguns donuts, sem donuts como você chamou
+
+0:11:42.649,0:11:44.230
+Bagels, certo? Tudo bem
+
+0:11:44.230,0:11:51.009
+Então, para você, aquele de vocês que tem óculos, tire os óculos e agora responda à minha pergunta
+
+0:11:53.179,0:11:55.179
+OK
+
+0:11:59.210,0:12:01.210
+Então a terceira propriedade
+
+0:12:02.210,0:12:07.059
+É certo de composicionalidade e assim composicionalidade significa que o
+
+0:12:07.880,0:12:10.119
+A palavra é realmente explicável, certo?
+
+0:12:11.060,0:12:13.060
+tudo bem, você gosta de
+
+0:12:15.830,0:12:20.199
+A coisa está bem, você tem que voltar para mim certo? Eu apenas tento manter sua vida
+
+0:12:26.180,0:12:28.100
+Olá
+
+0:12:28.100,0:12:33.520
+OK. Então, para quem não tem óculos, pergunte ao amigo que tem óculos e experimente-os. Okay agora
+
+0:12:34.430,0:12:36.430
+Não faça isso se não for bom
+
+0:12:37.010,0:12:43.659
+Estou brincando. Você pode apertar os olhos apenas rainha, não, não use óculos de outras pessoas. OK?
+
+0:12:44.990,0:12:46.990
+Pergunta. Sim
+
+0:12:50.900,0:12:52.130
+assim
+
+0:12:52.130,0:12:57.489
+Estacionaridade significa que você observa o mesmo tipo de padrão repetidamente em seus dados
+
+0:12:58.160,0:13:01.090
+Localidade significa que o padrão é apenas localizado
+
+0:13:01.820,0:13:08.109
+Então você tem algumas informações específicas aqui algumas informações aqui informações aqui conforme você se afasta deste ponto
+
+0:13:08.270,0:13:10.270
+esse outro valor vai ser
+
+0:13:10.760,0:13:11.780
+quase
+
+0:13:11.780,0:13:15.249
+Independente do valor deste ponto aqui. Então as coisas estão correlacionadas
+
+0:13:15.860,0:13:17.860
+Apenas dentro de um bairro, ok
+
+0:13:19.910,0:13:27.910
+Ok, todo mundo tem experimentado agora apertando os olhos e olhando para esta bela foto, ok. Então esta é a terceira parte que é composicionalidade
+
+0:13:28.730,0:13:32.289
+Aqui você pode dizer como você pode realmente ver algo
+
+0:13:33.080,0:13:35.080
+Se você borrar um pouco
+
+0:13:35.810,0:13:39.250
+porque novamente as coisas são feitas de pequenas peças e você pode realmente
+
+0:13:40.010,0:13:42.429
+Você sabe compor as coisas dessa maneira
+
+0:13:43.400,0:13:47.829
+de qualquer forma, então essas são as três propriedades principais dos sinais naturais, que
+
+0:13:48.650,0:13:50.650
+permita-nos
+
+0:13:51.260,0:13:55.960
+Pode ser explorado para fazer, você sabe, um projeto de nossa arquitetura, que é mais
+
+0:13:56.600,0:14:00.880
+Realmente propenso a extrair informações que tenham essas propriedades
+
+0:14:00.880,0:14:05.169
+Ok, então estamos falando agora sobre sinais que exibem essas propriedades
+
+0:14:07.730,0:14:11.500
+Finalmente tudo bem. Teve o último que eu não falei então
+
+0:14:12.890,0:14:18.159
+Tivemos o último aqui. Temos uma frase em inglês, certo John pegou a maçã
+
+0:14:18.779,0:14:22.818
+qualquer coisa e aqui novamente, você pode representar cada palavra como
+
+0:14:23.399,0:14:26.988
+Um vetor, por exemplo, cada um desses itens. Pode ser um
+
+0:14:27.869,0:14:30.469
+Vetor que tem 1 no correspondente
+
+0:14:31.110,0:14:35.329
+Correspondência para a posição de onde essa palavra está no dicionário, ok
+
+0:14:35.329,0:14:39.709
+então se você tem um dicionário de 10.000 palavras, você pode simplesmente checar o que for
+
+0:14:40.679,0:14:44.899
+A palavra neste dicionário você acabou de colocar a página mais o número
+
+0:14:45.629,0:14:50.599
+Como você acabou de descobrir que a posição da página no dicionário. Assim também a linguagem
+
+0:14:51.899,0:14:56.419
+Tem esse tipo de propriedades que as coisas que estão por perto têm, você sabe
+
+0:14:56.420,0:15:01.069
+Algum tipo de relacionamento, as coisas não são menos, a menos que você saiba
+
+0:15:01.470,0:15:05.149
+Padrões correlacionados e, em seguida, semelhantes acontecem repetidamente
+
+0:15:05.819,0:15:12.558
+Além disso, você pode usar as palavras que conhece para fazer frases para fazer redações completas e, finalmente, fazer suas redações para o
+
+0:15:12.839,0:15:16.008
+Sessões. Estou brincando. OK. Tudo bem, então
+
+0:15:17.429,0:15:19.789
+Já vimos este. Então eu vou muito rápido
+
+0:15:20.759,0:15:28.279
+acho que não deve haver nenhuma pergunta, porque também temos tudo escrito no site, certo para que você possa sempre verificar o
+
+0:15:28.860,0:15:30.919
+resumos da lição anterior no site
+
+0:15:32.040,0:15:39.349
+Camada tão totalmente conectada. Então, na verdade, talvez seja uma nova versão do diagrama. Este é o meu X,Y está na parte inferior
+
+0:15:42.089,0:15:49.698
+Características de baixo nível. Qual a cor dos decks? Cor de rosa. OK, bom. Tudo bem, então temos uma seta que representa minha
+
+0:15:51.299,0:15:54.439
+Sim, tudo bem, esse é o termo adequado, mas eu gosto de chamá-los
+
+0:15:55.410,0:16:02.299
+Rotações e depois há algum esmagamento certo? esmagamento significa a não linearidade, então eu tenho minha camada oculta, então eu tenho outra
+
+0:16:04.379,0:16:06.379
+Rotação e um final
+
+0:16:06.779,0:16:12.888
+Esmagamento. OK. Não é necessário. Talvez possa ser um linear, você sabe a transformação final como um linear
+
+0:16:14.520,0:16:18.059
+Seja qual for a função que eles são, se você fizer uma tarefa de regressão
+
+0:16:19.750,0:16:21.750
+Aí você tem as equações, certo
+
+0:16:22.060,0:16:24.060
+E esses caras podem ser qualquer um desses
+
+0:16:24.610,0:16:26.260
+funções não lineares ou
+
+0:16:26.260,0:16:33.239
+Mesmo uma função linear né se você fizer a regressão mais uma vez e assim você pode anotar essas camadas onde eu expando
+
+0:16:33.240,0:16:39.510
+Então esse cara aqui embaixo é na verdade um vetor e eu represento o vetor G com apenas um polo ali
+
+0:16:39.510,0:16:42.780
+Acabei de mostrar todos os cinco elementos de itens desse vetor
+
+0:16:43.030,0:16:45.239
+Então você tem o X na primeira camada?
+
+0:16:45.370,0:16:50.520
+Então você tem o primeiro segundo terceiro hit oculto e a última camada, então temos quantas camadas?
+
+0:16:53.590,0:16:55.240
+Cinco ok
+
+0:16:55.240,0:16:56.950
+E então você também pode chamá-los
+
+0:16:56.950,0:17:03.689
+camada de ativação 1 camada 2 3 4 o que for e então as matrizes são onde você armazena seu
+
+0:17:03.970,0:17:10.380
+Parâmetros você tem esses W's diferentes e então para pegar cada um desses valores você já viu as coisas, certo?
+
+0:17:10.380,0:17:17.280
+Então eu vou bem mais rápido você executa apenas o produto escalar. O que significa que você acabou de fazer aquela coisa
+
+0:17:17.860,0:17:23.400
+Você recebe todos esses pesos. Eu multiplico a entrada para cada um desses pesos e você continua assim
+
+0:17:24.490,0:17:28.920
+E então você armazena esses pesos nessas matrizes e assim por diante. Então, como você pode dizer
+
+0:17:30.700,0:17:37.019
+Tem muitas flechas né e independente do fato de eu ter passado muitas horas fazendo aquele desenho
+
+0:17:38.200,0:17:43.649
+Isso também é muito caro computacionalmente porque há tantos cálculos certos em cada seta
+
+0:17:44.350,0:17:46.350
+representa um peso que você tem que multiplicar
+
+0:17:46.960,0:17:49.110
+para like por sua própria entrada
+
+0:17:49.870,0:17:51.870
+assim
+
+0:17:52.090,0:17:53.890
+O que podemos fazer agora?
+
+0:17:53.890,0:17:55.150
+assim
+
+0:17:55.150,0:17:57.150
+visto que nossas informações
+
+0:17:57.700,0:18:04.679
+Tem localidade. Não os nossos dados têm esta localidade como propriedade. O que significa se eu tivesse algo aqui?
+
+0:18:05.290,0:18:07.290
+Eu me importo com o que está acontecendo aqui?
+
+0:18:09.460,0:18:12.540
+Então, alguns de vocês estão apenas apertando a mão e o resto
+
+0:18:13.000,0:18:17.219
+Você é meio que não sei não responde e eu tenho que te dar um ping
+
+0:18:18.140,0:18:18.900
+assim
+
+0:18:18.900,0:18:25.849
+Temos localidade, certo? Então as coisas estão apenas em regiões específicas. Você realmente se importa em olhar para longe
+
+0:18:27.030,0:18:28.670
+Não, tudo bem. Fantástico
+
+0:18:28.670,0:18:32.119
+Então, vamos simplesmente descartar algumas conexões, certo?
+
+0:18:32.130,0:18:38.660
+Então aqui vamos da camada L-1 para a camada L usando a primeira, você conhece cinco
+
+0:18:39.570,0:18:45.950
+Dez e quinze, certo? Além disso, eu tenho o último aqui da camada L para L+1
+
+0:18:45.950,0:18:48.529
+Eu tenho mais três, então no total temos
+
+0:18:50.550,0:18:53.089
+Dezoito cálculos de pesos, certo
+
+0:18:53.760,0:18:55.760
+então, que tal nós
+
+0:18:56.370,0:19:01.280
+Largue as coisas que não nos importamos, certo? Então, digamos, para este neurônio, talvez
+
+0:19:01.830,0:19:04.850
+Por que temos que nos preocupar com aqueles caras lá no fundo, certo?
+
+0:19:05.160,0:19:08.389
+Então, por exemplo, eu posso usar esses três pesos, certo?
+
+0:19:08.390,0:19:12.770
+Eu apenas esqueço os outros dois e, novamente, eu apenas uso esses três pesos
+
+0:19:12.770,0:19:15.229
+Eu pulo o primeiro e o último e assim por diante
+
+0:19:16.170,0:19:23.570
+OK. Então agora temos apenas nove conexões agora apenas nove multiplicações e finalmente mais três
+
+0:19:24.360,0:19:28.010
+então, à medida que vamos do lado esquerdo para o lado direito,
+
+0:19:28.920,0:19:32.149
+Suba na hierarquia e teremos um número cada vez maior
+
+0:19:33.960,0:19:34.790
+Ver à direita
+
+0:19:34.790,0:19:40.879
+então, embora esses corpos verdes aqui e não vejam toda a entrada, você continua subindo o
+
+0:19:41.310,0:19:45.109
+Hierarquia você poderá ver toda a extensão da entrada, certo?
+
+0:19:46.590,0:19:48.590
+então, neste caso, vamos ser
+
+0:19:49.230,0:19:55.760
+Definindo a RF como campo receptivo. Então meu campo receptivo aqui desde o último
+
+0:19:56.400,0:20:03.769
+Neurônio para o neurônio intermediário é três. Então o que vai ser? Isso significa que o neurônio final vê três
+
+0:20:04.500,0:20:10.820
+Neurônios da camada anterior. Então, qual é o campo receptivo da camada oculta em relação à camada de entrada?
+
+0:20:14.970,0:20:21.199
+A resposta foi três. Sim, correto, mas qual é agora o campo séptico da camada de saída em relação à camada de entrada
+
+0:20:23.549,0:20:25.549
+Cinco certo. Isso é fantástico
+
+0:20:25.679,0:20:30.708
+Ok, doce. Então agora toda a arquitetura vê toda a entrada
+
+0:20:31.229,0:20:33.229
+enquanto cada subparte
+
+0:20:33.239,0:20:39.019
+Como as camadas intermediárias só vê pequenas regiões e isso é muito bom porque você vai poupar
+
+0:20:39.239,0:20:46.939
+Cálculos que são desnecessários porque em média não têm qualquer informação. E assim conseguimos acelerar
+
+0:20:47.669,0:20:50.059
+Os cálculos que você realmente pode calcular
+
+0:20:51.119,0:20:53.208
+coisas em um tempo razoável
+
+0:20:54.809,0:20:58.998
+Claro para que possamos falar sobre esparsidade apenas porque
+
+0:21:02.669,0:21:05.238
+Assumimos que nossos dados mostram
+
+0:21:06.329,0:21:08.249
+localidade, certo
+
+0:21:08.249,0:21:12.708
+Questione se meus dados não mostram a localidade. Posso usar esparsidade?
+
+0:21:16.139,0:21:19.279
+Não, tudo bem, fantástico, tudo bem. Tudo bem
+
+0:21:20.549,0:21:23.898
+mais coisas, então também dissemos que esses sinais naturais são
+
+0:21:24.209,0:21:28.399
+Estacionária e, portanto, dado que são estacionárias, as coisas aparecem repetidamente
+
+0:21:28.399,0:21:34.008
+Então talvez não tenhamos que aprender de novo as mesmas coisas de todo o tempo certo? assim
+
+0:21:34.679,0:21:37.668
+Neste caso, dissemos oh, deixamos de lado essas duas linhas, certo?
+
+0:21:38.729,0:21:41.179
+E então que tal usarmos?
+
+0:21:41.969,0:21:46.999
+A primeira conexão a oblíqua de você conhece indo para baixo
+
+0:21:47.549,0:21:52.158
+Faça-o amarelo. Então todos esses são amarelos, então estes são laranja
+
+0:21:52.859,0:21:57.139
+E então o último é vermelho, certo? Então, quantos pesos eu tenho aqui?
+
+0:21:59.639,0:22:01.639
+E eu tinha aqui
+
+0:22:03.089,0:22:05.089
+Nove à direita e antes que tivéssemos
+
+0:22:06.749,0:22:09.769
+15 certo, então caímos de 15 para 3
+
+0:22:10.529,0:22:14.958
+Isso é como uma grande redução e como talvez agora não funcione
+
+0:22:14.969,0:22:16.759
+Então, temos que corrigir isso em um pouco
+
+0:22:16.759,0:22:22.368
+Mas de qualquer forma desta forma quando eu treino uma rede, eu só tive que treinar três pesos o vermelho
+
+0:22:22.840,0:22:25.980
+desculpe, o amarelo laranja e vermelho e
+
+0:22:26.889,0:22:30.959
+Na verdade, vai funcionar ainda melhor porque só precisa aprender
+
+0:22:31.749,0:22:37.079
+Você terá mais informações, terá mais dados para saber treinar esses pesos específicos
+
+0:22:41.320,0:22:48.299
+Então essas são essas três cores, o amarelo laranja e o vermelho vão ser chamados de meu kernel e então eu as armazenei
+
+0:22:48.850,0:22:50.850
+Em um vetor aqui
+
+0:22:53.200,0:22:58.679
+E então aqueles se você fala sobre você sabe cuidados convolucionais esses são simplesmente o peso desses
+
+0:22:59.200,0:22:59.909
+por aqui
+
+0:22:59.909,0:23:04.589
+Corrija os pesos que estamos usando usando esparsidade e, em seguida, usando o compartilhamento de parâmetros
+
+0:23:04.869,0:23:09.629
+Compartilhamento de parâmetros significa que você usa o mesmo parâmetro novamente em toda a arquitetura
+
+0:23:10.330,0:23:15.090
+Portanto, existem as seguintes propriedades interessantes de usar esses dois combinados
+
+0:23:15.490,0:23:20.699
+Assim, o compartilhamento de parâmetros nos dá uma convergência mais rápida porque você terá muito mais informações
+
+0:23:21.399,0:23:23.549
+Para usar para treinar esses pesos
+
+0:23:24.519,0:23:26.139
+Você tem um melhor
+
+0:23:26.139,0:23:32.008
+Generalização porque você não precisa aprender toda vez um tipo específico de coisa que aconteceu em uma região diferente
+
+0:23:32.009,0:23:34.079
+Você acabou de aprender alguma coisa. Isso faz sentido
+
+0:23:34.720,0:23:36.720
+Você sabe globalmente
+
+0:23:37.570,0:23:44.460
+Então nós também não estamos restritos ao tamanho da entrada isso é tão importante ray também Yann disse isso três vezes ontem
+
+0:23:45.700,0:23:48.029
+Por que não estamos restritos ao tamanho da entrada?
+
+0:23:54.039,0:24:00.449
+Porque podemos continuar mudando logo antes, neste outro caso, se você tiver mais neurônios, precisará aprender coisas novas
+
+0:24:00.450,0:24:06.210
+Certo, neste caso. Eu posso simplesmente adicionar mais neurônios e continuo usando meu peso certo que foi
+
+0:24:07.240,0:24:09.809
+Alguns dos principais pontos Yann, você sabe
+
+0:24:10.509,0:24:12.509
+destaque ontem
+
+0:24:12.639,0:24:14.939
+Além disso, temos a independência do kernel
+
+0:24:15.999,0:24:18.689
+Então, para um de vocês, eles estão interessados ​​em otimização
+
+0:24:19.659,0:24:21.009
+otimizando como computação
+
+0:24:21.009,0:24:22.299
+isso é tão legal porque
+
+0:24:22.299,0:24:29.189
+Este kernel e outro kernel são completamente independentes então você pode treiná-los você pode paralisar é fazer as coisas andarem mais rápido
+
+0:24:33.580,0:24:38.549
+Então, finalmente, temos também alguma propriedade de esparsidade de conexão e aqui temos uma
+
+0:24:39.070,0:24:41.700
+Quantidade reduzida de computação, o que também é muito bom
+
+0:24:42.009,0:24:48.659
+Então, todas essas propriedades nos permitiram treinar essa rede em muitos dados
+
+0:24:48.659,0:24:55.739
+você ainda precisa de muitos dados, mas sem ter localidade esparsa, portanto, sem ter esparsidade e
+
+0:24:56.409,0:25:01.859
+Compartilhamento de parâmetros, você não conseguiria concluir o treinamento desta rede em um período de tempo razoável
+
+0:25:03.639,0:25:11.039
+Então, vamos ver, por exemplo, agora como isso funciona quando você tem um sinal de áudio, que é quantos sinais dimensionais
+
+0:25:12.279,0:25:17.849
+1 sinal dimensional, certo? OK. Então, por exemplo, kernels para dados 1d
+
+0:25:18.490,0:25:24.119
+No lado direito. Você pode ver novamente. Meus meus neurônios posso estar usando meu
+
+0:25:24.909,0:25:30.359
+Diferente do primeiro scanner aqui. E então eu vou armazenar meu kernel lá nesse vetor
+
+0:25:31.330,0:25:36.059
+Por exemplo, posso ter um segundo kernel certo. Então agora temos dois kernels o
+
+0:25:36.700,0:25:39.749
+Azul roxo e rosa e amarelo, laranja e vermelho
+
+0:25:41.559,0:25:44.158
+Então vamos dizer que minha saída é r2
+
+0:25:44.799,0:25:46.829
+Isso significa que cada um desses
+
+0:25:47.980,0:25:50.909
+Bolhas aqui. Cada um desses neurônios é realmente
+
+0:25:51.639,0:25:57.359
+Um e dois saem do tabuleiro, certo? Então, cada um deles tem uma espessura de dois
+
+0:25:58.929,0:26:02.819
+E digamos que o outro cara aqui está tendo uma espessura de sete, certo
+
+0:26:02.990,0:26:07.010
+Eles estão saindo da tela e são, você sabe, sete euros dessa maneira
+
+0:26:08.070,0:26:13.640
+então, neste caso, meu kernel terá tamanho 2 * 7 * 3
+
+0:26:13.860,0:26:17.719
+Então 2 significa que eu tenho dois kernels que vão de 7
+
+0:26:18.240,0:26:20.070
+para me dar
+
+0:26:20.070,0:26:22.070
+3
+
+0:26:22.950,0:26:24.950
+Saídas
+
+0:26:28.470,0:26:32.959
+Segure meu mal. Então o 2 significa que você tem ℝ² aqui
+
+0:26:33.659,0:26:37.069
+Porque você tem dois cantos. Então o primeiro kernel lhe dará o primeiro
+
+0:26:37.679,0:26:41.298
+A primeira coluna aqui e o segundo kernel vão te dar a segunda coluna
+
+0:26:42.179,0:26:44.869
+Então tem que inicializar 7
+
+0:26:45.210,0:26:50.630
+Porque precisa combinar com toda a espessura da camada anterior e aí tem 3 porque são três
+
+0:26:50.789,0:26:56.778
+Conexões certo? Então, talvez eu sinta falta de me confundir antes, faz sentido o dimensionamento?
+
+0:26:58.049,0:26:59.820
+assim dado que o nosso
+
+0:26:59.820,0:27:03.710
+273 2 significa que você tinha 2 kernels e, portanto, você tem dois
+
+0:27:04.080,0:27:08.000
+Itens aqui como um a um saindo para cada uma dessas colunas
+
+0:27:08.640,0:27:15.919
+Tem sete porque cada um deles tem uma espessura de 7 e finalmente 3 significa que existem 3 conexões conectando à camada anterior
+
+0:27:17.429,0:27:22.819
+Certo, então os dados 1d usam kernels 3d ok
+
+0:27:23.460,0:27:30.049
+então se eu chamar isso de minha coleção de kernel, certo, então se eles forem armazenados em um tensor
+
+0:27:30.049,0:27:32.898
+Este tensor será um tensor tridimensional
+
+0:27:33.690,0:27:34.919
+assim
+
+0:27:34.919,0:27:37.939
+Pergunta para você, se eu vou brincar agora com imagens
+
+0:27:38.580,0:27:40.580
+Qual é o tamanho de?
+
+0:27:40.679,0:27:43.999
+Você conhece o pacote completo de kernels para uma imagem
+
+0:27:45.809,0:27:47.809
+Rede convolucional
+
+0:27:49.590,0:27:56.209
+Quatro certo. Então, teremos o número de kernels, então será o número da espessura
+
+0:27:56.730,0:28:00.589
+E então você terá conexões em altura e conexões em largura
+
+0:28:01.799,0:28:03.179
+OK
+
+0:28:03.179,0:28:09.798
+Então, se você for verificar os kernels convolucionais atuais mais tarde em seu notebook, na verdade, você deve verificar isso
+
+0:28:09.929,0:28:12.138
+Você deve encontrar o mesmo tipo de dimensões
+
+0:28:14.159,0:28:16.159
+Tudo bem, então
+
+0:28:18.059,0:28:20.478
+Perguntas até agora, isso é tão claro?. Sim
+
+0:28:50.460,0:28:52.460
+Ok, boa pergunta então
+
+0:28:52.469,0:28:56.149
+trade-off sobre, você sabe o dimensionamento dessas circunvoluções
+
+0:28:56.700,0:28:59.119
+kernels convolucionais, certo está correto? Certo
+
+0:28:59.909,0:29:06.409
+Três por três, ele parece ser o mínimo que você pode obter se realmente se importa com informações espaciais
+
+0:29:07.499,0:29:13.098
+Como Yann apontou, você também pode usar uma convolução uma por uma. Oh, desculpe, venha um
+
+0:29:13.769,0:29:15.149
+como um
+
+0:29:15.149,0:29:20.718
+Convolução com que tem apenas um peso ou se usar como nas imagens tem uma convolução uma a uma
+
+0:29:21.179,0:29:23.179
+Esses são usados ​​para serem
+
+0:29:23.309,0:29:24.570
+tendo como um
+
+0:29:24.570,0:29:26.570
+camada final, que ainda
+
+0:29:26.909,0:29:30.528
+Ainda espacial pode ser aplicado a uma imagem de entrada maior
+
+0:29:31.649,0:29:36.138
+No momento, usamos apenas kernels que são três ou talvez cinco
+
+0:29:36.929,0:29:42.348
+é meio empírico, então não é como se não tivéssemos fórmulas mágicas, mas
+
+0:29:43.349,0:29:44.279
+temos sido
+
+0:29:44.279,0:29:50.329
+tentando arduamente nos últimos dez anos para descobrir qual é o melhor conjunto de hiperparâmetros e se você verificar
+
+0:29:50.969,0:29:55.879
+Para cada campo como para um processamento de fala processamento visual como processamento de imagem
+
+0:29:55.879,0:29:59.718
+Você vai descobrir qual é o compromisso certo para seus dados específicos?
+
+0:30:01.769,0:30:03.769
+Sim
+
+0:30:04.910,0:30:06.910
+Segundo
+
+0:30:07.970,0:30:12.279
+Ok, essa é uma boa pergunta por que números ímpares por que o kernel tem um número ímpar
+
+0:30:14.390,0:30:16.220
+De elementos
+
+0:30:16.220,0:30:20.049
+Então, se você realmente tiver um número ímpar de elementos, haveria um elemento central
+
+0:30:20.240,0:30:25.270
+Certo. Se você tiver um número par de elementos, saberemos que não haverá um valor central
+
+0:30:25.370,0:30:27.880
+Então, se você tiver novamente um número ímpar
+
+0:30:27.880,0:30:30.790
+Você sabe que a partir de um ponto específico você vai considerar
+
+0:30:31.220,0:30:36.789
+Número par de itens à esquerda e número par de itens à direita se for um tamanho par
+
+0:30:37.070,0:30:42.399
+Kernel que você realmente não sabe onde está o centro e o centro será a média de dois
+
+0:30:43.040,0:30:48.310
+Amostras vizinhas que realmente criam um efeito de filtro passa-baixa. Então mesmo
+
+0:30:49.220,0:30:51.910
+tamanhos de kernel geralmente não são
+
+0:30:52.580,0:30:56.080
+preferidos ou não usualmente usados ​​porque implicam algum tipo de
+
+0:30:57.290,0:30:59.889
+redução adicional da qualidade dos dados
+
+0:31:02.000,0:31:08.380
+Ok, então mais uma coisa que mencionamos também ontem, seu preenchimento é algo
+
+0:31:09.590,0:31:16.629
+que se isso afeta os resultados finais está piorando, mas é muito conveniente para
+
+0:31:17.570,0:31:25.450
+lado da programação, então, se tivermos o nosso, como você pode ver aqui, quando aplicarmos a convolução desta camada, você terminará com
+
+0:31:27.680,0:31:31.359
+Ok, quantos neurônios temos aqui
+
+0:31:32.720,0:31:34.720
+três e começamos de
+
+0:31:35.480,0:31:39.400
+cinco, então se usarmos um kernel convolucional de três
+
+0:31:40.490,0:31:42.490
+Perdemos quantos neurônios?
+
+0:31:43.310,0:31:50.469
+Dois, ok, um de cada lado. Se você estiver usando um kernel convolucional de tamanho cinco, quanto você perderá
+
+0:31:52.190,0:31:57.639
+Quatro à direita e, portanto, essa é a regra de preenchimento zero do usuário, você precisa adicionar um extra
+
+0:31:58.160,0:32:02.723
+Neurônio aqui um neurônio extra aqui. Então você vai fazer o tamanho do número do kernel, certo?
+
+0:32:02.723,0:32:05.800
+Três menos um dividido por dois e então você adiciona esse extra
+
+0:32:06.560,0:32:12.850
+Qualquer que seja o número de neurônios aqui, você os configurou para zero. Por que zerar? porque geralmente você zero significa
+
+0:32:13.470,0:32:18.720
+Suas entradas ou zerar a saída de cada camada usando algumas camadas de normalização
+
+0:32:19.900,0:32:21.820
+nesse caso
+
+0:32:21.820,0:32:25.770
+Sim, três vem do tamanho do kernel e então você tem isso
+
+0:32:26.740,0:32:28.630
+Alguma animação deve estar tocando
+
+0:32:28.630,0:32:31.289
+Sim, você tem um neurônio extra lá então
+
+0:32:31.289,0:32:37.289
+Eu tenho um neurônio extra lá de tal forma que finalmente você acaba com isso, você sabe, neurônios fantasmas lá
+
+0:32:37.330,0:32:41.309
+Mas agora você tem o mesmo número de entrada e o mesmo número de saída
+
+0:32:41.740,0:32:47.280
+E isso é tão conveniente porque se começamos com eu não sei 64 neurônios, você aplica uma convolução
+
+0:32:47.280,0:32:54.179
+Você ainda tem 64 neurônios e, portanto, você pode usar, digamos, o agrupamento máximo de dois, você terminará em 32 neurônios
+
+0:32:54.179,0:32:57.809
+Caso contrário você vai ter isso eu não sei se você considera um
+
+0:32:58.539,0:33:01.019
+Temos um número ímpar certo, então você não sabe o que fazer
+
+0:33:04.030,0:33:06.030
+depois de um tempo né?
+
+0:33:08.320,0:33:10.320
+OK, então
+
+0:33:10.720,0:33:12.720
+Sim, e você tem o mesmo tamanho
+
+0:33:13.539,0:33:20.158
+Tudo bem. Então, vamos ver quanto tempo você tem. Você tem um pouco de tempo. Então, vamos ver como usamos isso
+
+0:33:21.130,0:33:27.270
+Rede convolucional na prática. Então, isso é como a teoria por trás e dissemos que podemos usar convoluções
+
+0:33:28.000,0:33:33.839
+Portanto, este é um operador convolucional. Eu nem defini. O que é uma convolução. Acabamos de dizer que se nossos dados
+
+0:33:37.090,0:33:39.929
+localidade de estacionaridade e é na verdade
+
+0:33:42.130,0:33:45.689
+Composicional, então podemos explorar isso usando
+
+0:33:49.240,0:33:51.240
+Compartilhamento de peso
+
+0:33:51.940,0:33:56.730
+Esparsidade e então você sabe empilhando várias dessa camada. Você tem um tipo de hierarquia, certo?
+
+0:33:58.510,0:34:06.059
+Então, usando esse tipo de operação, isso é uma convolução, eu nem defini isso, não me importo agora, talvez na próxima aula
+
+0:34:07.570,0:34:11.999
+Então isso é como a teoria por trás agora, vamos ver um pouco de prática
+
+0:34:12.429,0:34:15.628
+Você conhece sugestões de como realmente usamos essas coisas na prática
+
+0:34:16.119,0:34:22.229
+Então, a próxima coisa que temos como padrão é uma rede convolucional espacial que está operando que tipo de dados
+
+0:34:22.840,0:34:24.840
+Se é espacial
+
+0:34:25.780,0:34:28.229
+É especial porque é minha rede né especial
+
+0:34:29.260,0:34:32.099
+Não apenas brincando tão especial como você conhece o espaço
+
+0:34:33.190,0:34:37.139
+Então, neste caso, temos várias camadas, é claro que as prendemos
+
+0:34:37.300,0:34:42.419
+Também falamos sobre por que é melhor ter várias camadas em vez de ter uma camada de gordura
+
+0:34:43.300,0:34:48.149
+Temos circunvoluções. É claro que temos não linearidades porque, caso contrário,
+
+0:34:55.270,0:34:56.560
+assim
+
+0:34:56.560,0:35:04.439
+ok, da próxima vez vamos ver como uma convolução pode ser implementada com matrizes, mas as convoluções são apenas operadores lineares com os quais muitos
+
+0:35:04.440,0:35:07.470
+zeros e como replicação do mesmo pelos pesos
+
+0:35:07.570,0:35:13.019
+mas caso contrário, se você não usar não linearidade, uma convolução de uma convolução
+
+0:35:13.020,0:35:16.679
+Vai ser uma convolução. Então temos que limpar as coisas
+
+0:35:17.680,0:35:19.510
+aquele
+
+0:35:19.510,0:35:25.469
+A gente tem que gostar de colocar barreiras né? para evitar o colapso de toda a rede. Tínhamos algum operador de pooling
+
+0:35:26.140,0:35:27.280
+que
+
+0:35:27.280,0:35:33.989
+Geoffrey diz que é você sabe, algo já ruim. Mas você sabe, você ainda está fazendo isso Hinton certo Geoffrey Hinton
+
+0:35:35.410,0:35:40.950
+Então, tivemos algo que, se você não usar, sua rede não estará treinando. Então é só usar
+
+0:35:41.560,0:35:44.339
+embora não saibamos exatamente por que funciona, mas
+
+0:35:45.099,0:35:48.659
+Acho que há uma pergunta na Piazza. vou colocar um link lá
+
+0:35:49.330,0:35:53.519
+Sobre esta normalização de lote. Além disso, Yann cobrirá todas as camadas de normalização
+
+0:35:54.910,0:36:01.889
+Finalmente, temos algo que também é bastante recente que é chamado de conexões de recebimento ou desvio
+
+0:36:01.990,0:36:03.990
+Quais são basicamente estes?
+
+0:36:04.240,0:36:05.859
+extra
+
+0:36:05.859,0:36:07.089
+conexões
+
+0:36:07.089,0:36:09.089
+Que me permitem
+
+0:36:09.250,0:36:10.320
+Obtenha a rede
+
+0:36:10.320,0:36:13.320
+Você sabe que a rede decidiu se deve enviar informações
+
+0:36:13.780,0:36:18.780
+Através desta linha ou realmente envie-a para frente se você empilhar tantas camadas uma após a outra
+
+0:36:18.910,0:36:24.330
+O sinal se perde um pouco depois de algum tempo se você adicionar essas conexões adicionais
+
+0:36:24.330,0:36:27.089
+Você sempre tem como um caminho para voltar
+
+0:36:27.710,0:36:31.189
+De baixo para cima e também ter gradientes descendo de cima para baixo
+
+0:36:31.440,0:36:38.599
+então isso é realmente muito importante, tanto a conexão do receptor quanto a normalização do lote são realmente muito úteis para fazer com que essa rede
+
+0:36:39.059,0:36:46.849
+Treine adequadamente se você não os usar, então será muito difícil fazer com que essas redes realmente funcionem para a parte do treinamento
+
+0:36:48.000,0:36:51.949
+Então como funciona temos aqui uma imagem, por exemplo
+
+0:36:53.010,0:36:55.939
+Onde a maior parte da informação é informação espacial?
+
+0:36:55.940,0:36:59.000
+Assim, a informação está espalhada pelas duas dimensões
+
+0:36:59.220,0:37:04.520
+Embora haja uma espessura e eu chamo a espessura como informação característica
+
+0:37:04.770,0:37:07.339
+O que significa que fornece uma informação?
+
+0:37:07.890,0:37:11.569
+Nesse ponto específico. Então, qual é a minha informação característica?
+
+0:37:12.180,0:37:15.740
+nesta imagem digamos que é uma imagem RGB
+
+0:37:16.680,0:37:18.680
+É uma imagem colorida certo?
+
+0:37:19.230,0:37:27.109
+Assim temos que a maior parte da informação está espalhada em uma informação espacial. Como se você me fizesse fazer caretas
+
+0:37:28.109,0:37:30.109
+mas então em cada ponto
+
+0:37:30.300,0:37:33.769
+Esta não é uma imagem em tons de cinza, é uma imagem colorida, certo?
+
+0:37:33.770,0:37:39.199
+Então cada ponto terá uma informação adicional que é minha você sabe
+
+0:37:39.990,0:37:42.439
+Informações características. O que é neste caso?
+
+0:37:44.640,0:37:46.910
+É um vetor de três valores que representam
+
+0:37:48.630,0:37:51.530
+RGB são as três letras do __, pois representam
+
+0:37:54.780,0:37:57.949
+Ok, no geral, como isso representa
+
+0:37:59.160,0:38:02.480
+Sim intensidade. Só você sabe, me diga em inglês sem estranho
+
+0:38:03.359,0:38:05.130
+coisas
+
+0:38:05.130,0:38:11.480
+A cor do pixel, certo? Então minhas informações específicas. Minha informação característica. Sim. Eu não sei o que você está dizendo
+
+0:38:11.480,0:38:18.500
+Desculpe, a informação característica neste caso é apenas uma cor certa então a cor é a única informação que é específica lá
+
+0:38:18.500,0:38:20.780
+Mas, caso contrário, a informação é espalhada por aí
+
+0:38:21.359,0:38:23.359
+Como se subíssemos escalar a hierarquia
+
+0:38:23.730,0:38:31.189
+Você pode ver agora algum vetor final que digamos que estamos fazendo a classificação neste caso. Então meu
+
+0:38:31.770,0:38:36.530
+Você sabe a altura e a largura ou a coisa vai ser uma por uma, então é apenas um vetor
+
+0:38:37.080,0:38:43.590
+E então digamos que você tenha o logit final específico, que é o mais alto, então representa a classe
+
+0:38:43.590,0:38:47.400
+Qual é mais provável de ser o correto se for bem treinado
+
+0:38:48.220,0:38:51.630
+no Midway, você tem algo que é, você conhece um trade-off entre
+
+0:38:52.330,0:38:59.130
+Informações espaciais e depois essas informações características. OK. Então, basicamente, é como uma conversão entre
+
+0:39:00.070,0:39:01.630
+informações espaciais
+
+0:39:01.630,0:39:03.749
+nesta informação característica
+
+0:39:04.360,0:39:07.049
+Você vê assim basicamente ir de uma coisa?
+
+0:39:07.660,0:39:08.740
+entrada
+
+0:39:08.740,0:39:13.920
+Dados para algo. É muito grosso, mas depois não tem mais informação informação espacial
+
+0:39:14.710,0:39:20.760
+e assim você pode ver aqui com minhas habilidades ninja PowerPoint como você pode conhecer um
+
+0:39:22.240,0:39:27.030
+Redução do espessante ___ como uma figura mais espessa em nossa apresentação
+
+0:39:27.070,0:39:30.840
+Considerando que você realmente perde o especial espacial
+
+0:39:32.440,0:39:39.870
+Ok, então isso foi mais um agrupamento, então o agrupamento é simplesmente novamente, por exemplo
+
+0:39:41.620,0:39:43.600
+Pode ser realizado desta forma
+
+0:39:43.600,0:39:48.660
+Então aí você tem um desenho à mão porque eu não queria que você tivesse tempo para fazer em látex?
+
+0:39:49.270,0:39:52.410
+Então você tem diferentes regiões que você aplica um específico?
+
+0:39:53.500,0:39:57.060
+Operador para aquela região específica, por exemplo, você tem a norma P
+
+0:39:58.150,0:39:59.680
+e então
+
+0:39:59.680,0:40:02.760
+Sim, o P vai para mais infinito. voce tem o maximo
+
+0:40:03.730,0:40:09.860
+E então esse não é dar-lhe um valor certo, então você dá um passo.
+
+0:40:09.860,0:40:12.840
+pule para Pixels ainda mais e então você novamente calcula a mesma coisa
+
+0:40:12.840,0:40:18.150
+você vai ter outro valor lá e assim sucessivamente até acabar de
+
+0:40:18.700,0:40:24.900
+Seus dados que eram m por n com canais c você ainda obtém canais c
+
+0:40:24.900,0:40:31.199
+Mas então, neste caso, você obterá m/2 ec e n/2. Ok, e isso é para imagens
+
+0:40:35.029,0:40:41.079
+Não há parâmetros no pool, como você pode escolher qual tipo de pooling, certo, você pode escolher o pool máximo
+
+0:40:41.390,0:40:44.229
+Agrupamento médio qualquer agrupamento está errado. assim
+
+0:40:45.769,0:40:48.879
+Sim, vamos também o problema, ok, então
+
+0:40:49.999,0:40:55.809
+Esta foi a parte média com os slides. Vamos ver agora os notebooks ficarão um pouco mais lentos desta vez
+
+0:40:55.809,0:40:58.508
+Percebi que da última vez eu meio que me apressei
+
+0:40:59.900,0:41:02.529
+Há alguma pergunta até agora sobre esta parte que abordamos?
+
+0:41:04.519,0:41:06.519
+Sim
+
+0:41:10.670,0:41:12.469
+Então existe como
+
+0:41:12.469,0:41:17.769
+Geoffrey Hinton é conhecido por dizer que o pooling máximo é algo que é apenas
+
+0:41:18.259,0:41:23.319
+Errado porque você apenas joga fora as informações como você calcula a média ou você pega o máximo, você apenas joga fora as coisas
+
+0:41:24.380,0:41:29.140
+Ele está trabalhando em algo chamado redes de cápsulas, que você conhece
+
+0:41:29.660,0:41:33.849
+caminhos de roteamento que estão escolhendo, você conhece alguns
+
+0:41:34.519,0:41:41.319
+Melhores estratégias para evitar como jogar fora informações. OK. Basicamente esse é o argumento por trás sim
+
+0:41:45.469,0:41:52.329
+Sim, então o objetivo principal de usar esse pooling ou o stride é, na verdade, livrar-se de muitos dados, de modo que você
+
+0:41:52.329,0:41:54.579
+Pode computar coisas em uma quantidade razoável de tempo?
+
+0:41:54.619,0:42:00.939
+Normalmente você precisa de muito passo ou pooling nas primeiras camadas na parte inferior porque, caso contrário, é absolutamente você saber
+
+0:42:01.339,0:42:03.339
+Muito caro computacionalmente
+
+0:42:03.979,0:42:05.979
+Sim
+
+0:42:21.459,0:42:23.459
+Então, naquele sentar
+
+0:42:24.339,0:42:32.068
+Essas arquiteturas de rede são até agora impulsionadas por você conhece o estado da arte, que é completamente uma base empírica
+
+0:42:33.279,0:42:40.109
+nós nos esforçamos e na verdade vamos para, quero dizer, agora chegamos a algum tipo de padrão, então um
+
+0:42:40.359,0:42:44.399
+Alguns anos atrás. Eu estava respondendo como se eu não soubesse, mas agora nós realmente temos
+
+0:42:45.099,0:42:47.049
+Determinado algumas boas configurações
+
+0:42:47.049,0:42:53.968
+Especialmente usando essas conexões de receptor e a normalização de lote. Na verdade, podemos treinar basicamente tudo
+
+0:42:54.759,0:42:56.759
+Sim
+
+0:43:05.859,0:43:11.038
+Então, basicamente, você terá seu gradiente em um ponto específico descendo também
+
+0:43:11.039,0:43:13.679
+E então você tem o outro gradiente descendo
+
+0:43:13.839,0:43:18.238
+Então você tinha uma ramificação certa uma ramificação e se tiver ramificação o que está acontecendo com o gradiente?
+
+0:43:19.720,0:43:25.439
+Está correto. Sim, eles são adicionados corretamente, então você tem os dois gradientes provenientes de dois ramos diferentes sendo adicionados juntos
+
+0:43:26.470,0:43:31.769
+Tudo bem. Então vamos ao caderno para que possamos cobrir não nos apressarmos muito
+
+0:43:32.859,0:43:37.139
+Então aqui eu apenas passo pela parte do convnet. Então aqui eu treino
+
+0:43:39.519,0:43:41.289
+Inicialmente eu
+
+0:43:41.289,0:43:43.979
+Carregue o conjunto de dados MNIST, então mostro alguns
+
+0:43:44.680,0:43:45.849
+personagens aqui
+
+0:43:45.849,0:43:52.828
+Ok, e eu treino agora um perceptron multicamada como uma rede totalmente conectada como um humor, você sabe
+
+0:43:53.440,0:44:00.509
+Sim, rede totalmente conectada e uma rede neural convolucional que possui o mesmo número de parâmetros. OK. Então esses dois modelos terão o mesmo
+
+0:44:01.150,0:44:05.819
+Dimensão em termos de D. Se você salvá-los vamos esperar o mesmo para
+
+0:44:07.269,0:44:11.219
+Estou treinando aqui esse cara aqui com a Rede totalmente conectada
+
+0:44:12.640,0:44:14.640
+Leva um pouco de tempo
+
+0:44:14.829,0:44:21.028
+E ele fica 87% bem. Isso é treinado na classificação dos dígitos MNIST de Yann
+
+0:44:21.999,0:44:24.419
+Na verdade, baixamos do site dele, se você verificar
+
+0:44:25.239,0:44:32.189
+De qualquer forma, eu treino uma rede neural convolucional com o mesmo número de parâmetros que você espera ter um resultado melhor ou pior
+
+0:44:32.349,0:44:35.548
+Então, meu perceptron multicamada obtém 87%
+
+0:44:36.190,0:44:38.190
+O que obtemos com uma rede convolucional?
+
+0:44:41.739,0:44:43.739
+Sim porque
+
+0:44:46.910,0:44:50.950
+Ok, então qual é o ponto aqui de usar esparsidade o que isso significa
+
+0:44:52.640,0:44:55.089
+Dado que temos o mesmo número de parâmetros
+
+0:44:56.690,0:44:58.690
+Conseguimos treinar muito
+
+0:44:59.570,0:45:05.440
+mais filtros certo no segundo caso porque no primeiro caso usamos filtros que estão tentando obter algum
+
+0:45:05.960,0:45:12.549
+dependências entre coisas que estão mais distantes com coisas que estão fechadas por isso são completamente desperdiçadas basicamente elas aprendem 0
+
+0:45:12.830,0:45:19.930
+Em vez disso, na rede convolucional. Eu tenho todos esses parâmetros. Eles estão apenas concentrados para descobrir. Qual é a relação dentro de um
+
+0:45:20.480,0:45:23.799
+Pixels vizinhos. Tudo bem. Então agora ele tira as fotos que eu
+
+0:45:24.740,0:45:26.740
+Agite tudo acabou de ser mexido
+
+0:45:27.410,0:45:33.369
+Mas mantenho o mesmo embaralhe da mesma forma todas as imagens. Então eu executo uma permutação aleatória
+
+0:45:34.850,0:45:38.710
+Sempre a mesma permutação aleatória de todas as minhas imagens ou pixels nas minhas imagens
+
+0:45:39.500,0:45:41.090
+O que acontece?
+
+0:45:41.090,0:45:43.299
+Se eu treinar as duas redes
+
+0:45:47.990,0:45:50.049
+Então aqui eu treinei veja aqui
+
+0:45:50.050,0:45:56.950
+Eu tenho minhas imagens de fotos e aqui eu apenas embaralhei com a mesma função de embaralhamento todos os pixels
+
+0:46:00.200,0:46:04.240
+Todas as minhas entradas serão essas imagens aqui
+
+0:46:06.590,0:46:10.870
+A saída ainda será a classe do original, então este é um quatro você
+
+0:46:11.450,0:46:13.780
+Pode ver que isso é um quatro. Este é um nove
+
+0:46:14.920,0:46:19.889
+Este é um 1 este é um 7 é um 3 este é um 4 então eu mantenho os mesmos rótulos
+
+0:46:19.930,0:46:24.450
+Mas eu embaralhei a ordem dos pixels e executo o mesmo embaralhamento todas as vezes
+
+0:46:25.239,0:46:27.239
+O que você espera é desempenho?
+
+0:46:31.029,0:46:33.299
+Quem é melhor quem está trabalhando quem é o mesmo?
+
+0:46:38.619,0:46:46.258
+Percepção como faz com a percepção? Ele vê alguma diferença? Não, tudo bem. Então o cara ainda 83
+
+0:46:47.920,0:46:49.920
+rede de Yann
+
+0:46:52.029,0:46:54.029
+O que vocês
+
+0:47:04.089,0:47:09.988
+Saiba que é um totalmente conectado. Desculpe. Vou mudar a ordem. Sim, veja. OK. Ai está
+
+0:47:12.460,0:47:14.999
+Então eu não posso nem te mostrar essa coisa
+
+0:47:17.920,0:47:18.730
+Tudo bem
+
+0:47:18.730,0:47:24.659
+Então, o cara totalmente conectado basicamente executou o mesmo, as diferenças são apenas básicas com base no inicial
+
+0:47:25.059,0:47:30.899
+A inicialização aleatória da rede convolucional que estava ganhando por meio de grande avanço
+
+0:47:31.509,0:47:33.509
+vantagem antes de realmente realizar
+
+0:47:34.059,0:47:38.008
+Tipo de cada um de forma semelhante, mas quero dizer pior do que muito pior do que antes
+
+0:47:38.499,0:47:42.449
+Por que a rede convolucional agora está tendo um desempenho pior do que minha rede totalmente conectada?
+
+0:47:44.829,0:47:46.829
+Porque nós fodemos
+
+0:47:47.739,0:47:55.379
+Ok, e toda vez que você usa uma rede convolucional, você realmente tem que pensar que posso usar uma rede convolucional, ok
+
+0:47:56.440,0:47:59.700
+Se valer agora, você tem as três propriedades, então sim
+
+0:47:59.700,0:48:05.759
+Talvez, é claro, devesse oferecer um desempenho melhor se essas três propriedades não se mantiverem
+
+0:48:06.579,0:48:09.058
+então usar redes convolucionais é
+
+0:48:11.499,0:48:17.939
+BS certo, qual foi o viés? Não. Ok. Deixa pra lá. Tudo bem. Bem boa noite
