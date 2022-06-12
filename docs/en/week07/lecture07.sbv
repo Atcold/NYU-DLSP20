@@ -776,7 +776,7 @@ In fact that's equivalent to
 defining a new energy function F
 
 0:20:27.500,0:20:33.160
-which I call F-infinity here that only depends on x and y. F-infinity(x,y) is the min over z of
+which I call F∞ here that only depends on x and y. F∞(x,y) is the min over z of
 
 0:20:33.350,0:20:35.920
 a of E(x,y,z). You take a
@@ -794,28 +794,28 @@ So in practice, you minimize with respect to z and y simultaneously
 Because we don't know how to represent the function
 
 0:20:54.440,0:21:02.410
-But there is an alternative to this, which is to define F, here I write F of beta or F
+But there is an alternative to this, which is to define F, here I write Fβ or F
 
 0:21:03.920,0:21:06.639
-Index beta of (x,y)
+Index β of (x,y)
 
 0:21:07.400,0:21:09.400
-as minus 1 over beta log
+as minus 1/β log
 
 0:21:09.860,0:21:13.300
-sum or integral over z of e to the minus beta E(x,y,z)
+sum or integral over z of exp(-βE(x,y,z)).
 
 0:21:14.660,0:21:16.660
 Now a little bit of
 
 0:21:19.070,0:21:22.850
-computation, you will see that if you make beta go to infinity
+computation, you will see that if you make β go to infinity
 
 0:21:24.029,0:21:25.980
 this kind of
 
 0:21:25.980,0:21:29.299
-F-Beta converges to F-infinity which is why I called it F-infinity
+Fβ converges to F∞ which is why I called it F∞.
 
 0:21:30.330,0:21:32.330
 And I went to this
@@ -839,7 +839,7 @@ which is the one that has the
 lowest value over all possible values of z, right?
 
 0:21:51.570,0:21:54.500
-Because all the other ones are going to be much bigger because beta is very very large
+Because all the other ones are going to be much bigger because β is very very large
 
 0:21:54.500,0:21:58.069
 And so the value in the exponential is not going to count really
@@ -854,7 +854,7 @@ And so if you have only one term in there, which is E(x,y,z)
 for the value of z that produces the smallest value, then the log cancels the
 
 0:22:14.220,0:22:18.139
-exponential and the minus one over beta cancel the minus beta and you're left with just
+exponential and the minus 1/β cancel the -β and you're left with just
 
 0:22:18.659,0:22:22.398
 min over z of E(x,y,z). Ok, so that's the limit
@@ -899,13 +899,13 @@ So there is a particular architecture here where x goes into
 what I'll call a predictor, which is some sort of neural net. It produces some representation feature representation of x and
 
 0:23:24.629,0:23:31.789
-Then x and z the latent variable go into what I call here decoder which produces a prediction y-bar
+Then x and z the latent variable go into what I call here decoder which produces a prediction y̅
 
 0:23:32.460,0:23:36.949
 Okay, it's a prediction for the variable y. That is the one that we want to predict and
 
 0:23:37.620,0:23:42.200
-Our energy function here just compares y bar and y. It's simply the distance between them
+Our energy function here just compares y̅ and y. It's simply the distance between them
 
 0:23:42.420,0:23:46.039
 Okay, you're familiar with this kind of diagram. We talked about them earlier
@@ -917,7 +917,7 @@ So if I choose to vary z over a set, let's say the 2-dimensional square here sym
 diagram
 
 0:23:57.090,0:24:02.420
-Then the prediction y bar is going to vary also over a set in this case here some sort of ribbon
+Then the prediction y̅ is going to vary also over a set in this case here some sort of ribbon
 
 0:24:02.640,0:24:04.640
 2D ribbon and
@@ -1124,10 +1124,10 @@ is to use what's called a Gibbs-Boltzmann distribution
 So the form of this, you know goes back to classical statistical physics in the nineteenth century and the
 
 0:29:02.280,0:29:04.280
-P of y given x is
+P(y|x) is
 
 0:29:05.610,0:29:08.360
-exponential minus beta, where beta is some constant,
+exponential minus β, where β is some constant,
 
 0:29:09.780,0:29:13.849
 the energy of x and y and then you want to, so that turns
@@ -1151,13 +1151,13 @@ So
 taking exponential's, you turn the energies into positive numbers and
 
 0:29:43.110,0:29:50.210
-then you normalize. So you normalize in such a way that the P of y|x is a properly normalized distribution over y and
+then you normalize. So you normalize in such a way that the P(y|x)  is a properly normalized distribution over y and
 
 0:29:51.060,0:29:57.049
 To make it a properly distribution, a normalized distribution of y, you divide by the integral or the sum if y is discrete
 
 0:29:57.450,0:30:01.969
-over y of e to the minus beta F(x,y), which is the same thing as the top except you
+over y of exp(-β F(x,y)), which is the same thing as the top except you
 
 0:30:02.850,0:30:04.770
 you
@@ -1196,16 +1196,16 @@ This one has interesting properties which I am not going to go through but
 corresponds to the so-called maximum entropy distribution
 
 0:30:53.400,0:30:55.400
-The beta parameter is kind of arbitrary
+The β parameter is kind of arbitrary
 
 0:30:55.690,0:31:00.450
 It's the way you calibrate your probabilities as a function of your energies, so
 
 0:31:01.030,0:31:06.660
-The larger the beta, the more sort of binary your probability will be for a given energy function
+The larger the β, the more sort of binary your probability will be for a given energy function
 
 0:31:08.710,0:31:12.270
-If beta is very very large, it is basically just the
+If βis very very large, it is basically just the
 
 0:31:13.180,0:31:14.860
 the E(x,y)
@@ -1214,22 +1214,22 @@ the E(x,y)
 for the y that produces the lowest energy that will have high probability and everything else will have very low probability and
 
 0:31:20.980,0:31:26.159
-For small beta for a small beta then you get kind of a smoother distribution
+For small β for a small β then you get kind of a smoother distribution
 
 0:31:26.680,0:31:28.390
 Okay
 
 0:31:28.390,0:31:32.099
-Beta in physics term is akin to an inverse temperature
+Β in physics term is akin to an inverse temperature
 
 0:31:33.310,0:31:36.900
-Okay, so the beta goes to infinity is equal to zero temperature
+Okay, so the β goes to infinity is equal to zero temperature
 
 0:31:44.860,0:31:47.219
 Okay a little bit of math. It's not that scary
 
 0:31:49.990,0:31:54.990
-To show you where the formula for F-beta comes from that I talked about earlier
+To show you where the formula for Fβ comes from that I talked about earlier
 
 0:31:58.870,0:32:04.109
 So, let's go through this slowly here
@@ -1250,7 +1250,7 @@ formula as I used before except now, it's a joint distribution over
 y,z instead of just the distribution over y. This is for a latent variable model, okay
 
 0:32:25.330,0:32:29.819
-So it's e to the minus the energy of (x,y,z) and then I have to normalize 
+So it's exp(-β E(x,y,z)) and then I have to normalize 
 
 0:32:30.430,0:32:35.130
 I have to integrate in the denominator with respect to y and z so that I get a normalized distribution
@@ -1259,10 +1259,7 @@ I have to integrate in the denominator with respect to y and z so that I get a n
 over the joint
 
 0:32:37.810,0:32:41.279
-domain of y and z. Okay, so that's the formula at the top left
-
-0:32:42.460,0:32:44.140
-
+domain of y and z. Okay, so that's the formula at the top left.
 
 0:32:44.140,0:32:48.299
 I can marginalize so if I integrate P(y,z|x)
@@ -1277,10 +1274,10 @@ So now if I write P(y|x), it is simply the integral over z of the one at the top
 Okay, which is written
 
 0:33:06.269,0:33:12.628
-in the second line, so at the top we have integral over z, e to the minus beta energy of (x,y,z) and at the bottom,
+in the second line, so at the top we have integral over z, exp(-β E(x,y,z)) and at the bottom,
 
 0:33:13.389,0:33:17.608
-integral over y integral over z of e to the minus beta e to the (x,y,z). Alright
+integral over y integral over z of exp(-β E(x,y,z)). Alright
 
 0:33:18.789,0:33:22.439
 Ok. Now I'm going to do something very sneaky and stupid
@@ -1289,13 +1286,13 @@ Ok. Now I'm going to do something very sneaky and stupid
 Which is that I'm going to take the log of this formula
 
 0:33:27.639,0:33:34.348
-multiply by minus 1 over beta, then multiply by minus beta and then take the exponential all of those things cancel out
+multiply by –1/β, then multiply by -β and then take the exponential all of those things cancel out
 
 0:33:34.349,0:33:40.649
-Ok, the log cancels the exponential, the minus 1 over beta cancels the minus beta. right? so I haven't done anything
+Ok, the log cancels the exponential, the –1/β cancels the -β. right? so I haven't done anything
 
 0:33:41.409,0:33:46.138
-By doing this e to the minus beta times minus 1 over beta log
+By doing this e to the -β times –1/β log
 
 0:33:46.929,0:33:48.639
 I've done nothing
@@ -1316,16 +1313,16 @@ And what I see now is that the stuff in the bracket
 is the formula
 
 0:34:01.019,0:34:05.098
-I wrote previously. F-beta of (x,y) equals minus 1 over beta log
+I wrote previously. Fβ(x,y) equals minus 1 over beta log
 
 0:34:05.349,0:34:09.929
-sum over z, integral over z of e to the minus beta E(x,y,z) and
+sum over z, integral over z of exp(-βE(x,y,z)) and
 
 0:34:10.329,0:34:14.339
 so I can rewrite this horrible complicated formula here as
 
 0:34:15.220,0:34:21.209
-e to the minus beta F-beta(x,y) divided by integral over y of e to minus beta F(x,y)
+exp(-β Fβ(x,y) ) divided by integral over y of exp(-β Fβ(x,y)).
 
 0:34:22.510,0:34:27.329
 What does this all mean? It means that if you have a latent viable model, and you want to
@@ -1338,9 +1335,6 @@ the energy F
 
 0:34:38.740,0:34:40.389
 as this 
-
-0:34:40.389,0:34:42.389
-
 
 0:34:43.059,0:34:45.059
 as a function of E(x,y,z)
@@ -1379,7 +1373,7 @@ infinite beta limit of this formula, it can be done
 Okay, I mean just to get a substitution in the second line, okay, the last two terms in the second line the bracket
 
 0:36:06.079,0:36:10.329
-are replaced by F-beta of (x,y) because I just defined F-beta(x,y) this way
+are replaced by Fβ(x,y) because I just defined Fβ(x,y) this way
 
 0:36:11.150,0:36:13.150
 Okay, so just define it this way
@@ -1391,7 +1385,7 @@ and
 if I define
 
 0:36:17.089,0:36:24.189
-F(x,y) this way, then P of y given x is just an application of Gibbs-Boltzmann formula, right 
+F(x,y) this way, then P(y|x) is just an application of Gibbs-Boltzmann formula, right 
 
 0:36:26.210,0:36:30.549
 and z has been kind of marginalized implicitly inside of this, okay?
@@ -1709,7 +1703,7 @@ and a lot of things and I think really the future of machine learning is in self
 this
 
 0:45:09.140,0:45:17.140
-these days, you know over the last year and a half, there's been enormous progress in NLP because of systems like Bert and
+these days, you know over the last year and a half, there's been enormous progress in NLP because of systems like BERT and
 
 0:45:18.710,0:45:24.820
 Those systems are trained using self-supervised learning, a particular form of self-supervised learning called denoising auto-encoder, which we'll talk about
@@ -2300,7 +2294,7 @@ then z will have the complimentary variable, here is the direction in which the 
 then the combination of those two pieces of information, the stuff you can extract from the observation and  the stuff
 
 1:00:26.560,1:00:28.840
-you cannot, gives you the prediction y bar
+you cannot, gives you the prediction y̅
 
 1:00:29.990,1:00:33.250
 which hopefully is close to what actually occurs
@@ -2330,13 +2324,13 @@ Then the resulting prediction error is the energy and it's how your model rate t
 If you want to predict ys, what you have to do is you observe x and then you kind of
 
 1:01:20.339,1:01:24.439
-dream up a value of y within a certain domain and that produces a y bar and
+dream up a value of y within a certain domain and that produces a y̅ and
 
 1:01:25.680,1:01:30.049
-Then dream up another value of z and that will produce another y bar
+Then dream up another value of z and that will produce another y̅
 
 1:01:30.779,1:01:35.779
-And you can produce a whole set of y bars, by kind of drawing multiple values of z within their set
+And you can produce a whole set of y̅, by kind of drawing multiple values of z within their set
 
 1:01:36.390,1:01:38.390
 or within the distribution
@@ -2729,10 +2723,10 @@ y given x
 which is for a particular data point y[i]
 
 1:13:37.250,1:13:42.069
-x[i]. It gives you the probability that your model gives to this particular value of y [i] for a given x[i]
+x[i]. It gives you the probability that your model gives to this particular value of y[i] for a given x[i]
 
 1:13:43.010,1:13:49.179
-And it's you know, exponential minus beta the energy divided by exponential minus beta the energy integrated over all ys
+And it's you know, exponential -β the energy divided by exponential -β the energy integrated over all ys
 
 1:13:49.850,1:13:54.609
 okay, so if you want to maximize so let's say you have a bunch of data points and
@@ -2750,7 +2744,7 @@ want to maximize the probability that your model gives to this particular value 
 You want to make the
 
 1:14:12.469,1:14:19.089
-energy of this y small, which means you want to make the e to the minus beta the energy of this big
+energy of this y small, which means you want to make the e to the -β the energy of this big
 
 1:14:20.719,1:14:24.698
 And you want to make the stuff at the bottom as small as possible 
@@ -2771,10 +2765,10 @@ difference of the logs of those two terms
 The log of the ratio is the difference of the logs, right?
 
 1:14:46.389,1:14:53.999
-So I get log of e to the minus beta E of y and then I guess I get minus log 
+So I get log of exp(-βE(y)) then I guess I get minus log 
 
 1:14:56.139,1:14:58.409
-integral over y, e to minus beta E of y
+integral over y, exp(-βE(y))
 
 1:15:02.170,1:15:04.710
 I take the
@@ -3443,7 +3437,7 @@ which is another neural net and
 Then you compare the output which is a reconstruction for y with y
 
 1:33:02.060,1:33:07.629
-This is just in the classical form, this is the distance between y and y bar squared
+This is just in the classical form, this is the distance between y and y̅ squared
 
 1:33:10.730,1:33:13.209
 Okay, and you see here in the

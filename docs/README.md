@@ -25,7 +25,7 @@ If you want to debug it locally, you need to install `jekyll`, starting by insta
 ```bash
 brew install ruby
 export PATH=/usr/local/opt/ruby/bin:$PATH
-gem install jekyll
+gem install jekyll webrick
 ```
 
 To figure out where `jekyll` has been installed, we can query `gem`:
@@ -34,14 +34,14 @@ To figure out where `jekyll` has been installed, we can query `gem`:
 gem environment gemdir
 ```
 
-which for me is `/usr/local/lib/ruby/gems/2.7.0`.
+which for me is `/usr/local/lib/ruby/gems/3.0.0`.
 
 ## Serve locally
 
 Given that we know where to find `jekyll`, we can serve the website with the following command:
 
 ```bash
-/usr/local/lib/ruby/gems/2.7.0/bin/jekyll serve --trace --baseurl '/pytorch-Deep-Learning'
+/usr/local/lib/ruby/gems/3.0.0/bin/jekyll serve --trace --baseurl '/pytorch-Deep-Learning'
 ```
 
 For your convenience there's an execturable in this directory containing this exact line. So, all you need to do to run the web server is typing:

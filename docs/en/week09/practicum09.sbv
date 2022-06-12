@@ -41,7 +41,7 @@ the variation of the encoder the variation of encoder is basically like a
 normal thing coder where the encoder in this case provides us the parameters for
 
 0:01:19.930,0:01:25.660
-a distribution from where we sample our latent input to Zed okay so the only
+a distribution from where we sample our latent input to z okay so the only
 
 0:01:25.660,0:01:31.240
 difference between the normal one is the again the sampler which is gonna kick a
@@ -101,10 +101,10 @@ sampler on the right right hand side this sampler on the left hand side we
 have a decoder on the left hand side which is basically generating something
 
 0:03:15.639,0:03:20.950
-but since the Zed is consider a code we have a decoding step whereas on the
+but since the z is consider a code we have a decoding step whereas on the
 
 0:03:20.950,0:03:25.120
-right hand side since Zed was not a code but was simply an input then we have a
+right hand side since z was not a code but was simply an input then we have a
 
 0:03:25.120,0:03:30.310
 generator and that the said is simply for example sample sample from Gaussian
@@ -134,13 +134,13 @@ figure out that we are actually doing you know we are have actually a true
 sample a good sample so summarizing the sequence of operations we had at the
 
 0:04:14.980,0:04:21.039
-generator Maps my leighton input set into this RN which is the space of the
+generator Maps my leighton input set into this ℝⁿ which is the space of the
 
 0:04:21.039,0:04:25.630
 input space so we have delayed and input the orange one that is mapped into the
 
 0:04:25.630,0:04:31.870
-original input so we had that orange z mapped or x hat in blue the top one
+original input so we had that orange z mapped or x̂ in blue the top one
 
 0:04:31.870,0:04:38.620
 instead is a cost network in this case which Maps the input which can be the
@@ -248,7 +248,7 @@ and then the visual definition now gonna be trying to give you a few
 interpretations which I pretty like and I can't make me sound like a fool but I
 
 0:07:52.810,0:07:59.020
-am a four so you know I just go for it so you can think about the generator has
+am one so you know I just go for it so you can think about the generator has
 
 0:07:59.020,0:08:05.800
 been a Italian and therefore I will be using some proper Italian accent okay so
@@ -260,7 +260,7 @@ I'm a proper Italian now and I am in the south of Italy and I'm gonna be trying
 to make some fake man okay because we are very good at using so we make a
 
 0:08:17.290,0:08:22.870
-second money and then we go to Germany to get some to purchase something game
+second money and then we go to Germany to buy something game
 
 0:08:22.870,0:08:27.250
 we go to Germany with this fake money and then there is this different people
@@ -272,7 +272,7 @@ look at the US is like oh [ __ ] Italian this is fake money and so we
 can't really manage to we can really manage to buy anything but since we are
 
 0:08:41.320,0:08:45.220
-Italian we have spice we have spies in the okay there are
+Italian we have spies we have spies in the… Okay there are
 
 0:08:45.220,0:08:52.720
 questions hold on maybe I'm offending people now chart what's going on oh okay
@@ -332,7 +332,7 @@ it looks very good now I don't know how to make in German accent I'm sorry
 and so they accept the money right okay and this is how pretty much these
 
 0:10:29.150,0:10:33.900
-generative other cyanide work works we had like a generator which are the
+GANs works we had like a generator which are the
 
 0:10:33.900,0:10:37.770
 Italian dudes in the south which are making fake money and we are trying to
@@ -398,7 +398,7 @@ mouse so I have you know my final loss on top of here will come down with the
 gradients and then you have here some gradients in all these gradients you
 
 0:12:35.160,0:12:41.880
-know how if you change this X hat you're gonna know how these final loss will
+know how if you change this x̂ you're gonna know how these final loss will
 
 0:12:41.880,0:12:48.360
 change right therefore you can train now this generator with this gradient in
@@ -437,13 +437,13 @@ actually don't really have anything about anything to say about this
 distribution as long as you pick your distribution
 
 0:13:54.050,0:13:59.630
-you know the generator will map that distribution into some X hat
+you know the generator will map that distribution into some x̂
 
 0:13:59.630,0:14:07.620
 distribution which will hopefully match what is the pink distribution of the X's
 
 0:14:07.620,0:14:12.480
-okay so even even though Z the distribution of Z is fixed we reach
+okay so even even the distribution of z is fixed we reach
 
 0:14:12.480,0:14:17.459
 be sure that we can change the generator in such a way that we can minimize the
@@ -488,7 +488,7 @@ Amamiya okay other questions I have a generator was supposed to give negative
 samples so negative samples okay so there are two steps here
 
 0:15:38.970,0:15:44.610
-we provide negative samples that are these X Hut's to the cost Network so the
+we provide negative samples that are these x̂ to the cost Network so the
 
 0:15:44.610,0:15:50.490
 cost network is trained in order to have low values on the pink inputs and higher
@@ -560,7 +560,7 @@ loss function right so don't get confused between loss and costs there
 are two different things so I have my MSC here and if I have this guy here my
 
 0:18:02.340,0:18:11.190
-target is going to be zero there's gonna be my Y Y okay for this one and instead
+target is going to be zero there's gonna be my yc for this one and instead
 
 0:18:11.190,0:18:16.860
 if I input this guy here to the cost Network I expect to have let's say in
@@ -641,7 +641,7 @@ function that I want to minimize is the cost Network so for this generator the
 loss is the cost and I try to minimize this guy output okay so this is also
 
 0:20:43.519,0:20:47.650
-relative to what Yun is teaching with the energy based models you have energy
+relative to what Yann is teaching with the energy based models you have energy
 
 0:20:47.650,0:20:54.049
 and we try to have low energies through minimization of a loss function so the
@@ -802,29 +802,20 @@ gonna give you a scalar value for each output your generator makes therefore
 0:26:20.800,0:26:25.300
 you can compute the partial derivative you can look at the gradient you know of
 
-0:26:25.300,0:26:33.070
-that cost value I like to compute partial derivative of these ok lower
+0:26:25.300,0:26:44.070
+that cost value I like to compute partial derivative of these : ∂c/∂x̂.
 
-0:26:33.070,0:26:44.309
-case C so DC / d eggs hot right so here I have the parcel
+0:26:44.309,0:26:58.950
+Sorry it's hard to write properly, it's really ugly. And here it's a lowercase c not a capital one.
 
-0:26:44.309,0:26:50.280
-and this is our phone writing sorry alright I can't drive okay ye no see
-
-0:26:50.280,0:26:58.950
-oh my god okay this was a lowercase C oh it's like that alright cool so I come to
-
-0:26:58.950,0:27:04.679
-the partial derivative of my lowercase C with respect to the X hat right so now I
-
-0:27:04.679,0:27:13.110
-have a gradient this gradient allows me to move right around and I figure out
+0:26:58.950,0:27:13.110
+So I compute ∂c/∂x̂. So now I have a gradient this gradient allows me to move right around and I figure out
 
 0:27:13.110,0:27:19.820
 whether the cost is going increase or decrease right so this is some kind of
 
 0:27:19.820,0:27:26.940
-maybe you know a little bit not standard is in also yesterday Yan was talking
+maybe you know a little bit not standard is in also yesterday Yann was talking
 
 0:27:26.940,0:27:32.100
 about this you know you have some inputs in to your network you can decide to do
@@ -851,7 +842,7 @@ input right the pink one does it make that did I kind of explain myself or is
 it still weird there is much clearer thank you you sure
 
 0:28:10.289,0:28:16.740
-yeah yeah it's like taking gradients in the interface and make it move towards
+yeah yeah it's like taking gradients in the input space and make it move towards
 
 0:28:16.740,0:28:22.110
 like and then decrease the cost so that means the input actually gets better
@@ -862,11 +853,8 @@ like ass better money right right right and then you can also
 0:28:27.480,0:28:33.030
 use this one is your gradient here coming down here right and so now you
 
-0:28:33.030,0:28:37.890
-can compute with the chain rule also on the partial derivative of this lowercase
-
-0:28:37.890,0:28:46.870
-C with respect to the parameters W or the generator
+0:28:33.030,0:28:46.870
+can compute with the chain rule also ∂c/∂Wg, g for the generator.
 
 0:28:46.870,0:28:51.940
 okay so in this case then I can train the generator I had the parcel of the
@@ -1319,7 +1307,7 @@ let's have a look to actually a practical example of training laws for
 these two networks we have just seen now okay so the loss function for my cost
 
 0:43:08.210,0:43:17.390
-Network given the input X and the latent input Zed in orange can be the following
+Network given the input X and the latent input z in orange can be the following
 
 0:43:17.390,0:43:27.980
 so it can be equal my cost C given my pink input X and then plus this part
@@ -1379,10 +1367,10 @@ generator and said cause that is equal to 0 is promoted by this term over here
 so this is a example of possible loss we can use for training the cost Network
 
 0:45:17.900,0:45:25.580
-known this is done in this paper here by Jake icon and yon from 2016 then how do
+known this is done in this paper here by Jake, Michael and Yann from 2016 then how do
 
 0:45:25.580,0:45:30.980
-we train the generator well this white 3/4 because you simply
+we train the generator well this quite straightforward because you simply
 
 0:45:30.980,0:45:39.290
 have the loss for training the generator being equal the cost that the network
@@ -1472,7 +1460,7 @@ thinks the closest input on the training manifold could be okay all right let's
 move on in the last five minutes if there are no questions we are going to
 
 0:48:31.890,0:48:38.640
-be reading the source code from Piper's examples together and this I think it's
+be reading the source code from PyTorch’s examples together and this I think it's
 
 0:48:38.640,0:48:41.560
 going to be the first case we are we actually reading
@@ -1493,10 +1481,10 @@ and pretty and has nice-looking output right now you're gonna be reading
 actually nice code written die by people like that do this is their job right so
 
 0:49:08.230,0:49:13.570
-we go get up we don't go on PI towards deep learning we are going to apply
+we go get up we don't go on PyTorch Deep Learning  we are going to apply
 
 0:49:13.570,0:49:30.850
-torch my torch by torch examples some pose ok so let's zoom a little bit ok so
+PyTorch examples. Ok so let's zoom a little bit ok so
 
 0:49:30.850,0:49:40.540
 here we have the DC gun and it's smooth here okay so we can just go through this
@@ -1565,10 +1553,10 @@ homework you want to go from a small dimension to a larger dimension you're
 gonna use this model they have bench norm reloj and so on right and transpose
 
 0:51:48.190,0:51:54.369
-convolution batch norm real low and keep going and finally we have a tonnage we
+convolution batch norm real low and keep going and finally we have a tanh we
 
 0:51:54.369,0:52:00.220
-have a tonnage because the output in this case is going to be lying within
+have a tanh because the output in this case is going to be lying within
 
 0:52:00.220,0:52:07.240
 minus 1 to +1 forward is simply send through forward through D you send the
@@ -1613,10 +1601,10 @@ and then like to see how the Train so the discriminator is the same stuff you
 have a sequential in this case we feed these whatever number of channels times
 
 0:53:28.120,0:53:33.760
-64 times 64 and then you go down with leaky read oh oh this is important so
+64 times 64 and then you go down with LeakyReLU  oh oh this is important so
 
 0:53:33.760,0:53:37.750
-leaky riilu in the discriminator make sure you're not gonna be killing the
+LeakyReLU  in the discriminator make sure you're not gonna be killing the
 
 0:53:37.750,0:53:41.680
 gradient if you are in the region in a negative region right this is very
@@ -1766,7 +1754,7 @@ gradients for defected now you have that we can compute this one right so we ste
 in the optimizer so we computed the back part they did the partial derivatives we
 
 0:58:20.660,0:58:26.150
-computed the other parts of derivatives now we stir finally we train the
+computed the other parts of derivatives now we step finally we train the
 
 0:58:26.150,0:58:31.999
 generator and then we are done so how do we train the generator now you fill the
@@ -1901,7 +1889,7 @@ network when we fed fake data right and so here we simply do again another
 backward so in this case this backward this line here in this line here will
 
 1:02:26.570,1:02:30.440
-give you them they will accumulate right because pythons by default will
+give you them they will accumulate right because PyTorch by default will
 
 1:02:30.440,1:02:34.730
 accumulate every time you perform backward so first part you accumulate
@@ -2309,10 +2297,10 @@ director to the correct location on the video in the same way each section of
 the video is the same in title is in transcription so you can go back and
 
 1:14:15.100,1:14:21.550
-forth maybe English is not your first language but italiano habla espanol nous
+forth maybe English is not your first language: Parli italiano? ¿Hablas español?
 
 1:14:21.550,1:14:26.230
-oppidum comma speak Korean have no idea how to speak Korean well we have several
+你会说中文吗 ? speak Korean have no idea how to speak Korean well we have several
 
 1:14:26.230,1:14:31.239
 translations of this material avaible odd at the web site so and we are also
@@ -2339,7 +2327,7 @@ for example you find some typos in the write-up so you find some bugs in the
 notebooks you can fix those and you know be part of this whole project by sending
 
 1:15:03.790,1:15:09.400
-me a request on github or letting me know otherwise and that was it so see
+me a request on GitHub or letting me know otherwise and that was it so see
 
 1:15:09.400,1:15:12.180
 you next time bye bye

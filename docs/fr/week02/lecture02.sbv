@@ -1,0 +1,2777 @@
+0:00:00.000,0:00:04.740
+Je suppose que nous pouvons commencer, alors aujourd'hui nous allons parler de la rétropropagation
+
+0:00:04.740,0:00:08.849
+et je suis sûr que pour certains d'entre vous, une grande partie de ceci vous est familier.
+
+0:00:08.849,0:00:14.719
+Je vais commencer par une sorte de rappel sur les concepts de base et vais
+
+0:00:14.719,0:00:20.640
+parler un peu plus tard d'une sorte de formulation plus générale de la rétropropagation.
+
+0:00:20.640,0:00:27.930
+Et demain Alfredo expliquera la façon dont vous utilisez l'autograd et
+
+0:00:27.930,0:00:33.840
+des choses comme ça dans PyTorch. Ok donc les concepts de base. Nous avons
+
+0:00:33.840,0:00:39.540
+des modèles paramétrés. Ces modèles paramétrés ne sont que des fonctions
+
+0:00:39.540,0:00:44.040
+qui dépendent de deux paramètres : une entrée et un paramètre entraînable.
+
+0:00:44.040,0:00:47.969
+Il n'y a pas de différence conceptuelle entre le paramètre et l’entrée.
+
+0:00:47.969,0:00:52.410
+Ce sont juste deux paramètres de la fonction déterministe.
+
+0:00:52.410,0:01:01.500
+La chose est que le paramètre est partagé à travers les échantillons d’entraînement
+
+0:01:01.500,0:01:04.530
+alors que les échantillons sont bien sûr différents pour chaque échantillon d’entraînement.
+
+0:01:04.530,0:01:11.520
+Dans la plupart des cadres d'apprentissage profond, le paramètre est en fait
+
+0:01:11.520,0:01:15.540
+implicite à la fonction de paramétrage. Lorsque vous appelez la fonction, vous
+
+0:01:15.540,0:01:20.580
+ne passez pas réellement la valeur du paramètre. Elle est en quelque sorte stockée à l'intérieur, du
+
+0:01:20.580,0:01:28.860
+moins dans les versions orientées objet des modèles. Il faut juste se rappeler
+
+0:01:28.860,0:01:32.130
+qu’un modèle paramétré est juste une fonction paramétréé. Cela prend une
+
+0:01:32.130,0:01:37.829
+entrée et a un vecteur de paramètre et cela produit une sortie. En apprentissage
+
+0:01:37.829,0:01:41.549
+simple, cette sortie entre dans une fonction de coût qui compare la sortie du modèle
+
+0:01:41.549,0:01:47.159
+avec la sortie que vous voulez. Ici c’est appelé C. La sortie du modèle
+
+0:01:47.159,0:01:51.720
+est appelée Y̅. La fonction C a comparé Y et Y̅ où Y est la sortie
+
+0:01:51.720,0:02:00.090
+que vous voulez. Y̅ est la sortie que vous obtenez. Donc ici je donne 
+
+0:02:00.090,0:02:03.540
+deux exemples très simples de fonctions paramétrées que vous connaissez sûrement.
+
+0:02:03.540,0:02:07.770
+Le premier est un modèle linéaire. Ce modèle ne fait que calculer
+
+0:02:07.770,0:02:10.720
+la somme des composantes de son vecteur d'entrée multipliée
+
+0:02:10.720,0:02:15.610
+par les poids. Si vous faites une régression linéaire avec perte quadratique,
+
+0:02:15.610,0:02:20.500
+la fonction C est juste le carré de la distance, la distance euclidienne entre
+
+0:02:20.500,0:02:28.060
+le vecteur Y et le vecteur Y̅. Y̅ peut être un vecteur, un scalaire ou un tenseur
+
+0:02:28.060,0:02:33.610
+ou quoi que ce soit d'autre. Cela n'a pas d'importance. Juste des choses qui contiennent des chiffres ou des choses dont
+
+0:02:33.610,0:02:40.180
+vous pouvez calculer des distances entre les deux. C'est tout ce dont vous avez besoin 
+
+0:02:40.180,0:02:45.280
+techniquement. Une fonction paramétrée un peu plus compliquée est ici en bas.
+
+0:02:45.280,0:02:52.990
+Elle calcule en fait le plus proche voisin. Donc ici il y a l'entrée X
+
+0:02:52.990,0:03:01.300
+puis W qui est une matrice. Chaque ligne de la matrice est indexée par l'indice k.
+
+0:03:01.300,0:03:13.630
+Pour calculer la sortie… nous sortons le nombre K qui correspond à la ligne 
+
+0:03:13.630,0:03:18.160
+de W qui est la plus proche de X. Donc nous calculons la distance entre X et une
+
+0:03:18.160,0:03:24.340
+ligne particulière de W qui est Wₖ. Puis nous évaluons tous les cas et 
+
+0:03:24.340,0:03:28.450
+déterminons laquelle de ces différences est la plus faible. Et 
+
+0:03:28.450,0:03:35.140
+nous sortons ce k. Donc c'est ce que fait la fonction argmin fait.
+
+0:03:35.140,0:03:42.010
+Elle renvoie la valeur de l'argument qui minimise la fonction. Donc
+
+0:03:42.010,0:03:46.540
+c'est une fonction de k et cela renvoie le k qui minimise cette fonction.
+
+0:03:46.540,0:03:50.860
+Ce que je veux dire par là, c'est qu'il s'agit d'une façon compliquée d'expliquer 
+
+0:03:50.860,0:03:55.810
+les plus proches voisins. C’est le type de compétition qui se déroule dans 
+votre modèle paramétré
+
+0:03:55.810,0:03:58.600
+pourrait qui peut être très compliqué. Cela ne doit pas être juste comme un
+
+0:03:58.600,0:04:02.250
+réseau de neurones, quelque chose que vous calculez avec des sommes pondérées et
+
+0:04:02.250,0:04:06.370
+des non linéarités. Cela peut être quelque chose de compliqué, impliquant 
+
+0:04:06.370,0:04:09.070
+une minimisation ou quelque chose d'autre part. Cela pourrait être les 
+
+0:04:09.070,0:04:14.820
+minimums de certaines fonctions. Nous y reviendrons dans quelques semaines.
+
+0:04:14.820,0:04:17.820
+[Etudiant : question inaudible] Vous pouvez le désigner d'une autre manière.
+
+0:04:26.229,0:04:34.919
+J’aurais pu écrire la matrice W multipliée par, disons, le vecteur Z.
+
+0:04:34.919,0:04:41.020
+Le vecteur Z serait « one-hot ». Et dans ce cas nous sélectionnons une
+
+0:04:41.020,0:04:46.690
+colonne de W. Vous pourriez faire une moyenne sur ce vecteur Z. La notation
+
+0:04:46.690,0:04:49.840
+serait différente mais aurait un effet similaire,
+
+0:04:49.840,0:04:53.860
+mais alors je devrais écrire une autre équation car Z est « one-hot » et il
+
+0:04:53.860,0:05:00.190
+et faudrait expliquer ce que cela signifie. Oubliez la notation.
+
+0:05:00.190,0:05:05.139
+Rappelez-vous simplement qu'il pourrait y avoir quelque chose de compliqué
+
+0:05:05.139,0:05:08.289
+dans cette fonction de paramétrage. Il n'y a pas forcément une chose très
+
+0:05:08.289,0:05:15.210
+très simple. Donc ce que j'ai fait avec ce diagramme, c'est que j’ai introduit
+
+0:05:15.210,0:05:20.110
+une sorte de façon de désigner/d’écrire les réseaux neuronaux
+
+0:05:20.110,0:05:25.300
+et divers autres modèles comme les diagrammes à blocs. J'utilise trois types
+
+0:05:25.300,0:05:33.909
+de symboles ici. Quatre en réalité. Les bulles représentent des variables. 
+
+0:05:33.909,0:05:37.630
+Celles remplies représentent des variables qui sont observées. Donc X est une
+
+0:05:37.630,0:05:40.509
+variable en entrée de votre système que vous observez dans les jeux d’entraînement  
+
+0:05:40.509,0:05:47.349
+et de test. Y̅ est une variable calculée, donc c'est quelque chose
+
+0:05:47.349,0:05:50.919
+qui est juste produit par une fonction déterministe. Vous pouvez calculer à
+
+0:05:50.919,0:05:56.860
+partir de la variable d'observation au moyen d'une fonction déterministe. 
+
+0:05:56.860,0:06:00.190
+Y est aussi une variable observée parce qu’observée sur le jeu d’entraînement.
+
+0:06:00.190,0:06:02.740
+Elle n'est pas observée sur le jeu de test, mais l’est pendant l’entraînement.
+
+0:06:02.740,0:06:07.750
+Vous avez alors deux types de modules fonctionnels : un type est le genre
+
+0:06:07.750,0:06:12.569
+de modules bleus de forme ronde qui représentent des fonctions déterministes.
+
+0:06:12.569,0:06:21.000
+Le côté rond indique dans quelle direction il est facile de calculer.
+
+0:06:21.000,0:06:26.770
+Ici vous pouvez calculer Y̅ à partir de X. C'est beaucoup plus compliqué de calculer
+
+0:06:26.770,0:06:29.520
+X à partir de Y̅. Si je vous donne un Y̅, vous allez avoir du mal
+
+0:06:32.230,0:06:37.870
+à me donner un X qui lui correspond. Et puis vous avez un autre type de
+
+0:06:37.870,0:06:42.780
+module qui est généralement utilisé pour représenter les fonctions de coût.
+
+0:06:42.780,0:06:46.830
+Représentés par des carrés rouges pour les rendre plus visibles dans ce cas.
+
+0:06:46.830,0:06:53.410
+Elles ont une sortie implicite qui est une sortie scalaire : un nombre unique.
+
+0:06:53.410,0:06:57.490
+Il peut prendre plusieurs entrées et calculer un seul nombre, généralement 
+
+0:06:57.490,0:07:02.670
+une distance entre les entrées ou quelque chose de similaire. Donc avec
+
+0:07:03.570,0:07:09.460
+les symboles de base, vous pouvez représenter une sorte de standard des 
+
+0:07:09.460,0:07:14.560
+systèmes d'apprentissage supervisés. Pour ceux d'entre vous qui sont familiers avec les
+
+0:07:14.560,0:07:19.810
+modèles graphiques, ceci est une notation similaire à ce qui est utilisé dans ce que l'on appelle le facteur
+
+0:07:19.810,0:07:24.940
+de graphe. Où les carrés des facteurs… Les facteurs de graphes n'ont pas 
+
+0:07:24.940,0:07:27.460
+ces fonctions déterministes parce qu'ils ne se soucient pas de la façon dont
+
+0:07:27.460,0:07:38.230
+les dépendances peuvent être calculées. Mais dans notre cas, c'est vraiment important.
+
+0:07:38.230,0:07:42.430
+Donc les fonctions de perte. Ce sont des choses que nous minimisons pendant l’entraînement.
+
+0:07:42.430,0:07:50.320
+Il y a deux types de perte. Il y a la perte par échantillon, qui est dans ce cas, L(x,y,w).
+
+0:07:50.320,0:07:55.570
+Donc vous lui donnez un échantillon, une paire x et y, et une valeur de paramètre et elle
+
+0:07:55.570,0:07:59.350
+calcule juste la valeur scalaire. Dans tous les cas ici nous utilisons une perte très simple
+
+0:07:59.350,0:08:03.310
+qui est juste égal au module de coût. La sortie du module de coût sera
+
+0:08:03.310,0:08:07.330
+mise sur le dessus du système. C'est en quelque sorte le paradigme standard 
+
+0:08:07.330,0:08:15.160
+des systèmes d'apprentissage supervisé. Où la perte est simplement la moyenne. 
+
+0:08:15.160,0:08:19.780
+La perte par échantillon est simplement le résultat de la fonction de coût que nous avons mise en place. Ce n'est pas
+
+0:08:19.780,0:08:25.090
+toujours le cas. La perte que nous minimisons réellement durant l’entraînement est la
+
+0:08:25.090,0:08:30.430
+perte moyenne sur un ensemble d’entraînement. Donc le jeu d’entraînement est un ensemble de 
+
+0:08:30.430,0:08:36.940
+paires x[p], y[p] pour p allant de 0 à P  - 1. La perte globale qui dépend 
+
+0:08:36.940,0:08:40.240
+bien sûr de l'ensemble d’entraînement et des valeurs des paramètres, est la
+
+0:08:40.240,0:08:44.669
+moyenne de la perte par échantillon pour l'ensemble des échantillons. J’ai
+
+0:08:49.529,0:09:00.509
+oublié de dire que dans la première somme ici, c'est x,y appartenant à S. 
+
+0:09:00.509,0:09:04.110
+L'apprentissage machine consiste à optimiser des fonctions, la plupart du temps en les minimisant,
+
+0:09:04.110,0:09:09.660
+parfois en les maximisant. Occasionnellement en trouvant des équilibres de 
+
+0:09:09.660,0:09:13.170
+Nash entre deux fonctions comme dans le cas des GANs mais la plupart du temps nous minimisons.
+
+0:09:13.170,0:09:19.680
+Nous faisons ça avec des méthodes basées sur le gradient, pas nécessairement
+
+0:09:19.680,0:09:22.680
+basées sur la descente de gradient. Qu'est-ce qu’une méthode basée sur le gradient ?
+
+0:09:22.680,0:09:28.470
+C’est une méthode qui trouve le minimum d'une fonction en supposant que vous
+
+0:09:28.470,0:09:33.059
+pouvez calculer facilement le gradient de cette fonction. Donc cela suppose que la fonction est
+
+0:09:33.059,0:09:37.290
+plus ou moins différenciable. Pas besoin nécessairement techniquement qu’elle 
+
+0:09:37.290,0:09:42.300
+soit différenciable partout. Elle doit être continue et différentiable 
+
+0:09:42.300,0:09:47.009
+presque partout. Sinon vous avez des problèmes. Il peut y avoir des coudes
+
+0:09:47.009,0:09:50.990
+à condition qu'ils ne soient pas trop méchants. La descente de gradient comme 
+
+0:09:54.300,0:09:59.790
+vous le savez probablement, consiste à calculer le gradient. Vous voyez ici en haut
+
+0:09:59.790,0:10:09.000
+une fonction . Il y a un minimum en haut à droite. J'ai tracé les lignes de coût égal de
+
+0:10:09.000,0:10:13.470
+cette fonction. Les flèches que vous voyez sont les vecteurs de gradient. 
+
+0:10:13.470,0:10:19.199
+Le gradient est pointe vers le haut à chaque endroit. Le gradient est
+
+0:10:19.199,0:10:24.059
+toujours orthogonal aux lignes de coût égal. Aux altitudes
+
+0:10:24.059,0:10:33.569
+égales si vous voulez. Donc la descente de gradient c’est comme être en
+
+0:10:33.569,0:10:37.230
+montagne la nuit dans le brouillard. Vous ne voyez rien mais vous voulez
+
+0:10:37.230,0:10:39.720
+descendre au village. Donc vous regardez autour de vous, vous cherchez la
+
+0:10:39.720,0:10:45.149
+direction de la descente la plus raide et vous faites un pas. Donc l'algorithme ici
+
+0:10:45.149,0:10:50.339
+en haut, le vecteur w qui correspond à votre position est remplacé par 
+
+0:10:50.339,0:10:55.139
+votre vecteur w actuel moins une constante fois le vecteur de gradient.
+
+0:10:55.139,0:11:00.230
+Le vecteur de gradient pointe vers le haut donc lorsque vous le faites - vous descendez
+
+0:11:00.230,0:11:06.360
+dans le sens de la descente la plus raide. C'est si η est une constante scalaire.
+
+0:11:06.360,0:11:13.350
+Dans des algorithmes sophistiqués cela peut être une matrice, donc si c'est une matrice
+
+0:11:13.350,0:11:18.860
+s'il s'agit d'une matrice semi-définie positive. Vous continuerez à descendre
+
+0:11:18.860,0:11:23.580
+mais pas nécessairement dans le sens de la descente la plus raide. En fait
+la direction de la
+
+0:11:23.580,0:11:27.450
+descente la plus raide n'est pas nécessairement celle vers laquelle vous voulez aller.
+
+0:11:27.450,0:11:31.980
+Si vous avez une situation comme celle en haut, où la valeur est allongée,
+
+0:11:31.980,0:11:35.640
+le gradient n'est en fait pas dirigé vers le minimum. Il est dirigé
+
+0:11:35.640,0:11:40.920
+hors du centre et donc si vous devez aller directement au minimum vous ne
+
+0:11:40.920,0:11:43.200
+voulez pas suivre le gradient. Vous voulez être un peu plus intelligent que cela.
+
+0:11:43.200,0:11:49.950
+En utilisant une sorte d’êta sous forme de matrice, vous pouvez en principe
+
+0:11:49.950,0:11:57.270
+le faire avec des méthodes dites de second ordre. Elles sont aussi basées sur 
+
+0:11:57.270,0:12:03.420
+le gradient mais elles sont peu pratiques dans la plupart des cas. Nous 
+
+0:12:03.420,0:12:10.560
+parlerons de certains de ces problèmes dans quelques semaines. Il existe des 
+
+0:12:10.560,0:12:15.060
+algorithmes d'optimisation non basés sur le gradient. Lorsque votre fonction 
+
+0:12:15.060,0:12:19.920
+n'est pas différenciable lorsque, que c'est comme un terrain de golf. Que
+
+0:12:19.920,0:12:25.080
+c'est plat et il y a un trou dedans ou quand c'est une sorte d'escalier, 
+
+0:12:25.080,0:12:28.380
+le gradient ne vous donne pas une information utile. Ou lorsque cela peut
+
+0:12:28.380,0:12:34.320
+être différencié mais vous ne connaissez pas la fonction, vous ne pouvez 
+
+0:12:34.320,0:12:37.800
+pas écrire le programme pour calculer le gradient car cette fonction
+
+0:12:37.800,0:12:43.890
+peut être l'environnement entier autour de vous. Vous ne pouvez pas calculer
+
+0:12:43.890,0:12:49.070
+le gradient de manière efficace. Il faut donc recourir à d'autres méthodes
+
+0:12:49.070,0:12:55.920
+appelées méthodes d'ordre zéro ou méthodes sans gradient. Il y a
+
+0:12:55.920,0:13:00.630
+toute une famille de ces méthodes dont je ne vais pas parler du tout.
+
+0:13:00.630,0:13:04.950
+L'apprentissage profond est toutes les méthodes à base de gradient.
+
+0:13:04.950,0:13:10.170
+Ceci dit, si vous êtes intéressé par l'apprentissage par renforcement [RL],
+
+0:13:10.170,0:13:13.709
+la plupart des apprentissages par renforcement utilisent une estimation du
+
+0:13:13.709,0:13:18.899
+gradient sans le gradient. Ce que vous voulez… par exemple c’est apprendre
+
+0:13:18.899,0:13:27.380
+à un robot à faire du vélo. De temps en temps le robot tombe et vous 
+
+0:13:27.380,0:13:32.940
+n'avez pas de gradient pour la fonction objectif qui dit « ne pas tomber ».
+
+0:13:32.940,0:13:37.980
+Ou la fonction objectif qui mesure la durée pendant laquelle le vélo reste debout sans
+
+0:13:37.980,0:13:43.649
+tomber. Personne ne vous dit quoi faire pour minimiser cette fonction de coût. Vous devez
+
+0:13:43.649,0:13:48.510
+essayer des choses. Vous ne pouvez pas calculer un gradient de cette fonction. Donc en RL, 
+
+0:13:48.510,0:13:52.320
+votre coût n'est pas différenciable la plupart du temps. Mais le réseau qui 
+
+0:13:52.320,0:13:57.389
+calcule la sortie va dans l'environnement qui est différenciable. Ok, donc
+
+0:13:57.389,0:14:02.130
+à partir de ce moment, c'est à base de gradient. Mais le coût n'est pas
+
+0:14:02.130,0:14:05.910
+Différenciable. Il y aura donc une situation comme le diagramme que j’ai
+
+0:14:05.910,0:14:12.149
+montré plus tôt. Imaginez ici que G est différentiable. Vous pouvez calculer
+
+0:14:12.149,0:14:15.209
+le gradient de la sortie de G par rapport aux paramètres, à son entrée, à
+
+0:14:15.209,0:14:18.120
+tout. Mais C n'est pas différenciable. En fait, c'est complètement inconnu.
+
+0:14:18.120,0:14:21.839
+La seule chose que vous savez sur C est que si vous lui donnez un Y̅ et un Y,
+
+0:14:21.839,0:14:26.010
+cela vous dit la valeur. Mais cela ne vous donne pas le gradient. C'est un peu ce qu’est le RL.
+
+0:14:26.010,0:14:29.880
+Il y a un tas de choses en RL mais c'est la différence fondamentale entre
+
+0:14:29.880,0:14:37.850
+le RL et l’apprentissage supervisé. [Question inaudible d’un étudiant]
+
+0:14:43.930,0:14:48.410
+La récompense est juste la sortie de C. Donc C est une boîte noire et ce
+
+0:14:48.410,0:14:53.839
+que vous obtenez est la sortie de C. Vous n'avez pas non plus un Y. Donc on
+
+0:14:53.839,0:14:58.399
+ne vous dit pas quelle est la bonne réponse. Vous avez juste une boîte noire,
+
+0:14:58.399,0:15:02.060
+vous lui donnez un Y̅ et cela donne votre C. C'est tout. Vous ne pouvez
+
+0:15:02.060,0:15:10.730
+pas calculer le gradient de C par rapport à Y̅. [Etudiant]. C’est juste, ce que vous faites, 
+
+0:15:10.730,0:15:13.819
+c’est que vous changez un peu le Y et vous voyez le C monter ou descendre.
+
+0:15:13.819,0:15:19.819
+S’il descend, vous renforcez en quelque sorte. S'il monte, vous faites autre chose.
+
+0:15:19.819,0:15:23.689
+Donc, vous dites au système à quel point il est bon sans lui donner la
+
+0:15:23.689,0:15:28.180
+bonne réponse. Il n'a pas accès au gradient.
+
+0:15:28.180,0:15:34.129
+Ce que cela vous dit, c'est que RL est horriblement inefficace. Car vous 
+
+0:15:34.129,0:15:41.120
+n'avez pas de gradient. Vous devez essayer de savoir si sortie Y̅ est
+
+0:15:41.120,0:15:46.550
+de basse dimension. Alors c'est bon. Vous pouvez essayer de le rendre plus
+
+0:15:46.550,0:15:51.560
+plus grand, plus petit, des choses comme ça. Ce n'est pas trop mal. Si Y̅ est un 
+
+0:15:51.560,0:15:56.959
+vecteur de grand dimension, il y a un espace tellement vaste à fouiller qu'il n'y a probablement
+
+0:15:56.959,0:16:02.209
+aucune façon de trouver une valeur optimale. A moins que vous n'essayiez beaucoup, beaucoup de
+
+0:16:02.209,0:16:10.370
+choses différentes. C’est un énorme problème avec RL. Cela prend beaucoup
+
+0:16:10.370,0:16:14.839
+de temps en fait… je ne vais pas parler de RL dans ce cours sauf aujourd'hui
+
+0:16:14.839,0:16:21.290
+peut-être. Une technique très appropriée en RL est ce qu'on appelle les méthodes de critique.
+
+0:16:21.290,0:16:27.050
+Une méthode de critique consiste à disposer d'un deuxième module C qui est
+
+0:16:27.050,0:16:32.059
+un module entraînable. Vous entraînez votre propre module C qui est
+
+0:16:32.059,0:16:36.769
+différenciable pour approximer la fonction de coût, la valeur de la fonction
+
+0:16:36.769,0:16:42.949
+que vous obtenez, les récompenses la fonction de récompense que vous avez. Donc la récompense est
+
+0:16:42.949,0:16:49.730
+l'inverse d'un coût. Je veux dire que c'est un coût négatif. Comme une
+
+0:16:49.730,0:16:53.900
+punition en fait. C'est une façon de rendre la fonction de coût
+
+0:16:53.900,0:16:58.250
+différenciable ou au moins approximative par une fonction différenciable.
+
+0:16:58.250,0:17:02.600
+Et ensuite vous avez juste à rétropropager. Donc AC, AAC
+
+0:17:02.600,0:17:11.839
+et AAAC sont des versions de ça : Acteur/Critique, Aventures/Acteur/Critique,
+
+0:17:11.839,0:17:23.410
+etc. Ok, donc ce que vous devez savoir c'est comment calculer le gradient
+
+0:17:23.410,0:17:30.080
+de votre « per-sample »,  votre fonction objective par rapport aux paramètres.
+
+0:17:30.080,0:17:36.110
+En pratique, nous utilisons le gradient stochastique comme vous le savez probablement.
+
+0:17:36.110,0:17:40.250
+Au lieu de calculer le gradient de l'ensemble de la fonction objective qui est la
+
+0:17:40.250,0:17:48.650
+moyenne de tous les échantillons, nous ne prenons qu'un seul échantillon. Calculons la perte L, calculons
+
+0:17:48.650,0:17:51.860
+le gradient de ces pertes par rapport à leurs paramètres. Puis faisons
+
+0:17:51.860,0:18:00.200
+un pas dans la direction du gradient négatif. C'est la deuxième formule ici.
+
+0:18:00.200,0:18:05.090
+W est remplacée par W moins un pas multiplié par le gradient de la fonction
+
+0:18:05.090,0:18:12.970
+de perte par échantillon par rapport au paramètre pour un échantillon donné x[p], y[p].
+
+0:18:13.840,0:18:32.960
+[Question inaudible d’un étudiant] En pratique les gens utilisent des batchs. Donc au lieu de faire cela sur un seul échantillon…
+
+0:18:32.960,0:18:36.560
+donc tout d'abord si vous faites cela sur un seul échantillon vous allez
+
+0:18:36.560,0:18:40.070
+obtenir une trajectoire très bruyante. Une trajectoire comme celle que vous voyez ici
+
+0:18:40.070,0:18:44.720
+en bas, où au lieu que le vecteur de paramètres descende directement, il va 
+
+0:18:44.720,0:18:50.090
+osciller. Certains disent que cela ne devrait pas s'appeler SGD, ce qui
+
+0:18:50.090,0:18:53.030
+signifie descente de gradient stochastique, car ce n'est pas vraiment une descente.
+
+0:18:53.030,0:18:56.390
+Cela devrait être appelé optimisation par gradient stochastique. C'est
+
+0:18:56.390,0:19:00.690
+stochastique, donc très bruyant. Chaque échantillon que vous obtenez va
+
+0:19:00.690,0:19:03.990
+dans une direction différente, c'est juste la moyenne qui vous attire vers 
+
+0:19:03.990,0:19:09.780
+le minimum de la moyenne. Cela semble inefficace, mais en fait, c'est rapide.
+
+0:19:09.780,0:19:14.040
+Beaucoup plus rapide que le gradient par batch. Du moins dans le contexte
+
+0:19:14.040,0:19:19.830
+de l'apprentissage machine quand les échantillons ont une certaine redondance entre eux. C’est
+
+0:19:19.830,0:19:24.510
+plus rapide de faire le gradient stochastique. Donc à la question du « batching ».
+
+0:19:24.510,0:19:28.440
+La méthode la plus courante est de calculer la moyenne du gradient sur
+
+0:19:28.440,0:19:34.920
+un batch d'échantillons et non pas un seul échantillon, puis faire un pas. La seule raison
+
+0:19:34.920,0:19:44.300
+de faire ça… cela n'a rien à voir avec l'efficacité de la convergence 
+
+0:19:44.300,0:19:48.900
+algorithmique ou quoique ce soit. La seule raison de le faire est car le 
+
+0:19:48.900,0:19:55.500
+type de de machine qui est à notre disposition sont les GPUs et les CPUs 
+
+0:19:55.500,0:20:02.910
+multi-cœurs. C’est plus efficace si vous avez des batchs. C’est plus facile à paralléliser. Donc
+
+0:20:02.910,0:20:07.920
+vous obtenez une utilisation plus efficace de votre matériel de calcul si vous utilisez des batchs.
+
+0:20:07.920,0:20:13.200
+C’est une mauvaise justification, mais nous n'avons pas le choix tant que quelqu'un 
+
+0:20:13.200,0:20:19.080
+n’aura pas construit un matériel bien conçu. La raison pour laquelle nous 
+
+0:20:19.080,0:20:24.050
+devons faire ça, c'est parce que les puces que nous avons dans les GPU de NVIDIA
+
+0:20:24.050,0:20:31.440
+sont fortement parallélisées. Elles parallélisent d'une manière simple et la
+
+0:20:31.440,0:20:46.400
+façon la plus simple de paralléliser est de faire des batchs. [Question inaudible d’un étudiant] Ok alors voici pourquoi
+
+0:20:46.320,0:20:51.330
+le gradient stochastique est meilleur. Si je vous donne un million d'échantillons, mais dans
+
+0:20:51.330,0:20:56.310
+ces millions d'échantillons, je n'ai en fait que 10 000 échantillons différents.
+
+0:20:56.310,0:21:00.270
+Donc je répète ces 10 000 échantillons 100 fois et je les mélange. Je vous donne
+
+0:21:00.270,0:21:03.930
+ce jeu d’entraînement d’un million d'échantillons. Vous ne savez pas qu’en 
+
+0:21:03.930,0:21:08.040
+fait c’est seulement 10 000 échantillons répétés 100 fois. Si vous utilisez le gradient par batch, vous
+
+0:21:08.040,0:21:09.840
+pouvez calculer cent fois 
+
+0:21:09.840,0:21:14.970
+la même quantité et en faire la moyenne. C’est plus de calculs que nécessaire.
+
+0:21:14.970,0:21:19.100
+Si vous utilisez le gradient stochastique, le temps de voir 20 000 échantillons
+
+0:21:19.100,0:21:23.370
+vous l’aurez fait en deux itérations. Vous passez deux fois sur votre jeu
+
+0:21:23.370,0:21:28.440
+d’entraînement. Donc il sera au moins cent fois plus efficace. La question
+
+0:21:28.440,0:21:34.890
+est de savoir quelle quantité vous pouvez moyenner dans un batch sans
+
+0:21:34.890,0:21:40.410
+utiliser l'efficacité dans la redondance. Certaines personnes ont mené des
+
+0:21:40.410,0:21:44.970
+expériences sur ça, et empiriquement le nombre d'échantillons que vous pouvez
+
+0:21:44.970,0:21:50.730
+mettre dans un batch est à peu près égal au nombre de catégories que vous avez si
+
+0:21:50.730,0:21:54.930
+vous faites de la classification. Entre une et deux fois le nombre de catégories que vous avez.
+
+0:21:54.930,0:21:59.820
+Donc si vous vous entraînez sur ImageNet vous avez 1.000 catégories. Vous pouvez
+
+0:21:59.820,0:22:04.160
+alors avoir des batchs allant jusqu'à environ deux mille. Au-delà, vous commencez à perdre en
+
+0:22:04.160,0:22:15.360
+vitesse de conversion. [Remarque d’un étudiant]  Cela signifie que c’est complètement aléatoire. Cela
+
+0:22:15.360,0:22:19.470
+ne se passe jamais parce que… Considérez le scénario suivant. 
+
+0:22:19.470,0:22:23.310
+Vous avez ce ensemble d’entraînement et vous le divisez en deux. La première
+
+0:22:23.310,0:22:27.390
+moitié est le jeu d’entraînement et la seconde moitié le jeu de validation.
+
+0:22:27.390,0:22:32.250
+S'il y a zéro [???] dans votre ensemble cela
+
+0:22:32.250,0:22:36.980
+signifie que la machine ne va pas fonctionner du tout. Elle ne pourra pas
+
+0:22:36.980,0:22:41.430
+généraliser sur la deuxième moitié. Donc s'il y a une possibilité de
+
+0:22:41.430,0:22:56.320
+généralisation, il doit y avoir une certaine redondance. Alors commençons
+
+0:22:56.320,0:23:01.269
+par parler des réseaux neuronaux traditionnels. En gros, ces réseaux sont
+
+0:23:01.269,0:23:06.730
+des couches intercalées d'opérations linéaires et d’opérations non linéaires composante par composante.
+
+0:23:06.730,0:23:13.090
+Donc pour l'opération linéaire vous avez un vecteur d'entrée. Vous calculez 
+
+0:23:13.090,0:23:18.759
+une somme pondérée de ce vecteur avec un ensemble de poids. Dans ce cas, nous avons
+
+0:23:18.759,0:23:23.320
+six entrées avec trois unités cachées dans la première couche. Donc trois
+
+0:23:23.320,0:23:28.320
+différents ensembles de poids avec lesquels nous calculons des sommes pondérées des six entrées.
+
+0:23:28.320,0:23:34.000
+Conceptuellement, l’opération pour passer du vecteur d’entrée en six dimensions
+
+0:23:34.000,0:23:37.570
+à la somme pondérée tridimensionnelle n'est qu'une multiplication matricielle.
+
+0:23:37.570,0:23:43.179
+Cela prend le vecteur d'entrée et le multiplie par une matrice formée par
+
+0:23:43.179,0:23:48.639
+les poids, ce sera une matrice de trois par six. Et donc vous multipliez
+
+0:23:48.639,0:23:54.730
+ça par un vecteur à six dimensions. Vous obtenez un vecteur à trois dimensions. Donc c'est
+
+0:23:54.730,0:23:57.759
+le premier type d'opération dans un réseau neuronal classique. Le second type d'opération
+
+0:23:57.759,0:24:01.389
+est que vous prenez toutes les composantes du vecteur, la somme pondérée,
+
+0:24:01.389,0:24:05.559
+et vous les faites passer par de simples non-linéarités. Dans ce cas, cela
+
+0:24:05.559,0:24:11.500
+s'appelle une ReLU. C’est ce qu’on appelle une « half-wave rectification » en ingénierie.
+
+0:24:11.500,0:24:15.000
+Il y a différents noms pour cela, mais mathématiquement c'est la partie 
+
+0:24:15.000,0:24:22.960
+positive. Elle est donc égale à l'identité lorsque l'argument est positif 
+
+0:24:22.960,0:24:28.889
+et égale à zéro si l'argument est négatif. Puis vous répétez le processus.
+
+0:24:28.889,0:24:33.519
+Donc la troisième étape est à nouveau une étape linéaire. Multipliez ce vecteur tridimensionnel
+
+0:24:33.519,0:24:37.330
+par une matrice, ici une matrice deux par trois, vous obtenez un vecteur bidimensionnel
+
+0:24:37.330,0:24:44.169
+que vous passez dans les deux composantes de non-linéarités. Je pourrais appeler ça un réseau à deux 
+
+0:24:44.169,0:24:48.450
+couches car ce qui compte, ce sont les paires linéaires non linéaires.
+
+0:24:48.450,0:24:52.509
+La plupart des gens disent que c'est un réseau à deux niveaux. Certains disent que c'est un
+
+0:24:52.509,0:24:55.960
+réseau à trois couches parce qu'ils comptent les variables. Mais je ne pense pas que ce soit juste.
+
+0:24:55.960,0:25:00.990
+[Yann s’adresse à quelqu’un en particulier dans la salle]. Tu fais ça, mais ce n’est pas ce qu’il faut faire.
+
+0:25:01.680,0:25:07.080
+S'il n'y a pas de non-linéarités au milieu comme je l'ai dit la semaine dernière, vous pourriez
+
+0:25:07.080,0:25:12.780
+avoir une seule couche car le produit de deux fonctions linéaires est une
+
+0:25:12.780,0:25:17.430
+fonction linéaire. Vous pouvez donc les regrouper en une seule fonction. 
+
+0:25:17.430,0:25:29.670
+Une matrice unique est le produit des deux matrices. Ok donc ici c'est un 
+
+0:25:29.670,0:25:42.080
+peu plus détaillé. La somme de l'unité i, s[i], qui est une somme pondérée pour l'unité i,
+
+0:25:42.080,0:25:50.190
+est la somme de tous les prédécesseurs de i. Dénotée ici UP(i). L’indice
+
+0:25:50.190,0:25:55.490
+j passe en revue tous les prédécesseurs w[i,j] par z[j] où z[j] est la sortie
+
+0:25:55.490,0:26:00.360
+de j de la couche précédente. C'est une sorte de pile de couche standard
+
+0:26:00.360,0:26:08.250
+d’un réseau neuronal. Puis vous prenez un s[i] particulier et vous le passez
+
+0:26:08.250,0:26:14.240
+par une de ces fonctions non linéaires f. Vous obtenez z[i]. Je vais
+
+0:26:21.110,0:26:25.400
+aborder maintenant la façon de calculer les gradients et de choses comme ça.
+
+0:26:25.400,0:26:29.450
+Il y a deux formes de ça. Une forme intuitive que je vais expliquer
+
+0:26:29.450,0:26:34.550
+dès maintenant ce qui ne vous oblige même pas à savoir ce qu'est une dérivée
+
+0:26:34.550,0:26:40.370
+ce qui est assez drôle. Et puis il y a une forme un peu plus générale,
+
+0:26:40.370,0:26:46.340
+forme encore plus générale, dont je parlerai peut-être la semaine prochaine. Ok alors disons que
+
+0:26:46.340,0:26:53.480
+nous avons un grand réseau. Nous avons une fonction de coût, et des choses qui ont un x et un y,
+
+0:26:53.480,0:26:56.720
+et cela va donner un coût en sortie. Mais en fait vous n'avez pas besoin de faire ça.
+
+0:26:56.720,0:26:59.510
+La seule hypothèse que vous devez faire est que vous avez une
+
+0:26:59.510,0:27:02.240
+fonction paramétrable qui produit un scalaire en sortie.
+
+0:27:02.240,0:27:09.980
+Quelque part dans ce réseau vous avez une fonction non linéaire h. Je l'ai appelée
+
+0:27:09.980,0:27:15.140
+f dans la diapositive précédente, mais je l'appelle h ici. Donc cela prend une de ces sommes 
+
+0:27:15.140,0:27:18.410
+pondérées s. Vous la passez via cette fonction H et elle produit alors 
+
+0:27:18.410,0:27:22.430
+l'une de ces variables z. Je ne mets pas un index ici parce que je prends
+
+0:27:22.430,0:27:29.630
+une fonction particulière. Une de ces fonctions en dehors du réseau et je
+
+0:27:29.630,0:27:34.670
+considère le reste du réseau comme une sorte de boîte noire. Donc supposons
+que… Ok nous allons donc
+
+0:27:34.670,0:27:44.720
+utiliser la formule de dérivation des fonctions composées [appelée « règle de la chaîne » dans la suite pour une question pratique]
+0:27:44.720,0:27:52.430
+de l'école maternelle… ok du lycée… ok de l’université. Si vous avez deux fonctions qui
+
+0:27:52.430,0:27:58.310
+se suivent mutuellement, votre g(h(s)), et que vous voulez dériver, alors 
+
+0:27:58.310,0:28:04.100
+g(h(s))’ est égale à la dérivée de g au point h(s) multipliée par la
+
+0:28:04.100,0:28:11.530
+dérivée de h au point s. Cela vous revient ?
+
+0:28:12.250,0:28:19.330
+Ok après quelques années d'université vous pouvez écrire ça comme Newton l’a
+
+0:28:19.330,0:28:26.289
+écrit ou Euler ou qui que ce soit, avec les quantités infinitésimales.
+
+0:28:26.289,0:28:31.950
+Donc vous pouvez écrire ∂c/∂s, ce qui signifie la dérivée de c par rapport à s,
+
+0:28:31.950,0:28:37.780
+est égale à (∂c/∂z)*(∂z/∂s). Donc c'est la dérivée de c
+
+0:28:37.780,0:28:42.280
+par rapport à z multipliée par la dérivée de z par rapport à s.
+
+0:28:42.280,0:28:46.750
+La raison de l'écrire ainsi est qu'il est évident que vous pouvez
+
+0:28:46.750,0:28:52.330
+simplifier par ∂z. Vous avez ∂z en bas et en haut. Donc en simplifiant
+
+0:28:52.330,0:28:57.970
+par dz, vous avez la deuxième ligne. Vous obtenez ∂c/∂s. Donc vous séparez
+
+0:28:57.970,0:29:02.409
+la dérivée en ayant une certaine variable intermédiaire que vous mettez en
+
+0:29:02.409,0:29:06.370
+bas et en haut. C'est manipulation très simple, une manipulation symbolique.
+
+0:29:06.370,0:29:12.429
+Maintenant dz/ds est juste la dérivée de z par rapport à s. z étant égal à
+
+0:29:12.429,0:29:20.440
+h(s) donc c'est juste h’(s). Donc ∂c/∂s est égal à
+
+0:29:20.440,0:29:27.010
+∂c/∂z * h’(s). Donc si quelqu'un vous donne la dérivée de la
+
+0:29:27.010,0:29:34.539
+fonction de coût par rapport à z, vous multipliez par la dérivée de votre
+
+0:29:34.539,0:29:37.450
+non linéaire. Vous obtenez la dérivée de la fonction de coût par rapport 
+
+0:29:37.450,0:29:43.780
+à s. Imaginez que vous ayez une chaîne de ces fonctions dans votre réseau.
+
+0:29:43.780,0:29:49.090
+vous pouvez rétropropager en multipliant par les dérivés de toutes ces fonctions h.
+
+0:29:49.090,0:29:55.960
+Les fonctions h, l’une après l’autre, jusqu’au début du réseau.
+
+0:29:55.960,0:29:58.720
+En gros, si vous voulez calculer un gradient, vous devez
+
+0:29:58.720,0:30:03.460
+utiliser un réseau qui ressemble beaucoup à celui-ci, sauf que vous avez
+
+0:30:03.460,0:30:07.120
+signaux qui vont en arrière, et partout où vous aviez une fonction H, ce 
+
+0:30:07.120,0:30:13.720
+que vous avez maintenant est une dérivée venant du haut. C’est scalaire tout z.
+
+0:30:13.720,0:30:18.669
+Vous le multipliez par la dérivée de la fonction h et vous obtenez alors la
+
+0:30:18.669,0:30:23.409
+dérivée de la fonction de coût par rapport à la variable d'entrée qui est s.
+
+0:30:23.409,0:30:26.980
+Donc en gros ce que vous avez maintenant est un réseau
+
+0:30:26.980,0:30:34.360
+de transformation qui calcule votre gradient. Vous pouvez être
+
+0:30:34.360,0:30:39.100
+convaincue de cela car si vous ne comprenez pas complètement la règle
+
+0:30:39.100,0:30:46.510
+de la chaîne, ce que j'espère que vous ferez… Mais imaginez que vous troublez
+
+0:30:46.510,0:30:53.400
+s un petit peu. Ok nous allons perturber s par ∂s. Donc si
+
+0:30:53.400,0:31:00.880
+nous passons par h, h comme un coup, qui est h’(s), alors z va
+
+0:31:00.880,0:31:05.850
+être perturbé par ∂s fois cette dérivée. ∂s*h’(s). C’est ce
+
+0:31:05.850,0:31:14.020
+qui est écrit ici : « perturber s par ∂s va perturber z par ∂z = ∂s*h’(s). » 
+
+0:31:14.020,0:31:22.810
+Cela perturbera C par la petite perturbation ∂z fois
+
+0:31:22.810,0:31:27.220
+le gradient, je veux dire la dérivée de c par rapport à z, ce qui est
+
+0:31:27.220,0:31:34.690
+∂c/∂z. Donc en gros on obtient que ∂c est égal à ∂z, la perturbation de z,
+
+0:31:34.690,0:31:38.740
+donc la perturbation de c est égale à la perturbation de z, ∂z, multipliée par le
+
+0:31:38.740,0:31:45.360
+gradient d'autres dérivés de c par rapport à z. Mais nous avons calculé ceci avant.
+
+0:31:45.360,0:31:52.180
+Nous savons que dz est ∂s*h’(s). Donc nous remplaçons juste et puis on passe
+
+0:31:52.180,0:31:59.200
+le s de l'autre côté et on obtient simplement que ∂c/∂s est égal à ∂c/∂z*h’(s).
+
+0:31:59.200,0:32:03.220
+Ok nous avons juste à dériver en utilisant la règle de la chaîne. Nous 
+
+0:32:03.220,0:32:06.580
+besoin de rien de plus qu'une que la règle de la chaîne. C'est beaucoup plus intuitif 
+
+0:32:06.580,0:32:10.480
+si vous pensez à cela en terme de petites perturbations. Et parfois c'est utile
+
+0:32:10.480,0:32:15.180
+lorsque vous écrivez la fonction de rétropropagation d'un module, de penser en ces termes.
+
+0:32:15.270,0:32:19.240
+Car il est parfois plus facile d'y penser en ces termes que d’en fait
+
+0:32:19.240,0:32:26.380
+écrire les équations. Nous avons deux types de modules dans notre
+
+0:32:26.380,0:32:30.750
+réseau de neurones. L'autre est un module linéaire. Pour celui-ci,
+
+0:32:30.750,0:32:35.960
+je vais de nouveau utiliser le réseau comme une boite noire
+
+0:32:35.960,0:32:42.890
+sauf pour trois connexions allant d’une variable z à un tas de variables s.
+
+0:32:42.890,0:32:50.330
+Donc s[i] est une somme pondérée. Donc s[0] par exemple va prendre z,
+
+0:32:50.330,0:32:54.950
+le Z en bas ici, en le multipliant par son propre w, que j’appelle
+
+0:32:54.950,0:32:59.530
+w[0] ok. J'établis tous les indices qui sont ennuyeux. Donc je peux
+
+0:32:59.530,0:33:07.990
+à nouveau poser la question de savoir si je perturbe z, de combien c sera
+
+0:33:07.990,0:33:18.080
+modifié ? Donc si je perturbe z, s[0] sera perturbé par w[0]*z. 
+
+0:33:18.080,0:33:24.920
+Car z est multiplié par w[0]. Donc si w[0] est 2 et je perturbe z par ∂z,
+
+0:33:24.920,0:33:32.120
+la sortie après le poids va être multipliée par deux. Elle va être perturbée
+
+0:33:32.120,0:33:38.000
+par deux fois la valeur. Mais z influence en fait plusieurs variables, dans ce
+
+0:33:38.000,0:33:44.180
+cas 3. Donc cela va également perturber s[1] et s[2]. La perturbation pour 
+
+0:33:44.180,0:33:50.420
+s[1] va être ∂z*w[1] et pour s[2] cela va être ∂z*w[2].
+
+0:33:50.420,0:34:00.190
+Donc la perturbation globale…  Ok donc nous obtenons que ∂z*w[0] est la
+
+0:34:07.250,0:34:14.210
+perturbation pour s[0], ∂z*w[1] pour s[1], ∂z*w[2] pour s[2] mais maintenant 
+
+0:34:14.210,0:34:22.010
+s[0], s[1] et s[2] vont influencer c. La question est de savoir dans quelle mesure ? c 
+
+0:34:22.010,0:34:27.230
+va varier en fonction de la variation de s[0] multiplié par la dérivée de C 
+
+0:34:27.230,0:34:34.760
+par rapport à s[0]. c va aussi varier par rapport à s[1] et également
+
+0:34:34.760,0:34:38.330
+s[2] qui varient. Si les variations sont suffisamment faibles, alors la 
+
+0:34:38.330,0:34:41.460
+valeur de la variation globale est juste la somme des trois variations.
+
+0:34:41.460,0:34:45.990
+Et donc ce que vous avez ici en bas
+
+0:34:45.990,0:34:52.679
+est que la variation totale du coût va être égale à la variation de
+
+0:34:52.679,0:34:58.590
+z multiplié par w[0] qui est la version en s[0] et vous multipliez
+
+0:34:58.590,0:35:02.510
+cela par la dérivée de c par rapport à s[0], qui est ∂c/∂s[0].
+
+0:35:02.510,0:35:08.940
+Donc ce que vous voyez ici dans la dernière équation est exactement
+
+0:35:08.940,0:35:18.780
+cela. Vous devez additionner les contributions des trois composantes.
+
+0:35:18.780,0:35:26.310
+Donc ∂c/∂z à la fin est ∂c/∂s[0]*w[0] + ∂c/∂s[1]*w[1]
+
+0:35:26.310,0:35:31.190
++ ∂c/∂s[2]*w[2]. Quand vous avez une
+
+0:35:31.190,0:35:36.930
+une branche comme celle-ci, vous perturbez la variable d'entrée, toutes les
+
+0:35:36.930,0:35:42.300
+branches sont perturbées et vous devez sommer les résultats sur la fonction de coût.
+
+0:35:42.300,0:35:48.330
+Vous supposez que vous connaissez tous les autres dc sur n’importe quelles autres variables.
+
+0:35:48.330,0:35:53.930
+Des questions ? C’est clair ? Tout est compréhensible ? Ok qu'est-ce que cela signifie ?
+
+0:36:00.660,0:36:05.790
+Regardez cette formule ici, cela dit que si j'ai le gradient ou la dérivée
+
+0:36:05.790,0:36:12.690
+de c, les dérivées de c par rapport à s[0], s[1], s[2], toutes les trois.
+
+0:36:12.690,0:36:16.680
+Je calcule la somme pondérée de ces dérivés avec
+
+0:36:16.680,0:36:21.120
+les poids, en avant, mais je les utilise en descendant. Cela me donne la
+
+0:36:21.120,0:36:25.950
+dérivée de la fonction de coût par rapport à z, qui alimente ces trois poids.
+
+0:36:25.950,0:36:31.340
+Donc en gros, lorsque vous vous propagez à travers un réseau neuronal, vous
+
+0:36:31.340,0:36:42.720
+calculez la somme pondérée des gradients en utilisant les poids à l'envers. 
+
+0:36:42.720,0:36:45.180
+C'était pour donner un peu d'intuition mais il y a beaucoup plus de
+
+0:36:45.180,0:36:51.510
+formulation générale pour ça. Nous pouvons l’écrire de cette façon.
+
+0:36:51.510,0:36:56.490
+Faisons-le une étape à la fois. Conceptuellement, un réseau de neurones,
+
+0:36:56.490,0:37:02.010
+vous le voyez plutôt comme quelque chose comme ça. Au moins dans les réseaux
+
+0:37:02.010,0:37:08.160
+de neurones neuronal traditionnels, nous avons une variable d'entrée. Vous multipliez la variable d'entrée
+
+0:37:08.160,0:37:13.620
+par la première matrice w[0], ce qui vous donne s[1], puis passez la passez à travers une
+
+0:37:13.620,0:37:17.760
+non-linéarité qui vous donne z[1]. Puis multipliez cela par la matrice de poids w[1]
+
+0:37:17.760,0:37:22.980
+qui nous donne s[2] que vous passez dans une non-linéarité qui vous donne z[2],
+
+0:37:22.980,0:37:34.010
+et ainsi de suite. Combien de couche ce réseau neuronal a ? [Etudiant : 3]. Oui trois.
+
+0:37:34.010,0:37:39.960
+Les couches sont des sortes de paires de linéarité/non linéarité. La plupart des réseaux neuronaux modernes
+
+0:37:39.960,0:37:45.570
+n’ont pas des séparations linéaires/non linéaires claires. Ils sont plus 
+
+0:37:45.570,0:37:54.000
+complexes. Donc sₖ₊₁  est égal à wₖ fois zₖ  où Wₖ est une matrice
+
+0:37:54.000,0:38:01.110
+et zₖ est un vecteur, sₖ₊₁ est un vecteur. zₖ  est égal à h(sₖ) où h
+
+0:38:01.110,0:38:09.060
+est une sorte d'application de la fonction scalaire h à chaque composantes. 
+
+0:38:09.060,0:38:13.470
+Donc si vous écrivez ceci en Python, vous écrivez quelque chose comme ceci. 
+
+0:38:13.470,0:38:16.830
+Il y a de nombreuses façons de l'écrire en PyTorch : de zéro, de manière
+
+0:38:16.830,0:38:20.160
+fonctionnelle ou vous pouvez l'écrire de cette manière qui est plus
+
+0:38:20.160,0:38:29.000
+orienté objet. Cela cache en quelque sorte une complexité pour vous. Donc 
+
+0:38:29.000,0:38:34.760
+Vous importez torch, nn de torch, vous faites une sorte d'entrée qui est de
+
+0:38:34.760,0:38:40.530
+3 tenseurs. Vous ne pouvez pas savoir combien d'éléments cela comporte. Ce sera la taille
+
+0:38:40.530,0:38:45.240
+de votre couche d'entrée. Nous allons la transformer en un vecteur. Mais pas encore. Et
+
+0:38:45.240,0:38:51.240
+vous définissez ensuite une classe pour votre réseau. Donc le constructeur 
+
+0:38:51.240,0:38:57.630
+va juste initialiser trois couches linéaires. Donc les couches linéaires doivent dans ce cas être
+
+0:38:57.630,0:39:02.970
+des objets séparés car elles contiennent un vecteur pour le paramètre. Les valeurs
+
+0:39:02.970,0:39:08.850
+n'ont pas besoin d'être des objets séparés. Elles ne peuvent pas avoir de paramètres en fait.
+
+0:39:08.850,0:39:12.450
+C'est la complexité qui se cache dans ces nn linéaires. Les nn linéaires 
+
+0:39:12.450,0:39:15.210
+font un peu plus que multiplier la matrice. Elles ajoutent également un 
+
+0:39:15.210,0:39:22.770
+vecteur de biais. Donc vous initialisez ces couches avec les bonnes tailles
+
+0:39:22.770,0:39:27.240
+que vous avez transmises comme argument au constructeur. Puis vous définissez 
+
+0:39:27.240,0:39:31.410
+la fonction « forward », c'est-à-dire comment calculer le résultat en 
+
+0:39:31.410,0:39:37.020
+fonction de l'entrée. Donc la première ligne ici x.view(-1) aplatit le 
+
+0:39:37.020,0:39:41.910
+tenseur d'entrée dans un vecteur et ensuite vous appliquez le module m0 à
+
+0:39:41.910,0:39:48.900
+x. Vous obtenez s1. Puis appliquez la valeur de la non-linéarité à s1 vous obtenez z1, etc.
+
+0:39:48.900,0:39:57.990
+Puis vous retourner s3. La beauté de PyTorch qu'Alfredo va vous
+
+0:39:57.990,0:40:03.000
+expliquer demain peut-être, est que vous n'avez pas à vous inquiéter de
+
+0:40:03.000,0:40:07.730
+calculer le gradient car vous avez écrit la fonction forward et PyTorch
+
+0:40:07.730,0:40:12.690
+sait à quoi cela ressemble. Il sait comment rétropropager le gradient. Il
+
+0:40:12.690,0:40:16.920
+sait comment transformer le graphe correspondant à votre fonction forward
+
+0:40:16.920,0:40:20.520
+dans le graphe correspondant à la rétropropagation. Vous n’avez pas à 
+
+0:40:20.520,0:40:23.109
+vous en préoccuper. Vous devez quand même savoir comment calculer les
+
+0:40:23.109,0:40:27.849
+gradients car il faut parfois écrire son propre module. Inventer un
+
+0:40:27.849,0:40:31.630
+nouveau type de réseau neuronal, qui a de multi-têtes,
+
+0:40:31.630,0:40:38.099
+de multi-queues, de la mémoire, de l’attention, des LSTMs, peu importe.
+
+0:40:38.099,0:40:42.010
+Donc vous pourriez avoir à écrire votre propre truc, écrire
+
+0:40:42.010,0:40:52.320
+votre propre noyau CUDA ou tout autre. Mais c'est assez simple. 
+
+0:40:52.320,0:41:16.180
+[Question d’un étudiant]. Comme je l'ai dit, si vous n'avez pas de non-linéarité, tout est linéaire.
+
+0:41:16.180,0:41:20.920
+Donc ça ne sert à rien d'avoir des couches. Vous devez penser à quelle
+
+0:41:20.920,0:41:24.190
+est la non-linéarité la plus simple que vous pouvez prendre. Ce sera une 
+
+0:41:24.190,0:41:28.240
+non linéarité composantes par composantes. La plus simple que 
+
+0:41:28.240,0:41:31.089
+vous pouvez imaginer, quelque chose qui a un seul coude. Le truc marrant,
+
+0:41:31.089,0:41:33.280
+c'est que nous parlons d’apprentissage 
+
+0:41:33.280,0:41:36.250
+basé sur le gradient, et ce n'est même différentiable. A cause du coude.
+
+0:41:36.250,0:41:43.750
+Mais si vous êtes un mathématicien et êtes obsessionnel-compulsif sur ce 
+
+0:41:43.750,0:41:51.790
+sujet vous n'appelleriez pas cela un gradient mais un sous-gradient. 
+
+0:41:51.790,0:42:01.540
+Combien de mathématiciens y a-t-il ici ? [Remarque d’un étudiant]. Oui il y a plusieurs sous-gradients. Ici on a une
+
+0:42:01.540,0:42:08.440
+fonction qui présente un coude. A ce point toute pente qui se trouve entre 
+
+0:42:08.440,0:42:14.200
+là et là est correcte. C'est bon, tout cela est de bons sous-gradients. La
+
+0:42:14.200,0:42:16.540
+question est donc de savoir si vous devez utiliser quelque chose du genre
+
+0:42:16.540,0:42:20.410
+le milieu ou juste zéro. Cela n'a pas d'importance car il ne s'agit que d'un point, 
+
+0:42:20.410,0:42:23.670
+donc n'a aucun impact en pratique. Donc voici la stratégie plus générale.
+
+0:42:34.470,0:42:43.349
+Nous passons d'une stratégie spécifique à une stratégie plus générale. Voici
+
+0:42:43.349,0:42:50.880
+une forme de règle de chaîne pour les modules qui peuvent avoir des sorties et
+
+0:42:50.880,0:42:55.910
+entrées multiples. Ou peuvent avoir des entrées qui sont des vecteurs et des sorties qui sont des vecteurs.
+
+0:42:55.910,0:43:03.299
+Je ne leur donne pas de symboles différents ici. La formule de base ∂c/∂zf
+
+0:43:03.299,0:43:11.940
+dans ce cas. C’est égal à (∂c/∂zg)*(∂zg/∂zf). C’est la même formule de règle 
+
+0:43:11.940,0:43:17.970
+de chaîne que celle que nous utilisions auparavant pour les fonctions scalaires.
+
+0:43:17.970,0:43:23.790
+Elle s'applique également aux fonctions vectorielles. Il y a une chose dont nous avons besoin
+
+0:43:23.790,0:43:30.540
+de nous souvenir. Le gradient de la fonction scalaire par rapport à un vecteur est un
+
+0:43:30.540,0:43:35.329
+vecteur de même taille que le vecteur par rapport auquel vous différencez.
+
+0:43:35.329,0:43:40.500
+Si vous l'écrivez de cette façon et que vous voulez que les notations soient cohérentes,
+
+0:43:40.500,0:43:45.510
+c'est un vecteur ligne, ce n'est plus un vecteur colonne. Donc nous allons 
+
+0:43:45.510,0:43:51.589
+prendre une fonction scalaire qui dépend du vecteur, donc un vecteur colonne.
+
+0:43:51.589,0:43:56.940
+Différenciez cette fonction scalaire par rapport au vecteur colonne. Ce que
+
+0:43:56.940,0:44:00.900
+vous obtenez, est un vecteur ligne qui est le gradient. Techniquement, ce 
+
+0:44:00.900,0:44:05.520
+n'est pas le gradient. Le gradient c’est une fois que vous transposez le vecteur. 
+
+0:44:05.520,0:44:14.880
+C'est ∂c/∂zf. C'est la notation. Vous pouvez voir qu'elle se vérifie. Donc
+
+0:44:14.880,0:44:24.079
+imaginons que zg est un vecteur colonne de taille dg par 1, et zf est un
+
+0:44:24.079,0:44:32.880
+vecteur colonne de taille df par 1. Alors cette petite équation de règle 
+
+0:44:32.880,0:44:36.580
+de chaîne ici, vous donne un vecteur ligne de taille df qui est égal au vecteur ligne
+
+0:44:36.580,0:44:44.920
+de taille dg multiplié par une matrice dont le nombre de lignes est dg et le nombre
+
+0:44:44.920,0:44:53.740
+de colonnes est df. Bien sûr la dernière taille du vecteur et la première
+
+0:44:53.740,0:45:01.420
+taille de la matrice doivent correspondre si vous voulez que ce produit fonctionne.
+
+0:45:01.420,0:45:04.720
+Une forme plus commode pour cela serait de transposer tout. Dire que ∂c/∂zf 
+
+0:45:04.720,0:45:09.910
+transposé, qui est maintenant un vecteur colonne, est égal à la
+
+0:45:09.910,0:45:14.440
+transposition du produit. Ce serait la transposition de ∂z/∂zf
+
+0:45:14.440,0:45:19.810
+fois la transposition de ∂c/∂zg. Ce serait un peu plus pratique de 
+
+0:45:19.810,0:45:30.070
+de cette façon mais c'est un peu plus simple de cette manière.
+
+0:45:30.070,0:45:37.030
+Qu’est ce que cet animal amusant ∂zg/∂zf ? Donc nous avons un petit réseau 
+
+0:45:37.030,0:45:43.720
+neural ici qui comporte deux modules : f  et g. La sortie du module f est
+
+0:45:43.720,0:45:55.920
+zf et la sortie du modèle g est zg. Fondamentalement, nous voulons le
+
+0:45:55.920,0:46:00.580
+gradient de la fonction de coût par rapport à zf. Nous supposons que nous connaissons le
+
+0:46:00.580,0:46:03.070
+le gradient de cette fonction de coût par rapport à zg. Nous savons comment 
+
+0:46:03.070,0:46:08.560
+rétropropager à c. Et pour calculer le gradient par rapport à zf, si l'on connait
+
+0:46:08.560,0:46:12.580
+le gradient par rapport à zg, nous devons multiplier par cette matrice ∂zg/∂zf
+
+0:46:12.580,0:46:21.910
+qui est appelée la matrice Jacobienne de g, par rapport à son entrée. g a 
+
+0:46:21.910,0:46:25.330
+deux arguments, donc on peut différencier par rapport à z ou par rapport à w.
+
+0:46:25.330,0:46:30.310
+Nous allons juste différencier par rapport à z. Ok quelle est cette matrice ? 
+
+0:46:30.310,0:46:37.840
+L'entrée i j de cette matrice jacobienne est égale à la
+
+0:46:37.840,0:46:42.190
+dérivée partielle des sorties i. Les i composantes du
+
+0:46:42.190,0:46:46.210
+vecteur de sortie du module G par rapport à la j-ème composante du
+
+0:46:46.210,0:46:53.160
+vecteur d'entrée. Donc si j'altère l'entrée j, cela va
+
+0:46:53.160,0:47:03.900
+perturber toute la sortie. Cela représente en gros une colonne entière de
+
+0:47:03.900,0:47:16.700
+la matrice jacobienne. Ok c'est la rétropropagation. Donc si vous avez un
+
+0:47:16.700,0:47:25.050
+réseau composé d'une cascade de modules, il suffit de multiplier par la
+
+0:47:25.050,0:47:28.320
+matrice jacobienne de tous les modules qui descendent et vous obtenez tout le gradient
+
+0:47:28.320,0:47:37.380
+respectant toutes les variables internes. Il vous faut maintenant deux 
+
+0:47:37.380,0:47:39.630
+ensembles de gradient. Le gradient par rapport aux états mais aussi 
+
+0:47:39.630,0:47:43.530
+le gradient par rapport aux poids. Il y a comme je l'ai dit, un module qui
+
+0:47:43.530,0:47:48.900
+a des paramètres a deux matrices jacobiennes. Il y en a une par rapport aux états d’entrée
+
+0:47:48.900,0:47:52.800
+et une autre par rapport à ses paramètres. Donc vous avez les deux équations 
+
+0:47:52.800,0:47:57.300
+ici. Disons que vous avez une sorte de réseau de neurones général qui est
+
+0:47:57.300,0:48:08.099
+est une pile de nombreux modules. Chaque module est appelé fₖ. Donc k est
+
+0:48:08.099,0:48:15.800
+une sorte d'index pour ce module dont l'entrée est zₖ et les paramètres Wₖ.
+
+0:48:15.800,0:48:23.660
+La sortie est zₖ₊₁. Elle est égale à fₖ(zₖ,Wₖ). C’est très simple.
+
+0:48:23.660,0:48:29.339
+Alors comment calculer ∂c/∂zₖ qui est le gradient de la fonction de coût 
+
+0:48:29.339,0:48:34.310
+ou de toute fonction que vous souhaitez minimiser par rapport à l'entrée du module zₖ.
+
+0:48:34.310,0:48:41.369
+En supposant que je connaisse déjà ∂c/∂zₖ₊₁, vous multipliez juste par la matrice 
+
+0:48:41.369,0:48:49.080
+jacobienne du module k qui est ∂zₖ₊₁/∂zₖ. Ou en d'autres termes, 
+
+0:48:49.080,0:48:58.650
+∂fₖ(zₖ,Wₖ)/∂zₖ. Ok donc c'est juste la règle de la chaîne à nouveau. 
+
+0:48:58.650,0:49:03.590
+Donc ∂c/∂zₖ  est égal à ∂c/∂zₖ₊₁, que je suppose connaître, par 
+
+0:49:03.590,0:49:10.730
+la matrice jacobienne de fₖ par rapport à zₖ . A la deuxième ligne c’est
+
+0:49:10.730,0:49:16.430
+La même chose pour ∂c/∂Wₖ est égal à ∂c/∂zₖ₊₁, qu’on a déjà
+
+0:49:16.430,0:49:22.040
+au dessus, et ensuite ∂zₖ₊₁/∂Wₖ qui est la matrice jacobienne de la
+
+0:49:22.040,0:49:27.320
+fonction f par rapport à ses poids, ses paramètres
+
+0:49:27.320,0:49:41.860
+quels qu'ils soient. C'est tout ce qu'il y a à rétropropager.
+
+0:49:42.790,0:49:46.120
+Des questions ? C’est un petit exemple concret.
+
+0:49:55.990,0:49:58.420
+Donc disons que… L'une de ces fonctions
+
+0:49:58.420,0:50:05.290
+simples ici g(x,w), on ne sait pas ce qu'il y a dedans mais c'est ok. Cela
+
+0:50:05.290,0:50:12.160
+va à une fonction de coût. C'est un graphe. Et par cette manipulation de… 
+
+0:50:12.160,0:50:18.640
+Multiplier par des matrices jacobiennes, nous pouvons transformer ce graphe en celui qui
+
+0:50:18.640,0:50:23.740
+calculera les gradients allant vers l'arrière. Donc PyTorch et TensorFlow 
+
+0:50:23.740,0:50:27.160
+le font automatiquement pour vous. Vous écrivez une fonction, elle se transforme en 
+
+0:50:27.160,0:50:33.160
+graphe et ensuite il y a quelque chose qui le transforme le graphe de dérivé
+
+0:50:33.160,0:50:37.800
+si vous voulez, ça rétropropage le gradient. Dans ce cas, le
+
+0:50:37.800,0:50:44.380
+graphe du gradient ressemble à celui de droite. Quand on commence avec 1
+
+0:50:44.380,0:50:53.170
+au sommet et vous calculez ensuite le Jacobien de C par rapport à Y̅. 
+
+0:50:53.170,0:51:01.330
+Vous multipliez ce nombre par ce Jacobien. Le Jacobien est en fait un 
+
+0:51:01.330,0:51:09.780
+vecteur. C'est un gradient, un vecteur ligne. C'est ∂C/∂Y̅. Puis vous 
+
+0:51:09.780,0:51:14.470
+multipliez cela, le Jacobien de G par rapport à ses poids et vous obtenez
+
+0:51:14.470,0:51:20.620
+le gradient par rapport à ses poids. C'est ce qu'il faut pour entraîner. 
+
+0:51:20.620,0:51:23.890
+C’est donc un exemple de la transformation automatique, ce qu’autograd fait.
+
+0:51:23.890,0:51:30.580
+Ce qui devient compliqué, c'est lorsque l’architecture du graphe
+
+0:51:30.580,0:51:38.830
+n'est pas fixe mais dépend des données. Donc imaginons que selon la valeur
+
+0:51:38.830,0:51:44.800
+de x, vous avez un test dans votre code du réseau de neurone qui décide 
+
+0:51:44.800,0:51:50.440
+si x est un vecteur plus long qu'une certaine longueur, alors vous faites
+
+0:51:50.440,0:51:55.360
+une chose et si c'est plus court vous faites une autre chose.
+
+0:51:55.360,0:51:58.480
+Donc vous allez avoir une sorte de condition dans deux graphes dépendant de
+
+0:51:58.480,0:52:03.330
+l'entrée. Vous avez encore besoin de générer le graphe de rétropropagation.
+
+0:52:03.330,0:52:27.250
+Si il y a des boucles ça devient compliqué. Vous pouvez toujours le faire. [Question d’un étudiant]. Oui
+
+0:52:27.250,0:52:30.790
+Cela ne fonctionne généralement pas très bien si le nombre de boucles dont vous disposez est plus
+
+0:52:30.790,0:52:38.260
+grand que 50. 50 mais cela ça pourrait être 20. Cela dépend. Vous avez probablement
+
+0:52:38.260,0:52:42.580
+entendu parler des LSTMs. La particularité des LSTM par rapport aux réseaux récurrents standard
+
+0:52:42.580,0:52:50.620
+est que c’est un moyen de les faire fonctionner pour une longueur de cinq, mais ils ne
+
+0:52:50.620,0:53:00.700
+fonctionnent très bien après vingt. Le fait est que vous pouvez avoir un nombre
+
+0:53:00.700,0:53:06.640
+variable d'étapes. C’est spécifié par le programme et peut être variable 
+
+0:53:06.640,0:53:11.310
+selon la taille de l’entrée. Certaines personnes utilisent aujourd'hui une
+
+0:53:11.310,0:53:17.110
+taille variable. x pourrait être un tableau multidimensionnel de taille variable et cela
+
+0:53:17.110,0:53:21.330
+signifie que G a une taille variable à l'intérieur et vous pouvez avoir des
+
+0:53:21.330,0:53:30.430
+choses compliquées qui s'y passe. Donc encore une fois en ce qui concerne les tailles que ces
+
+0:53:30.430,0:53:40.030
+choses prennent. Donc ∂C/∂w est un vecteur ligne de taille 1 par n où n est 
+
+0:53:40.030,0:53:46.390
+le nombre de composantes de w. ∂C/Y̅ est de taille 1 par m où m est la dimension de la
+
+0:53:46.390,0:53:55.570
+sortie. Et ∂Y̅/∂w est le nombre de lignes, le nombre de sorties de G.
+
+0:53:55.570,0:54:01.360
+Et le nombre de colonnes est la dimension de w qui est n. Donc ça correspond.
+
+0:54:01.360,0:54:03.540
+Donc c’est bien. Ok maintenant quel genre de modules
+
+0:54:16.760,0:54:24.140
+utilisons- nous en réseau neuronal ? Comme je l'ai dit les modules linéaires et ReLU ou
+
+0:54:24.140,0:54:28.010
+les modules de non-linéarité composantes par composantes ne sont que deux exemples de ce
+
+0:54:28.010,0:54:31.220
+que nous utilisons pour construire des réseaux neuronaux ou des systèmes d'apprentissage profond en
+
+0:54:31.220,0:54:35.119
+général. Il y a des tonnes et des tonnes… Si vous regardez la documentation de PyTorch
+
+0:54:35.119,0:54:41.150
+il y a une liste énorme de ces modules. La raison pour laquelle vous en avez besoin de beaucoup d’entre…
+
+0:54:41.150,0:54:45.650
+Je veux dire que la plupart d'entre eux peuvent être construits à partir de
+
+0:54:45.650,0:54:51.230
+plus petits, de fonctions plus élémentaires. Mais la raison pour laquelle ils sont préconstruits est
+
+0:54:51.230,0:54:54.530
+parce qu'ils ont d'abord un nom et pour le débogage mais aussi parce qu'ils
+
+0:54:54.530,0:55:00.710
+sont optimisés. Parfois pouvez écrire les noyaux CUDA directement ou
+
+0:55:00.710,0:55:05.930
+générer par un compilateur ou quelque chose du genre. Voici donc un tas de
+
+0:55:05.930,0:55:13.930
+modules élémentaires. Je ne suis pas sûr de pouvoir utiliser mon…
+
+0:55:21.940,0:55:27.290
+Ok commençons par un module dupliqué. Un module dupliqué est un module
+
+0:55:27.290,0:55:33.849
+qui prend un seul… essentiellement un connecteur Y. Par exemple, vous
+
+0:55:33.849,0:55:39.530
+voulez que deux personnes écoutent de la musique sur votre iPhone. Vous avez besoin d'un
+
+0:55:39.530,0:55:50.990
+câble en Y. Donc la première sortie est égale à l'entrée et la deuxième sortie
+
+0:55:50.990,0:55:57.410
+est aussi égale à l'entrée : y1 = x et y2 = x. Vous pensez que vous
+
+0:55:57.410,0:55:59.510
+n'avez même pas besoin d’un module pareil mais en faites si.
+
+0:55:59.510,0:56:06.230
+Parfois en PyTorch c’est implicite mais vous devez parfois
+
+0:56:06.230,0:56:11.480
+le rendre explicite. Donc chaque fois que vous avez un fil qui se fend
+
+0:56:11.480,0:56:19.520
+en 2 ou en n, sur le chemin du retour, les gradients s’ajoutent. C’est
+
+0:56:19.520,0:56:24.470
+exactement la même situation que celle que j'ai expliquée précédemment. Vous pouvez
+
+0:56:24.470,0:56:28.810
+décomposer ce module que je vous explique ici. Vous pouvez penser à cette
+
+0:56:37.940,0:56:45.410
+variable z découpée en trois fils comme l'un de ces modules de branche. Comme les
+
+0:56:45.410,0:56:51.400
+trois fils convergent, vous devez additionner les gradients. Ce que nous avons fait. Mais
+
+0:56:51.400,0:56:59.540
+vous pouvez l'intégrer dans ce module de découpe. Il suffit de dupliquer le module,
+
+0:56:59.540,0:57:08.300
+le tripliquer ou n-pliquer, peu importe. Quoi que vous copiiez comme variable, 
+
+0:57:08.300,0:57:12.589
+quoi que vous utilisez comme variable en plusieurs endroits, vous devez additionner les
+
+0:57:12.589,0:57:22.400
+gradients. Autograd dans PyTorch le fait pour vous. Mais souvenez-vous de ça.
+
+0:57:22.400,0:57:29.250
+Le module « Add ». Si vous avez deux variables et que vous les additionnez, 
+
+0:57:29.250,0:57:33.300
+quand vous perturbez ce type, la sortie sera perturbée par la même quantité.
+
+0:57:33.300,0:57:37.860
+Quand vous perturbez ce type, la sortie sera perturbée par la même quantité.
+
+0:57:37.860,0:57:42.630
+Cela signifie que le gradient de toute fonction que vous souhaitez minimiser 
+
+0:57:42.630,0:57:53.400
+par rapport à la sortie d'une somme, est égal à… . Lorsque vous avez le gradient de la fonction de coût
+
+0:57:53.400,0:57:58.800
+par rapport à la somme, quel est le gradient par rapport à chacun des deux
+
+0:57:58.800,0:58:11.130
+branches que vous avez additionnées ? [Un étudiant répond] C'est en fait égal pour les deux branches. Donc si vous
+
+0:58:11.130,0:58:15.480
+avez une connexion allant dans cette direction et vous obtenez un gradient 
+
+0:58:15.480,0:58:28.230
+au sommet, vous copiez juste le gradient. Ok ? Car vous obtenez la même influence des deux côtés. [Question d’un étudiant]
+
+0:58:28.430,0:58:39.120
+Non c'est indépendant de la valeur des entrées. Si vous y réfléchissez c'est
+
+0:58:39.120,0:58:49.700
+assez évident en fait. Laissez-moi essayer ceci. 
+
+0:58:49.420,0:58:59.420
+Ok cela ne fonctionne que si je reflète mon écran.
+
+0:59:21.079,0:59:37.519
+Je ne peux pas écrire sur un écran qui n'existe pas. Ok attendez moi juste une minute. [Problème technique, vous pouvez passer directement à 1:00:58 pour la reprise du cours]
+
+1:00:58.440,1:01:03.600
+Donc si y est égal à x₁  plus x₂.
+
+1:01:03.600,1:01:22.650
+∂C/∂x₁ = (∂C/∂y)*(∂y/∂x₁)
+
+1:01:22.650,1:01:39.380
+Supposons que nous savons ça. A combien s'élève ceci ? [Etudiant] Un. Bien sûr, ∂y/∂x₂ vaut également 1.
+
+1:01:39.380,1:01:49.680
+Donc on a ∂C/∂x₁ = ∂C/∂y 
+
+1:01:49.680,1:01:57.480
+et ∂C/∂x₂ = ∂C/∂y. Prenez juste ∂C/∂y, copiez c’est fait. 
+
+1:02:08.000,1:02:12.000
+Le module max. C'est un cas intéressant.
+
+1:02:21.950,1:02:39.170
+Donc y = max(x₁,x₂). ∂C/∂x₁ = (∂C/∂y)*(∂y/∂x₁). 
+
+1:02:39.170,1:02:55.630
+Ok, c’est juste la règle de la chaîne. Qu’est-ce que ∂y/∂x₁ ? [Etudiant] Oui et autrement ?
+
+1:02:55.630,1:03:00.730
+C'est 1 oui correct. Donc en fait vous pouvez
+
+1:03:00.730,1:03:15.980
+complètement comprendre ceci graphiquement. En gros, vous avez x₁. [Etudiant] Répétez. [Etudiant] Oui
+
+1:03:15.980,1:03:27.380
+oui oui. Donc la réponse était ∂y/∂x₁ = 0 si x₂ > x₁ et 0 si x₁ > x₂. 
+
+1:03:27.380,1:03:34.900
+Intuitivement, c'est très simple. Si vous avez la variable x₁ et la
+
+1:03:34.900,1:03:42.160
+variable x₂, la sortie de ce module max n'est qu'un commutateur.
+
+1:03:46.910,1:03:55.550
+Je mets une flèche ici mais ce n'est pas une flèche. C'est un commutateur.
+
+1:03:55.550,1:04:01.190
+Je peux déplacer ce commutateur de gauche à droite. Je peux choisir de connecter x₁ à y
+
+1:04:01.190,1:04:07.850
+ou de connecter x₂ à y. Une fois que j'ai décidé de quel côté je connecte, c’est juste un fil.
+
+1:04:07.850,1:04:14.810
+Quelle que soit ce que la position que je choisie pour le commutateur, 
+
+1:04:14.810,1:04:19.970
+j'utilise max. C’est juste un interrupteur. Je décide de quel côté mettre.
+
+1:04:19.970,1:04:23.990
+Quand je décide de le mettre d'un côté alors je connecte
+
+1:04:23.990,1:04:28.940
+juste x₁ à y. C'est juste un fil. Donc si je perturbe x₂, cela n’a pas
+
+1:04:28.940,1:04:32.630
+d'influence sur la sortie. Le gradient de la fonction de coût par rapport à
+
+1:04:32.630,1:04:39.080
+x₂ est 0. Le gradient de la fonction de coût par rapport à x₁ est bien sur
+
+1:04:39.080,1:04:42.020
+égal au gradient de la fonction de coût par rapport à x₁ car c'est juste
+
+1:04:42.020,1:04:45.110
+un fil. C'est la même variable. Généralisons
+
+1:04:45.110,1:04:55.190
+à un commutateur à variables multiples. Peu importe le nombre de variables
+
+1:04:55.190,1:05:04.310
+que j’ai si la sortie est déterminée par un interrupteur que je peux bouger
+
+1:05:04.310,1:05:08.120
+sur l'une des variables d'entrée. Lorsque je rétropropage, je le fais dans
+
+1:05:08.120,1:05:11.540
+la variable qui a été connectée et toutes les autres sont à zéro.
+
+1:05:11.540,1:05:20.430
+Il est plus facile de dessiner de cette façon que d'écrire les formules
+
+1:05:20.430,1:05:29.130
+mathématiques. Il faut utiliser les fonctions Delta et tout ça.
+
+1:05:29.130,1:05:49.460
+LogSoftMax. C’est un marrant. Je dois utiliser une nouvelle page. Mais cela
+
+1:05:49.860,1:06:00.880
+ne passe pas à la page suivante… Ok donc softmax est le module où la sortie
+
+1:06:00.880,1:06:18.610
+yᵢ = exᵢ. Donc c'est un module avec lequel… Je ne devrais pas dessiner
+
+1:06:18.610,1:06:32.010
+de cette façon. Plutôt de cette façon. Il a autant de sorties que d'entrées.
+
+1:06:32.010,1:06:43.960
+J’appelle ça yᵢ et ça xⱼ, ou x quoi que ce soit. Donc le softmax est…
+
+1:06:43.960,1:06:54.850
+C'est un moyen très pratique de transformer un tas de chiffres en
+
+1:06:54.850,1:07:01.090
+un tas de nombres positifs entre 0 et 1 qui somment à 1. Quand je prends
+
+1:07:01.090,1:07:05.470
+l’exponentielle, les xⱼ peuvent être n'importe quel nombre. Quand je prends l'exponentielle de
+
+1:07:05.470,1:07:09.940
+ces chiffres, j'obtiens des chiffres positifs et je normalise par leur somme. Donc ce que j'obtiens
+
+1:07:09.940,1:07:14.440
+c'est un ensemble de chiffres compris entre 0 et 1 et dont la somme est égale à 1. Certains appellent ça une
+
+1:07:14.440,1:07:20.800
+distribution de probabilité. Pour que vous puissiez interpréter yᵢ comme 
+
+1:07:20.800,1:07:28.829
+un vecteur de probabilités sur l'ensemble des sorties discrètes. 
+
+1:07:28.829,1:07:41.099
+Qu’est-ce que le logsoftmax ? Oups, ce n’est pas ce que je veux faire…
+
+1:07:41.099,1:07:52.589
+Donc le log du numérateur moins le log du dénominateur.  
+
+1:07:52.589,1:07:59.219
+Vous obtenez le log de l'exponentielle xᵢ. Ce sera xᵢ.
+
+1:07:59.219,1:08:06.209
+Puis vous obtenez le log de la somme de…  vous obtenez moins
+
+1:08:06.209,1:08:09.809
+le log de cette somme d’exponentielle de xⱼ.
+
+1:08:09.809,1:08:25.549
+Ce qui donne xᵢ – log de la somme sur j de exp(xⱼ). C’est ce qu’on appelle la logsoftmax.
+
+1:08:32.760,1:08:42.100
+Le type qui a inventé la softmax en 1989 ou en 88, je ne me souviens plus précisément [1989 d’après Wikipédia], est un
+
+1:08:42.100,1:08:46.020
+gentleman du nom de John Bridle de Grande-Bretagne. Il regrette de l'avoir 
+
+1:08:49.960,1:08:56.920
+appelé softmax. Il a dit qu'il aurait dû l'appeler softargmax. Mais c’est trop tard,
+
+1:08:56.920,1:09:07.240
+les gens appellent ça softmax. Donc voici un exercice intéressant pour vous.
+
+1:09:07.240,1:09:11.500
+Je vais vous dire comment vous allez rétropropager ça. Je veux que vous 
+
+1:09:11.500,1:09:16.750
+fassiez le calcul. C’est un très bon exercice. Logsoftmax est en fait un
+
+1:09:16.750,1:09:22.570
+module en Python, mais faites-le par vous-même, c'est un exercice parfait.
+
+1:09:22.570,1:09:34.960
+Donc, en gros, calculer ∂C/∂xₖ, supposant que vous ayez tous les ∂C/∂yᵢ.
+
+1:09:34.960,1:09:42.070
+Donc vous allez avoir un tas de détails ∂C/∂yᵢ.
+
+1:09:42.070,1:09:54.880
+Ici vous n'avez qu'une seule sortie en fait mais c'est ok. Donc disons qu’il
+
+1:09:54.880,1:10:00.460
+n'y a qu'un yᵢ et vous connaissez le gradient de la perte par rapport à ce
+
+1:10:00.460,1:10:07.500
+yᵢ. Quel est le gradient de la perte par rapport à l'ensemble des xₖ ?
+
+1:10:07.800,1:10:14.290
+C'est un bon exercice. Est-ce que c'est un devoir officiel ? [Réponse d’Alfredo] C'est un devoir officiel
+
+1:10:14.290,1:10:22.960
+ce soir. Ok c'est plus qu'un exercice. Vous pouvez trouver la réponse mais
+
+1:10:22.960,1:10:26.350
+c'est plus amusant… Je veux dire que vous n'apprenez pas beaucoup si vous 
+
+1:10:26.350,1:10:35.140
+n'essayez pas par vous-même. Vous devriez simplement chercher la réponse. [Question d’un étudiant]
+
+1:10:35.889,1:10:46.369
+Softmax et log est une combinaison de modules qui est très communément
+
+1:10:46.369,1:10:50.449
+Utilisée dans la classification multi-classe. Vous prenez un réseau de 
+
+1:10:50.449,1:10:53.320
+neurones, le dernier module sera un softmax afin de normaliser toutes les
+
+1:10:53.320,1:10:57.409
+les sorties. Les rendent positives, les faire ressembler à des probabilités 
+
+1:10:57.409,1:11:04.849
+et ce que vous voulez, c’est maximiser la probabilité que le modèle donne à 
+
+1:11:04.849,1:11:07.250
+la bonne réponse. Vous connaissez la bonne réponse est « oiseau ».
+
+1:11:07.250,1:11:13.460
+« oiseau » est le numéro quatre dans vos catégories, donc vous voulez la quatrième sortie de votre
+
+1:11:13.460,1:11:23.119
+softmax soit la plus grande que possible. C’est ce qu’est la logsoftmax.  
+
+1:11:23.119,1:11:27.230
+Si vous séparez les choses en deux, donc si vous avez la softmax et que 
+
+1:11:27.230,1:11:30.800
+vous prenez le log de la sortie comme la fonction de coût, le log de la sortie correcte de votre
+
+1:11:30.800,1:11:37.820
+fonction de coût, vous obtenez des problèmes numériques. Vous n'obtenez pas
+
+1:11:37.820,1:11:43.309
+log de zéro par exemple. Donc lorsque le score devient très très petit, le log diverge en quelque sorte
+
+1:11:43.309,1:11:47.210
+et vous avez des problèmes numériques. Donc il vaut mieux écrire les 
+
+1:11:47.210,1:11:57.860
+logsoftmax directement en tant que module unique, car ce problème numérique disparaît alors. [Question d’un étudiant]
+
+1:11:57.590,1:12:04.590
+C'est une bonne question, une très bonne question pour les 20 prochaines
+
+1:12:04.590,1:12:18.630
+minutes. Et pas seulement les 20 minutes suivantes. J'ai égaré mon stylo. 
+
+1:12:18.630,1:12:32.480
+Je n'ai aucune idée de ce que j'ai fait du stylo. Il est ici. 
+
+1:12:35.390,1:12:40.770
+Ok, alors disons que vous un réseau de neurones qui prend une variable x
+
+1:12:40.770,1:12:54.660
+et ensuite il y a w₀, puis une valeur, puis w₁. Nous obtenons
+
+1:12:54.660,1:13:11.690
+un tas de scores. Nous allons les transformer en des scores entre 0 et 1. 
+
+1:13:11.690,1:13:16.830
+Ce réseau n'a qu'une seule sortie et nous ne pouvons donc faire que deux 
+
+1:13:16.830,1:13:25.440
+classes. Le module que nous allons mettre ici est la fonction sigmoïde,
+
+1:13:25.440,1:13:36.450
+aussi appelée fonction logistique. Donc cette fonction, h(s), puisque
+
+1:13:36.450,1:13:48.420
+nous avons appelé cela s avant. 1/(1+e^(-s)).
+
+1:13:48.420,1:13:54.360
+Lorsque s est très grand, cette exponentielle est proche de 0 et
+
+1:13:54.360,1:14:06.720
+h est donc égale à 1. Lorsque s est très petit ou négatif, alors cette
+
+1:14:06.720,1:14:10.630
+exponentielle devient très importante et la fonction globale est donc 0.
+
+1:14:10.630,1:14:21.789
+Cette fonction ressemble à ça. Ici c'est 0,5. L'asymptote ici est +1.
+
+1:14:21.789,1:14:40.639
+Et ici c’est juste 0. Le 0,5 est illisible. Donc je pourrais juste prendre la
+
+1:14:40.639,1:14:49.929
+sortie ici, que je peux appeler Y̅, et la brancher sur une fonction de 
+
+1:14:52.420,1:15:02.809
+coût que je compare avec y. Donc y serait aussi une variable binaire :  0 ou 1.
+
+1:15:02.809,1:15:08.179
+Qu'est-ce que cette fonction de coût ? Qu'est-ce qu'elle devrait faire ? Je pourrais utiliser l'erreur quadratique.
+
+1:15:08.179,1:15:17.559
+Donc C pourrait être égale à la différence entre y et Y̅ au carré. 
+
+1:15:18.730,1:15:21.579
+Cela semble parfaitement raisonnable mais cela ne fonctionne pas très bien.
+
+1:15:21.579,1:15:31.190
+La raison pour laquelle cela ne fonctionne pas très bien est que la sigmoïde… 
+
+1:15:31.190,1:15:35.510
+Au début des réseaux neuronaux dans les années 1980, les gens utilisaient cela très couramment
+
+1:15:35.510,1:15:40.460
+et le réseau ne convergerait pas. Donc les gens disaient que les réseaux neuronaux ne fonctionnent pas.
+
+1:15:40.460,1:15:44.360
+Ils le faisaient juste de la mauvaise manière. Le problème que vous avez ici est
+
+1:15:44.360,1:15:54.559
+que si y est égal à 1 pour une classe et à 0 pour l'autre classe, le système
+
+1:15:54.559,1:15:59.480
+veut avoir la réponse égale à 1. Il ne peut pas le faire car il c’est une asymptote. Donc il
+
+1:15:59.480,1:16:05.659
+essaie de faire en sorte que les poids w1 soient très très grands pour qu'il arrive à 1 ou
+
+1:16:05.659,1:16:11.420
+à 0. Il doit faire en sorte que la somme pondérée soit énorme. Il veut être
+
+1:16:11.420,1:16:15.349
+le proche possible de la sortie souhaitée. Mais le gradient est très faible 
+
+1:16:15.349,1:16:19.639
+car la dérivée de la sigmoïde, la sigmoïde est très plate. Donc quand vous 
+
+1:16:19.639,1:16:22.230
+rétropropagez, le gradient est fondamentalement nul. Car la sigmoïde
+
+1:16:22.230,1:16:32.220
+est plate. Donc vous avez un problème de saturation. Certaines personnes comme moi
+
+1:16:32.220,1:16:39.510
+ont dit à l’époque les deux choses suivantes. Soit vous fixez vos cibles
+
+1:16:39.510,1:16:46.350
+entre donc pas aux asymptotes, soit vous utilisez une perte différente.
+
+1:16:46.350,1:16:52.710
+Donc en gros vous dites qu'ici c’est la fonction sigmoïde. La cible pour
+
+1:16:52.710,1:16:56.700
+la catégorie 1 va se trouver, disons à 0,8 , et la cible pour la
+
+1:16:56.700,1:17:02.250
+la catégorie 2 sera à 0,2. Donc il y aurait un tableau et pour les poids
+
+1:17:02.250,1:17:07.320
+n'iraient pas à l'infini et donc vous n'ayez pas ces problèmes. Il y a
+
+1:17:07.320,1:17:12.570
+une autre idée. Il s’agit juste de prendre le log de ça. Donc si
+
+1:17:12.570,1:17:16.980
+vous pensez à cela, la fonction suivante ici, c'est en fait un softmax.
+
+1:17:16.980,1:17:22.980
+Un softmax entre deux variables. [Traduction de ce qui est écrit et pas de ce que dit Yann] 
+
+1:17:22.980,1:17:27.990
+L'une est égale à -s et l'autre à 0. Ce que vous obtenez est le soft(arg)max de la sortie
+
+1:17:27.990,1:17:39.720
+à partir de l'entrée qui est égale à s. Donc écrivons cette fonction
+
+1:17:39.720,1:17:50.430
+d'une autre manière. Je vais multiplier le haut et le bas par eˢ.
+
+1:17:50.430,1:17:58.620
+Donc j'obtiens eˢ visisé par (eˢ + e⁻ˢ) qui vaut 1. Ok, c’est le softmax.
+
+1:17:58.620,1:18:09.060
+[De nouveau la traduction du texte au lieu du discours]. C’est un softmax où une entrée est 0 et l’autre est s.
+
+1:18:09.060,1:18:14.760
+Ce que je regarde, c'est la sortie correspondant à l‘entrée s.
+
+1:18:14.760,1:18:17.090
+Donc la sigmoïde… Le softmax est juste une
+
+1:18:24.290,1:18:30.409
+généralisation de la sigmoïde pour de multiples sorties. Si vous prenez le
+
+1:18:30.409,1:19:06.120
+log de ça, vous obtenez s – log(1 + eˢ).
+
+1:19:14.120,1:19:17.120
+Une autre question est… Encore une fois c'est un
+
+1:19:17.670,1:19:21.810
+cas spécial de softmax avec seulement deux entrées où l'une est égale à 1. 
+
+1:19:21.810,1:19:30.420
+L'une des deux entrées est égale à 1. Ok donc l'effet du log…
+
+1:19:30.420,1:19:44.370
+regardez cette fonction ici. Cette fonction ressemble à ceci, où quand s est
+
+1:19:44.370,1:19:48.870
+très grand, le 1 ne compte pas dans la somme. Donc vous avez essentiellement
+
+1:19:48.870,1:19:52.710
+log(eˢ) qui est juste s. Pour un s grand, c’est juste la fonction identité.
+
+1:19:52.710,1:20:00.960
+Pour les petits s, le 1 domine. Or log(1) vaut 0, donc on obtient 0.
+
+1:20:00.960,1:20:08.970
+C'est un peu comme une ReLU « douce ». Mais le fait est que cela ne
+
+1:20:08.970,1:20:18.250
+sature pas. Vous n’avez pas de problème de disparition du gradient. [Question d’un étudiant]
+
+1:20:34.710,1:20:43.480
+Oui, nous avons le log devant. Donc log(eˢ) = s [L’étudiant poursuit] Oui bien sûr, 
+
+1:20:43.480,1:20:48.039
+je veux dire que je parlais juste du deuxième terme.
+
+1:20:48.039,1:20:57.280
+Je veux dire s – ça, c'est un peu l'inverse. Oui absolument.
+
+1:20:57.280,1:21:08.699
+Vous devriez prendre la fonction entière. C'est l’exact opposé [cf. le tracé]
+
+1:21:21.680,1:21:33.560
+Vous avez aussi le softmax comme un des exercices ? Ok.
+
+1:21:33.560,1:21:44.030
+Alors terminons par quelques astuces pratiques. Vous en verrez plus demain
+quand vous commencerez
+
+1:21:44.030,1:21:50.540
+à jouer avec la rétropropagation. L'idée d'utiliser la ReLU au lieu d'une
+
+1:21:50.540,1:21:54.500
+tangente hyperbolique… La tangente hyperbolique est semblable à la sigmoïde 
+
+1:21:54.500,1:21:59.240
+que je viens de montrer, sauf que c'est multiplié par 2 et on soustrait 1.
+
+1:21:59.240,1:22:04.900
+Donc elle va de -1 à +1 au lieu de 0 à +1. Elle a essentiellement la même 
+
+1:22:04.900,1:22:09.290
+forme. [Remarque d’Alfredo]. Oui on en a parlé la semaine dernière.
+
+1:22:09.290,1:22:16.610
+La ReLU a tendance à fonctionner beaucoup mieux lorsque vous
+
+1:22:16.610,1:22:22.700
+avez de nombreuses couches. La raison de ça est probablement qu’elle est invariante au changement d’échelle
+
+1:22:22.700,1:22:28.790
+ou équivariante au changement d’échelle. Si vous multipliez l'entrée par 2,
+
+1:22:28.790,1:22:33.590
+la sortie sera multipliée par 2 mais tout le reste sera inchangé. Il y a
+
+1:22:33.590,1:22:38.870
+qu’un seul coude et donc il n'a pas d'échelle dessus. Si vous aviez deux coudes, 
+
+1:22:38.870,1:22:42.950
+l'entrée devrait avoir une variance particulière pour convenir à ces deux coudes
+
+1:22:42.950,1:22:51.170
+au bon endroit. Les gens utilisent la ReLU. Utiliser l'entropie 
+
+1:22:51.170,1:22:59.050
+croisée pour la classification. Logsoftmax est un cas particulier simple de 
+
+1:22:59.290,1:23:08.140
+la perte d'entropie croisée. Nous y reviendrons.
+
+1:23:08.400,1:23:24.830
+[Remarque d’une autre personne, je n’entends pas tout bien. Elle évoque l’implémentation en PyTorch pour tout ce qui est débogage, et préconise l’usage de la logsoftmax à la softmax]
+
+1:23:24.830,1:23:33.630
+Oui vous allez utiliser la logsoftmax au lieu de la softmax. Si vous donnez ça à une fonction de perte d’entropie croisée, elle attend
+
+1:23:33.630,1:23:39.120
+une sortie d’une logsoftmax, pas d’une softmax. Si vous ne le savez pas, vous risquez de perdre beaucoup de
+
+1:23:39.120,1:23:44.640
+temps. Utiliser le gradient stochastique sur des mini-batchs. Nous en avons parlé avant.
+
+1:23:44.640,1:23:48.780
+Mélangez les échantillons d’entraînement. Quand vous utilisez le gradient stochastique, l'ordre des
+
+1:23:48.780,1:23:54.030
+exemples a une importance. Si disons vous faites une classification à 10 
+
+1:23:54.030,1:23:58.230
+sorties sur MNIST, vous essayez de classer les dix chiffres de 0 à 9. 
+
+1:23:58.230,1:24:02.489
+Si vous mettez tous les 0,  puis tous les 1, puis tous les 2, etc. Ce ne va
+
+1:24:02.489,1:24:06.690
+pas fonctionner car ce qui va se passer, c'est que dans les premiers exemples de 0, le
+
+1:24:06.690,1:24:11.100
+système adaptera les biais de la dernière couche pour simplement produire la sortie correcte
+
+1:24:11.100,1:24:14.969
+et nous n'apprendrons jamais à quoi ressemble un 0. Puis vous montrez 1 et 
+
+1:24:14.969,1:24:18.929
+cela va prélever quelques échantillons pour qu'il s'adapte aux biais, donc il va apprendre à
+
+1:24:18.929,1:24:22.350
+produire 1 sans vraiment regarder l'entrée. Il va continuer à faire cela
+
+1:24:22.350,1:24:27.510
+pour des siècles et des siècles et cela ne convergera jamais. Donc vous devez 
+
+1:24:27.510,1:24:31.469
+absolument mélanger les exemples. Dans le cas de MNIST mais c'est aussi vrai pour beaucoup
+
+1:24:31.469,1:24:35.760
+d'autres bases. Vous voulez probablement que dans un mini-batch il y
+
+1:24:35.760,1:24:39.480
+ait des exemples de toutes les catégories. Si vous voulez vraiment
+
+1:24:39.480,1:24:45.480
+utiliser un mini-batch électronique, utilisez des échantillons de différentes catégories. Si
+
+1:24:45.480,1:24:49.260
+vous n'utilisez pas un mini-batch, vous avez des échantillons de différentes catégories l’un
+
+1:24:49.260,1:24:53.760
+après l'autre. Il y a un débat sur la nécessité de changer l'ordre des
+
+1:24:53.760,1:24:59.610
+échantillons à chaque passage sur les échantillons. Ce n'est pas tout à fait clair. Certaines 
+
+1:24:59.610,1:25:02.400
+personnes prétendent qu'il vaut mieux ne pas le faire, d’autres qu'il vaut
+
+1:25:02.400,1:25:09.929
+mieux. Il y a divers arguments théoriques pour ça. Normaliser les variables 
+
+1:25:09.929,1:25:15.929
+d'entrée. Donc si vous regardez les codes standards que les gens publient 
+
+1:25:15.929,1:25:20.730
+pour un entraînement sur ImageNet, de la reconnaissance vocale ou autre,
+
+1:25:20.730,1:25:24.159
+La première opération qu'ils font est qu'ils normalisent les entrées. 
+
+1:25:24.159,1:25:52.210
+Qu'est-ce qu'ils font ? Donc une image a trois plans : R, V, B.
+
+1:25:52.470,1:26:05.590
+Donc il faut penser à un tableau tridimensionnel où la première
+
+1:26:05.590,1:26:12.430
+dimension est le plan de couleur et les deux autres dimensions sont l'espace.
+
+1:26:12.430,1:26:18.700
+Parfois dans l'autre sens. Parfois le canal est le dernier. Mais il vaut
+
+1:26:18.700,1:26:22.750
+mieux y penser de cette façon. Donc ce que vous faites, c’est que vous prenez chacun
+
+1:26:22.750,1:26:32.680
+de ces gars. Donc disons le bleu. Vous calculez la moyenne de toutes les variables dans
+
+1:26:32.680,1:26:36.520
+cette image bleue et vous faites cela pour chaque image de votre jeu d’entraînement.
+
+1:26:36.520,1:26:40.630
+Prenez le jeu d’entraînement en entier ou une bonne partie de celui-ci et calculer la moyenne de
+
+1:26:40.630,1:26:44.920
+toutes les entrées bleues pour le jeu d’entraînement en entier. Cela vous
+
+1:26:44.920,1:26:51.460
+donne un seul scalaire. Appelons-le mb, la moyenne de tous les bleues.
+
+1:26:51.460,1:26:56.740
+Vous pouvez faire la même chose et calculer l’écart-type.
+
+1:26:56.740,1:27:01.360
+Calculez la variance de tous les bleus et prenez la racine carrée qui
+
+1:27:01.360,1:27:08.640
+est l’écart-type : σb. Faites  la même chose pour le vert et le rouge.
+
+1:27:11.630,1:27:19.370
+Donc nous obtenons six chiffres, six valeurs scalaires. Maintenant ce que 
+vous faites
+
+1:27:19.370,1:27:37.040
+c’est que dans une image vous prenez l'ensemble des composantes rij.
+
+1:27:37.040,1:27:48.889
+Pour normaliser ça, vous remplacer par lui-même moins la moyenne divisée par
+
+1:27:48.889,1:27:58.460
+l'écart-type ou le maximum de l'écart type et d’une petite quantité.
+
+1:27:58.460,1:28:04.790
+Donc il n'explose pas. Qu’est-ce que cela fait pour vous ? Cela normalise le contraste en
+
+1:28:04.790,1:28:11.630
+mettant la variante à 0. C’est bon pour diverses raisons. C’est une bonne 
+
+1:28:11.630,1:28:15.770
+idée d'avoir des variables à l'intérieur d'un réseau neuronal qui ont une
+
+1:28:15.770,1:28:20.780
+moyenne nulle et une variance unitaire ou une variance qui est à peu prêt 
+
+1:28:20.780,1:28:38.300
+la même partout. Bien sûr vous le faites aussi pour le vert et le bleu. [Question d’un étudiant] A travers de nombreuses
+
+1:28:38.300,1:28:45.050
+images. C’est une moyenne unique. [Etudiant] Il y a plusieurs façons de le faire. Vous pouvez
+
+1:28:45.050,1:28:48.980
+le faire pour une seule image de Google Images, c’est ce que la 
+
+1:28:48.980,1:28:55.130
+batch-norm fait. Vous pouvez aussi le faire sur un petit morceau d'une image. Cela s'appelle
+
+1:28:55.130,1:28:59.690
+un filtre passe-haut. Mais le plus simple et ce que presque tout le monde fait, pour les
+
+1:28:59.690,1:29:04.100
+pipelines standard pour ImageNet, pour le traitement d'image, ou pour les
+
+1:29:04.100,1:29:15.800
+pipelines de reconnaissance d’images avec ConvNets par exemple, c’est ça.
+[Question d’un étudiant]
+
+1:29:15.969,1:29:23.300
+Les canaux ont des moyennes très différentes. Dans une image naturelle
+
+1:29:23.300,1:29:29.780
+typique, vous pouvez être à l'intérieur ou à l'extérieur. Les composants
+
+1:29:29.780,1:29:37.630
+sont très différents. Vous avez un changement de couleur. L'amplitude du bleu est
+
+1:29:37.630,1:29:41.949
+relativement faible si vous êtes en plein soleil par exemple. Pour le 
+
+1:29:41.949,1:29:46.119
+rouge, l'amplitude est pratiquement inexistante si vous êtes sous l'eau.
+
+1:29:46.119,1:29:52.489
+Si vous voulez un signal quelconque vous devez normaliser. C’est comme un
+
+1:29:52.489,1:29:57.409
+contrôle automatique des gains. Les moyennes sont très différentes
+
+1:29:57.409,1:30:00.139
+car cela dépend de la luminosité globale. Vous ne voulez pas d’un
+
+1:30:00.139,1:30:03.889
+système où la reconnaissance dépend trop de
+
+1:30:03.889,1:30:07.099
+l'éclairage de votre image. C'est une façon de se débarrasser de
+
+1:30:07.099,1:30:13.909
+l'éclairage. Une sorte de « bad tuning » de l’exposition ou du contraste ou
+
+1:30:13.909,1:30:19.369
+de quoi que ce soit d'autre. Ce sont de bonnes raisons numériques de faire
+
+1:30:19.369,1:30:33.679
+faire ça. Je reviens sur pourquoi c'est une bonne idée plus tard.
+
+1:30:33.679,1:30:37.340
+Dans la plupart des codes pré-fait, vous trouvez des
+
+1:30:37.340,1:30:40.969
+schémas pour diminuer le taux d’apprentissage. Donc le taux d'apprentissage,
+
+1:30:40.969,1:30:46.789
+l’éta du système. La plupart des systèmes n'utilisent pas seulement le gradient stochastique simple.
+
+1:30:46.789,1:30:51.530
+Ils utilisent des choses comme Adam qui adaptent automatiquement la taille des pas. Ou
+
+1:30:51.530,1:30:57.170
+bien d'autres astuces. Ils utilisent aussi ce que l'on appelle un « momentum trick », le momentum de Nesterov
+
+1:30:57.170,1:31:04.280
+en particulier qui intègre Adam. Généralement si vous voulez de bons résultats, vous devez en
+
+1:31:04.280,1:31:07.010
+quelque sorte diminuer votre taux d’apprentissage à mesure que le temps
+
+1:31:07.010,1:31:11.840
+passe. Il existe donc des moyens standard, des schémas pour diminuer le 
+
+1:31:11.840,1:31:19.179
+du taux d'apprentissage que vous pouvez utiliser. Parfois, pas toujours,
+
+1:31:21.690,1:31:27.720
+vous pouvez utiliser un peu de régularisation L2/L1 en cours de route.
+
+1:31:27.720,1:31:34.390
+Qu'est-ce que cela signifie ? La régularisation L2 signifie qu’à chaque mise à jour, vous
+
+1:31:34.390,1:31:42.360
+multipliez tous les poids par tout par 1 - une petite constante multipliée par le taux d'apprentissage.
+
+1:31:43.050,1:31:56.130
+Les gens appellent ça « weight decay » [taux de décroissance des poids]. Les statisticiens appellent ça 
+
+1:32:01.390,1:32:13.150
+régularisation L2. Vous avez une addition dans 
+
+1:32:13.150,1:32:21.760
+votre fonction de cout. Votre coût plus un terme de régularisation
+
+1:32:21.760,1:32:27.820
+qui ne dépend que du poids. Le coût dépend aussi de l'échantillon. Vous
+
+1:32:27.820,1:32:35.530
+avez une sorte de variable pour contrôler cette importance ici. Donc la
+
+1:32:35.530,1:32:46.990
+Régularisation L2 signifie que R(w) est égal à la norme carrée de w. Lorsque vous calculez le
+
+1:32:46.990,1:32:53.770
+gradient de R par rapport à une composante particulière de W, ce que vous 
+
+1:32:53.770,1:32:56.310
+obtenez c’est 2 wᵢ. Et donc dans la règle de mise à jour lorsque vous faites
+
+1:33:14.890,1:33:24.430
+wᵢ remplacé par wi - η gradient de votre perte globale par rapport à
+
+1:33:24.430,1:33:33.550
+w, ce que vous obtenez est wᵢ - η multiplié par le gradient du coût par
+
+1:33:33.550,1:33:52.350
+rapport à w, moins car c'est un – gradient, - 2 α wi. Oh vous avez raison.
+
+1:33:54.330,1:34:10.560
+Je peux réécrire comme… ceci est wᵢ, et je peux réécrire comme wᵢ fois 1 
+
+1:34:10.980,1:34:25.750
+- 2 η α - η ∂c/∂wᵢ. Alors qu'est-ce que cela signifie ? Que vous prenez chaque poids et à
+
+1:34:25.750,1:34:33.070
+chaque itération, vous réduisez d'une constante légèrement inférieure à 1. 
+
+1:34:33.070,1:34:39.310
+C'est pourquoi on appelle cela la décroissance des poids. En l'absence de tout gradient de C,
+
+1:34:39.310,1:34:45.730
+les poids se réduisent exponentiellement à 0. Donc ce que cela fait, c'est 
+
+1:34:45.730,1:34:52.000
+qu’on essaie de dire au système de minimiser la fonction de coût mais le 
+
+1:34:52.000,1:34:55.980
+faire avec un vecteur de poids aussi court que possible.
+
+1:34:58.749,1:35:04.269
+L'autre est la régularisation L1.
+
+1:35:10.689,1:35:25.599
+C’est essentiellement un terme de régularisation égal à somme de nos i, valeur absolue de wᵢ.
+
+1:35:25.599,1:35:46.659
+C’est la norme L1. Quand vous faites la mise à jour du gradient, vous avez 
+
+1:35:46.659,1:36:02.559
+wᵢ – η ∂c/∂wᵢ et le gradient de ça, ou - le
+
+1:36:02.559,1:36:09.869
+gradient de ça, est sin(wᵢ). Et bien sûr, vous avez besoin de α devant.
+
+1:36:13.809,1:36:23.590
+C'est donc une constante qui est positive si wᵢ est positif et
+
+1:36:23.590,1:36:28.530
+négatif s’il est négatif mais il y a un signe moins devant donc…
+
+1:36:29.400,1:36:36.219
+En gros ici, wᵢ est réduit vers zéro par une constante égale η
+
+1:36:36.219,1:36:45.119
+fois α. Les statisticiens appellent cela LASSO : Least Absolute quelque chose [Least Absolute Shrinkage and Selection Operator].
+
+1:36:48.699,1:36:59.440
+C’est un acronyme mignon, une sorte de jeu de mots.
+
+1:36:59.440,1:37:04.420
+Ils le prononcent « lassou », pour une raison que je n’ai jamais
+
+1:37:04.420,1:37:11.170
+compris. Cela a pour effet de réduire tous les poids vers zéro
+
+1:37:11.170,1:37:16.239
+par une constante. Cela signifie que si un poids n'est pas utile, il
+
+1:37:16.239,1:37:27.280
+va être éliminé à zéro. C'est très intéressant quand vous avez
+
+1:37:27.280,1:37:33.070
+un réseau avec un très
+
+1:37:33.070,1:37:36.519
+grand nombre d’entrées dont beaucoup ne sont pas très utiles. Cela élimine
+
+1:37:36.519,1:37:40.360
+les entrées qui ne sont pas très utiles. Car les poids qui connectent
+
+1:37:40.360,1:37:52.360
+seront à zéro. Quelqu’un a une question. [Etudiant]. Tout d'abord vous ne
+voulez pas l'utiliser
+
+1:37:52.360,1:37:56.829
+au début car il y a une chose curieuse avec les réseaux de neurones qui est
+
+1:37:56.829,1:38:02.949
+que l'origine de l'espace de poids est en quelque sorte un point de selle. 
+
+1:38:02.949,1:38:06.969
+Donc si vous monter en puissance avec L1 ou L2 à l’initialisation, les poids vont juste à 0
+
+1:38:06.969,1:38:13.989
+et rien ne fonctionne. C'est une des astuces que j'ai oubliées et qui est très
+
+1:38:13.989,1:38:19.929
+importante dans cette liste. Les poids doivent être initialisés dans
+
+1:38:19.929,1:38:23.860
+le réseau neuronal. Et ils doivent être correctement initialisés. Il y a différentes
+
+1:38:23.860,1:38:28.570
+astuces qui sont intégrées dans PyTorch pour initialiser. L’une des astuces est appelée
+
+1:38:28.570,1:38:33.729
+Kaiming. C'est en fait l’astuce de Leon Bottou qui date d’il y a 20 ans. Cette
+
+1:38:33.729,1:38:43.239
+idée a été réinventé plusieurs fois. L'idée est que vous voulez que les poids qui
+
+1:38:43.239,1:38:47.739
+vont à une unité soient aléatoires. Je veux dire que vous les initialisez
+
+1:38:47.739,1:38:50.920
+au hasard mais vous ne savez pas s'ils sont trop grands ou trop petits. 
+
+1:38:50.920,1:38:53.559
+Vous les voulez d’à peu près la bonne taille afin que la sortie ait
+
+1:38:53.559,1:38:57.849
+à peu près la même variance que les entrées. Donc si les entrées d'une unité
+
+1:38:57.849,1:39:06.189
+sont indépendantes, la variance de la sortie, la variance de la somme pondérée
+
+1:39:06.189,1:39:11.199
+sera égale à la somme des variances de l'entrée multipliée par,
+
+1:39:11.199,1:39:17.739
+pondéré par le carré des poids. Donc si vous avez n entrées et vous voulez
+
+1:39:17.739,1:39:23.050
+que la sortie ait la même variance que l'entrée. Vous avez besoin que les 
+
+1:39:23.050,1:39:30.550
+poids soient proportionnels à la racine carrée inverse du nombre d'entrées. 
+
+1:39:30.550,1:39:34.449
+C'est l'astuce. Donc nous initialisons les poids à des valeurs qui sont
+
+1:39:34.449,1:39:40.599
+tirées au hasard, avec une moyenne nulle et la variance vaut 1 sur la 
+
+1:39:40.599,1:39:45.159
+racine carrée du nombre d'entrées dans l’unité. C’est construit dans 
+
+1:39:45.159,1:39:51.099
+PyTorch bien sûr. L'initialisation est donc très importante. Si vous la
+
+1:39:51.099,1:40:11.079
+faites mal votre réseau ne va pas converger. [Question d’un étudiant] Vous
+
+1:40:11.079,1:40:15.280
+voulez probablement commencer avec un alpha égal à zéro et ensuite peut-être le faire monter.
+
+1:40:15.280,1:40:18.249
+Ensuite cela dépend de la quantité que vous voulez régulariser ? En quelle
+
+1:40:18.249,1:40:22.829
+quantité c’est nécessaire. Beaucoup de gens n'utilisent pas de L1 ou L2.  
+
+1:40:22.829,1:40:26.800
+Ils utilisent le dropout. Donc le dropout est un autre type de régularisation.
+
+1:40:26.800,1:40:31.749
+Vous pouvez considérer ça comme une couche à l'intérieur d'un réseau neuronal.
+
+1:40:31.749,1:40:36.659
+Il suffit de l'insérer dans le réseau. Ce que fait le dropout est qu’aléatoirement… 
+
+1:40:36.659,1:40:44.800
+C'est une boîte qui a n entrée et n sortie et qui fixe aléatoirement n sur
+
+1:40:44.800,1:40:49.869
+deux des sorties à 0. C'est un tirage au sort. A chaque nouvel échantillon 
+
+1:40:49.869,1:40:58.199
+que vous tirez, cette couche tue la moitié de ses composants. Ok c'est fou 
+
+1:40:58.199,1:41:03.550
+non ? Mais en fait, cela rend les autres variables plus robustes.
+
+1:41:03.550,1:41:08.610
+Cela oblige le système à ne pas s'appuyer sur une seule unité pour produire une réponse.
+
+1:41:08.610,1:41:12.720
+Il distribue en quelque sorte l'information dans toutes les unités car il 
+
+1:41:12.720,1:41:16.830
+sait que vous entraînez. Donc la moitié d'entre eux peuvent disparaître, ce tend
+
+1:41:16.830,1:41:20.670
+à mieux diffuser l'information. C'est une astuce que Geoffrey Hinton
+
+1:41:20.670,1:41:24.960
+et son équipe a trouvé. Cela s'avère être une manière assez efficace de
+
+1:41:24.960,1:41:30.720
+régulariser des réseaux neuronaux. Beaucoup de gens utilisent ça. Il y a des variations.
+
+1:41:30.720,1:41:34.110
+Nous parlerons plus en détail des astuces qui se trouvent dans l'un des papiers « Efficient Backprop »
+
+1:41:34.110,1:41:42.690
+que j'ai écrit il y a de nombreuses années et que vous êtes invités à lire. 
+
+1:41:42.690,1:41:47.910
+Dernière chose pour aujourd'hui, même si nous sommes en retard. Cette astuce, je veux dire que c'est tout un
+
+1:41:47.910,1:41:52.470
+Cadre : avoir un graphe et rétropropager à travers lui. Bien sûr il
+
+1:41:52.470,1:41:59.550
+ne fonctionne pas seulement pour les modules empilés. Il fonctionne pour n'importe quelle disposition de module
+
+1:41:59.550,1:42:05.930
+y compris ceux dynamiques et qui dépendent des entrées. {Etudiant]
+
+1:42:13.760,1:42:19.710
+Donc la question est de savoir pourquoi nous nous soucions du fait que les valeurs sont
+
+1:42:19.710,1:42:24.539
+invariantes au changement d'échelle si nous voulons normaliser. La question est de savoir aussi
+
+1:42:24.539,1:42:29.130
+ce que vous normalisez. Si vous avez des sigmoïdes et que vous normalisez
+
+1:42:29.130,1:42:32.400
+cela force le système… Si vous normalisez et qu’une variance est trop 
+
+1:42:32.400,1:42:35.039
+petite par exemple, le système ne pourra pas utiliser la non-linéarité
+
+1:42:35.039,1:42:40.650
+dans la sigmoïde/tangente hyperbolique. Si vous la rendez trop petite, cela 
+
+1:42:40.650,1:42:47.249
+va saturer. Donc qu’elle est la bonne configuration ? Ce n’est pas clair. ReLU s’en fiche. Tant que
+
+1:42:47.249,1:42:50.369
+c'est la même variance sur tout le réseau. Si ce n’est pas la même variance 
+
+1:42:50.369,1:42:54.480
+sur tout le réseau, alors vous obtiendrez que certaines couches vont 
+
+1:42:54.480,1:42:57.059
+apprendre plus vite que d'autres. Certaines vont diverger quand d'autres
+
+1:42:57.059,1:43:01.110
+Convergeront. Donc vous voulez que les variances soient à peu près les mêmes sur tout le réseau.
+
+1:43:01.110,1:43:08.880
+C’est ce que certaines choses comme la batch-norm fait pour vous mais nous n'avons pas encore parlé.
+
+1:43:08.880,1:43:16.000
+Mais c'est tout pour aujourd'hui, merci. A la semaine prochaine

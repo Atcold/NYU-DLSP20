@@ -110,7 +110,7 @@ it's plane doesn't have a taste that American sorry I try to be the most
 American I can in Italy you feel taken an ice cream which is doesn't have a
 
 0:03:11.390,0:03:15.950
-taste it's gonna be fury laughter which is milk taste in here we don't have milk
+taste it's gonna be fior di latte which is milk taste in here we don't have milk
 
 0:03:15.950,0:03:20.049
 tests they have vanilla taste which is the plain ice cream
@@ -536,16 +536,16 @@ very nice compact notation it's just I just put the two vectors one on top of
 each other and then I sign assign I sum the bias I also and define initial
 
 0:15:24.640,0:15:29.920
-condition my initial H is gonna be 0 so at the beginning whenever I have T equal
+condition my initial H is gonna be 0 so at the beginning whenever I have t=1
 
 0:15:29.920,0:15:34.360
-1 this stuff is gonna be settle is a vector of zeros and then I have this
+this stuff is gonna be settle is a vector of zeros and then I have this
 
 0:15:34.360,0:15:39.880
-matrix WH is gonna be two separate matrices so sometimes you see this a
+matrix Wh is gonna be two separate matrices so sometimes you see this a
 
 0:15:39.880,0:15:48.130
-question is wh x times x plus w HH times h t minus 1 but you can also figure out
+question is Wₕₓ times x plus Wₕₕ times h[t-1] but you can also figure out
 
 0:15:48.130,0:15:52.450
 that if you stock those two matrices you know one attached to the other that you
@@ -620,7 +620,7 @@ already seen that so let's see how this works for a practical example so in this
 case we we are just reading this code here so this is world language model you
 
 0:17:51.830,0:17:57.770
-can find it at the PI torch examples so you have a sequence of symbols I have
+can find it at the PyTorch examples so you have a sequence of symbols I have
 
 0:17:57.770,0:18:01.910
 just represented there every symbol is like a letter in the alphabet and then
@@ -647,16 +647,16 @@ network to be able to so this will be my best back propagation through time
 period and I will force the network to output the next sequence of characters
 
 0:18:38.270,0:18:44.510
-ok so given that I have ABC I will force my network to say D given that I have
+ok so given that I have a,b,c, I will force my network to say d given that I have
 
 0:18:44.510,0:18:50.000
-GHI I will force the network to come up with J givin em an orbit for
+g,h,i, I will force the network to come up with j. Given m,n,o,
 
 0:18:50.000,0:18:54.980
-tonight poke at P and s tu for the network 20 right so how can you actually
+I want p, given s,t,u, I want v. So how can you actually make
 
 0:18:54.980,0:18:59.660
-make sure you understand what I'm saying whenever you are able to predict my next
+sure you understand what I'm saying whenever you are able to predict my next
 
 0:18:59.660,0:19:04.010
 world you're actually able to you know you basically know in already what I'm
@@ -680,10 +680,10 @@ gonna be my first output is going to be a batch with four items I feed this
 inside the near corner all night and then my neural net we come up with a
 
 0:19:34.220,0:19:39.740
-prediction of the upcoming sample right and I will force that one to be my B H
+prediction of the upcoming sample right and I will force that one to be my b,h,n,t
 
 0:19:39.740,0:19:47.450
-and T okay then I'm gonna be having my second input I will provide the previous
+okay then I'm gonna be having my second input I will provide the previous
 
 0:19:47.450,0:19:53.420
 hidden state to the current RNN I will feel these inside and then I expect to
@@ -695,13 +695,13 @@ get the second line of the output the target right and then so on right I get
 the next state and sorry the next input I get the next state and then I'm gonna
 
 0:20:03.410,0:20:07.700
-get inside the neural net the RN n I which I will try to force to get the
+get inside the neural net the RNN I which I will try to force to get the
 
 0:20:07.700,0:20:13.840
 final target okay so far yeah each one is gonna be the output of the
 
 0:20:18.730,0:20:28.280
-internet recurrent neural net right I'll show you the equation before you have h1
+internet recurrent neural net right I'll show you the equation before you have h[1]
 
 0:20:28.280,0:20:43.460
 comes out from this one right second the output I'm gonna be forcing the output
@@ -755,7 +755,7 @@ output here the value inside the batch ok alright what's missing now
 constraint all right what's happening now so here I'm gonna be sending the
 
 0:22:08.370,0:22:13.300
-here I just drawn an arrow with the final HT but there is a slash on the
+here I just drawn an arrow with the final h[T] but there is a slash on the
 
 0:22:13.300,0:22:16.780
 arrow what is the slash on the arrow who can
@@ -767,7 +767,7 @@ understand what the slash mean of course there will be there is gonna be the nex
 batch they're gonna be starting from here D and so on this is gonna be my
 
 0:22:31.570,0:22:46.690
-next batch d j pv e KQ v + FL rx right so this slash here means do not back
+next batch d,j,p,v  e,k,q,w  and f,l,r,x. This slash here means do not back
 
 0:22:46.690,0:22:51.550
 propagate through okay so that one is gonna be calling dot detach in Porsche
@@ -785,7 +785,7 @@ gradient such that when I input the next gradient the first input here it's gonn
 be this guy over here and also of course without gradient such that we don't have
 
 0:23:11.530,0:23:17.170
-an infinite length RN n okay make sense yes
+an infinite length RNN okay make sense yes
 
 0:23:17.170,0:23:24.640
 no I assume it's a yes okay so vanishing and exploding
@@ -971,13 +971,13 @@ so how do we fix this problem well instead of using one recurrent neural
 network we're gonna using for recurrent neural network okay so the first
 
 0:28:36.650,0:28:41.510
-recurrent Network alcohol on the first network is gonna be the one that goes
+RNN on the first network is gonna be the one that goes
 
 0:28:41.510,0:28:46.370
 from the input to this intermediate state then I have other three networks
 
 0:28:46.370,0:28:51.410
-and each of those are represented by these three symbols 1 2 & 3
+and each of those are represented by these three symbols 1 2 & 3.
 
 0:28:51.410,0:28:56.870
 okay think about this as our open mouth and it's like a closed mouth okay like
@@ -1241,7 +1241,7 @@ multiple C over time you want to change something in the original C you still
 have the gradient coming down all the way until the first C which comes down
 
 0:36:39.130,0:36:43.740
-to getting gradients through that matrix WC here right so if you want to change
+to getting gradients through that matrix Wc here right so if you want to change
 
 0:36:46.660,0:36:52.089
 those weights here you just go through the chain of multiplications that are
@@ -1268,13 +1268,13 @@ multiply you get the norm of this vector getting killed right so you have like a
 exponential decay in this case if my forget gate is actually always equal to
 
 0:37:31.569,0:37:37.510
-1 then you get C equal C minus team derivative what is the partial
+1 then you get c = c-t. What is the partial
 
 0:37:37.510,0:37:43.299
-derivative of C T with respect to what is the partial derivative of C T with
+derivative of c[t]/c[t-1]?
 
 0:37:43.299,0:37:48.579
-respect to C minus t minus 1 1 right so the parts of the relative that is the
+1 right so the parts of the relative that is the
 
 0:37:48.579,0:37:52.390
 thing that you actually multiply every time there's gonna be 1 so output
@@ -1349,10 +1349,10 @@ sequence of elements sequence elements and targets are represented locally
 input vectors with only one nonzero bit so it's a one hot encoding the sequence
 
 0:40:05.660,0:40:10.770
-starts with a B for beginning and end efore end and otherwise consists of a
+starts with a B for beginning and end with a E and otherwise consists of a
 
 0:40:10.770,0:40:16.370
-randomly chosen symbols from a set a b c and d which are some kind of noise
+randomly chosen symbols from a set {a, b, c, d} which are some kind of noise
 
 0:40:16.370,0:40:22.380
 expect for two elements in position t1 and t2 this position can be either or X
@@ -1367,25 +1367,25 @@ length length is chose randomly between 100 and 110 10 t1 is randomly chosen
 between 10 and 20 Tinto is randomly chosen between 50 and 60 there are four
 
 0:40:40.530,0:40:47.010
-sequences classes QRS nu which depends on the temporal order of x and y so if
+sequences classes Q, R, S and U which depends on the temporal order of x and y so if
 
 0:40:47.010,0:40:53.520
-you have X X you can be getting a Q x and y you get an R Y and X you get an S
+you have X,X you can be getting a Q. X,Y you get an R. Y,X you get an S
 
 0:40:53.520,0:40:57.750
-and YY with you so we're going to be doing a sequence classification based on
+and Y,Y get U. You so we're going to be doing a sequence classification based on
 
 0:40:57.750,0:41:03.720
 the X and y or whatever those to import to these kind of triggers okay
 
 0:41:03.720,0:41:08.370
-and in the middle in the middle you can have ABCD in random positions like you
+and in the middle in the middle you can have a,b,c,d in random positions like you
 
 0:41:08.370,0:41:12.810
 know randomly generated is it clear so far so we do cast a classification of
 
 0:41:12.810,0:41:23.180
-sequences where you may have these x and y's or X X or Y or Y X so in this case
+sequences where you may have these X,X  X,Y  Y,X ou Y,Y. So in this case
 
 0:41:23.210,0:41:29.460
 I'm showing you first the first input so the return type is a tuple of sequence
@@ -1397,13 +1397,13 @@ of two which is going to be what is the output of this example generator and so
 let's see what is what is this thing here so this is my data I'm going to be
 
 0:41:43.050,0:41:48.030
-feeding to the network so I have one two three four five six seven eight there
+feeding to the network so I have 1, 2, 3, 4, 5, 6, 7, 8 
 
 0:41:48.030,0:41:54.180
-are eight different symbols here in a row every time why there are eight we
+different symbols here in a row every time why there are eight we
 
 0:41:54.180,0:42:02.970
-have x and y a b c and d beginning and end right so we have one hot out of you
+have X and Y and a, b, c and d beginning and end. So we have one hot out of you
 
 0:42:02.970,0:42:08.400
 know eight characters and then i have a sequence of rows which are my sequence
@@ -1427,7 +1427,7 @@ you're gonna have like in this case the second item is of the two a pole to pole
 is the corresponding best class for example I have a batch size of 32 and
 
 0:42:41.160,0:42:51.930
-then I'm gonna have an output size of 4 y 4 Q R whatever right the QRS you okay
+then I'm gonna have an output size of 4. Why 4 ? Q, R, S and U.
 
 0:42:51.930,0:42:57.450
 so I have 4 a 4 dimensional target vector and I have a sequence of 8
@@ -1436,7 +1436,7 @@ so I have 4 a 4 dimensional target vector and I have a sequence of 8
 dimensional vectors as input okay so let's see how this sequence looks like
 
 0:43:04.499,0:43:12.779
-in this case is gonna be the beginning BX CX CBE so X X let's see X X X X is Q
+in this case is gonna be BbXcXcbE. So X,X let's see X X X X is Q
 
 0:43:12.779,0:43:18.569
 right so we have our Q sequence and that's why the final target is a Q the 1
@@ -1499,16 +1499,16 @@ gradient okay all right those are the five steps you always want to see in any
 training blueprint if someone is missing then you're [ __ ] up okay so we try now
 
 0:45:37.909,0:45:42.469
-the RNN and the lsdm and you get something looks like this
+the RNN and the LSTM and you get something looks like this
 
 0:45:42.469,0:45:55.929
-so our NN goes up to 50% in accuracy and then the lsdm got 100% okay oh okay
+so our NN goes up to 50% in accuracy and then the LSTM got 100% okay oh okay
 
 0:45:56.439,0:46:06.019
-first of all how many weights does this lsdm have compared to the RN n four
+first of all how many weights does this LSTM have compared to the RNN four
 
 0:46:06.019,0:46:11.059
-times more weights right so it's not a fair comparison I would say because lsdm
+times more weights right so it's not a fair comparison I would say because LSTM
 
 0:46:11.059,0:46:16.819
 is simply for rnns combined somehow right so this is a two layer neural
@@ -1556,7 +1556,7 @@ other case we got 2,100 percent in roughly twice as long
 twice longer at a time okay so let's first see how they perform here so I
 
 0:47:35.690,0:47:42.200
-have this sequence BC y dy Dae which is au sequence and then we ask the network
+have this sequence BcYdYdaE which is a U sequence and then we ask the network
 
 0:47:42.200,0:47:46.760
 and he actually meant for actually like labels it as you okay so below we're
@@ -1568,16 +1568,16 @@ gonna be seeing something very cute so in this case we were using sequences
 that are very very very very small right so even the RNN is able to train on
 
 0:47:56.870,0:48:02.390
-these small sequences so what is the point of using a lsdm well we can first
+these small sequences so what is the point of using a LSTM well we can first
 
 0:48:02.390,0:48:07.430
 of all increase the difficulty of the training part and we're gonna see that
 
 0:48:07.430,0:48:13.280
-the RN ends can be miserably failing whereas the lsdm keeps working in this
+the RNN can be miserably failing whereas the LSTM keeps working in this
 
 0:48:13.280,0:48:19.790
-visualization part below okay I train a network now Alice and lsdm now with the
+visualization part below okay I train a network now Alice and LSTM now with the
 
 0:48:19.790,0:48:26.000
 moderate level which has eighty symbols rather than eight or ten ten symbols so
@@ -1631,13 +1631,13 @@ unit because in this case I use hidden representation like hidden dimension of
 quiet after seen the other acts this allows me to basically you know take
 
 0:49:58.410,0:50:07.440
-care of I mean recognize if the sequence is ru OPRS okay does it make sense okay
+care of I mean recognize if the sequence is U, P, R or S. Okay does it make sense okay
 
 0:50:07.440,0:50:14.519
-oh this one more notebook I'm gonna be showing just quickly which is the Eco
+oh this one more notebook I'm gonna be showing just quickly which is the 09-echo_data
 
 0:50:14.519,0:50:22.410
-data in this case I'm gonna be in South corner I'm gonna have a network echo in
+in this case I'm gonna be in South corner I'm gonna have a network echo in
 
 0:50:22.410,0:50:27.059
 whatever I'm saying so if I say something I asked a network to say if I
@@ -1727,7 +1727,7 @@ actually get we are an n/a accuracy that goes 100 100 percent then if you are
 starting now to mess with the size of the memory chunk with a memory interval
 
 0:53:08.220,0:53:11.619
-you can be seen with the lsdm you can keep this memory
+you can be seen with the LSTM you can keep this memory
 
 0:53:11.619,0:53:16.399
 for a long time as long as you have enough capacity the RNN after you reach
@@ -1739,4 +1739,4 @@ some kind of length you start forgetting what happened in the past and it was
 pretty much everything for today so stay warm wash your hands and I'll see you
 
 0:53:29.809,0:53:34.929
-next week bye bye [Music]
+next week bye bye

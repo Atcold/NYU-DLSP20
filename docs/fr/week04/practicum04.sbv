@@ -1,0 +1,1451 @@
+0:00:00.030,0:00:04.730
+Donc depuis la dernière fois… Ok, bon retour, merci d'être là.
+
+0:00:04.730,0:00:09.059
+La dernière fois Yann a utilisé la tablette. Comment peut-il utiliser la tablette et moi non ?
+
+0:00:09.059,0:00:13.040
+Je devrais être aussi cool que Yann, du moins je le pense. Une chose 
+
+0:00:13.040,0:00:18.900
+supplémentaire pour commencer, il y a un tableur où vous pouvez décider si
+
+0:00:18.900,0:00:22.890
+vous souhaitez rejoindre le Slack où nous collaborons pour réaliser
+
+0:00:22.890,0:00:28.529
+des dessins pour le site web, corrigeons certaines notations mathématiques, 
+
+0:00:28.529,0:00:32.640
+Corrigeons les erreurs d’anglais, de grammaire anglaise, etc.
+
+0:00:32.640,0:00:37.290
+Donc si vous souhaitez aider à améliorer le contenu de ce cours
+
+0:00:37.290,0:00:42.450
+n'hésitez pas à remplir la feuille du tableau calcul, ok ? Nous sommes déjà quelques
+
+0:00:42.450,0:00:49.789
+uns sur le Slack, donc si vous voulez nous rejoindre, vous êtes les bienvenus. 
+
+0:00:49.789,0:00:53.399
+Donc au lieu d'écrire sur le tableau blanc que ceux du fond ont du 
+
+0:00:53.399,0:01:00.270
+mal à lire, nous allons expérimenter un nouveau jouet ici.
+
+0:01:00.270,0:01:03.930
+C'est la première fois, donc vous savez, je suis un peu tendu.
+
+0:01:03.930,0:01:11.250
+La dernière fois j'ai foiré avec un notebook… Donc nous allons commencer
+
+0:01:11.250,0:01:15.659
+par un petit rappel sur l'algèbre linéaire. J'espère que je n’offense 
+
+0:01:15.659,0:01:20.670
+personne car je sais que vous avez déjà fait de l'algèbre linéaire et que 
+
+0:01:20.670,0:01:25.920
+vous très forts, mais j'aimerais néanmoins vous faire part de mon intuition, ma perspective, ok ?
+
+0:01:25.920,0:01:31.320
+C'est juste une diapositive, pas super long. Donc peut-être que vous aimez
+
+0:01:31.320,0:01:36.290
+prendre des notes papier/stylo ou vous pouvez juste suivre, peu importe.
+
+0:01:36.290,0:01:49.850
+Donc : « Revue de l'algèbre linéaire ».
+
+0:01:51.170,0:02:06.450
+Est-ce que j'attends un peu ? Laissez-moi attendre une seconde. Prêt ? Oui ? Non ? Secouez votre tête.
+
+0:02:06.450,0:02:12.150
+Ok, fantastique. Donc nous parlions la dernière fois d’un
+
+0:02:12.150,0:02:18.510
+réseau avec l'entrée en bas, puis nous avons une transformation affine et enfin une couche cachée. Donc je vais juste écrire la
+
+0:02:18.510,0:02:26.880
+première équation. J’ai donc ma couche cachée et comme j'écris avec un stylo… vous voyez quelque chose ? Oui donc puisque j'écris avec un stylo 
+
+0:02:26.970,0:02:30.360
+je mets souligne la variable avec un trait afin d’indiquer
+
+0:02:30.360,0:02:35.120
+que c'est un vecteur. Ok ? C'est comme ça que j'écris les vecteurs. Donc mon h est
+
+0:02:35.120,0:02:42.660
+une fonction non linéaire f appliquée à mon z. z est mon entrée linéaire,
+
+0:02:42.660,0:02:46.230
+la sortie de la transformation affine. Donc dans ce cas
+
+0:02:46.230,0:02:54.989
+j’écris ici que z est égal à ma matrice A fois x. Nous pouvons imaginer
+
+0:02:54.989,0:03:00.630
+qu'il n'y a pas de biais ici. C'est assez générique car nous pouvons
+
+0:03:00.630,0:03:06.030
+l'inclure dans la matrice et faire en sorte que le premier élément de x soit égal à 1.
+
+0:03:06.030,0:03:18.360
+Donc, si ce x ici appartient à ℝⁿ et ce z appartient à ℝᵐ, première question pour vous :
+
+0:03:18.360,0:03:24.989
+quelle est la taille de cette matrice ? [Etudiant] Ok, fantastique, donc cette matrice A 
+
+0:03:24.989,0:03:30.360
+est m fois n. Vous avez autant de lignes que la dimension où vous tirez
+
+0:03:30.360,0:03:34.200
+et vous avez autant de colonnes que la dimension d'où vous tirez, ok ?
+
+0:03:34.200,0:03:39.930
+Très bien, développons celui-ci. La matrice ici sera égale à quoi ?
+
+0:03:39.930,0:03:49.549
+Vous avez a₁,₁ a₁,₂ ainsi de suite jusqu'au dernier, qui va être ? [Etudiant] Criez. [Etudiant]
+
+0:03:49.549,0:03:56.269
+Merci. 1... ? [Etudiant]. Oui {1,n} puis vous avez la deuxième ligne
+
+0:03:56.269,0:04:04.249
+a₂,₁ a₂,₂ et ainsi de suite jusqu'au dernier qui est un a₂,ₙ ok ? Puis vous
+
+0:04:04.249,0:04:14.840
+continuez à descendre jusqu'au dernier qui va être ? [Etudiant] Quels sont les indices ? {m,1} ok ?
+
+0:04:14.840,0:04:24.740
+Donc vous avez aₘ,₁ aₘ,₂ et ainsi de suite jusqu'à aₘ,ₙ.
+
+0:04:24.740,0:04:37.220
+Puis nous avons ici notre x. Donc on a x₁, x₂ et ainsi de suite jusqu'à xₙ, ok ?
+
+0:04:41.680,0:04:47.479
+Vous êtes plus réactif que la dernière fois, bien, merci. Donc nous pouvons aussi
+
+0:04:47.479,0:04:52.099
+réécrire celui-ci de différentes façons. La première façon est la suivante.
+
+0:04:52.099,0:05:00.020
+Donc je vais avoir ici mon a¹. Puis je vais avoir
+
+0:05:00.020,0:05:12.409
+ici mon a² et puis j'ai le dernier qui va être mon aⁿ, ok ?
+
+0:05:12.409,0:05:23.400
+Ici, je vais multiplier cela par un vecteur colonne. Donc je vais écrire mon vecteur colonne comme ça. Quel est le résultat de cette opération ? 
+
+0:05:23.409,0:05:28.820
+Vous avez une matrice et un vecteur, le résultat va être… [Etudiant] Un vecteur. 
+
+0:05:28.820,0:05:35.780
+Quel est le premier élément de mon vecteur ? [Etudiant] Je n'utilise pas de points parce que je ne suis pas
+
+0:05:35.780,0:05:43.400
+physicien, en fait si, mais nous faisons de l'algèbre linéaire, alors que dois-je écrire ? [Etudiant]
+
+0:05:43.810,0:05:47.509
+D'accord, c'est déjà transposé car ce sont des vecteurs de ligne, donc
+
+0:05:47.509,0:06:01.780
+j'ai a¹ x. D donc il n'y a pas de transposition ici, pas de points. Le deuxième élément est ? [Etudiant] a² x, ok.
+
+0:06:01.780,0:06:17.800
+Et ensuite jusqu'au dernier qui sera [cf. l’écran]. Il n'y a pas de point. C’est comme si quelqu'un appelait ça « dot product » [littéralement produit point. En français on utilise le terme de produit scalaire] au lieu du « cross product » [littéralement produit croix. En français on utilise le terme de produit vectoriel]
+
+0:06:17.810,0:06:20.389
+mais cela suppose que vous utilisez un autre type de notation.
+
+0:06:20.389,0:06:26.710
+Très bien, et cela va être… Combien d'éléments ce vecteur a-t-il ? [Etudiant]
+
+0:06:26.710,0:06:35.120
+donc nous avons z₁, z₂  et ainsi de suite jusqu'à zₘ et c'est mon 
+
+0:06:35.120,0:06:39.710
+mon vecteur z, ok ? Fantastique. Donc maintenant, nous allons nous concentrer un peu
+
+0:06:39.710,0:06:48.590
+sur la signification de cette chose ici. Des questions jusqu'à présent ?
+
+0:06:48.590,0:06:54.530
+Non, ok. C'est très banal jusqu'à présent, j'espère. Faites-moi savoir si ce n'est pas le cas.
+
+0:06:54.530,0:07:00.140
+Donc analysons l'un de ces types ici pour comprendre la signification
+
+0:07:00.140,0:07:10.970
+de l'écriture aᵀ fois x. Mon aᵀ va être mon aⁱ générique.
+
+0:07:10.970,0:07:24.680
+Supposons dans ce cas que n = 2. Alors qu'est-ce que aᵀx ? Donc aᵀx va
+
+0:07:24.680,0:07:29.780
+être égal à quoi ? Laissez-moi dessiner quelque chose qui sera plus facile 
+
+0:07:29.780,0:07:37.720
+pour vous à comprendre. Donc celui-ci va être mon a, cela va être mon α
+
+0:07:37.720,0:07:48.620
+et ici ça va être mon x. Et là c’est mon ψ.
+
+0:07:48.620,0:07:58.210
+Quel est le résultat de ce produit ici ? Celui-ci ici. [Etudiant]
+
+0:07:58.210,0:08:08.470
+Répétez, désolé. [Etudiant] a transposé… disons que c'est un vecteur ligne.
+
+0:08:10.030,0:08:29.410
+Pouvez-vous voir ? non ? Quel est le résultat de cette opération ici ? [Etudiant] Non, pourquoi ? [Etudiant]
+
+0:08:29.410,0:08:34.610
+C'est un a générique, parmi les nombreux a. Il y a des m a,
+
+0:08:34.610,0:08:39.169
+C'est un de ces m a. Donc je multiplie un de ces a par mon x.
+
+0:08:39.169,0:08:43.310
+Supposons qu'il n'y ait que deux dimensions, alors quel est le résultat 
+
+0:08:43.310,0:08:50.660
+de ce produit scalaire ? Quelqu'un peut-il me dire ? [Etudiant] Non non non.
+
+0:08:50.660,0:09:02.720
+Produit scalaire normal. [Etudiant] Attendez. Donc vous avez a ici,
+
+0:09:02.720,0:09:08.510
+cette partie ici va être a₁ et ça va être a₂  ok ? Donc vous avez
+
+0:09:08.510,0:09:19.550
+ici x₁  et vous avez x₂, n'est-ce pas ? Alors comment exprimez-vous ce produit scalaire ici ? [Etudiant]
+
+0:09:19.980,0:09:26.730
+OK, donc j'écris. Faites-moi savoir si tout est clair. Donc j’écris ici : 
+
+0:09:28.890,0:09:37.780
+a₁ fois x₁  + a₂  fois x₂. C’est la définition. C’est clair ?
+
+0:09:37.780,0:09:44.830
+Oui ? Non ? Oui une question. [Etudiant]. C'est censé être une transposition. Une ligne fois
+
+0:09:44.830,0:09:49.600
+un vecteur colonne. Donc supposons que a est un vecteur colonne alors j'ai ligne fois colonne.
+
+0:09:49.600,0:10:02.230
+Continuons à écrire ces choses ici. Qu'est a¹ ? Comment puis-je calculer a¹ ?
+
+0:10:02.230,0:10:15.220
+[Etudiant] Répétez. [Etudiant] Ok. Je vais donc écrire ici que a¹ est la
+
+0:10:15.220,0:10:20.770
+longueur du vecteur a multiplié par cos(α). Que dire de x₁ ? 
+
+0:10:20.770,0:10:30.010
+ [Etudiant] Qu'est-ce que x₁ ? [Etudiant]. La même chose mais avec des lettres différentes.
+
+0:10:30.010,0:10:37.450
+Quelqu'un a dit quelque chose ? Vous suivez ? Vous êtes complètement largué ?
+
+0:10:37.450,0:10:43.210
+Vous n'avez aucune idée ? C'est trop facile ? Aucune idée de ce qui se passe ici ?
+
+0:10:43.210,0:10:53.770
+C'est bien jusqu’à présent ? Ok. Que sera le deuxième terme ? [Etudiant] Celui-ci va être x
+
+0:10:53.770,0:11:00.430
+Ici fois cos(ψ). Puis vous avez le deuxième mandat qui va être quoi ?
+
+0:11:00.430,0:11:16.920
+Norme de a [Etudiant] Criez, je n'entends pas. [Etudiant]. Ok sin(α) et puis ? [Etudiant]
+
+0:11:17.660,0:11:21.290
+Ok merci.
+
+0:11:23.930,0:11:27.870
+Très bien, je vais juste rassembler ces deux choses. Je vais avoir 
+
+0:11:27.870,0:11:47.370
+norme de a fois norme de x fois (cos(α)cos(ψ) + sin(α)sin(ψ)).
+
+0:11:48.210,0:11:54.210
+Qu'est-ce que c'est que ce truc entre parenthèses ? [Etudiant] Très bien, c'est le cosinus de la
+
+0:11:54.210,0:11:57.240
+différence des deux angles. Tout le monde connaît la trigonométrie ici, n'est-ce pas ?
+
+0:11:57.240,0:12:05.160
+Des formules de lycée. Donc cela est égal à a, x, le cos(ψ - α) 
+
+0:12:05.160,0:12:11.000
+n'est-ce pas ? Ou l'inverse, α - ψ.
+
+0:12:11.000,0:12:17.040
+Qu'est-ce que cela signifie ? Vous pouvez réfléchir à chaque élément… C'est clair jusqu'à présent ? 
+
+0:12:17.040,0:12:22.680
+Je n'ai pas fait de magie. Secouez la tête comme ça pour oui, comme ça pour non,
+
+0:12:22.680,0:12:27.810
+comme ça pour peut-être… je rigole. Ok, donc vous pouvez penser à chaque fois que vous
+
+0:12:27.810,0:12:33.600
+multipliez une matrice par un vecteur qui… en gros chaque sortie de cette opération
+
+0:12:33.600,0:12:39.570
+va mesurer… Ok attendez, c'est quoi ce cosinus ? Que vaut cosinus de 0 ?
+
+0:12:39.570,0:12:45.780
+1. Cela signifie donc que si ces deux angles, si les deux vecteurs sont alignés,
+
+0:12:45.780,0:12:50.460
+ce qui signifie qu'il y a un angle nul entre les deux vecteurs, vous pouvez avoir la
+
+0:12:50.460,0:12:57.090
+valeur maximale de cet élément, ok ? Quand avez-vous avez la valeur
+
+0:12:57.090,0:13:03.240
+la plus négative ? Quand ils sont opposés. Donc quand ils sont en
+
+0:13:03.240,0:13:08.310
+opposition de phase, vous avez la distance la plus négative. Mais si vous
+
+0:13:08.310,0:13:11.730
+appliquez, disons un ReLU, vous coupez toutes ces choses négatives et vous 
+
+0:13:11.730,0:13:16.200
+vérifiez juste les parties positives. Donc le réseau neuronal, en gros se
+
+0:13:16.200,0:13:20.520
+contente juste de trouver les correspondances positives. Encore une fois 
+
+0:13:20.520,0:13:23.620
+quand vous multipliez une matrice par un vecteur, vous
+
+0:13:23.620,0:13:31.330
+effectuez un produit scalaire entre chaque colonne et chaque ligne de
+
+0:13:31.330,0:13:36.220
+la matrice qui représente votre noyau. Donc chaque fois que vous avez une couche 
+
+0:13:36.220,0:13:40.000
+linéaire votre noyau va être la ligne entière de la matrice. Vous voyez 
+
+0:13:40.000,0:13:47.050
+quelle est la projection de cette entrée sur cette ligne
+
+0:13:47.050,0:13:52.900
+Donc chaque élément de ce produit va vous indiquer l'alignement avec
+
+0:13:52.900,0:13:57.580
+quelle entrée… Quel est l'alignement de l’entrée par rapport à la
+
+0:13:57.580,0:14:03.600
+ligne spécifique de la matrice. Oui ? Non ? Cela devrait donner plus
+
+0:14:03.600,0:14:08.290
+d'intuition sur pourquoi nous utilisons ces transformations linéaires. Elles vous 
+
+0:14:08.290,0:14:13.140
+permettent de voir la projection de l'entrée sur différents types
+
+0:14:13.140,0:14:22.300
+d’orientations. Ok ? [Etudiant] Vous pouvez essayer d’extrapoler cela dans
+
+0:14:22.300,0:14:26.140
+des dimensions élevées. Je suppose que l'intuition que je vous donne 
+
+0:14:26.140,0:14:30.580
+fonctionne en deux et trois dimensions. En dimensions plus élevées, je pense que cela
+
+0:14:30.580,0:14:38.209
+fonctionne de la même manière. Dans la prochaine leçon nous allons voir comment se répartissent les projections dans un
+
+0:14:38.890,0:14:43.240
+l'espace dimensionnel supérieur. Cela va être tellement cool je pense. 
+
+0:14:43.240,0:14:49.779
+Donc c'était la première partie de la classe. Oh il y a une autre partie.
+
+0:14:49.779,0:14:54.940
+Donc en fait ce z ici, nous pouvons l'écrire d'une manière différente.
+
+0:14:54.940,0:15:00.130
+Peut-être que c'est connu, peut-être pas. Quand je l'ai vu la première fois,
+
+0:15:00.130,0:15:05.050
+je ne le savais pas. Donc c'est cool que parfois de voir ces choses une fois de plus.
+
+0:15:05.050,0:15:10.450
+Donc revenons ici, le même z là. Donc vous pouvez exprimer
+
+0:15:10.450,0:15:18.820
+ce z comme étant égal au vecteur a₁. Dans ce cas a₁ sera le premier
+
+0:15:18.820,0:15:22.830
+colonne de la matrice A. Celle-ci va être multipliée par le scalaire x₁.
+
+0:15:22.830,0:15:29.380
+Vous avez la deuxième colonne de la matrice. Donc j'ai a₂  qui est multiplié
+
+0:15:29.380,0:15:34.870
+par le deuxième élément du x. Jusqu'au dernier qui sera ? [Etudiant]
+
+0:15:34.870,0:15:44.930
+Encore. [Etudiant] Je ne peux pas entendre si c'est m ou n ? [Etudiant] m comme ça ou n ? Vous savez, en langue des signes. Lequel ?
+
+0:15:44.930,0:15:52.880
+n. Ok. Vous connaissez la langue des signes ? Non ? Vous devriez l'apprendre c'est bien pour l'inclusion.
+
+0:15:52.880,0:15:59.630
+aₙ, ok ? donc la dernière colonne multipliée par votre xₙ. Bien sûr car x
+
+0:15:59.630,0:16:04.100
+a une taille de n. Il y a n éléments. Donc, fondamentalement, quand vous
+
+0:16:04.100,0:16:07.940
+faites une transformation linéaire ou appliquez un opérateur linéaire, vous
+
+0:16:07.940,0:16:12.890
+pondérez chaque colonne de la matrice avec le coefficient qui est dans…
+
+0:16:12.890,0:16:16.640
+Vous avez la première colonne multipliée par le premier coefficient de la
+
+0:16:16.640,0:16:22.130
+deuxième colonne, et par le deuxième élément, plus la troisième colonne multipliée par le troisième élément.
+
+0:16:22.130,0:16:26.420
+Et vous pouvez donc voir que le résultat de cette transformation est une somme pondérée
+
+0:16:26.420,0:16:32.180
+des colonnes de la matrice A. C'est donc une autre sorte d'intuition.
+
+0:16:32.180,0:16:36.620
+Parfois, vous les voyez comme si vous vouliez exprimer votre signal, vos
+
+0:16:36.620,0:16:45.290
+données, comme une combinaison de différentes décompositions. C'est une sorte de décomposition
+
+0:16:45.290,0:16:50.600
+linéaire de votre entrée. Ok, donc c'était la première partie. Un rappel
+
+0:16:50.600,0:16:57.530
+de l'algèbre linéaire. Une deuxième partie sera encore plus cool je pense.
+
+0:16:57.530,0:17:06.790
+Des questions jusqu'à présent ? Non ? Facile ? Trop facile ? Vous vous ennuyez ?
+
+0:17:06.790,0:17:10.670
+Désolé, d'accord, alors je vais accélérer, je suppose.
+
+0:17:10.670,0:17:15.170
+Alors voyons comment nous pouvons prolonger les choses que nous avons vues
+
+0:17:15.170,0:17:19.040
+aux convolutions. Donc peut-être que les convolutions sont parfois un peu 
+
+0:17:19.040,0:17:28.900
+bizarres. Voyons comment on peut faire une extension aux convolutions.
+
+0:17:31.720,0:17:38.390
+Disons que je commence avec la même matrice. Je vais donc avoir ici quatre
+
+0:17:38.390,0:17:53.660
+lignes et ensuite trois colonnes. Donc mes données doivent être ? Si j'ai, cette matrice,
+
+0:17:53.660,0:17:59.360
+si je multiplie cela par une colonne, mon vecteur colonne devrait être de taille ? [Etudiant] Trois, merci.
+
+0:17:59.360,0:18:04.250
+Donc laissez-moi dessiner ici mon vecteur colonne de taille trois et cela
+
+0:18:04.250,0:18:08.809
+va vous donner une sortie de taille ? [Etudiant] Quatre. Ok fantastique.
+
+0:18:08.809,0:18:15.740
+Mais ensuite… disons que vous allez écouter du son, un fichier audio.
+
+0:18:15.740,0:18:21.260
+Est-ce que vos données ne durent que trois échantillons ? Combien de temps vont durer vos données ?
+
+0:18:21.260,0:18:24.590
+Disons que vous écoutez un morceau de musique qui dure environ 3 min.
+
+0:18:24.590,0:18:32.330
+Combien d'échantillons comporte trois minutes de son ? [Etudiant] Oui, quel
+
+0:18:32.330,0:18:40.070
+sera mon taux d'échantillonnage ? [Etudiant] Disons vingt-deux, ok. Vingt-deux mille kilohertz…
+
+0:18:40.070,0:18:47.480
+22 kilohertz ! Donc combien d'échantillons de 3 min de musique ? [Etudiant] 
+
+0:18:47.799,0:18:58.010
+Répétez. [Etudiant]. Vous êtes sûr ? C'est monophonique ou stéréophonique ? Je plaisante.
+
+0:18:58.010,0:19:08.650
+Ok donc vous allez multiplier le nombre de secondes par la fréquence ok ? 
+
+0:19:08.660,0:19:12.620
+Ce signal va être très très long. Il va descendre.
+
+0:19:12.620,0:19:16.940
+Donc si j'ai un vecteur qui est très très long, je dois utiliser une
+
+0:19:16.940,0:19:23.540
+matrice qui va être très très… ? [Etudiant]. Large. Ok fantastique donc ce 
+
+0:19:23.540,0:19:31.080
+truc continue dans cette direction. Ok donc ma question pour vous est : que dois-je mettre à cet endroit ?
+
+0:19:35.570,0:19:48.020
+Que dois-je mettre ici ? Nous soucions-nous de choses plus éloignées ? [Etudiant].
+
+0:19:48.740,0:19:54.000
+Non, pourquoi ? Car nos données ont… [Etudiant] la propriété de
+
+0:19:54.000,0:20:00.299
+localité, fantastique. Donc qu'est-ce que je vais mettre ici ? [Etudiant].
+
+0:20:00.299,0:20:06.690
+Un grand 0. Fantastique. Donc nous mettons un zéro ici et ensuite quel est l'autre…
+
+0:20:06.690,0:20:09.809
+Laissez-moi redessiner ces choses correctement. Donc j’ai mon noyau
+
+0:20:09.809,0:20:16.890
+de taille trois et puis j'ai mes données qui vont être très longues.
+
+0:20:16.890,0:20:31.169
+Ainsi de suite. [Redessine]. Donc ici il y a zéro. Quelle est l’autre
+
+0:20:31.169,0:20:36.960
+propriété que possèdent mes données naturelles ? [Etudiant] La stationnarité. Ce qui
+
+0:20:36.960,0:20:45.059
+signifie ? [Etudiant] Le motif que vous vous attendez à trouver peut se répéter en encore
+
+0:20:45.059,0:20:49.140
+et encore. Donc si j'ai ici mes trois valeurs, peut-être que j’aimerais
+
+0:20:49.140,0:20:53.789
+les réutiliser encore et encore. Donc si ces trois valeurs…
+
+0:20:53.789,0:21:00.779
+Je change la couleur pour que vous puissiez voir que c'est la même chose.
+
+0:21:00.779,0:21:07.230
+Donc j’ai trois valeurs ici et puis je vais utiliser ces trois mêmes valeurs une fois plus loin.
+
+0:21:07.230,0:21:16.770
+Et je continue d'aller plus bas et je continue de cette façon.
+
+0:21:16.770,0:21:22.799
+Que dois-je mettre ici en bas ? Qu'est-ce que je dois mettre ici ? [Etudiant] Un zéro.
+
+0:21:22.799,0:21:28.529
+Pourquoi cela ? [Etudiant] A cause de la localisation des données. Donc mettre
+
+0:21:28.529,0:21:36.350
+les zéros autour s'appelle… [Etudiant] Oui cela s’appelle aussi le « padding », mais dans ce cas, on appelle cela… [Etudiant]
+
+0:21:36.350,0:21:44.850
+L’éparsité. Donc, c'est comme l’éparsité. Ensuite la reproduction de cette chose
+
+0:21:44.850,0:21:52.730
+encore et encore, s’appelle… [Etudiant]. La stationnarité est la propriété
+
+0:21:52.730,0:21:57.430
+du signal, c'est ce qu'on appelle le partage des poids.
+
+0:22:04.330,0:22:10.090
+Ok fantastique. Donc combien de valeurs avons-nous maintenant ? Combien 
+
+0:22:10.090,0:22:13.530
+de paramètres ai-je sur la droite ? [Etudiant]
+
+0:22:15.150,0:22:22.750
+Nous avons donc trois paramètres. Sur le côté gauche, combien en avons-nous ? [Etudiant]
+
+0:22:22.750,0:22:28.900
+Douze. Donc, est-ce que le côté droit va fonctionner ?
+
+0:22:28.900,0:22:36.810
+Vous avez trois paramètres d'un côté et douze de l’autre.
+
+0:22:36.810,0:22:45.610
+C'est en utilisant la localité et tout comme l’éparsité et le partage des paramètres, mais nous nous retrouvons avec seulement trois paramètres, n'est-ce pas
+
+0:22:45.610,0:22:51.190
+une trop grande restriction ? Comment pouvons-nous avoir des paramètres multiples ?
+
+0:22:51.190,0:22:56.290
+Que manque t’il ici ? Il y a plusieurs canaux. Donc, c'est
+
+0:22:56.290,0:23:01.570
+juste une couche ici. Puis vous avez ces trucs qui sortent de la 
+
+0:23:01.570,0:23:08.230
+planche ici. Donc vous avez le premier noyau ici, maintenant vous avez le
+
+0:23:08.230,0:23:20.500
+deuxième noyau disons celui-ci, et le dernier ici. Et donc vous avez
+
+0:23:20.500,0:23:24.760
+chaque plan de ces métriques, ne contenant qu'un seul noyau, qui est
+
+0:23:24.760,0:23:36.190
+reproduit plusieurs fois. Qui connaît le nom de cette matrice ? [Etudiant] 
+
+0:23:36.190,0:23:40.650
+Cela s’appelle une matrice de Toeplitz.
+
+0:23:43.419,0:23:48.219
+Quelle est la principale caractéristique de ces matrices de Toeplitz ?
+
+0:23:48.219,0:24:01.479
+Un gros gros truc que vous remarquez ? C'est une matrice éparse.
+
+0:24:01.479,0:24:16.149
+Qu'est ce premier point ici ? Quel est le contenu du premier gars ? Oui ? [Etudiant]
+
+0:24:16.149,0:24:21.669
+Celui-ci va être le prolongement de ma transformation linéaire qui est…
+
+0:24:21.669,0:24:26.169
+j'ai un signal qui est plus long que trois échantillons donc je dois rendre
+
+0:24:26.169,0:24:32.229
+cette matrice plus grande. La deuxième partie va être… étant donné que je ne me soucie pas de
+
+0:24:32.229,0:24:36.129
+ce qui se passe, des choses qui sont ici en bas. Je ne me soucie pas des 
+
+0:24:36.129,0:24:40.299
+choses qui sont ici, si je regarde les points qui sont ici. Donc cela va 
+
+0:24:40.299,0:24:45.070
+mettre un grand 0 ici. Donc tout ce qui est ici-bas est nettoyé.
+
+0:24:45.070,0:24:49.899
+Finalement, je vais utiliser le même noyau encore et encore car je
+
+0:24:49.899,0:24:55.839
+suppose que mes données sont stationnaires et donc que des motifs similaires
+
+0:24:55.839,0:24:58.929
+vont se produire encore et encore. C'est pourquoi je vais utiliser ce
+
+0:24:58.929,0:25:03.429
+qui est écrit ici : le partage des poids.
+
+0:25:03.429,0:25:08.019
+Enfin, étant donné que celui-ci ne vous donne que trois paramètres,
+
+0:25:08.019,0:25:12.940
+j'utilise plusieurs couches afin d'avoir différents canaux.
+
+0:25:12.940,0:25:17.739
+Celui-ci est donc un noyau. Avant, un seul noyau était la ligne entière 
+
+0:25:17.739,0:25:21.849
+de la matrice, d'accord ? Donc quand vous avez une couche entièrement connectée. La seule différence
+
+0:25:21.849,0:25:25.179
+entre une couche entièrement connectée et une convolution est que vous avez
+
+0:25:25.179,0:25:38.019
+la ligne entière de la matrice. Qu'est-ce qu'il y aura dans ce premier élément ici ? Quelqu'un ? [Etudiant]
+
+0:25:38.480,0:25:43.230
+donc appelons le noyau vert a¹. Laissez-moi le noter
+
+0:25:43.230,0:25:55.200
+en vert car c'est un noyau vert. Donc vous avez a¹ fois... quoi ?
+
+0:25:55.200,0:25:58.890
+C’est de 1 à 3, n'est-ce pas ? Ensuite le deuxième point est
+
+0:25:58.890,0:26:05.640
+la même chose ici : a¹ et le x décalé par 1.
+
+0:26:05.640,0:26:20.039
+Et ainsi de suite. C'est logique ? [Etudiant] Oui. Celui-là va être
+
+0:26:20.039,0:26:23.970
+pour la sortie verte, puis vous aurez la sortie bleue
+
+0:26:23.970,0:26:26.730
+et puis vous avez le plus loin le rouge qui arrive.
+
+0:26:26.730,0:26:32.929
+D'accord ? L'expérience avec iPad était-elle cool ?
+
+0:26:32.929,0:26:40.520
+Oui ? Non ? J'ai bien aimé. D'accord. D'autres questions ? [Etudiant]
+
+0:26:41.029,0:26:49.049
+Répétez. [Etudiant] Ce cercle bleu ici ? C'est un grand zéro.
+
+0:26:49.049,0:26:53.480
+C'est l’éparsité. C’est la même chose qu’ici.
+
+0:26:53.899,0:26:58.520
+Oui ? Non ? Oui. [Etudiant]
+
+0:27:01.530,0:27:16.200
+Ici j'ai mis beaucoup de zéros à l'intérieur, donc j'ai tué toutes les
+
+0:27:16.200,0:27:21.000
+valeurs qui sont éloignées de la petite partie. Et je répète les trois mêmes valeurs
+
+0:27:21.000,0:27:24.480
+encore et encore car je m'attends à trouver le même motif dans
+
+0:27:24.480,0:27:33.360
+différentes régions de ce grand signal. [Etudiant] Celui-là ? J'ai dit
+
+0:27:33.360,0:27:36.840
+que dans ce cas, je n'aurai que trois valeurs. Nous avons commencé par
+
+0:27:36.840,0:27:41.040
+12 valeurs et j'ai fini par en avoir 3, ce qui est vraiment très peu, alors 
+
+0:27:41.040,0:27:44.760
+si je veux avoir disons 6 valeurs, je peux avoir mon
+
+0:27:44.760,0:27:49.530
+deuxième 3 sur un autre plan. Je réalise la même opération. Chaque fois que 
+
+0:27:49.530,0:27:55.110
+vous multipliez cette matrice par un vecteur vous effectuez une convolution. 
+
+0:27:55.110,0:28:00.770
+J’ai juste pour vous dire qu'une convolution n'est qu'une multiplication matricielle avec beaucoup de zéros.
+
+0:28:00.770,0:28:09.600
+[Etudiant]. Donc il y a celui-ci ici, puis vous en avez un autre,
+
+0:28:09.600,0:28:14.790
+et un troisième. Vous avez trois versions de l'entrée.
+
+0:28:14.790,0:28:18.000
+Dans la deuxième partie du cours, je vais vous montrer des choses plus interactives.
+
+0:28:18.000,0:28:27.810
+S’il vous plait, participez à la deuxième partie également.
+
+0:28:27.810,0:28:37.950
+J'ai renommé le site web et maintenant
+
+0:28:37.950,0:28:42.450
+l'environnement va s'appeler pDL, donc PyTorch Deep Learning, au lieu de
+
+0:28:42.450,0:28:49.980
+« Deep Learning Mini-cours », c'était trop long. Donc commençons par lancer celui-là.
+
+0:28:55.320,0:29:04.960
+conda activate pDL
+
+0:29:04.960,0:29:12.940
+Et ouvrons jupyter notebook. Très bien, alors maintenant on va faire le
+
+0:29:12.940,0:29:18.520
+notebook « 07-listening_to_kernels ». Je vous ai donc montré une
+
+0:29:18.520,0:29:22.630
+convolution sur papier, sur ma tablette, et  maintenant vous allez écouter
+
+0:29:22.630,0:29:25.990
+une convolution pour vous puissiez vraiment apprécier ce que sont les convolutions.
+
+0:29:25.990,0:29:35.919
+On utilise le nouveau noyau qui est appelé pDL (PyTorch deep learning).
+
+0:29:35.919,0:29:42.520
+Vous aurez la même procédure si vous mettez à jour votre système.
+
+0:29:42.520,0:29:52.200
+Très bien, dans ce cas, nous pouvons lire le début de la page ici. Laissez-moi cacher le haut ici.
+
+0:29:52.890,0:29:56.950
+Donc, étant donné l'hypothèse de la localité, de la stationnarité et 
+
+0:29:56.950,0:30:00.280
+la composition, nous pouvons réduire la quantité de calcul pour une
+
+0:30:00.280,0:30:05.969
+multiplication matrice-vecteur en utilisant une matrice de Toeplitz locale éparse car stationnaire.
+
+0:30:05.969,0:30:10.550
+De cette façon, nous pouvons simplement redécouvrir l’opérateur de convolution.
+
+0:30:10.550,0:30:14.980
+On peut aussi rappeler qu'un produit scalaire est une simple
+
+0:30:14.980,0:30:19.150
+distance cosinus normalisée qui nous indique l'alignement de deux vecteurs.
+
+0:30:19.150,0:30:21.850
+Plus précisément nous calculons les normes
+
+0:30:21.850,0:30:26.320
+de la projection orthogonale d’un vecteur sur l'autre et vice versa.
+
+0:30:26.320,0:30:29.590
+Donc voyons maintenant comment tout cela peut avoir
+
+0:30:29.590,0:30:34.270
+un sens en utilisant nos oreilles, ok ? Je vais donc importer une librairie 
+
+0:30:34.270,0:30:39.880
+qu’un professeur ici à la NYU a fait. Là je charge juste mes données audios. 
+
+0:30:39.880,0:30:43.600
+J’ai ça dans mon x, et ensuite mon taux d'échantillonnage est dans
+
+0:30:43.600,0:30:48.570
+l'autre variable. Donc ici, je montre que j’ai environ 70 000 échantillons
+
+0:30:48.570,0:30:54.430
+dans ce cas car j'ai un taux d'échantillonnage de 22 kilohertz. Ensuite
+
+0:30:54.430,0:31:01.720
+mon temps total est de trois secondes. Donc trois secondes fois 22 donne 
+
+0:31:01.720,0:31:06.910
+quoi ? Ce n'est pas 180 que vous disiez. Qui disait 180 ? C'était 3. [Etudiant]
+
+0:31:06.910,0:31:11.380
+Oh trois minutes donc vous avez raison. C'est en faites trois secondes, donc vous avez
+
+0:31:11.380,0:31:16.540
+corrigé ma faute. Cela fait donc trois secondes, donc multiplié par 22 kilo hertz, vous obtenez
+
+0:31:16.540,0:31:22.390
+environ 70 000 échantillons. Ici, je vais importer quelques librairies pour
+
+0:31:22.390,0:31:28.180
+vous montrer quelque chose et ensuite je vous montre le premier graphique. Donc c'est
+
+0:31:28.180,0:31:37.270
+le signal audio que j'ai importé, à quoi ressemble-t-il ? [Etudiant] Ondulé, ok cool.
+
+0:31:37.270,0:31:50.680
+Pouvez-vous me dire de quoi ça a l'air ? [Étudiant : « aaaaaaah », rires] C'est une bonne supposition. La supposition est « aaah ». On ne peut pas dire 
+
+0:31:50.680,0:31:55.450
+exactement quel est le contenu de ce diagramme car l'amplitude de…
+
+0:31:55.450,0:32:00.240
+L'axe des y vous montre l'amplitude. 
+
+0:32:00.240,0:32:05.530
+Puis-je éteindre la lumière ? C'est bon ? ou... vous êtes sûr ? Ok merci.
+
+0:32:05.530,0:32:16.090
+Je n'aime vraiment pas ces lumières. Ok. Bonne nuit. Oh, vous voyez comme c'est joli ? Ok. Cool.
+
+0:32:16.090,0:32:19.930
+D'accord, donc vous ne pouvez rien dire ici.
+
+0:32:19.930,0:32:26.580
+Vous ne pouvez pas savoir quel est le son. Comment pouvons-nous savoir
+
+0:32:26.580,0:32:31.870
+quel est le son à l'intérieur ? Par exemple, je peux vous montrer une transcription
+
+0:32:31.870,0:32:37.660
+du son et permettez-moi de le mettre dans votre tête.
+
+0:32:37.660,0:32:44.810
+Donc vous avez... ah attendez, ça n'a pas marché. [Son de démarrage de Windows].
+
+0:32:44.810,0:32:50.610
+Ok [rires] donc maintenant nous l'avons vraiment entendu. Donc maintenant vous pouvez voir le [Alfredo imite le son].
+
+0:32:50.610,0:32:56.400
+Vous pouvez imaginer un peu. Mais d'accord, quelles notes
+
+0:32:56.400,0:33:00.830
+avons-nous jouées ici ? Par exemple, comment puis-je savoir quelles sont les notes
+
+0:33:00.830,0:33:05.550
+à l'intérieur ? Je vais donc montrer ceci. Puisque c'est un peu plus lumineux
+
+0:33:05.550,0:33:13.820
+je peux voir vos visages. Combien d'entre vous ne peuvent pas lire ceci ? Oh, aïe...
+
+0:33:13.820,0:33:20.960
+Donc laissez-moi voir si je peux demander de l'aide.
+
+0:33:23.620,0:33:26.620
+Peut-être que quelqu'un peut nous aider ici.
+
+0:33:29.400,0:33:32.480
+D'accord. Voyons voir.
+
+0:33:38.140,0:33:42.840
+[Alf Skype : hé, hé Alf !] Oh, salut Alf ! [rires]
+
+0:33:42.880,0:33:45.420
+[Alf Skype : comment ça va ?] Je vais bien, merci.
+
+0:33:45.420,0:33:47.040
+[Alf Skype : belle classe !] Oh, merci pour eux.
+
+0:33:47.040,0:33:49.040
+Joli pull ! [Alf Skype : Joli pull toi aussi !]
+
+0:33:49.040,0:33:51.040
+Oh, nous portons le même pull ! [rires]
+
+0:33:51.040,0:33:54.480
+Peux-tu nous aider ? Ils ne savent pas comment lire
+
+0:33:54.480,0:33:57.120
+Oh, la connexion... ☹ !
+
+0:33:57.120,0:34:00.380
+Ils ne peuvent pas lire la partition ! Peux-tu nous aider ?
+
+0:34:00.380,0:34:02.380
+[Alf Skype : très bien ! Laisse-moi essayer de vous aider]
+
+0:34:02.380,0:34:04.380
+Merci ! [Alf Skype : je change de caméra].
+
+0:34:04.380,0:34:06.380
+Très bien. Je t’en prie, fais-le. [rires]
+
+0:34:06.380,0:34:08.380
+[Alf Skype : donc, ici nous pouvons aller comme...
+
+0:34:08.380,0:34:10.860
+et écoutez comment ça sonne]. [rires]
+
+0:34:10.860,0:34:14.320
+[Alf Skype : donc, ça va être comme ça.
+
+0:34:14.440,0:34:23.380
+C'est cool, non ?] [Les étudiants applaudissent]
+
+0:34:23.380,0:34:27.990
+Merci. Il vous a fallu quatre leçons pour m'applaudir. [rires]
+
+0:34:27.990,0:34:32.360
+C'est très gentil de votre part. Continuons.
+
+0:34:32.360,0:34:36.320
+[Alf Skype : A♭, puis nous avons un E♭, et enfin un A♭.
+
+0:34:36.320,0:34:40.380
+La différence entre le premier A♭ et l'autre en matière de fréquences
+
+0:34:40.380,0:34:46.540
+est que le premier A♭ va être deux fois plus fréquent que l'autre.
+
+0:34:46.540,0:34:51.400
+Et au lieu de cela, au milieu, nous avons le 5ème. Nous allons trouver quelle est la fréquence de ce phénomène.
+
+0:34:51.400,0:34:55.320
+Et puis, nous allons aller sur un B♭, ici.
+
+0:34:55.320,0:34:57.680
+À gauche, au contraire, nous avons l'accompagnement,
+
+0:34:57.680,0:35:01.220
+et donc nous allons avoir un A♭ et un B♭
+
+0:35:01.220,0:35:05.620
+puis B♭ et E♭.
+
+0:35:05.680,0:35:10.900
+Donc, si on met tout ça ensemble, on va avoir ça.
+
+0:35:11.300,0:35:14.020
+D'accord ? Simple, non ?] Ouais, merci !
+
+0:35:14.020,0:35:18.820
+[Alf Skype : au revoir !] Bye ! [Applaudissements]
+
+0:35:18.820,0:35:23.540
+Ça a pris une journée entière à préparer [rires]
+
+0:35:23.540,0:35:27.480
+J'étais si nerveux avant de venir ici [rires]
+
+0:35:27.480,0:35:32.140
+Je ne savais pas si cela marcherait... Les deux. La tablette et ça.
+
+0:35:32.140,0:35:35.060
+Je suis si heureux ! Je pourrais vraiment aller me coucher, plus tard.
+
+0:35:35.060,0:35:39.280
+Quoi qu'il en soit, c'était comme dans la première partie
+
+0:35:39.290,0:35:43.280
+où vous allez avoir la première note, il y a A♭ , vous avez un B♭, A♭ et B♭.
+
+0:35:43.280,0:35:51.550
+Donc vous avez [Alfredo fredonne le son] et la différence entre ce son [fredonne un son aigu] et ce son [fredonne un son grave]
+
+0:35:51.550,0:35:57.440
+est d'une octave. La première fréquence sera deux fois la seconde fréquence.
+
+0:35:57.440,0:36:02.870
+Ok ? donc chaque fois que nous allons observer la forme de l'onde, un 
+
+0:36:02.870,0:36:07.730
+signe a une période plus courte de moitié que l'autre, n'est-ce pas ?
+
+0:36:07.730,0:36:12.410
+Surtout le A♭,  en haut, aura une période qui est la moitié de la période
+
+0:36:12.410,0:36:20.000
+du A♭  en bas. Donc vous avez [imite le son]. Si vous allez à la moitié de
+
+0:36:20.000,0:36:27.290
+celui-là, vous obtenez [imite le son]. Ok, alors comment pouvons-nous réellement obtenir les notes de
+
+0:36:27.290,0:36:33.770
+ce spectre, à partir de la forme d'onde ? Qui peut me dire comment extraire 
+
+0:36:33.770,0:36:40.790
+ces hauteurs, ces fréquences de l'autre signal ? Une supposition ? [Etudiant] Transformée de Fourier.
+
+0:36:40.790,0:36:45.530
+C’est une sorte de bonne supposition. Que se passe-t-il si j'effectue une
+
+0:36:45.530,0:36:50.660
+transformée de Fourier de ce signal ? Quelqu’un peut me répondre ? Vous ne pouvez pas 
+
+0:36:50.660,0:36:54.100
+levez la main car je ne vois pas, donc criez. [Etudiant]
+
+0:36:55.120,0:36:59.690
+Si vous effectuez la transformée de Fourier de l'ensemble du signal, vous allez
+
+0:36:59.690,0:37:06.470
+entendre [imite un son] comme les notes entières [imite un son],
+toutes ensemble. Mais alors vous ne pouvez pas
+
+0:37:06.470,0:37:13.260
+déterminer quelle pièce est jouée où et quand dans ce cas. [Etudiant] 
+
+0:37:13.260,0:37:18.210
+Ha ! Nous avons donc besoin d'une sorte de transformation de Fourier localisée, d'une
+
+0:37:18.210,0:37:23.190
+transformée de Fourier localisée dans le temps ou dans l'espace selon le domaine 
+
+0:37:23.190,0:37:30.000
+que vous utilisez. Cela s’appelle un spectrogramme j’affiche pour vous
+le spectrogramme. Oh pardon.
+
+0:37:30.000,0:37:34.380
+J’affiche ici le spectrogramme. Et donc, vous pouvez
+
+0:37:34.380,0:37:39.960
+comparer les deux. Sur la première partie ici, de ce côté-là, vous avec ce
+
+0:37:39.960,0:37:47.970
+ce pic ici à 1600 qui est [imite le son], en fait plus élevé, [imite le même son mais plus aigu].
+
+0:37:47.970,0:37:58.640
+Vous en avez un deuxième qui est ce pic ici [imite le son] et puis celui-ci [imite le son]. Vous pouvez voir ce pic ? Oui.
+
+0:37:58.640,0:38:07.260
+Donc ces pics vont être les notes réelles que je joue avec la main droite. Assemblons tout cela et
+
+0:38:07.560,0:38:13.140
+regardons ici les fréquences. J'ai donc 1600, 1200 et 800. Vous voyez ici ?
+
+0:38:13.140,0:38:20.550
+J'ai 1600, 800. Pourquoi l’une est le double de l'autre ? Car [Etudiant] c’est une octave à part.
+
+0:38:20.550,0:38:27.540
+Donc si c'est [imite le son], ça va être [imite le son]. C’est un 5 qui, lui aussi
+
+0:38:27.540,0:38:32.280
+a un bel intervalle. Laissez-moi donc générer ces signaux et ensuite je
+
+0:38:32.280,0:38:42.100
+concatène tous. Donc je vais jouer les deux. Le premier est en fait l'audio original. Laissez-moi à nouveau [le son de Windows se lance]. Si je joue 
+
+0:38:45.680,0:39:01.720
+le deuxième, la concaténation [même son mais plus aigu]… Oui, c'est un peu fort. Je ne peux même pas réduire le volume. Oh si, ici. Laisse-moi recommencer. 
+
+0:39:01.720,0:39:05.350
+[rejoue le Windows aigu] Très bien. Voici donc la concaténation de ces
+
+0:39:05.350,0:39:12.380
+quatre différents hauteurs. Devinez ce que nous allons faire ensuite.
+
+0:39:12.380,0:39:20.420
+Comment extraire toutes les notes que je peux entendre dans un morceau donné ? Disons que
+
+0:39:20.420,0:39:29.360
+vous jouez un score complet et j'aimerais savoir quelle hauteur est jouée à quel temps. [Etudiant]
+
+0:39:29.360,0:39:36.230
+De quoi ? Pour l’enregistrement, la réponse est « convolution ». Donc je demande la convolution
+
+0:39:36.230,0:39:43.370
+de quoi ? [Etudiant] Pas la convolution du spectrogramme. Donc vous avez une convolution de votre signal 
+
+0:39:43.370,0:39:49.460
+d’entrée avec quoi ? Avec un autre type d’hauteurs. Quelles hauteurs
+
+0:39:49.460,0:39:59.150
+choisissez-vous ? [Etudiant] Disons que vous ne voyez pas le spectre car
+
+0:39:59.150,0:40:06.220
+cela peut être n'importe quel morceau de musique. Donc j'aimerais connaître toutes les notes possibles qui sont là. Que feriez-vous ? [Etudiant]
+
+0:40:06.220,0:40:13.430
+Vous ne connaissez pas toutes les hauteurs, comment essayeriez-vous ? [Etudiant] bien, donc dans lesquels sont tous les
+
+0:40:13.430,0:40:19.900
+les hauteurs que vous pourriez vouloir utiliser, si vous jouez du piano ? [Etudiant] 
+
+0:40:19.900,0:40:24.530
+Toutes les touches du piano, ok ? Si je joue un concerto avec le piano, je 
+
+0:40:24.530,0:40:28.010
+veux avoir un morceau d'audio pour chacune de ces touches. Et je vais faire
+
+0:40:28.010,0:40:32.690
+des convolutions de tout mon morceau avec toutes les touches. Donc vous
+
+0:40:32.690,0:40:36.470
+allez voir des pics qui sont l'alignement de la similarité cosinus
+
+0:40:36.470,0:40:41.349
+lorsque vous obtenez le son correspondant à votre noyau spécifique.
+
+0:40:41.349,0:40:46.989
+Donc je vais faire ça mais avec ces tons spécifiques extrais ici.
+
+0:40:46.989,0:40:52.929
+Regardons d'abord à quoi ressemblent les deux spectrogrammes.
+
+0:40:52.929,0:40:57.699
+Le côté gauche est le spectrogramme de mon signal réel X de t
+
+0:40:57.699,0:41:01.630
+et sur la droite, le spectrogramme de cette concaténation de hauteurs.
+
+0:41:01.630,0:41:10.749
+Donc ici vous pouvez clairement voir ces [fait les sons] mais tout d'abord, 
+
+0:41:10.749,0:41:14.429
+que sont ces barres ici, ces barres verticales ?
+
+0:41:15.269,0:41:20.589
+Vous suivez ? Je ne peux pas vous voir, vous devez répondre. Que sont ces
+
+0:41:20.589,0:41:24.160
+barres ici, ces barres verticales ? Les horizontales, je vous ai dit que 
+
+0:41:24.160,0:41:34.390
+ce sont les [fait les sons]. Mais les verticales, qu'est-ce que c'est ? [Etudiant] Les problèmes d'échantillonnage, les transitions. Donc chaque
+
+0:41:34.390,0:41:39.099
+fois que vous avez les [fait les sons], vous avez en fait une forme d'onde et ensuite
+
+0:41:39.099,0:41:43.019
+l'autre, une forme d'onde doit s'arrêter. Donc ce n'est plus périodique et chaque fois
+
+0:41:43.019,0:41:47.609
+vous faites une transformée de Fourier d'un signal non périodique vous obtenez de la merde.
+
+0:41:47.609,0:41:53.589
+C'est pourquoi, chaque fois que vous obtenez la jonction entre ces deux éléments, 
+
+0:41:53.589,0:41:57.729
+Ces deux [fait les sons], vous avez ce pic, ce saut. 
+
+0:41:57.729,0:42:01.749
+Vous pouvez penser au saut comme une très haute fréquence. 
+
+0:42:01.749,0:42:05.469
+C'est comme un delta. Donc vous obtenez toutes les fréquences, c'est pourquoi vous
+
+0:42:05.469,0:42:12.549
+avez toutes les fréquences ici. Boom. Ok ? Cela a du sens jusqu'à présent ?
+
+0:42:12.549,0:42:18.720
+C'est donc la version propre de [fait les sons] que je ne peux même pas chanter
+
+0:42:18.720,0:42:25.800
+mais pourquoi le côté gauche est-il tout rouge en bas ? [Etudiant]
+
+0:42:25.800,0:42:31.440
+Oh, vous le saviez. Donc à gauche, le cordon, est ce que je vous montre
+
+0:42:31.440,0:42:37.320
+en bas à gauche. Ok, alors laisse-moi finir ce cours et je vous laisserai partir.
+
+0:42:37.320,0:42:42.990
+Ici je vous montre tous les noyaux.
+
+0:42:42.990,0:42:48.090
+Le rouge va être le premier morceau de mon signal, le vrai.
+
+0:42:48.090,0:42:53.280
+Vous pouvez voir que la première hauteur a la même fréquence.
+
+0:42:53.280,0:43:04.230
+Vous voyez ? Donc, le [fait un son] a le même Δt, le même intervalle, la même période. Vous voyez ? Vous ne pouvez pas hocher la tête car,
+
+0:43:04.230,0:43:08.700
+encore une fois, je ne vous vois pas, donc il faut me répondre. Pouvez-vous voir ou non ? [Etudiant]
+
+0:43:08.700,0:43:13.050
+Merci, fantastique. Et donc celui-ci est le troisième. Vous pouvez voir qu'il
+
+0:43:13.050,0:43:17.130
+commence ici pendant la période et se termine ici. Si vous montez ici, vous 
+
+0:43:17.130,0:43:20.520
+voyez exactement qu'il y a deux de ces gars. Donc c'est la façon
+
+0:43:20.520,0:43:24.619
+dont vous pouvez voir que c’est deux fois plus fréquent que celle du bas.
+
+0:43:24.619,0:43:30.089
+Enfin, j’effectue la convolution de ces quatre noyaux avec mon
+
+0:43:30.089,0:43:36.839
+signal d'entrée, et voilà à quoi cela ressemble. Donc le premier noyau a un
+une grande correspondance
+
+0:43:36.839,0:43:42.150
+dans la première partie du score. Donc, entre 0 et 0,5 secondes.
+
+0:43:42.150,0:43:46.830
+La deuxième commence juste après la première, puis vous avez la
+
+0:43:46.830,0:43:50.820
+troisième à partir de 0,3 je suppose et ensuite vous avez le dernier
+
+0:43:50.820,0:43:56.940
+à partir de 0,6. Ok ? Alors devinez quoi ? Je vais vous faire écouter.
+
+0:43:56.940,0:44:02.520
+Vous êtes excité ? [Etudiant] Oh, ok, vous répondez maintenant, bien !
+
+0:44:02.520,0:44:07.440
+Voici donc les résultats. Permettez-moi de réduire un peu le volume
+
+0:44:07.440,0:44:14.900
+sinon vous allez vous plaindre.
+
+0:44:16.800,0:44:28.690
+Donc le premier. Essayons encore. [joue les 4 sons]
+
+0:44:28.880,0:44:37.110
+C'est cool non ? Vous écoutez les convolutions. C’est presque terminé j'ai une dernière
+
+0:44:37.110,0:44:41.280
+diapositive car j'ai senti qu'il y avait une certaine confusion la dernière
+
+0:44:41.280,0:44:45.360
+fois concernant les différents dimensions des différents types de signaux.
+
+0:44:45.360,0:44:50.850
+Je recommande vraiment d'assister au cours de Joan Bruna 
+
+0:44:50.850,0:44:56.580
+« Mathematics of Deep  Learning ».  Je lui ai volé quelques petites choses 
+
+0:44:56.580,0:45:04.320
+que j’ai mis dans une diapositive pour vous. 
+
+0:45:04.320,0:45:13.140
+Nous avons la couche d'entrée ou les échantillons que nous donnons au
+
+0:45:13.140,0:45:18.420
+réseau. La dernière fois que j’ai défini, j'ai ce X bouclé
+
+0:45:18.420,0:45:23.010
+qui est composé de ces xⁱ qui sont tous les échantillons de données. 
+
+0:45:23.010,0:45:29.100
+J'ai généralement m échantillons de données, donc mon i va de m=1 à n.
+
+0:45:29.100,0:45:34.080
+Est-ce que cette notation est claire ? Car c'est un peu plus formel, je suis d'habitude un peu 
+
+0:45:34.080,0:45:39.030
+moins formel mais quelqu'un se sentait un peu mal à l'aise.
+
+0:45:39.030,0:45:46.470
+Ceci n'est que mon échantillon d'entrée, mais nous pouvons aussi noter
+
+0:45:46.470,0:45:52.950
+ce X bouclé, qui est mon ensemble d'entrée, comme l'ensemble de toutes ces fonctions xⁱ
+
+0:45:52.950,0:45:59.850
+qui font correspondre mon Ω, qui est mon domaine, à ℝᶜ
+
+0:45:59.850,0:46:06.150
+qui sont essentiellement les canaux de cet exemple spécifique. Donc je fais
+
+0:46:06.150,0:46:14.040
+correspondre ces ω à ces x i d'omégas. Donc voyons comment
+
+0:46:14.040,0:46:17.550
+cela diffèrent de la notation précédente. Je vais donc vous donner trois
+
+0:46:17.550,0:46:21.300
+exemples et vous devriez être en mesure de dire quelle est la dimension de
+
+0:46:21.300,0:46:24.820
+l’exemple. Donc, le premier. Disons,
+
+0:46:24.820,0:46:29.560
+comme ce que je vous ai montré, juste une partie d’un signal audio.
+
+0:46:29.560,0:46:34.870
+Donc mon Ω est juste les échantillons. Echantillon numéro un, 
+
+0:46:34.870,0:46:39.550
+échantillon numéro deux, comme l'index. Index un, l'index deux, l'index
+
+0:46:39.550,0:46:44.740
+jusqu'à 70.000 et quelques qu’on a vu. Ok ? Et la dernière valeur est
+
+0:46:44.740,0:46:52.330
+le T, qui est le nombre de secondes divisé par le Δt qui est 1 sur la fréquence. 
+
+0:46:52.330,0:46:57.250
+C’est un sous-ensemble de n. Il s'agit d'un nombre discret d'échantillons, car vous avez un
+
+0:46:57.250,0:47:03.220
+ordinateur, vous avez toujours des échantillons discrets. Voici donc les données d'entrée, et
+
+0:47:03.220,0:47:09.310
+qu'en est-il de l'image de cette fonction ? Quand je demande quelle est la
+
+0:47:09.310,0:47:13.330
+dimensionnalité de ce type de signal, vous devez répondre qu'il s'agit d'un
+
+0:47:13.330,0:47:19.360
+signal unidimensionnel car la puissance de N ici est de 1. Donc c'est comme
+
+0:47:19.360,0:47:25.000
+un signal unidimensionnel. Bien vous pouvez avoir… c’est le temps total et le
+
+0:47:25.000,0:47:28.900
+tout est l’intervalle d'échantillonnage. Sur la droite vous avez le numéro
+
+0:47:28.900,0:47:33.340
+de canaux pouvant être de 1 si vous avez un signal mono ou de 2 si vous 
+
+0:47:33.340,0:47:38.230
+avez un signal stéréo. Donc vous avez mono là, vous avez 2 pour stéréophonique. Qu’est-ce que le 5+1 ?
+
+0:47:38.230,0:47:44.650
+C'est le Dolby 5.1. D'accord, donc c'est toujours un signal
+
+0:47:44.650,0:47:48.430
+unidimensionnel qui peut avoir plusieurs canaux, néanmoins c’est toujours
+
+0:47:48.430,0:47:53.020
+un signal unidimensionnel car il n'y a qu'une seule variable en cours d'exécution, ok ?
+
+0:47:53.020,0:47:58.270
+C’est mieux que la dernière fois ? Oui ? Non ? Mieux ? Merci.
+
+0:47:58.270,0:48:03.070
+Disons que c'est grâce à Joan. Deuxième exemple, j'ai ici mon Ω qui
+
+0:48:03.070,0:48:07.630
+est le produit cartésien de ces deux ensembles. Le premier ensemble va
+
+0:48:07.630,0:48:13.150
+de 1 à la hauteur. Il est aussi discret. L'autre va
+
+0:48:13.150,0:48:17.020
+de 1 à la largeur, donc ce sont les pixels réels. Donc celui-ci est un
+
+0:48:17.020,0:48:21.690
+signal bidimensionnel car j'ai 2 degrés de liberté dans mon domaine.
+
+0:48:21.690,0:48:28.690
+Quels sont les canaux possibles dont nous disposons ? Les canaux possibles 
+
+0:48:28.690,0:48:32.440
+qui sont très très courants sont les suivants. Vous pouvez donc avoir une image en niveaux de gris et
+
+0:48:32.440,0:48:36.849
+vous ne produisez donc qu'une seule valeur scalaire. Ou vous obtenez un
+
+0:48:36.849,0:48:42.789
+arc-en-ciel, la couleur. Donc vous obtenez x qui est une fonction des
+
+0:48:42.789,0:48:49.299
+coordonnées ω₁, ω₂ qui sont chaque point
+
+0:48:49.299,0:48:52.690
+représenté par un vecteur de trois composantes. 
+
+0:48:52.690,0:48:59.109
+Les composantes rouges du point ω₁, ω₂ vertes ω₁, ω₂, et bleues de
+
+0:48:59.109,0:49:04.299
+ω₁, ω₂. Donc, une fois encore, vous pouvez considérer cela comme 
+
+0:49:04.299,0:49:08.980
+un grand point de données ou considérer cela comme une fonction faisant 
+
+0:49:08.980,0:49:12.640
+correspondre un domaine bidimensionnel à un domaine tridimensionnel.
+
+0:49:12.640,0:49:18.490
+Enfin le vingt. Qui connait le nom d’une image à vingt canaux ?
+
+0:49:18.490,0:49:24.400
+[Etudiant] Oui, c'est une image hyperspectrale. C'est très commun
+
+0:49:24.400,0:49:31.869
+d’avoir 20 bandes. Enfin, qui peut deviner celui-là ?
+
+0:49:31.869,0:49:40.829
+Si mon domaine est ℝ⁴ par ℝ⁴, qu'est-ce que cela peut être ? [Etudiant]
+
+0:49:41.099,0:49:50.589
+Non, ce droit discret. C'est ℝ⁴, donc ce n'est même pas un ordinateur. [Etudiant]
+
+0:49:50.589,0:49:56.740
+Ha ! qui a dit quelque chose là-bas ? J'ai entendu ! Oui, c'est exact, c'est l'espace-temps.
+
+0:49:56.740,0:50:00.849
+Quel est le deuxième ? [Etudiant] Oui, quel momemtum ? Il a un nom.
+
+0:50:00.849,0:50:07.779
+On l'appelle « quadruple momemtum » car il possède une information temporelle.
+
+0:50:07.779,0:50:12.160
+Et donc, quelle sera mon image possible de la fonction X ?
+
+0:50:12.160,0:50:24.790
+Disons que c est égal à 1. Qu'est-ce que c'est ?
+
+0:50:24.790,0:50:29.630
+Cela pourrait être par exemple l'Hamiltonien du système, ok ?
+
+0:50:29.630,0:50:42.460
+C’était comme une introduction un peu plus mathématique, une définition plus précise.
+
+0:50:42.890,0:50:54.000
+C’est tout pour aujourd'hui, laissez-moi allumer la lumière. Je vous vois
+
+0:50:48.980,0:50:54.969
+lundi prochain. Merci d'être avec moi.

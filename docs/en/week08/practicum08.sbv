@@ -44,7 +44,7 @@ but what I actually you know advocated is that this is a three layer neural net
 because for me the layers are the activations that's kind of what is
 
 0:01:27.630,0:01:34.200
-usually the definition and then yeah now uses that new kind of symbols that look
+usually the definition and then Yann uses that new kind of symbols that look
 
 0:01:34.200,0:01:39.600
 like a box with a round top okay all right so we have two different diagrams
@@ -179,16 +179,16 @@ you have only have the diagonal where you have all the variances okay so here
 just to make a recap you have the encoder that is mapping this kind of
 
 0:05:41.020,0:05:47.290
-input distribution into like the input set of samples into this R 2d and so we
+input distribution into like the input set of samples into this ℝ²ᵈ and so we
 
 0:05:47.290,0:05:52.360
 can think in this case that we met from x to the hidden representation and then
 
 0:05:52.360,0:05:58.480
-the decoder instead maps the z space into R n which is back to the original
+the decoder instead maps the z space into ℝⁿ which is back to the original
 
 0:05:58.480,0:06:05.160
-space of the X and therefore we go from lower case z into x hat. Someone asked
+space of the X and therefore we go from lower case z into x̂. Someone asked
 
 0:06:05.160,0:06:12.460
 E of z and the V of z is that the output of the encoder yeah E of z and V of z are
@@ -752,7 +752,7 @@ actually explaining it okay so we have this expression let's try to analyze a
 little bit in more detail what they these terms represent so the first term
 
 0:22:51.050,0:22:56.390
-you'd have these variants - log variants - one so if we graph it it looks like
+you'd have V(z) – log[V(z)] – 1. So if we graph it it looks like
 
 0:22:56.390,0:23:03.560
 this you have a linear function right on the after you know after 2 on the x-axis
@@ -761,10 +761,10 @@ this you have a linear function right on the after you know after 2 on the x-axi
 and then on the other terms you have subtracted you subtract a logarithm
 
 0:23:08.930,0:23:13.070
-which goes to plus infinity like if you sum a minus logarithm it goes to plus
+which goes to +∞ … If you sum a minus logarithm it goes to +∞
 
 0:23:13.070,0:23:19.670
-infinity at zero and then otherwise it's gonna be just you know decaying so if
+at zero and then otherwise it's gonna be just you know decaying so if
 
 0:23:19.670,0:23:23.960
 you sum the two and subtract one you get this kind of cute function and if you
@@ -794,7 +794,7 @@ enforced the network not to collapse these bubbles in order to make it grow
 them too much right because otherwise they still get penalized here so then we
 
 0:24:14.420,0:24:19.910
-have another term here these E of z everything squared and that's classical
+have another term here these E(z)² and that's classical
 
 0:24:19.910,0:24:25.130
 problem which has a minimum over there and so this term here basically says
@@ -1017,9 +1017,9 @@ good I can't see you you miss you guys okay so good, are there any questions so 
 
 0:31:32.770,0:31:42.500
 hope you can see stuff I just give feedback, can you see stuff? yeah yes yep so
-
+	
 0:31:42.500,0:31:54.640
-work get pDL conda activate pDL and Jupyter notebook boom okay so I'm gonna
+Work/GitHub/pDL conda activate pDL jn. Boom okay so I'm gonna
 
 0:32:02.870,0:32:09.260
 be covering now the VAE and so now I'm gonna just execute everything such that this
@@ -1088,10 +1088,10 @@ zero and one so I have those digits from the MNIST and they are they are
 values like the values of the digits are going to be from 0 to 1 so I'd like to
 
 0:34:14.480,0:34:19.909
-have my network this module here outputs things that goes from minus infinity to
+have my network this module here outputs things that goes from -∞ to
 
 0:34:19.909,0:34:24.139
-plus infinity if I send it through a sigmoid this stuff sends things through
++∞ if I send it through a sigmoid this stuff sends things through
 
 0:34:24.139,0:34:31.520
 like 0 to 1 okay when you say the values of the digits you mean the deactivations
@@ -1217,7 +1217,7 @@ output of the decoder the mu and the log var so here you get the model
 you feed the input you get x_hat mu logvar you can compute the loss using the
 
 0:38:22.160,0:38:30.470
-x_hat, x, mu and logvar, x being the input but also the target and then we you know
+x̂, x, mu and logvar, x being the input but also the target and then we you know
 
 0:38:30.470,0:38:36.260
 yeah we add the item for the loss we clean up the gradient from the previous
@@ -1382,7 +1382,7 @@ separated and then I think if you keep training more you should have like more
 separation okay so here I'm basically doing the testing part I get all the
 
 0:43:57.980,0:44:04.640
-means so my model outputs x_hat, mu and logvar right and so my means I append
+means so my model outputs x̂, mu and logvar right and so my means I append
 
 0:44:04.640,0:44:10.820
 them I append all my mus into this mean list I append all the logvars in this
@@ -1634,7 +1634,7 @@ training instead what this is what happens so my I compute the standard
 deviation from this logvar so I get the logvar I divid it by two and then I take
 
 0:52:03.799,0:52:10.519
-the exponential right so I have E to the one half logvar such that you get you
+the exponential right so I have exp(0.5 * logvar) such that you get you
 
 0:52:10.519,0:52:17.089
 know the standard deviation and then the epsilon it can be simply an a d

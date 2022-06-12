@@ -1,0 +1,1742 @@
+0:00:00.030,0:00:03.959
+então hoje vamos cobrir muitos materiais, então tentarei não
+
+0:00:03.959,0:00:08.309
+correr, mas ontem jovem me pegou completamente tão jovem falou exatamente
+
+0:00:08.309,0:00:15.269
+as mesmas coisas que eu queria falar hoje então eu vou um pouco mais rápido por favor devagar
+
+0:00:15.269,0:00:18.210
+me para baixo se você realmente está de alguma forma perdido ok
+
+0:00:18.210,0:00:21.420
+então vou tentar ser um pouco mais rápido que o senhor
+
+0:00:21.420,0:00:26.250
+então hoje vamos falar sobre redes neurais recorrentes registram neurais
+
+0:00:26.250,0:00:31.050
+redes são um tipo de arquitetura que podemos usar para lidar com
+
+0:00:31.050,0:00:37.430
+sequências de dados o que são sequências que tipo de sinal é uma sequência
+
+0:00:39.890,0:00:44.219
+temporal é um componente temporal, mas já vimos dados com tempo
+
+0:00:44.219,0:00:49.350
+componente como eles são chamados qual dimensional qual é a dimensão
+
+0:00:49.350,0:00:55.320
+desse tipo de sinal, então na lição da rede convolucional que vimos
+
+0:00:55.320,0:00:59.969
+que um sinal pode ser um este sinal para este sinal 3d de sinal com base no
+
+0:00:59.969,0:01:06.270
+domínio e o domínio é o que você mapeia para ir para a direita para que o tratamento temporal
+
+0:01:06.270,0:01:10.580
+seqüências sequenciais de dados está basicamente lidando com um dos dados
+
+0:01:10.580,0:01:15.119
+porque o domínio será apenas o eixo temporal, mas você pode
+
+0:01:15.119,0:01:18.689
+também use RNN para lidar com você sabe dados bidimensionais que você tem duplo
+
+0:01:18.689,0:01:28.049
+Direção ok ok então esta é uma rede neural clássica no diagrama
+
+0:01:28.049,0:01:33.299
+ou seja, estou acostumado a desenhar onde represento cada um, neste caso, um monte de
+
+0:01:33.299,0:01:37.590
+neurônios como cada um deles é um vetor e, por exemplo, o X é meu vetor de entrada
+
+0:01:37.590,0:01:42.450
+está em rosa como de costume, então eu tenho minha camada oculta em um verde no centro
+
+0:01:42.450,0:01:46.200
+então eu tenho minha camada final de pista azul, que é a rede de saída, então
+
+0:01:46.200,0:01:52.320
+esta é uma rede neural de três camadas no meu para minha notação e, portanto, se alguns de vocês
+
+0:01:52.320,0:01:57.960
+estão familiarizados com a eletrônica digital é como falar sobre um
+
+0:01:57.960,0:02:03.329
+lógica combinatória sua saída atual depende apenas da entrada atual e
+
+0:02:03.329,0:02:08.420
+é isso, não há nenhuma outra entrada em vez disso, quando
+
+0:02:08.420,0:02:12.590
+estamos falando sobre nossos homens, vamos falar sobre algo que parece
+
+0:02:12.590,0:02:17.420
+assim, neste caso, nossa saída aqui no lado direito depende do
+
+0:02:17.420,0:02:21.860
+entrada atual e no estado do sistema e novamente se você é um rei de
+
+0:02:21.860,0:02:26.750
+eletrônica digital isso é simplesmente lógica seqüencial enquanto você tem um
+
+0:02:26.750,0:02:31.580
+estado interno a cebola é a dimensão flip-flop se você não tem idéia
+
+0:02:31.580,0:02:37.040
+que flip-flop você conhece, veja só, é apenas uma unidade de memória muito básica em
+
+0:02:37.040,0:02:41.810
+eletrônica digital, no entanto, esta é a única diferença logo no primeiro
+
+0:02:41.810,0:02:45.290
+caso você tenha uma saída que é apenas função da entrada no segundo caso
+
+0:02:45.290,0:02:49.580
+você tem uma saída que é função da entrada e do estado do sistema
+
+0:02:49.580,0:02:54.130
+ok, essa é a grande diferença sim, baunilha é um termo americano para dizer
+
+0:02:58.040,0:03:04.670
+é avião não tem um gosto que americano desculpe eu tento ser o mais
+
+0:03:04.670,0:03:11.390
+Americano eu posso na Itália você se sente tomado um sorvete que não tem
+
+0:03:11.390,0:03:15.950
+prove vai ser fior di latte que é leite prove aqui não temos leite
+
+0:03:15.950,0:03:20.049
+testes eles têm sabor de baunilha que é o sorvete simples
+
+0:03:20.049,0:03:28.360
+ok americanos desculpe tudo bem então oh então vamos ver o que faz
+
+0:03:28.360,0:03:32.760
+isso muda com a representação jovem tão jovem desenha esse tipo de pequeno
+
+0:03:32.760,0:03:38.170
+coisas estranhas aqui que representam um mapeamento entre um tensor TENS para outro
+
+0:03:38.170,0:03:41.800
+pintor de um vetor para outro vetor, então você tem o seu
+
+0:03:41.800,0:03:46.630
+o vetor de entrada X será mapeado através deste item aqui para este oculto
+
+0:03:46.630,0:03:50.620
+representação de modo que realmente represente minha bela transformação para que minha
+
+0:03:50.620,0:03:54.130
+rotação Mais esta pergunta, então você tem a representação do aquecedor que você
+
+0:03:54.130,0:03:57.850
+ter outra rotação é uma questão, então você obtém a saída final da mesma forma
+
+0:03:57.850,0:04:03.220
+no diagrama recorrente você pode ter essas coisas adicionais isso é bom
+
+0:04:03.220,0:04:06.640
+esmagamento de transformação que é como um módulo de atraso com uma transformação final
+
+0:04:06.640,0:04:10.900
+excursão e agora você tem a última transformação afim e esmagamento
+
+0:04:10.900,0:04:18.100
+certo essas coisas estão fazendo barulho ok desculpe tudo bem então qual é o primeiro
+
+0:04:18.100,0:04:24.250
+caso o primeiro caso é este é um vetor para sequenciar, então inserimos uma bolha no
+
+0:04:24.250,0:04:28.270
+maravilha rosa e então você vai ter essa evolução do estado interno de
+
+0:04:28.270,0:04:33.070
+o sistema o verde e então, à medida que o estado do sistema evolui, você pode ser
+
+0:04:33.070,0:04:38.470
+cuspindo em cada carimbo de hora uma saída específica o que pode ser um exemplo
+
+0:04:38.470,0:04:43.240
+deste tipo de arquitetura para que este possa ser o seguinte, minha entrada vai
+
+0:04:43.240,0:04:46.750
+ser uma dessas imagens e, em seguida, a saída será uma sequência de
+
+0:04:46.750,0:04:53.140
+caracteres que representam a descrição em inglês de qualquer que seja essa entrada
+
+0:04:53.140,0:04:57.940
+por exemplo, no centro, quando temos uma manada de elefantes, então a última manada
+
+0:04:57.940,0:05:03.880
+de elefantes andando por um campo de grama seca, então está muito, muito bem
+
+0:05:03.880,0:05:09.130
+refinado, então você tem no centro aqui, por exemplo, dois cães brincam
+
+0:05:09.130,0:05:15.640
+na grama talvez haja três, mas tudo bem, eles jogam, eles estão jogando
+
+0:05:15.640,0:05:20.500
+a grama certa, então é legal, neste caso você conhece um parque de motos vermelho
+
+0:05:20.500,0:05:24.610
+o lado da estrada parece mais rosa ou você sabe um pouco
+
+0:05:24.610,0:05:30.490
+soprar uma garotinha no rosa que está soprando bolhas que ela não está
+
+0:05:30.490,0:05:35.650
+soprando direito qualquer coisa lá tudo bem e então você também tem você sabe mesmo
+
+0:05:35.650,0:05:41.560
+mais exemplos errados certo, então você tem como ônibus escolar amarelo estacionado no
+
+0:05:41.560,0:05:44.050
+estacionamento bem, é CL hum, mas não é uma escola
+
+0:05:44.050,0:05:49.860
+ônibus, então pode estar falhando também, mas eu também posso fazer um muito, muito legal, você sabe
+
+0:05:49.860,0:05:56.470
+você também pode ter um desempenho muito bom, então isso foi de um vetor de entrada que é B para
+
+0:05:56.470,0:06:01.720
+exemplo de representação da minha imagem para uma sequência de símbolos que são D para
+
+0:06:01.720,0:06:05.620
+exemplos de caracteres ou palavras que estão fazendo aqui minha frase em inglês ok
+
+0:06:05.620,0:06:11.440
+claro até agora sim ok outro tipo de uso que você pode ter é talvez o
+
+0:06:11.440,0:06:17.560
+seguindo, então você terá a sequência dois vetores finais ok, então eu não me importo
+
+0:06:17.560,0:06:22.120
+sobre as sequências intermediárias, então tudo bem, o canto superior direito é chamado de Auto regressivo
+
+0:06:22.120,0:06:26.590
+rede e rede regressiva externa é uma rede que está emitindo uma saída
+
+0:06:26.590,0:06:29.950
+dado que você sente como entrada a saída anterior ok
+
+0:06:29.950,0:06:33.700
+então isso é chamado de Auto regressivo, você tem esse tipo de parte maluca no
+
+0:06:33.700,0:06:37.780
+rede no lado esquerdo, em vez disso, fornecerei várias sequências
+
+0:06:37.780,0:06:40.140
+sim, essa vai ser a tradução em inglês
+
+0:06:51.509,0:06:55.380
+então você tem uma sequência de palavras que vão compor sua frase final
+
+0:06:55.380,0:07:00.330
+é azul lá você pode pensar em um índice em um dicionário e então cada
+
+0:07:00.330,0:07:03.300
+azul vai lhe dizer qual palavra você vai escolher em um índice
+
+0:07:03.300,0:07:09.780
+dicionário certo então este é um ônibus escolar certo então oh sim um ônibus escolar amarelo você
+
+0:07:09.780,0:07:14.940
+vá para um índice de a, então você tem o segundo índice, você pode descobrir que é amarelo
+
+0:07:14.940,0:07:17.820
+e, em seguida, a caixa da escola para a direita, então a sequência aqui será
+
+0:07:17.820,0:07:22.590
+representando a sequência de palavras que o modelo está do outro lado lá
+
+0:07:22.590,0:07:26.460
+a esquerda você terá em vez disso, continuo alimentando uma sequência de símbolos e
+
+0:07:26.460,0:07:30.750
+só no final eu vou olhar qual é a minha saída final o que pode ser um
+
+0:07:30.750,0:07:36.150
+aplicação deste, então algo que yun também mencionou era diferente, então vamos
+
+0:07:36.150,0:07:40.789
+ver se consigo fazer com que minha rede compile Python ou para um piloto aberto próprio
+
+0:07:40.789,0:07:45.599
+interpretação, então neste caso eu tenho minha entrada atual que alimento minha rede
+
+0:07:45.599,0:07:54.979
+que será J igual a 8580 para então para X na faixa de oito alguns - J 920
+
+0:07:54.979,0:07:59.430
+blá blá blá e depois imprima este e então minha rede vai ser
+
+0:07:59.430,0:08:04.860
+encarregado de apenas você sabe me dar vinte e cinco mil e onze ok então
+
+0:08:04.860,0:08:09.210
+esta é a saída final de um programa e eu apliquei na rede para poder
+
+0:08:09.210,0:08:13.860
+para me enviar a saída correta, a correta na sua solução deste programa
+
+0:08:13.860,0:08:18.330
+ou coisas ainda mais complicadas, por exemplo, posso fornecer uma sequência de
+
+0:08:18.330,0:08:21.900
+outros símbolos que serão oitenta e oito mil e oitocentos
+
+0:08:21.900,0:08:26.669
+trinta e sete então eu tenho C vai ser algo então eu tenho que imprimir este
+
+0:08:26.669,0:08:33.360
+se algo que é sempre verdadeiro como o outro e então você conhece a saída
+
+0:08:33.360,0:08:38.849
+deve ser doze mil oito 184 certo para que você possa treinar uma rede neural para
+
+0:08:38.849,0:08:42.690
+fazer essas operações para que você alimente uma sequência de símbolos e depois no
+
+0:08:42.690,0:08:48.870
+saída você apenas impõe que o destino final deve ser um valor específico ok
+
+0:08:48.870,0:08:56.190
+e essas coisas fazendo barulho ok talvez eu seja melhor
+
+0:08:56.190,0:09:02.589
+tudo bem, então o que vem a seguir será, por exemplo, uma sequência para vetor
+
+0:09:02.589,0:09:07.210
+para sequenciar isso costumava ser a maneira padrão de executar a linguagem de comprimento
+
+0:09:07.210,0:09:13.000
+tradução para que você comece com uma sequência de símbolos aqui mostrados em rosa para que você
+
+0:09:13.000,0:09:17.290
+tem uma sequência de entradas, então tudo é condensado nesse tipo
+
+0:09:17.290,0:09:23.020
+da idade final que é este H aqui que vai ser de alguma forma o meu conceito
+
+0:09:23.020,0:09:27.880
+certo, então eu tenho uma frase, eu espremo a informação temporal da frase em apenas
+
+0:09:27.880,0:09:31.600
+um vetor que está representando o significado da mensagem que eu gostaria de enviar
+
+0:09:31.600,0:09:36.310
+e então eu recebo esse significado em qualquer representação desenrolada de volta
+
+0:09:36.310,0:09:41.380
+um idioma diferente né pra eu codificar não sei hoje estou muito feliz
+
+0:09:41.380,0:09:47.350
+em inglês como uma sequência de palavras e então você sabe que pode fazer com que o LG Sonoma
+
+0:09:47.350,0:09:53.170
+Felicia e depois falo fora da Tailândia hoje ou o que quer que seja agora hoje estou
+
+0:09:53.170,0:09:58.480
+muito cansado Jin Chen anda han lei ou o que quer que seja ok então
+
+0:09:58.480,0:10:02.020
+novamente você tem algum tipo de codificação, então você tem um compactado
+
+0:10:02.020,0:10:08.110
+representação e então você fica como a decodificação dada a mesma compactação
+
+0:10:08.110,0:10:15.040
+versão ok e então, por exemplo, acho que a tradução de idiomas novamente recentemente
+
+0:10:15.040,0:10:20.709
+vimos transformadores e muitas coisas como nos últimos tempos, então estamos
+
+0:10:20.709,0:10:25.300
+vou cobrir isso na próxima lição, eu acho, mas isso costumava ser o estado de
+
+0:10:25.300,0:10:31.000
+a arte até uns dois anos atrás e aqui você pode ver que se você realmente verificar
+
+0:10:31.000,0:10:38.950
+se você fizer um PCA sobre o espaço latente você tem que as palavras são agrupadas por
+
+0:10:38.950,0:10:43.630
+semântica ok, então, se ampliarmos nessa região, veremos isso em
+
+0:10:43.630,0:10:48.400
+o que no mesmo local você encontra todos os valores dezembro fevereiro novembro
+
+0:10:48.400,0:10:52.750
+certo, se você colocar um pouco de foco em uma região diferente, você obtém alguns
+
+0:10:52.750,0:10:55.250
+dias próximos quilômetros e assim por diante, então
+
+0:10:55.250,0:11:00.230
+local diferente terá algum significado comum específico que você conhece para que possamos
+
+0:11:00.230,0:11:05.780
+basicamente veja neste caso como treinando essas redes você sabe apenas
+
+0:11:05.780,0:11:09.680
+com símbolos eles vão pegar algumas semânticas específicas
+
+0:11:09.680,0:11:16.130
+você conhece os recursos, neste caso, você pode ver como se houvesse um vetor, então o
+
+0:11:16.130,0:11:20.900
+vetor que está conectando mulheres a homens será o mesmo vetor que está bem
+
+0:11:20.900,0:11:27.590
+mulher - homem que é esse eu acho que vai ser igual a rainha - rei certo e
+
+0:11:27.590,0:11:32.890
+então sim, está correto e você terá a mesma distância neste
+
+0:11:32.890,0:11:37.730
+espaço de incorporação será aplicado a coisas que são femininas e masculinas para
+
+0:11:37.730,0:11:43.370
+exemplo ou no outro caso você entrou e andou nadando e pântano assim
+
+0:11:43.370,0:11:47.960
+você sempre tem isso você sabe a transformação linear específica que você pode aplicar em
+
+0:11:47.960,0:11:53.690
+para ir de um tipo de palavra para outro ou este você tem a
+
+0:11:53.690,0:11:59.180
+ligação entre as cidades e as capitais tudo certo então mais um certo eu
+
+0:11:59.180,0:12:05.210
+pense no que está faltando no quadro geral aqui é um quadro geral porque
+
+0:12:05.210,0:12:09.560
+é tão grande não não é uma imagem tão grande porque é a visão geral ok
+
+0:12:09.560,0:12:18.590
+você não entendeu a piada está tudo bem o que está faltando aqui vetor para buscar sem tudo bem
+
+0:12:18.590,0:12:23.330
+bom, mas não, porque você ainda pode usar o outro, então você tem este
+
+0:12:23.330,0:12:27.830
+vetor é sequência para sequência correta, então este é você começar a alimentar dentro
+
+0:12:27.830,0:12:31.580
+entradas você começa a produzir algo certo o que pode ser um exemplo disso
+
+0:12:31.580,0:12:38.900
+coisas, então se você tem um telefone Nokia e usa o t9, você conhece essas coisas de
+
+0:12:38.900,0:12:43.100
+20 anos atrás você tem basicamente sugestões sobre qual é a sua digitação
+
+0:12:43.100,0:12:47.150
+você está digitando certo, então este seria um tipo dessas sugestões, como uma
+
+0:12:47.150,0:12:50.570
+tipo dessa arquitetura à medida que você recebe sugestões enquanto digita coisas
+
+0:12:50.570,0:12:57.290
+através ou você pode ter como fala para legendas né eu falei e você tem o
+
+0:12:57.290,0:13:02.520
+coisas abaixo ou algo muito legal que é
+
+0:13:02.520,0:13:08.089
+o seguinte então eu começo a escrever aqui os anéis de Saturno brilham enquanto o
+
+0:13:08.089,0:13:16.260
+gelo duro dois homens se olham hmm ok eles eram inimigos mas o servidor
+
+0:13:16.260,0:13:20.100
+os robôs não estavam bem ok espere então esta rede foi treinada em alguns
+
+0:13:20.100,0:13:24.360
+romances de ficção científica e, portanto, você pode simplesmente digitar algo e deixar a rede
+
+0:13:24.360,0:13:28.290
+começar a enviar algumas sugestões para você, para que você saiba se não sabe como
+
+0:13:28.290,0:13:34.620
+escreva um livro, então você pode saber, peça ao seu computador para ajudá-lo, ok
+
+0:13:34.620,0:13:39.740
+isso é tão legal ou mais um que eu realmente gosto este é fantástico eu acho
+
+0:13:39.740,0:13:45.959
+você deveria ler, leia, eu acho, então você coloca algum tipo de entrada lá como o
+
+0:13:45.959,0:13:51.630
+cientista nomeou sozinho o que é ou o prompt certo para que você coloque no
+
+0:13:51.630,0:13:56.839
+o prompt superior e então você sabe que esta rede começa a escrever sobre muito
+
+0:13:56.839,0:14:05.690
+unicórnios interessantes com vários chifres são chamados de chifres, diga unicórnio certo, ok
+
+0:14:05.690,0:14:09.480
+tudo bem, que legal, confira mais tarde e você pode tirar uma captura de tela
+
+0:14:09.480,0:14:14.970
+a tela de qualquer maneira, era como um colírio para os olhos, para que você saiba
+
+0:14:14.970,0:14:21.089
+com fome agora vamos entrar no PTT que é a coisa que eles não gostam muito
+
+0:14:21.089,0:14:27.390
+o PTT de ontem disse ok ok vamos ver como isso funciona bem então no
+
+0:14:27.390,0:14:31.620
+lado esquerdo vemos novamente este vetor no meio na representação a saída
+
+0:14:31.620,0:14:35.520
+para uma transformação fina e então temos as equações clássicas certas
+
+0:14:35.520,0:14:42.450
+tudo bem, então vamos ver como essas coisas são semelhantes ou não semelhantes e você não pode ver
+
+0:14:42.450,0:14:46.620
+qualquer coisa então nos próximos dois segundos eu vou querer um minuto eu vou desligar o
+
+0:14:46.620,0:14:51.300
+luzes, então eu as ligo [Música]
+
+0:14:51.300,0:14:55.570
+ok agora você pode ver algo certo então vamos ver quais são as perguntas de
+
+0:14:55.570,0:15:00.490
+essa nova arquitetura não se levante você vai se esmagar
+
+0:15:00.490,0:15:04.270
+tudo bem, então você tem aqui a representação oculta agora vai haver isso
+
+0:15:04.270,0:15:10.000
+função não linear desta rotação de uma versão de pilha da minha entrada que eu
+
+0:15:10.000,0:15:15.520
+anexou a configuração anterior da camada oculta ok e então esta é uma
+
+0:15:15.520,0:15:19.420
+notação compacta muito boa, é só colocar os dois vetores um em cima
+
+0:15:19.420,0:15:24.640
+um ao outro e então eu assino atribuo eu soma o viés eu também e defino inicial
+
+0:15:24.640,0:15:29.920
+condicionar meu H inicial será 0, então no início sempre que eu tiver t = 1
+
+0:15:29.920,0:15:34.360
+esse material vai ser resolvido é um vetor de zeros e então eu tenho isso
+
+0:15:34.360,0:15:39.880
+matriz Wh serão duas matrizes separadas, então às vezes você vê isso como
+
+0:15:39.880,0:15:48.130
+pergunta é Wₕₓ vezes x mais Wₕₕ vezes h[t-1], mas você também pode descobrir
+
+0:15:48.130,0:15:52.450
+que se você estocar essas duas matrizes você sabe que uma está ligada à outra que você
+
+0:15:52.450,0:15:56.620
+basta colocar essas duas linhas verticais em notação completamente equivalente, mas
+
+0:15:56.620,0:16:01.360
+parecia muito semelhante ao que tínhamos aqui, então a camada oculta é afim
+
+0:16:01.360,0:16:05.230
+transformação da camada interna de entrada é a transformação afim da entrada
+
+0:16:05.230,0:16:11.440
+e o valor anterior ok e então você tem a saída final que será
+
+0:16:11.440,0:16:20.140
+novamente minha rotação final então eu vou acender a luz então sem mágica até agora
+
+0:16:20.140,0:16:27.690
+certo você está bem certo você está comigo para balançar a cabeça e os outros
+
+0:16:27.690,0:16:34.930
+não sim tudo bem então este é simplesmente na mão direita
+
+0:16:34.930,0:16:40.330
+lado eu simplesmente desenrolo ao longo do tempo para que você possa ver como as coisas não são muito
+
+0:16:40.330,0:16:43.990
+louco como este loop aqui não é realmente um loop isso é como um
+
+0:16:43.990,0:16:48.500
+conexão com o próximo passo certo para que em torno
+
+0:16:48.500,0:16:52.760
+seta significa que é apenas esta seta para a direita, então esta é uma rede neural, é dinkley a
+
+0:16:52.760,0:16:57.950
+rede neural que é estendida em comprimento e não apenas em um em um
+
+0:16:57.950,0:17:01.639
+espessura certa, então você tem uma rede que vai nessa direção de entrada e
+
+0:17:01.639,0:17:05.600
+saída, mas como você pode pensar, houve uma entrada estendida e esta foi uma
+
+0:17:05.600,0:17:10.220
+saída estendida enquanto todos esses pesos intermediários são todos compartilhados
+
+0:17:10.220,0:17:14.120
+então todos esses pesos são os mesmos pesos e então você usa esse tipo de
+
+0:17:14.120,0:17:17.510
+pesos compartilhados, por isso é semelhante a uma rede convolucional no sentido de que você
+
+0:17:17.510,0:17:21.410
+tinha esse parâmetro de compartilhamento em diferentes domínios de tempo porque você
+
+0:17:21.410,0:17:28.820
+suponha que haja algum tipo de estacionaridade à direita do sinal
+
+0:17:28.820,0:17:32.870
+sentido, então isso é um tipo de convolução, certo, você pode ver como isso é uma espécie de
+
+0:17:32.870,0:17:40.130
+convolução tudo bem então foi meio que você conhece um pouco da teoria que nós
+
+0:17:40.130,0:17:46.160
+já vi isso então vamos ver como isso funciona para um exemplo prático então neste
+
+0:17:46.160,0:17:51.830
+caso estamos apenas lendo este código aqui, então este é o modelo de linguagem mundial que você
+
+0:17:51.830,0:17:57.770
+pode encontrá-lo nos exemplos do PyTorch para que você tenha uma sequência de símbolos que eu tenho
+
+0:17:57.770,0:18:01.910
+apenas representado lá cada símbolo é como uma letra no alfabeto e então
+
+0:18:01.910,0:18:05.419
+a primeira parte vai ser basicamente dividindo este desta forma certo
+
+0:18:05.419,0:18:10.309
+então você preserva verticalmente no domínio do tempo, mas então eu divido o longo
+
+0:18:10.309,0:18:16.640
+sequência longa de tal forma que agora posso cortar posso usar as melhores apostas como se diz
+
+0:18:16.640,0:18:21.980
+computação, então a primeira coisa que você tem o melhor tamanho será 4 neste caso
+
+0:18:21.980,0:18:27.410
+e então eu vou entrar no meu primeiro lote e então vou forçar o
+
+0:18:27.410,0:18:33.650
+rede para poder, então esta será minha melhor propagação de volta ao longo do tempo
+
+0:18:33.650,0:18:38.270
+período e forçarei a rede a produzir a próxima sequência de caracteres
+
+0:18:38.270,0:18:44.510
+ok então dado que eu tenho a,b,c, vou forçar minha rede a dizer d dado que eu tenho
+
+0:18:44.510,0:18:50.000
+g,h,i, forçarei a rede a criar j. Dado m,n,o,
+
+0:18:50.000,0:18:54.980
+Eu quero p, dado s,t,u, eu quero v. Então, como você pode realmente fazer
+
+0:18:54.980,0:18:59.660
+certeza de que você entende o que estou dizendo sempre que puder prever meu próximo
+
+0:18:59.660,0:19:04.010
+mundo você é realmente capaz de você sabe que basicamente já sabe o que eu sou
+
+0:19:04.010,0:19:11.720
+dizendo certo, sim, tentando prever uma próxima palavra que você vai
+
+0:19:11.720,0:19:15.170
+estar mostrando algum tipo de compreensão do que quer que seja este temporal
+
+0:19:15.170,0:19:22.700
+informações nos dados tudo bem, então depois de conseguirmos as camas que temos, então como
+
+0:19:22.700,0:19:26.510
+funciona, vamos ver se você sabe e um pouco de detalhe isso é
+
+0:19:26.510,0:19:30.650
+vai ser minha primeira saída vai ser um lote com quatro itens eu alimento isso
+
+0:19:30.650,0:19:34.220
+no canto mais próximo a noite toda e, em seguida, minha rede neural, chegamos a um
+
+0:19:34.220,0:19:39.740
+previsão da próxima amostra certa e eu forçarei essa a ser minha b,h,n,t
+
+0:19:39.740,0:19:47.450
+ok, então eu vou ter minha segunda entrada, vou fornecer a anterior
+
+0:19:47.450,0:19:53.420
+estado oculto para o RNN atual, sentirei isso por dentro e espero
+
+0:19:53.420,0:19:58.670
+obter a segunda linha da saída o destino certo e depois assim por diante, eu recebo
+
+0:19:58.670,0:20:03.410
+o próximo estado e desculpe a próxima entrada eu recebo o próximo estado e então eu vou
+
+0:20:03.410,0:20:07.700
+entrar na rede neural o RNN I que vou tentar forçar para obter o
+
+0:20:07.700,0:20:13.840
+alvo final ok até agora sim cada um vai ser a saída do
+
+0:20:18.730,0:20:28.280
+direito de rede neural recorrente da internet vou mostrar a equação antes que você tenha h[1]
+
+0:20:28.280,0:20:43.460
+sai deste um segundo a saída eu vou forçar a saída
+
+0:20:43.460,0:20:48.170
+na verdade, para ser meu alvo, minha próxima palavra na sequência de letras, então eu tenho
+
+0:20:48.170,0:20:52.610
+uma sequência de palavras força minha rede a prever qual é a próxima palavra dada a
+
+0:20:52.610,0:21:02.480
+palavra anterior sabe que h1 será alimentado aqui e você colocou a próxima palavra
+
+0:21:02.480,0:21:07.880
+a próxima palavra junto com o estado anterior e então você fará uma rotação de
+
+0:21:07.880,0:21:13.670
+a palavra anterior com uma anterior desculpe a nova palavra com o próximo estado o novo
+
+0:21:13.670,0:21:17.720
+palavra com o estado anterior você fará nossa rotação aqui encontre a transformação
+
+0:21:17.720,0:21:21.230
+certo e, em seguida, você aplica a não-linearidade para obter sempre um novo
+
+0:21:21.230,0:21:25.610
+palavra que é o X atual e aí você pega o estado anterior só para ver em
+
+0:21:25.610,0:21:30.650
+qual estado do sistema uma vez e, em seguida, você produz uma nova saída correta e, portanto, estamos
+
+0:21:30.650,0:21:35.000
+nesta situação aqui temos um monte de entradas eu tenho minha primeira entrada e depois
+
+0:21:35.000,0:21:39.200
+Eu recebo a primeira saída eu tenho essa memória interna que é enviada para frente e
+
+0:21:39.200,0:21:44.240
+então esta rede agora estará ciente do que aconteceu aqui e então eu insiro o
+
+0:21:44.240,0:21:49.450
+próxima entrada e assim por diante, recebo a próxima saída e forço a saída a ser a
+
+0:21:49.450,0:21:57.040
+saia aqui o valor dentro do lote ok tudo bem o que está faltando agora
+
+0:21:57.070,0:22:00.160
+[Música] isto é para desenho do PowerPoint
+
+0:22:02.890,0:22:08.370
+restrição tudo bem o que está acontecendo agora, então aqui eu vou enviar o
+
+0:22:08.370,0:22:13.300
+aqui acabei de desenhar uma seta com o h[T] final, mas há uma barra no
+
+0:22:13.300,0:22:16.780
+seta qual é a barra na seta quem pode
+
+0:22:16.780,0:22:27.100
+entenda o que a barra significa, claro que haverá, haverá o próximo
+
+0:22:27.100,0:22:31.570
+lote eles vão começar a partir daqui D e assim por diante este vai ser o meu
+
+0:22:31.570,0:22:46.690
+próximo lote d,j,p,ve,k,q,w ef,l,r,x. Esta barra aqui significa não voltar
+
+0:22:46.690,0:22:51.550
+propagar através de ok para que alguém chame o dot detach no Porsche
+
+0:22:51.550,0:22:56.560
+que vai parar o gradiente para ser propagado de volta para
+
+0:22:56.560,0:23:01.450
+para sempre tudo bem, então este diga, saiba disso e sempre que eu recebo, desculpe, não, não
+
+0:23:01.450,0:23:06.970
+gradiente de tal forma que, quando eu inserir o próximo gradiente, a primeira entrada aqui será
+
+0:23:06.970,0:23:11.530
+ser esse cara aqui e também claro sem gradiente para que não tenhamos
+
+0:23:11.530,0:23:17.170
+um comprimento infinito RNN ok faz sentido sim
+
+0:23:17.170,0:23:24.640
+não, eu suponho que é um sim, tudo bem, então desaparecendo e explodindo
+
+0:23:24.640,0:23:30.730
+gradientes nós tocamos neles também ontem, então novamente eu estou indo um
+
+0:23:30.730,0:23:35.620
+um pouco mais rápido para o usuário intent, então vamos ver como isso funciona
+
+0:23:35.620,0:23:40.390
+então geralmente para nossa rede neural recorrente você tem uma entrada você tem um
+
+0:23:40.390,0:23:45.160
+camada oculta e então você tem uma saída, então esse valor aqui como você obtém
+
+0:23:45.160,0:23:50.680
+esta informação por aqui o que o que esse R representa você
+
+0:23:50.680,0:23:55.840
+lembre-se da equação da camada oculta para que a nova camada oculta
+
+0:23:55.840,0:24:01.050
+ser a camada oculta anterior que giramos
+
+0:24:03.100,0:24:08.030
+tudo bem, então giramos a camada oculta anterior e como você gira oculta
+
+0:24:08.030,0:24:15.220
+matrizes de camadas corretas e, portanto, toda vez que você vê todos os anúncios na seta do bloco, há uma
+
+0:24:15.220,0:24:21.920
+rotação existe uma matriz agora se você sabe que esta matriz pode
+
+0:24:21.920,0:24:26.900
+altere o tamanho da sua saída final corretamente, então se você pensar em talvez
+
+0:24:26.900,0:24:31.190
+digamos que o determinante certo se o terminal for unitário é um mapeamento do
+
+0:24:31.190,0:24:34.610
+mesmas áreas para a mesma área, se for maior que um, eles serão
+
+0:24:34.610,0:24:39.560
+conhecendo esses radianos para ficar cada vez maior ou se for menor
+
+0:24:39.560,0:24:44.660
+do que eu vou fazer esses gradientes irem para zero sempre que você executar as costas
+
+0:24:44.660,0:24:48.920
+propagação nesta direção ok, então o problema aqui é que sempre que fazemos
+
+0:24:48.920,0:24:53.390
+é enviar gradientes de volta para que os ganhos sejam reduzidos assim
+
+0:24:53.390,0:24:57.800
+vai descer assim, então para baixo assim e para baixo assim
+
+0:24:57.800,0:25:01.610
+caminho e também por este caminho e assim por diante, para que os gradientes sejam
+
+0:25:01.610,0:25:06.380
+sempre indo contra a direção da seta em H ro tem uma matriz dentro
+
+0:25:06.380,0:25:11.510
+certo e novamente essa matriz afetará como esses gradientes se propagam e isso é
+
+0:25:11.510,0:25:18.590
+por que você pode ver aqui, embora tenhamos uma entrada muito brilhante que um gosta de obter
+
+0:25:18.590,0:25:23.720
+perdido por oh bem se você tem como um gradiente descendo aqui o gradiente
+
+0:25:23.720,0:25:30.410
+você sabe matar ao longo do tempo ok então como podemos consertar isso para consertar este nós simplesmente
+
+0:25:30.410,0:25:40.420
+remova as matrizes nesta operação horizontal faz sentido não sim não
+
+0:25:40.420,0:25:47.630
+o problema é que o próximo estado oculto fará com que você conheça sua própria entrada
+
+0:25:47.630,0:25:52.910
+memória vindo do passo anterior através de uma multiplicação de matrizes agora isso
+
+0:25:52.910,0:25:58.760
+a multiplicação de matrizes afetará o que vai ser o gradiente que vem no
+
+0:25:58.760,0:26:02.630
+outra direção ok então sempre que você tiver uma saída aqui você
+
+0:26:02.630,0:26:06.740
+ter uma derrota final agora você tem a nota que vai contra o
+
+0:26:06.740,0:26:12.050
+setas até a entrada o problema é que esse gradiente que vai
+
+0:26:12.050,0:26:16.910
+na direção oposta dessas setas será multiplicado pelo
+
+0:26:16.910,0:26:22.460
+matriz direita a transposição da matriz e novamente essas matrizes afetarão
+
+0:26:22.460,0:26:26.030
+qual é a norma geral desse gradiente certo e será tudo
+
+0:26:26.030,0:26:28.310
+matando você tem gradiente de fuga ou você está
+
+0:26:28.310,0:26:32.690
+vai ter explodir o gradiente que vai ser sempre que vai ser
+
+0:26:32.690,0:26:37.880
+sendo amplificado certo para evitar o que temos que evitar para que você
+
+0:26:37.880,0:26:41.960
+podemos ver que esta é uma rede muito profunda, então recorrentemente nossa rede onde o primeiro
+
+0:26:41.960,0:26:45.320
+redes profundas de volta à noite é na verdade e a palavra
+
+0:26:45.320,0:26:49.850
+profundidade estava realmente no tempo que e, claro, eles estavam enfrentando os mesmos problemas
+
+0:26:49.850,0:26:54.350
+enfrentamos com o aprendizado profundo nos dias modernos, onde ainda estávamos como
+
+0:26:54.350,0:26:58.450
+empilhando várias camadas, observamos que os gradientes se perdem à medida que
+
+0:26:58.450,0:27:05.750
+profundidade certa, então como resolvemos o gradiente se perdendo na profundidade em um
+
+0:27:05.750,0:27:08.770
+dias atuais pulando a conexão constante direito o
+
+0:27:11.270,0:27:15.530
+conexões do receptor que usamos e da mesma forma aqui podemos usar pular
+
+0:27:15.530,0:27:21.860
+conexões também quando descemos bem no tempo certo, então vamos ver como isso
+
+0:27:21.860,0:27:30.500
+funciona sim, então o problema é que o
+
+0:27:30.500,0:27:34.250
+gradientes estão apenas indo nos caminhos para trás de volta
+
+0:27:34.250,0:27:38.990
+[Música] bem, o gradiente tem que seguir o mesmo caminho
+
+0:27:38.990,0:27:42.680
+foi para a frente na direção oposta, quero dizer, você está computando
+
+0:27:42.680,0:27:46.970
+regra da cadeia, então se você tem uma função de uma função de uma função, então você apenas
+
+0:27:46.970,0:27:52.220
+usar essas funções para voltar à direita o ponto é que sempre que você tiver esses
+
+0:27:52.220,0:27:55.790
+gradientes voltando eles não terão que passar por matrizes, portanto, também
+
+0:27:55.790,0:28:01.250
+a parte direta não precisa passar pelas matrizes, o que significa que a
+
+0:28:01.250,0:28:07.310
+a memória não pode passar pela multiplicação de matrizes se você não quiser ter
+
+0:28:07.310,0:28:11.770
+este efeito quando você executa a propagação de volta ok
+
+0:28:14.050,0:28:19.420
+sim vai valer a pena trabalhar muito melhor eu mostro no próximo slide
+
+0:28:19.420,0:28:22.539
+[Música] mostra o próximo slide
+
+0:28:27.740,0:28:32.270
+então, como corrigimos bem esse problema em vez de usar um recurso neural recorrente
+
+0:28:32.270,0:28:36.650
+rede que vamos usar para rede neural recorrente ok, então o primeiro
+
+0:28:36.650,0:28:41.510
+RNN na primeira rede vai ser a que vai
+
+0:28:41.510,0:28:46.370
+da entrada para este estado intermediário, então eu tenho outras três redes
+
+0:28:46.370,0:28:51.410
+e cada um deles é representado por esses três símbolos 1 2 e 3.
+
+0:28:51.410,0:28:56.870
+ok pense nisso como nossa boca aberta e é como uma boca fechada ok tipo
+
+0:28:56.870,0:29:04.580
+o emoji ok então se você usar esse tipo de rede para rede neural recorrente
+
+0:29:04.580,0:29:09.740
+seja regular Rede você tem que ter por exemplo a partir da entrada que eu envio coisas
+
+0:29:09.740,0:29:14.390
+passa na boca aberta então chega aqui eu tenho a boca fechada aqui então
+
+0:29:14.390,0:29:18.920
+nada vai pra frente então eu vou ficar de boca aberta aqui pra que o
+
+0:29:18.920,0:29:23.600
+a história avança para que a história seja enviada para frente sem passar por um
+
+0:29:23.600,0:29:29.120
+multiplicação de matrizes de redes neurais, ele apenas passa pela nossa boca aberta e
+
+0:29:29.120,0:29:34.670
+todas as outras entradas encontram uma boca fechada para que o estado oculto não mude
+
+0:29:34.670,0:29:40.820
+novas entradas ok e então aqui você vai ter uma boca aberta aqui de tal forma que
+
+0:29:40.820,0:29:44.960
+você pode obter a saída final aqui, então a boca aberta continua aqui como
+
+0:29:44.960,0:29:48.560
+que você tem outra saída lá e, finalmente, você obtém a última fechada
+
+0:29:48.560,0:29:54.620
+boca no último agora se você executar back prop você terá os gradientes
+
+0:29:54.620,0:29:58.880
+fluindo pela boca aberta e você não obtém nenhum tipo de matriz
+
+0:29:58.880,0:30:04.400
+multiplicação, então agora vamos descobrir como essas bocas abertas são representadas
+
+0:30:04.400,0:30:10.010
+como eles são instanciados em termos de matemática é um design claro
+
+0:30:10.010,0:30:13.130
+agora estamos usando bocas abertas e fechadas e cada uma dessas bocas
+
+0:30:13.130,0:30:17.880
+é mais o primeiro cara aqui que conecta a entrada ao oculto são
+
+0:30:17.880,0:30:25.580
+brn termina então isso aqui que é uma rede recorrente fechada é simplesmente para
+
+0:30:25.580,0:30:32.060
+rede neural recorrente normal combinada de maneira inteligente, de modo que você tenha
+
+0:30:32.060,0:30:37.920
+interação multiplicativa e não interação de matrizes está claro até agora
+
+0:30:37.920,0:30:42.000
+isso é como a intuição eu não te mostrei como tudo bem então vamos descobrir
+
+0:30:42.000,0:30:48.570
+quem fez isso e como funciona bem, então vamos ver agora aqueles longos
+
+0:30:48.570,0:30:55.530
+memória de termo ou redes neurais recorrentes fechadas, então me desculpe, tudo bem, esse foi o
+
+0:30:55.530,0:30:59.730
+cara ok esse é o cara que realmente inventou essas coisas na verdade ele e seus
+
+0:30:59.730,0:31:07.620
+alunos de volta alguns em 1997 e estávamos bebendo aqui juntos, tudo bem, então
+
+0:31:07.620,0:31:14.010
+essa é a questão de uma rede neural recorrente e no canto superior esquerdo estão
+
+0:31:14.010,0:31:18.000
+você verá no diagrama, então eu apenas faço uma versão muito compacta disso
+
+0:31:18.000,0:31:23.310
+rede neural recorrente aqui será a coleção de equações que
+
+0:31:23.310,0:31:27.840
+são expressos em uma memória de longo prazo, eles parecem um pouco densos, então eu
+
+0:31:27.840,0:31:32.970
+apenas desenhe para você aqui ok, vamos realmente ver como essas coisas
+
+0:31:32.970,0:31:36.320
+funciona então eu vou desenhar um interativo
+
+0:31:36.320,0:31:40.500
+animação aqui para que você tenha seu portão de entrada aqui, que será um afim
+
+0:31:40.500,0:31:43.380
+transformação para que todos sejam recorrentes A rede escreve o mesmo
+
+0:31:43.380,0:31:49.920
+equação que eu mostro aqui para que essa transformação de entrada esteja multiplicando meu C
+
+0:31:49.920,0:31:55.440
+til que é o meu portão candidato aqui eu tenho um portão não se esqueça que é
+
+0:31:55.440,0:32:01.920
+multiplicando meu valor anterior da minha memória celular e então meu estilista Poppa talvez
+
+0:32:01.920,0:32:08.100
+não se esqueça da entrada anterior mais ii vou mostrar agora como funciona então eu
+
+0:32:08.100,0:32:12.600
+tenho minhas representações ocultas finais para serem elementos de multiplicação
+
+0:32:12.600,0:32:17.850
+multiplicação entre meu portão de saída e meu você sabe o que quer que seja hiperbólico
+
+0:32:17.850,0:32:22.740
+versão tangente da célula de tal forma que as coisas são limitadas e então eu tenho
+
+0:32:22.740,0:32:26.880
+finalmente meu til C, que é meu portão candidato, é simplesmente
+
+0:32:26.880,0:32:31.110
+Anette certo então você tem uma rede recorrente uma que modula a saída
+
+0:32:31.110,0:32:35.730
+um que modula este é o portão não esqueça e este é o portão de entrada
+
+0:32:35.730,0:32:40.050
+então toda essa interação entre a memória e os portões é um multiplicativo
+
+0:32:40.050,0:32:44.490
+interação e isso esqueça a entrada e não esqueça que a entrada e a saída são
+
+0:32:44.490,0:32:48.780
+todos os sigmóides e, portanto, eles vão de 0 a 1 para que eu possa multiplicar por um
+
+0:32:48.780,0:32:53.340
+0 você está de boca fechada ou pode multiplicar por 1 se estiver de boca aberta né
+
+0:32:53.340,0:33:00.120
+se você pensa em ter nosso volume linear interno que está abaixo
+
+0:33:00.120,0:33:06.120
+menos 5 ou acima mais 5 ok, de modo que você usa o portão no
+
+0:33:06.120,0:33:11.940
+área saturada ou 0 ou 1 certo você conhece o sigmóide então vamos ver como essas coisas
+
+0:33:11.940,0:33:16.260
+funciona esta é a saída vamos desligar o
+
+0:33:16.260,0:33:20.450
+output como faço para desligar a saída eu simplesmente coloco um 0
+
+0:33:20.450,0:33:26.310
+dentro então digamos que eu tenha uma representação interna roxa veja eu coloquei um 0
+
+0:33:26.310,0:33:29.730
+lá no portão de saída a saída vai estar multiplicando um 0 com
+
+0:33:29.730,0:33:36.300
+algo que você recebe 0 ok então vamos dizer que eu tenho um verde eu tenho um então eu
+
+0:33:36.300,0:33:40.830
+multiplique um com o roxo eu fico roxo e então finalmente eu recebo o mesmo
+
+0:33:40.830,0:33:46.170
+valor da mesma forma eu posso controlar a memória e posso, por exemplo, configurá-lo neste
+
+0:33:46.170,0:33:51.240
+caso eu vou ser eu tenho minha memória interna ver isso é roxo e então eu
+
+0:33:51.240,0:33:57.450
+tenho aqui meu cara anterior que vai ser azul eu acho que tenho um zero aqui e
+
+0:33:57.450,0:34:01.500
+então a multiplicação me dá um zero aí eu tenho aqui um zero então
+
+0:34:01.500,0:34:05.190
+a multiplicação vai dar um zero em cerca de dois zeros e eu recebo um zero
+
+0:34:05.190,0:34:09.690
+dentro da memória, então eu apenas apago a memória e você obtém o zero lá
+
+0:34:09.690,0:34:15.210
+caso contrário eu posso manter a memória eu ainda faço a coisa interna eu fiz uma nova
+
+0:34:15.210,0:34:19.919
+mas guardo uma maravilha tal que a multiplicação fica azul o sol fica
+
+0:34:19.919,0:34:25.649
+azul e então eu continuo enviando minha flor finalmente eu posso escrever de tal forma que eu
+
+0:34:25.649,0:34:31.110
+pode obter um 1 no portão de entrada a multiplicação fica roxa então o I
+
+0:34:31.110,0:34:35.010
+defina um zero no não esqueça de tal forma que o
+
+0:34:35.010,0:34:40.679
+nós esquecemos e então a multiplicação me dá zero eu alguns eu fico roxo e então
+
+0:34:40.679,0:34:45.780
+Eu recebo a saída roxa final, então aqui nós controlamos como enviar como escrever
+
+0:34:45.780,0:34:50.850
+na memória como redefinir a memória e como produzir algo bem, então temos
+
+0:34:50.850,0:35:04.770
+todas as operações diferentes, isso parece um computador - e sim, é
+
+0:35:04.770,0:35:08.700
+assumido neste caso para mostrar como a lógica funciona como nós somos
+
+0:35:08.700,0:35:14.250
+ter um valor dentro do sigmóide foi ou abaixo de menos 5 ou está acima
+
+0:35:14.250,0:35:27.780
+mais 5 tal que estamos trabalhando como switch 0 1 switch ok a rede pode
+
+0:35:27.780,0:35:32.790
+optar por usar este tipo de operação para mim faz sentido acredito que este é o
+
+0:35:32.790,0:35:37.110
+a lógica por trás de como esta rede foi montada, a rede pode decidir
+
+0:35:37.110,0:35:42.690
+para fazer o que quiser, geralmente eles fazem o que querem, mas isso parece
+
+0:35:42.690,0:35:46.800
+eles podem trabalhar pelo menos se eles tiveram que saturar os portões parece que as coisas
+
+0:35:46.800,0:35:51.930
+pode funcionar muito bem, então nos 15 minutos restantes do tipo eu estarei
+
+0:35:51.930,0:35:56.880
+mostrando dois cadernos eu meio que fui um pouco mais rápido porque novamente lá
+
+0:35:56.880,0:36:04.220
+é muito mais para ser visto aqui nos notebooks então sim
+
+0:36:10.140,0:36:17.440
+então este é o peso real, o gradiente real que você se importa aqui será o
+
+0:36:17.440,0:36:21.970
+gradiente em relação ao C anterior certo, o que você se importa será
+
+0:36:21.970,0:36:25.000
+basicamente a derivada parcial da corrente vista em relação à anterior
+
+0:36:25.000,0:36:30.160
+C é tal que você se você tem a inicial C original aqui e você tem
+
+0:36:30.160,0:36:35.140
+vários C ao longo do tempo você quer mudar algo no C original você ainda
+
+0:36:35.140,0:36:39.130
+tem o gradiente descendo até o primeiro C que desce
+
+0:36:39.130,0:36:43.740
+para obter gradientes através dessa matriz Wc aqui, então se você quiser mudar
+
+0:36:46.660,0:36:52.089
+esses pesos aqui você apenas passa pela cadeia de multiplicações que são
+
+0:36:52.089,0:36:56.890
+não envolvendo nenhuma multiplicação de matrizes como tal que você quando você obtém o
+
+0:36:56.890,0:37:00.490
+gradiente ainda é multiplicado por um o tempo todo e se reduz a
+
+0:37:00.490,0:37:05.760
+tudo o que queremos fazer ok eu respondi sua pergunta
+
+0:37:09.150,0:37:16.660
+então as matrizes vão mudar a amplitude do seu gradiente, então se
+
+0:37:16.660,0:37:22.000
+você tem como esses maiores autovalores sendo que você conhece 0,0001 toda vez que você
+
+0:37:22.000,0:37:26.079
+multiplique, você obtém a norma desse vetor sendo morto, então você tem como um
+
+0:37:26.079,0:37:31.569
+decaimento exponencial neste caso se meu portão de esquecimento for realmente sempre igual a
+
+0:37:31.569,0:37:37.510
+1 então você obtém c = ct. Qual é a parcial
+
+0:37:37.510,0:37:43.299
+derivada de c[t]/c[t-1]?
+
+0:37:43.299,0:37:48.579
+1 certo então as partes do parente que é o
+
+0:37:48.579,0:37:52.390
+coisa que você realmente multiplica toda vez que haverá 1, então a saída
+
+0:37:52.390,0:37:57.609
+gradientes de saída de gradiente podem ser gradientes de entrada, sim, eu vou pavilhões
+
+0:37:57.609,0:38:01.510
+será implícito porque aplicaria o gradiente de saída pela derivada de
+
+0:38:01.510,0:38:05.599
+este módulo certo se este módulo é e1 então a coisa que é
+
+0:38:05.599,0:38:14.660
+aqui continua essa é a lógica por trás disso agora isso é só para desenhar
+
+0:38:14.660,0:38:24.710
+propósitos, eu assumi que é como um interruptor, tudo bem, para que eu possa fazer as coisas que você
+
+0:38:24.710,0:38:29.089
+sei que você tem um interruptor ligado e desligado para mostrar como deveria estar funcionando, talvez
+
+0:38:29.089,0:38:46.579
+não funciona assim, mas ainda funciona, pode funcionar dessa maneira, sim, então
+
+0:38:46.579,0:38:50.089
+essa é a implementação da pergunta profissional será simplesmente você apenas pad
+
+0:38:50.089,0:38:55.069
+todos os outros sincronizam quando vê com zeros antes da sequência, então se você tiver
+
+0:38:55.069,0:38:59.920
+várias várias sequências sim várias sequências de comprimento diferente
+
+0:38:59.920,0:39:03.619
+você acabou de colocá-los todos alinhados à direita
+
+0:39:03.619,0:39:08.960
+e então você coloca alguns zeros aqui ok tal que você sempre tem no último
+
+0:39:08.960,0:39:14.599
+coluna o elemento mais recente se você colocar dois zeros aqui vai ser uma bagunça certo
+
+0:39:14.599,0:39:17.299
+no código se você colocar os zeros no começo você simplesmente para de fazer
+
+0:39:17.299,0:39:21.319
+propagação de volta quando você acertar o último símbolo certo, então você começa a partir daqui
+
+0:39:21.319,0:39:25.460
+volte aqui para ir em frente, então você volta prop e pare sempre que você
+
+0:39:25.460,0:39:29.599
+realmente chegar ao final de sua seqüência se você pad do outro lado você obtém um
+
+0:39:29.599,0:39:34.730
+monte de queda lá nos próximos dez minutos, então você vai ser visto dois
+
+0:39:34.730,0:39:45.049
+cadernos se você não tiver outras perguntas ok uau você está tão quieto ok
+
+0:39:45.049,0:39:49.970
+então vamos agora para a classificação de sequências bem, então neste caso
+
+0:39:49.970,0:39:54.589
+Eu vou ser eu realmente falo alto o objetivo é classificar um
+
+0:39:54.589,0:40:00.259
+sequência de elementos elementos de sequência e alvos são representados localmente
+
+0:40:00.259,0:40:05.660
+vetores de entrada com apenas um bit diferente de zero, então é um hot codificando a sequência
+
+0:40:05.660,0:40:10.770
+começa com um B para começar e terminar com um E e, caso contrário, consiste em um
+
+0:40:10.770,0:40:16.370
+símbolos escolhidos aleatoriamente de um conjunto {a, b, c, d} que são algum tipo de ruído
+
+0:40:16.370,0:40:22.380
+espere para dois elementos na posição t1 e t2 esta posição pode ser ou X
+
+0:40:22.380,0:40:29.460
+ou Y para o nível de dificuldade difícil que você tem, por exemplo, que a sequência
+
+0:40:29.460,0:40:35.220
+comprimento comprimento é escolhido aleatoriamente entre 100 e 110 10 t1 é escolhido aleatoriamente
+
+0:40:35.220,0:40:40.530
+entre 10 e 20 Tinto é escolhido aleatoriamente entre 50 e 60 há quatro
+
+0:40:40.530,0:40:47.010
+classes de sequências Q, R, S e U que depende da ordem temporal de x e y então se
+
+0:40:47.010,0:40:53.520
+você tem X,X você pode estar recebendo um Q. X,Y você ganha um R. Y,X você ganha um S
+
+0:40:53.520,0:40:57.750
+e Y,Y obtém U. Então, vamos fazer uma classificação de sequência com base em
+
+0:40:57.750,0:41:03.720
+o X e y ou o que quer que importe para esses tipos de gatilhos, ok
+
+0:41:03.720,0:41:08.370
+e no meio no meio você pode ter a,b,c,d em posições aleatórias como você
+
+0:41:08.370,0:41:12.810
+sei gerado aleatoriamente está claro até agora, então lançamos uma classificação de
+
+0:41:12.810,0:41:23.180
+seqüências onde você pode ter esses X,XX,YY,X ou Y,Y. Então neste caso
+
+0:41:23.210,0:41:29.460
+Estou mostrando primeiro a primeira entrada para que o tipo de retorno seja uma tupla de sequência
+
+0:41:29.460,0:41:36.780
+de dois que vai ser qual é a saída deste gerador de exemplo e assim
+
+0:41:36.780,0:41:43.050
+vamos ver o que é isso aqui então esses são meus dados que eu vou ser
+
+0:41:43.050,0:41:48.030
+alimentando a rede, então eu tenho 1, 2, 3, 4, 5, 6, 7, 8
+
+0:41:48.030,0:41:54.180
+símbolos diferentes aqui em uma linha cada vez que há oito nós
+
+0:41:54.180,0:42:02.970
+têm X e Y e a, b, c e d início e fim. Então nós temos um quente fora de você
+
+0:42:02.970,0:42:08.400
+sei oito caracteres e então eu tenho uma sequência de linhas que são minha sequência
+
+0:42:08.400,0:42:12.980
+de símbolos ok neste caso você pode ver aqui eu tenho um começo com todos os zeros
+
+0:42:12.980,0:42:19.260
+por que todos os zeros estão corretos, então, neste caso, a sequência foi menor que
+
+0:42:19.260,0:42:21.329
+a esperar a sequência máxima na cama
+
+0:42:21.329,0:42:29.279
+e então a primeira primeira sequência tem um item zero extra no início nelas
+
+0:42:29.279,0:42:34.859
+você vai ter como neste caso o segundo item é dos dois um pólo a pólo
+
+0:42:34.859,0:42:41.160
+é a melhor classe correspondente, por exemplo, tenho um tamanho de lote de 32 e
+
+0:42:41.160,0:42:51.930
+então eu vou ter um tamanho de saída de 4. Por que 4 ? Q, R, S e U.
+
+0:42:51.930,0:42:57.450
+então eu tenho 4 um vetor alvo de 4 dimensões e tenho uma sequência de 8
+
+0:42:57.450,0:43:04.499
+vetores dimensionais como entrada ok, então vamos ver como essa sequência se parece
+
+0:43:04.499,0:43:12.779
+neste caso será BbXcXcbE. Então X,X vamos ver que XXXX é Q
+
+0:43:12.779,0:43:18.569
+certo, então temos nossa sequência Q e é por isso que o alvo final é um Q o 1
+
+0:43:18.569,0:43:25.019
+0 0 0 e então você verá BBXC então o segundo item e o penúltimo
+
+0:43:25.019,0:43:30.390
+vai ser B minúsculo B você pode ver aqui o segundo item e o penúltimo
+
+0:43:30.390,0:43:36.390
+o item vai ficar bem, então vamos agora criar uma rede recorrente
+
+0:43:36.390,0:43:41.249
+de uma maneira muito rápida, então aqui posso simplesmente dizer que minha rede recorrente será
+
+0:43:41.249,0:43:47.369
+tocha e um RNN e vou usar uma rede de leitura realmente não linear
+
+0:43:47.369,0:43:52.709
+e então eu tenho minha camada linear final no outro caso eu vou usar um led
+
+0:43:52.709,0:43:57.119
+STM e então eu vou ter uma camada interna final, então eu apenas executo esses caras
+
+0:43:57.119,0:44:07.920
+Eu tenho meu loop de treinamento e vou treinar para 10 livros, então no treinamento
+
+0:44:07.920,0:44:13.259
+grupo você pode estar sempre procurando por esses cinco passos diferentes, o primeiro passo é
+
+0:44:13.259,0:44:18.900
+vamos obter os dados dentro do modelo correto, então esse é o passo número um, o que é
+
+0:44:18.900,0:44:30.669
+passo número dois há cinco passos que lembramos olá
+
+0:44:30.669,0:44:35.089
+você sente que alimenta a rede se alimenta a rede com alguns dados, então
+
+0:44:35.089,0:44:41.539
+o que você faz você calcula a perda ok, então temos o passo de cálculo para calcular o
+
+0:44:41.539,0:44:52.549
+perda fantástica número três é zero o dinheiro certo então o número quatro que é
+
+0:44:52.549,0:45:09.699
+computando o off sim cachorro perdido para trás perdido não para trás não computar o
+
+0:45:09.699,0:45:16.449
+derivada parcial da perda em relação aos parâmetros da rede sim
+
+0:45:16.449,0:45:27.380
+aqui para trás, finalmente, número cinco, que é um passo na direção oposta do
+
+0:45:27.380,0:45:31.819
+gradiente tudo bem esses são os cinco passos que você sempre quer ver em qualquer
+
+0:45:31.819,0:45:37.909
+plano de treinamento se alguém estiver faltando, então você está [ __ ] bem, então tentamos agora
+
+0:45:37.909,0:45:42.469
+o RNN e o LSTM e você obtém algo parecido com isso
+
+0:45:42.469,0:45:55.929
+então nosso NN vai até 50% em precisão e então o LSTM ficou 100% ok oh ok
+
+0:45:56.439,0:46:06.019
+em primeiro lugar, quantos pesos este LSTM tem em comparação com o RNN quatro
+
+0:46:06.019,0:46:11.059
+vezes mais pesos certo, então não é uma comparação justa, eu diria porque LSTM
+
+0:46:11.059,0:46:16.819
+é simplesmente para rnns combinados de alguma forma certo, então este é um neural de duas camadas
+
+0:46:16.819,0:46:20.659
+rede enquanto o outro está em uma camada certa sempre ambos sempre como se tivesse
+
+0:46:20.659,0:46:25.009
+uma camada oculta eles são um fim se Alice TM podemos pensar em ter duas
+
+0:46:25.009,0:46:33.199
+escondido então novamente uma camada duas camadas bem uma escondida para levar em um conjunto de
+
+0:46:33.199,0:46:37.610
+parâmetros quatro conjuntos dos mesmos números como ok não justo ok de qualquer maneira
+
+0:46:37.610,0:46:43.610
+vamos com cem iterações ok, então agora eu vou com 100 iterações e eu
+
+0:46:43.610,0:46:49.490
+mostrar como funcionam ou não e também quando estou apenas clicando em coisas como
+
+0:46:49.490,0:46:56.000
+que temos tempo para fazer as coisas ok agora meu computador vai ser
+
+0:46:56.000,0:47:02.990
+reclamando tudo bem então novamente quais são os cinco tipos de operações como cinco
+
+0:47:02.990,0:47:06.860
+ok agora já está feito desculpe eu ia fazer tudo bem então é isso
+
+0:47:06.860,0:47:16.280
+o RNN certo RNN e finalmente deu a 100% ok então ferro e só
+
+0:47:16.280,0:47:20.030
+deixe mais tempo como um pouco mais de treinamento mais longo realmente funciona o outro
+
+0:47:20.030,0:47:26.060
+um ok e aqui você pode ver que temos 100% em vinte e oito dólares ok o
+
+0:47:26.060,0:47:30.650
+outro caso, obtivemos 2.100% em aproximadamente o dobro do tempo
+
+0:47:30.650,0:47:35.690
+duas vezes mais de cada vez ok, então vamos primeiro ver como eles se comportam aqui, então eu
+
+0:47:35.690,0:47:42.200
+temos essa sequência BcYdYdaE que é uma sequência U e então perguntamos a rede
+
+0:47:42.200,0:47:46.760
+e ele realmente quis dizer como rótulos como você está bem, então abaixo estamos
+
+0:47:46.760,0:47:51.140
+veremos algo muito fofo, então neste caso estávamos usando sequências
+
+0:47:51.140,0:47:56.870
+que são muito, muito, muito pequenos, então até o RNN é capaz de treinar
+
+0:47:56.870,0:48:02.390
+essas pequenas sequências, então qual é o ponto de usar um LSTM bem, podemos primeiro
+
+0:48:02.390,0:48:07.430
+de tudo aumentar a dificuldade da parte do treinamento e vamos ver isso
+
+0:48:07.430,0:48:13.280
+o RNN pode estar falhando miseravelmente enquanto o LSTM continua trabalhando neste
+
+0:48:13.280,0:48:19.790
+parte de visualização abaixo ok eu treino uma rede agora Alice e LSTM agora com o
+
+0:48:19.790,0:48:26.000
+nível moderado que tem oitenta símbolos em vez de oito ou dez dez símbolos, então
+
+0:48:26.000,0:48:31.430
+você pode ver aqui como esse modelo realmente conseguiu ter sucesso no final, embora
+
+0:48:31.430,0:48:38.870
+há um pico muito grande e agora vou desenhar o valor do
+
+0:48:38.870,0:48:43.970
+estado da célula ao longo do tempo ok, então eu vou entrar em nossa sequência de oitenta
+
+0:48:43.970,0:48:49.090
+símbolos e eu vou mostrar a você qual é o valor do estado oculto
+
+0:48:49.090,0:48:53.330
+estado oculto, então, neste caso, eu vou mostrar a você
+
+0:48:53.330,0:48:56.910
+[Música] escondido espera
+
+0:48:56.910,0:49:01.140
+sim, vou mostrar que vou enviar minha entrada através de uma tangente hiperbólica
+
+0:49:01.140,0:49:06.029
+de tal forma que se você estiver abaixo de menos 2,5 eu vou mapear para menos 1 se você estiver
+
+0:49:06.029,0:49:12.329
+acima de 2,5 você é mapeado para mais 1 mais ou menos e então vamos ver como essas coisas
+
+0:49:12.329,0:49:18.029
+parece que, neste caso, você pode ver que essa camada oculta específica foi selecionada
+
+0:49:18.029,0:49:27.720
+no X aqui e então ficou vermelho até você acertar o outro X então isso
+
+0:49:27.720,0:49:33.710
+está visualizando o estado interno do LSD e assim você pode ver isso em
+
+0:49:33.710,0:49:39.599
+unidade porque neste caso eu uso representação oculta como dimensão oculta de
+
+0:49:39.599,0:49:47.700
+10 e assim neste caso o 1 2 3 4 5 a quinta unidade oculta da célula
+
+0:49:47.700,0:49:52.829
+A 5ª célula na verdade é acionada observando o primeiro X e depois vai
+
+0:49:52.829,0:49:58.410
+quieto depois de ver os outros atos, isso me permite basicamente você saber
+
+0:49:58.410,0:50:07.440
+cuidar de quero dizer reconhecer se a sequência é U, P, R ou S. Ok, faz sentido ok
+
+0:50:07.440,0:50:14.519
+ah mais esse notebook que vou mostrar rapidinho que é o 09-echo_data
+
+0:50:14.519,0:50:22.410
+neste caso eu vou estar no canto sul vou ter um eco de rede em
+
+0:50:22.410,0:50:27.059
+o que quer que eu esteja dizendo, se eu disser algo, pedi a uma rede para dizer se eu
+
+0:50:27.059,0:50:30.960
+fala alguma coisa eu pedi pro meu vizinho falar se eu falar alguma coisa eu peço ok Anderson
+
+0:50:30.960,0:50:42.150
+certo ok então neste caso aqui e eu estarei inserindo esta é a primeira sequência
+
+0:50:42.150,0:50:50.579
+vai ser 0 1 1 1 1 0 e você terá o mesmo aqui 0 1 1 1 1 0 e eu
+
+0:50:50.579,0:50:57.259
+tem 1 0 1 1 0 1 etc certo, então, neste caso, se você quiser produzir algo
+
+0:50:57.259,0:51:00.900
+depois de algum certo isso neste caso é três vezes
+
+0:51:00.900,0:51:06.809
+passo depois você tem que ter algum tipo de memória de curto prazo onde você tenha em mente
+
+0:51:06.809,0:51:11.780
+o que eu acabei de dizer onde você tem em mente o que eu acabei de dizer onde você tem em mente
+
+0:51:11.780,0:51:16.890
+[Música] o que acabei de dizer, sim, está correto, então
+
+0:51:16.890,0:51:22.099
+você sabe que a pirataria realmente requer algum tipo de memória de trabalho
+
+0:51:22.099,0:51:27.569
+enquanto o outro o modelo de linguagem que foi levado a dizer
+
+0:51:27.569,0:51:33.539
+algo que eu ainda não disse direito, então esse foi um tipo diferente de
+
+0:51:33.539,0:51:38.700
+tarefa que você realmente teve que prever qual é a próxima palavra mais provável no keynote que você
+
+0:51:38.700,0:51:42.329
+não pode estar sempre certo, mas este você sempre pode estar certo, você sabe
+
+0:51:42.329,0:51:49.079
+isso é que não há coisas aleatórias de qualquer maneira, então eu tenho meu primeiro lote aqui e depois
+
+0:51:49.079,0:51:53.549
+a sec a mancha branca que é a mesma coisa semelhante que é deslocada
+
+0:51:53.549,0:52:01.319
+tempo e então temos que fragmentar essa sequência longa, longa, então antes de eu
+
+0:52:01.319,0:52:05.250
+estava enviando uma sequência inteira dentro da rede e eu estava aplicando o final
+
+0:52:05.250,0:52:09.569
+target para ser algo certo, neste caso, eu tive que separar se a sequência for
+
+0:52:09.569,0:52:13.319
+nessa direção eu tive que dividir minha longa sequência em pequenos pedaços e então você
+
+0:52:13.319,0:52:18.869
+tem que preencher o primeiro pedaço manter o rastro de qualquer que seja o estado oculto enviar um
+
+0:52:18.869,0:52:23.549
+novo pedaço onde você alimenta e inicialmente como o estado oculto inicial a saída
+
+0:52:23.549,0:52:28.319
+deste canto certo então você alimenta este pedaço você tem um estado oculto final então
+
+0:52:28.319,0:52:33.960
+você alimenta esse pedaço e como você coloca você tem que colocar esses dois como entrada para o
+
+0:52:33.960,0:52:38.430
+memória interna agora você alimenta o próximo pedaço onde você coloca este como
+
+0:52:38.430,0:52:44.670
+entrada quanto ao estado interno e você vamos comparar aqui RNN
+
+0:52:44.670,0:52:57.059
+com o analista TMS eu acho que no final aqui você pode ver que tudo bem nós conseguimos
+
+0:52:57.059,0:53:02.789
+na verdade, somos uma precisão n/a que vai de 100 a 100 por cento, então se você estiver
+
+0:53:02.789,0:53:08.220
+começando agora a mexer com o tamanho do pedaço de memória com um intervalo de memória
+
+0:53:08.220,0:53:11.619
+você pode ser visto com o LSTM você pode manter esta memória
+
+0:53:11.619,0:53:16.399
+por um longo tempo, desde que você tenha capacidade suficiente do RNN depois de atingir
+
+0:53:16.399,0:53:22.880
+algum tipo de comprimento você começa a esquecer o que aconteceu no passado e foi
+
+0:53:22.880,0:53:29.809
+praticamente tudo por hoje então fique aquecido lave as mãos e eu vou te ver
+
+0:53:29.809,0:53:34.929
+semana que vem tchau

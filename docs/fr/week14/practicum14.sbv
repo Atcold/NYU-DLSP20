@@ -1,0 +1,2621 @@
+0:00:00.000,0:00:07.000
+Alors aujourd'hui dernière leçon. Je souris mais je suis triste.
+
+0:00:07.000,0:00:16.080
+Je voulais parler des modèles à base d'énergie et comment les entraîner mais je pense que j’ai besoin d’un mois de préparation.
+
+0:00:16.080,0:00:24.640
+Donc si cela vous intéresse, cet été vous aurez un tutoriel sur les modèles à base d'énergie [voir la section commentaires de la vidéo].
+
+0:00:24.720,0:00:28.880
+Nous écrivons un papier ensemble avec Yann. Je prévois de
+
+0:00:28.880,0:00:35.040
+rédiger ce papier en deux parties : l’une sur les mathématiques et l’autre devrait être l’implémentation.
+
+0:00:35.040,0:00:44.399
+Pour que vous puissiez exécuter le papier en gros. Et ainsi mieux comprendre ce qui se passe.
+
+0:00:44.399,0:00:54.480
+Donc c’est en cours. Peut-être dans un mois. Je dois faire du bon travail dessus.
+
+0:00:54.480,0:01:02.000
+Et peut-être que nous pourrons même avoir un cours supplémentaire plus tard
+
+0:01:02.000,0:01:06.799
+si vous êtes intéressés. Vous savez que je suis toujours là pour enseigner.
+
+0:01:06.799,0:01:11.280
+Donc si vous êtes intéressés par les modèles à base d’énergie
+
+0:01:11.280,0:01:14.400
+plus tard, en dehors du cours, etc.
+
+0:01:14.400,0:01:20.640
+nous pourrons à nouveau nous réunir, enregistrer et prétendre que c'est un cours de plus.
+
+0:01:20.640,0:01:26.560
+Donc je n’ai pas réussi à le faire pour aujourd'hui. Aujourd'hui nous allons couvrir,
+
+0:01:26.560,0:01:31.520
+si je le peux deux sujets. Nous en n’avons jamais
+
+0:01:31.520,0:01:36.960
+trop parlé avant car c'est plus de l'apprentissage machine
+
+0:01:36.960,0:01:41.119
+mais néanmoins nous nous soucions aussi en apprentissage profond.
+
+0:01:41.119,0:01:45.360
+Donc le sujet d'aujourd'hui est le surentraînement et la régularisation.
+
+0:01:45.360,0:01:50.479
+Laissez-moi commencer par partager mon écran. Donc encore une fois
+
+0:01:50.479,0:01:56.000
+comme d'habitude, c’est ma perspective du sujet. Ce n'est généralement pas
+
+0:01:56.000,0:02:00.320
+la plus populaire mais c'est ce que vous avez car c'est mon
+
+0:02:00.320,0:02:04.079
+point de vue et je suis votre éducateur/instructeur.
+
+0:02:04.079,0:02:08.000
+Donc le lien entre le surentraînement et la régularisation.
+
+0:02:08.000,0:02:13.160
+Ce sont deux choses différentes mais sont bien sur connectées.
+
+0:02:13.160,0:02:16.480
+Donc je commence avec ce dessin ici.
+
+0:02:16.480,0:02:19.360
+Quelqu'un m'a dit que ce n'est pas intuitif
+
+0:02:19.360,0:02:23.760
+mais encore une fois pour moi ça l’est.
+
+0:02:23.760,0:02:30.000
+Ici je vous montre, avec la boîte rose, la complexité des données.
+
+0:02:30.000,0:02:38.000
+Donc ces points sont échantillonnés de mon jeu d’entraînement.
+
+0:02:38.000,0:02:42.800
+Puis, j'ai essayé de faire correspondre leurs trois modèles différents,
+
+0:02:42.800,0:02:50.160
+Donc, dans le premier cas, la complexité du modèle est en dessous.
+
+0:02:50.160,0:02:54.480
+Elle est plus petite que la complexité des données.
+
+0:02:54.480,0:03:00.239
+Donc, vous avez un phénomène appelé sousentraînement [underfitting] car vous essayez 
+
+0:03:00.239,0:03:06.480
+d’entraîner pour que cela ressemble à une parabole avec une ligne droite.
+
+0:03:06.480,0:03:09.920
+Donc vous ne faites pas du bon travail.
+
+0:03:09.920,0:03:14.239
+Puis ce qui s'est passé ici, c’est que nous avons le bon entraînement.
+
+0:03:14.239,0:03:17.599
+Dans ce cas, la complexité du modèle correspond à
+
+0:03:17.599,0:03:22.560
+la complexité des données. Et donc, dans ce cas, quelle est la différence avec
+
+0:03:22.560,0:03:27.280
+le cas précédent ? Ici vous avez une erreur nulle.
+
+0:03:27.280,0:03:31.280
+Votre modèle correspond exactement aux points d’entraînement.
+
+0:03:31.280,0:03:39.920
+Enfin, nous avons le surentraînement où la complexité du modèle est en fait
+
+0:03:39.920,0:03:44.000
+plus grande que la complexité des données.
+
+0:03:44.000,0:03:51.519
+Dans ce cas, le modèle ne choisit pas une parabole. Pourquoi ? C’est une question pour vous
+
+0:03:51.519,0:03:58.239
+mon audience en direct. Pourquoi ce modèle gigote dans ce cas ?
+
+0:03:58.239,0:04:03.040
+Pourquoi ce n'est pas une parabole ?
+
+0:04:03.040,0:04:06.720
+Et vous êtes censés taper dans le chat car sinon
+
+0:04:06.720,0:04:10.000
+je ne sais pas si vous me suivez. Donc ma question est : 
+
+0:04:10.000,0:04:15.280
+dans le dernier cas, la complexité de mon modèle est plus grande
+
+0:04:15.280,0:04:21.120
+que la complexité des données. Et bien que ces points semblent
+
+0:04:21.120,0:04:26.320
+appartenir à une parabole, mon modèle décide d'avoir ce type de
+
+0:04:26.320,0:04:30.479
+pic sur la gauche, vous savez des trucs bizarres.
+
+0:04:30.479,0:04:37.440
+[Chat : le modèle n'apprend pas mais mémorise] Oui, c'est écrit dans « overfitting »
+
+0:04:37.440,0:04:41.600
+mais pourquoi ? Si ces points proviennent d'une
+
+0:04:41.600,0:04:45.600
+parabole, je m'attendrais à un modèle encore plus grand.
+
+0:04:45.600,0:04:48.720
+Faisant comme une belle parabole.
+
+0:04:48.720,0:04:52.240
+Vous m'écrivez en privé, ne le faites pas.
+
+0:04:52.240,0:04:59.600
+Donc si, et c'est un gros « si »,
+
+0:04:59.600,0:05:04.000
+si mes points d’entraînement proviennent d’une vraie
+
+0:05:04.000,0:05:09.520
+parabole, même le modèle surentraîné ferait une parabole parfaite.
+
+0:05:09.520,0:05:12.720
+Le point ici est qu'il y a du bruit.
+
+0:05:12.720,0:05:17.680
+Il y a toujours du bruit et donc le modèle qui passe parfaitement
+
+0:05:17.680,0:05:23.000
+par tous les points d’entraînement sera comme ça.
+
+0:05:23.000,0:05:26.960
+Car tous ces points ne vivent pas exactement sur
+
+0:05:26.960,0:05:31.360
+la parabole mais sont légèrement décalés. Et pour
+
+0:05:31.360,0:05:37.120
+les parcourir parfaitement, le modèle va devoir essayer de
+
+0:05:37.120,0:05:40.960
+trouver une fonction funky. Est-ce que ça a un sens ?
+
+0:05:40.960,0:05:47.120
+Le fait est que sans le bruit, ce ne serait qu'une parabole parfaite.
+
+0:05:47.120,0:05:53.840
+Donc vous pourriez dire, peut-être devrions-nous utiliser le « right-fiting ».
+
+0:05:54.080,0:05:57.759
+En apprentissage machine peut-être. Mais nous faisons de l’apprentissage profond.
+
+0:05:57.759,0:06:01.840
+Et ce n'est pas tout à fait le cas.
+
+0:06:01.840,0:06:05.199
+Le « right-fiting » n’est définitivement pas le cas. Nos modèles
+
+0:06:05.199,0:06:10.960
+sont si puissants qu'ils ont même réussi à apprendre le bruit.
+
+0:06:10.960,0:06:14.319
+Il y a un papier montrant que vous pouvez étiqueter 
+
+0:06:14.319,0:06:18.720
+ImageNet avec des étiquettes aléatoires et vous pouvez obtenir un réseau
+
+0:06:18.720,0:06:21.759
+mémorisant parfaitement chaque étiquette
+
+0:06:21.759,0:06:25.039
+pour chacun de ces échantillons. Donc vous pouvez
+
+0:06:25.039,0:06:28.080
+clairement dire que les modèles que nous utilisons
+
+0:06:28.080,0:06:32.080
+sont absolument sur-paramétrés. Cela signifie donc que
+
+0:06:32.080,0:06:38.720
+vous avez beaucoup plus de pouvoir que ce qu’est nécessaire
+
+0:06:38.720,0:06:44.080
+pour apprendre la structure des données. Néanmoins
+
+0:06:44.080,0:06:50.560
+nous avons vraiment besoin de ça. Donc essayons de comprendre ce qui se passe.
+
+0:06:50.560,0:06:52.960
+Oh en fait peut-être que vous connaissez la réponse.
+
+0:06:54.639,0:06:58.960
+Alors pourquoi voulons-nous aller dans un espace
+
+0:06:58.960,0:07:03.840
+dimensionnel en très grandes dimensions ? Je vous l'ai dit plusieurs fois.
+
+0:07:03.840,0:07:10.479
+Car ? Qui répond ? Allez. C’est le dernier cours, répondez-moi [rires]
+
+0:07:11.000,0:07:15.199
+Pourquoi voulons-nous y aller… [Chat : pour élargir la distribution
+
+0:07:15.199,0:07:19.039
+des données] [Chat : l'optimisation est plus facile]. Oui fantastique.
+
+0:07:19.039,0:07:23.199
+Chaque fois que nous allons dans un espace surparamétré,
+
+0:07:23.199,0:07:27.000
+tout est très facile à déplacer. Donc nous voudrions toujours
+
+0:07:27.000,0:07:30.319
+nous mettre dans le scénario du surentraînement
+
+0:07:30.319,0:07:35.120
+avec nos réseaux car c'est l’entraînement va être plus facile.
+
+0:07:35.120,0:07:42.800
+Néanmoins, quel est le problème maintenant ? Le problème est que cela se tortiller comme des fous.
+
+0:07:42.800,0:07:48.400
+Donc c’est le point numéro 1.
+
+0:07:48.400,0:07:52.400
+Le point deux : pourquoi pensez-vous que vous devez
+
+0:07:52.400,0:07:59.840
+surentraîner lorsque vous écrivez le script de votre code ?
+
+0:08:01.199,0:08:05.840
+Deuxième question. Question interactive aujourd'hui.
+
+0:08:05.840,0:08:12.000
+[Chat : être sûr qu'il y a une tendance qu’on peut modeler]
+
+0:08:12.000,0:08:17.919
+C'est peut-être dans la bonne direction mais c'est une réponse trop compliquée.
+
+0:08:17.919,0:08:23.199
+Etes-vous des experts en entraînement de réseau ? Vous devriez
+
+0:08:23.199,0:08:28.560
+car vous suivez ces leçons depuis un certain temps.
+
+0:08:28.560,0:08:32.479
+Essayez de répondre à cette question :
+
+0:08:32.479,0:08:36.159
+pourquoi voudriez-vous surentraîner ? Je vous en dis même un peu plus.
+
+0:08:39.760,0:08:43.039
+Je commence toujours à entraîner mon réseau sur un batch.
+
+0:08:43.039,0:08:45.680
+[Chat : si le modèle a des capacités] Donc c'est
+
+0:08:49.519,0:08:54.399
+la règle numéro 1 pour déboguer du code en apprentissage machine.
+
+0:08:54.399,0:08:57.920
+Vous aimeriez voir si vous vous plantez dans la
+
+0:08:57.920,0:09:03.440
+création du modèle. Donc premièrement vous pouvez prendre 1 batch de la bonne
+
+0:09:03.440,0:09:07.120
+taille même avec du bruit aléatoire.
+
+0:09:07.120,0:09:10.080
+« torch.rand » avec des étiquettes aléatoires.
+
+0:09:10.080,0:09:13.440
+Puis vous souhaitez faire quelques époques
+
+0:09:13.440,0:09:17.120
+avec 1 batch de bruit aléatoire qui pourrait être
+
+0:09:17.120,0:09:22.680
+premier batch de votre ensemble de données ou autre. Juste pour prouver que votre modèle peut apprendre.
+
+0:09:22.680,0:09:25.279
+Vous pouvez facilement faire de petites erreurs
+
+0:09:25.279,0:09:34.080
+comme j'en fait quelques fois comme par exemple mettre le « zéro grad » après le « backward » [rires].
+
+0:09:34.279,0:09:39.200
+Je sais que ça arrive et rien n'est appris. Donc vous voulez
+
+0:09:39.200,0:09:43.440
+toujours voir si le modèle peut apprendre.
+
+0:09:43.440,0:09:46.000
+Donc si vous pouvez mémoriser, c’est fantastique. Nous allons
+
+0:09:46.000,0:09:50.880
+maintenant apprendre comment améliorer les performances d'un modèle qui
+
+0:09:50.880,0:09:54.640
+mémorise ses propres données. Deux raisons.
+
+0:09:54.640,0:09:57.120
+La première nous avons dit que surparamétrer
+
+0:09:57.120,0:10:01.920
+les modèles permet d’apprendre facilement car le paysage est beaucoup plus lisse.
+
+0:10:01.920,0:10:06.720
+Si vous avez un modèle sur-paramétré, vous allez
+
+0:10:06.720,0:10:10.000
+idéalement, commencé par différentes initialisations.
+
+0:10:10.000,0:10:14.240
+Donc vous obtenez des points initiaux dans l'espace des paramètres et puis
+
+0:10:14.240,0:10:17.120
+chaque fois que vous entraînez ces différents modèles, tous
+
+0:10:17.120,0:10:21.760
+convergent vers une position différente. Vous pouvez
+
+0:10:21.760,0:10:26.500
+penser à un modèle identique où vous permutez tous les poids.
+
+0:10:26.500,0:10:30.000
+Je veux dire que vous permutez des poids par couche
+
+0:10:30.000,0:10:35.279
+et toujours obtenir le même modèle à la fin. Donc ils sont comparables en
+
+0:10:35.279,0:10:40.000
+termes de la fonction d’approximation que vous construisez. Néanmoins dans
+
+0:10:40.000,0:10:42.800
+l'espace des paramètres, ils ne sont pas les mêmes. Dans l’espace de la fonction
+
+0:10:42.800,0:10:46.880
+ce sont des modèles exactement équivalents. Dans l'espace des paramètres ce
+
+0:10:46.880,0:10:51.760
+sont des modèles absolument différents. Mais, ils convergeront vers
+
+0:10:51.760,0:10:55.440
+des modèles équivalents en terme de performance.
+
+0:10:55.440,0:11:01.760
+Vous suivez ? Je parle de choses
+
+0:11:01.760,0:11:06.880
+bizarres aujourd'hui. Je suppose que cela vient aussi un du
+
+0:11:06.880,0:11:10.000
+cours de Joan Bruna où l'on parle de l'espace des paramètres et
+
+0:11:10.000,0:11:13.120
+de l’espace des fonctions. Ce cours est tellement cool.
+
+0:11:13.120,0:11:17.600
+Je pense que l'année prochaine, j'essaierai de le mettre en ligne aussi.
+
+0:11:17.600,0:11:24.080
+Donc premier point : le surparamétrage qui aide à entraîner. Le deuxième point : le surparamétrage
+
+0:11:24.079,0:11:28.320
+vous aide pour le débogage des maths. [Chat : pouvez-vous répéter le point
+
+0:11:28.320,0:11:33.680
+sur l'espace des fonctions et des paramètres ?] Donc si vous avez un réseau 
+
+0:11:33.680,0:11:42.000
+et permutez les lignes de vos matrices puis permutez la colonne de la couche suivante,
+
+0:11:42.000,0:11:49.839
+vous pouvez en gros réorganiser les poids pour que vous puissiez toujours obtenir la même performance.
+
+0:11:49.839,0:11:53.200
+Donc si vous avez la première matrice, vous avez le premier élément de la couche cachée égal à
+
+0:11:53.200,0:11:56.200
+un certain nombre. Disons que la couche cachée a une taille de 2.
+
+0:11:56.200,0:11:59.200
+Donc vous avez une matrice avec 2 lignes
+
+0:11:59.200,0:12:03.600
+et donc vous pouvez échanger les lignes. Vous allez obtenir une couche cachée 
+
+0:12:03.600,0:12:07.120
+qui est retournée et puis pour la matrice de poids suivante
+
+0:12:07.120,0:12:13.839
+vous pouvez retourner les colonnes. Et vous obtiendriez exactement
+
+0:12:13.839,0:12:19.519
+le même réseau. Désolé, vous obtiendrez exactement
+
+0:12:19.519,0:12:22.560
+la même fonction. Cela vous donnera exactement 
+
+0:12:22.560,0:12:26.399
+le même nombre en sortie bien que les paramètres soient en fait
+
+0:12:26.399,0:12:29.440
+différents car vous les échangez.
+
+0:12:29.440,0:12:35.240
+Le même paramètre w11 va être w21. Donc ils sont différents.
+
+0:12:35.240,0:12:39.200
+Dans l'espace des paramètres, il s'agit de modèles différents. Il y a
+
+0:12:39.200,0:12:42.560
+un point ici dans l'espace des paramètres et un autre point est ici.
+
+0:12:42.560,0:12:53.000
+Néanmoins pour le passage de l'espace des paramètres à l'espace fonctionnel, ces deux configurations seront affectées à la même fonction.
+
+0:12:53.079,0:12:58.079
+Car la fonction connecte l'entrée à la sortie et elles seront identiques
+
+0:12:58.079,0:13:03.200
+même si vous faites cette permutation des lignes et des colonnes.
+
+0:13:03.200,0:13:08.000
+Cela fait sens ?
+
+0:13:08.000,0:13:19.000
+[Chat : si l'espace pour l'espace des paramètres est très grand pour un ensemble de données donné, peut-on dire que le modèle est très incertain à propos de ses prédictions ?]
+
+0:13:19.320,0:13:23.360
+Nous allons parler d'incertitude.
+
+0:13:23.360,0:13:27.839
+Je vais aborder ce point dans un instant. Donc nous commençons toujours par 
+
+0:13:27.839,0:13:31.000
+la troisième colonne ici, le surentraînement.
+
+0:13:31.000,0:13:35.920
+Je veux toujours avoir un modèle sur-paramétré car c’est facile à apprendre
+
+0:13:35.920,0:13:39.120
+et c’est également puissant en termes…
+
+0:13:39.120,0:13:42.240
+au sens qu'il va apprendre plus que ce que nous
+
+0:13:42.240,0:13:47.600
+attendons. Donc comment faire face à ce surentraînement ?
+
+0:13:47.600,0:13:51.600
+Comment améliorer les performances de validation ou de test ?
+
+0:13:51.600,0:13:54.600
+Nous avons donc dit que le surentraînement signifie…
+
+0:13:54.600,0:13:58.839
+Nous ne l’avons pas dit, on va voir ça à la prochaine diapositive.
+
+0:13:58.839,0:14:01.040
+Ici on voit comment lutter contre.
+
+0:14:01.040,0:14:04.560
+Nous commençons donc par la droite, où nous introduisons
+
+0:14:04.560,0:14:08.320
+ce faible régulariseur. Donc il n'y a pas de régularisation.
+
+0:14:08.320,0:14:12.399
+Le dernier graphique, le sixième ici que mon troisième.
+
+0:14:12.399,0:14:18.560
+Puis je continue à ajouter, ici un régulariseur moyen.
+
+0:14:18.560,0:14:23.360
+Donc j'aime y penser comme un lisseur de bords.
+
+0:14:23.360,0:14:29.120
+Donc les contours de mon carré sont lisses.
+
+0:14:29.120,0:14:34.399
+Et vous pouvez dire maintenant que ce graphique est différent de ma deuxième fenêtre
+
+0:14:34.399,0:14:39.279
+ici. Donc la régularisation moyenne est différente du
+
+0:14:39.279,0:14:43.199
+« right-fiting ». Vous pouvez voir qu’il y a des
+
+0:14:43.199,0:14:50.079
+coins ici. Enfin si vous montez la dose de cette drogue,
+
+0:14:50.080,0:14:55.519
+l’empoisonnement de votre modèle pour restreindre sa puissance,
+
+0:14:55.519,0:14:59.199
+alors vous obtenez comme un régulariseur très fort
+
+0:14:59.199,0:15:02.720
+qui vous donne le cercle ici. C'est mon image mentale.
+
+0:15:02.720,0:15:06.480
+Peu importe, je vous ai donné ma vue d’ensemble en premier,
+
+0:15:06.480,0:15:10.000
+passons aux définitions réelles.
+
+0:15:10.000,0:15:13.920
+Donc il y a quelques définitions ici.
+
+0:15:13.920,0:15:18.079
+Elles ne sont pas tout à fait équivalentes mais en apprentissage profond c’est ce que nous utilisons.
+
+0:15:18.079,0:15:24.160
+Donc la régularisation ajoute des connaissances préalables à un modèle. 
+
+0:15:24.160,0:15:27.120
+La distribution a priori est spécifiée pour les paramètres.
+
+0:15:27.120,0:15:34.000
+Nous nous attendons donc à ce que ces paramètres proviennent d'une distribution spécifique,
+
+0:15:34.000,0:15:39.040
+d’un processus de génération spécifique.
+
+0:15:39.040,0:15:43.759
+Chaque fois que nous pensons à la régularisation, nous pouvons
+
+0:15:43.759,0:15:49.120
+fortement supposer que ces paramètres devraient provenir
+
+0:15:49.120,0:15:54.560
+de ce processus spécifique qui les génère.
+
+0:15:54.560,0:15:58.639
+Donc cela parle de l'espace des paramètres. Puis on peut aussi parler de
+
+0:15:58.639,0:16:02.240
+l'espace des fonctions. Dans ce cas la régularisation
+
+0:16:02.240,0:16:08.000
+peut être vue comme une restriction de l'ensemble des fonctions possibles
+
+0:16:08.000,0:16:18.500
+qui sont apprenables. Donc il y a deux perspectives : l'une concerne les poids, quel type d’objets ils sont.
+
+0:16:18.500,0:16:21.680
+Ils devraient avoir une forme particulière,
+
+0:16:21.680,0:16:27.759
+une longueur ou peu importe. Une certaine structure que je suppose à l’avance.
+
+0:16:27.759,0:16:32.959
+C’est l’a priori, signifiant « avant » en latin.
+
+0:16:32.959,0:16:36.240
+Et dans un autre cas, au lieu de cela, si vous avez toutes
+
+0:16:36.240,0:16:39.920
+les fonctions possibles, vous aimeriez trouver une restriction de
+
+0:16:39.920,0:16:45.279
+ces fonctions possibles de sorte qu'elles ne soient pas trop folles.
+
+0:16:45.279,0:16:48.399
+Ne soient pas trop extrêmes dans la façon
+
+0:16:48.399,0:16:54.480
+dont elles se comportent. Il y a une question. [Chat : mais dans cette image
+
+0:16:54.480,0:16:58.959
+le carré est toujours dans le cercle]
+
+0:16:58.959,0:17:05.760
+Oui… je reviens. Oh ! Je vois. Donc peut-être que le cercle devrait
+
+0:17:05.760,0:17:09.520
+être plus petit que le carré.
+
+0:17:09.520,0:17:16.400
+Bon point. Cool.  Enfin la dernière définition de la régularisation
+
+0:17:16.400,0:17:20.480
+est la véritable partie sur l'apprentissage profond. C’est la suivante.
+
+0:17:20.480,0:17:25.520
+C’est comme un étirement. 
+
+0:17:25.520,0:17:30.880
+Ma Google Home pense que je parle en italien.
+
+0:17:30.880,0:17:34.160
+[rires] La régularisation est toute modification que
+
+0:17:38.880,0:17:44.640
+nous faisons à un algorithme d'apprentissage visant à réduire son erreur de généralisation
+
+0:17:44.640,0:17:48.000
+mais pas son erreur d’entraînement. Donc c'est en fait
+
+0:17:48.000,0:17:53.280
+un étirement car il ne s'agit plus de connaissances préalables et
+
+0:17:53.280,0:17:57.360
+d'espace de fonctions mais en fait la modification de l'apprentissage
+
+0:17:57.360,0:18:01.520
+des algorithmes. Donc c'est comme si on se dirigeait vers une programmation.
+
+0:18:01.520,0:18:06.000
+Les paramètres d’un côté, les fonctions d’un autre et
+
+0:18:06.000,0:18:10.160
+l'implémentation d’algorithme. Donc il s'agit en réalité de trois
+
+0:18:10.160,0:18:16.400
+perspectives de la même chose. Cool donc commençons par
+
+0:18:16.400,0:18:19.919
+les techniques de régularisation. Quelques exemples.
+
+0:18:19.919,0:18:24.400
+Je commence par l'initialisation de Xavier. J’ai dit avant que nous
+
+0:18:24.400,0:18:29.919
+pouvons considérer ces paramètres comme provenant d'un processus de génération.
+
+0:18:29.919,0:18:32.960
+Donc chaque fois que vous initialisez un réseau,
+
+0:18:32.960,0:18:37.600
+vous pouvez choisir de sélectionner un a priori.
+
+0:18:37.600,0:18:44.799
+Donc voici comment définir où vos poids proviennent.
+
+0:18:44.799,0:18:48.400
+Donc dans ce cas nous pouvons choisir « xavier_normal »
+
+0:18:48.400,0:18:55.039
+qui est une technique d'initialisation. Cela suppose cette distribution
+
+0:18:55.039,0:18:58.960
+gaussienne. Donc vous avez l'espace des poids, les valeurs de poids et
+
+0:18:58.960,0:19:02.240
+la plupart d'entre elles seront prélevées vers 0 et 
+
+0:19:02.240,0:19:07.280
+vous avez une sorte d'écart type
+
+0:19:07.280,0:19:12.320
+qui est basé sur la taille de l'entrée et de la sortie.
+
+0:19:12.320,0:19:16.400
+La taille de cette couche spécifique. A partir de là, nous pouvons commencer
+
+0:19:16.400,0:19:20.720
+à introduire le taux de décroissance des poids. C’est la première technique de
+
+0:19:20.720,0:19:23.840
+régularisation très répandue en apprentissage automatique.
+
+0:19:23.840,0:19:27.280
+Peut-être moins d’actualité dans les réseaux neuronaux.
+
+0:19:27.280,0:19:31.200
+Donc le taux de décroissance des poids vous pouvez la trouver 
+
+0:19:31.200,0:19:37.720
+directement à l'intérieur du paquet « optim ». C'est un drapeau dans les différents optimiseurs.
+
+0:19:37.720,0:19:41.919
+C’est aussi appelé « régularisation L2 », « Ridge » ou
+
+0:19:41.919,0:19:44.799
+« a priori gaussien ». Cela vous dit en gros que les choses
+
+0:19:44.799,0:19:48.799
+proviennent de cette distribution gaussienne, distribution générative.
+
+0:19:48.799,0:19:53.200
+Cependant nous l'appelons le taux de décroissance des poids.
+
+0:19:53.200,0:19:56.000
+Pourquoi cela ? C’est la première chose que…
+
+0:19:56.000,0:20:00.500
+si vous entraînez un réseau neuronal, vous utilisez le taux de décroissance des poids.
+
+0:20:00.500,0:20:05.600
+pas les autres choses. Donc nous pouvons commencer avec ce Jtrain qui est
+
+0:20:05.600,0:20:10.559
+notre objectif agissant sur les paramètres.
+
+0:20:10.559,0:20:14.080
+C’est égal à l’ancien entraînement, celui sans
+
+0:20:14.080,0:20:20.240
+régularisation plus un terme de pénalité.
+
+0:20:20.240,0:20:23.440
+Ici la norme carrée.
+
+0:20:23.440,0:20:27.679
+La norme deux au carrée de ces paramètres.
+
+0:20:27.679,0:20:34.320
+Si vous calculez le gradient, bien sûr, vous aurez juste λθ.
+
+0:20:34.320,0:20:39.760
+Car le 2 vient en bas et cela se simplifie. Vous avez donc ça.
+
+0:20:39.760,0:20:43.200
+Si vous pensez à cette deuxième équation, 
+
+0:20:43.200,0:20:50.799
+vous dites que le θ prend le θ précédent
+
+0:20:50.799,0:20:59.600
+moins le pas dans la direction du gradient telle que vous pouvez
+
+0:20:59.679,0:21:03.360
+descendre la colline dans votre perte d’entraînement.
+
+0:21:03.360,0:21:09.039
+Moins un certain ηλ qui est un
+
+0:21:09.039,0:21:12.960
+scalaire multiplié par θ. Cela signifie que
+
+0:21:15.360,0:21:17.679
+la première partie vous dit : va tous
+
+0:21:17.679,0:21:21.840
+en bas de la colline. Alors que l'autre vous dit :
+
+0:21:21.840,0:21:27.760
+va aussi vers 0. Donc à quoi cela ressemble ?
+
+0:21:27.760,0:21:31.000
+Cela ressemble à cela. 
+
+0:21:31.000,0:21:35.600
+Donc considérez que nous avons déjà entraînés et que la
+
+0:21:35.600,0:21:39.280
+perte d’entraînement est nulle. Et nous ne considérons que le second terme.
+
+0:21:39.280,0:21:44.320
+Donc considérons que nous avons déjà terminé l’entraînement.
+
+0:21:44.320,0:21:49.919
+Donc il n'y a pas ce terme. Nous avons juste θ
+
+0:21:49.919,0:21:56.640
+moins η λ θ. Qu'est-ce que cela signifie ? S'il n'y a pas d’êta au premier terme
+
+0:21:56.640,0:22:00.240
+ici, à n'importe quel endroit où vous êtes, vous allez
+
+0:22:00.240,0:22:04.640
+soustraire un multiplicateur/scalaire.
+
+0:22:04.640,0:22:08.400
+Un scalaire est ce qui « scale » [modifie l’échelle].
+
+0:22:08.400,0:22:14.400
+Donc ce scalaire met à l'échelle ce vecteur probablement par un facteur plus petit que 1.
+
+0:22:14.400,0:22:18.559
+Donc si vous êtes ici, celui-ci va vous faire tomber sur
+
+0:22:18.559,0:22:21.520
+le point qui relie votre tête du
+
+0:22:21.520,0:22:27.840
+θ vers 0. Ou ce point ici,
+
+0:22:27.840,0:22:31.600
+c’est θ et puis il vous ramène à 0.
+
+0:22:31.600,0:22:35.760
+Donc si vous n'avez pas ce terme ici et effectuez quelques étapes
+
+0:22:35.760,0:22:39.039
+dans cette mise à jour des paramètres,
+
+0:22:39.039,0:22:43.000
+vous allez obtenir que le champ vectoriel résultant est
+
+0:22:43.000,0:22:47.600
+quelque chose qui vous attire vers 0. Et c'est pourquoi on l'appelle le taux de décroissance des poids.
+
+0:22:47.600,0:22:52.720
+Donc si vous laissez faire, ce truc va décroitre vers 0.
+
+0:22:52.720,0:22:57.919
+Cela fait sens ? Donc ces dessins sont très mignons. Je pense.
+
+0:22:57.919,0:23:04.159
+Donc, maintenant vous connaissez le taux de décroissance des poids.
+
+0:23:04.159,0:23:11.679
+On peut aussi considérer cela comme ajouter une contrainte sur la longueur d'un vecteur.
+
+0:23:11.679,0:23:17.039
+Donc la longueur d'un vecteur est la norme euclidienne.
+
+0:23:17.039,0:23:21.600
+Donc ici nous essayons en gros de réduire la longueur de ce vecteur.
+
+0:23:21.600,0:23:26.080
+Le taux de décroissance des poids est donc un moyen de réduire la longueur.
+
+0:23:26.080,0:23:33.840
+L1. Qu'est-ce que L1 ? Cela peut aussi être
+
+0:23:33.840,0:23:39.120
+utilisé comme drapeau dans l'optimiseur dans torch. C’est aussi appelé LASSO :
+
+0:23:39.120,0:23:46.400
+« Least Absoute Shrinkage Selector Operator « par les statisticiens.
+
+0:23:46.400,0:23:52.400
+C’est également appelé « a priori Laplacien » car vient d'une distribution 
+
+0:23:52.400,0:23:58.159
+distribution de probabilités laplacienne. Et on peut aussi l'appeler
+
+0:23:58.159,0:24:02.720
+« a priori épars ». Pourquoi cela ? C'est assez intéressant. Donc ici dans
+
+0:24:02.720,0:24:06.960
+la partie inférieure, vous pouvez voir la ligne pointillée
+
+0:24:06.960,0:24:10.799
+représentant mon a priori gaussien. Puis ici je
+
+0:24:10.799,0:24:14.320
+vous montre l’a priori Laplacien [en bleue]. Quelle est la différence ?
+
+0:24:14.320,0:24:17.120
+Laplace même que le gaussien, donc vous avez l'exponentielle,
+
+0:24:17.120,0:24:22.799
+mais au lieu d'avoir la norme 2, vous avez la une norme 1.
+
+0:24:22.799,0:24:31.000
+Alors que la quadratrique est très peu profonde, comme plate vers 0,
+
+0:24:31.039,0:24:36.000
+la L1 est en pointe. C'est pourquoi si vous avez
+
+0:24:36.000,0:24:39.679
+l'exponentielle, vous obtenez comme un pic. 
+
+0:24:39.679,0:24:42.720
+C'est moins la valeur absolue. Donc vous avez
+
+0:24:42.720,0:24:47.279
+un pic pour la laplacienne ou un truc lisse pour la carrée
+
+0:24:47.279,0:24:50.000
+car vous avez la parabole qui est lisse sur la
+
+0:24:50.000,0:24:55.360
+la partie inférieure. Donc le fait est qu'il y a beaucoup
+
+0:24:55.360,0:24:59.440
+plus de masse maintenant dans cette région qu’avant.
+
+0:24:59.440,0:25:04.320
+Donc c'est comme un pic, il y a beaucoup plus de
+
+0:25:04.320,0:25:08.080
+probabilité que vous obteniez quelque chose vers 0. Néanmoins, c'est peut-être
+
+0:25:08.080,0:25:10.640
+pas très clair comme explication. Alors je vous montre
+
+0:25:10.640,0:25:16.080
+ce deuxième diagramme. Dans ce cas pour ma perte d’entraînement au lieu 
+
+0:25:16.080,0:25:20.960
+d'être la perte de toutes les pertes d’entraînement, je vais sommer λ,
+
+0:25:20.960,0:25:24.640
+la norme 1 de mon θ. Donc si vous calculez le gradient de
+
+0:25:24.640,0:25:30.559
+L1, qu'est-ce que vous obtenez ? Donc L1 va juste être 1
+
+0:25:30.559,0:25:33.679
+si vous êtes positif et -1 si vous allez…
+
+0:25:33.679,0:25:38.320
+[Chat : la fonction sinusoïdale] Oui exactement.
+
+0:25:38.320,0:25:42.880
+Donc vous obtenez η λ sin(θ). Et donc pensons maintenant
+
+0:25:42.880,0:25:47.039
+de la même manière à ce qui se passe si vous avez déjà terminé votre entraînement. Vous n'avez pas
+
+0:25:47.039,0:25:54.880
+ce terme ici et vous obtenez juste θ - η λ sin(θ).
+
+0:25:55.039,0:26:02.559
+Donc si vous êtes sur l'axe des x, l'axe des y
+
+0:26:02.559,0:26:07.120
+est déjà zéro donc vous allez obtenir des flèches
+
+0:26:07.120,0:26:10.480
+vous y amenant. Donc si vous êtes dans l'axe vous allez avoir
+
+0:26:10.480,0:26:14.559
+exactement L2, vous allez aller vers 0.
+
+0:26:14.559,0:26:18.320
+Que se passe-t-il si vous êtes dans le premier quadrant ?
+
+0:26:18.320,0:26:24.799
+Dans le premier quadrant, vous obtenez un sin dans les deux directions. Mis à l'échelle par
+
+0:26:24.799,0:26:30.240
+le facteur du scalaire. Donc cela va pointer vers le bas de cette façon.
+
+0:26:30.240,0:26:38.080
+Donc ici les flèches grises ici
+
+0:26:38.080,0:26:41.679
+montrent les régularisations L2 vous emmenant
+
+0:26:41.679,0:26:47.600
+du point initial vers 0, ce qui est proportionnel à ce vecteur ici.
+
+0:26:47.600,0:26:52.159
+Alors que la L1 qui va être dans une
+
+0:26:52.159,0:26:57.520
+couleur différente… en vert. Donc la L1 à la place
+
+0:26:57.520,0:27:03.679
+part d'ici et descend de 40 degrés. Que se passe t’il après ?
+
+0:27:03.679,0:27:07.200
+Et bien vous tuez la composante y.
+
+0:27:07.200,0:27:17.159
+Donc la L1 tuera rapidement les composantes qui sont proches de l'axe.
+
+0:27:17.300,0:27:20.559
+Donc si vous êtes assez proche de l'axe, ceci
+
+0:27:20.559,0:27:24.000
+vous amène à l'axe en quelques pas.
+
+0:27:24.000,0:27:28.240
+Puis si vous appliquez encore celui-ci vous allez descendre
+
+0:27:28.240,0:27:31.760
+l'axe ici. Donc celui-ci vous permet de descendre
+
+0:27:31.760,0:27:36.080
+rapidement ici et ensuite, si vous continuez d’appliquer, vous pouvez réduire la longueur.
+
+0:27:36.080,0:27:41.840
+Mais le fait est que vous ne regardez pas le rétrécissement de la
+
+0:27:41.840,0:27:50.720
+longueur comme dans la L2. La L2 réduisait juste la longueur du vecteur 
+
+0:27:52.399,0:27:58.159
+alors que la L1 tue les composantes qui sont en quelque sorte près de l’axe.
+
+0:27:58.159,0:28:04.240
+Donc je pense que vous pouvez clairement comprendre maintenant comment cela
+
+0:28:04.240,0:28:08.320
+fonctionne. Et en fait ceci est tout à fait pertinent
+
+0:28:08.320,0:28:13.840
+pour l’entraînement. Disons nos modèles à
+
+0:28:13.840,0:28:17.039
+variables latentes régularisées car vous pouvez penser
+
+0:28:17.039,0:28:20.799
+à un moyen très rapide de régulariser cette
+
+0:28:20.799,0:28:24.559
+variable latente juste en tuant certaines de ces composants tels que
+
+0:28:24.559,0:28:29.279
+seules les informations seront limitées dans quelques-unes de ces valeurs.
+
+0:28:29.279,0:28:33.600
+Vous aimez ce genre de choses ? Vous aimez les dessins ?
+
+0:28:33.600,0:28:39.039
+Ils sont mignons, je pense.
+
+0:28:39.039,0:28:44.240
+Le dropout. Nous en avons parlé plusieurs fois mais je ne vous ai jamais montré
+
+0:28:44.240,0:28:50.000
+l'animation. Donc qu’est-ce que le dropout ? Qu’est-ce qu’il fait ?
+
+0:28:51.520,0:28:55.360
+Donc que je peux vous montrer mes compétences de ninja en Powerpoint.
+
+0:28:55.360,0:28:59.600
+Nous avons une animation en boucle.
+
+0:28:59.600,0:29:03.080
+Donc l'entrée en rose est fournie au réseau
+
+0:29:03.080,0:29:07.600
+et puis vous avez ces couches cachées, neurones cachés 
+
+0:29:07.600,0:29:13.760
+qui sont parfois mis à 0. Dans ce cas, vous avez un dropout avec un taux de
+
+0:29:13.760,0:29:17.440
+0.5 donc la moitié des neurones vont être mis à 0
+
+0:29:17.440,0:29:22.640
+au hasard pendant l’entraînement.
+
+0:29:22.640,0:29:26.080
+Et donc ce qui se passe ici, c'est qu'il y a
+
+0:29:26.080,0:29:29.679
+plus de chemin entre l'entrée et la sortie.
+
+0:29:29.679,0:29:36.480
+Il n'y a pas d'apprentissage d'un chemin singulier de l'entrée à la sortie.
+
+0:29:36.480,0:29:39.679
+Donc à chaque fois que vous voulez essayer de
+
+0:29:39.679,0:29:43.520
+mémoriser une entrée spécifique, vous ne pouvez pas. Car chaque
+
+0:29:43.520,0:29:49.279
+fois vous obtenez un réseau différent. Donc, encore une fois, cela vous dit en gros…
+
+0:29:49.279,0:29:56.799
+Oh… Donc ce qui se passe ici c'est que
+
+0:29:56.799,0:30:00.000
+avant, si nous avons un réseau entièrement connecté comme celui-ci,
+
+0:30:00.000,0:30:04.799
+vous pouvez penser que vous aimeriez mémoriser ce neurone
+
+0:30:04.799,0:30:10.720
+en suivant ce chemin. Puis ici. Donc vous pouviez essayer de
+
+0:30:10.720,0:30:15.600
+mémoriser un échantillon spécifique.
+
+0:30:15.600,0:30:19.760
+Vous pouvez mémoriser un échantillon spécifique dans ce cas. Mais si vous avez 
+
+0:30:19.760,0:30:23.279
+le réseau qui enlève les neurones parfois…
+
+0:30:23.279,0:30:26.399
+ce neurone, ici à gauche, n'existe pas.
+
+0:30:26.399,0:30:32.480
+Donc si celui-ci n'existe pas, vous ne
+
+0:30:32.480,0:30:37.520
+pouvez pas mémoriser un chemin spécifique. De plus, vous pouvez penser
+
+0:30:37.520,0:30:42.880
+au dropout comme entrainer un nombre infini
+
+0:30:42.880,0:30:49.440
+de réseaux qui sont différents. Car chaque fois vous enlevez
+
+0:30:49.440,0:30:52.559
+certains neurones et obtenez en gros un nouveau réseau.
+
+0:30:52.559,0:30:57.039
+Ils partagent tous le même type de position de départ avec les
+
+0:30:57.039,0:31:00.960
+poids initiaux. Mais à la fin chaque fois que vous faites
+
+0:31:00.960,0:31:05.279
+l’inférence, en général, vous n’utilisez pas ce dropout.
+
+0:31:05.279,0:31:09.440
+Puis vous devez mettre à l’échelle les poids car sinon vous obtenez
+
+0:31:09.440,0:31:14.559
+un réseau vous faisant sauter. Car si vous avez la
+
+0:31:14.559,0:31:19.120
+moitié des neurones hors service, l’autre moitié des neurones fait
+
+0:31:19.120,0:31:26.000
+tout le travail. Et si vous allumez tout, vous avez deux fois plus de valeurs.
+
+0:31:26.000,0:31:32.720
+Donc vous pouvez faire deux choses. Lorsque vous utilisez le dropout vous
+
+0:31:32.720,0:31:37.440
+multipliez par, disons, 1/le taux de dropout.
+
+0:31:37.440,0:31:43.840
+Donc si vous avez un taux de 0,5, vous pouvez multiplier par 2 de sorte que
+
+0:31:43.840,0:31:46.880
+vos neurones soient deux fois plus puissants.
+
+0:31:46.880,0:31:53.200
+Deux fois plus puissant. 1/(1-0,5)
+
+0:31:53.200,0:31:57.840
+Donc si vous avez un taux de chute de 0,1,
+
+0:31:57.840,0:32:05.360
+cela signifie que vous avez 90% de vos neurones et donc vos neurones devraient être 1/0,9 plus forts.
+
+0:32:05.360,0:32:11.200
+Pour avoir le même genre de
+
+0:32:11.200,0:32:15.440
+pouvoir en termes de valeurs. Peu importe. Vous pouvez
+
+0:32:15.440,0:32:19.840
+penser au dropout comme ayant ces réseaux multiples
+
+0:32:19.840,0:32:23.919
+pendant l’entraînement, mais ensuite lors de l’inférence,
+
+0:32:23.919,0:32:28.080
+vous désactivez ce module de dropout et faites la moyenne de toutes
+
+0:32:28.080,0:32:31.360
+les performances des réseaux singuliers.
+
+0:32:31.360,0:32:42.000
+Cela vous permet de mieux réduire le bruit qui a été introduit avec la procédure d’entraînement.
+
+0:32:42.000,0:32:48.000
+Car si vous avez plusieurs experts, vous prenez la moyenne des différents experts et obtenez une meilleure réponse.
+
+0:32:48.000,0:32:53.120
+Car cela va supprimer ce genre de variabilité dans les
+
+0:32:53.120,0:32:59.600
+réponses spécifiques. Mais peut-être nous devrions garder à l'esprit cette
+
+0:32:59.600,0:33:03.360
+variabilité des réponses car cela peut s'avérer intéressant.
+
+0:33:03.360,0:33:08.559
+Donc le dropout est en gros un moyen incroyable d’avoir 
+
+0:33:08.559,0:33:12.840
+un modèle automatique performant de moyennage/ d’ensembles.
+
+0:33:12.840,0:33:18.240
+Cool, cool, cool. [Chat : est-ce que le dropout est une bonne
+
+0:33:18.240,0:33:21.200
+technique uniquement pour la tâche de classification ou aussi pour d'autres
+
+0:33:21.200,0:33:27.760
+tâches comme l'apprentissage de la métrique et l'apprentissage du codage ?]
+
+0:33:27.760,0:33:32.640
+Je dirais que le dropout vous donne une prédiction
+
+0:33:33.360,0:33:38.000
+beaucoup plus solide pour votre réseau quelle que soit la tâche à accomplir.
+
+0:33:38.000,0:33:44.000
+Cela ne se limite pas à la classification. Vous entraînez en gros plusieurs réseaux
+
+0:33:44.000,0:33:49.600
+de taille réduite, puis vous faites la moyenne de ces réseaux de taille réduite.
+
+0:33:49.600,0:33:52.799
+Donc bien qu'à la fin vous ayant un grand réseau, ce grand réseau
+
+0:33:52.799,0:33:58.080
+est juste la moyenne des performances des petits réseaux.
+
+0:33:58.080,0:34:03.600
+Et si vous pensez de cette façon les petits réseaux ne peuvent plus surentraîner
+
+0:34:03.600,0:34:06.960
+car ils ne sont plus aussi surparamétrés.
+
+0:34:06.960,0:34:15.359
+Et donc le dropout vous permet de lutter contre le surentraînement par différents mécanismes.
+
+0:34:15.359,0:34:25.000
+Enfin si par exemple vous appliquez le dropout à l'entrée
+
+0:34:25.040,0:34:30.240
+c'est un peu comme un auto-encodeur débruiteur. Je veux dire que vous
+
+0:34:30.240,0:34:33.919
+perturber l'entrée dans ce cas et ensuite vous forcez
+
+0:34:33.919,0:34:39.119
+la sortie à rester la même. Donc si vous pensez à cela, vous allez
+
+0:34:39.119,0:34:42.720
+être insensible à certaines petites variations de
+
+0:34:42.720,0:34:47.200
+l’entrée ce qui va rendre votre réseau plus robuste.
+
+0:34:47.200,0:34:50.879
+Ou le même que celui que je vous ai écrit dans
+
+0:34:50.879,0:34:54.560
+l'examen de mi-parcours. Comment pouvez-vous obtenir une entrée qui 
+
+0:34:54.560,0:34:58.320
+est ennuyeuse ? Vous pouvez trouver du bruit dans l'entrée
+
+0:34:58.320,0:35:03.359
+ce qui va augmenter votre perte. Donc vous pouvez
+
+0:35:03.359,0:35:07.599
+faire une sorte de génération adverse de bruit. Puis vous entraînez
+
+0:35:07.599,0:35:13.040
+votre réseau sur ces échantillons manuels qui ont été
+
+0:35:13.040,0:35:17.760
+comme perturbés afin d’augmenter
+
+0:35:17.760,0:35:21.680
+votre perte d’entraînement. Donc je vous ai donné 4 raisons
+
+0:35:21.680,0:35:27.119
+différentes de recourir au dropout, mais je ne l’utilise pas après [rires]. 
+
+0:35:27.119,0:35:37.520
+Je l'utilise souvent pour une raison différente, à laquelle je viendrais dans un peu de temps.
+
+0:35:38.240,0:35:42.160
+« L'early-stopping. » C’est l’une des techniques les plus élémentaires si
+
+0:35:42.160,0:35:48.000
+vous entraînez votre modèle et votre perte de validation commence à augmenter
+
+0:35:48.000,0:35:54.320
+alors vous arrêtez l’entraînement. De manière à obtenir le score de validation le plus bas
+
+0:35:54.320,0:35:57.950
+et qui vous indique que vous n’avez pas encore surentraîner.
+
+0:35:57.950,0:36:03.800
+Cela permet à vos poids de ne pas trop augmenter.
+
+0:36:04.000,0:36:08.640
+Donc au lieu d’obtenir la L2 qui essaie de ne pas rendre ces poids
+
+0:36:08.640,0:36:13.000
+trop longs, vous arrêtez juste quand ils ne sont pas encore si longs.
+
+0:36:13.000,0:36:16.960
+Lutter contre le surentraînement. Donc ce sont des
+
+0:36:20.079,0:36:25.520
+techniques qui finissent par régulariser nos paramètres, nos modèles mais
+
+0:36:25.520,0:36:29.760
+mais ce ne sont pas des régulariseurs. Donc c'est important.
+
+0:36:29.760,0:36:34.920
+Ce ne sont pas des régulariseurs bien qu'ils régularisent le réseau.
+
+0:36:34.920,0:36:39.280
+Tant que vous gardez à l'esprit nous pouvons
+
+0:36:39.280,0:36:43.000
+voir ces autres options mais ce ne sont
+
+0:36:43.000,0:36:50.240
+pas des techniques de régularisation. Cela agit comme un régulariseur.
+
+0:36:50.240,0:36:53.440
+On commence avec la batch-normalisation. Nous en avons parlé à plusieurs reprises.
+
+0:36:53.440,0:36:56.880
+Nous ne savons pas non plus comment cela fonctionne.
+
+0:36:56.880,0:37:00.320
+Il y a un article de blog qui explique cela.
+
+0:37:00.320,0:37:03.599
+Il y a le lien dans le cours sur l'optimisation.
+
+0:37:03.599,0:37:06.880
+Je crois que c'est la conférence 7.
+
+0:37:06.880,0:37:11.359
+Je ne me souviens pas vraiment des noms des articles de blog.
+
+0:37:11.359,0:37:14.720
+Donc vous réinitialisez le mu, la moyenne et
+
+0:37:14.720,0:37:19.079
+le sigma carré qui est la variance à chaque couche. 
+
+0:37:24.000,0:37:29.520
+Quand vous réinitialisez la moyenne et le sigma, c’est basé sur le batch
+
+0:37:29.520,0:37:33.200
+spécifique que vous avez car vous calculez la moyenne et le carré sigma
+
+0:37:33.200,0:37:39.800
+sur le bacth spécifique. Mais si vous prélevez un échantillon de votre jeu d’entraînement uniformément,
+
+0:37:39.800,0:37:44.960
+vous n'aurez jamais deux batchs identiques. Donc chaque batch
+
+0:37:44.960,0:37:49.000
+aura une configuration différente des échantillons.
+
+0:37:49.000,0:37:53.000
+Donc si vous calculez la moyenne et l'écart-type, ils seront toujours
+
+0:37:53.000,0:37:56.880
+différents droit. Et donc…  je viens de dire « donc » 5 fois…
+
+0:37:56.880,0:38:00.500
+Vous allez appliquer une correction différente
+
+0:38:00.500,0:38:04.880
+par batch et le modèle ne verra jamais deux fois la même entrée.
+
+0:38:04.880,0:38:10.560
+Car elles sont modifiées en fonction de l'endroit où elles apparaissent
+
+0:38:10.560,0:38:18.000
+dans votre procédure d’entraînement. Car vous n'avez
+
+0:38:18.000,0:38:23.680
+montré deux fois la même entrée. Et c'est vraiment cool. J’aime beaucoup ça
+
+0:38:23.680,0:38:27.040
+et c'est tout ce dont vous avez besoin la plupart du temps pour entraîner votre réseau.
+
+0:38:27.040,0:38:32.960
+Vous n’avez pas besoin du dropout. Cette technique accélère aussi énormément
+
+0:38:32.960,0:38:36.480
+l’entraînement. Avant que cela ne soit introduit,
+
+0:38:36.480,0:38:40.880
+ça me prenait, je crois, une semaine pour entraîner sur ImageNet.
+
+0:38:40.880,0:38:46.160
+Je me demande si ce n’était pas même un mois. C'était terrible. 
+
+0:38:46.160,0:38:50.000
+Mais encore une fois, c'était il y a 8 ans.
+
+0:38:50.000,0:38:54.000
+C'était un entraînement terrible sur ImageNet. Avec la batch-normalisation 
+
+0:38:54.000,0:39:00.280
+vous pouvez entraîner en un jour. Donc c'est ridicule. [Chat : voulez-vous dire robuste en termes d’apprentissage adverse ?
+
+0:39:00.280,0:39:04.000
+Je ne comprends pas non plus pourquoi nous ne voyons pas le
+
+0:39:04.000,0:39:09.359
+même échantillon deux fois] Je dis robuste ici
+
+0:39:09.359,0:39:15.920
+comme si vous fournissez des entrées différentes à chaque fois.
+
+0:39:15.920,0:39:19.119
+Donc le réseau obtient une meilleure couverture de la surface 
+
+0:39:19.119,0:39:22.560
+d’entraînement. Vous ne voyez pas deux fois la même entrée
+
+0:39:22.560,0:39:27.200
+car la même entrée basée sur la façon dont elle apparaît dans le batch…
+
+0:39:27.200,0:39:32.000
+Donc si vous apparaissez… Vous avez l'entrée 42.
+
+0:39:32.000,0:39:35.760
+Cette entrée 42 se produit dans un batch donné.
+
+0:39:35.760,0:39:39.119
+Vous soustrayez la moyenne du batch et divisez par l'écart type.
+
+0:39:39.119,0:39:43.280
+Vous obtenez la nouvelle valeur au sein du réseau.
+
+0:39:43.280,0:39:46.880
+Mais si cette entrée 42 se produit dans un batch différent
+
+0:39:46.880,0:39:51.040
+alors la moyenne des différents lots sera une moyenne différente.
+
+0:39:51.040,0:39:54.480
+Donc vous allez obtenir une entrée différente
+
+0:39:54.480,0:39:58.560
+à chaque fois. Donc vous n'observez jamais la même entrée car elles
+
+0:39:58.560,0:40:02.800
+se trouvent être emballés dans des batchs différents. Les statistiques de 
+
+0:40:02.800,0:40:06.720
+ce patch spécifique seront spécifiques à ce batch.
+
+0:40:06.720,0:40:10.160
+Cela va changer chaque fois que vous aurez un batch différent.
+
+0:40:10.160,0:40:16.440
+Donc la même entrée aura une correction différente en fonction du batch où elle apparaît.
+
+0:40:16.500,0:40:21.839
+Donc on ne voit jamais deux fois la même entrée. Cette technique est celle que j'utilise habituellement pour
+
+0:40:21.839,0:40:27.440
+entraîner mon réseau. Et ça marche. Mais à nouveau, j’utilise
+
+0:40:27.440,0:40:37.440
+le dropout pour une autre raison. Nous allons voir ça dans quelques minutes.
+
+0:40:37.440,0:40:47.520
+Plus de données [rires]. Bien sûr. En fournissant simplement plus de données vous lutterez contre tous les surentrainements. Mais cela coûte de l’argent. 
+
+0:40:47.520,0:40:52.079
+Enfin l'augmentation de données. L'augmentation de données est aussi une
+
+0:40:52.079,0:40:55.680
+technique valide afin de fournir une sorte de
+
+0:40:55.680,0:41:00.960
+version déformée de l'entrée. Si vous parlez d'images, nous avons
+
+0:41:00.960,0:41:07.440
+« CenterCrop », « ColorJitter », différentes transformations : aléatoires,
+
+0:41:07.440,0:41:11.200
+crop, rotation, retournement horizontal, etc.
+
+0:41:11.200,0:41:16.560
+Si vous me voyez comme et retournez ma tête, je suis toujours moi en quelque sorte.
+
+0:41:16.560,0:41:23.440
+Si c'est à l'envers peut-être pas tout à fait. Néanmoins vous pouvez
+
+0:41:23.440,0:41:28.160
+voir que si vous apportez des modifications, des
+
+0:41:28.160,0:41:31.680
+perturbations auxquelles vous aimeriez être insensible,
+
+0:41:31.680,0:41:35.359
+vous pouvez alors améliorer les performances du réseau. Il va
+
+0:41:35.359,0:41:40.160
+apprendre à être insensible à ce genre de variations.
+
+0:41:41.599,0:41:47.359
+Oh l’apprentissage par transfert. Nous connaissons déjà ça je pense.
+
+0:41:47.359,0:41:50.160
+Donc vous avez votre réseau que vous avez déjà entraîné sur une
+
+0:41:50.160,0:41:53.599
+tâche spécifique, il suffit d’enlever le premier classifieur,
+
+0:41:53.599,0:41:57.839
+vous déplacez tout et branchez un nouveau classifieur ou
+
+0:41:57.839,0:42:01.280
+quoi que ce soit. Puis, si vous avez, quelques données
+
+0:42:01.280,0:42:04.400
+avec un type de distribution d’entraînement similaire
+
+0:42:04.400,0:42:07.680
+vous ne faites que transférer l'apprentissage. Cela revient
+
+0:42:07.680,0:42:14.960
+juste à entraîner le classifieur final. Si vous avez beaucoup de données
+
+0:42:14.960,0:42:18.720
+vous devez faire « finetuner » car vous voulez
+
+0:42:18.720,0:42:22.400
+améliorer aussi la performance de… 
+
+0:42:22.400,0:42:26.960
+vous aimeriez ajuster l’extracteur de caractéristiques,
+
+0:42:26.960,0:42:31.520
+les couches bleues. Et les couleurs sont inversées ici… La couche cachée
+
+0:42:31.520,0:42:35.680
+aurait dû être verte et la sortie bleue.
+
+0:42:35.680,0:42:39.359
+Avec peu de données et différent de l’entraînement. Vous voulez faire 
+
+0:42:39.359,0:42:42.839
+un apprentissage par transfert tôt, ce qui signifie que vous commencez à
+
+0:42:42.839,0:42:49.760
+changer quelques couches et pas toutes.
+
+0:42:49.760,0:42:53.280
+Vous voulez enlever quelques couches de plus en fait.
+
+0:42:56.800,0:43:00.079
+Désolé. Donc vous voudriez retirer quelques-unes des couches
+
+0:43:00.079,0:43:05.359
+cachées sur le dessus car elles sont en quelque sorte déjà spécialisées.
+
+0:43:05.359,0:43:09.520
+Vous voulez donc ré-entraîner dans l'extracteur de caractéristiques de base ici.
+
+0:43:09.520,0:43:18.640
+Et si vous avez beaucoup de données qui sont différentes de la distribution d’entraînement, entraînez juste.
+
+0:43:18.640,0:43:24.000
+Vous pouvez aussi utiliser différents taux d'apprentissage pour les différentes couches.
+
+0:43:24.000,0:43:30.000
+Pour améliorer les performances. Alors peut-être que vous aimeriez…
+
+0:43:30.000,0:43:38.300
+D'habitude ces couches finales sont celles qui changent le plus rapidement car sont proches de la perte.
+
+0:43:38.300,0:43:45.839
+Mais encore une fois si vous utilisez la batch-norm, toutes ces couches sont en quelque sorte entraînées à la même vitesse.
+
+0:43:45.839,0:43:50.079
+Vous pouvez voir si vous voulez changer de taux d'apprentissage.
+
+0:43:50.079,0:43:54.560
+Peut-être mettre ces types plus lentement ou non. [Etudiant : avez-vous dit 
+
+0:43:54.560,0:43:56.960
+la différence entre l'apprentissage par transfert et le finetuning ?]
+
+0:43:56.960,0:44:01.920
+Avec l'apprentissage par transfert, j’entraîne juste le classifieur final
+
+0:44:01.920,0:44:08.000
+car si vous avez peu de données, vous ne voulez pas surentraîner.
+
+0:44:08.000,0:44:12.640
+Si vous avez peu de données, vous souhaitez simplement réutiliser l'ensemble du
+
+0:44:12.640,0:44:16.880
+réseau de la tâche précédente et vous contentez d’entraîner le classifieur final.
+
+0:44:16.880,0:44:21.119
+Si vous avez beaucoup de données, vous pouvez essayer d’avoir
+
+0:44:21.119,0:44:24.040
+quelques changements…
+
+0:44:24.040,0:44:29.040
+Vous pouvez avoir un taux d'apprentissage bas, et le changer aussi pour
+
+0:44:29.040,0:44:38.000
+cet extracteur de caractéristiques. S'ils sont similaires. [Etudiant : avec l'apprentissage par transfert vous figez le réseau de base…]
+
+0:44:38.000,0:44:42.000
+Oui, vous figez les gars en bleus et entraînez ceux en orange.
+
+0:44:42.000,0:44:46.640
+Avec le « finetuning », vous réglez tous les autres paramètres.
+
+0:44:46.640,0:44:51.520
+Peut-être avec un taux d'apprentissage plus faible.
+
+0:44:51.520,0:44:55.760
+Ceci est le notebook 12. Ici je classifie les avis 
+
+0:44:55.760,0:45:01.200
+de ces critiques de films sur IMDB. J'aimerais donc
+
+0:45:01.200,0:45:04.079
+comparer différentes techniques de régularisation.
+
+0:45:04.079,0:45:09.920
+Je passe tout car j'aimerais vous montrer le résultat final.
+
+0:45:09.920,0:45:14.880
+Laissez-moi voir où se trouve l'optimiseur. Donc vous basculer entre différentes choses.
+
+0:45:14.880,0:45:18.319
+Au début nous n'avons pas de taux de décroissance des poids, rien. Donc nous
+
+0:45:18.319,0:45:22.560
+entraînons avec ce régulariseur. Vérifions quel est le modèle.
+
+0:45:22.560,0:45:28.480
+C’est juste un réseau feed forward. Nous avons quelques
+
+0:45:28.480,0:45:32.480
+« nn.Embedding », « nn.Linear » puis ma « def forward » prend
+
+0:45:32.480,0:45:37.680
+mon « embedded » et l’envoie à l’entièrement connecté. ReLU.
+
+0:45:37.680,0:45:41.839
+Puis vous obtenez la sortie de ce deuxième entièrement connecté et
+
+0:45:41.839,0:45:44.800
+je passe par une sigmoïde car je fais un
+
+0:45:44.800,0:45:49.200
+problème de classification à deux classes. Donc nous aimerions savoir si
+
+0:45:49.200,0:45:52.880
+il s'agit d'une critique positive ou négative.
+
+0:45:52.880,0:46:00.400
+Et donc c'est l’entraînement initial. Nous avons la courbe de validation
+
+0:46:00.400,0:46:06.000
+qui monte comme une folle tandis que la courbe d’entraînement descend jusqu'à 0.
+
+0:46:06.000,0:46:15.500
+Et donc ici vous pouvez voir la précision de validation qui va jusqu'à environ 64.
+
+0:46:15.520,0:46:19.599
+Et ici on stocke juste les poids du réseau
+
+0:46:19.599,0:46:23.440
+pour les cas où il n'y a pas de type de régularisation.
+
+0:46:23.440,0:46:28.160
+Puis la première chose que j'aimerais faire est d'essayer de faire
+
+0:46:28.160,0:46:34.800
+la régularisation de poids L1. Donc voyons comment faire.
+
+0:46:35.520,0:46:42.079
+On bascule ici sur la régularisation L1.
+
+0:46:42.079,0:46:49.000
+Donc ici j'extrais les paramètres du modèle, puis je vais ajouter
+
+0:46:49.040,0:46:53.839
+un certains terme à la perte. Donc la perte va
+
+0:46:53.839,0:46:59.680
+être la norme FC1 * 0.001.
+
+0:46:59.680,0:47:06.319
+Car il n'y a pas d'autre moyen de le faire en PyTorch
+
+0:47:06.319,0:47:14.880
+pour le moment. Donc laissez-moi réinitialiser le réseau.
+
+0:47:14.880,0:47:21.510
+Je commence donc ici.
+
+0:47:22.079,0:47:25.760
+J’obtiens… 
+
+0:47:25.760,0:47:31.680
+celui-là et puis je commence à entraîner ici. Donc ça entraîne sur…
+
+0:47:31.680,0:47:36.000
+10 époques : 1, 2, 3
+
+0:47:36.000,0:47:39.760
+4, 5, 6. OK.
+
+0:47:39.760,0:47:46.160
+Nous pouvons descendre ici. Avant nous avions une précision de validation d'environ 64.
+
+0:47:46.160,0:47:52.000
+Maintenant nous avons la précision de validation qui est passée à 66. Donc nous avons
+
+0:47:52.000,0:47:56.240
+amélioré les performances en ayant ce gars.
+
+0:47:56.240,0:48:03.119
+Oh cela a chuté…
+
+0:48:03.119,0:48:09.920
+Oh, ça remonte à 67. Cela semble bon. Ok c’est terminé à 68.45.
+
+0:48:09.920,0:48:14.079
+Je peux vous montrer ici ce qui s'est passé avec L1. Oh ! Ce n'est pas encore fini. Cela prend
+
+0:48:14.079,0:48:17.760
+une éternité. Donc pendant que ça entraîne,
+
+0:48:17.760,0:48:20.640
+je vais vous montrer la sortie de ce type et puis vous
+
+0:48:20.640,0:48:26.640
+montrer brièvement la deuxième utilisation du dropout.
+
+0:48:26.640,0:48:31.680
+69… Donc vous pouvez voir maintenant que nous sommes à 69
+
+0:48:31.680,0:48:36.640
+en validation. Ok cool. Et ici vous pouvez voir les deux :
+
+0:48:36.640,0:48:40.319
+l’entraînement et la validation, les deux pertes baissent.
+
+0:48:40.319,0:48:46.480
+Et ici je vous montre la validation qui est allée jusqu'à 67 et 68.
+
+0:48:46.480,0:48:50.319
+Et ici je stock juste les poids pour la L1.
+
+0:48:50.319,0:48:53.280
+Donc ici je stocke.
+
+0:48:56.800,0:49:01.040
+Je retourne ici.
+
+0:49:01.040,0:49:08.400
+Nous allons enlever celui-ci car nous ne
+
+0:49:08.400,0:49:13.040
+voulons plus la L1 et choisissons maintenant une L2.
+
+0:49:13.040,0:49:18.880
+Je peux donc basculer celui-là et celui-là. Donc maintenant, nous
+
+0:49:18.880,0:49:23.920
+avons un taux de décroissance des poids de cette valeur.
+
+0:49:24.240,0:49:30.720
+J'exécute celui-ci et ces types.
+
+0:49:30.720,0:49:33.760
+Donc, pendant que la L2 s'entraîne, je vais vous montrer
+
+0:49:33.760,0:49:37.520
+un aperçu rapide sur les neuronaux bayésiens.
+
+0:49:37.520,0:49:42.520
+L'estimation d'une distribution prédictive. Donc pourquoi se soucier de l'incertitude ?
+
+0:49:42.520,0:49:46.400
+Pleins de raisons. Si vous avez un classifieur chat/chiens
+
+0:49:46.400,0:49:49.839
+et montrez un hippopotame, le réseau va vous dire : « oh
+
+0:49:49.839,0:49:53.920
+c'est un chien ». Il ne sait pas vous dire : « oh, ce n’est
+
+0:49:53.920,0:49:57.920
+pas l'un des deux. » Vous pouvez penser à créer une
+
+0:49:57.920,0:50:01.920
+troisième catégorie mais alors comment pouvez-vous
+
+0:50:01.920,0:50:05.599
+montrez au réseau « pas un chat » et « pas un chien » ? Cela ne
+
+0:50:05.599,0:50:10.000
+marche pas comme ça. « chat » est un objet et « chien » est un objet.
+
+0:50:10.000,0:50:13.599
+« pas un chat » ou « pas un chien »
+
+0:50:13.599,0:50:16.319
+ce n'est pas un objet. Donc vous ne pouvez pas vraiment entraîner votre réseau
+
+0:50:16.319,0:50:22.319
+à dire « tout le reste ». La fiabilité sur le contrôle de la direction.
+
+0:50:22.319,0:50:25.200
+Disons que vous entraînez votre voiture à rouler à droite et à gauche
+
+0:50:25.200,0:50:28.960
+et puis votre voiture vous dit de tourner à droite.
+
+0:50:28.960,0:50:35.839
+A quel point êtes-vous certain de cette action ? Cela va me tuer ?
+
+0:50:35.839,0:50:39.359
+Prédiction de simulations en physique. Si vous connaissez
+
+0:50:39.359,0:50:42.400
+la physique ou les physiciens, ils veulent toujours connaître
+
+0:50:42.400,0:50:46.400
+le degré de certitude quant à la valeur. Donc en physique
+
+0:50:46.400,0:50:49.920
+les mesures sont toujours données par une valeur plus moins
+
+0:50:49.920,0:50:52.800
+l'incertitude. Donc votre réseau devrait pouvoir
+
+0:50:52.800,0:51:01.000
+vous dire quel est l'intervalle de confiance pour une prédiction spécifique.
+
+0:51:01.000,0:51:07.000
+De plus, vous pouvez penser à utiliser ça pour minimiser le caractère aléatoire de l'action lorsqu’elle est
+
+0:51:07.000,0:51:10.400
+liée à une récompense. Qu'est-ce que cela signifie ?
+
+0:51:10.400,0:51:17.839
+S'il y a une certaine incertitude associée à certaines actions, vous pouvez l’exploiter et
+
+0:51:17.839,0:51:24.000
+entraîner votre modèle à minimiser cette incertitude. Et c'est tellement cool car
+
+0:51:24.000,0:51:28.000
+nous utilisons quelque chose de similaire dans notre projet.
+
+0:51:28.000,0:51:32.480
+Donc le dropout. Je vous ai parlé plus tôt.
+
+0:51:32.480,0:51:36.559
+Comment fonctionne ce réseau neuronal avec dropout ? Je vais passer rapidement cela.
+
+0:51:36.559,0:51:42.800
+Je multiplie mon entrée et ma couche cachée avec ces masques 0/1 
+
+0:51:42.800,0:51:47.440
+aléatoires et vous pouvez avoir la fonction d'activation étant
+
+0:51:49.520,0:51:52.720
+une certaine non-linéarité. Et ici vous avez cette Bernoulli
+
+0:51:52.720,0:51:56.000
+avec une probabilité de 1 – le taux de dropout.
+
+0:51:56.000,0:52:00.319
+Donc le taux dropout. Puis vous voulez changer l’échelle du
+
+0:52:00.319,0:52:04.800
+delta de telle sorte que vous redimensionnez l'amplitude
+
+0:52:04.800,0:52:09.200
+de ces poids. L'entraînement vient de se terminer. Donc je vais y
+
+0:52:09.200,0:52:12.240
+revenir. Désolé pour le changement de contexte.
+
+0:52:12.240,0:52:18.000
+[Chat : calculer la variance]
+
+0:52:18.000,0:52:22.000
+Oui, désolé je change, je suis désolé c'est la dernière leçon.
+
+0:52:22.000,0:52:28.559
+Donc c'est l’entraînement et nous obtenons 64
+
+0:52:28.559,0:52:32.720
+ce qui… Donc ces deux courbes sont également en baisse.
+
+0:52:32.720,0:52:38.000
+C'est la régularisation L2. Et avant nous arrivions à 68 avec
+
+0:52:38.000,0:52:42.640
+la L1. Ici nous obtenons autre chose…
+
+0:52:42.640,0:52:46.079
+Oh, vous pouvez voir que cela grimpe toujours. Donc peut-être que j’ai arrêté trop tôt.
+
+0:52:46.079,0:52:50.960
+Donc si vous continuez à entraîner, vous aurez de meilleures performances.
+
+0:52:50.960,0:52:54.640
+C'est un monotone, non décroissant, donc je pense
+
+0:52:54.640,0:52:59.760
+que vous pouvez entraîner plus. Et ici je vais sauvegarder
+
+0:52:59.760,0:53:05.839
+ces poids dans la variable « weights_L2 ».
+
+0:53:05.839,0:53:08.720
+Donc le dernier est le dropout.
+
+0:53:08.720,0:53:13.200
+Donc on remonte ici. On désactive
+
+0:53:13.200,0:53:19.599
+la L2. Donc on désactive ce type et retournons au simple.
+
+0:53:19.599,0:53:22.400
+Mais nous devons ensuite revenir à ce
+
+0:53:22.400,0:53:29.599
+réseau et souhaitons activer le taux dropout.
+
+0:53:29.599,0:53:34.800
+On y va : boom, boom, boom, boom. Ça entraîne ? Oui.
+
+0:53:38.480,0:53:43.040
+Bien, cool. Retournons à la présentation.
+
+0:53:43.040,0:53:50.559
+Je suis désolé, je dépasse le temps, quel mauvais professeur.
+
+0:53:51.200,0:53:54.800
+Donc c'est en fait ce que nous faisons.
+
+0:53:54.800,0:53:58.000
+Donc c'est mon dropout
+
+0:53:58.000,0:54:01.520
+et je multiplie en gros ces entrées et couches cachées
+
+0:54:01.520,0:54:06.400
+avec des masques. Ici vous avez comme un réseau qui
+
+0:54:06.400,0:54:12.880
+essaie d’entraîner une faible prédiction. Un niveau
+
+0:54:12.880,0:54:17.440
+de concentration en CO2. Si vous utilisez un noyau gaussien avec un
+
+0:54:17.440,0:54:20.800
+noyau exponentiel carré,
+
+0:54:20.800,0:54:24.240
+après la ligne pointillée, le modèle dit 
+
+0:54:24.240,0:54:30.640
+« je n'ai aucune idée ». Je vous donne ma prédiction qui est 0 et c'est mon niveau de confiance.
+
+0:54:30.640,0:54:34.400
+Pouvons-nous faire quelque chose de similaire avec les réseaux neuronaux ? Oui nous pouvons.
+
+0:54:34.400,0:54:38.799
+Il s'agit donc d'une estimation de l'incertitude utilisant
+
+0:54:38.799,0:54:42.319
+la non-linéarité ReLU dans le réseau. Et là c’est
+
+0:54:42.319,0:54:48.000
+en utilisant la tanh, ce qui est en fait rien. Si je veux faire une
+
+0:54:48.000,0:54:52.880
+classification binaire, dans le premier cas ces mes logits.
+
+0:54:52.880,0:54:56.720
+Sur cette section de -3 à 2,5 il s’agit de
+
+0:54:56.720,0:55:01.119
+l'intervalle d’entraînement et puis si
+
+0:55:01.119,0:55:06.000
+je demande : « oh quelle est la prédiction pour x* ? »
+
+0:55:06.000,0:55:12.839
+Si je n'utilise pas d'estimation d’incertitude, vous allez obtenir une valeur très élevée
+
+0:55:13.040,0:55:16.319
+qui correspond à 1.
+
+0:55:16.319,0:55:20.000
+Donc c'est ma classe 1. Si j'utilise juste la ligne blanche
+
+0:55:20.000,0:55:24.799
+épaisse. Si au lieu vous utilisez cette estimation de l'incertitude,
+
+0:55:24.799,0:55:28.960
+vous obtenez ce réseau obtenant ces logits ici avec une sorte de
+
+0:55:28.960,0:55:34.799
+d'ombre floue. Donc si vous appliquez
+
+0:55:34.799,0:55:39.119
+la sigmoïde, vous passez en gros de 0 à 1.
+
+0:55:39.119,0:55:47.680
+Donc vous ne dites plus que c’est 1 mais 1 avec une certaine probabilité.
+
+0:55:48.000,0:55:53.440
+Et ici je vous montre un réseau entraîné sur MNIST.
+
+0:55:53.440,0:55:56.079
+Vous entrez un 1 qui s’incline
+
+0:55:56.079,0:55:59.839
+et vous pouvez alors voir que cela commence par
+
+0:55:59.839,0:56:03.000
+avoir une valeur élevée pour les logits en violet, pour le 1
+
+0:56:03.000,0:56:06.000
+puis au fur et à mesure que vous le déplacez
+
+0:56:06.000,0:56:09.960
+cela devient comme un 5 et puis un 7
+
+0:56:09.960,0:56:13.240
+car cela ressemble à une partie du 7.
+
+0:56:13.240,0:56:16.240
+Et voici le résultat après la softargmax.
+
+0:56:16.240,0:56:22.799
+Donc vous voyez qu'après avoir incliné, cela devient
+
+0:56:22.799,0:56:26.640
+très floue et très répandue. Donc comment pouvons-nous
+
+0:56:26.640,0:56:30.079
+avoir quelque chose comme ça ?
+
+0:56:30.079,0:56:36.799
+Nous en avons donc fini avec la régularisation. Permettez-moi de vous donner la version finale.
+
+0:56:36.799,0:56:40.799
+Donc avec le dropout, vous avez toujours les courbes de validation
+
+0:56:40.799,0:56:43.680
+et d’entraînement qui sont l'une sur l'autre.
+
+0:56:43.680,0:56:47.760
+Donc c'était la régularisation L2. Je peux exécuter
+
+0:56:47.760,0:56:50.480
+l'autre. Et cela continue d’augmenter.
+
+0:56:50.480,0:56:53.760
+Donc bien que le modèle soit sur-paramétré, nous ne faisons
+
+0:56:53.760,0:56:58.640
+pas de surentraînement comme c’était le cas au début.
+
+0:56:58.640,0:57:02.640
+On stocke ces poids dans « weights_dropout ».
+
+0:57:02.640,0:57:08.480
+Je les ai tous sauvegardés et je peux commencer à vous montrer quelques
+
+0:57:08.480,0:57:12.480
+choses. Par exemple celle-là.
+
+0:57:12.480,0:57:19.040
+Voyons si ça marche. Boom. Donc ici vous pouvez voir en rouge
+
+0:57:19.040,0:57:23.119
+la L1 et en gros tous est dans le centre.
+
+0:57:23.119,0:57:26.400
+Et tout le reste est à 0.
+
+0:57:26.400,0:57:30.000
+Donc je vous montre juste l'histogramme des poids.
+
+0:57:30.000,0:57:34.079
+Lorsque j’entraîne le réseau avec le régulariseur L1, vous obtenez tous les éléments ici.
+
+0:57:34.079,0:57:38.720
+Dans le cas violet, cela
+
+0:57:38.720,0:57:42.240
+semble plus élevé. Je ne suis pas tout à fait sûr de
+
+0:57:42.240,0:57:49.680
+pourquoi vous avez un pic plus élevé à 0 mais vous avez d’autres
+
+0:57:49.680,0:57:53.440
+valeurs en violet ici dans les queues. Donc s'il n'y a pas de régularisation
+
+0:57:53.440,0:57:56.480
+vous obtenez quelque chose qui ressemble beaucoup
+
+0:57:56.480,0:58:02.640
+à une gaussien très répandue. Donc vous obtenez des valeurs qui
+
+0:58:02.640,0:58:07.040
+sont beaucoup plus grandes. La L1, elle
+
+0:58:07.040,0:58:10.240
+devrait être très très courte.
+
+0:58:10.240,0:58:14.400
+Je ne sais pas pourquoi ce violet est plus grand que le rouge ici. Je pense
+
+0:58:14.400,0:58:19.520
+c'est un problème. Donc voici les poids.
+
+0:58:19.520,0:58:26.799
+Nous pouvons regarder les valeurs individuelles. Donc L1.
+
+0:58:26.799,0:58:29.760
+Et voici sans régularisation.
+
+0:58:31.440,0:58:41.820
+Ce sont donc sans régularisation et la régularisation L1.
+
+0:58:41.839,0:58:46.540
+Nous pouvons aussi avoir plus de « bins » pour avoir une meilleure compréhension de ce qui se passe.
+
+0:58:50.000,0:58:56.559
+Vous voyez ? Boom. Fantastique. Et je peux vous montrer aussi les poids
+
+0:58:56.559,0:59:02.079
+de la L2. Donc L1 et L2.
+
+0:59:02.559,0:59:07.839
+Mais là encore, 100 000 et 100 000.
+
+0:59:07.839,0:59:11.280
+Je ne suis pas tout à fait sûr.
+
+0:59:15.839,0:59:19.040
+Mais le fait est que dans la L1, vous avez beaucoup plus de poids
+
+0:59:19.040,0:59:25.760
+à 0. Mais il y a quelques poids plus importants.
+
+0:59:25.760,0:59:28.960
+Dans la L2 vous avez tous les poids petits.
+
+0:59:28.960,0:59:32.559
+Vous voyez ? Il n'y a pas de grands poids.
+
+0:59:32.559,0:59:36.160
+Donc L1 ne perde pas de poids, elle les met
+
+0:59:36.160,0:59:39.760
+vers 0. C'est pour ça que vous avez ce grand type ici.
+
+0:59:39.760,0:59:48.720
+Enfin…  je sais que je suis en retard.
+
+0:59:48.720,0:59:57.520
+Le dernier notebook est celui qui calcule l'incertitude
+
+0:59:57.520,1:00:08.839
+avec le dropout. Donc « Cell -> Run All ».
+
+1:00:09.760,1:00:13.200
+Donc que faisons-nous ici ? Comment calculons-nous l'incertitude 
+
+1:00:17.520,1:00:22.000
+dans les diapositives que je viens de vous montrer ?
+
+1:00:22.000,1:00:25.440
+Donc voici quelques points que j'essaie d’entraîner
+
+1:00:25.440,1:00:28.960
+avec mon réseau et voici ce que j’obtiens.
+
+1:00:28.960,1:00:32.640
+Pouvez-vous me dire quel réseau j'ai utilisé ?
+
+1:00:32.640,1:00:37.599
+Où se trouve le chat ?... Pouvez-vous dire quelle
+
+1:00:37.680,1:00:41.680
+non-linéarité j'ai utilisée ? Vous devriez le savoir.
+
+1:00:41.680,1:00:44.799
+[Chat : ReLU]. Oui.
+
+1:00:49.040,1:00:55.119
+Et puis ici je vous montre à quoi cette incertitude ressemble. Donc qu’est-ce que c’est ?
+
+1:00:55.119,1:00:58.240
+J'utilise le réseau avec dropout
+
+1:00:58.240,1:01:06.079
+mais n’utilise pas le mode évaluation. J'utilise juste le mode d’entraînement de telle sorte que le dropout est toujours activé.
+
+1:01:06.079,1:01:10.319
+Puis je calcule la variance des prédictions du réseau
+
+1:01:10.319,1:01:14.480
+en envoyant plusieurs fois les données. Donc ici
+
+1:01:14.480,1:01:18.000
+une fourchette de 100. Je fournis 100 fois
+
+1:01:18.000,1:01:22.160
+mes données à l'intérieur du réseau.
+
+1:01:22.160,1:01:26.319
+C’est un réseau avec la ReLU. Laissez-moi vous montrer comment un réseau 
+
+1:01:26.319,1:01:31.040
+avec une tanh fonctionne.
+
+1:01:31.040,1:01:36.559
+Laissez-moi tuer celui-ci. Donc ici je crée le réseau.
+
+1:01:37.680,1:01:41.040
+Donc c'est réseau entraîné avec la tangente hyperbolique.
+
+1:01:41.040,1:01:44.720
+C'est beaucoup plus agréable. 
+
+1:01:44.720,1:01:51.079
+Le réseau est en mode entraînement et ensuite je donne 100 fois mes points de données.
+
+1:01:51.359,1:01:56.000
+Puis j'évalue la moyenne. Vous pouvez voir maintenant
+
+1:01:56.000,1:02:01.119
+que le réseau produit une incertitude qui est constante même
+
+1:02:01.119,1:02:06.960
+si vous vous déplacez en dehors de cet intervalle qui était la région où 
+
+1:02:06.960,1:02:10.000
+les données d’entraînement arrivaient. Vous pouvez voir maintenant que
+
+1:02:10.000,1:02:12.880
+ces estimations de l'incertitude sont un peu, vous savez, funky.
+
+1:02:12.880,1:02:17.119
+Différentes fonctions d'activation vous donnent différents types d'estimation,
+
+1:02:17.119,1:02:22.559
+ce n’est même pas calibrés. Néanmoins, vous avez l'incertitude
+
+1:02:22.559,1:02:26.000
+près des points de données. C'est très très très petit.
+
+1:02:26.000,1:02:31.039
+Donc vous pouvez dire à quelle distance vous êtes de la région d’entraînement. 
+
+1:02:31.039,1:02:35.520
+Et nous utilisons cette astuce ici afin de…
+
+1:02:35.520,1:02:39.039
+Donc, encore une fois, cette variance est une
+
+1:02:39.039,1:02:42.799
+fonction différenciable. Donc vous pouvez exécuter 
+
+1:02:42.799,1:02:46.000
+une descente de gradient afin de minimiser la variance.
+
+1:02:46.000,1:02:52.920
+Et cela vous permettrait de vous rapprocher de la région des points
+
+1:02:53.000,1:02:58.079
+de la région d’entraînement. C'est ce que nous utilisons pour
+
+1:02:58.079,1:03:02.319
+notre politique dans notre scénario de conduite.
+
+1:03:02.319,1:03:08.079
+Donc c’est tout. On a atteint la fin
+
+1:03:08.079,1:03:13.440
+de la classe, la fin du semestre. C'était un grand honneur d'être
+
+1:03:13.440,1:03:18.880
+votre professeur pour ce semestre. Je me suis foiré peut-être un peu à mi-chemin.
+
+1:03:18.880,1:03:27.220
+Merci de m'avoir aidé à me remettre sur pied.
+
+1:03:27.280,1:03:30.400
+si vous avez besoin de quelque chose, vraiment tout, faites-le moi savoir.
+
+1:03:30.400,1:03:34.999
+Je suis toujours prêt à discuter, à aider et expliquer.
+
+1:03:34.999,1:03:38.319
+Comme je vous l'ai dit, nous pouvons même penser
+
+1:03:38.319,1:03:42.240
+avoir une leçon supplémentaire dans un mois si vous le souhaitez.
+
+1:03:42.240,1:03:49.520
+De la même façon sur Zoom. Sur les modèles à base d'énergie.
+
+1:03:49.520,1:03:53.440
+Si vous avez des questions sur l’une des leçons, vous pouvez
+
+1:03:53.440,1:03:57.520
+écrire dans la section des commentaires sur YouTube, je vous répondrai.
+
+1:03:57.520,1:04:01.200
+Si vous avez des souhaits spécifiques, si vous êtes intéressé à faire
+
+1:04:01.200,1:04:04.640
+les dessins et de la visualisation vous pouvez toujours…
+
+1:04:04.640,1:04:08.079
+Vous devriez m’en parler car je suis en train de
+
+1:04:08.079,1:04:12.079
+créer un groupe pour visualiser des trucs d'apprentissage machine.
+
+1:04:12.079,1:04:18.960
+Nous avons le site web avec plein de choses à faire : l'anglais doit être
+
+1:04:18.960,1:04:24.319
+corrigé dans de nombreuses contributions,
+
+1:04:24.319,1:04:29.039
+certaines formules sont erronées, il y a
+
+1:04:29.039,1:04:33.680
+pleins de choses open source à faire
+
+1:04:33.680,1:04:37.200
+si vous êtes intéressés. Et je pense que c'est à peu près tout.
+
+1:04:41.440,1:04:47.039
+Je vous revois lundi prochain. Vous devez soumettre les trois vidéos
+
+1:04:47.039,1:04:51.039
+de présentation, j’ai fait un tutoriel sur comment faire.
+
+1:04:51.039,1:04:56.079
+Si vous aimez ma façon d'enseigner et souhaitez connaître mon opinion sur
+
+1:04:56.079,1:05:01.839
+comment vous devriez présenter votre travail, à nouveau c’est sur YouTube.
+
+1:05:01.839,1:05:09.039
+Je pense que c'est tout. Donc encore une fois merci beaucoup et
+
+1:05:09.039,1:05:16.920
+j'ai hâte de voir tous vos résultats pour le projet.
+
+1:05:17.440,1:05:25.680
+On se voit lundi. Bonne chance. Bye.  Ah des questions à propos du cours ?
+
+1:05:25.680,1:05:30.319
+Ahhhh il y a un notebook de plus.
+
+1:05:32.160,1:05:36.640
+Je ne peux pas le passer en revue, je suis trop en retard.
+
+1:05:36.640,1:05:41.200
+Il y a un autre notebook dont je voulais parler et qui est le
+
+1:05:41.200,1:05:47.839
+notebook sur la projection.
+
+1:05:47.840,1:05:52.799
+Peut-être que nous pouvons faire une leçon supplémentaire avec la projection et parlerais de ça 
+
+1:05:52.799,1:05:57.039
+la semaine prochaine. Vous avez d'autres questions ?
+
+1:05:57.039,1:06:01.839
+Il est tard et il y avait ce notebook :/
+
+1:06:04.160,1:06:08.319
+Vous savez que je veux enseigner davantage [rires]
+
+1:06:09.280,1:06:13.079
+Pas de question ? [Chat : Google utilise un viseur
+
+1:06:13.079,1:06:17.680
+pour sélectionner les hyperparamètres de ses réseaux
+
+1:06:17.680,1:06:22.480
+cela tend à être soit une recherche aléatoire soit un processus gaussien 
+
+1:06:22.480,1:06:27.920
+pour l’optimisation des hyperparamètres] Oui exactement mais je ne les ai 
+
+1:06:27.920,1:06:32.720
+pas essayés, donc je ne peux pas vraiment vous donner d'avis.
+
+1:06:32.720,1:06:36.319
+Je sais qu'ils existent mais je ne suis pas encore tout à fait au courant.
+
+1:06:41.839,1:06:48.720
+Je pense que c'est bon. Alors à lundi, merci. Bye
+
+1:06:48.720,1:06:53.839
+[Chat : poste une lasagne] Oh, j’ai mis le gâteau au citron.
+
+1:06:53.839,1:06:57.280
+[pour que l'enseignement continue] Oui
+
+1:06:57.280,1:07:01.359
+c'est sûr. Je pense que Yann enseigne
+
+1:07:01.359,1:07:06.079
+à l'automne également. Yann et KyungHyun [Cho] s'associent
+
+1:07:06.079,1:07:10.000
+et enseignent à l'automne. J’enseignerai aussi les TDs
+
+1:07:10.000,1:07:14.079
+mais nous n'avons pas encore discuté du contenu.
+
+1:07:14.079,1:07:18.319
+Plus enseignant mais c'est amusant.
+
+1:07:18.319,1:07:24.880
+Ok, bye.
+
+1:07:26.030,1:07:36.000
+Donc je pense que c'était tout pour aujourd'hui, à moins qu'il n'y ait des questions pour moi ou Yann.
+
+1:07:36.000,1:07:39.520
+Je sais que vous m'envoyez des emails,
+
+1:07:39.520,1:07:43.119
+je pense, en avoir quelques centaines de votre part.
+
+1:07:43.119,1:07:48.440
+Je vais répondre ne vous inquiétez pas trop.
+
+1:07:48.440,1:07:52.319
+Nous pouvons comprendre ce qui se passe bien, ne paniquez pas.
+
+1:07:52.319,1:07:55.359
+Comme je vous l'ai dit, nous pouvons avoir une
+
+1:07:55.359,1:07:59.760
+leçon supplémentaire dans un mois sur les modèles à base d'énergie quand
+
+1:07:59.760,1:08:03.520
+j'aurais fini de préparer ça. Encore une fois c'est basé
+
+1:08:03.520,1:08:06.319
+sur le volontariat, c'est hors du cours.
+
+1:08:06.319,1:08:10.000
+Je pensais que cela faisait sens puisque
+
+1:08:10.000,1:08:13.280
+quelqu'un a demandé de créer un TD sur les
+
+1:08:13.280,1:08:18.880
+EBMs et j'ai dit oui. Je tiens toujours ma parole. Je n'ai pas
+
+1:08:18.880,1:08:24.080
+réussi à le faire à temps mais je vais le faire. Je vais travailler pour cela.
+
+1:08:24.080,1:08:35.000
+Des questions ? Non ? Donc cela a été un honneur. J'ai aimé vous enseigner
+
+1:08:35.279,1:08:38.480
+ce semestre. Vous avez eu tant de questions.
+
+1:08:38.480,1:08:41.920
+Surtout lorsque nous sommes passés à ce format en ligne.
+
+1:08:41.920,1:08:47.600
+Personnellement j’ai beaucoup aimé. Du moins à mon avis, avant nous ayons les cours de Yann
+
+1:08:47.600,1:08:53.440
+et peut-être que vous étiez un peu timide.
+
+1:08:53.440,1:08:58.239
+Je pense donc que ce format où vous écrivez des questions et les lis,
+
+1:08:58.239,1:09:02.640
+ça a vraiment bien fonctionné pour
+
+1:09:02.640,1:09:06.159
+déterminer quels sont les aspects qui sont
+
+1:09:06.159,1:09:12.560
+un peu plus difficile à comprendre. Car nous pouvons
+
+1:09:12.560,1:09:16.080
+ne pas être en mesure de déterminer quelle partie est
+
+1:09:16.080,1:09:21.520
+moins clair qu’une autre car nous parlons de
+
+1:09:21.520,1:09:25.359
+ces choses depuis un certain temps maintenant. Donc je pense que si vous écrivez ces
+
+1:09:25.359,1:09:28.480
+questions et les lis, c’est comme avoir une conversation
+
+1:09:28.480,1:09:32.799
+avec l’orateur de la présentation et c’est beaucoup plus efficace
+
+1:09:32.799,1:09:37.359
+en terme de contenus et de diffusion.
+
+1:09:37.359,1:09:42.719
+[Yann : je veux faire écho à ce qu'a dit Alfredo. C'était un plaisir d'enseigner
+
+1:09:42.719,1:09:46.880
+malgré les circonstances, et je suis très reconnaissant envers
+
+1:09:46.880,1:09:55.000
+Alfredo. Il met tout son cœur dans cela comme vous pouvez le voir.
+
+1:09:55.280,1:10:00.840
+Je suis vraiment reconnaissant envers lui de faire tout ce travail
+
+1:10:00.840,1:10:05.600
+car je pense que cela fait une énorme différence en termes
+
+1:10:05.600,1:10:10.320
+d'utilité de la classe et donc merci Alfredo]
+
+1:10:10.320,1:10:14.159
+Merci et Jiachen [Zhu] ! Jiachen a crée tout le challenge
+
+1:10:14.159,1:10:17.280
+[Yann : il a fait une énorme quantité…] Oh mon dieu
+
+1:10:17.280,1:10:21.040
+[Yann : c’est lui qui a rendu la compétition possible, a rassemblé les données,
+
+1:10:21.040,1:10:26.400
+le code de base, le chargeur de données. Il a énormément travaillé dessus 
+
+1:10:26.400,1:10:29.679
+depuis quelques mois et a
+
+1:10:29.679,1:10:32.960
+rassemblé tous les autres résultats. Donc merci Jiachen]
+
+1:10:32.960,1:10:36.159
+Je crois que ça fait deux mois maintenant
+
+1:10:36.159,1:10:40.560
+qu’il travaille sur ce sujet.
+
+1:10:40.560,1:10:44.080
+Merci les gars. Vous pouvez juste me tweeter et je
+
+1:10:44.080,1:10:49.760
+répondrais à chaque fois si vous avez besoin de quelque chose. Ma porte
+
+1:10:49.760,1:10:54.880
+est toujours ouverte, ou dans le bureau, ou ici sur Zoom.
+
+1:10:54.880,1:10:59.920
+[Yann : comme Alfredo l’a dit, nous avons un projet sur la conduite autonome
+
+1:10:59.920,1:11:05.200
+et nous avons besoin de toute l'aide que nous pouvons obtenir. Donc si vous
+
+1:11:05.200,1:11:10.199
+faites partie des meilleures équipes de la compétition et êtes intéressés pour participer,
+
+1:11:10.199,1:11:17.040
+prenez contact avec Alfredo et vous pourriez travailler sur ce sujet pendant l'été ou peut-être au-delà.
+
+1:11:17.040,1:11:26.880
+Et félicitations à toutes les équipes]  Au revoir les gars. [Bye]

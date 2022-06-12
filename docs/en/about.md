@@ -90,4 +90,5 @@ I am writing here a non exhaustive list of mathematical notation we're going to 
 - Function names are **not** in italic, hence `$\max(\cdot)$`, `$\log(\cdot)$`, `$\tanh(\cdot)$`, which look like $\max(\cdot)$, $\log(\cdot)$, $\tanh(\cdot)$, and so on.
 - The *exponential* function is `$\exp(\cdot)$`, $\exp(\cdot)$, and not `$e^{(\cdot)}$`, $e^{(\cdot)}$.
 - Computer names use `$\texttt{}$` in the mathematical environment. For example we can write `$\texttt{ReLU}(\cdot)$` for $\texttt{ReLU}(\cdot)$. If we are just talking about computer stuff, then we shall write `ReLU` or `torch.relu()`. While writing formulas we should prefer using `$(\cdot)^+$`, $(\cdot)^+$, for the positive part.
-
+- The conditional bar in $p(\vect{y} \mid \vect{x})$ is obtained typing `\mid`.
+- The norm of a vector $\Vert \cdot \Vert$ uses the `\Vert` command.

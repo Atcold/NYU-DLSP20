@@ -71,40 +71,40 @@ we're going to be working on and why we need these energy based models
 so we can think about our data why bold y is uh it's been living
 
 0:01:45.920,0:01:52.000
-having two components y one y two y one is gonna be this row one function
+having two components y1, y2. y1 is gonna be this ρ1(x) function
 
 0:01:52.000,0:01:55.840
 of x which is going to be my input multiplied
 
 0:01:55.840,0:01:59.920
-by the cosine of theta which is some you know angle we don't
+by the cosine of θ which is some you know angle we don't
 
 0:01:59.920,0:02:03.040
-know plus some epsilon noise and then row 2
+know plus some ε noise and then ρ2
 
 0:02:03.040,0:02:07.680
 is going to be again a function of my input x and then it's multiplied by a
 
 0:02:07.680,0:02:11.360
-sine of this theta we have no axis plus some
+sin of this θ we have no axis plus some
 
 0:02:11.360,0:02:18.480
-uh noise epsilon rho is a function that maps the input
+noise ε. ρ is a function that maps the input
 
 0:02:18.480,0:02:22.560
-one dimensional r into a r2 and so it's mapping my
+ℝ1 into ℝ2 and so it's mapping my
 
 0:02:22.560,0:02:26.480
-x into something that is this alpha x plus beta
+x into something that is this α(x) + β(1-x)
 
 0:02:26.480,0:02:29.840
-1 minus x for the first component and the other is beta
+for the first component and the other is
 
 0:02:29.840,0:02:36.239
-times x plus alpha multiply 1 minus x and and then everything is multiplied by
+β(x) + α(1-x) and then everything is multiplied by
 
 0:02:36.239,0:02:41.840
-this exponential of x so alpha and beta
+this exponential of x. So α and β
 
 0:02:41.840,0:02:45.760
 are simply 1.5 and 2 so this is simply the
@@ -128,13 +128,13 @@ like horizontal ellipse and eventually end up as a vertical ellipse
 okay x here is going to be sample from the uniform distribution
 
 0:03:15.840,0:03:22.640
-similarly theta is also sampled from the uniform distribution from 0 to 2 pi
+similarly θ is also sampled from the uniform distribution from 0 to 2π
 
 0:03:22.640,0:03:26.239
-epsilon instead is sampled from a normal distribution
+ε instead is sampled from a normal distribution
 
 0:03:26.239,0:03:31.680
-with mean 0 and then a standard deviation of 1 over 20.
+with mean 0 and then a standard deviation of 1/20.
 
 0:03:31.680,0:03:34.879
 so again as you might have seen from twitter
@@ -182,16 +182,16 @@ uh per given x so we can't really use normal uh feed forward neural net to do
 this uh similarly if we are just talking
 
 0:04:41.199,0:04:45.360
-about y's given one value of y one i cannot even
+about y's given one value of y1 I cannot even
 
 0:04:45.360,0:04:48.240
-tell what is the other corresponding y two
+tell what is the other corresponding y2
 
 0:04:48.240,0:04:51.680
 because there are always two almost always two values for
 
 0:04:51.680,0:04:57.120
-y two given one y one right and so using vectors to vectors mapping
+y2 given one y1 right and so using vectors to vectors mapping
 
 0:04:57.120,0:05:00.320
 as we've been learning so far is not quite
@@ -221,13 +221,13 @@ x to zero so by fixing the x to zero i'm gonna have that my exponential becomes
 simply 1. and then basically we turn out having
 
 0:05:42.639,0:05:46.720
-row 1 that becomes 2 right so alpha
+ρ1 that becomes 2 right so α
 
 0:05:46.720,0:05:50.240
-gets deleted by 0 and then you just have the beta multiplied by
+gets deleted by 0 and then you just have the β multiplied by
 
 0:05:50.240,0:05:54.080
-a 1 and then row two automatically is gonna get
+a 1 and then ρ2 automatically is gonna get
 
 0:05:54.080,0:06:00.400
 the amplitude of 1.5 right and so my data points y are going to be simply
@@ -236,13 +236,13 @@ the amplitude of 1.5 right and so my data points y are going to be simply
 points coming from this twice the cosine of this uniform
 
 0:06:05.520,0:06:09.199
-simply uniformly sample theta and then 1.5
+simply uniformly sample θ and then 1.5
 
 0:06:09.199,0:06:16.720
-sine this uniform theta the collection of all my y's
+sine this uniform θ the collection of all my y's
 
 0:06:16.720,0:06:20.319
-will give me capital y so capital y is going to be the collection of all my
+will give me Y so Y is going to be the collection of all my
 
 0:06:20.319,0:06:25.600
 sample and here i decided to just use 24 samples so i have 24
@@ -254,7 +254,7 @@ different samples from the uniform distribution
 okay and per each of these samples there will be
 
 0:06:33.600,0:06:39.120
-one epsilon for the first component and one epsilon for the second component
+one ε for the first component and one ε for the second component
 
 0:06:39.120,0:06:44.800
 all right so what we try to do today is going to be to learn well to learn
@@ -293,10 +293,10 @@ minor radius is gonna have one two three boxes uh each box is 0.5
 and so this is the minor radius of 1.5 when you said there's no input just
 
 0:07:36.560,0:07:40.800
-what is theta do you consider that an input or so theta we don't have access
+what is θ do you consider that an input or so θ we don't have access
 
 0:07:40.800,0:07:44.879
-to right so theta is something we don't see x
+to right so θ is something we don't see x
 
 0:07:44.879,0:07:48.720
 could be the input we provide the model to figure out
@@ -308,10 +308,10 @@ at what location we are at that kind of uh
 horn allows us to figure out the dimension of those
 
 0:07:56.400,0:08:01.440
-ellipse ellipses but then we theta here is something we don't have access
+ellipse ellipses but then we θ here is something we don't have access
 
 0:08:01.440,0:08:06.319
-to so theta was is simply a variable which is
+to so θ was is simply a variable which is
 
 0:08:06.319,0:08:10.400
 uh missing which was used for generating our data
@@ -335,37 +335,37 @@ input still there is some you know potential
 input you notice here is the same color as
 
 0:08:39.839,0:08:45.120
-that theta right anyhow so i have my z z which is uh
+that θ right anyhow so i have my z which is
 
 0:08:45.120,0:08:49.040
-i can decide to like take it from zero to two pi
+i can decide to like take it from 0 to 2π
 
 0:08:49.040,0:08:53.440
 uh without the so that square bracket flipped square bracket means
 
 0:08:53.440,0:08:56.800
-i'm considering a vector that goes from 0 to 2 pi
+i'm considering a vector that goes from 0 to 2π
 
 0:08:56.800,0:09:03.440
-with 2 pi excluded with a step you know pi over 24. and so
+with 2π excluded with a step you know π/24. So
 
 0:09:03.440,0:09:09.760
-this one basically is like a line where there are many points there are uh 40 48
+this one basically is like a line where there are many points there are 48
 
 0:09:09.760,0:09:14.320
-points right from zero to two pi excluded so this
+points right from zero to 2π excluded so this
 
 0:09:14.320,0:09:19.839
 latent input goes inside a decoder and then the decoder is going to give me
 
 0:09:19.839,0:09:23.519
-this y tilde and y is bold because again it
+this ỹ and y is bold because again it
 
 0:09:23.519,0:09:27.920
 lives in two dimensions uh more precisely we're gonna have that
 
 0:09:27.920,0:09:32.560
-by varying z over one line y tilde is gonna be
+by varying z over one line ỹ is gonna be
 
 0:09:32.560,0:09:37.760
 varying around a uh ellipse okay
@@ -395,7 +395,7 @@ right the blue points are the one sample from my
 data generation generated distribution we already
 
 0:10:07.760,0:10:12.399
-sampled them we have 24 and then here i just decided to plot uh
+sampled them we have 24 and then here i just decided to plot
 
 0:10:12.399,0:10:17.760
 48 of these values from like
@@ -425,10 +425,10 @@ pretty bad since it's not already matching the data and still
 going to be seeing how to use this model so what what determines the shape of the
 
 0:10:53.600,0:10:56.560
-red or orange points is it the alpha and the
+red or orange points is it the α and the β ?
 
 0:10:56.560,0:11:00.959
-beta uh alpha and beta are determining the
+α and β are determining the
 
 0:11:00.959,0:11:03.760
 side the the shape of that blue thing right so
@@ -470,7 +470,7 @@ function so what is this energy function so this
 energy function it's um something that tells me
 
 0:11:57.760,0:12:04.880
-what is the compatibility between this y tilde and y the blue y right
+what is the compatibility between this ỹ and y the blue y right
 
 0:12:04.880,0:12:09.040
 and so basically in this case here measures the distance between
@@ -490,20 +490,17 @@ energy e function of my y data point and my latent variable z
 0:12:31.440,0:12:38.079
 it's gonna be the sum of the square euclidean distances of the two
 
-0:12:38.079,0:12:42.240
-components so we have component one of the y minus
-
-0:12:42.240,0:12:46.160
-component one of this g which is our decoder
+0:12:38.079,0:12:46.160
+components so we have component [y1 – g1(z)]² with g which is our decoder
 
 0:12:46.160,0:12:50.560
-function of z squared and then we have the other one is going to be y2 minus
+and then we have the other one is going to be y2 minus
 
 0:12:50.560,0:12:54.000
-g2 which is the second component of this output of the decoder
+g2 which is the second component is [y2 – g2(z)]².
 
 0:12:54.000,0:13:01.279
-squared and this importantly uh happens for every y we pick
+And this importantly uh happens for every y we pick
 
 0:13:01.279,0:13:07.519
 from capital y so in this case we have 24 different
@@ -530,25 +527,22 @@ uh you know align with what i think you know
 it's a very good guess about how the output should look uh so my g
 
 0:13:39.839,0:13:43.519
-which is a two component function g one g two
+which is a two component function g1, g2
 
 0:13:43.519,0:13:50.160
-maps uh the real line to this r2 and therefore it maps my z into these
+ℝ to this ℝ² and therefore it maps my z into these
 
 0:13:50.160,0:13:54.959
-two components which are going to be w1 cosine cosine of z and then the second
+two components which are going to be w1 cos(z) and then the second
 
 0:13:54.959,0:13:59.760
-component is going to be w2 because the sine of z to notice here
+component is going to be w2 sin(z). Notice here
 
-0:13:59.760,0:14:06.720
-the only parameters we have available in this network in this decoder are w1
+0:13:59.760,0:14:09.040
+the only parameters we have available in this network in this decoder are w1 and w2.
 
-0:14:06.720,0:14:11.040
-and w2 okay cosine x and sine z
-
-0:14:11.040,0:14:14.880
-sorry cosine z and sine z are you know knowledge a priori you know i know
+0:14:09.040,0:14:14.880
+Cosinus(z) et sinus(z) are you know knowledge a priori you know i know
 
 0:14:14.880,0:14:18.800
 already and i put there my best guess for that
@@ -593,13 +587,13 @@ right now since i have you know a discrete number of training samples
 i have a discrete number of energies in this case
 
 0:15:19.519,0:15:23.920
-so this is my e1 and then the last one on the row is going to be in the one
+so this is my E1 and then the last one on the row is going to be in the one
 
 0:15:23.920,0:15:28.000
 associated to the sixth sample of my training sample my training
 
 0:15:28.000,0:15:32.480
-set and therefore i have my e6
+set and therefore i have my E6
 
 0:15:32.480,0:15:35.519
 uh if we go down until the last row we're gonna be
@@ -608,25 +602,25 @@ uh if we go down until the last row we're gonna be
 seeing uh i'm gonna be picking the 19th sample from my training set and then i'm
 
 0:15:40.959,0:15:46.880
-going to have this e 19 over there and finally if i pick my y prime
+going to have this E19 over there and finally if i pick my y prime
 
 0:15:46.880,0:15:50.399
 being the last the 24th example then i'll be
 
 0:15:50.399,0:15:56.560
-ending up with the e24 on the x axis of each of these little cells you're
+ending up with the E24 on the x axis of each of these little cells you're
 
 0:15:56.560,0:16:02.160
-going to be having z so each of these e's know e 1 e 2 e 3
+going to be having z so each of these E : E1, E2, E3, …, E24
 
 0:16:02.160,0:16:08.800
-e until 24 are functions of my z latent variable which is
+are functions of my z latent variable which is
 
 0:16:08.800,0:16:14.560
-spanning as we said before zero to two pi in this uh drawing here i
+spanning as we said before 0 to 2π in this uh drawing here i
 
 0:16:14.560,0:16:18.880
-just have them separated by uh pi over 12. so i have
+just have them separated by π/12. so i have
 
 0:16:18.880,0:16:23.680
 nice separation for drawing this function
@@ -656,7 +650,7 @@ of very funny weird wiggly functions okay
 we are gonna start by cherry picking two of them
 
 0:16:58.639,0:17:05.839
-uh for example the e23 the e23 looks pretty you know
+uh for example the E23 looks pretty you know
 
 0:17:05.839,0:17:12.160
 kind of okay it looks very uh mostly smooth and i think it looks like
@@ -689,13 +683,13 @@ you know sean just asked a few questions so so far we are
 all on board or i lost some of you no yeah so so basically like this square
 
 0:17:50.480,0:17:54.960
-would be y23 and then the x-axis is showing
+would be Y[23] and then the x-axis is showing
 
 0:17:54.960,0:17:58.480
-as you vary z you're going to be evaluating this e
+as you vary z you're going to be evaluating this
 
 0:17:58.480,0:18:03.039
-y 23 and z yeah yeah this is the e23 the the one i
+E(y23,z) yeah yeah this is the E23 the the one i
 
 0:18:03.039,0:18:06.080
 show you right now great the lecture's going
@@ -797,19 +791,19 @@ okay anyhow so that's why we start at this location uh here 12 right
 as we keep uh increasing z and we go from
 
 0:20:26.480,0:20:30.880
-zero to pi half we end up at this location over here
+zero to π/2 we end up at this location over here
 
 0:20:30.880,0:20:36.000
-and then as we keep going until pi you're gonna get and ending up in this
+and then as we keep going until π you're gonna get and ending up in this
 
 0:20:36.000,0:20:40.480
-location over here and as you can tell uh pi
+location over here and as you can tell π
 
 0:20:40.480,0:20:46.640
 you're gonna be at one square away from this green boy and so one square is
 
 0:20:46.640,0:20:52.159
-gonna be 0.5 0.5 square is 0.25
+gonna be 0.5, 0.5 square is 0.25
 
 0:20:52.159,0:20:55.840
 and therefore the height of this red curve
@@ -821,7 +815,7 @@ at this location over here it's 0.25 very close to zero okay and then
 we still keep cranking up that z and we go to
 
 0:21:06.559,0:21:12.159
-three three half pi and then you keep going up to two pi right and two pi
+3.5π and then you keep going up to 2π right and 2π
 
 0:21:12.159,0:21:14.880
 we're gonna be basically getting up to the same location
@@ -839,10 +833,10 @@ right so this looks pretty okay i think no no no crazy stuff but
 then we saw the other one was kind of wiggly right what happened there so
 
 0:21:32.000,0:21:36.720
-instead of using the y 23 we're going to be using now the y10
+instead of using the Y[23] we're going to be using now the Y[10]
 
 0:21:36.720,0:21:40.480
-which is this thing right like a signature like yarn
+which is this thing right like a signature like Yann
 
 0:21:40.480,0:21:45.039
 signature all right so what happened here so in this case
@@ -914,16 +908,16 @@ z equals zero corresponds to the leftmost point
 yes so i know that uh this is because i checked the code
 
 0:23:32.799,0:23:40.960
-i know that my w1 it's um it's equal to something uh that is
+i know that my w1 it's equal to something uh that is
 
 0:23:40.960,0:23:47.840
-uh minus 1.5 right something like that minus one
+minus 1.5 right something like that minus one
 
 0:23:47.840,0:23:51.840
-point five okay and then we have the w tool
+point five okay and then we have the w2
 
 0:24:01.039,0:24:04.159
-and i'm drawing with the touchpad so it's crazy
+i'm drawing with the touchpad so it's crazy
 
 0:24:04.159,0:24:10.880
 uh this is 0.3 0.4 something like that
@@ -932,10 +926,10 @@ uh this is 0.3 0.4 something like that
 zero point let's say four that looks like a one but okay
 
 0:24:19.520,0:24:22.720
-okay believe me it's a four okay when we go pi
+okay believe me it's a four okay when we go π/2
 
 0:24:22.720,0:24:28.720
-half we are roughly uh one unit away from this point so one square is
+we are roughly uh one unit away from this point so one square is
 
 0:24:28.720,0:24:32.559
 going to be roughly one right i mean some something roughly one
@@ -956,10 +950,10 @@ we should basically get the same point over here so then over
 here we're going to get a similar value a little bit smaller and then we
 
 0:24:54.400,0:24:57.600
-oh what happened here so when we go to three
+oh what happened here so when we go to
 
 0:24:57.600,0:25:02.720
-three half pi we actually are at this location over here and we have
+1.5π we actually are at this location over here and we have
 
 0:25:02.720,0:25:06.000
 another minimum right what happened here so basically you had
@@ -974,7 +968,7 @@ a point over here right and so in this case
 this function here this energy has a local minima
 
 0:25:17.840,0:25:23.520
-which is happening at three three half pi at this location over here
+which is happening at three 1.5π at this location over here
 
 0:25:23.520,0:25:28.000
 all right cool uh let's go back to the arrow
@@ -1004,13 +998,13 @@ limit of the free energy it's going to be simply the mean minimum
 value of this e function with respect to z
 
 0:26:04.480,0:26:11.200
-so we can compute this z check which is gonna be equal
+so we can compute this z^check which is gonna be equal
 
 0:26:11.200,0:26:15.520
-we can define it as being the arc mean of this energy function
+we can define it as being the arc mean of this
 
 0:26:15.520,0:26:21.039
-uh with respect to z why the check well because the check is pointing
+E(y,z). Why the check (✓) ? because the check is pointing
 
 0:26:21.039,0:26:26.320
 downwards right so whenever i minimize my energy i found the location that is
@@ -1028,7 +1022,7 @@ the energy is the lowest okay um and how do can we find that set right
 so if um if z it's basically
 
 0:26:44.720,0:26:48.320
-uh discrete like let's say we have like k means
+uh discrete like let's say we have like K-means
 
 0:26:48.320,0:26:51.520
 uh we have we can do exhaustive search we can check every z
@@ -1064,25 +1058,25 @@ average so it's not stochastic and therefore you're going to be using
 you can use algorithms such that conjugate gradient
 
 0:27:35.279,0:27:42.480
-line search lbf gs and so on okay so let's look at and let's figure out
+line search, LBFGS, and so on okay so let's look at and let's figure out
 
 0:27:42.480,0:27:45.919
 what is this free energy right how it works so given
 
 0:27:45.919,0:27:51.440
-that we have defined this uh z check this uh free energy
+that we have defined this uh z^check this uh free energy
 
 0:27:51.440,0:27:54.960
 the the zero limit for the free energy is going to simply be this
 
 0:27:54.960,0:27:58.000
-energy e computed in the location of my z
+energy E computed in the location of my
 
 0:27:58.000,0:28:05.279
-check so let's visualize here this uh e uh so this
+z^check so let's visualize here this E10
 
 0:28:05.279,0:28:09.760
-e10 all the energy for the sample when i pick the sample pen
+all the energy for the sample when i pick the sample pen
 
 0:28:09.760,0:28:17.120
 i initialize my latent variable z tilde the orange one with some volume
@@ -1091,19 +1085,19 @@ i initialize my latent variable z tilde the orange one with some volume
 and then i'm gonna be running a gradient base method for
 
 0:28:20.640,0:28:25.360
-minimization therefore i end up in the blue location which is my z
+minimization therefore i end up in the blue location which is my
 
 0:28:25.360,0:28:28.720
-check and it's blue because it's cold so it's like low
+z^check and it's blue because it's cold so it's like low
 
 0:28:28.720,0:28:32.240
 i usually think about this energy as being like a temperature right
 
 0:28:32.240,0:28:37.360
-i mean if you multiply by the boltzmann boltzmann constant no k
+i mean if you multiply by the Boltzmann constant kB
 
 0:28:37.360,0:28:40.880
-kt uh you're gonna get like the some energy right
+you're gonna get like the some energy right
 
 0:28:40.880,0:28:45.440
 so energy and temperature are very uh very closely related
@@ -1112,7 +1106,7 @@ so energy and temperature are very uh very closely related
 um and so again i use the the blue to show you that is low
 
 0:28:49.840,0:28:55.600
-and cold and so at that location that z check the yeah at that location we
+and cold and so at that location that z^check the yeah at that location we
 
 0:28:55.600,0:28:59.520
 reached the minimum of this energy and that is my uh
@@ -1133,7 +1127,7 @@ yeah the initialization uh so your algorithm
 will screw up depending on the initialization for sure
 
 0:29:25.440,0:29:31.120
-so i can show you later on that lbfgs actually gets the wrong
+so i can show you later on that LBFGS actually gets the wrong
 
 0:29:31.120,0:29:36.320
 minimum but nevertheless the free energy is the global minimum right
@@ -1184,10 +1178,10 @@ then i can run some some some minimization algorithm
 and then you end up in that location the blue location and the blue x
 
 0:30:50.960,0:30:54.399
-is going to be the you know decoded version of the z
+is going to be the you know decoded version of the
 
 0:30:54.399,0:31:01.440
-check which is the closest item to this green boy over here so
+z^check which is the closest item to this green boy over here so
 
 0:31:01.440,0:31:05.120
 why are we doing this stuff here how can we use this model what we use
@@ -1385,13 +1379,13 @@ kind of example here so again here we initialize to the location in
 orange and then by running some you know gradient based method or whatever
 
 0:35:55.680,0:36:00.640
-minimization process we find these blue x which is my z
+minimization process we find these blue x which is my
 
 0:36:00.640,0:36:04.079
-check so we go from the z tilde which is the initialized
+z^check so we go from the z tilde which is the initialized
 
 0:36:04.079,0:36:08.400
-uh value for my latent to this z check which is the
+uh value for my latent to this z^check which is the
 
 0:36:08.400,0:36:15.040
 value at which i find the minimum for my uh energy
@@ -1472,13 +1466,13 @@ orange okay i have to pick red sorry so let's say i initialize
 my my latent variable such that the g the decoded version of the
 
 0:38:20.880,0:38:24.400
-z tilde is this point over here then we run
+z̃ is this point over here then we run
 
 0:38:24.400,0:38:30.320
 our minimization process to perform inference right to find out what is that
 
 0:38:30.320,0:38:35.119
-check so whenever we find z check that process is called
+check so whenever we find z^check that process is called
 
 0:38:35.119,0:38:40.000
 inference given an energy given a sample
@@ -1628,16 +1622,16 @@ value when i pick a specific location right so it's no longer a function of
 the latent whenever we compute the free energy
 
 0:42:15.200,0:42:21.040
-the latent disappears and i get that z check which is the optimal
+the latent disappears and i get that z^check which is the optimal
 
 0:42:21.040,0:42:26.000
 latent on the latent that is the most likely giving me uh
 
 0:42:26.000,0:42:32.079
-that that point so here we have that the z check for the blue curve happens over
+that that point so here we have that the z^check for the blue curve happens over
 
 0:42:32.079,0:42:36.400
-here similarly the z check for the orange green and purple and red
+here similarly the z^check for the orange green and purple and red
 
 0:42:36.400,0:42:39.920
 are happening in these locations uh there
@@ -1652,7 +1646,7 @@ definitely could be a pitfall of you know
 of using some gradient-based methods so question now for the audience
 
 0:42:56.720,0:43:04.319
-i'm removing everything what is f infinity so how many dimensions does
+i'm removing everything what is F∞ so how many dimensions does
 
 0:43:04.319,0:43:08.000
 this stuff okay can someone remind me this right so can
@@ -1661,16 +1655,16 @@ this stuff okay can someone remind me this right so can
 someone tell me what is the domain and the image
 
 0:43:10.640,0:43:15.359
-of these function on the chart where does f infinity live
+of these function on the chart where does F∞ live
 
 0:43:17.800,0:43:24.640
 [Music] anyone run sir is anyone listening
 
 0:43:25.280,0:43:31.680
-hello okay so y is uh on r24 yeah but that's
+hello okay so y is uh on ℝ24 yeah but that's
 
 0:43:31.680,0:43:38.079
-uh there is just an r i don't know what just r means um
+uh there is just an ℝ i don't know what just ℝ means um
 
 0:43:38.079,0:43:44.880
 the capital y is 20 capital y has 24 items each item in
@@ -1679,10 +1673,10 @@ the capital y is 20 capital y has 24 items each item in
 capital y are two dimensional right so y is a
 
 0:43:47.920,0:43:52.160
-matrix but i'm not asking the capital y i'm asking capital f
+matrix but i'm not asking the Y i'm asking capital
 
 0:43:52.160,0:43:57.599
-infinity right so capital f infinity is uh someone mentioned here it's
+F∞ right so capital F∞ is uh someone mentioned here it's
 
 0:43:57.599,0:44:01.920
 definitely a real value uh in our case is actually positively
@@ -1694,16 +1688,16 @@ non-negatively value right because it's a it's a square
 sum of squares and the domain instead what is the
 
 0:44:08.880,0:44:12.160
-domain of capital f the domain is going to be the uh the
+domain of F ? The domain is going to be the uh the
 
 0:44:19.280,0:44:26.160
 basically the where y uh the bold y belongs to no so the ball y
 
 0:44:26.160,0:44:30.960
-it's a vector in two dimensions so that's gonna be r two right so again
+it's a vector in two dimensions so that's gonna be ℝ2 right so again
 
 0:44:30.960,0:44:33.520
-these f are scalar values so i'm gonna be
+these F are scalar values so i'm gonna be
 
 0:44:33.520,0:44:36.560
 representing the different intensities of this
@@ -1715,10 +1709,10 @@ scalar value with this color bar here i will represent in a violet very dark
 maybe not even able to see in this free energy
 
 0:44:46.720,0:44:52.160
-uh equals zero then in aqua i'm gonna be representing this zero
+equals zero then in aqua i'm gonna be representing this zero
 
 0:44:52.160,0:44:56.880
-temperature limit uh free energy for uh equal one and then
+temperature limit uh free energy for equal one and then
 
 0:44:56.880,0:45:00.079
 everything that is above and beyond the value two
@@ -1784,10 +1778,10 @@ such that it's gonna be you know nicely fitting on these blue points okay
 uh why is the energy surface single value
 
 0:46:37.119,0:46:43.280
-so the energy surface which is the value of f infinity right
+so the energy surface which is the value of F∞ right
 
 0:46:43.280,0:46:47.119
-and f infinity is the minimum of my energy so
+and F∞ is the minimum of my energy so
 
 0:46:47.119,0:46:54.800
 energy the capital e it's a function over all possible latent but then
@@ -1799,10 +1793,10 @@ given that we have this function we're going to find what is the minimum value
 minimum value that this energy can take that minimum value
 
 0:47:03.119,0:47:10.560
-is the uh zero temperature limit of the free energy which is this f
+is the uh zero temperature limit of the free energy which is this
 
 0:47:10.560,0:47:16.880
-infinity okay and so e y z is a function of y and z
+F∞ okay and so E(y,z) is a function of y and z
 
 0:47:16.880,0:47:21.200
 but then whenever we take out the z with the minimization
@@ -2087,7 +2081,7 @@ function which is so funny uh and then we're
 gonna be learning perhaps what is the free energy without this
 
 0:54:14.559,0:54:18.880
-beta that goes to um to infinity and we're gonna be
+beta that goes infinity and we're gonna be
 
 0:54:18.880,0:54:21.760
 learning how to do learning okay so today again we just
@@ -2168,7 +2162,7 @@ the gradient so you can end up boom down on the manifold right so you can
 make little steps so you can just go uh you know you can find out where to go
 
 0:56:06.079,0:56:10.640
-or you can use the uh you know the z check
+or you can use the uh you know the z^check
 
 0:56:10.640,0:56:15.520
 to find out what is the uh best approximation of your point over here
@@ -2285,7 +2279,7 @@ finally if you find any bug in the previous notebooks
 in the website anywhere you're really encouraged to
 
 0:58:47.839,0:58:51.359
-point them out on github or if you find yourself inclined
+point them out on GitHub or if you find yourself inclined
 
 0:58:51.359,0:58:55.680
 you can also send a pull request such that you can be an official contributor

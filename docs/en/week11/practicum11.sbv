@@ -1,5 +1,5 @@
 0:00:00.319,0:00:07.080
-okay so let's get started with today lesson and let's see what Yan likes to
+okay so let's get started with today lesson and let's see what Yann likes to
 
 0:00:07.080,0:00:13.349
 do research on alright so today we're going to be talking about model
@@ -113,16 +113,16 @@ so let me give you like an introduction here or a small recap of the what are
 the main components in this system here so we have a agent here represented by
 
 0:03:53.050,0:04:01.030
-this pink brain which gets as input a state s T and produces in action is an
+this pink brain which gets as input a state sₜ  and produces in action is an
 
 0:04:01.030,0:04:06.190
-output which is a T which is for example my steering control and my acceleration
+output which is aₜ which is for example my steering control and my acceleration
 
 0:04:06.190,0:04:13.810
 or braking signal moreover I observe a cost which is you know a consequence of
 
 0:04:13.810,0:04:19.780
-taking a specific action a given that I find myself in state s T ok so if I
+taking a specific action a given that I find myself in state sₜ  ok so if I
 
 0:04:19.780,0:04:25.000
 should be okay let me see there are chat messages here let me see what's going on
@@ -203,7 +203,7 @@ dead don't know and you can see what is the the current state and then you can
 have the next state dinner is ready mmm I'm gonna gray I'm actually hungry
 
 0:06:39.970,0:06:45.670
-p.m. all right more or you also had the consequence 15 they're going to be you
+p.m. all right more or you also had the consequence cₜ they're going to be you
 
 0:06:45.670,0:06:51.310
 know your mouth is watering anyhow you're gonna be providing now like a
@@ -305,13 +305,13 @@ tractor the pickup pickup pickup truck and then on the bus on the right hand
 side so here for every each and every vehicle the blue the cyan one I have two
 
 0:09:48.460,0:09:53.320
-vectors the vector PT which is representing the position of the vehicle
+vectors the vector Pₜ  which is representing the position of the vehicle
 
 0:09:53.320,0:09:56.350
-the we are part VT which is the velocity
+the we are part vₜ  which is the velocity
 
 0:09:56.350,0:10:02.589
-which is you know vector representing the VX and V Y component and then
+which is you know vector representing the vₓ and vy component and then
 
 0:10:02.589,0:10:08.470
 moreover I given that I know what is the kinematics of driving a car or a bicycle
@@ -386,10 +386,10 @@ representing two things the state of the lanes of the street basically and the
 second part is going to be they represent the traffic situation
 
 0:12:16.850,0:12:24.020
-surrounding me so overall the set of PT the position
+surrounding me so overall the set of Pₜ the position
 
 0:12:24.020,0:12:30.830
-within the velocity and I team this observation represent my state s T so as
+within the velocity and I team this observation represent my state sₜ so as
 
 0:12:30.830,0:12:37.310
 T represents the current state at a specific time T right for my given
@@ -500,7 +500,7 @@ other and then if you go at 50 kilometers per hour you know on average
 every one is a bit further away so if you multiply that potential that is in
 
 0:15:44.980,0:15:49.870
-the Y and the other one that was in the X you get something that looks like this
+the y and the other one that was in the x you get something that looks like this
 
 0:15:49.870,0:15:55.060
 okay and in the case that we go at a higher speed you cannot get something
@@ -650,19 +650,19 @@ does it work what's the action here so the action here is for example the
 acceleration and the steering steering command that the we have observed in our
 
 0:20:25.059,0:20:30.730
-data set right so my state's s1 to t are a sequence of you know observations of
+data set right so my state s1:t are a sequence of you know observations of
 
 0:20:30.730,0:20:35.530
 position velocities and context images in the action are the action taken by
 
 0:20:35.530,0:20:43.030
-the driver that I obtained by inverting the kinematic model of the car PT is the
+the driver that I obtained by inverting the kinematic model of the car Pₜ is the
 
 0:20:43.030,0:20:48.670
-position of the car and VT is the velocity of the car so a position
+position of the car and Vₜ is the velocity of the car so a position
 
 0:20:48.670,0:20:57.190
-velocity in the 80 is the acceleration right so PT x and y position VT x and y
+velocity in the 80 is the acceleration right so Pₜ, x and y position, Vₜ (x,y)
 
 0:20:57.190,0:21:05.440
 velocity 80 x and y acceleration basically is it preferred
@@ -695,7 +695,7 @@ truth action coming from the yeah from the ground truth thanks how do we
 calculate st we don't how do we get actual sto
 
 0:21:58.619,0:22:05.200
-the actual str i show you before right the the camera are checking the the cars
+the actual st i show you before right the the camera are checking the the cars
 
 0:22:05.200,0:22:10.029
 going on the highway i get the bounding boxes i track the bounding boxes and
@@ -704,10 +704,10 @@ going on the highway i get the bounding boxes i track the bounding boxes and
 therefore i have all those you know positions x and y's over time and then
 
 0:22:16.450,0:22:22.659
-those are DX the PT positions you can also compute the velocity right you know
+those are DX the Pₜ  positions you can also compute the velocity right you know
 
 0:22:22.659,0:22:27.879
-position time t plus 1 minus position at times T divided by time you have the
+position time t plus 1 minus position at timesₜ divided by time you have the
 
 0:22:27.879,0:22:33.759
 velocity wait I'm still a little confused on the role of the decoder is
@@ -731,7 +731,7 @@ decoder all the time right you can decide where you want to have the hidden
 representation how do we hold on how do we determine the dimensionality of a
 
 0:23:04.090,0:23:09.849
-spread output well it depends on your network right so whatever your network
+fpred output well it depends on your network right so whatever your network
 
 0:23:09.849,0:23:14.000
 is outputting in my case I think it 128 dimensional
@@ -740,7 +740,7 @@ is outputting in my case I think it 128 dimensional
 vector foresty since there are variable number of cars surrounding our agent
 
 0:23:22.310,0:23:28.360
-vehicle then okay that's a good question is the size of SD viable so st
+vehicle then okay that's a good question is the size of sₜ  variable. So sₜ  
 
 0:23:28.360,0:23:35.610
 represents the position and velocity of myself and then i have an image
@@ -749,7 +749,7 @@ represents the position and velocity of myself and then i have an image
 which shows me the occupancy grid basically shows me what the surrounding
 
 0:23:42.330,0:23:49.009
-right so I show you here this is my image IT which represents the
+right so I show you here this is my image iₜ  which represents the
 
 0:23:49.009,0:23:53.909
 configuration of the lanes of the street and what is the configuration of the
@@ -905,7 +905,7 @@ from that initial point in time you know you have everything else therefore it
 looks like that you know every kind of image looks up like a blur the image
 
 0:28:30.850,0:28:37.090
-right so again you had this example from yan if you have a pencil on on a plane
+right so again you had this example from Yann if you have a pencil on on a plane
 
 0:28:37.090,0:28:41.260
 and I since I can't really draw in 3d I'm gonna give you the top-down view on
@@ -917,7 +917,7 @@ the right-hand side let's say you make it falling right one two three four
 times five six whatever and if you compute what is the average right
 
 0:28:52.990,0:28:59.260
-folding location well this is since is a you know X&Y is just you know coordinate
+folding location well this is since is a you know (x,y) is just you know coordinate
 
 0:28:59.260,0:29:04.990
 the average final location is like oh the pen never fed and it's really wrong
@@ -950,13 +950,13 @@ Network I just show you before it doesn't work and let's fix this so in
 the center we're going to be summing something and with some this
 
 0:29:59.770,0:30:05.940
-low-dimensional latent variable in green ZT which goes through a you know
+low-dimensional latent variable in green zₜ  which goes through a you know
 
 0:30:05.940,0:30:11.980
 expansion expansion module such that he fixed the image the dimensionality so
 
 0:30:11.980,0:30:17.260
-where's this ZT coming from well I guess you can tell so that T is going to be
+where's this zₜ  coming from well I guess you can tell so that zₜ  is going to be
 
 0:30:17.260,0:30:22.840
 chosen such that the prediction is minimized you know that the MSE is
@@ -977,7 +977,7 @@ that you can still get the MSE to zero by doing gradient descent into latent
 space right so you can change that set into two to chain chain chain chain
 
 0:30:44.110,0:30:48.120
-chain until the emissive dies this is very expensive because you have
+chain until the MSE dies this is very expensive because you have
 
 0:30:50.450,0:30:53.960
 two degrees in the same thing to the damn thing there otherwise you can just
@@ -995,10 +995,10 @@ the future state and gives you the mean and variance from which you sample the
 what is it Irish variational predictive network actually is a variational
 
 0:31:15.740,0:31:21.050
-conditional predictive network because you actually start from a actual action
+conditional predictive network because you actually start from an actual action
 
 0:31:21.050,0:31:29.750
-89 so 80 is the condition is it advisable to help the output fed into a
+aₜ. So aₜ is the condition is it advisable to help the output fed into a
 
 0:31:29.750,0:31:35.570
 encoder for the latent variable during training oh never mind okay all right
@@ -1007,7 +1007,7 @@ encoder for the latent variable during training oh never mind okay all right
 yeah that's that's how yeah okay that was the answer yeah so you don't have to
 
 0:31:39.890,0:31:45.860
-all right this is just a very convenient way to get that said T I guess in the
+all right this is just a very convenient way to get that said zt guess in the
 
 0:31:45.860,0:31:49.010
 next next lab when we do the energy based model we're going to do first
@@ -1016,13 +1016,13 @@ next next lab when we do the energy based model we're going to do first
 inference right but inference is not take you forever because every time you
 
 0:31:52.130,0:31:56.420
-have to try try try try try try a new Zed then where you start with why is
+have to try try try try try try a new z then where you start with why is
 
 0:31:56.420,0:32:02.320
-there an arrow from St plus 1 to F Inc because unless you know what will happen
+there an arrow from st+1 to fenc because unless you know what will happen
 
 0:32:08.539,0:32:14.749
-how will you find that ZT right so that Z T is the missing information that you
+how will you find that zₜ right ? So that zₜ is the missing information that you
 
 0:32:14.749,0:32:18.979
 can't have from the past because something happened you know now my
@@ -1064,7 +1064,7 @@ access to the future but since your training here you can kind of cheat and
 look look what's happened there but we can fix this how do we fix that so this
 
 0:33:23.029,0:33:28.190
-is the posterior blind of a variational encoder and you fix it this way right
+is the posterior “blah” of a variational encoder and you fix it this way right
 
 0:33:28.190,0:33:34.969
 you enforce the posterior the decoder they saw the encoder there to be giving
@@ -1076,19 +1076,16 @@ you a distribution that is as close as possible to the prior to that K ed right
 and so in this case you learn how to predict basically mean meaningful latent
 
 0:33:48.349,0:33:52.729
-variable ZT trying to you know disconnect as well from that kind of
+variable zₜ trying to you know disconnect as well from that kind of future.
 
-0:33:52.729,0:33:58.590
-future okay I'm not sure what Allah is it
-
-0:33:58.590,0:34:06.960
-I'm not I'm not really understanding the f X part FX means a expansion so that T
+0:33:52.790,0:34:06.960
+I'm not I'm not really understanding the fexp part fexp means a expansion so that zt
 
 0:34:06.960,0:34:11.370
 is the latent might be you know 16 dimensional vector very tiny thing and
 
 0:34:11.370,0:34:17.400
-the F bread must can easily be like some kind of spatial information right so
+the fpred must can easily be like some kind of spatial information right so
 
 0:34:17.400,0:34:22.710
 given that is the state is an image are gonna be like you know throughout New
@@ -1100,10 +1097,10 @@ York neural-net I'm gonna be making it convolutional nets a bit smaller it's
 gonna be still spatial I won't be collapsing in one vector such that my X
 
 0:34:30.679,0:34:37.500
-FX be explained expander will expand my 16 dimensional vector may be in two
+fexp be explained expander will expand my 16 dimensional vector may be in two
 
 0:34:37.500,0:34:44.070
-sixteenth lanes of the same size of this F pred hidden representation okay such
+sixteenth lanes of the same size of this fpred hidden representation okay such
 
 0:34:44.070,0:34:47.520
 that I can sum them together could you repeat how you're putting the
@@ -1115,7 +1112,7 @@ restriction on the model not being able to look at actually interstates so right
 now only by looking in the future you can figure out what's happening okay so
 
 0:34:59.280,0:35:05.400
-this F encoder is trained to produce the latent variable which is minimizing that
+this fenc is trained to produce the latent variable which is minimizing that
 
 0:35:05.400,0:35:11.100
 MSC so that's not the variational at encoder encoder there on the top part
@@ -1136,10 +1133,10 @@ so the fact that there is like a KL term between the posterior and the Q and the
 P allows you later on to sample from the prior when you are actually doing you
 
 0:35:39.420,0:35:43.590
-know you're using this network see you build a prior distribution and then
+know you're using this network. So you build a prior distribution and then
 
 0:35:43.590,0:35:47.400
-during into the viewing test time instead of looking at the actual future
+inference / test time instead of looking at the actual future
 
 0:35:47.400,0:35:52.740
 state you sample from the distribution label you just learn you just assemble
@@ -1235,16 +1232,16 @@ no that wasn't someone else saying got it okay
 someone had a question before okay I don't know oh no it was the answer I
 
 0:38:31.789,0:38:35.359
-gave so basically we are adding the F bread
+gave so basically we are adding the fpred
 
 0:38:35.359,0:38:42.559
-f bread our prediction of what will happen with FX the representation of the
+fpred our prediction of what will happen with fexp the representation of the
 
 0:38:42.559,0:38:50.630
-what actually happens now FX is not what actually happens if X is what I couldn't
+what actually happens now fexp is not what actually happens fexp is what I couldn't
 
 0:38:50.630,0:38:59.059
-figure out that would have happened okay so f pred output it's what I I can
+figure out that would have happened okay so fpred output it's what I I can
 
 0:38:59.059,0:39:04.519
 you know I would guess you know my best prediction for what happens tomorrow is
@@ -1253,7 +1250,7 @@ you know I would guess you know my best prediction for what happens tomorrow is
 going to be that the Sun will rise might not be the case so the the Zed that
 
 0:39:12.739,0:39:20.690
-comes down to the F expander will add that component that will you know manage
+comes down to the fexp will add that component that will you know manage
 
 0:39:20.690,0:39:27.979
 to fix my broken prediction right so the lower branch will try to do as the best
@@ -1298,7 +1295,7 @@ can zero out that noise by adding this additional term so it's guaranteed if
 the network is properly sized yeah okay cool so inference how do we drive okay
 
 0:40:49.280,0:40:55.670
-we already spoiled okay more question training time we try to learn qz4 that
+we already spoiled okay more question training time we try to learn q(z) that
 
 0:40:55.670,0:41:03.710
 close to prior petesy test time okay yeah I'm getting there hold on all right
@@ -1508,10 +1505,10 @@ right because if you drive you know you turn to the left and how's gonna be like
 like that right so if I turn to the left you just turn to the right and turning
 
 0:47:12.880,0:47:19.990
-to the right is gonna be contributing in a huge way to the MSC right so right now
+to the right is gonna be contributing in a huge way to the MSE right so right now
 
 0:47:19.990,0:47:26.020
-you can I get basically that these MSC lofts can be minimized if you were
+you can I get basically that these MSE lofts can be minimized if you were
 
 0:47:26.020,0:47:31.570
 encoder and they're in the latent variable is gonna tell my bottom part
@@ -1679,7 +1676,7 @@ let me show you how we fix this maybe oh is it is it clear what I'm
 trying to show you yeah that was much better so okay thank you see
 
 0:52:24.250,0:52:30.640
-but repeating we say repetitive and it's in Latin repetition helps that's why you
+but repeating we say repetita iuvant in Latin repetition helps that's why you
 
 0:52:30.640,0:52:35.860
 had to practice practice practice okay how do you fix the problem the problem
@@ -1907,7 +1904,7 @@ scaler and then my model uncertainty regularizer leave some of the two and
 you get the final loss to optimize and that's it so that's the whole model
 
 0:59:38.689,0:59:42.390
-where the final loss is going to be my DC task
+where the final loss is going to be my ctask
 
 0:59:42.390,0:59:48.479
 plus this uncertainty this slides are going to be in the next slide I give you
@@ -1970,13 +1967,13 @@ you have the additional cost for you know trying to mimic the experts
 information and these are the links for everything so that's the title that's me
 
 1:01:32.210,1:01:37.339
-collaborators are well main authors we are both first outers Micahel and myself
+collaborators are well main authors we are both first autors Mikael and myself
 
 1:01:37.339,1:01:43.190
 and then division slides are here the article is here the code is available on
 
 1:01:43.190,1:01:50.779
-github on my github and this is a website and we also have a poster sorry
+github on my GitHub and this is a website and we also have a poster sorry
 
 1:01:50.779,1:01:56.390
 it'll be running so so so late but I hope you really enjoyed this small
@@ -2060,7 +2057,7 @@ that we have access to the future if we make a small tiny change in my steering
 steering wheel control everything will change which is a very large change
 
 1:04:34.539,1:04:40.329
-right and that MSC will to minimize that MSE you know a lot of information will
+right and that MSE will to minimize that MSE you know a lot of information will
 
 1:04:40.329,1:04:45.460
 go through that way because it's a big change right so it's very is a brutal
@@ -2096,7 +2093,7 @@ the left so you had to disentangle this and to fix that the thing that really
 worked very well was this one which was basically half of the time or maybe we
 
 1:05:37.869,1:05:42.069
-had some shading I forgot but you know some some times instead of you know
+had some scheduling I forgot but you know some some times instead of you know
 
 1:05:42.069,1:05:47.420
 sampling the latent variable while training these automation of
@@ -2153,7 +2150,7 @@ killing you like if the future changed because of the action or not and it said
 the prior distribution for the latent variable is just like a Gaussian normal
 
 1:07:19.700,1:07:25.220
-okay all right cool thank you so much Yan keeps saying that we sample from
+okay all right cool thank you so much Yann keeps saying that we sample from
 
 1:07:25.220,1:07:30.530
 zero that was the previous previous version where we actually didn't even
@@ -2168,7 +2165,7 @@ mean so we we didn't have the same thing module we didn't have the variance just
 we had an encoder which was just giving me this latent so that was the previous
 
 1:07:45.890,1:07:52.970
-version no sampling no V you just F ank you encode this guy and so sometimes you
+version no sampling no V just fenc you encode this guy and so sometimes you
 
 1:07:52.970,1:07:57.339
 were getting it from the encoder and sometimes you were picking it from zero
@@ -2213,7 +2210,7 @@ to learn a low dimensional representation then we AE the
 variational auto encoder builds on it to regularize the latent space so that it
 
 1:09:11.770,1:09:18.069
-can randomly sample from the Nathan space and then Gans and the model that
+can randomly sample from the Nathan space and then GANs and the model that
 
 1:09:18.069,1:09:24.370
 we just studied they use it to introduce randomness so that when we have the same
@@ -2249,7 +2246,7 @@ predictions so without the laden bag what you are getting that you know
 masked version of the prediction it's blurry prediction instead in order to
 
 1:10:25.660,1:10:32.020
-get you know Chris predictions you want to refine your average prediction to the
+get you know crisp predictions you want to refine your average prediction to the
 
 1:10:32.020,1:10:38.500
 specific case you have at hand right got it so it is basically using it to add
@@ -2312,7 +2309,7 @@ due to unforeseen events but everything that is you know predictable should be
 done by the deterministic branch such that you use the past information to
 
 1:12:25.300,1:12:28.450
-determine what's happening next but then you can't really name so it's
+determine what's happening next but then you can't really know so it's
 
 1:12:28.450,1:12:35.560
 like you know you're gonna be me trying to touch the calm web web-cam here but
@@ -2339,7 +2336,7 @@ additional you know inputs that are not under my control then you will not be
 able to make accurate predictions unless you have some knowledge it's like okay
 
 1:13:11.470,1:13:16.630
-like going back to the example yan makes all the time with a pencil right so the
+like going back to the example Yann makes all the time with a pencil right so the
 
 1:13:16.630,1:13:20.160
 pen is gonna be falling one direction let me get the pens
@@ -2498,7 +2495,7 @@ variance by having the action going from clear draw here because here the
 variance is tiny right the variance here is minimum and
 
 1:18:09.160,1:18:14.920
-here the variance is very large so you can have actions that might great in
+here the variance is very large so you can have actions that might migrate in
 
 1:18:14.920,1:18:21.820
 your action space such that the variance is minimized right so your variance now
@@ -2525,7 +2522,7 @@ such that in this region where the variance is low you know that all these
 different models will agree for the future predictions therefore and those
 
 1:19:00.190,1:19:09.970
-actions are coming from you know safe Riaan right the actions are now coming
+actions are coming from you know safe realm right the actions are now coming
 
 1:19:09.970,1:19:14.560
 from more like the training points rather than outside point a training
@@ -2651,7 +2648,7 @@ video in the same way each section of the video is the same title is in
 transcription so you can go back and forth maybe English is not your first
 
 1:22:25.020,1:22:30.960
-language but l'italiano habla espanol new Obama speak Korean have no idea how
+language. Parli italiano? ¿Hables Español? 你会说中文吗 ? speak Korean have no idea how
 
 1:22:30.960,1:22:36.180
 to speak Korean well we have several translations of this material available
@@ -2678,7 +2675,7 @@ opportunity to show your contribution for example you find some typos in the
 write-up so you find some bugs in the notebooks you can fix those and you know
 
 1:23:07.740,1:23:12.810
-be part of this whole project by sending me a poor request on github or letting
+be part of this whole project by sending me a poor request on GitHub or letting
 
 1:23:12.810,1:23:18.920
 me know otherwise and that was it so see you next time bye bye
