@@ -31,7 +31,7 @@ Voici quelques réponses à des questions fréquemment posées :
 >	Non. Pour proposer une certification, il faudrait pouvoir vous évaluer or le contenu n’a pas été prévu pour (contrairement à un MOOC par exemple).    
 >	Cette demande étant fréquente, des réflexions sont menées pour essayer d’en proposer une pour des éditions futures du cours.
 -	**Une version plus récente du cours existe. Cette édition 2020 est-elle encore valable ?**  
-> Absolument. L’édition 2021 est sensiblement la même que celle de 2020 mais est présentée d’une façon différente : les travaux dirigés sont maintenant abordés du point de vue des modèles à base d’énergie et les cours magistraux ont été légèrement réorganisées. Les invités diffèrent également. Concernant le français, le site web de l’édition 2021 a été traduit mais pas les vidéos (elles ne le seront probablement pas car ce travail est extrêmement chronophage, voir la section 3 ci-dessous). Ainsi nous vous conseillons de commencer avec cette édition 2020 pour le français puis explorer par vous-même par la suite l’édition 2021 au besoin. 
+> Absolument. L’[édition 2021](https://atcold.github.io/NYU-DLSP21/fr/) est sensiblement la même que celle de 2020 mais est présentée d’une façon différente : les travaux dirigés sont maintenant abordés du point de vue des modèles à base d’énergie et les cours magistraux ont été légèrement réorganisées. Les invités diffèrent également. Concernant le français, le site web de l’édition 2021 a été traduit et les trois vidéos des conférenciers invités. Les autres vidéos ne seront pas traduites car son redondantes avec l'édition 2020. Ainsi nous vous conseillons de commencer avec cette édition 2020 pour le français puis explorer par vous-même par la suite l’édition 2021 au besoin. 
 -	**Combien de temps consacrer à ce cours ?**  
 > Pour chaque semaine, il y a environ 2h30/3h de contenu vidéo. Avec le temps consacré à la prise de notes et celui pour jouer avec les *notebooks*, une estimation totale de 5h par semaine semble raisonnable. Pour la suite, cela dépend du niveau d'immersion que vous voulez atteindre dans un sujet donné (lire les articles donnés en référence, appliquer ce qui a été vu en classe à vos propres projets, etc.).
 -	**Où poser une question à l’issue du visionnage d’une vidéo ?**  
@@ -49,9 +49,7 @@ Voici quelques réponses à des questions fréquemment posées :
   title = {NYU Deep Learning, Spring 2020},  
   howpublished = "\url{https://atcold.github.io/pytorch-Deep-Learning/}",  
   year = {2020},  
-  note = "[Online; accessed <today>]"  
-}
-
+  note = "[Online; accessed <today>]"}
 
 
 #	Traduction
