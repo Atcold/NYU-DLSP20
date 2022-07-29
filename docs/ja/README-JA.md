@@ -53,7 +53,7 @@ source activate pDL
 ## Jupyter Notebook または JupyterLab を起動する
 
 <!-- Start from terminal as usual: -->
-次のコマンドを実行してターミナルから起動します.
+次のコマンドを実行してターミナルから起動します。
 
 ```bash
 jupyter lab
