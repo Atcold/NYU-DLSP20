@@ -1,5 +1,5 @@
 ---
-title: Foreword, FAQ and disclamer
+title: Foreword, FAQ and disclaimer
 author: Loïck Bourdois
 date: 14 Nov 2021
 lang-ref: faq
@@ -30,7 +30,7 @@ Here are some answers to frequently asked questions:
 - **Does taking this course lead to certification?**
 > No, it does not. In order to offer a certification, we would have to be able to evaluate you, but the content has not been designed for this (unlike a MOOC for example). As this is a frequent request, we are thinking about proposing a certification for future editions of the course.
 - **A more recent version of the course exists. Is this 2020 edition still valid?**
-> The 2021 edition is pretty much the same as the 2020 edition but is presented in a different way: practinum is now approached from the point of view of energy-based models (EBMs) and the lectures have been reorganized. The lecture guests are also different. 
+> The 2021 edition is pretty much the same as the 2020 edition but is presented in a different way: practicum is now approached from the point of view of energy-based models (EBMs) and the lectures have been reorganized. The lecture guests are also different. 
 - **How much time should I spend on this course?**
 > For each week, there is approximately 2h30/3h of video content. With the time dedicated to note taking and playing with the notebooks, a total estimate of 5 hours per week seems reasonable. For the rest, it depends on the level of immersion you want to achieve in a given topic (reading the referenced articles, applying what was seen in class to your own projects, etc.).
 - **Where to ask a question after watching a video?**
