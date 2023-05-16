@@ -25,6 +25,7 @@ If you want to debug it locally, you need to install `jekyll`, starting by insta
 ```bash
 brew install ruby
 export PATH=/usr/local/opt/ruby/bin:$PATH
+# or export PATH=/opt/homebrew/opt/ruby/bin:$PATH
 gem install jekyll webrick
 ```
 
