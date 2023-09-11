@@ -39,7 +39,7 @@ Change directory (`cd`) into the course folder, then type:
 ```bash
 # cd pytorch-Deep-Learning
 conda env create -f environment.yml
-source activate pDL
+conda activate pDL
 ```
 
 
