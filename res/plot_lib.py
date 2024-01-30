@@ -37,22 +37,34 @@ def plot_model(X, y, model):
     plot_data(X, y)
 
 
-def show_scatterplot(X, colors, title=''):
-    colors = colors.cpu().numpy()
-    X = X.cpu().numpy()
-    plt.figure()
+zieger = plt.imread('res/ziegler.png')
+
+def show_scatterplot(X, colors, title='', axis=True):
+    colors = zieger[colors[:,0], colors[:,1]]
+    X = X.numpy()
+    # plt.figure()
     plt.axis('equal')
     plt.scatter(X[:, 0], X[:, 1], c=colors, s=30)
     # plt.grid(True)
     plt.title(title)
     plt.axis('off')
+    _m, _c = 0, '.15'
+    if axis:
+        plt.axvline(0, ymin=_m, color=_c, lw=1, zorder=0)
+        plt.axhline(0, xmin=_m, color=_c, lw=1, zorder=0)
 
 
-def plot_bases(bases, width=0.04):
-    bases = bases.cpu()
+def plot_bases(bases, plotting=True, width=0.04):
     bases[2:] -= bases[:2]
-    plt.arrow(*bases[0], *bases[2], width=width, color=(1,0,0), zorder=10, alpha=1., length_includes_head=True)
-    plt.arrow(*bases[1], *bases[3], width=width, color=(0,1,0), zorder=10, alpha=1., length_includes_head=True)
+    # if plot_bases.a: plot_bases.a.set_visible(False)
+    # if plot_bases.b: plot_bases.b.set_visible(False)
+    if plotting:
+        plot_bases.a = plt.arrow(*bases[0], *bases[2], width=width, color='r', zorder=10, alpha=1., length_includes_head=True)
+        plot_bases.b = plt.arrow(*bases[1], *bases[3], width=width, color='g', zorder=10, alpha=1., length_includes_head=True)
+
+
+plot_bases.a = None
+plot_bases.b = None
 
 
 def show_mat(mat, vect, prod, threshold=-1):
@@ -72,7 +84,7 @@ def show_mat(mat, vect, prod, threshold=-1):
     # Remove xticks for vectors
     ax2.set_xticks(tuple())
     ax3.set_xticks(tuple())
-    
+
     # Plot colourbars
     fig.colorbar(cax1, ax=ax2)
     fig.colorbar(cax3, ax=ax3)
