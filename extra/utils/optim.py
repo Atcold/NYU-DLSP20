@@ -39,7 +39,8 @@ A = torch.tensor([[1.0, 0.0,], [0.0, 5.0]])
 b = torch.tensor([0.0, 0.0])
 
 def objective(x, y):
-    xy = torch.tensor([x, y])
+    xy = torch.tensor([x, y]).float()
+    
     return (0.5 * xy @ (A @ xy) + b @ xy).item()
 
 delta = 0.025
