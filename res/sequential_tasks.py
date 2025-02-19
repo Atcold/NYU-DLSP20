@@ -24,7 +24,7 @@ def pad_sequences(sequences, maxlen=None, dtype='int32',
             sample_shape = np.asarray(s).shape[1:]
             break
 
-    is_dtype_str = np.issubdtype(dtype, np.str_) or np.issubdtype(dtype, np.unicode_)
+    is_dtype_str = np.issubdtype(dtype, np.str_)
     if isinstance(value, six.string_types) and dtype != object and not is_dtype_str:
         raise ValueError("`dtype` {} is not compatible with `value`'s type: {}\n"
                          "You should set `dtype=object` for variable length strings."
