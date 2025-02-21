@@ -29,7 +29,7 @@ Les instructions suivantes fonctionneront telles quelles pour les utilisateurs d
 ## Download and install Miniconda
 
 Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 
 ```bash
 wget <http:// link to miniconda>
@@ -40,7 +40,7 @@ sh <miniconda*.sh>
 ## Télécharger et installer Miniconda
 
 Veuillez-vous rendre sur le [site web d'Anaconda](https://conda.io/miniconda.html).
-Téléchargez et installez la *dernière* version de Miniconda pour *Python* 3.7 pour votre système d'exploitation.
+Téléchargez et installez la *dernière* version de Miniconda pour *Python* $\geq$ 3.7 pour votre système d'exploitation.
 
 ```bash
 wget <http:// link to miniconda>

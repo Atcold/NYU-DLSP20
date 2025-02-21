@@ -18,9 +18,9 @@
 ## Miniconda をインストールする
 
 <!-- Please go to the [Anaconda website](https://conda.io/miniconda.html).                           -->
-<!-- Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system. -->
+<!-- Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system. -->
 [Anaconda のウェブサイト](https://conda.io/miniconda.html) にアクセスし、
-使用してる OS の、*Python* 3.7 を用いている最新のバージョンをインストールしてください。
+使用してる OS の、*Python* $\geq$ 3.7 を用いている最新のバージョンをインストールしてください。
 
 ```bash
 wget <http:// link to miniconda>

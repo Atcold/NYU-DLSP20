@@ -22,10 +22,10 @@ Las instrucciones siguientes funcionarán para los usuarios de Mac o Ubuntu Linu
 ## Descarga e instala Miniconda
 
 <!-- Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 -->
 Ve al [sitio web de Anaconda](https://conda.io/miniconda.html).
-Descarga e instala *la última* versión de Miniconda para *Python* 3.7 para tu sistema operativo.
+Descarga e instala *la última* versión de Miniconda para *Python* $\geq$ 3.7 para tu sistema operativo.
 
 <!-- wget <http:// link to miniconda>
 -->

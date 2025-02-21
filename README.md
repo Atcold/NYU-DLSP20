@@ -15,7 +15,7 @@ The following instruction would work as is for Mac or Ubuntu Linux users, Window
 ## Download and install Miniconda
 
 Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 
 ```bash
 wget <http:// link to miniconda>
