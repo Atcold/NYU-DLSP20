@@ -11,7 +11,7 @@
 
 ## Miniconda ডাউনলোড করে ইনস্টল করুন
 
-[Anaconda ওয়েবসাইটে](https://conda.io/miniconda.html) গিয়ে আপনার অপারেটিং সিস্টেমে *Python* 3.7-এর জন্য Miniconda-র *সর্বশেষ* সংস্করণটি ডাউনলোড ও ইনস্টল করুন।
+[Anaconda ওয়েবসাইটে](https://conda.io/miniconda.html) গিয়ে আপনার অপারেটিং সিস্টেমে *Python* $\geq$ 3.7-এর জন্য Miniconda-র *সর্বশেষ* সংস্করণটি ডাউনলোড ও ইনস্টল করুন।
 
 ```bash
 wget <http:// link to miniconda>

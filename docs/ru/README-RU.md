@@ -23,7 +23,7 @@ The following instruction would work as is for Mac or Ubuntu Linux users, Window
 ## Загрузка и установка Miniconda
 
 <!-- Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 
 ```bash
 wget <http:// link to miniconda>
@@ -31,7 +31,7 @@ sh <miniconda*.sh>
 ``` -->
 
 Пожалуйста, перейдите на [вебсайт Anaconda](https://conda.io/miniconda.html).
-Скачайте и установите *the latest* версию Miniconda для *Python* 3.7 в соответствии с Вашей операционной системой.
+Скачайте и установите *the latest* версию Miniconda для *Python* $\geq$ 3.7 в соответствии с Вашей операционной системой.
 
 ```bash
 wget <http:// link to miniconda>
