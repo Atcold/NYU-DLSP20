@@ -13,7 +13,7 @@
 
 ## 下载并安装Miniconda
 
-请前往[Anaconda网站](https://conda.io/miniconda.html)，下载并且安装适合你的操作系统的*最新*Miniconda版本。其中*Python*版本请选择3.8
+请前往[Anaconda网站](https://conda.io/miniconda.html)，下载并且安装适合你的操作系统的*最新*Miniconda版本。其中*Python*版本请选择 >3.8
 
 ```bash
 wget <http:// link to miniconda>

@@ -12,7 +12,7 @@
 
 
 ##   دانلود و نصب Miniconda
-لطفا به وبسایت [Anaconda](https://conda.io/miniconda.html) بروید و آخرین نسخه Miniconda برای پایتون 3.7 مخصوص سیستم عامل خود را دانلود و سپس نصب کنید.
+لطفا به وبسایت [Anaconda](https://conda.io/miniconda.html) بروید و آخرین نسخه Miniconda برای پایتون >3.7 مخصوص سیستم عامل خود را دانلود و سپس نصب کنید.
 
 ```bash
 wget <http:// link to miniconda>
