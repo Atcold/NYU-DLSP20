@@ -25,10 +25,10 @@ The following instruction would work as is for Mac or Ubuntu Linux users, Window
 ## تنزيل وتثبيت Miniconda
 
 <!-- Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 -->
 إذهب إلى [موقع Anaconda](https://conda.io/miniconda.html).
-قم بتنزيل وتثبيت *أحدث* إصدار من Miniconda لـ *Python* 3.7 لنظام التشغيل الخاص بك.
+قم بتنزيل وتثبيت *أحدث* إصدار من Miniconda لـ *Python* $\geq$ 3.7 لنظام التشغيل الخاص بك.
 
 <!-- Once Miniconda is ready, checkout the course repository and proceed with setting up the environment:
 -->

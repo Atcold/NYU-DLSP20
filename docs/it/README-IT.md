@@ -14,7 +14,7 @@ Per poter seguire gli esercizi, si avrà bisogno di un computer con Miniconda (u
 
 ## Scaricare e installare Miniconda
 
-Vai al [sito di Anaconda](https://conda.io/miniconda.html). Scarica e installa *l'ultima* versione di Miniconda per *Python* 3.7 per il tuo sistema operativo.
+Vai al [sito di Anaconda](https://conda.io/miniconda.html). Scarica e installa *l'ultima* versione di Miniconda per *Python* $\geq$ 3.7 per il tuo sistema operativo.
 
 
 ```bash

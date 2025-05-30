@@ -13,7 +13,7 @@ A kurzus elvégzéséhez szükséged lesz egy laptopra, melyen telepítve van a 
 ## A Miniconda letöltése és telepítése
 
 Kérlek menj az [Anaconda weboldalára](https://conda.io/miniconda.html).
-Tölts le és telepítsd a Miniconda *legújabb Python 3.7* verzióját az operációs rendszerednek megfelelően.
+Tölts le és telepítsd a Miniconda *legújabb Python $\geq$ 3.7* verzióját az operációs rendszerednek megfelelően.
 
 ```bash
 wget <http:// link to miniconda>

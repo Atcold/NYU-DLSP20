@@ -24,9 +24,9 @@ Aşağıdaki yönergeler Mac veya Ubuntu Linux kullancıları için geçerlidir.
 ## Miniconda'nın indirilmesi ve yüklenmesi
 
 <!-- Please go to the [Anaconda website](https://conda.io/miniconda.html).
-Download and install *the latest* Miniconda version for *Python* 3.7 for your operating system.
+Download and install *the latest* Miniconda version for *Python* $\geq$ 3.7 for your operating system.
 -->
-[Anaconda](https://conda.io/miniconda.html)'nın sitesine giderek işletim sisteminiz için uygun olan *en güncel* *Python* 3.7 Miniconda versiyonunu indirip kurun.
+[Anaconda](https://conda.io/miniconda.html)'nın sitesine giderek işletim sisteminiz için uygun olan *en güncel* *Python* $\geq$ 3.7 Miniconda versiyonunu indirip kurun.
 
 
 ```bash

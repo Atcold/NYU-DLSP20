@@ -12,7 +12,7 @@ Notebook này hiện đang được phát hành tại [trang web](https://atcold
 ## Tải và cài đặt Miniconda
 
 Vui lòng truy cập [Anaconda website](https://conda.io/miniconda.html).
-Tải xuống và cài đặt *phiên bản mới nhất* Miniconda cho *Python* 3.7 tương ứng với hệ điều hành của bạn.
+Tải xuống và cài đặt *phiên bản mới nhất* Miniconda cho *Python* $\geq$ 3.7 tương ứng với hệ điều hành của bạn.
 
 ```bash
 wget <http:// liên kết đến trang web Miniconda>
